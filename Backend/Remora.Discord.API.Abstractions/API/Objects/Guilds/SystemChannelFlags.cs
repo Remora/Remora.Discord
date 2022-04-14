@@ -23,32 +23,31 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents various flags for system channels.
+/// </summary>
+[PublicAPI, Flags]
+public enum SystemChannelFlags
 {
     /// <summary>
-    /// Represents various flags for system channels.
+    /// Suppress member join notifications.
     /// </summary>
-    [PublicAPI, Flags]
-    public enum SystemChannelFlags
-    {
-        /// <summary>
-        /// Suppress member join notifications.
-        /// </summary>
-        SuppressJoinNotifications = 1 << 0,
+    SuppressJoinNotifications = 1 << 0,
 
-        /// <summary>
-        /// Suppress server boost notifications.
-        /// </summary>
-        SuppressPremiumSubscriptions = 1 << 1,
+    /// <summary>
+    /// Suppress server boost notifications.
+    /// </summary>
+    SuppressPremiumSubscriptions = 1 << 1,
 
-        /// <summary>
-        /// Suppresses server setup tips.
-        /// </summary>
-        SuppressGuildReminderNotifications = 1 << 2,
+    /// <summary>
+    /// Suppresses server setup tips.
+    /// </summary>
+    SuppressGuildReminderNotifications = 1 << 2,
 
-        /// <summary>
-        /// Suppresses the reply sticker button for new joins.
-        /// </summary>
-        SuppressJoinNotificationReplies = 1 << 3
-    }
+    /// <summary>
+    /// Suppresses the reply sticker button for new joins.
+    /// </summary>
+    SuppressJoinNotificationReplies = 1 << 3
 }

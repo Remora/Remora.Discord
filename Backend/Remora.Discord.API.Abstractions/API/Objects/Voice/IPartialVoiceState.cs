@@ -24,51 +24,50 @@ using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a user's partial voice connection status.
+/// </summary>
+[PublicAPI]
+public interface IPartialVoiceState
 {
-    /// <summary>
-    /// Represents a user's partial voice connection status.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialVoiceState
-    {
-        /// <inheritdoc cref="IVoiceState.GuildID" />
-        Optional<Snowflake> GuildID { get; }
+    /// <inheritdoc cref="IVoiceState.GuildID" />
+    Optional<Snowflake> GuildID { get; }
 
-        /// <inheritdoc cref="IVoiceState.ChannelID" />
-        Optional<Snowflake?> ChannelID { get; }
+    /// <inheritdoc cref="IVoiceState.ChannelID" />
+    Optional<Snowflake?> ChannelID { get; }
 
-        /// <inheritdoc cref="IVoiceState.UserID" />
-        Optional<Snowflake> UserID { get; }
+    /// <inheritdoc cref="IVoiceState.UserID" />
+    Optional<Snowflake> UserID { get; }
 
-        /// <inheritdoc cref="IVoiceState.Member" />
-        Optional<IGuildMember> Member { get; }
+    /// <inheritdoc cref="IVoiceState.Member" />
+    Optional<IGuildMember> Member { get; }
 
-        /// <inheritdoc cref="IVoiceState.SessionID" />
-        Optional<string> SessionID { get; }
+    /// <inheritdoc cref="IVoiceState.SessionID" />
+    Optional<string> SessionID { get; }
 
-        /// <inheritdoc cref="IVoiceState.IsDeafened" />
-        Optional<bool> IsDeafened { get; }
+    /// <inheritdoc cref="IVoiceState.IsDeafened" />
+    Optional<bool> IsDeafened { get; }
 
-        /// <inheritdoc cref="IVoiceState.IsMuted" />
-        Optional<bool> IsMuted { get; }
+    /// <inheritdoc cref="IVoiceState.IsMuted" />
+    Optional<bool> IsMuted { get; }
 
-        /// <inheritdoc cref="IVoiceState.IsSelfDeafened" />
-        Optional<bool> IsSelfDeafened { get; }
+    /// <inheritdoc cref="IVoiceState.IsSelfDeafened" />
+    Optional<bool> IsSelfDeafened { get; }
 
-        /// <inheritdoc cref="IVoiceState.IsSelfMuted" />
-        Optional<bool> IsSelfMuted { get; }
+    /// <inheritdoc cref="IVoiceState.IsSelfMuted" />
+    Optional<bool> IsSelfMuted { get; }
 
-        /// <inheritdoc cref="IVoiceState.IsStreaming" />
-        Optional<bool> IsStreaming { get; }
+    /// <inheritdoc cref="IVoiceState.IsStreaming" />
+    Optional<bool> IsStreaming { get; }
 
-        /// <inheritdoc cref="IVoiceState.IsVideoEnabled" />
-        Optional<bool> IsVideoEnabled { get; }
+    /// <inheritdoc cref="IVoiceState.IsVideoEnabled" />
+    Optional<bool> IsVideoEnabled { get; }
 
-        /// <inheritdoc cref="IVoiceState.IsSuppressed" />
-        Optional<bool> IsSuppressed { get; }
+    /// <inheritdoc cref="IVoiceState.IsSuppressed" />
+    Optional<bool> IsSuppressed { get; }
 
-        /// <inheritdoc cref="IVoiceState.RequestToSpeakTimestamp" />
-        Optional<DateTimeOffset?> RequestToSpeakTimestamp { get; }
-    }
+    /// <inheritdoc cref="IVoiceState.RequestToSpeakTimestamp" />
+    Optional<DateTimeOffset?> RequestToSpeakTimestamp { get; }
 }

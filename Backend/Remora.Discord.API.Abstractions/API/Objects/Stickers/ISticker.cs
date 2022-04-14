@@ -23,68 +23,67 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a sticker.
+/// </summary>
+[PublicAPI]
+public interface ISticker
 {
     /// <summary>
-    /// Represents a sticker.
+    /// Gets the ID of the sticker.
     /// </summary>
-    [PublicAPI]
-    public interface ISticker
-    {
-        /// <summary>
-        /// Gets the ID of the sticker.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the sticker pack.
-        /// </summary>
-        Optional<Snowflake> PackID { get; }
+    /// <summary>
+    /// Gets the ID of the sticker pack.
+    /// </summary>
+    Optional<Snowflake> PackID { get; }
 
-        /// <summary>
-        /// Gets the name of the sticker.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the sticker.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the description of the sticker.
-        /// </summary>
-        string? Description { get; }
+    /// <summary>
+    /// Gets the description of the sticker.
+    /// </summary>
+    string? Description { get; }
 
-        /// <summary>
-        /// Gets the autocomplete/suggestion tags for the sticker. By convention, this tends to be a comma-separated
-        /// list.
-        /// </summary>
-        string Tags { get; }
+    /// <summary>
+    /// Gets the autocomplete/suggestion tags for the sticker. By convention, this tends to be a comma-separated
+    /// list.
+    /// </summary>
+    string Tags { get; }
 
-        /// <summary>
-        /// Gets the type of the sticker.
-        /// </summary>
-        StickerType Type { get; }
+    /// <summary>
+    /// Gets the type of the sticker.
+    /// </summary>
+    StickerType Type { get; }
 
-        /// <summary>
-        /// Gets the format of the sticker.
-        /// </summary>
-        StickerFormatType FormatType { get; }
+    /// <summary>
+    /// Gets the format of the sticker.
+    /// </summary>
+    StickerFormatType FormatType { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the sticker is available.
-        /// </summary>
-        Optional<bool> IsAvailable { get; }
+    /// <summary>
+    /// Gets a value indicating whether the sticker is available.
+    /// </summary>
+    Optional<bool> IsAvailable { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the sticker belongs to.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild the sticker belongs to.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the user that uploaded the sticker.
-        /// </summary>
-        Optional<IUser> User { get; }
+    /// <summary>
+    /// Gets the user that uploaded the sticker.
+    /// </summary>
+    Optional<IUser> User { get; }
 
-        /// <summary>
-        /// Gets the sticker's sorting order within a sticker pack.
-        /// </summary>
-        Optional<int> SortValue { get; }
-    }
+    /// <summary>
+    /// Gets the sticker's sorting order within a sticker pack.
+    /// </summary>
+    Optional<int> SortValue { get; }
 }

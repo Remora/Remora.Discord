@@ -82,7 +82,8 @@ public record GuildCreate
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<IStageInstance>> StageInstances,
     Optional<IReadOnlyList<ISticker>> Stickers,
-    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents
+    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents,
+    bool IsPremiumProgressBarEnabled
 ) : Guild
 (
     ID,
@@ -133,5 +134,6 @@ public record GuildCreate
     NSFWLevel,
     StageInstances,
     Stickers,
-    GuildScheduledEvents
+    GuildScheduledEvents,
+    IsPremiumProgressBarEnabled
 ), IGuildCreate;

@@ -36,6 +36,5 @@ public record IntegrationApplication
     string Name,
     IImageHash? Icon,
     string Description,
-    string Summary,
     Optional<IUser> Bot = default
 ) : IIntegrationApplication;

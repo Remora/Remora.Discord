@@ -27,57 +27,102 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 using Polly;
 using Remora.Discord.Rest.API;
 
-namespace Remora.Discord.Rest.Polly
+namespace Remora.Discord.Rest.Polly;
+
+/// <summary>
+/// Represents a Discord rate limiting policy.
+/// </summary>
+internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
 {
     /// <summary>
-    /// Represents a Discord rate limiting policy.
+    /// Maps endpoint names to their corresponding bucket IDs.
     /// </summary>
-    internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
+    /// <remarks>
+    /// If an endpoint is not in this dictionary, it either does not use a shared bucket, or it is the first request for
+    /// this endpoint.
+    /// </remarks>
+    private readonly ConcurrentDictionary<string, string> _endpointBuckets;
+
+    private readonly RateLimitBucket _globalRateLimitBucket;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRateLimitPolicy"/> class.
+    /// </summary>
+    private DiscordRateLimitPolicy()
     {
-        private readonly ConcurrentDictionary<string, RateLimitBucket> _rateLimitBuckets;
-        private RateLimitBucket _globalRateLimitBucket;
+        _globalRateLimitBucket = new RateLimitBucket
+        (
+            50,
+            50,
+            DateTimeOffset.UtcNow + TimeSpan.FromSeconds(1),
+            "global"
+        );
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRateLimitPolicy"/> class.
-        /// </summary>
-        private DiscordRateLimitPolicy()
+        _endpointBuckets = new ConcurrentDictionary<string, string>();
+    }
+
+    /// <inheritdoc />
+    protected override async Task<HttpResponseMessage> ImplementationAsync
+    (
+        Func<Context, CancellationToken, Task<HttpResponseMessage>> action,
+        Context context,
+        CancellationToken cancellationToken,
+        bool continueOnCapturedContext
+    )
+    {
+        if (!context.TryGetValue("endpoint", out var rawEndpoint) || rawEndpoint is not string endpoint)
         {
-            _globalRateLimitBucket = new RateLimitBucket
-            (
-                10000,
-                10000,
-                DateTime.Today + TimeSpan.FromDays(1),
-                "global",
-                true
-            );
-
-            _rateLimitBuckets = new ConcurrentDictionary<string, RateLimitBucket>();
+            throw new InvalidOperationException("No endpoint set.");
         }
 
-        /// <inheritdoc />
-        protected override async Task<HttpResponseMessage> ImplementationAsync
-        (
-            Func<Context, CancellationToken, Task<HttpResponseMessage>> action,
-            Context context,
-            CancellationToken cancellationToken,
-            bool continueOnCapturedContext
-        )
+        if (!context.TryGetValue("cache", out var rawCache) || rawCache is not IMemoryCache cache)
         {
-            if (!context.TryGetValue("endpoint", out var rawEndpoint) || rawEndpoint is not string endpoint)
+            throw new InvalidOperationException("No memory cache set.");
+        }
+
+        var now = DateTimeOffset.UtcNow;
+
+        // Determine whether this request is exempt from global rate limits
+        var isExemptFromGlobalRateLimits = false;
+        if (context.TryGetValue("exempt-from-global-rate-limits", out var rawExempt) && rawExempt is bool isExempt)
+        {
+            isExemptFromGlobalRateLimits = isExempt;
+        }
+
+        // First, take a token from the global limits
+        if (!isExemptFromGlobalRateLimits)
+        {
+            // Check if we need to reset the global limits
+            if (_globalRateLimitBucket.ResetsAt < now)
             {
-                throw new InvalidOperationException("No endpoint set.");
+                await _globalRateLimitBucket.ResetAsync(now + TimeSpan.FromSeconds(1));
             }
 
-            if (!_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
+            if (!await _globalRateLimitBucket.TryTakeAsync())
             {
-                rateLimitBucket = _globalRateLimitBucket;
+                var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+
+                var delay = _globalRateLimitBucket.ResetsAt - now;
+                rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
+
+                return rateLimitedResponse;
             }
+        }
 
-            var now = DateTime.UtcNow;
+        // Then, try to take one from the local bucket
+        if (!_endpointBuckets.TryGetValue(endpoint, out var bucketIdentifier))
+        {
+            bucketIdentifier = endpoint;
+        }
 
+        if (cache.TryGetValue<RateLimitBucket>(bucketIdentifier, out var rateLimitBucket))
+        {
+            // We don't reset route-specific rate limits ourselves; that's the responsibility of the returned headers
+            // from Discord
             if (!await rateLimitBucket.TryTakeAsync())
             {
                 var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
@@ -87,40 +132,45 @@ namespace Remora.Discord.Rest.Polly
 
                 return rateLimitedResponse;
             }
+        }
 
-            // The request can proceed without hitting rate limits, and we've taken a token
-            var requestAction = action(context, cancellationToken).ConfigureAwait(continueOnCapturedContext);
+        // The request can proceed without hitting rate limits, and we've taken a token
+        var requestAction = action(context, cancellationToken).ConfigureAwait(continueOnCapturedContext);
 
-            var response = await requestAction;
-            if (!RateLimitBucket.TryParse(response.Headers, out var newLimits))
-            {
-                return response;
-            }
+        var response = await requestAction;
+        if (!RateLimitBucket.TryParse(response.Headers, out var newLimits))
+        {
+            return response;
+        }
 
-            if (newLimits.IsGlobal)
-            {
-                if (_globalRateLimitBucket.ResetsAt < newLimits.ResetsAt)
-                {
-                    _globalRateLimitBucket = newLimits;
-                }
+        if (newLimits.ID is null)
+        {
+            // No shared bucket for this endpoint; clear any old shared information
+            _endpointBuckets.TryRemove(endpoint, out _);
 
-                return response;
-            }
-
-            _rateLimitBuckets.AddOrUpdate
-            (
-                endpoint,
-                newLimits,
-                (_, old) => old.ResetsAt < newLimits.ResetsAt ? newLimits : old
-            );
+            // use the endpoint and not any mapped identifier, plus an expiration so we don't leak transient rate limits
+            cache.Set(endpoint, newLimits, newLimits.ResetsAt + TimeSpan.FromSeconds(1));
 
             return response;
         }
 
-        /// <summary>
-        /// Creates a new instance of the policy.
-        /// </summary>
-        /// <returns>The policy.</returns>
-        public static DiscordRateLimitPolicy Create() => new();
+        // Shared bucket
+        // save the endpoint-to-id mapping
+        _endpointBuckets.AddOrUpdate(endpoint, _ => newLimits.ID, (_, _) => newLimits.ID);
+        cache.Set(newLimits.ID, newLimits, newLimits.ResetsAt + TimeSpan.FromSeconds(1));
+
+        if (newLimits.ID != bucketIdentifier)
+        {
+            // evict the old endpoint-specific or shared bucket
+            cache.Remove(bucketIdentifier);
+        }
+
+        return response;
     }
+
+    /// <summary>
+    /// Creates a new instance of the policy.
+    /// </summary>
+    /// <returns>The policy.</returns>
+    public static DiscordRateLimitPolicy Create() => new();
 }

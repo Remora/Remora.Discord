@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a gateway endpoint.
+/// </summary>
+[PublicAPI]
+public interface IGatewayEndpoint
 {
     /// <summary>
-    /// Represents a gateway endpoint.
+    /// Gets the gateway endpoint.
     /// </summary>
-    [PublicAPI]
-    public interface IGatewayEndpoint
-    {
-        /// <summary>
-        /// Gets the gateway endpoint.
-        /// </summary>
-        string Url { get; }
+    string Url { get; }
 
-        /// <summary>
-        /// Gets the recommended number of shards to use when connecting.
-        /// </summary>
-        Optional<int> Shards { get; }
+    /// <summary>
+    /// Gets the recommended number of shards to use when connecting.
+    /// </summary>
+    Optional<int> Shards { get; }
 
-        /// <summary>
-        /// Gets information about the current session start limit.
-        /// </summary>
-        Optional<ISessionStartLimit> SessionStartLimit { get; }
-    }
+    /// <summary>
+    /// Gets information about the current session start limit.
+    /// </summary>
+    Optional<ISessionStartLimit> SessionStartLimit { get; }
 }

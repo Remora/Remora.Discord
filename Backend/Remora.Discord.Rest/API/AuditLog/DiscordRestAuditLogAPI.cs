@@ -24,7 +24,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -32,71 +32,71 @@ using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestAuditLogAPI" />
+[PublicAPI]
+public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditLogAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestAuditLogAPI" />
-    [PublicAPI]
-    public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditLogAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestAuditLogAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestAuditLogAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestAuditLogAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestAuditLogAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+    }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IAuditLog>> GetAuditLogAsync
-        (
-            Snowflake guildID,
-            Optional<Snowflake> userID = default,
-            Optional<AuditLogEvent> actionType = default,
-            Optional<Snowflake> before = default,
-            Optional<byte> limit = default,
-            CancellationToken ct = default
-        )
+    /// <inheritdoc />
+    public virtual async Task<Result<IAuditLog>> GetAuditLogAsync
+    (
+        Snowflake guildID,
+        Optional<Snowflake> userID = default,
+        Optional<AuditLogEvent> actionType = default,
+        Optional<Snowflake> before = default,
+        Optional<byte> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        if (limit.HasValue && limit.Value is > 100 or 0)
         {
-            if (limit.HasValue && limit.Value is > 100 or 0)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(limit),
-                    $"The limit must be between 1 and 100."
-                );
-            }
-
-            return await this.RestHttpClient.GetAsync<IAuditLog>
+            return new ArgumentOutOfRangeError
             (
-                $"guilds/{guildID}/audit-logs",
-                b =>
-                {
-                    if (userID.HasValue)
-                    {
-                        b.AddQueryParameter("user_id", userID.Value.ToString());
-                    }
-
-                    if (actionType.HasValue)
-                    {
-                        b.AddQueryParameter("action_type", ((int)actionType.Value).ToString());
-                    }
-
-                    if (before.HasValue)
-                    {
-                        b.AddQueryParameter("before", before.Value.ToString());
-                    }
-
-                    if (limit.HasValue)
-                    {
-                        b.AddQueryParameter("limit", limit.Value.ToString());
-                    }
-
-                    b.WithRateLimitContext();
-                },
-                ct: ct
+                nameof(limit),
+                $"The limit must be between 1 and 100."
             );
         }
+
+        return await this.RestHttpClient.GetAsync<IAuditLog>
+        (
+            $"guilds/{guildID}/audit-logs",
+            b =>
+            {
+                if (userID.HasValue)
+                {
+                    b.AddQueryParameter("user_id", userID.Value.ToString());
+                }
+
+                if (actionType.HasValue)
+                {
+                    b.AddQueryParameter("action_type", ((int)actionType.Value).ToString());
+                }
+
+                if (before.HasValue)
+                {
+                    b.AddQueryParameter("before", before.Value.ToString());
+                }
+
+                if (limit.HasValue)
+                {
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
+            ct: ct
+        );
     }
 }

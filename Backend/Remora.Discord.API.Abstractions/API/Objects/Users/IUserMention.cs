@@ -23,17 +23,16 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a user mention.
+/// </summary>
+[PublicAPI]
+public interface IUserMention : IUser
 {
     /// <summary>
-    /// Represents a user mention.
+    /// Gets the guild member information about the user.
     /// </summary>
-    [PublicAPI]
-    public interface IUserMention : IUser
-    {
-        /// <summary>
-        /// Gets the guild member information about the user.
-        /// </summary>
-        Optional<IPartialGuildMember> Member { get; }
-    }
+    Optional<IPartialGuildMember> Member { get; }
 }

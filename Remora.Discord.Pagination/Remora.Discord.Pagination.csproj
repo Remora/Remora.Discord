@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>2.0.7</Version>
+        <Description>
+            $(BaseDescription)
+
+            This package provides simple implementations of pagination for messages via buttons.
+        </Description>
+        <PackageReleaseNotes>
+            Update dependencies.
+        </PackageReleaseNotes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />
+    </ItemGroup>
+
+</Project>

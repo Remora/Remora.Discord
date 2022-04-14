@@ -23,30 +23,29 @@
 using System;
 using Remora.Discord.API.Abstractions.Gateway;
 
-namespace Remora.Discord.Gateway.Tests.Transport.Events
+namespace Remora.Discord.Gateway.Tests.Transport.Events;
+
+/// <summary>
+/// Represents an expected payload reception event.
+/// </summary>
+public class ReceiveEvent : IEvent
 {
+    private readonly Func<IPayload, bool, EventMatch> _matcher;
+
     /// <summary>
-    /// Represents an expected payload reception event.
+    /// Initializes a new instance of the <see cref="ReceiveEvent"/> class.
     /// </summary>
-    public class ReceiveEvent : IEvent
+    /// <param name="matcher">The matching function.</param>
+    public ReceiveEvent(Func<IPayload, bool, EventMatch> matcher)
     {
-        private readonly Func<IPayload, bool, EventMatch> _matcher;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReceiveEvent"/> class.
-        /// </summary>
-        /// <param name="matcher">The matching function.</param>
-        public ReceiveEvent(Func<IPayload, bool, EventMatch> matcher)
-        {
-            _matcher = matcher;
-        }
-
-        /// <summary>
-        /// Determines whether this event matches the given arguments.
-        /// </summary>
-        /// <param name="payload">The payload to test against.</param>
-        /// <param name="ignoreUnexpected">Whether to ignore payloads of the wrong type.</param>
-        /// <returns>The match status.</returns>
-        public EventMatch Matches(IPayload payload, bool ignoreUnexpected) => _matcher(payload, ignoreUnexpected);
+        _matcher = matcher;
     }
+
+    /// <summary>
+    /// Determines whether this event matches the given arguments.
+    /// </summary>
+    /// <param name="payload">The payload to test against.</param>
+    /// <param name="ignoreUnexpected">Whether to ignore payloads of the wrong type.</param>
+    /// <returns>The match status.</returns>
+    public EventMatch Matches(IPayload payload, bool ignoreUnexpected) => _matcher(payload, ignoreUnexpected);
 }

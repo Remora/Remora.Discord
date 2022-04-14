@@ -23,28 +23,27 @@
 using System;
 using Remora.Discord.API.Abstractions.Gateway;
 
-namespace Remora.Discord.Gateway.Tests.Transport.Events
+namespace Remora.Discord.Gateway.Tests.Transport.Events;
+
+/// <summary>
+/// Represents a payload sending event.
+/// </summary>
+public class SendEvent : IEvent
 {
+    private readonly Func<IPayload> _payloadFactory;
+
     /// <summary>
-    /// Represents a payload sending event.
+    /// Initializes a new instance of the <see cref="SendEvent"/> class.
     /// </summary>
-    public class SendEvent : IEvent
+    /// <param name="payloadFactory">The payload factory function.</param>
+    public SendEvent(Func<IPayload> payloadFactory)
     {
-        private readonly Func<IPayload> _payloadFactory;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SendEvent"/> class.
-        /// </summary>
-        /// <param name="payloadFactory">The payload factory function.</param>
-        public SendEvent(Func<IPayload> payloadFactory)
-        {
-            _payloadFactory = payloadFactory;
-        }
-
-        /// <summary>
-        /// Creates the payload that should be sent.
-        /// </summary>
-        /// <returns>The payload.</returns>
-        public IPayload CreatePayload() => _payloadFactory();
+        _payloadFactory = payloadFactory;
     }
+
+    /// <summary>
+    /// Creates the payload that should be sent.
+    /// </summary>
+    /// <returns>The payload.</returns>
+    public IPayload CreatePayload() => _payloadFactory();
 }

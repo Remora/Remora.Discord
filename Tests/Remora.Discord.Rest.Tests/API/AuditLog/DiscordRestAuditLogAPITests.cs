@@ -24,106 +24,105 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Rest.Tests.API.AuditLog
+namespace Remora.Discord.Rest.Tests.API.AuditLog;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestAuditLogAPI"/> class.
+/// </summary>
+public class DiscordRestAuditLogAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestAuditLogAPI"/> class.
+    /// Tests the <see cref="DiscordRestAuditLogAPI.GetAuditLogAsync"/> method.
     /// </summary>
-    public class DiscordRestAuditLogAPITests
+    public class GetAuditLogAsync : RestAPITestBase<IDiscordRestAuditLogAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestAuditLogAPI.GetAuditLogAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetAuditLogAsync : RestAPITestBase<IDiscordRestAuditLogAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildID = new Snowflake(0);
-                var userID = new Snowflake(1);
-                var actionType = AuditLogEvent.BotAdd;
-                var before = new Snowflake(2);
-                byte limit = 45;
+            var guildID = DiscordSnowflake.New(0);
+            var userID = DiscordSnowflake.New(1);
+            var actionType = AuditLogEvent.BotAdd;
+            var before = DiscordSnowflake.New(2);
+            byte limit = 45;
 
-                var api = CreateAPI
-                (
-                    b =>
-                        b.Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/*/audit-logs")
-                            .WithAuthentication()
-                            .WithQueryString
-                            (
-                                new[]
-                                {
-                                    new KeyValuePair<string, string>("user_id", userID.ToString()),
-                                    new KeyValuePair<string, string>("action_type", ((int)actionType).ToString()),
-                                    new KeyValuePair<string, string>("before", before.ToString()),
-                                    new KeyValuePair<string, string>("limit", limit.ToString())
-                                }
-                            )
-                            .Respond("application/json", SampleRepository.Samples[typeof(IAuditLog)])
-                );
+            var api = CreateAPI
+            (
+                b =>
+                    b.Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/*/audit-logs")
+                        .WithAuthentication()
+                        .WithQueryString
+                        (
+                            new[]
+                            {
+                                new KeyValuePair<string, string>("user_id", userID.ToString()),
+                                new KeyValuePair<string, string>("action_type", ((int)actionType).ToString()),
+                                new KeyValuePair<string, string>("before", before.ToString()),
+                                new KeyValuePair<string, string>("limit", limit.ToString())
+                            }
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IAuditLog)])
+            );
 
-                var result = await api.GetAuditLogAsync
-                (
-                    guildID,
-                    userID,
-                    actionType,
-                    before,
-                    limit
-                );
+            var result = await api.GetAuditLogAsync
+            (
+                guildID,
+                userID,
+                actionType,
+                before,
+                limit
+            );
 
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
+        }
 
-            [Fact]
-            public async Task ReturnsErrorIfLimitIsOutsideValidRange()
-            {
-                var services = CreateConfiguredAPIServices(_ => { });
-                var api = services.GetRequiredService<IDiscordRestAuditLogAPI>();
+        [Fact]
+        public async Task ReturnsErrorIfLimitIsOutsideValidRange()
+        {
+            var services = CreateConfiguredAPIServices(_ => { });
+            var api = services.GetRequiredService<IDiscordRestAuditLogAPI>();
 
-                var guildID = new Snowflake(0);
-                var userID = new Snowflake(1);
-                var actionType = AuditLogEvent.BotAdd;
-                var before = new Snowflake(2);
+            var guildID = DiscordSnowflake.New(0);
+            var userID = DiscordSnowflake.New(1);
+            var actionType = AuditLogEvent.BotAdd;
+            var before = DiscordSnowflake.New(2);
 
-                var result = await api.GetAuditLogAsync
-                (
-                    guildID,
-                    userID,
-                    actionType,
-                    before,
-                    0
-                );
+            var result = await api.GetAuditLogAsync
+            (
+                guildID,
+                userID,
+                actionType,
+                before,
+                0
+            );
 
-                ResultAssert.Unsuccessful(result);
+            ResultAssert.Unsuccessful(result);
 
-                result = await api.GetAuditLogAsync
-                (
-                    guildID,
-                    userID,
-                    actionType,
-                    before,
-                    101
-                );
+            result = await api.GetAuditLogAsync
+            (
+                guildID,
+                userID,
+                actionType,
+                before,
+                101
+            );
 
-                ResultAssert.Unsuccessful(result);
-            }
+            ResultAssert.Unsuccessful(result);
         }
     }
 }

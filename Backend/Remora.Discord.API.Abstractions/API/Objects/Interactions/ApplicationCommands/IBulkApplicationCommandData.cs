@@ -24,27 +24,26 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a request to create or update an application command.
+/// </summary>
+[PublicAPI]
+public interface IBulkApplicationCommandData
 {
-    /// <summary>
-    /// Represents a request to create or update an application command.
-    /// </summary>
-    [PublicAPI]
-    public interface IBulkApplicationCommandData
-    {
-        /// <inheritdoc cref="IApplicationCommand.Name"/>
-        string Name { get; }
+    /// <inheritdoc cref="IApplicationCommand.Name"/>
+    string Name { get; }
 
-        /// <inheritdoc cref="IApplicationCommand.Description"/>
-        Optional<string> Description { get; }
+    /// <inheritdoc cref="IApplicationCommand.Description"/>
+    Optional<string> Description { get; }
 
-        /// <inheritdoc cref="IApplicationCommand.Options"/>
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
+    /// <inheritdoc cref="IApplicationCommand.Options"/>
+    Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
 
-        /// <inheritdoc cref="IApplicationCommand.DefaultPermission"/>
-        Optional<bool> DefaultPermission { get; }
+    /// <inheritdoc cref="IApplicationCommand.DefaultPermission"/>
+    Optional<bool> DefaultPermission { get; }
 
-        /// <inheritdoc cref="IApplicationCommand.Type"/>
-        Optional<ApplicationCommandType> Type { get; }
-    }
+    /// <inheritdoc cref="IApplicationCommand.Type"/>
+    Optional<ApplicationCommandType> Type { get; }
 }

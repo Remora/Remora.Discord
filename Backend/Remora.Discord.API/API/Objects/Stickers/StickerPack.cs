@@ -37,5 +37,5 @@ public record StickerPack
     Snowflake SKUID,
     Optional<Snowflake> CoverStickerID,
     string Description,
-    Snowflake BannerAssetID
+    Optional<Snowflake> BannerAssetID
 ) : IStickerPack;

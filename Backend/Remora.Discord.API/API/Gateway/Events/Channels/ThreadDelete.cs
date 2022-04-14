@@ -39,7 +39,7 @@ public record ThreadDelete
     Optional<Snowflake> GuildID = default,
     Optional<int> Position = default,
     Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites = default,
-    Optional<string> Name = default,
+    Optional<string?> Name = default,
     Optional<string?> Topic = default,
     Optional<bool> IsNsfw = default,
     Optional<Snowflake?> LastMessageID = default,

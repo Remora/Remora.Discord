@@ -25,6 +25,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using OneOf;
+using Remora.Commands.Results;
+using Remora.Commands.Services;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Rest;
@@ -40,7 +42,7 @@ namespace Remora.Discord.Commands.Services;
 [PublicAPI]
 public class SlashService
 {
-    private readonly CommandTree _commandTree;
+    private readonly CommandTreeAccessor _commandTreeAccessor;
     private readonly IDiscordRestOAuth2API _oauth2API;
     private readonly IDiscordRestApplicationAPI _applicationAPI;
 
@@ -61,17 +63,17 @@ public class SlashService
     /// <summary>
     /// Initializes a new instance of the <see cref="SlashService"/> class.
     /// </summary>
-    /// <param name="commandTree">The command tree.</param>
+    /// <param name="commandTreeAccessor">The command tree accessor.</param>
     /// <param name="oauth2API">The OAuth2 API.</param>
     /// <param name="applicationAPI">The application API.</param>
     public SlashService
     (
-        CommandTree commandTree,
+        CommandTreeAccessor commandTreeAccessor,
         IDiscordRestOAuth2API oauth2API,
         IDiscordRestApplicationAPI applicationAPI
     )
     {
-        _commandTree = commandTree;
+        _commandTreeAccessor = commandTreeAccessor;
         _applicationAPI = applicationAPI;
         _oauth2API = oauth2API;
 
@@ -85,12 +87,19 @@ public class SlashService
     /// <summary>
     /// Determines whether the application's commands support being bound to Discord slash commands.
     /// </summary>
+    /// <param name="treeName">The name of the tree to check.</param>
     /// <returns>true if slash commands are supported; otherwise, false.</returns>
-    public Result SupportsSlashCommands()
+    public Result SupportsSlashCommands(string? treeName = null)
     {
+        if (!_commandTreeAccessor.TryGetNamedTree(treeName, out var tree))
+        {
+            return new TreeNotFoundError(treeName);
+        }
+
         // TODO: Improve
-        // Yes, this is inefficient. Generally, this method is only expected to be called once on startup.
-        var couldCreate = _commandTree.CreateApplicationCommands();
+        // Yes, this is inefficient. Generally, this method is only expected to be called a limited number of times on
+        // startup.
+        var couldCreate = tree.CreateApplicationCommands();
 
         return couldCreate.IsSuccess
             ? Result.FromSuccess()
@@ -101,14 +110,24 @@ public class SlashService
     /// Updates the application's slash commands.
     /// </summary>
     /// <param name="guildID">The ID of the guild to update slash commands in, if any.</param>
+    /// <param name="treeName">
+    /// The name of the tree to update Discord with. Note that whatever is currently configured (either globally or on
+    /// the provided guild) will be completely replaced by this tree.
+    /// </param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     public async Task<Result> UpdateSlashCommandsAsync
     (
         Snowflake? guildID = null,
+        string? treeName = null,
         CancellationToken ct = default
     )
     {
+        if (!_commandTreeAccessor.TryGetNamedTree(treeName, out var tree))
+        {
+            return new TreeNotFoundError(treeName);
+        }
+
         var getApplication = await _oauth2API.GetCurrentBotApplicationInformationAsync(ct);
         if (!getApplication.IsSuccess)
         {
@@ -116,7 +135,7 @@ public class SlashService
         }
 
         var application = getApplication.Entity;
-        var createCommands = _commandTree.CreateApplicationCommands();
+        var createCommands = tree.CreateApplicationCommands();
         if (!createCommands.IsSuccess)
         {
             return Result.FromError(createCommands);
@@ -154,7 +173,7 @@ public class SlashService
             OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
         >(this.CommandMap);
 
-        var newMappings = _commandTree.MapDiscordCommands(discordTree);
+        var newMappings = tree.MapDiscordCommands(discordTree);
         foreach (var (key, value) in newMappings)
         {
             mergedDictionary[key] = value;

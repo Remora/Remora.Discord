@@ -23,31 +23,30 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Xunit;
 
-namespace Remora.Discord.API.Tests.Services
+namespace Remora.Discord.API.Tests.Services;
+
+/// <summary>
+/// Represents a source of sample data for an xUnit test.
+/// </summary>
+/// <typeparam name="TData">The data type.</typeparam>
+public class SampleEventDataSource<TData> : TheoryData<SampleDataDescriptor> where TData : IGatewayEvent
 {
     /// <summary>
-    /// Represents a source of sample data for an xUnit test.
+    /// Initializes a new instance of the <see cref="SampleEventDataSource{TData}"/> class.
     /// </summary>
-    /// <typeparam name="TData">The data type.</typeparam>
-    public class SampleEventDataSource<TData> : TheoryData<SampleDataDescriptor> where TData : IGatewayEvent
+    public SampleEventDataSource()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SampleEventDataSource{TData}"/> class.
-        /// </summary>
-        public SampleEventDataSource()
+        var sampleData = new SampleDataService();
+
+        var getSamples = sampleData.GetSampleEventDataSet<TData>();
+        if (!getSamples.IsSuccess)
         {
-            var sampleData = new SampleDataService();
+            throw new SkipException(getSamples.Error.Message);
+        }
 
-            var getSamples = sampleData.GetSampleEventDataSet<TData>();
-            if (!getSamples.IsSuccess)
-            {
-                throw new SkipException(getSamples.Error.Message);
-            }
-
-            foreach (var sample in getSamples.Entity)
-            {
-                Add(sample);
-            }
+        foreach (var sample in getSamples.Entity)
+        {
+            Add(sample);
         }
     }
 }

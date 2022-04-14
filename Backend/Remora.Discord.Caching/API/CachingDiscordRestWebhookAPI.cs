@@ -26,398 +26,404 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.API
+namespace Remora.Discord.Caching.API;
+
+/// <inheritdoc />
+[PublicAPI]
+public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
 {
-    /// <inheritdoc />
-    [PublicAPI]
-    public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
+    private readonly CacheService _cacheService;
+
+    /// <inheritdoc cref="DiscordRestWebhookAPI(IRestHttpClient, JsonSerializerOptions, IMemoryCache)" />
+    public CachingDiscordRestWebhookAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        IMemoryCache rateLimitCache,
+        CacheService cacheService
+    )
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
-        private readonly CacheService _cacheService;
+        _cacheService = cacheService;
+    }
 
-        /// <inheritdoc cref="DiscordRestWebhookAPI(IRestHttpClient, JsonSerializerOptions)" />
-        public CachingDiscordRestWebhookAPI
-        (
-            IRestHttpClient restHttpClient,
-            JsonSerializerOptions jsonOptions,
-            CacheService cacheService
-        )
-            : base(restHttpClient, jsonOptions)
+    /// <inheritdoc />
+    public override async Task<Result<IWebhook>> CreateWebhookAsync
+    (
+        Snowflake channelID,
+        string name,
+        Optional<Stream?> avatar,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var createWebhook = await base.CreateWebhookAsync(channelID, name, avatar, reason, ct);
+        if (!createWebhook.IsSuccess)
         {
-            _cacheService = cacheService;
-        }
-
-        /// <inheritdoc />
-        public override async Task<Result<IWebhook>> CreateWebhookAsync
-        (
-            Snowflake channelID,
-            string name,
-            Optional<Stream?> avatar,
-            CancellationToken ct = default
-        )
-        {
-            var createWebhook = await base.CreateWebhookAsync(channelID, name, avatar, ct);
-            if (!createWebhook.IsSuccess)
-            {
-                return createWebhook;
-            }
-
-            var webhook = createWebhook.Entity;
-            var key = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
-
-            _cacheService.Cache(key, webhook);
-
             return createWebhook;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result> DeleteWebhookAsync
-        (
-            Snowflake webhookID,
-            CancellationToken ct = default
-        )
+        var webhook = createWebhook.Entity;
+        var key = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
+
+        _cacheService.Cache(key, webhook);
+
+        return createWebhook;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result> DeleteWebhookAsync
+    (
+        Snowflake webhookID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var deleteWebhook = await base.DeleteWebhookAsync(webhookID, reason, ct);
+        if (!deleteWebhook.IsSuccess)
         {
-            var deleteWebhook = await base.DeleteWebhookAsync(webhookID, ct);
-            if (!deleteWebhook.IsSuccess)
-            {
-                return deleteWebhook;
-            }
-
-            var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            _cacheService.Evict(key);
-
             return deleteWebhook;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IMessage?>> ExecuteWebhookAsync
+        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        _cacheService.Evict<IWebhook>(key);
+
+        return deleteWebhook;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IMessage?>> ExecuteWebhookAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Optional<bool> shouldWait = default,
+        Optional<string> content = default,
+        Optional<string> username = default,
+        Optional<string> avatarUrl = default,
+        Optional<bool> isTTS = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IAllowedMentions> allowedMentions = default,
+        Optional<Snowflake> threadID = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
+        CancellationToken ct = default
+    )
+    {
+        var execute = await base.ExecuteWebhookAsync
         (
-            Snowflake webhookID,
-            string token,
-            Optional<bool> shouldWait = default,
-            Optional<string> content = default,
-            Optional<string> username = default,
-            Optional<string> avatarUrl = default,
-            Optional<bool> isTTS = default,
-            Optional<IReadOnlyList<IEmbed>> embeds = default,
-            Optional<IAllowedMentions> allowedMentions = default,
-            Optional<Snowflake> threadID = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
+            webhookID,
+            token,
+            shouldWait,
+            content,
+            username,
+            avatarUrl,
+            isTTS,
+            embeds,
+            allowedMentions,
+            threadID,
+            components,
+            attachments,
+            flags,
+            ct
+        );
+
+        if (!execute.IsSuccess)
         {
-            var execute = await base.ExecuteWebhookAsync
-            (
-                webhookID,
-                token,
-                shouldWait,
-                content,
-                username,
-                avatarUrl,
-                isTTS,
-                embeds,
-                allowedMentions,
-                threadID,
-                components,
-                attachments,
-                ct
-            );
-
-            if (!execute.IsSuccess)
-            {
-                return execute;
-            }
-
-            var message = execute.Entity;
-            if (message is null)
-            {
-                return execute;
-            }
-
-            var key = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
-            _cacheService.Cache(key, message);
-
             return execute;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IWebhook>> GetWebhookAsync
-        (
-            Snowflake webhookID,
-            CancellationToken ct = default
-        )
+        var message = execute.Entity;
+        if (message is null)
         {
-            var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            if (_cacheService.TryGetValue<IWebhook>(key, out var cachedInstance))
-            {
-                return Result<IWebhook>.FromSuccess(cachedInstance);
-            }
+            return execute;
+        }
 
-            var getWebhook = await base.GetWebhookAsync(webhookID, ct);
-            if (!getWebhook.IsSuccess)
-            {
-                return getWebhook;
-            }
+        var key = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+        _cacheService.Cache(key, message);
 
-            var webhook = getWebhook.Entity;
-            _cacheService.Cache(key, webhook);
+        return execute;
+    }
 
+    /// <inheritdoc />
+    public override async Task<Result<IWebhook>> GetWebhookAsync
+    (
+        Snowflake webhookID,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        if (_cacheService.TryGetValue<IWebhook>(key, out var cachedInstance))
+        {
+            return Result<IWebhook>.FromSuccess(cachedInstance);
+        }
+
+        var getWebhook = await base.GetWebhookAsync(webhookID, ct);
+        if (!getWebhook.IsSuccess)
+        {
             return getWebhook;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IWebhook>> ModifyWebhookAsync
-        (
-            Snowflake webhookID,
-            Optional<string> name = default,
-            Optional<Stream?> avatar = default,
-            Optional<Snowflake> channelID = default,
-            CancellationToken ct = default
-        )
+        var webhook = getWebhook.Entity;
+        _cacheService.Cache(key, webhook);
+
+        return getWebhook;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IWebhook>> ModifyWebhookAsync
+    (
+        Snowflake webhookID,
+        Optional<string> name = default,
+        Optional<Stream?> avatar = default,
+        Optional<Snowflake> channelID = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var modifyWebhook = await base.ModifyWebhookAsync(webhookID, name, avatar, channelID, reason, ct);
+        if (!modifyWebhook.IsSuccess)
         {
-            var modifyWebhook = await base.ModifyWebhookAsync(webhookID, name, avatar, channelID, ct);
-            if (!modifyWebhook.IsSuccess)
-            {
-                return modifyWebhook;
-            }
-
-            var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            var webhook = modifyWebhook.Entity;
-
-            _cacheService.Cache(key, webhook);
-
             return modifyWebhook;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
-        (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
+        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        var webhook = modifyWebhook.Entity;
+
+        _cacheService.Cache(key, webhook);
+
+        return modifyWebhook;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateChannelWebhooksCacheKey(channelID);
+        if (_cacheService.TryGetValue<IReadOnlyList<IWebhook>>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateChannelWebhooksCacheKey(channelID);
-            if (_cacheService.TryGetValue<IReadOnlyList<IWebhook>>(key, out var cachedInstance))
-            {
-                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
-            }
+            return Result<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
+        }
 
-            var getWebhooks = await base.GetChannelWebhooksAsync(channelID, ct);
-            if (!getWebhooks.IsSuccess)
-            {
-                return getWebhooks;
-            }
-
-            var webhooks = getWebhooks.Entity;
-            _cacheService.Cache(key, webhooks);
-
-            foreach (var webhook in webhooks)
-            {
-                var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
-                _cacheService.Cache(webhookKey, webhook);
-            }
-
+        var getWebhooks = await base.GetChannelWebhooksAsync(channelID, ct);
+        if (!getWebhooks.IsSuccess)
+        {
             return getWebhooks;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
-        (
-            Snowflake guildID, CancellationToken ct = default
-        )
+        var webhooks = getWebhooks.Entity;
+        _cacheService.Cache(key, webhooks);
+
+        foreach (var webhook in webhooks)
         {
-            var key = KeyHelpers.CreateGuildWebhooksCacheKey(guildID);
-            if (_cacheService.TryGetValue<IReadOnlyList<IWebhook>>(key, out var cachedInstance))
-            {
-                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
-            }
+            var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
+            _cacheService.Cache(webhookKey, webhook);
+        }
 
-            var getWebhooks = await base.GetGuildWebhooksAsync(guildID, ct);
-            if (!getWebhooks.IsSuccess)
-            {
-                return getWebhooks;
-            }
+        return getWebhooks;
+    }
 
-            var webhooks = getWebhooks.Entity;
-            _cacheService.Cache(key, webhooks);
+    /// <inheritdoc />
+    public override async Task<Result<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
+    (
+        Snowflake guildID, CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateGuildWebhooksCacheKey(guildID);
+        if (_cacheService.TryGetValue<IReadOnlyList<IWebhook>>(key, out var cachedInstance))
+        {
+            return Result<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
+        }
 
-            foreach (var webhook in webhooks)
-            {
-                var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
-                _cacheService.Cache(webhookKey, webhook);
-            }
-
+        var getWebhooks = await base.GetGuildWebhooksAsync(guildID, ct);
+        if (!getWebhooks.IsSuccess)
+        {
             return getWebhooks;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result> DeleteWebhookWithTokenAsync
-        (
-            Snowflake webhookID,
-            string token,
-            CancellationToken ct = default
-        )
+        var webhooks = getWebhooks.Entity;
+        _cacheService.Cache(key, webhooks);
+
+        foreach (var webhook in webhooks)
         {
-            var deleteWebhook = await base.DeleteWebhookWithTokenAsync(webhookID, token, ct);
-            if (!deleteWebhook.IsSuccess)
-            {
-                return deleteWebhook;
-            }
+            var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
+            _cacheService.Cache(webhookKey, webhook);
+        }
 
-            var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            _cacheService.Evict(key);
+        return getWebhooks;
+    }
 
+    /// <inheritdoc />
+    public override async Task<Result> DeleteWebhookWithTokenAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var deleteWebhook = await base.DeleteWebhookWithTokenAsync(webhookID, token, reason, ct);
+        if (!deleteWebhook.IsSuccess)
+        {
             return deleteWebhook;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IWebhook>> GetWebhookWithTokenAsync
-        (
-            Snowflake webhookID,
-            string token,
-            CancellationToken ct = default
-        )
+        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        _cacheService.Evict<IWebhook>(key);
+
+        return deleteWebhook;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IWebhook>> GetWebhookWithTokenAsync
+    (
+        Snowflake webhookID,
+        string token,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        if (_cacheService.TryGetValue<IWebhook>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            if (_cacheService.TryGetValue<IWebhook>(key, out var cachedInstance))
-            {
-                return Result<IWebhook>.FromSuccess(cachedInstance);
-            }
+            return Result<IWebhook>.FromSuccess(cachedInstance);
+        }
 
-            var getWebhook = await base.GetWebhookWithTokenAsync(webhookID, token, ct);
-            if (!getWebhook.IsSuccess)
-            {
-                return getWebhook;
-            }
-
-            var webhook = getWebhook.Entity;
-            _cacheService.Cache(key, webhook);
-
+        var getWebhook = await base.GetWebhookWithTokenAsync(webhookID, token, ct);
+        if (!getWebhook.IsSuccess)
+        {
             return getWebhook;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IWebhook>> ModifyWebhookWithTokenAsync
-        (
-            Snowflake webhookID,
-            string token,
-            Optional<string> name = default,
-            Optional<Stream?> avatar = default,
-            CancellationToken ct = default
-        )
+        var webhook = getWebhook.Entity;
+        _cacheService.Cache(key, webhook);
+
+        return getWebhook;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IWebhook>> ModifyWebhookWithTokenAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Optional<string> name = default,
+        Optional<Stream?> avatar = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var modifyWebhook = await base.ModifyWebhookWithTokenAsync(webhookID, token, name, avatar, reason, ct);
+        if (!modifyWebhook.IsSuccess)
         {
-            var modifyWebhook = await base.ModifyWebhookWithTokenAsync(webhookID, token, name, avatar, ct);
-            if (!modifyWebhook.IsSuccess)
-            {
-                return modifyWebhook;
-            }
-
-            var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            var webhook = modifyWebhook.Entity;
-
-            _cacheService.Cache(key, webhook);
-
             return modifyWebhook;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IMessage>> EditWebhookMessageAsync
+        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        var webhook = modifyWebhook.Entity;
+
+        _cacheService.Cache(key, webhook);
+
+        return modifyWebhook;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IMessage>> EditWebhookMessageAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Snowflake messageID,
+        Optional<string?> content = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
+        Optional<IAllowedMentions?> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<Snowflake> threadID = default,
+        CancellationToken ct = default
+    )
+    {
+        var result = await base.EditWebhookMessageAsync
         (
-            Snowflake webhookID,
-            string token,
-            Snowflake messageID,
-            Optional<string?> content = default,
-            Optional<IReadOnlyList<IEmbed>?> embeds = default,
-            Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            Optional<Snowflake> threadID = default,
-            CancellationToken ct = default
-        )
+            webhookID,
+            token,
+            messageID,
+            content,
+            embeds,
+            allowedMentions,
+            components,
+            attachments,
+            threadID,
+            ct
+        );
+
+        if (!result.IsSuccess)
         {
-            var result = await base.EditWebhookMessageAsync
-            (
-                webhookID,
-                token,
-                messageID,
-                content,
-                embeds,
-                allowedMentions,
-                components,
-                attachments,
-                threadID,
-                ct
-            );
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
-            _cacheService.Cache(key, result.Entity);
-
             return result;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result> DeleteWebhookMessageAsync
-        (
-            Snowflake webhookID,
-            string token,
-            Snowflake messageID,
-            Optional<Snowflake> threadID = default,
-            CancellationToken ct = default
-        )
+        var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+        _cacheService.Cache(key, result.Entity);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result> DeleteWebhookMessageAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Snowflake messageID,
+        Optional<Snowflake> threadID = default,
+        CancellationToken ct = default
+    )
+    {
+        var result = await base.DeleteWebhookMessageAsync(webhookID, token, messageID, threadID, ct);
+        if (!result.IsSuccess)
         {
-            var result = await base.DeleteWebhookMessageAsync(webhookID, token, messageID, threadID, ct);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
-            _cacheService.Evict(key);
-
             return result;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IMessage>> GetWebhookMessageAsync
-        (
-            Snowflake webhookID,
-            string webhookToken,
-            Snowflake messageID,
-            Optional<Snowflake> threadID = default,
-            CancellationToken ct = default
-        )
+        var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+        _cacheService.Evict<IMessage>(key);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IMessage>> GetWebhookMessageAsync
+    (
+        Snowflake webhookID,
+        string webhookToken,
+        Snowflake messageID,
+        Optional<Snowflake> threadID = default,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateWebhookMessageCacheKey(webhookToken, messageID);
+        if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateWebhookMessageCacheKey(webhookToken, messageID);
-            if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
-            {
-                return Result<IMessage>.FromSuccess(cachedInstance);
-            }
+            return Result<IMessage>.FromSuccess(cachedInstance);
+        }
 
-            var result = await base.GetWebhookMessageAsync(webhookID, webhookToken, messageID, threadID, ct);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            _cacheService.Cache(key, result.Entity);
-
+        var result = await base.GetWebhookMessageAsync(webhookID, webhookToken, messageID, threadID, ct);
+        if (!result.IsSuccess)
+        {
             return result;
         }
+
+        _cacheService.Cache(key, result.Entity);
+
+        return result;
     }
 }

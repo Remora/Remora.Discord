@@ -24,7 +24,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -32,72 +32,72 @@ using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestInviteAPI" />
+[PublicAPI]
+public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestInviteAPI" />
-    [PublicAPI]
-    public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestInviteAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestInviteAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestInviteAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestInviteAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IInvite>> GetInviteAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IInvite>> GetInviteAsync
+    (
+        string inviteCode,
+        Optional<bool> withCounts = default,
+        Optional<bool> withExpiration = default,
+        Optional<Snowflake> guildScheduledEventID = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IInvite>
         (
-            string inviteCode,
-            Optional<bool> withCounts = default,
-            Optional<bool> withExpiration = default,
-            Optional<Snowflake> guildScheduledEventID = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IInvite>
-            (
-                $"invites/{inviteCode}",
-                b =>
+            $"invites/{inviteCode}",
+            b =>
+            {
+                if (withCounts.HasValue)
                 {
-                    if (withCounts.HasValue)
-                    {
-                        b.AddQueryParameter("with_counts", withCounts.Value.ToString());
-                    }
+                    b.AddQueryParameter("with_counts", withCounts.Value.ToString());
+                }
 
-                    if (withExpiration.HasValue)
-                    {
-                        b.AddQueryParameter("with_expiration", withExpiration.Value.ToString());
-                    }
+                if (withExpiration.HasValue)
+                {
+                    b.AddQueryParameter("with_expiration", withExpiration.Value.ToString());
+                }
 
-                    if (guildScheduledEventID.HasValue)
-                    {
-                        b.AddQueryParameter("guild_scheduled_event_id", guildScheduledEventID.Value.ToString());
-                    }
+                if (guildScheduledEventID.HasValue)
+                {
+                    b.AddQueryParameter("guild_scheduled_event_id", guildScheduledEventID.Value.ToString());
+                }
 
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IInvite>> DeleteInviteAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IInvite>> DeleteInviteAsync
+    (
+        string inviteCode,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync<IInvite>
         (
-            string inviteCode,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync<IInvite>
-            (
-                $"invites/{inviteCode}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"invites/{inviteCode}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
     }
 }

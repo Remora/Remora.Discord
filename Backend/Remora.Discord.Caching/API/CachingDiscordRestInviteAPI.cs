@@ -24,89 +24,88 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.API
-{
-    /// <inheritdoc />
-    [PublicAPI]
-    public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
-    {
-        private readonly CacheService _cacheService;
+namespace Remora.Discord.Caching.API;
 
-        /// <inheritdoc cref="DiscordRestInviteAPI(IRestHttpClient, JsonSerializerOptions)" />
-        public CachingDiscordRestInviteAPI
-        (
-            IRestHttpClient restHttpClient,
-            JsonSerializerOptions jsonOptions,
-            CacheService cacheService
-        )
-            : base(restHttpClient, jsonOptions)
+/// <inheritdoc />
+[PublicAPI]
+public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
+{
+    private readonly CacheService _cacheService;
+
+    /// <inheritdoc cref="DiscordRestInviteAPI(IRestHttpClient, JsonSerializerOptions, IMemoryCache)" />
+    public CachingDiscordRestInviteAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        IMemoryCache rateLimitCache,
+        CacheService cacheService
+    )
+        : base(restHttpClient, jsonOptions, rateLimitCache)
+    {
+        _cacheService = cacheService;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IInvite>> GetInviteAsync
+    (
+        string inviteCode,
+        Optional<bool> withCounts = default,
+        Optional<bool> withExpiration = default,
+        Optional<Snowflake> guildScheduledEventID = default,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
+        if (_cacheService.TryGetValue<IInvite>(key, out var cachedInstance))
         {
-            _cacheService = cacheService;
+            return Result<IInvite>.FromSuccess(cachedInstance);
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IInvite>> GetInviteAsync
+        var getInvite = await base.GetInviteAsync
         (
-            string inviteCode,
-            Optional<bool> withCounts = default,
-            Optional<bool> withExpiration = default,
-            Optional<Snowflake> guildScheduledEventID = default,
-            CancellationToken ct = default
-        )
+            inviteCode,
+            withCounts,
+            withExpiration,
+            guildScheduledEventID,
+            ct
+        );
+
+        if (!getInvite.IsSuccess)
         {
-            var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
-            if (_cacheService.TryGetValue<IInvite>(key, out var cachedInstance))
-            {
-                return Result<IInvite>.FromSuccess(cachedInstance);
-            }
-
-            var getInvite = await base.GetInviteAsync
-            (
-                inviteCode,
-                withCounts,
-                withExpiration,
-                guildScheduledEventID,
-                ct
-            );
-
-            if (!getInvite.IsSuccess)
-            {
-                return getInvite;
-            }
-
-            var invite = getInvite.Entity;
-            _cacheService.Cache(key, invite);
-
             return getInvite;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IInvite>> DeleteInviteAsync
-        (
-            string inviteCode,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
+        var invite = getInvite.Entity;
+        _cacheService.Cache(key, invite);
+
+        return getInvite;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IInvite>> DeleteInviteAsync
+    (
+        string inviteCode,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var deleteInvite = await base.DeleteInviteAsync(inviteCode, reason, ct);
+        if (!deleteInvite.IsSuccess)
         {
-            var deleteInvite = await base.DeleteInviteAsync(inviteCode, reason, ct);
-            if (!deleteInvite.IsSuccess)
-            {
-                return deleteInvite;
-            }
-
-            var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
-            _cacheService.Evict(key);
-
             return deleteInvite;
         }
+
+        var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
+        _cacheService.Evict<IInvite>(key);
+
+        return deleteInvite;
     }
 }

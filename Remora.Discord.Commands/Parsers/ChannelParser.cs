@@ -25,10 +25,10 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
-using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
@@ -53,7 +53,7 @@ public class ChannelParser : AbstractTypeParser<IChannel>
     /// <inheritdoc />
     public override async ValueTask<Result<IChannel>> TryParseAsync(string value, CancellationToken ct = default)
     {
-        if (!Snowflake.TryParse(value.Unmention(), out var channelID))
+        if (!DiscordSnowflake.TryParse(value.Unmention(), out var channelID))
         {
             return new ParsingError<IChannel>(value.Unmention());
         }

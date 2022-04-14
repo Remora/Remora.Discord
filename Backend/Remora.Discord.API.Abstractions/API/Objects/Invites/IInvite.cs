@@ -24,108 +24,99 @@ using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an invite.
+/// </summary>
+[PublicAPI]
+public interface IInvite : IPartialInvite
 {
     /// <summary>
-    /// Represents an invite.
+    /// Gets the unique invite code.
     /// </summary>
-    [PublicAPI]
-    public interface IInvite : IPartialInvite
-    {
-        /// <summary>
-        /// Gets the unique invite code.
-        /// </summary>
-        new string Code { get; }
+    new string Code { get; }
 
-        /// <summary>
-        /// Gets the guild this invite is for.
-        /// </summary>
-        new Optional<IPartialGuild> Guild { get; }
+    /// <summary>
+    /// Gets the guild this invite is for.
+    /// </summary>
+    new Optional<IPartialGuild> Guild { get; }
 
-        /// <summary>
-        /// Gets the channel this invite is for.
-        /// </summary>
-        new IPartialChannel Channel { get; }
+    /// <summary>
+    /// Gets the channel this invite is for.
+    /// </summary>
+    new IPartialChannel? Channel { get; }
 
-        /// <summary>
-        /// Gets the user who created the invite.
-        /// </summary>
-        new Optional<IUser> Inviter { get; }
+    /// <summary>
+    /// Gets the user who created the invite.
+    /// </summary>
+    new Optional<IUser> Inviter { get; }
 
-        /// <summary>
-        /// Gets the type of target for this invite.
-        /// </summary>
-        new Optional<InviteTarget> TargetType { get; }
+    /// <summary>
+    /// Gets the type of target for this invite.
+    /// </summary>
+    new Optional<InviteTarget> TargetType { get; }
 
-        /// <summary>
-        /// Gets the target user for this invite.
-        /// </summary>
-        new Optional<IPartialUser> TargetUser { get; }
+    /// <summary>
+    /// Gets the target user for this invite.
+    /// </summary>
+    new Optional<IPartialUser> TargetUser { get; }
 
-        /// <summary>
-        /// Gets the embedded application this invite is for.
-        /// </summary>
-        new Optional<IPartialApplication> TargetApplication { get; }
+    /// <summary>
+    /// Gets the embedded application this invite is for.
+    /// </summary>
+    new Optional<IPartialApplication> TargetApplication { get; }
 
-        /// <summary>
-        /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.
-        /// </summary>
-        new Optional<int> ApproximatePresenceCount { get; }
+    /// <summary>
+    /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.
+    /// </summary>
+    new Optional<int> ApproximatePresenceCount { get; }
 
-        /// <summary>
-        /// Gets the approximate count of total members.
-        /// </summary>
-        new Optional<int> ApproximateMemberCount { get; }
+    /// <summary>
+    /// Gets the approximate count of total members.
+    /// </summary>
+    new Optional<int> ApproximateMemberCount { get; }
 
-        /// <summary>
-        /// Gets the expiration date of this invite.
-        /// </summary>
-        new Optional<DateTimeOffset?> ExpiresAt { get; }
+    /// <summary>
+    /// Gets the expiration date of this invite.
+    /// </summary>
+    new Optional<DateTimeOffset?> ExpiresAt { get; }
 
-        /// <summary>
-        /// Gets metadata about the stage instance the invite is for, if any.
-        /// </summary>
-        new Optional<IInviteStageInstance> StageInstance { get; }
+    /// <summary>
+    /// Gets metadata about the scheduled event the invite points to.
+    /// </summary>
+    new Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
 
-        /// <summary>
-        /// Gets metadata about the scheduled event the invite points to.
-        /// </summary>
-        new Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
+    /// <inheritdoc/>
+    Optional<string> IPartialInvite.Code => this.Code;
 
-        /// <inheritdoc/>
-        Optional<string> IPartialInvite.Code => this.Code;
+    /// <inheritdoc/>
+    Optional<IPartialGuild> IPartialInvite.Guild => this.Guild;
 
-        /// <inheritdoc/>
-        Optional<IPartialGuild> IPartialInvite.Guild => this.Guild;
+    /// <inheritdoc/>
+    Optional<IPartialChannel?> IPartialInvite.Channel => new(this.Channel);
 
-        /// <inheritdoc/>
-        Optional<IPartialChannel> IPartialInvite.Channel => new(this.Channel);
+    /// <inheritdoc/>
+    Optional<IUser> IPartialInvite.Inviter => this.Inviter;
 
-        /// <inheritdoc/>
-        Optional<IUser> IPartialInvite.Inviter => this.Inviter;
+    /// <inheritdoc/>
+    Optional<InviteTarget> IPartialInvite.TargetType => this.TargetType;
 
-        /// <inheritdoc/>
-        Optional<InviteTarget> IPartialInvite.TargetType => this.TargetType;
+    /// <inheritdoc/>
+    Optional<IPartialUser> IPartialInvite.TargetUser => this.TargetUser;
 
-        /// <inheritdoc/>
-        Optional<IPartialUser> IPartialInvite.TargetUser => this.TargetUser;
+    /// <inheritdoc/>
+    Optional<IPartialApplication> IPartialInvite.TargetApplication => this.TargetApplication;
 
-        /// <inheritdoc/>
-        Optional<IPartialApplication> IPartialInvite.TargetApplication => this.TargetApplication;
+    /// <inheritdoc/>
+    Optional<int> IPartialInvite.ApproximatePresenceCount => this.ApproximatePresenceCount;
 
-        /// <inheritdoc/>
-        Optional<int> IPartialInvite.ApproximatePresenceCount => this.ApproximatePresenceCount;
+    /// <inheritdoc/>
+    Optional<int> IPartialInvite.ApproximateMemberCount => this.ApproximateMemberCount;
 
-        /// <inheritdoc/>
-        Optional<int> IPartialInvite.ApproximateMemberCount => this.ApproximateMemberCount;
+    /// <inheritdoc/>
+    Optional<DateTimeOffset?> IPartialInvite.ExpiresAt => this.ExpiresAt;
 
-        /// <inheritdoc/>
-        Optional<DateTimeOffset?> IPartialInvite.ExpiresAt => this.ExpiresAt;
-
-        /// <inheritdoc/>
-        Optional<IInviteStageInstance> IPartialInvite.StageInstance => this.StageInstance;
-
-        /// <inheritdoc/>
-        Optional<IGuildScheduledEvent> IPartialInvite.GuildScheduledEvent => this.GuildScheduledEvent;
-    }
+    /// <inheritdoc/>
+    Optional<IGuildScheduledEvent> IPartialInvite.GuildScheduledEvent => this.GuildScheduledEvent;
 }

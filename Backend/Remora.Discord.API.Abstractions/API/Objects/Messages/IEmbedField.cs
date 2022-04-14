@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a field in an embed.
+/// </summary>
+[PublicAPI]
+public interface IEmbedField
 {
     /// <summary>
-    /// Represents a field in an embed.
+    /// Gets the name of the field.
     /// </summary>
-    [PublicAPI]
-    public interface IEmbedField
-    {
-        /// <summary>
-        /// Gets the name of the field.
-        /// </summary>
-        string Name { get; }
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the value of the field.
-        /// </summary>
-        string Value { get; }
+    /// <summary>
+    /// Gets the value of the field.
+    /// </summary>
+    string Value { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the field should display inline.
-        /// </summary>
-        Optional<bool> IsInline { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the field should display inline.
+    /// </summary>
+    Optional<bool> IsInline { get; }
 }

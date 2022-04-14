@@ -24,15 +24,14 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Tests.Services;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.TestBases;
+
+/// <summary>
+/// Acts as a base class for voice gateway command types.
+/// </summary>
+/// <typeparam name="TType">The type under test.</typeparam>
+[UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
+public abstract class VoiceGatewayCommandTestBase<TType> : VoiceGatewayTestBase<TType, SampleVoiceCommandDataSource<TType>>
+    where TType : IVoiceGatewayCommand
 {
-    /// <summary>
-    /// Acts as a base class for voice gateway command types.
-    /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    [UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
-    public abstract class VoiceGatewayCommandTestBase<TType> : VoiceGatewayTestBase<TType, SampleVoiceCommandDataSource<TType>>
-        where TType : IVoiceGatewayCommand
-    {
-    }
 }

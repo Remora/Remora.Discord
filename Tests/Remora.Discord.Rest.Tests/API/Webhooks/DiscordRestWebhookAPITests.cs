@@ -26,762 +26,780 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using OneOf;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.Webhooks
+namespace Remora.Discord.Rest.Tests.API.Webhooks;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestWebhookAPI"/> class.
+/// </summary>
+public class DiscordRestWebhookAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestWebhookAPI"/> class.
+    /// Tests the <see cref="DiscordRestWebhookAPI.CreateWebhookAsync"/> method.
     /// </summary>
-    public class DiscordRestWebhookAPITests
+    public class CreateWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.CreateWebhookAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class CreateWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var channelId = new Snowflake(0);
-                var name = "aaa";
+            var channelId = DiscordSnowflake.New(0);
+            var name = "aaa";
+            var reason = "agag";
 
-                // Create a dummy PNG image
-                await using var avatar = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(avatar);
-                binaryWriter.Write(9894494448401390090);
-                avatar.Position = 0;
+            // Create a dummy PNG image
+            await using var avatar = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(avatar);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
+            avatar.Position = 0;
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("avatar", p => p.IsString())
-                            )
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("avatar", p => p.IsString())
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
+                    )
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                var result = await api.CreateWebhookAsync
-                (
-                    channelId,
-                    name,
-                    avatar
-                );
+            var result = await api.CreateWebhookAsync
+            (
+                channelId,
+                name,
+                avatar,
+                reason
+            );
 
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfNameIsTooShort()
-            {
-                var channelId = new Snowflake(0);
-                var name = string.Empty;
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
-
-                var result = await api.CreateWebhookAsync
-                (
-                    channelId,
-                    name,
-                    null
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfNameIsTooLong()
-            {
-                var channelId = new Snowflake(0);
-                var name = new string('a', 81);
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
-
-                var result = await api.CreateWebhookAsync
-                (
-                    channelId,
-                    name,
-                    null
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfNameIsClyde()
-            {
-                var channelId = new Snowflake(0);
-                var name = "clyde";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
-
-                var result = await api.CreateWebhookAsync
-                (
-                    channelId,
-                    name,
-                    null
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfAvatarIsUnknownFormat()
-            {
-                var channelId = new Snowflake(0);
-                var name = "aaa";
-
-                // Create a dummy PNG image
-                await using var avatar = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(avatar);
-                binaryWriter.Write(0x00000000);
-                avatar.Position = 0;
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
-
-                var result = await api.CreateWebhookAsync
-                (
-                    channelId,
-                    name,
-                    avatar
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.GetChannelWebhooksAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetChannelWebhooksAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfNameIsTooShort()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var channelId = new Snowflake(0);
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                        .Respond("application/json", "[]")
-                );
+            var channelId = DiscordSnowflake.New(0);
+            var name = string.Empty;
 
-                var result = await api.GetChannelWebhooksAsync
-                (
-                    channelId
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                ResultAssert.Successful(result);
-            }
+            var result = await api.CreateWebhookAsync
+            (
+                channelId,
+                name,
+                null
+            );
+
+            ResultAssert.Unsuccessful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.GetGuildWebhooksAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetGuildWebhooksAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfNameIsTooLong()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildId = new Snowflake(0);
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/webhooks")
-                        .Respond("application/json", "[]")
-                );
+            var channelId = DiscordSnowflake.New(0);
+            var name = new string('a', 81);
 
-                var result = await api.GetGuildWebhooksAsync
-                (
-                    guildId
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                ResultAssert.Successful(result);
-            }
+            var result = await api.CreateWebhookAsync
+            (
+                channelId,
+                name,
+                null
+            );
+
+            ResultAssert.Unsuccessful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.GetWebhookAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfNameIsClyde()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
+            var channelId = DiscordSnowflake.New(0);
+            var name = "clyde";
 
-                var result = await api.GetWebhookAsync
-                (
-                    webhookID
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                ResultAssert.Successful(result);
-            }
+            var result = await api.CreateWebhookAsync
+            (
+                channelId,
+                name,
+                null
+            );
+
+            ResultAssert.Unsuccessful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.GetWebhookWithTokenAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfAvatarIsUnknownFormat()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "aa";
+            var channelId = DiscordSnowflake.New(0);
+            var name = "aaa";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
+            // Create a dummy PNG image
+            await using var avatar = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(avatar);
+            binaryWriter.Write(0x00000000);
+            avatar.Position = 0;
 
-                var result = await api.GetWebhookWithTokenAsync
-                (
-                    webhookID,
-                    token
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                ResultAssert.Successful(result);
-            }
+            var result = await api.CreateWebhookAsync
+            (
+                channelId,
+                name,
+                avatar
+            );
+
+            ResultAssert.Unsuccessful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.GetChannelWebhooksAsync"/> method.
+    /// </summary>
+    public class GetChannelWebhooksAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.ModifyWebhookAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class ModifyWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var name = "aaa";
+            var channelId = DiscordSnowflake.New(0);
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Respond("application/json", "[]")
+            );
 
-                // Create a dummy PNG image
-                await using var avatar = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(avatar);
-                binaryWriter.Write(9894494448401390090);
-                avatar.Position = 0;
+            var result = await api.GetChannelWebhooksAsync
+            (
+                channelId
+            );
 
-                var channelId = new Snowflake(1);
+            ResultAssert.Successful(result);
+        }
+    }
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
-                        .WithJson
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.GetGuildWebhooksAsync"/> method.
+    /// </summary>
+    public class GetGuildWebhooksAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/webhooks")
+                    .Respond("application/json", "[]")
+            );
+
+            var result = await api.GetGuildWebhooksAsync
+            (
+                guildId
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.GetWebhookAsync"/> method.
+    /// </summary>
+    public class GetWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
+
+            var result = await api.GetWebhookAsync
+            (
+                webhookID
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.GetWebhookWithTokenAsync"/> method.
+    /// </summary>
+    public class GetWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "aa";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
+
+            var result = await api.GetWebhookWithTokenAsync
+            (
+                webhookID,
+                token
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.ModifyWebhookAsync"/> method.
+    /// </summary>
+    public class ModifyWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var name = "aaa";
+            var reason = "gagag";
+
+            // Create a dummy PNG image
+            await using var avatar = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(avatar);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
+            avatar.Position = 0;
+
+            var channelId = DiscordSnowflake.New(1);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("avatar", p => p.IsString())
-                                    .WithProperty("channel_id", p => p.Is(channelId.ToString()))
-                            )
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("avatar", p => p.IsString())
+                                .WithProperty("channel_id", p => p.Is(channelId.ToString()))
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
+                    )
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                var result = await api.ModifyWebhookAsync
-                (
-                    webhookId,
-                    name,
-                    avatar,
-                    channelId
-                );
+            var result = await api.ModifyWebhookAsync
+            (
+                webhookId,
+                name,
+                avatar,
+                channelId,
+                reason
+            );
 
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsNullableRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("avatar", p => p.IsNull())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
-
-                var result = await api.ModifyWebhookAsync
-                (
-                    webhookId,
-                    avatar: null
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfAvatarIsUnknownFormat()
-            {
-                // Create a dummy PNG image
-                await using var avatar = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(avatar);
-                binaryWriter.Write(0x000000);
-                avatar.Position = 0;
-
-                var webhookId = new Snowflake(0);
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("avatar", p => p.IsNull())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
-
-                var result = await api.ModifyWebhookAsync
-                (
-                    webhookId,
-                    avatar: avatar
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.ModifyWebhookWithTokenAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class ModifyWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNullableRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var token = "aasdasdaa";
-                var name = "aaa";
+            var webhookId = DiscordSnowflake.New(0);
 
-                // Create a dummy PNG image
-                await using var avatar = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(avatar);
-                binaryWriter.Write(9894494448401390090);
-                avatar.Position = 0;
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
-
-                var result = await api.ModifyWebhookWithTokenAsync
-                (
-                    webhookId,
-                    token,
-                    name,
-                    avatar
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-             /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsNullableRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var token = "aa";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("avatar", p => p.IsNull())
-                            )
+                            o => o
+                                .WithProperty("avatar", p => p.IsNull())
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                var result = await api.ModifyWebhookWithTokenAsync
-                (
-                    webhookId,
-                    token,
-                    avatar: null
-                );
+            var result = await api.ModifyWebhookAsync
+            (
+                webhookId,
+                avatar: null
+            );
 
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfAvatarIsUnknownFormat()
-            {
-                // Create a dummy PNG image
-                await using var avatar = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(avatar);
-                binaryWriter.Write(0x000000);
-                avatar.Position = 0;
-
-                var webhookId = new Snowflake(0);
-                var token = "aa";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
-                );
-
-                var result = await api.ModifyWebhookWithTokenAsync
-                (
-                    webhookId,
-                    token,
-                    avatar: avatar
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class DeleteWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfAvatarIsUnknownFormat()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
+            // Create a dummy PNG image
+            await using var avatar = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(avatar);
+            binaryWriter.Write(0x000000);
+            avatar.Position = 0;
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}")
-                        .Respond(HttpStatusCode.NoContent)
-                );
+            var webhookId = DiscordSnowflake.New(0);
 
-                var result = await api.DeleteWebhookAsync
-                (
-                    webhookID
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("avatar", p => p.IsNull())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                ResultAssert.Successful(result);
-            }
+            var result = await api.ModifyWebhookAsync
+            (
+                webhookId,
+                avatar: avatar
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.ModifyWebhookWithTokenAsync"/> method.
+    /// </summary>
+    public class ModifyWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aasdasdaa";
+            var name = "aaa";
+            var reason = "agaga";
+
+            // Create a dummy PNG image
+            await using var avatar = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(avatar);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
+            avatar.Position = 0;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
+
+            var result = await api.ModifyWebhookWithTokenAsync
+            (
+                webhookId,
+                token,
+                name,
+                avatar,
+                reason
+            );
+
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookWithTokenAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class DeleteWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNullableRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "aa";
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
-                        .Respond(HttpStatusCode.NoContent)
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("avatar", p => p.IsNull())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
 
-                var result = await api.DeleteWebhookWithTokenAsync
-                (
-                    webhookID,
-                    token
-                );
+            var result = await api.ModifyWebhookWithTokenAsync
+            (
+                webhookId,
+                token,
+                avatar: null
+            );
 
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.ExecuteWebhookAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class ExecuteWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfAvatarIsUnknownFormat()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsNormalRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var token = "aa";
+            // Create a dummy PNG image
+            await using var avatar = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(avatar);
+            binaryWriter.Write(0x000000);
+            avatar.Position = 0;
 
-                var shouldWait = true;
-                var content = "brr";
-                var username = "aaaag";
-                var avatarUrl = "http://aaaa";
-                var tts = false;
-                var allowedMentions = new AllowedMentions();
-                var threadID = new Snowflake(1);
-                var components = new List<IMessageComponent>();
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .WithQueryString("wait", shouldWait.ToString())
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+            );
+
+            var result = await api.ModifyWebhookWithTokenAsync
+            (
+                webhookId,
+                token,
+                avatar: avatar
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookAsync"/> method.
+    /// </summary>
+    public class DeleteWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var reason = "aagag";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .Respond(HttpStatusCode.NoContent)
+            );
+
+            var result = await api.DeleteWebhookAsync
+            (
+                webhookID,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookWithTokenAsync"/> method.
+    /// </summary>
+    public class DeleteWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "aa";
+            var reason = "agaga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .Respond(HttpStatusCode.NoContent)
+            );
+
+            var result = await api.DeleteWebhookWithTokenAsync
+            (
+                webhookID,
+                token,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.ExecuteWebhookAsync"/> method.
+    /// </summary>
+    public class ExecuteWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNormalRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
+
+            var shouldWait = true;
+            var content = "brr";
+            var username = "aaaag";
+            var avatarUrl = "http://aaaa";
+            var tts = false;
+            var allowedMentions = new AllowedMentions();
+            var threadID = DiscordSnowflake.New(1);
+            var components = new List<IMessageComponent>();
+            var flags = MessageFlags.SuppressEmbeds;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("content", p => p.Is(content))
-                                    .WithProperty("username", p => p.Is(username))
-                                    .WithProperty("avatar_url", p => p.Is(avatarUrl))
-                                    .WithProperty("tts", p => p.Is(tts))
-                                    .WithProperty("allowed_mentions", p => p.IsObject())
-                                    .WithProperty("thread_id", p => p.Is(threadID.ToString()))
-                                    .WithProperty("components", p => p.IsArray())
-                            )
+                            o => o
+                                .WithProperty("content", p => p.Is(content))
+                                .WithProperty("username", p => p.Is(username))
+                                .WithProperty("avatar_url", p => p.Is(avatarUrl))
+                                .WithProperty("tts", p => p.Is(tts))
+                                .WithProperty("allowed_mentions", p => p.IsObject())
+                                .WithProperty("thread_id", p => p.Is(threadID.ToString()))
+                                .WithProperty("components", p => p.IsArray())
+                                .WithProperty("flags", p => p.Is((int)flags))
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
 
-                var result = await api.ExecuteWebhookAsync
-                (
-                    webhookId,
-                    token,
-                    shouldWait,
-                    content,
-                    username,
-                    avatarUrl,
-                    tts,
-                    allowedMentions: allowedMentions,
-                    threadID: threadID,
-                    components: components
-                );
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                shouldWait,
+                content,
+                username,
+                avatarUrl,
+                tts,
+                allowedMentions: allowedMentions,
+                threadID: threadID,
+                components: components,
+                flags: flags
+            );
 
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
+        }
 
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsEmbedRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var token = "aa";
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsEmbedRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
 
-                var shouldWait = true;
-                var embeds = new List<Embed>();
-                var username = "aaaag";
-                var avatarUrl = "http://aaaa";
-                var tts = false;
-                var allowedMentions = new AllowedMentions();
+            var shouldWait = true;
+            var embeds = new List<Embed>();
+            var username = "aaaag";
+            var avatarUrl = "http://aaaa";
+            var tts = false;
+            var allowedMentions = new AllowedMentions();
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .WithQueryString("wait", shouldWait.ToString())
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("embeds", p => p.IsArray())
-                                    .WithProperty("username", p => p.Is(username))
-                                    .WithProperty("avatar_url", p => p.Is(avatarUrl))
-                                    .WithProperty("tts", p => p.Is(tts))
-                                    .WithProperty("allowed_mentions", p => p.IsObject())
-                            )
+                            o => o
+                                .WithProperty("embeds", p => p.IsArray())
+                                .WithProperty("username", p => p.Is(username))
+                                .WithProperty("avatar_url", p => p.Is(avatarUrl))
+                                .WithProperty("tts", p => p.Is(tts))
+                                .WithProperty("allowed_mentions", p => p.IsObject())
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
 
-                var result = await api.ExecuteWebhookAsync
-                (
-                    webhookId,
-                    token,
-                    shouldWait,
-                    username: username,
-                    avatarUrl: avatarUrl,
-                    isTTS: tts,
-                    embeds: embeds,
-                    allowedMentions: allowedMentions
-                );
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                shouldWait,
+                username: username,
+                avatarUrl: avatarUrl,
+                isTTS: tts,
+                embeds: embeds,
+                allowedMentions: allowedMentions
+            );
 
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
+        }
 
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsFileUploadRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var token = "aa";
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsFileUploadRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
 
-                await using var file = new MemoryStream();
-                var fileName = "file.bin";
-                var description = "wooga";
+            await using var file = new MemoryStream();
+            var fileName = "file.bin";
+            var description = "wooga";
 
-                var api = CreateAPI
-                (
-                    b => b.Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .With
-                        (
-                            m =>
+            var api = CreateAPI
+            (
+                b => b.Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .With
+                    (
+                        m =>
+                        {
+                            if (m.Content is not MultipartFormDataContent multipart)
                             {
-                                if (m.Content is not MultipartFormDataContent multipart)
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent("files[0]", fileName))
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent<StringContent>("payload_json"))
-                                {
-                                    return false;
-                                }
-
-                                return true;
+                                return false;
                             }
-                        )
-                        .WithMultipartJsonPayload
+
+                            if (!multipart.ContainsContent("files[0]", fileName))
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent<StringContent>("payload_json"))
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    )
+                    .WithMultipartJsonPayload
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("attachments", p => p.IsArray
-                                    (
-                                        a => a
+                            o => o
+                                .WithProperty("attachments", p => p.IsArray
+                                (
+                                    a => a
                                         .WithElement
                                         (
                                             0,
@@ -793,402 +811,169 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                                     .WithProperty("description", ep => ep.Is(description))
                                             )
                                         )
-                                    ))
-                            )
+                                ))
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
 
-                var result = await api.ExecuteWebhookAsync
-                (
-                    webhookId,
-                    token,
-                    attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
-                );
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
+            );
 
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsMultiFileUploadRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var token = "aa";
-
-                await using var file1 = new MemoryStream();
-                await using var file2 = new MemoryStream();
-                var fileName1 = "file1.bin";
-                var fileName2 = "file2.bin";
-
-                var description1 = "wooga";
-                var description2 = "booga";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .With
-                        (
-                            m =>
-                            {
-                                if (m.Content is not MultipartFormDataContent multipart)
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent("files[0]", fileName1))
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent("files[1]", fileName2))
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent<StringContent>("payload_json"))
-                                {
-                                    return false;
-                                }
-
-                                return true;
-                            }
-                        )
-                        .WithMultipartJsonPayload
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("attachments", p => p.IsArray
-                                    (
-                                        a => a
-                                            .WithElement
-                                            (
-                                                0,
-                                                e => e.IsObject
-                                                (
-                                                    eo => eo
-                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                        .WithProperty("filename", ep => ep.Is(fileName1))
-                                                        .WithProperty("description", ep => ep.Is(description1))
-                                                )
-                                            )
-                                            .WithElement
-                                            (
-                                                1,
-                                                e => e.IsObject
-                                                (
-                                                    eo => eo
-                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                        .WithProperty("filename", ep => ep.Is(fileName2))
-                                                        .WithProperty("description", ep => ep.Is(description2))
-                                                )
-                                            )
-                                    ))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
-
-                var result = await api.ExecuteWebhookAsync
-                (
-                    webhookId,
-                    token,
-                    attachments: new OneOf<FileData, IPartialAttachment>[]
-                    {
-                        new FileData(fileName1, file1, description1),
-                        new FileData(fileName2, file2, description2)
-                    }
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRetainingFileUploadRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var token = "aa";
-
-                await using var file = new MemoryStream();
-                var fileName = "file.bin";
-
-                var description = "wooga";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .With
-                        (
-                            m =>
-                            {
-                                if (m.Content is not MultipartFormDataContent multipart)
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent("files[0]", fileName))
-                                {
-                                    return false;
-                                }
-                                if (!multipart.ContainsContent<StringContent>("payload_json"))
-                                {
-                                    return false;
-                                }
-
-                                return true;
-                            }
-                        )
-                        .WithMultipartJsonPayload
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("attachments", p => p.IsArray
-                                    (
-                                        a => a
-                                            .WithElement
-                                            (
-                                                0,
-                                                e => e.IsObject
-                                                (
-                                                    eo => eo
-                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                        .WithProperty("filename", ep => ep.Is(fileName))
-                                                        .WithProperty("description", ep => ep.Is(description))
-                                                )
-                                            )
-                                            .WithElement
-                                            (
-                                                1,
-                                                e => e.IsObject
-                                                (
-                                                    eo => eo
-                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
-                                                )
-                                            )
-                                    ))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
-
-                var result = await api.ExecuteWebhookAsync
-                (
-                    webhookId,
-                    token,
-                    attachments: new OneOf<FileData, IPartialAttachment>[]
-                    {
-                        new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
-                    }
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsNullReturnRequestCorrectly()
-            {
-                var webhookId = new Snowflake(0);
-                var token = "aa";
-                var content = "bb";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("content", p => p.Is(content))
-                            )
-                        )
-                        .Respond(HttpStatusCode.NoContent)
-                );
-
-                var result = await api.ExecuteWebhookAsync
-                (
-                    webhookId,
-                    token,
-                    content: content
-                );
-
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookWithTokenAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class EditWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsMultiFileUploadRequestCorrectly()
         {
-             /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsNormalRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "aa";
-                var messageID = new Snowflake(1);
-                var threadID = new Snowflake(2);
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
 
-                var content = "booga";
-                var allowedMentions = new AllowedMentions();
-                var components = new List<IMessageComponent>();
+            await using var file1 = new MemoryStream();
+            await using var file2 = new MemoryStream();
+            var fileName1 = "file1.bin";
+            var fileName2 = "file2.bin";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("content", p => p.Is(content))
-                                    .WithProperty("allowed_mentions", p => p.IsObject())
-                                    .WithProperty("components", p => p.IsArray())
-                            )
-                        )
-                        .WithQueryString("thread_id", threadID.ToString())
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
+            var description1 = "wooga";
+            var description2 = "booga";
 
-                var result = await api.EditWebhookMessageAsync
-                (
-                    webhookID,
-                    token,
-                    messageID,
-                    content,
-                    allowedMentions: allowedMentions,
-                    components: components,
-                    threadID: threadID
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsEmbedRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "aa";
-                var messageID = new Snowflake(1);
-
-                var content = "booga";
-                var embeds = new List<IEmbed>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("content", p => p.Is(content))
-                                    .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
-
-                var result = await api.EditWebhookMessageAsync
-                (
-                    webhookID,
-                    token,
-                    messageID,
-                    content,
-                    embeds
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsFileUploadRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "aa";
-                var messageID = new Snowflake(1);
-
-                await using var file = new MemoryStream();
-                var fileName = "file.bin";
-                var description = "wooga";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
-                        )
-                        .With
-                        (
-                            m =>
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .With
+                    (
+                        m =>
+                        {
+                            if (m.Content is not MultipartFormDataContent multipart)
                             {
-                                if (m.Content is not MultipartFormDataContent multipart)
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent("files[0]", fileName))
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent<StringContent>("payload_json"))
-                                {
-                                    return false;
-                                }
-
-                                return true;
+                                return false;
                             }
-                        )
-                        .WithMultipartJsonPayload
+
+                            if (!multipart.ContainsContent("files[0]", fileName1))
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[1]", fileName2))
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent<StringContent>("payload_json"))
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    )
+                    .WithMultipartJsonPayload
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("attachments", p => p.IsArray
-                                    (
-                                        a => a
+                            o => o
+                                .WithProperty("attachments", p => p.IsArray
+                                (
+                                    a => a
+                                        .WithElement
+                                        (
+                                            0,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName1))
+                                                    .WithProperty("description", ep => ep.Is(description1))
+                                            )
+                                        )
+                                        .WithElement
+                                        (
+                                            1,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName2))
+                                                    .WithProperty("description", ep => ep.Is(description2))
+                                            )
+                                        )
+                                ))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                attachments: new OneOf<FileData, IPartialAttachment>[]
+                {
+                    new FileData(fileName1, file1, description1),
+                    new FileData(fileName2, file2, description2)
+                }
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRetainingFileUploadRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
+
+            await using var file = new MemoryStream();
+            var fileName = "file.bin";
+
+            var description = "wooga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .With
+                    (
+                        m =>
+                        {
+                            if (m.Content is not MultipartFormDataContent multipart)
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[0]", fileName))
+                            {
+                                return false;
+                            }
+                            if (!multipart.ContainsContent<StringContent>("payload_json"))
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    )
+                    .WithMultipartJsonPayload
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("attachments", p => p.IsArray
+                                (
+                                    a => a
                                         .WithElement
                                         (
                                             0,
@@ -1200,300 +985,532 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                                     .WithProperty("description", ep => ep.Is(description))
                                             )
                                         )
-                                    ))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
-
-                var result = await api.EditWebhookMessageAsync
-                (
-                    webhookID,
-                    token,
-                    messageID,
-                    attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsMultiFileUploadRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "aa";
-                var messageID = new Snowflake(1);
-
-                await using var file1 = new MemoryStream();
-                await using var file2 = new MemoryStream();
-                var fileName1 = "file1.bin";
-                var fileName2 = "file2.bin";
-
-                var description1 = "wooga";
-                var description2 = "booga";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
-                        )
-                        .With
-                        (
-                            m =>
-                            {
-                                if (m.Content is not MultipartFormDataContent multipart)
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent("files[0]", fileName1))
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent("files[1]", fileName2))
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent<StringContent>("payload_json"))
-                                {
-                                    return false;
-                                }
-
-                                return true;
-                            }
-                        )
-                        .WithMultipartJsonPayload
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("attachments", p => p.IsArray
-                                    (
-                                        a => a
-                                            .WithElement
+                                        .WithElement
+                                        (
+                                            1,
+                                            e => e.IsObject
                                             (
-                                                0,
-                                                e => e.IsObject
-                                                (
-                                                    eo => eo
-                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                        .WithProperty("filename", ep => ep.Is(fileName1))
-                                                        .WithProperty("description", ep => ep.Is(description1))
-                                                )
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
                                             )
-                                            .WithElement
-                                            (
-                                                1,
-                                                e => e.IsObject
-                                                (
-                                                    eo => eo
-                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                        .WithProperty("filename", ep => ep.Is(fileName2))
-                                                        .WithProperty("description", ep => ep.Is(description2))
-                                                )
-                                            )
-                                    ))
-                            )
+                                        )
+                                ))
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
 
-                var result = await api.EditWebhookMessageAsync
-                (
-                    webhookID,
-                    token,
-                    messageID,
-                    attachments: new OneOf<FileData, IPartialAttachment>[]
-                    {
-                        new FileData(fileName1, file1, description1),
-                        new FileData(fileName2, file2, description2)
-                    }
-                );
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                attachments: new OneOf<FileData, IPartialAttachment>[]
+                {
+                    new FileData(fileName, file, description),
+                    new PartialAttachment(DiscordSnowflake.New(999))
+                }
+            );
 
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRetainingFileUploadRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "aa";
-                var messageID = new Snowflake(1);
-
-                await using var file = new MemoryStream();
-                var fileName = "file.bin";
-
-                var description = "wooga";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
-                        )
-                        .With
-                        (
-                            m =>
-                            {
-                                if (m.Content is not MultipartFormDataContent multipart)
-                                {
-                                    return false;
-                                }
-
-                                if (!multipart.ContainsContent("files[0]", fileName))
-                                {
-                                    return false;
-                                }
-                                if (!multipart.ContainsContent<StringContent>("payload_json"))
-                                {
-                                    return false;
-                                }
-
-                                return true;
-                            }
-                        )
-                        .WithMultipartJsonPayload
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("attachments", p => p.IsArray
-                                    (
-                                        a => a
-                                            .WithElement
-                                            (
-                                                0,
-                                                e => e.IsObject
-                                                (
-                                                    eo => eo
-                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                        .WithProperty("filename", ep => ep.Is(fileName))
-                                                        .WithProperty("description", ep => ep.Is(description))
-                                                )
-                                            )
-                                            .WithElement
-                                            (
-                                                1,
-                                                e => e.IsObject
-                                                (
-                                                    eo => eo
-                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
-                                                )
-                                            )
-                                    ))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
-
-                var result = await api.EditWebhookMessageAsync
-                (
-                    webhookID,
-                    token,
-                    messageID,
-                    attachments: new OneOf<FileData, IPartialAttachment>[]
-                    {
-                        new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
-                    }
-                );
-
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookMessageAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class DeleteWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNullReturnRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "token";
-                var messageID = new Snowflake(1);
-                var threadID = new Snowflake(2);
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
+            var content = "bb";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
-                        .WithQueryString("thread_id", threadID.ToString())
-                        .Respond(HttpStatusCode.NoContent)
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("content", p => p.Is(content))
+                        )
+                    )
+                    .Respond(HttpStatusCode.NoContent)
+            );
 
-                var result = await api.DeleteWebhookMessageAsync
-                (
-                    webhookID,
-                    token,
-                    messageID,
-                    threadID
-                );
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                content: content
+            );
 
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookWithTokenAsync"/> method.
+    /// </summary>
+    public class EditWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNormalRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "aa";
+            var messageID = DiscordSnowflake.New(1);
+            var threadID = DiscordSnowflake.New(2);
+
+            var content = "booga";
+            var allowedMentions = new AllowedMentions();
+            var components = new List<IMessageComponent>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("content", p => p.Is(content))
+                                .WithProperty("allowed_mentions", p => p.IsObject())
+                                .WithProperty("components", p => p.IsArray())
+                        )
+                    )
+                    .WithQueryString("thread_id", threadID.ToString())
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.EditWebhookMessageAsync
+            (
+                webhookID,
+                token,
+                messageID,
+                content,
+                allowedMentions: allowedMentions,
+                components: components,
+                threadID: threadID
+            );
+
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestWebhookAPI.GetWebhookMessageAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsEmbedRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var webhookID = new Snowflake(0);
-                var token = "aaa";
-                var messageID = new Snowflake(1);
-                var threadID = new Snowflake(2);
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "aa";
+            var messageID = DiscordSnowflake.New(1);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
+            var content = "booga";
+            var embeds = new List<IEmbed>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            HttpMethod.Get,
-                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                            o => o
+                                .WithProperty("content", p => p.Is(content))
+                                .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
                         )
-                        .WithNoContent()
-                        .WithQueryString("thread_id", threadID.ToString())
-                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
 
-                var result = await api.GetWebhookMessageAsync
-                (
-                    webhookID,
-                    token,
-                    messageID,
-                    threadID
-                );
+            var result = await api.EditWebhookMessageAsync
+            (
+                webhookID,
+                token,
+                messageID,
+                content,
+                embeds
+            );
 
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsFileUploadRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "aa";
+            var messageID = DiscordSnowflake.New(1);
+
+            await using var file = new MemoryStream();
+            var fileName = "file.bin";
+            var description = "wooga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                    )
+                    .With
+                    (
+                        m =>
+                        {
+                            if (m.Content is not MultipartFormDataContent multipart)
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[0]", fileName))
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent<StringContent>("payload_json"))
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    )
+                    .WithMultipartJsonPayload
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("attachments", p => p.IsArray
+                                (
+                                    a => a
+                                        .WithElement
+                                        (
+                                            0,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName))
+                                                    .WithProperty("description", ep => ep.Is(description))
+                                            )
+                                        )
+                                ))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.EditWebhookMessageAsync
+            (
+                webhookID,
+                token,
+                messageID,
+                attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsMultiFileUploadRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "aa";
+            var messageID = DiscordSnowflake.New(1);
+
+            await using var file1 = new MemoryStream();
+            await using var file2 = new MemoryStream();
+            var fileName1 = "file1.bin";
+            var fileName2 = "file2.bin";
+
+            var description1 = "wooga";
+            var description2 = "booga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                    )
+                    .With
+                    (
+                        m =>
+                        {
+                            if (m.Content is not MultipartFormDataContent multipart)
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[0]", fileName1))
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[1]", fileName2))
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent<StringContent>("payload_json"))
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    )
+                    .WithMultipartJsonPayload
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("attachments", p => p.IsArray
+                                (
+                                    a => a
+                                        .WithElement
+                                        (
+                                            0,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName1))
+                                                    .WithProperty("description", ep => ep.Is(description1))
+                                            )
+                                        )
+                                        .WithElement
+                                        (
+                                            1,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName2))
+                                                    .WithProperty("description", ep => ep.Is(description2))
+                                            )
+                                        )
+                                ))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.EditWebhookMessageAsync
+            (
+                webhookID,
+                token,
+                messageID,
+                attachments: new OneOf<FileData, IPartialAttachment>[]
+                {
+                    new FileData(fileName1, file1, description1),
+                    new FileData(fileName2, file2, description2)
+                }
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRetainingFileUploadRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "aa";
+            var messageID = DiscordSnowflake.New(1);
+
+            await using var file = new MemoryStream();
+            var fileName = "file.bin";
+
+            var description = "wooga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                    )
+                    .With
+                    (
+                        m =>
+                        {
+                            if (m.Content is not MultipartFormDataContent multipart)
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[0]", fileName))
+                            {
+                                return false;
+                            }
+                            if (!multipart.ContainsContent<StringContent>("payload_json"))
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    )
+                    .WithMultipartJsonPayload
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("attachments", p => p.IsArray
+                                (
+                                    a => a
+                                        .WithElement
+                                        (
+                                            0,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName))
+                                                    .WithProperty("description", ep => ep.Is(description))
+                                            )
+                                        )
+                                        .WithElement
+                                        (
+                                            1,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
+                                            )
+                                        )
+                                ))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.EditWebhookMessageAsync
+            (
+                webhookID,
+                token,
+                messageID,
+                attachments: new OneOf<FileData, IPartialAttachment>[]
+                {
+                    new FileData(fileName, file, description),
+                    new PartialAttachment(DiscordSnowflake.New(999))
+                }
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookMessageAsync"/> method.
+    /// </summary>
+    public class DeleteWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "token";
+            var messageID = DiscordSnowflake.New(1);
+            var threadID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
+                    .WithQueryString("thread_id", threadID.ToString())
+                    .Respond(HttpStatusCode.NoContent)
+            );
+
+            var result = await api.DeleteWebhookMessageAsync
+            (
+                webhookID,
+                token,
+                messageID,
+                threadID
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestWebhookAPI.GetWebhookMessageAsync"/> method.
+    /// </summary>
+    public class GetWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var webhookID = DiscordSnowflake.New(0);
+            var token = "aaa";
+            var messageID = DiscordSnowflake.New(1);
+            var threadID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                    )
+                    .WithNoContent()
+                    .WithQueryString("thread_id", threadID.ToString())
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.GetWebhookMessageAsync
+            (
+                webhookID,
+                token,
+                messageID,
+                threadID
+            );
+
+            ResultAssert.Successful(result);
         }
     }
 }

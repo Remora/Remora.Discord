@@ -28,20 +28,19 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.Valid.Basics
-{
-    public class UnnamedGroupWithMultipleCommands : CommandGroup
-    {
-        [Command("a")]
-        public Task<IResult> A()
-        {
-            throw new NotImplementedException();
-        }
+namespace Remora.Discord.Commands.Tests.Data.Valid.Basics;
 
-        [Command("b")]
-        public Task<IResult> B()
-        {
-            throw new NotImplementedException();
-        }
+public class UnnamedGroupWithMultipleCommands : CommandGroup
+{
+    [Command("a")]
+    public Task<IResult> A()
+    {
+        throw new NotImplementedException();
+    }
+
+    [Command("b")]
+    public Task<IResult> B()
+    {
+        throw new NotImplementedException();
     }
 }

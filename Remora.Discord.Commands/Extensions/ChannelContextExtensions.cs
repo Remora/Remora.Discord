@@ -46,7 +46,6 @@ public static class ChannelContextExtensions
                     GuildVoice,
                     GuildCategory,
                     GuildNews,
-                    GuildStore,
                     GuildPrivateThread,
                     GuildPublicThread,
                     GuildNewsThread,

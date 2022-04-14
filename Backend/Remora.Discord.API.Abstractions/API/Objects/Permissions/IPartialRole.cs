@@ -24,45 +24,44 @@ using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a partial Discord role.
+/// </summary>
+[PublicAPI]
+public interface IPartialRole
 {
-    /// <summary>
-    /// Represents a partial Discord role.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialRole
-    {
-        /// <inheritdoc cref="IRole.ID" />
-        Optional<Snowflake> ID { get; }
+    /// <inheritdoc cref="IRole.ID" />
+    Optional<Snowflake> ID { get; }
 
-        /// <inheritdoc cref="IRole.Name" />
-        Optional<string> Name { get; }
+    /// <inheritdoc cref="IRole.Name" />
+    Optional<string> Name { get; }
 
-        /// <inheritdoc cref="IRole.Colour" />
-        Optional<Color> Colour { get; }
+    /// <inheritdoc cref="IRole.Colour" />
+    Optional<Color> Colour { get; }
 
-        /// <inheritdoc cref="IRole.IsHoisted" />
-        Optional<bool> IsHoisted { get; }
+    /// <inheritdoc cref="IRole.IsHoisted" />
+    Optional<bool> IsHoisted { get; }
 
-        /// <inheritdoc cref="IRole.Icon" />
-        Optional<IImageHash?> Icon { get; }
+    /// <inheritdoc cref="IRole.Icon" />
+    Optional<IImageHash?> Icon { get; }
 
-        /// <inheritdoc cref="IRole.UnicodeEmoji" />
-        Optional<string?> UnicodeEmoji { get; }
+    /// <inheritdoc cref="IRole.UnicodeEmoji" />
+    Optional<string?> UnicodeEmoji { get; }
 
-        /// <inheritdoc cref="IRole.Position" />
-        Optional<int> Position { get; }
+    /// <inheritdoc cref="IRole.Position" />
+    Optional<int> Position { get; }
 
-        /// <inheritdoc cref="IRole.Permissions" />
-        Optional<IDiscordPermissionSet> Permissions { get; }
+    /// <inheritdoc cref="IRole.Permissions" />
+    Optional<IDiscordPermissionSet> Permissions { get; }
 
-        /// <inheritdoc cref="IRole.IsManaged" />
-        Optional<bool> IsManaged { get; }
+    /// <inheritdoc cref="IRole.IsManaged" />
+    Optional<bool> IsManaged { get; }
 
-        /// <inheritdoc cref="IRole.IsMentionable" />
-        Optional<bool> IsMentionable { get; }
+    /// <inheritdoc cref="IRole.IsMentionable" />
+    Optional<bool> IsMentionable { get; }
 
-        /// <inheritdoc cref="IRole.Tags" />
-        Optional<IRoleTags> Tags { get; }
-    }
+    /// <inheritdoc cref="IRole.Tags" />
+    Optional<IRoleTags> Tags { get; }
 }

@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Gateway
+namespace Remora.Discord.Gateway;
+
+/// <summary>
+/// Enumerates the various states the gateway client can be in.
+/// </summary>
+[PublicAPI]
+public enum GatewayConnectionStatus
 {
     /// <summary>
-    /// Enumerates the various states the gateway client can be in.
+    /// The client is completely offline.
     /// </summary>
-    [PublicAPI]
-    public enum GatewayConnectionStatus
-    {
-        /// <summary>
-        /// The client is completely offline.
-        /// </summary>
-        Offline,
+    Offline,
 
-        /// <summary>
-        /// The client is disconnected, but active.
-        /// </summary>
-        Disconnected,
+    /// <summary>
+    /// The client is disconnected, but active.
+    /// </summary>
+    Disconnected,
 
-        /// <summary>
-        /// The client is connected and handling events.
-        /// </summary>
-        Connected
-    }
+    /// <summary>
+    /// The client is connected and handling events.
+    /// </summary>
+    Connected
 }

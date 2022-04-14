@@ -22,56 +22,55 @@
 
 using System.Drawing;
 
-namespace Remora.Discord.Extensions.Embeds
+namespace Remora.Discord.Extensions.Embeds;
+
+/// <summary>
+/// Provides a set of constant values for embed validation.
+/// </summary>
+public static class EmbedConstants
 {
     /// <summary>
-    /// Provides a set of constant values for embed validation.
+    /// Gets the maximum length of a title.
     /// </summary>
-    public static class EmbedConstants
-    {
-        /// <summary>
-        /// Gets the maximum length of a title.
-        /// </summary>
-        public const int MaxTitleLength = 256;
+    public const int MaxTitleLength = 256;
 
-        /// <summary>
-        /// Gets the maximum length of a description.
-        /// </summary>
-        public const int MaxDescriptionLength = 4096;
+    /// <summary>
+    /// Gets the maximum length of a description.
+    /// </summary>
+    public const int MaxDescriptionLength = 4096;
 
-        /// <summary>
-        /// Gets the maximum number of fields.
-        /// </summary>
-        public const int MaxFieldCount = 25;
+    /// <summary>
+    /// Gets the maximum number of fields.
+    /// </summary>
+    public const int MaxFieldCount = 25;
 
-        /// <summary>
-        /// Gets the maximum length of a field name.
-        /// </summary>
-        public const int MaxFieldNameLength = 256;
+    /// <summary>
+    /// Gets the maximum length of a field name.
+    /// </summary>
+    public const int MaxFieldNameLength = 256;
 
-        /// <summary>
-        /// Gets the maximum length of a field value.
-        /// </summary>
-        public const int MaxFieldValueLength = 1024;
+    /// <summary>
+    /// Gets the maximum length of a field value.
+    /// </summary>
+    public const int MaxFieldValueLength = 1024;
 
-        /// <summary>
-        /// Gets the maximum length of an author's name.
-        /// </summary>
-        public const int MaxAuthorNameLength = 256;
+    /// <summary>
+    /// Gets the maximum length of an author's name.
+    /// </summary>
+    public const int MaxAuthorNameLength = 256;
 
-        /// <summary>
-        /// Gets the maximum length of a footer.
-        /// </summary>
-        public const int MaxFooterTextLength = 2048;
+    /// <summary>
+    /// Gets the maximum length of a footer.
+    /// </summary>
+    public const int MaxFooterTextLength = 2048;
 
-        /// <summary>
-        /// Gets the maximum overall size of an embed.
-        /// </summary>
-        public const int MaxEmbedLength = 6000;
+    /// <summary>
+    /// Gets the maximum overall size of an embed.
+    /// </summary>
+    public const int MaxEmbedLength = 6000;
 
-        /// <summary>
-        /// The default embed color.
-        /// </summary>
-        public static readonly Color DefaultColour = Color.FromArgb(95, 186, 125);
-    }
+    /// <summary>
+    /// The default embed color.
+    /// </summary>
+    public static readonly Color DefaultColour = Color.FromArgb(95, 186, 125);
 }

@@ -23,87 +23,86 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various user account flags.
+/// </summary>
+[PublicAPI, Flags]
+public enum UserFlags
 {
     /// <summary>
-    /// Enumerates various user account flags.
+    /// No flags.
     /// </summary>
-    [PublicAPI, Flags]
-    public enum UserFlags
-    {
-        /// <summary>
-        /// No flags.
-        /// </summary>
-        None = 0,
+    None = 0,
 
-        /// <summary>
-        /// The user is a Discord employee.
-        /// </summary>
-        DiscordEmployee = 1 << 0,
+    /// <summary>
+    /// The user is a Discord employee.
+    /// </summary>
+    DiscordEmployee = 1 << 0,
 
-        /// <summary>
-        /// The user owns a a Discord-partnered server.
-        /// </summary>
-        PartneredServerOwner = 1 << 1,
+    /// <summary>
+    /// The user owns a a Discord-partnered server.
+    /// </summary>
+    PartneredServerOwner = 1 << 1,
 
-        /// <summary>
-        /// The user is part of HypeSquad events.
-        /// </summary>
-        HypeSquadEvents = 1 << 2,
+    /// <summary>
+    /// The user is a member of a HypeSquad event.
+    /// </summary>
+    HypeSquad = 1 << 2,
 
-        /// <summary>
-        /// The user is a hunter (level 1).
-        /// </summary>
-        BugHunterLevel1 = 1 << 3,
+    /// <summary>
+    /// The user is a hunter (level 1).
+    /// </summary>
+    BugHunterLevel1 = 1 << 3,
 
-        /// <summary>
-        /// The user is part of House Bravery.
-        /// </summary>
-        HouseBravery = 1 << 6,
+    /// <summary>
+    /// The user is part of House Bravery.
+    /// </summary>
+    HouseBravery = 1 << 6,
 
-        /// <summary>
-        /// The user is part of House Brilliance.
-        /// </summary>
-        HouseBrilliance = 1 << 7,
+    /// <summary>
+    /// The user is part of House Brilliance.
+    /// </summary>
+    HouseBrilliance = 1 << 7,
 
-        /// <summary>
-        /// The user is part of House Balance.
-        /// </summary>
-        HouseBalance = 1 << 8,
+    /// <summary>
+    /// The user is part of House Balance.
+    /// </summary>
+    HouseBalance = 1 << 8,
 
-        /// <summary>
-        /// The user is an early supporter.
-        /// </summary>
-        EarlySupporter = 1 << 9,
+    /// <summary>
+    /// The user is an early supporter.
+    /// </summary>
+    EarlySupporter = 1 << 9,
 
-        /// <summary>
-        /// The user is a team user.
-        /// </summary>
-        TeamUser = 1 << 10,
+    /// <summary>
+    /// The user is a team user.
+    /// </summary>
+    TeamUser = 1 << 10,
 
-        /// <summary>
-        /// The user is a hunter (level 2).
-        /// </summary>
-        BugHunterLevel2 = 1 << 14,
+    /// <summary>
+    /// The user is a hunter (level 2).
+    /// </summary>
+    BugHunterLevel2 = 1 << 14,
 
-        /// <summary>
-        /// The user is a verified bot.
-        /// </summary>
-        VerifiedBot = 1 << 16,
+    /// <summary>
+    /// The user is a verified bot.
+    /// </summary>
+    VerifiedBot = 1 << 16,
 
-        /// <summary>
-        /// The user is a verified bot developer.
-        /// </summary>
-        EarlyVerifiedBotDeveloper = 1 << 17,
+    /// <summary>
+    /// The user is a verified bot developer.
+    /// </summary>
+    EarlyVerifiedBotDeveloper = 1 << 17,
 
-        /// <summary>
-        /// The user is a Discord-certified moderator.
-        /// </summary>
-        DiscordCertifiedModerator = 1 << 18,
+    /// <summary>
+    /// The user is a Discord-certified moderator.
+    /// </summary>
+    DiscordCertifiedModerator = 1 << 18,
 
-        /// <summary>
-        /// The user is a bot that only uses outgoing webhook interactions, and should always be shown as online.
-        /// </summary>
-        BotHttpInteractions = 1 << 19
-    }
+    /// <summary>
+    /// The user is a bot that only uses outgoing webhook interactions, and should always be shown as online.
+    /// </summary>
+    BotHttpInteractions = 1 << 19
 }

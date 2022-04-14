@@ -22,79 +22,51 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions
+/// applicable to voice channels.
+/// </summary>
+[PublicAPI]
+public enum DiscordVoicePermission
 {
-    /// <summary>
-    /// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions
-    /// applicable to voice channels.
-    /// </summary>
-    [PublicAPI]
-    public enum DiscordVoicePermission
-    {
-        /// <summary>
-        /// Allows creation of instant invites.
-        /// </summary>
-        CreateInstantInvite = 0,
+    /// <inheritdoc cref="DiscordPermission.CreateInstantInvite"/>
+    CreateInstantInvite = DiscordPermission.CreateInstantInvite,
 
-        /// <summary>
-        /// Allows management and editing of channels.
-        /// </summary>
-        ManageChannels = 4,
+    /// <inheritdoc cref="DiscordPermission.ManageChannels"/>
+    ManageChannels = DiscordPermission.ManageChannels,
 
-        /// <summary>
-        /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
-        /// referred to as "Read Messages" in the Discord client.
-        /// </summary>
-        ViewChannel = 10,
+    /// <inheritdoc cref="DiscordPermission.ViewChannel"/>
+    ViewChannel = DiscordPermission.ViewChannel,
 
-        /// <summary>
-        /// Allows for joining of a voice channel.
-        /// </summary>
-        Connect = 20,
+    /// <inheritdoc cref="DiscordPermission.Connect"/>
+    Connect = DiscordPermission.Connect,
 
-        /// <summary>
-        /// Allows for speaking in a voice channel.
-        /// </summary>
-        Speak = 21,
+    /// <inheritdoc cref="DiscordPermission.Speak"/>
+    Speak = DiscordPermission.Speak,
 
-        /// <summary>
-        /// Allows for muting members in a voice channel.
-        /// </summary>
-        MuteMembers = 22,
+    /// <inheritdoc cref="DiscordPermission.MuteMembers"/>
+    MuteMembers = DiscordPermission.MuteMembers,
 
-        /// <summary>
-        /// Allows for deafening of members in a voice channel.
-        /// </summary>
-        DeafenMembers = 23,
+    /// <inheritdoc cref="DiscordPermission.DeafenMembers"/>
+    DeafenMembers = DiscordPermission.DeafenMembers,
 
-        /// <summary>
-        /// Allows for moving of members between voice channels.
-        /// </summary>
-        MoveMembers = 24,
+    /// <inheritdoc cref="DiscordPermission.MoveMembers"/>
+    MoveMembers = DiscordPermission.MoveMembers,
 
-        /// <summary>
-        /// Allows for using voice activity detection in a voice channel.
-        /// </summary>
-        UseVoiceActivity = 25,
+    /// <inheritdoc cref="DiscordPermission.UseVoiceActivity"/>
+    UseVoiceActivity = DiscordPermission.UseVoiceActivity,
 
-        /// <summary>
-        /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
-        /// </summary>
-        ManageRoles = 28,
+    /// <inheritdoc cref="DiscordPermission.ManageRoles"/>
+    ManageRoles = DiscordPermission.ManageRoles,
 
-        /// <summary>
-        /// Allows the user to request to speak in a stage channel.
-        /// </summary>
-        RequestToSpeak = 32,
+    /// <inheritdoc cref="DiscordPermission.RequestToSpeak"/>
+    RequestToSpeak = DiscordPermission.RequestToSpeak,
 
-        /// <summary>
-        /// Allows the user to manage scheduled events.
-        /// </summary>
-        ManageEvents = 33,
+    /// <inheritdoc cref="DiscordPermission.ManageEvents"/>
+    ManageEvents = DiscordPermission.ManageEvents,
 
-        /// <summary>
-        /// Allows for launching activities in a voice channel.
-        /// </summary>
-        StartEmbeddedActivities = 39
-    }
+    /// <inheritdoc cref="DiscordPermission.UseEmbeddedActivities"/>
+    UseEmbeddedActivities = DiscordPermission.UseEmbeddedActivities
 }

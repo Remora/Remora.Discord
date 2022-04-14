@@ -34,12 +34,13 @@ namespace Remora.Discord.API.Gateway.Events.Channels;
 [PublicAPI]
 public record ThreadCreate
 (
+    bool IsNewlyCreated,
     Snowflake ID,
     ChannelType Type,
     Optional<Snowflake> GuildID = default,
     Optional<int> Position = default,
     Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites = default,
-    Optional<string> Name = default,
+    Optional<string?> Name = default,
     Optional<string?> Topic = default,
     Optional<bool> IsNsfw = default,
     Optional<Snowflake?> LastMessageID = default,

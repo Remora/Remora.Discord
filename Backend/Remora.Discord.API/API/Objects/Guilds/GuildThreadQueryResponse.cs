@@ -26,7 +26,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadQueryResponse" />
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildThreadQueryResponse" />
 [PublicAPI]
 public record GuildThreadQueryResponse
 (

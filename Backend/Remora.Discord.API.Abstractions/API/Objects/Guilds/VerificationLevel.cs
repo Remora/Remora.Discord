@@ -22,37 +22,36 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates the various verification levels.
+/// </summary>
+[PublicAPI]
+public enum VerificationLevel
 {
     /// <summary>
-    /// Enumerates the various verification levels.
+    /// No restrictions.
     /// </summary>
-    [PublicAPI]
-    public enum VerificationLevel
-    {
-        /// <summary>
-        /// No restrictions.
-        /// </summary>
-        None = 0,
+    None = 0,
 
-        /// <summary>
-        /// Users must have a verified email.
-        /// </summary>
-        Low = 1,
+    /// <summary>
+    /// Users must have a verified email.
+    /// </summary>
+    Low = 1,
 
-        /// <summary>
-        /// Users must have been registered longer than 5 minutes.
-        /// </summary>
-        Medium = 2,
+    /// <summary>
+    /// Users must have been registered longer than 5 minutes.
+    /// </summary>
+    Medium = 2,
 
-        /// <summary>
-        /// Users must be a member of the server for longer than 10 minutes.
-        /// </summary>
-        High = 3,
+    /// <summary>
+    /// Users must be a member of the server for longer than 10 minutes.
+    /// </summary>
+    High = 3,
 
-        /// <summary>
-        /// Users must have a verified phone number.
-        /// </summary>
-        VeryHigh = 4
-    }
+    /// <summary>
+    /// Users must have a verified phone number.
+    /// </summary>
+    VeryHigh = 4
 }

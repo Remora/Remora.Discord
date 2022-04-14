@@ -1,0 +1,20 @@
+{
+  "tts": false,
+  "content": "none",
+  "embeds": [],
+  "allowed_mentions": {
+    "parse": [
+      "roles",
+      "users"
+    ],
+    "roles": [
+      "999999999999999999"
+    ],
+    "users": [
+      "748969255210450984"
+    ]
+  },
+  "flags": 0,
+  "components": [],
+  "attachments": []
+}

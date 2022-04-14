@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a role deletion.
+/// </summary>
+[PublicAPI]
+public interface IGuildRoleDelete : IGatewayEvent
 {
     /// <summary>
-    /// Represents a role deletion.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildRoleDelete : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the ID of the role.
-        /// </summary>
-        Snowflake RoleID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the role.
+    /// </summary>
+    Snowflake RoleID { get; }
 }

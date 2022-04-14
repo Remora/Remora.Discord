@@ -25,37 +25,36 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Sent when a user starts typing in a channel.
+/// </summary>
+[PublicAPI]
+public interface ITypingStart : IGatewayEvent
 {
     /// <summary>
-    /// Sent when a user starts typing in a channel.
+    /// Gets the ID of the channel.
     /// </summary>
-    [PublicAPI]
-    public interface ITypingStart : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the ID of the user.
-        /// </summary>
-        Snowflake UserID { get; }
+    /// <summary>
+    /// Gets the ID of the user.
+    /// </summary>
+    Snowflake UserID { get; }
 
-        /// <summary>
-        /// Gets the unix time (in seconds) when the user started typing.
-        /// </summary>
-        DateTimeOffset Timestamp { get; }
+    /// <summary>
+    /// Gets the unix time (in seconds) when the user started typing.
+    /// </summary>
+    DateTimeOffset Timestamp { get; }
 
-        /// <summary>
-        /// Gets the member who started typing (if it happened in a guild).
-        /// </summary>
-        Optional<IGuildMember> Member { get; }
-    }
+    /// <summary>
+    /// Gets the member who started typing (if it happened in a guild).
+    /// </summary>
+    Optional<IGuildMember> Member { get; }
 }

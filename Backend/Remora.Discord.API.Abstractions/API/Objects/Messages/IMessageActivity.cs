@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an activity reference.
+/// </summary>
+[PublicAPI]
+public interface IMessageActivity
 {
     /// <summary>
-    /// Represents an activity reference.
+    /// Gets the type of the activity.
     /// </summary>
-    [PublicAPI]
-    public interface IMessageActivity
-    {
-        /// <summary>
-        /// Gets the type of the activity.
-        /// </summary>
-        MessageActivityType Type { get; }
+    MessageActivityType Type { get; }
 
-        /// <summary>
-        /// Gets the party id of the activity. These can be acquired from rich presence events.
-        /// </summary>
-        Optional<string> PartyID { get; }
-    }
+    /// <summary>
+    /// Gets the party id of the activity. These can be acquired from rich presence events.
+    /// </summary>
+    Optional<string> PartyID { get; }
 }

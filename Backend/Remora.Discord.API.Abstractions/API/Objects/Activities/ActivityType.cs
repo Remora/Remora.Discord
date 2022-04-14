@@ -22,42 +22,41 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates the activity types supported by Discord.
+/// </summary>
+[PublicAPI]
+public enum ActivityType
 {
     /// <summary>
-    /// Enumerates the activity types supported by Discord.
+    /// The user is playing a game.
     /// </summary>
-    [PublicAPI]
-    public enum ActivityType
-    {
-        /// <summary>
-        /// The user is playing a game.
-        /// </summary>
-        Game = 0,
+    Game = 0,
 
-        /// <summary>
-        /// The user is streaming video.
-        /// </summary>
-        Streaming = 1,
+    /// <summary>
+    /// The user is streaming video.
+    /// </summary>
+    Streaming = 1,
 
-        /// <summary>
-        /// The user is listening to music.
-        /// </summary>
-        Listening = 2,
+    /// <summary>
+    /// The user is listening to music.
+    /// </summary>
+    Listening = 2,
 
-        /// <summary>
-        /// The user is watching a video.
-        /// </summary>
-        Watching = 3,
+    /// <summary>
+    /// The user is watching a video.
+    /// </summary>
+    Watching = 3,
 
-        /// <summary>
-        /// The user has a custom status.
-        /// </summary>
-        Custom = 4,
+    /// <summary>
+    /// The user has a custom status.
+    /// </summary>
+    Custom = 4,
 
-        /// <summary>
-        /// The user is competing in something.
-        /// </summary>
-        Competing = 5
-    }
+    /// <summary>
+    /// The user is competing in something.
+    /// </summary>
+    Competing = 5
 }

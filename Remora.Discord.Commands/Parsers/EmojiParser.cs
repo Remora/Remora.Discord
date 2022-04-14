@@ -29,11 +29,11 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
-using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
@@ -144,7 +144,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>
             return false;
         }
 
-        if (!Snowflake.TryParse(inputParts[^1], out var emojiID))
+        if (!DiscordSnowflake.TryParse(inputParts[^1], out var emojiID))
         {
             return false;
         }

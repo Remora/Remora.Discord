@@ -22,16 +22,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
@@ -55,7 +56,7 @@ public class DiscordRestGuildScheduledEventAPITests
         [Fact]
         public async Task PerformsRequestCorrectly()
         {
-            var guildID = new Snowflake(1);
+            var guildID = DiscordSnowflake.New(1);
             var withUserCount = true;
 
             var api = CreateAPI
@@ -83,8 +84,13 @@ public class DiscordRestGuildScheduledEventAPITests
         [Fact]
         public async Task PerformsRequestCorrectly()
         {
-            var guildID = new Snowflake(1);
-            var channelID = new Snowflake(2);
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
+            image.Position = 0;
+
+            var guildID = DiscordSnowflake.New(1);
+            var channelID = DiscordSnowflake.New(2);
             var entityMetadata = new GuildScheduledEventEntityMetadata();
             var name = "wooga";
             var privacyLevel = GuildScheduledEventPrivacyLevel.GuildOnly;
@@ -92,6 +98,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var scheduledEndTime = scheduledStartTime.AddHours(1);
             var description = "booga";
             var entityType = GuildScheduledEventEntityType.StageInstance;
+            var reason = "aaa";
 
             var api = CreateAPI
             (
@@ -114,8 +121,10 @@ public class DiscordRestGuildScheduledEventAPITests
 
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("entity_type", p => p.Is((int)entityType))
+                                .WithProperty("image", p => p.IsString())
                         )
                     )
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
             );
 
@@ -129,7 +138,9 @@ public class DiscordRestGuildScheduledEventAPITests
                 scheduledStartTime,
                 scheduledEndTime,
                 description,
-                entityType
+                entityType,
+                image,
+                reason
             );
 
             ResultAssert.Successful(result);
@@ -148,8 +159,8 @@ public class DiscordRestGuildScheduledEventAPITests
         [Fact]
         public async Task PerformsRequestCorrectly()
         {
-            var guildID = new Snowflake(1);
-            var eventID = new Snowflake(2);
+            var guildID = DiscordSnowflake.New(1);
+            var eventID = DiscordSnowflake.New(2);
             var withCounts = true;
 
             var api = CreateAPI
@@ -178,9 +189,14 @@ public class DiscordRestGuildScheduledEventAPITests
         [Fact]
         public async Task PerformsRequestCorrectly()
         {
-            var guildID = new Snowflake(1);
-            var eventID = new Snowflake(2);
-            var channelID = new Snowflake(3);
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
+            image.Position = 0;
+
+            var guildID = DiscordSnowflake.New(1);
+            var eventID = DiscordSnowflake.New(2);
+            var channelID = DiscordSnowflake.New(3);
             var entityMetadata = new GuildScheduledEventEntityMetadata();
             var name = "wooga";
             var privacyLevel = GuildScheduledEventPrivacyLevel.GuildOnly;
@@ -189,6 +205,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var description = "booga";
             var entityType = GuildScheduledEventEntityType.StageInstance;
             var status = GuildScheduledEventStatus.Completed;
+            var reason = "aaa";
 
             var api = CreateAPI
             (
@@ -212,8 +229,10 @@ public class DiscordRestGuildScheduledEventAPITests
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("entity_type", p => p.Is((int)entityType))
                                 .WithProperty("status", p => p.Is((int)status))
+                                .WithProperty("image", p => p.IsString())
                         )
                     )
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
             );
 
@@ -229,7 +248,9 @@ public class DiscordRestGuildScheduledEventAPITests
                 scheduledEndTime,
                 description,
                 entityType,
-                status
+                status,
+                image,
+                reason
             );
 
             ResultAssert.Successful(result);
@@ -248,8 +269,8 @@ public class DiscordRestGuildScheduledEventAPITests
         [Fact]
         public async Task PerformsRequestCorrectly()
         {
-            var guildID = new Snowflake(1);
-            var eventID = new Snowflake(2);
+            var guildID = DiscordSnowflake.New(1);
+            var eventID = DiscordSnowflake.New(2);
 
             var api = CreateAPI
             (
@@ -276,12 +297,12 @@ public class DiscordRestGuildScheduledEventAPITests
         [Fact]
         public async Task PerformsRequestCorrectly()
         {
-            var guildID = new Snowflake(1);
-            var eventID = new Snowflake(2);
+            var guildID = DiscordSnowflake.New(1);
+            var eventID = DiscordSnowflake.New(2);
             var limit = 10;
             var withMember = true;
-            var before = new Snowflake(3);
-            var after = new Snowflake(4);
+            var before = DiscordSnowflake.New(3);
+            var after = DiscordSnowflake.New(4);
 
             var api = CreateAPI
             (

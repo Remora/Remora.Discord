@@ -24,8 +24,6 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
@@ -41,5 +39,7 @@ public record InteractionContext
     string Token,
     Snowflake ID,
     Snowflake ApplicationID,
-    IInteractionData Data
+    IInteractionData Data,
+    Optional<IMessage> Message,
+    Optional<string> Locale
 ) : CommandContext(GuildID, ChannelID, User);

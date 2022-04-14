@@ -27,22 +27,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents the Discord Voice API.
+/// </summary>
+[PublicAPI]
+public interface IDiscordRestVoiceAPI
 {
     /// <summary>
-    /// Represents the Discord Voice API.
+    /// Gets the available voice regions.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestVoiceAPI
-    {
-        /// <summary>
-        /// Gets the available voice regions.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
-        (
-            CancellationToken ct = default
-        );
-    }
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
+    (
+        CancellationToken ct = default
+    );
 }

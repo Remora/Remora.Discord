@@ -29,14 +29,13 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.InternalLimits
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
+
+public class CollectionsAreNotSupported : CommandGroup
 {
-    public class CollectionsAreNotSupported : CommandGroup
+    [Command("a")]
+    public Task<IResult> A(IReadOnlyList<int> collection)
     {
-        [Command("a")]
-        public Task<IResult> A(IReadOnlyList<int> collection)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

@@ -24,42 +24,41 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the addition of a reaction to a message.
+/// </summary>
+[PublicAPI]
+public interface IMessageReactionAdd : IGatewayEvent
 {
     /// <summary>
-    /// Represents the addition of a reaction to a message.
+    /// Gets the ID of the user.
     /// </summary>
-    [PublicAPI]
-    public interface IMessageReactionAdd : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the user.
-        /// </summary>
-        Snowflake UserID { get; }
+    Snowflake UserID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    /// <summary>
+    /// Gets the ID of the channel.
+    /// </summary>
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the message.
-        /// </summary>
-        Snowflake MessageID { get; }
+    /// <summary>
+    /// Gets the ID of the message.
+    /// </summary>
+    Snowflake MessageID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the guild member information.
-        /// </summary>
-        Optional<IGuildMember> Member { get; }
+    /// <summary>
+    /// Gets the guild member information.
+    /// </summary>
+    Optional<IGuildMember> Member { get; }
 
-        /// <summary>
-        /// Gets the emoji.
-        /// </summary>
-        IPartialEmoji Emoji { get; }
-    }
+    /// <summary>
+    /// Gets the emoji.
+    /// </summary>
+    IPartialEmoji Emoji { get; }
 }

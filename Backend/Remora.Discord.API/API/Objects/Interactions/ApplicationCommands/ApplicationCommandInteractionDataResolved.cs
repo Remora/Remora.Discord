@@ -37,5 +37,6 @@ public record ApplicationCommandInteractionDataResolved
     Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members,
     Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles,
     Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels,
-    Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages
+    Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages,
+    Optional<IReadOnlyDictionary<Snowflake, IAttachment>> Attachments
 ) : IApplicationCommandInteractionDataResolved;

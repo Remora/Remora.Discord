@@ -22,6 +22,8 @@
 
 using JetBrains.Annotations;
 
+#pragma warning disable SA1402
+
 namespace Remora.Discord.API.Abstractions.VoiceGateway;
 
 /// <summary>

@@ -22,42 +22,41 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates the various embed types.
+/// </summary>
+[PublicAPI]
+public enum EmbedType
 {
     /// <summary>
-    /// Enumerates the various embed types.
+    /// A rich embed.
     /// </summary>
-    [PublicAPI]
-    public enum EmbedType
-    {
-        /// <summary>
-        /// A rich embed.
-        /// </summary>
-        Rich,
+    Rich,
 
-        /// <summary>
-        /// An image embed.
-        /// </summary>
-        Image,
+    /// <summary>
+    /// An image embed.
+    /// </summary>
+    Image,
 
-        /// <summary>
-        /// A video embed.
-        /// </summary>
-        Video,
+    /// <summary>
+    /// A video embed.
+    /// </summary>
+    Video,
 
-        /// <summary>
-        /// An animated gif embed.
-        /// </summary>
-        GIFV,
+    /// <summary>
+    /// An animated gif embed.
+    /// </summary>
+    GIFV,
 
-        /// <summary>
-        /// An article embed.
-        /// </summary>
-        Article,
+    /// <summary>
+    /// An article embed.
+    /// </summary>
+    Article,
 
-        /// <summary>
-        /// A link embed.
-        /// </summary>
-        Link
-    }
+    /// <summary>
+    /// A link embed.
+    /// </summary>
+    Link
 }

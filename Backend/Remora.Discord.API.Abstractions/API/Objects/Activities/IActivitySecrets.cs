@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a set of secrets used for interacting with the activity.
+/// </summary>
+[PublicAPI]
+public interface IActivitySecrets
 {
     /// <summary>
-    /// Represents a set of secrets used for interacting with the activity.
+    /// Gets the secret used for joining the party.
     /// </summary>
-    [PublicAPI]
-    public interface IActivitySecrets
-    {
-        /// <summary>
-        /// Gets the secret used for joining the party.
-        /// </summary>
-        Optional<string> Join { get; }
+    Optional<string> Join { get; }
 
-        /// <summary>
-        /// Gets the secret used for spectating the party.
-        /// </summary>
-        Optional<string> Spectate { get; }
+    /// <summary>
+    /// Gets the secret used for spectating the party.
+    /// </summary>
+    Optional<string> Spectate { get; }
 
-        /// <summary>
-        /// Gets the secret used for joining a specific instanced match.
-        /// </summary>
-        Optional<string> Match { get; }
-    }
+    /// <summary>
+    /// Gets the secret used for joining a specific instanced match.
+    /// </summary>
+    Optional<string> Match { get; }
 }

@@ -34,7 +34,6 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Autocomplete;
-using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
@@ -80,37 +79,22 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
-        if (!gatewayEvent.Data.IsDefined(out var data))
+        var createContext = gatewayEvent.CreateContext();
+        if (!createContext.IsSuccess)
         {
-            return new InvalidOperationError("Autocomplete interaction without data received. Bug?");
+            return Result.FromError(createContext);
         }
 
-        if (!data.ID.IsDefined(out var id))
+        var context = createContext.Entity;
+
+        if (!context.Data.ID.IsDefined(out var id))
         {
             return new InvalidOperationError("Autocomplete interaction without command ID received. Bug?");
         }
 
-        if (!data.Options.IsDefined(out var options))
+        if (!context.Data.Options.IsDefined(out var options))
         {
             return new InvalidOperationError("Autocomplete interaction without options received. Bug?");
-        }
-
-        if (!gatewayEvent.User.IsDefined(out var user))
-        {
-            if (!gatewayEvent.Member.IsDefined(out var member))
-            {
-                return new InvalidOperationError("Autocomplete interaction without user received. Bug?");
-            }
-
-            if (!member.User.IsDefined(out user))
-            {
-                return new InvalidOperationError("Autocomplete interaction without user received. Bug?");
-            }
-        }
-
-        if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
-        {
-            return new InvalidOperationError("Autocomplete interaction without channel ID received. Bug?");
         }
 
         // Check for a global command
@@ -126,14 +110,14 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             }
         }
 
-        data.UnpackInteraction(out var path, out _);
+        context.Data.UnpackInteraction(out var path, out _);
         var commandNode = value.Match
         (
             map => map[string.Join("::", path)],
             node => node
         );
 
-        if (!TryFindFocusedParameter(data, out var focusedParameter))
+        if (!TryFindFocusedParameter(context.Data, out var focusedParameter))
         {
             return new InvalidOperationError("Autocomplete interaction without focused option received. Desync?");
         }
@@ -141,18 +125,6 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
         var realParameter = commandNode.CommandMethod.GetParameters().First
         (
             p => p.Name is not null && p.Name.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
-        );
-
-        var context = new InteractionContext
-        (
-            gatewayEvent.GuildID,
-            channelID,
-            user,
-            gatewayEvent.Member,
-            gatewayEvent.Token,
-            gatewayEvent.ID,
-            gatewayEvent.ApplicationID,
-            data
         );
 
         var contextInjector = _services.GetRequiredService<ContextInjectionService>();
@@ -214,7 +186,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             new InteractionResponse
             (
                 InteractionCallbackType.ApplicationCommandAutocompleteResult,
-                new InteractionCallbackData(Choices: new(suggestions.Take(25).ToList()))
+                new(new InteractionAutocompleteCallbackData(suggestions.Take(25).ToList()))
             ),
             ct: ct
         );

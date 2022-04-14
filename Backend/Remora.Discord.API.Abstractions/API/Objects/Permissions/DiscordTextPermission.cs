@@ -22,115 +22,72 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions
+/// applicable to text channels.
+/// </summary>
+[PublicAPI]
+public enum DiscordTextPermission
 {
-    /// <summary>
-    /// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions
-    /// applicable to text channels.
-    /// </summary>
-    [PublicAPI]
-    public enum DiscordTextPermission
-    {
-        /// <summary>
-        /// Allows creation of instant invites.
-        /// </summary>
-        CreateInstantInvite = 0,
+    /// <inheritdoc cref="DiscordPermission.CreateInstantInvite"/>
+    CreateInstantInvite = DiscordPermission.CreateInstantInvite,
 
-        /// <summary>
-        /// Allows management and editing of channels.
-        /// </summary>
-        ManageChannels = 4,
+    /// <inheritdoc cref="DiscordPermission.ManageChannels"/>
+    ManageChannels = DiscordPermission.ManageChannels,
 
-        /// <summary>
-        /// Allows for the addition of reactions to messages.
-        /// </summary>
-        AddReactions = 6,
+    /// <inheritdoc cref="DiscordPermission.AddReactions"/>
+    AddReactions = DiscordPermission.AddReactions,
 
-        /// <summary>
-        /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
-        /// referred to as "Read Messages" in the Discord client.
-        /// </summary>
-        ViewChannel = 10,
+    /// <inheritdoc cref="DiscordPermission.ViewChannel"/>
+    ViewChannel = DiscordPermission.ViewChannel,
 
-        /// <summary>
-        /// Allows for sending messages in a channel.
-        /// </summary>
-        SendMessages = 11,
+    /// <inheritdoc cref="DiscordPermission.SendMessages"/>
+    SendMessages = DiscordPermission.SendMessages,
 
-        /// <summary>
-        /// Allows for sending of /tts messages.
-        /// </summary>
-        SendTTSMessages = 12,
+    /// <inheritdoc cref="DiscordPermission.SendTTSMessages"/>
+    SendTTSMessages = DiscordPermission.SendTTSMessages,
 
-        /// <summary>
-        /// Allows for deletion of other user's messages.
-        /// </summary>
-        ManageMessages = 13,
+    /// <inheritdoc cref="DiscordPermission.ManageMessages"/>
+    ManageMessages = DiscordPermission.ManageMessages,
 
-        /// <summary>
-        /// Links sent by users with this permission will be auto-embedded.
-        /// </summary>
-        EmbedLinks = 14,
+    /// <inheritdoc cref="DiscordPermission.EmbedLinks"/>
+    EmbedLinks = DiscordPermission.EmbedLinks,
 
-        /// <summary>
-        /// Allows for uploading images and files.
-        /// </summary>
-        AttachFiles = 15,
+    /// <inheritdoc cref="DiscordPermission.AttachFiles"/>
+    AttachFiles = DiscordPermission.AttachFiles,
 
-        /// <summary>
-        /// Allows for reading of message history.
-        /// </summary>
-        ReadMessageHistory = 16,
+    /// <inheritdoc cref="DiscordPermission.ReadMessageHistory"/>
+    ReadMessageHistory = DiscordPermission.ReadMessageHistory,
 
-        /// <summary>
-        /// Allows for using the @everyone tag to notify all users in a guild, and the @here tag to notify all online
-        /// users in a channel.
-        /// </summary>
-        MentionEveryone = 17,
+    /// <inheritdoc cref="DiscordPermission.MentionEveryone"/>
+    MentionEveryone = DiscordPermission.MentionEveryone,
 
-        /// <summary>
-        /// Allows the usage of custom emojis from other servers.
-        /// </summary>
-        UseExternalEmojis = 18,
+    /// <inheritdoc cref="DiscordPermission.UseExternalEmojis"/>
+    UseExternalEmojis = DiscordPermission.UseExternalEmojis,
 
-        /// <summary>
-        /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
-        /// </summary>
-        ManageRoles = 28,
+    /// <inheritdoc cref="DiscordPermission.ManageRoles"/>
+    ManageRoles = DiscordPermission.ManageRoles,
 
-        /// <summary>
-        /// Allows management and editing of webhooks.
-        /// </summary>
-        ManageWebhooks = 29,
+    /// <inheritdoc cref="DiscordPermission.ManageWebhooks"/>
+    ManageWebhooks = DiscordPermission.ManageWebhooks,
 
-        /// <summary>
-        /// Allows usage of slash commands.
-        /// </summary>
-        UseSlashCommands = 31,
+    /// <inheritdoc cref="DiscordPermission.UseApplicationCommands"/>
+    UseApplicationCommands = DiscordPermission.UseApplicationCommands,
 
-        /// <summary>
-        /// Allows the user to manage threads.
-        /// </summary>
-        ManageThreads = 34,
+    /// <inheritdoc cref="DiscordPermission.ManageThreads"/>
+    ManageThreads = DiscordPermission.ManageThreads,
 
-        /// <summary>
-        /// Allows the user to create public threads.
-        /// </summary>
-        CreatePublicThreads = 35,
+    /// <inheritdoc cref="DiscordPermission.CreatePublicThreads"/>
+    CreatePublicThreads = DiscordPermission.CreatePublicThreads,
 
-        /// <summary>
-        /// Allows the user to create private threads.
-        /// </summary>
-        CreatePrivateThreads = 36,
+    /// <inheritdoc cref="DiscordPermission.CreatePrivateThreads"/>
+    CreatePrivateThreads = DiscordPermission.CreatePrivateThreads,
 
-        /// <summary>
-        /// Allows the user to use stickers from other servers.
-        /// </summary>
-        UseExternalStickers = 37,
+    /// <inheritdoc cref="DiscordPermission.UseExternalStickers"/>
+    UseExternalStickers = DiscordPermission.UseExternalStickers,
 
-        /// <summary>
-        /// Allows the user to send messages in threads.
-        /// </summary>
-        SendMessagesInThreads = 38
-    }
+    /// <inheritdoc cref="DiscordPermission.SendMessagesInThreads"/>
+    SendMessagesInThreads = DiscordPermission.SendMessagesInThreads
 }

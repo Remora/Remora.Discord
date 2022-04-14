@@ -5,19 +5,19 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>1.0.0</Version>
+		<Version>4.0.0</Version>
 		<Description>
 			$(BaseDescription)
 
 			This package provides utilities and components which extened upon base resources.
 		</Description>
 		<PackageReleaseNotes>
-			Initial release.
+			Set default color to null.
 		</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Remora.Results" Version="7.0.3" />
+		<PackageReference Include="Remora.Results" Version="7.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>

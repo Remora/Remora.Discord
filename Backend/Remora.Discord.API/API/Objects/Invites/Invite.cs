@@ -35,7 +35,7 @@ public record Invite
 (
     string Code,
     Optional<IPartialGuild> Guild,
-    IPartialChannel Channel,
+    IPartialChannel? Channel,
     Optional<IUser> Inviter = default,
     Optional<InviteTarget> TargetType = default,
     Optional<IPartialUser> TargetUser = default,
@@ -43,6 +43,5 @@ public record Invite
     Optional<int> ApproximatePresenceCount = default,
     Optional<int> ApproximateMemberCount = default,
     Optional<DateTimeOffset?> ExpiresAt = default,
-    Optional<IInviteStageInstance> StageInstance = default,
     Optional<IGuildScheduledEvent> GuildScheduledEvent = default
 ) : IInvite;

@@ -23,14 +23,13 @@
 using System.IO;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Rest
-{
-    /// <summary>
-    /// Represents a file with its associated information.
-    /// </summary>
-    /// <param name="Name">The name of the file.</param>
-    /// <param name="Content">The contents of the file.</param>
-    /// <param name="Description">The file description.</param>
-    [PublicAPI]
-    public record FileData(string Name, Stream Content, string Description = "No description set.");
-}
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents a file with its associated information.
+/// </summary>
+/// <param name="Name">The name of the file.</param>
+/// <param name="Content">The contents of the file.</param>
+/// <param name="Description">The file description.</param>
+[PublicAPI]
+public record FileData(string Name, Stream Content, string Description = "No description set.");

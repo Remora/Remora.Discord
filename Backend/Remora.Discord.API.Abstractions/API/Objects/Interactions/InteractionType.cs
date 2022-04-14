@@ -22,32 +22,36 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various interaction types.
+/// </summary>
+[PublicAPI]
+public enum InteractionType
 {
     /// <summary>
-    /// Enumerates various interaction types.
+    /// A Discord-initiated ping to check for connectivity.
     /// </summary>
-    [PublicAPI]
-    public enum InteractionType
-    {
-        /// <summary>
-        /// A Discord-initiated ping to check for connectivity.
-        /// </summary>
-        Ping = 1,
+    Ping = 1,
 
-        /// <summary>
-        /// A user-invoked slash command.
-        /// </summary>
-        ApplicationCommand = 2,
+    /// <summary>
+    /// A user-invoked slash command.
+    /// </summary>
+    ApplicationCommand = 2,
 
-        /// <summary>
-        /// A user-initiated interaction with a message component.
-        /// </summary>
-        MessageComponent = 3,
+    /// <summary>
+    /// A user-initiated interaction with a message component.
+    /// </summary>
+    MessageComponent = 3,
 
-        /// <summary>
-        /// An autocomplete request.
-        /// </summary>
-        ApplicationCommandAutocomplete = 4
-    }
+    /// <summary>
+    /// An autocomplete request.
+    /// </summary>
+    ApplicationCommandAutocomplete = 4,
+
+    /// <summary>
+    /// A modal submission interaction.
+    /// </summary>
+    ModalSubmit = 5
 }

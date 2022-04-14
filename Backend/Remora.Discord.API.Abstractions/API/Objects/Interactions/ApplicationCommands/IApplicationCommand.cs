@@ -24,59 +24,58 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an application command.
+/// </summary>
+[PublicAPI]
+public interface IApplicationCommand
 {
     /// <summary>
-    /// Represents an application command.
+    /// Gets the ID of the command.
     /// </summary>
-    [PublicAPI]
-    public interface IApplicationCommand
-    {
-        /// <summary>
-        /// Gets the ID of the command.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the type of the command.
-        /// </summary>
-        Optional<ApplicationCommandType> Type { get; }
+    /// <summary>
+    /// Gets the type of the command.
+    /// </summary>
+    Optional<ApplicationCommandType> Type { get; }
 
-        /// <summary>
-        /// Gets the ID of the application.
-        /// </summary>
-        Snowflake ApplicationID { get; }
+    /// <summary>
+    /// Gets the ID of the application.
+    /// </summary>
+    Snowflake ApplicationID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the command belongs to.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild the command belongs to.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the name of the command.
-        /// </summary>
-        /// <remarks>The length of the name must be between 3 and 32 characters.</remarks>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the command.
+    /// </summary>
+    /// <remarks>The length of the name must be between 3 and 32 characters.</remarks>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the description of the command.
-        /// </summary>
-        /// <remarks>The length of the description must be between 1 and 100 characters.</remarks>
-        string Description { get; }
+    /// <summary>
+    /// Gets the description of the command.
+    /// </summary>
+    /// <remarks>The length of the description must be between 1 and 100 characters.</remarks>
+    string Description { get; }
 
-        /// <summary>
-        /// Gets the parameters of the command.
-        /// </summary>
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
+    /// <summary>
+    /// Gets the parameters of the command.
+    /// </summary>
+    Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the command is enabled by default when added to a guild.
-        /// </summary>
-        Optional<bool> DefaultPermission { get; }
+    /// <summary>
+    /// Gets a value indicating whether the command is enabled by default when added to a guild.
+    /// </summary>
+    Optional<bool> DefaultPermission { get; }
 
-        /// <summary>
-        /// Gets a value that increments on substantial changes.
-        /// </summary>
-        Snowflake Version { get; }
-    }
+    /// <summary>
+    /// Gets a value that increments on substantial changes.
+    /// </summary>
+    Snowflake Version { get; }
 }

@@ -11,7 +11,7 @@ environments - primarily, a system with `bash` is assumed, but the commands
 should be easily transferable to any shell language.
 
 ## Creating your project
-First of all, ensure that you have version 5.0 of the .NET Core SDK installed.
+First of all, ensure that you have version 6.0 of the .NET Core SDK installed.
 If you don't have it yet, you can follow the instructions on [this][1] page for
 your system.
 
@@ -23,12 +23,8 @@ this guide. Feel free to use your favourite IDE instead, such as
 ```bash
 dotnet new console -n "PingPong"
 cd PingPong
-dotnet add package Remora.Discord -v "3.0.33"
+dotnet add package Remora.Discord
 ```
-
-In the commands above, replace `-v "3.0.33"` with the release you'd like to
-install (or remove it altogether if you'd like to use the latest stable
-release).
 
 Opening up the `Program.cs` file, we can start to set up our environment.
 
@@ -39,9 +35,12 @@ connection to Discord's realtime gateway. This is facilitated through the
 with Discord themselves. From this account, you'll get a bot token, which the
 gateway client will use to authenticate with the gateway.
 
-For now, we'll do everything in our `Main` method, but as your bot grows, it's
-almost a certainty that you'll need to expand out to more types, files, and
-namespaces.
+For now, we'll do everything as top-level statements in our `Program.cs` file, 
+but as your bot grows, it's almost a certainty that you'll need to expand out to 
+more types, files, and namespaces. This guide also deliberately avoids more 
+integrated features, such as hosted services and generic app hosts - that said, 
+it is highly recommended that you build real bots around those technologies. 
+Check out the [samples][6] if you want to know more!
 
 The first thing we'll do is create a `CancellationTokenSource`. This is going to
 be our primary way of gracefully shutting down our bot, letting it notify the
@@ -52,16 +51,12 @@ For simplicity's sake, we'll set up our program to respond to CTRL+C at the
 command line, and terminate the gateway client if it catches that keypress.
 
 ```csharp
-static async Task Main()
+var cancellationSource = new CancellationTokenSource();
+Console.CancelKeyPress += (sender, eventArgs) =>
 {
-    var cancellationSource = new CancellationTokenSource();
-
-    Console.CancelKeyPress += (sender, eventArgs) =>
-    {
-        eventArgs.Cancel = true;
-        cancellationSource.Cancel();
-    };
-}
+    eventArgs.Cancel = true;
+    cancellationSource.Cancel();
+};
 ```
 
 After this, we'll set up a service provider. Remora.Discord uses [dependency
@@ -122,9 +117,7 @@ Let's implement some error handling next.
 
 ```csharp
 var log = services.GetRequiredService<ILogger<Program>>();
-```
 
-```csharp
 if (!runResult.IsSuccess)
 {
     switch (runResult.Error)
@@ -204,7 +197,7 @@ fact that they also share the cancellation token with the gateway client.
 Let's create our responder now.
 
 ```csharp
- public class PingPongResponder : IResponder<IMessageCreate>
+public class PingPongResponder : IResponder<IMessageCreate>
 {
 }
 ```
@@ -346,105 +339,98 @@ using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 using Remora.Results;
 
-namespace Remora.Discord.Docs.Custom.Guides.Getting_Started
+namespace Remora.Discord.Docs.Custom.Guides.Getting_Started;
+
+var cancellationSource = new CancellationTokenSource();
+Console.CancelKeyPress += (sender, eventArgs) =>
 {
-    class Program
+    eventArgs.Cancel = true;
+    cancellationSource.Cancel();
+};
+
+var botToken = "YOUR_TOKEN_HERE";
+// Do not place your bot token in the source code of your program
+// when you write your real bot. It's a massive security risk,
+// and is only done here for the sake of this guide. You should store
+// your token outside of the program in some kind of database or file
+// (appsettings, plaintext file, etc) that is not directly accessible
+// from your source code.
+
+var services = new ServiceCollection()
+    .AddDiscordGateway(_ => botToken)
+    .AddResponder<PingPongResponder>()
+    .BuildServiceProvider();
+
+var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
+var log = services.GetRequiredService<ILogger<Program>>();
+
+var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
+
+if (!runResult.IsSuccess)
+{
+    switch (runResult.Error)
     {
-        static async Task Main()
+        case ExceptionError exe:
         {
-            var cancellationSource = new CancellationTokenSource();
-
-            Console.CancelKeyPress += (sender, eventArgs) =>
-            {
-                eventArgs.Cancel = true;
-                cancellationSource.Cancel();
-            };
-
-            var botToken = "YOUR_TOKEN_HERE";
-            // Do not place your bot token in the source code of your program
-            // when you write your real bot. It's a massive security risk,
-            // and is only done here for the sake of this guide. You should store
-            // your token outside of the program in some kind of database or file
-            // (appsettings, plaintext file, etc) that is not directly accessible
-            // from your source code.
-
-            var services = new ServiceCollection()
-                .AddDiscordGateway(_ => botToken)
-                .AddResponder<PingPongResponder>()
-                .BuildServiceProvider();
-
-            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
-            var log = services.GetRequiredService<ILogger<Program>>();
-
-            var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
-
-            if (!runResult.IsSuccess)
-            {
-                switch (runResult.Error)
-                {
-                    case ExceptionError exe:
-                        {
-                            log.LogError
-                            (
-                                exe.Exception,
-                                "Exception during gateway connection: {ExceptionMessage}",
-                                exe.Message
-                            );
-
-                            break;
-                        }
-                    case GatewayWebSocketError:
-                    case GatewayDiscordError:
-                        {
-                            log.LogError("Gateway error: {Message}", runResult.Error.Message);
-                            break;
-                        }
-                    default:
-                        {
-                            log.LogError("Unknown error: {Message}", runResult.Error.Message);
-                            break;
-                        }
-                }
-            }
-
-            Console.WriteLine("Bye bye");
-        }
-    }
-
-    public class PingPongResponder : IResponder<IMessageCreate>
-    {
-        private readonly IDiscordRestChannelAPI _channelAPI;
-
-        public PingPongResponder(IDiscordRestChannelAPI channelAPI)
-        {
-            _channelAPI = channelAPI;
-        }
-
-        public async Task<Result> RespondAsync
-        (
-            IMessageCreate gatewayEvent,
-            CancellationToken ct = default
-        )
-        {
-            if (gatewayEvent.Content != "!ping")
-            {
-                return Result.FromSuccess();
-            }
-
-            var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
-            var replyResult = await _channelAPI.CreateMessageAsync
+            log.LogError
             (
-                gatewayEvent.ChannelID,
-                embeds: new[] { embed },
-                ct: ct
+                exe.Exception,
+                "Exception during gateway connection: {ExceptionMessage}",
+                exe.Message
             );
 
-            return !replyResult.IsSuccess 
-                ? Result.FromError(replyResult) 
-                : Result.FromSuccess();
+            break;
+        }
+        case GatewayWebSocketError:
+        case GatewayDiscordError:
+        {
+            log.LogError("Gateway error: {Message}", runResult.Error.Message);
+            break;
+        }
+        default:
+        {
+            log.LogError("Unknown error: {Message}", runResult.Error.Message);
+            break;
         }
     }
 }
+
+Console.WriteLine("Bye bye");
+
+public class PingPongResponder : IResponder<IMessageCreate>
+{
+    private readonly IDiscordRestChannelAPI _channelAPI;
+
+    public PingPongResponder(IDiscordRestChannelAPI channelAPI)
+    {
+        _channelAPI = channelAPI;
+    }
+
+    public async Task<Result> RespondAsync
+    (
+        IMessageCreate gatewayEvent,
+        CancellationToken ct = default
+    )
+    {
+        if (gatewayEvent.Content != "!ping")
+        {
+            return Result.FromSuccess();
+        }
+
+        var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
+        var replyResult = await _channelAPI.CreateMessageAsync
+        (
+            gatewayEvent.ChannelID,
+            embeds: new[] { embed },
+            ct: ct
+        );
+
+        return !replyResult.IsSuccess 
+            ? Result.FromError(replyResult) 
+            : Result.FromSuccess();
+    }
+}
+
 ```
 
 ## Conclusion

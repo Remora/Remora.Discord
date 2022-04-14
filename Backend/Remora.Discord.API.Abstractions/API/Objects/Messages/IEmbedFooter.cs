@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a footer in an embed.
+/// </summary>
+[PublicAPI]
+public interface IEmbedFooter
 {
     /// <summary>
-    /// Represents a footer in an embed.
+    /// Gets the text of the footer.
     /// </summary>
-    [PublicAPI]
-    public interface IEmbedFooter
-    {
-        /// <summary>
-        /// Gets the text of the footer.
-        /// </summary>
-        string Text { get; }
+    string Text { get; }
 
-        /// <summary>
-        /// Gets the URL of the footer icon. Only supports http(s) and attachments.
-        /// </summary>
-        Optional<string> IconUrl { get; }
+    /// <summary>
+    /// Gets the URL of the footer icon. Only supports http(s) and attachments.
+    /// </summary>
+    Optional<string> IconUrl { get; }
 
-        /// <summary>
-        /// Gets the proxied icon URL.
-        /// </summary>
-        Optional<string> ProxyIconUrl { get; }
-    }
+    /// <summary>
+    /// Gets the proxied icon URL.
+    /// </summary>
+    Optional<string> ProxyIconUrl { get; }
 }

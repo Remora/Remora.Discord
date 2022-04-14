@@ -24,24 +24,23 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a set of permissions for a command in a guild.
+/// </summary>
+[PublicAPI]
+public interface IPartialGuildApplicationCommandPermissions
 {
-    /// <summary>
-    /// Represents a set of permissions for a command in a guild.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialGuildApplicationCommandPermissions
-    {
-        /// <inheritdoc cref="IGuildApplicationCommandPermissions.ID" />
-        Optional<Snowflake> ID { get; }
+    /// <inheritdoc cref="IGuildApplicationCommandPermissions.ID" />
+    Optional<Snowflake> ID { get; }
 
-        /// <inheritdoc cref="IGuildApplicationCommandPermissions.ApplicationID" />
-        Optional<Snowflake> ApplicationID { get; }
+    /// <inheritdoc cref="IGuildApplicationCommandPermissions.ApplicationID" />
+    Optional<Snowflake> ApplicationID { get; }
 
-        /// <inheritdoc cref="IGuildApplicationCommandPermissions.GuildID" />
-        Optional<Snowflake> GuildID { get; }
+    /// <inheritdoc cref="IGuildApplicationCommandPermissions.GuildID" />
+    Optional<Snowflake> GuildID { get; }
 
-        /// <inheritdoc cref="IGuildApplicationCommandPermissions.Permissions" />
-        Optional<IReadOnlyList<IApplicationCommandPermissions>> Permissions { get; }
-    }
+    /// <inheritdoc cref="IGuildApplicationCommandPermissions.Permissions" />
+    Optional<IReadOnlyList<IApplicationCommandPermissions>> Permissions { get; }
 }

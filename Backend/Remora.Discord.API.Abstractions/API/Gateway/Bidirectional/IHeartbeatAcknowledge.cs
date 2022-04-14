@@ -24,13 +24,12 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Bidirectional
+namespace Remora.Discord.API.Abstractions.Gateway.Bidirectional;
+
+/// <summary>
+/// Represents a heartbeat acknowledgement. This interface defines no data.
+/// </summary>
+[PublicAPI]
+public interface IHeartbeatAcknowledge : IGatewayEvent, IGatewayCommand
 {
-    /// <summary>
-    /// Represents a heartbeat acknowledgement. This interface defines no data.
-    /// </summary>
-    [PublicAPI]
-    public interface IHeartbeatAcknowledge : IGatewayEvent, IGatewayCommand
-    {
-    }
 }

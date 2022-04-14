@@ -23,46 +23,53 @@
 using System;
 using System.Text.Json;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Rest;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <summary>
+/// Acts as an abstract base for REST API instances.
+/// </summary>
+[PublicAPI]
+public abstract class AbstractDiscordRestAPI
 {
     /// <summary>
-    /// Acts as an abstract base for REST API instances.
+    /// Gets the <see cref="RestHttpClient{TError}"/> available to the API instance.
     /// </summary>
-    [PublicAPI]
-    public abstract class AbstractDiscordRestAPI
+    protected IRestHttpClient RestHttpClient { get; }
+
+    /// <summary>
+    /// Gets the <see cref="System.Text.Json.JsonSerializerOptions"/> available to the API instance.
+    /// </summary>
+    protected JsonSerializerOptions JsonOptions { get; }
+
+    /// <summary>
+    /// Gets the rate limit memory cache.
+    /// </summary>
+    protected IMemoryCache RateLimitCache { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AbstractDiscordRestAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord-specialized Http client.</param>
+    /// <param name="jsonOptions">The Remora-specialized JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    protected AbstractDiscordRestAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        IMemoryCache rateLimitCache
+    )
     {
-        /// <summary>
-        /// Gets the <see cref="RestHttpClient{TError}"/> available to the API instance.
-        /// </summary>
-        protected IRestHttpClient RestHttpClient { get; }
+        this.RestHttpClient = restHttpClient;
+        this.JsonOptions = jsonOptions;
+        this.RateLimitCache = rateLimitCache;
+    }
 
-        /// <summary>
-        /// Gets the <see cref="System.Text.Json.JsonSerializerOptions"/> available to the API instance.
-        /// </summary>
-        protected JsonSerializerOptions JsonOptions { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractDiscordRestAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord-specialized Http client.</param>
-        /// <param name="jsonOptions">The Remora-specialized JSON options.</param>
-        protected AbstractDiscordRestAPI
-        (
-            IRestHttpClient restHttpClient,
-            JsonSerializerOptions jsonOptions
-        )
-        {
-            this.RestHttpClient = restHttpClient;
-            this.JsonOptions = jsonOptions;
-        }
-
-        /// <inheritdoc cref="RestHttpClient{TError}.WithCustomization"/>
-        public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return this.RestHttpClient.WithCustomization(requestCustomizer);
-        }
+    /// <inheritdoc cref="RestHttpClient{TError}.WithCustomization"/>
+    public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
+    {
+        return this.RestHttpClient.WithCustomization(requestCustomizer);
     }
 }

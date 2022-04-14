@@ -26,129 +26,122 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Extensions;
-using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.Services;
-using Remora.Discord.Tests;
 using Remora.Discord.Unstable.Extensions;
-using Remora.Rest;
-using Remora.Rest.Extensions;
-using Remora.Rest.Json;
-using Remora.Rest.Json.Internal;
 using Remora.Rest.Xunit;
 using Xunit;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.TestBases;
+
+/// <summary>
+/// Acts as a base class for testing JSON-backed types in the Discord API. This class contains common baseline
+/// tests for all types.
+/// </summary>
+/// <typeparam name="TType">The type under test.</typeparam>
+/// <typeparam name="TSampleSource">The theory data source.</typeparam>
+public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSampleSource : TheoryData, new()
 {
     /// <summary>
-    /// Acts as a base class for testing JSON-backed types in the Discord API. This class contains common baseline
-    /// tests for all types.
+    /// Gets the data sample source.
     /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    /// <typeparam name="TSampleSource">The theory data source.</typeparam>
-    public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSampleSource : TheoryData, new()
+    public static TheoryData SampleSource => new TSampleSource();
+
+    /// <summary>
+    /// Gets the sample data service.
+    /// </summary>
+    protected SampleDataService SampleData { get; }
+
+    /// <summary>
+    /// Gets the configured JSON serializer options.
+    /// </summary>
+    protected JsonSerializerOptions Options { get; }
+
+    /// <summary>
+    /// Gets the assertion options.
+    /// </summary>
+    protected virtual JsonAssertOptions AssertOptions => JsonAssertOptions.Default;
+
+    /// <summary>
+    /// Gets a value indicating whether unknown events are allowed.
+    /// </summary>
+    protected virtual bool AllowUnknownEvents => false;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JsonBackedTypeTestBase{TType,TSampleSource}"/> class.
+    /// </summary>
+    protected JsonBackedTypeTestBase()
     {
-        /// <summary>
-        /// Gets the data sample source.
-        /// </summary>
-        public static TheoryData SampleSource => new TSampleSource();
+        // ReSharper disable once VirtualMemberCallInConstructor
+        var services = new ServiceCollection()
+            .ConfigureDiscordJsonConverters(allowUnknownEvents: this.AllowUnknownEvents)
+            .AddSingleton<SampleDataService>()
+            .AddExperimentalDiscordApi()
+            .BuildServiceProvider(true);
 
-        /// <summary>
-        /// Gets the sample data service.
-        /// </summary>
-        protected SampleDataService SampleData { get; }
+        this.SampleData = services.GetRequiredService<SampleDataService>();
+        this.Options = services.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>()
+            .Get("Discord");
+    }
 
-        /// <summary>
-        /// Gets the configured JSON serializer options.
-        /// </summary>
-        protected JsonSerializerOptions Options { get; }
+    /// <summary>
+    /// Tests whether the type can be deserialized from a JSON object.
+    /// </summary>
+    /// <param name="sampleDataFile">The sample data.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [SkippableTheory]
+    [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
+    public async Task CanDeserialize(SampleDataDescriptor sampleDataFile)
+    {
+        await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
+        var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
+        Assert.NotNull(payload);
+    }
 
-        /// <summary>
-        /// Gets the assertion options.
-        /// </summary>
-        protected virtual JsonAssertOptions AssertOptions => JsonAssertOptions.Default;
+    /// <summary>
+    /// Tests whether the type can be serialized to a JSON object.
+    /// </summary>
+    /// <param name="sampleDataFile">The sample data.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [SkippableTheory]
+    [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
+    public async Task CanSerialize(SampleDataDescriptor sampleDataFile)
+    {
+        await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
+        var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
 
-        /// <summary>
-        /// Gets a value indicating whether unknown events are allowed.
-        /// </summary>
-        protected virtual bool AllowUnknownEvents => false;
+        Assert.NotNull(payload);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonBackedTypeTestBase{TType,TSampleSource}"/> class.
-        /// </summary>
-        protected JsonBackedTypeTestBase()
-        {
-            // ReSharper disable once VirtualMemberCallInConstructor
-            var services = new ServiceCollection()
-                .ConfigureDiscordJsonConverters(allowUnknownEvents: this.AllowUnknownEvents)
-                .AddSingleton<SampleDataService>()
-                .AddExperimentalDiscordApi()
-                .BuildServiceProvider(true);
+        await using var stream = new MemoryStream();
+        await JsonSerializer.SerializeAsync(stream, payload!, this.Options);
+    }
 
-            this.SampleData = services.GetRequiredService<SampleDataService>();
-            this.Options = services.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>()
-                .Get("Discord");
-        }
+    /// <summary>
+    /// Tests whether data survives being round-tripped by the type - that is, it can be deserialized and then
+    /// serialized again without data loss.
+    /// </summary>
+    /// <param name="sampleDataFile">The sample data.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [SkippableTheory]
+    [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
+    public async Task SurvivesRoundTrip(SampleDataDescriptor sampleDataFile)
+    {
+        await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
+        var deserialized = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
 
-        /// <summary>
-        /// Tests whether the type can be deserialized from a JSON object.
-        /// </summary>
-        /// <param name="sampleDataFile">The sample data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [SkippableTheory]
-        [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task CanDeserialize(SampleDataDescriptor sampleDataFile)
-        {
-            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
-            var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
-            Assert.NotNull(payload);
-        }
+        Assert.NotNull(deserialized);
 
-        /// <summary>
-        /// Tests whether the type can be serialized to a JSON object.
-        /// </summary>
-        /// <param name="sampleDataFile">The sample data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [SkippableTheory]
-        [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task CanSerialize(SampleDataDescriptor sampleDataFile)
-        {
-            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
-            var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
+        await using var stream = new MemoryStream();
+        await JsonSerializer.SerializeAsync(stream, deserialized!, this.Options);
 
-            Assert.NotNull(payload);
+        await stream.FlushAsync();
 
-            await using var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, payload!, this.Options);
-        }
+        stream.Seek(0, SeekOrigin.Begin);
+        sampleData.Seek(0, SeekOrigin.Begin);
 
-        /// <summary>
-        /// Tests whether data survives being round-tripped by the type - that is, it can be deserialized and then
-        /// serialized again without data loss.
-        /// </summary>
-        /// <param name="sampleDataFile">The sample data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [SkippableTheory]
-        [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task SurvivesRoundTrip(SampleDataDescriptor sampleDataFile)
-        {
-            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
-            var deserialized = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
+        var serialized = await JsonDocument.ParseAsync(stream);
+        var original = await JsonDocument.ParseAsync(sampleData);
 
-            Assert.NotNull(deserialized);
-
-            await using var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, deserialized!, this.Options);
-
-            await stream.FlushAsync();
-
-            stream.Seek(0, SeekOrigin.Begin);
-            sampleData.Seek(0, SeekOrigin.Begin);
-
-            var serialized = await JsonDocument.ParseAsync(stream);
-            var original = await JsonDocument.ParseAsync(sampleData);
-
-            JsonAssert.Equivalent(original, serialized, this.AssertOptions);
-        }
+        JsonAssert.Equivalent(original, serialized, this.AssertOptions);
     }
 }

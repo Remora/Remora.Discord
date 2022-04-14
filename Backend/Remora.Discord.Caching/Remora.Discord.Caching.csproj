@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>16.0.3</Version>
+        <Version>23.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,15 +13,12 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
+            Lots of rate limit refactoring and improvements.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
     </ItemGroup>
 
 </Project>

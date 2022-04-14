@@ -24,55 +24,55 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestOAuth2API" />
+[PublicAPI]
+public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2API
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestOAuth2API" />
-    [PublicAPI]
-    public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2API
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestOAuth2API"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestOAuth2API(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestOAuth2API"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestOAuth2API(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
+    (
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IApplication>
         (
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IApplication>
-            (
-                "oauth2/applications/@me",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            "oauth2/applications/@me",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+    (
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IAuthorizationInformation>
         (
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IAuthorizationInformation>
-            (
-                "oauth2/@me",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            "oauth2/@me",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
     }
 }

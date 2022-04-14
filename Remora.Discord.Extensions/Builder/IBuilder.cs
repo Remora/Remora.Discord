@@ -22,24 +22,23 @@
 
 using Remora.Results;
 
-namespace Remora.Discord.Extensions.Builder
+namespace Remora.Discord.Extensions.Builder;
+
+/// <summary>
+/// Represents an object responsible for constructing and validating a model.
+/// </summary>
+/// <typeparam name="TEntity">The type of model to build.</typeparam>
+public interface IBuilder<TEntity>
 {
     /// <summary>
-    /// Represents an object responsible for constructing and validating a model.
+    /// Validate the model within specifications described by the model.
     /// </summary>
-    /// <typeparam name="TEntity">The type of model to build.</typeparam>
-    public interface IBuilder<TEntity>
-    {
-        /// <summary>
-        /// Validate the model within specifications described by the model.
-        /// </summary>
-        /// <returns>Returns a <see cref="Result"/> indicating the result of validation.</returns>
-        Result Validate();
+    /// <returns>Returns a <see cref="Result"/> indicating the result of validation.</returns>
+    Result Validate();
 
-        /// <summary>
-        /// Validates and then builds the model.
-        /// </summary>
-        /// <returns>Returns a <see cref="Result{TEntity}"/> containing the result of the build or the reason for failure.</returns>
-        Result<TEntity> Build();
-    }
+    /// <summary>
+    /// Validates and then builds the model.
+    /// </summary>
+    /// <returns>Returns a <see cref="Result{TEntity}"/> containing the result of the build or the reason for failure.</returns>
+    Result<TEntity> Build();
 }

@@ -22,37 +22,36 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various premium tiers of a guild.
+/// </summary>
+[PublicAPI]
+public enum PremiumTier
 {
     /// <summary>
-    /// Enumerates various premium tiers of a guild.
+    /// The guild hasn't been boosted.
     /// </summary>
-    [PublicAPI]
-    public enum PremiumTier
-    {
-        /// <summary>
-        /// The guild hasn't been boosted.
-        /// </summary>
-        None = 0,
+    None = 0,
 
-        /// <summary>
-        /// The guild is boosted to tier 1.
-        /// </summary>
-        Tier1 = 1,
+    /// <summary>
+    /// The guild is boosted to tier 1.
+    /// </summary>
+    Tier1 = 1,
 
-        /// <summary>
-        /// The guild is boosted to tier 2.
-        /// </summary>
-        Tier2 = 2,
+    /// <summary>
+    /// The guild is boosted to tier 2.
+    /// </summary>
+    Tier2 = 2,
 
-        /// <summary>
-        /// The guild is boosted to tier 3.
-        /// </summary>
-        Tier3 = 3,
+    /// <summary>
+    /// The guild is boosted to tier 3.
+    /// </summary>
+    Tier3 = 3,
 
-        /// <summary>
-        /// The guild is boosted to tier 4.
-        /// </summary>
-        Tier4 = 4
-    }
+    /// <summary>
+    /// The guild is boosted to tier 4.
+    /// </summary>
+    Tier4 = 4
 }

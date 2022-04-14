@@ -25,62 +25,61 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.API
-{
-    /// <inheritdoc />
-    [PublicAPI]
-    public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
-    {
-        private readonly CacheService _cacheService;
+namespace Remora.Discord.Caching.API;
 
-        /// <inheritdoc cref="DiscordRestVoiceAPI(IRestHttpClient, JsonSerializerOptions)" />
-        public CachingDiscordRestVoiceAPI
-        (
-            IRestHttpClient restHttpClient,
-            JsonSerializerOptions jsonOptions,
-            CacheService cacheService
-        )
-            : base(restHttpClient, jsonOptions)
+/// <inheritdoc />
+[PublicAPI]
+public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
+{
+    private readonly CacheService _cacheService;
+
+    /// <inheritdoc cref="DiscordRestVoiceAPI(IRestHttpClient, JsonSerializerOptions, IMemoryCache)" />
+    public CachingDiscordRestVoiceAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        IMemoryCache rateLimitCache,
+        CacheService cacheService
+    )
+        : base(restHttpClient, jsonOptions, rateLimitCache)
+    {
+        _cacheService = cacheService;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
+    (
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateVoiceRegionsCacheKey();
+        if (_cacheService.TryGetValue<IReadOnlyList<IVoiceRegion>>(key, out var cachedInstance))
         {
-            _cacheService = cacheService;
+            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
-        (
-            CancellationToken ct = default
-        )
+        var listRegions = await base.ListVoiceRegionsAsync(ct);
+        if (!listRegions.IsSuccess)
         {
-            var key = KeyHelpers.CreateVoiceRegionsCacheKey();
-            if (_cacheService.TryGetValue<IReadOnlyList<IVoiceRegion>>(key, out var cachedInstance))
-            {
-                return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
-            }
-
-            var listRegions = await base.ListVoiceRegionsAsync(ct);
-            if (!listRegions.IsSuccess)
-            {
-                return listRegions;
-            }
-
-            var regions = listRegions.Entity;
-            _cacheService.Cache(key, regions);
-
-            foreach (var voiceRegion in regions)
-            {
-                var regionKey = KeyHelpers.CreateVoiceRegionCacheKey(voiceRegion.ID);
-                _cacheService.Cache(regionKey, voiceRegion);
-            }
-
             return listRegions;
         }
+
+        var regions = listRegions.Entity;
+        _cacheService.Cache(key, regions);
+
+        foreach (var voiceRegion in regions)
+        {
+            var regionKey = KeyHelpers.CreateVoiceRegionCacheKey(voiceRegion.ID);
+            _cacheService.Cache(regionKey, voiceRegion);
+        }
+
+        return listRegions;
     }
 }

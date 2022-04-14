@@ -20,26 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.Gateway.Tests.Transport.Events
+namespace Remora.Discord.Gateway.Tests.Transport.Events;
+
+/// <summary>
+/// Represents the results of an event matching.
+/// </summary>
+public enum EventMatch
 {
     /// <summary>
-    /// Represents the results of an event matching.
+    /// The event passed the test, and the sequence should advance.
     /// </summary>
-    public enum EventMatch
-    {
-        /// <summary>
-        /// The event passed the test, and the sequence should advance.
-        /// </summary>
-        Pass,
+    Pass,
 
-        /// <summary>
-        /// The event failed the test, and the sequence should abort.
-        /// </summary>
-        Fail,
+    /// <summary>
+    /// The event failed the test, and the sequence should abort.
+    /// </summary>
+    Fail,
 
-        /// <summary>
-        /// The event was ignored, and the sequence should not advanced.
-        /// </summary>
-        Ignore
-    }
+    /// <summary>
+    /// The event was ignored, and the sequence should not advanced.
+    /// </summary>
+    Ignore
 }

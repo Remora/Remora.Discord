@@ -28,159 +28,158 @@ using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.TestBases;
+
+/// <summary>
+/// Acts as a base class for CDN endpoints.
+/// </summary>
+public abstract class CDNTestBase
 {
     /// <summary>
-    /// Acts as a base class for CDN endpoints.
+    /// Gets a valid image URI without a format extension.
     /// </summary>
-    public abstract class CDNTestBase
+    protected Uri ValidUriWithoutExtension { get; }
+
+    private readonly IReadOnlyList<CDNImageFormat> _allFormats;
+    private readonly IReadOnlyList<CDNImageFormat> _supportedFormats;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CDNTestBase"/> class.
+    /// </summary>
+    /// <param name="validUriWithoutExtension">A valid static image URI.</param>
+    /// <param name="supportedFormats">The supported formats.</param>
+    protected CDNTestBase
+    (
+        Uri validUriWithoutExtension,
+        IReadOnlyList<CDNImageFormat> supportedFormats
+    )
     {
-        /// <summary>
-        /// Gets a valid image URI without a format extension.
-        /// </summary>
-        protected Uri ValidUriWithoutExtension { get; }
+        this.ValidUriWithoutExtension = validUriWithoutExtension;
 
-        private readonly IReadOnlyList<CDNImageFormat> _allFormats;
-        private readonly IReadOnlyList<CDNImageFormat> _supportedFormats;
+        _allFormats = Enum.GetValues<CDNImageFormat>();
+        _supportedFormats = supportedFormats;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CDNTestBase"/> class.
-        /// </summary>
-        /// <param name="validUriWithoutExtension">A valid static image URI.</param>
-        /// <param name="supportedFormats">The supported formats.</param>
-        protected CDNTestBase
-        (
-            Uri validUriWithoutExtension,
-            IReadOnlyList<CDNImageFormat> supportedFormats
-        )
+    /// <summary>
+    /// Gets a set of image URIs, using the functions under test.
+    /// </summary>
+    /// <param name="imageFormat">The custom image format, if any.</param>
+    /// <param name="imageSize">The custom image size, if any.</param>
+    /// <returns>The results.</returns>
+    protected abstract IEnumerable<Result<Uri>> GetImageUris
+    (
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    );
+
+    /// <summary>
+    /// Tests whether the correct address is returned for the simple case.
+    /// </summary>
+    [Fact]
+    public void ReturnsCorrectAddress()
+    {
+        foreach (var getActual in GetImageUris())
         {
-            this.ValidUriWithoutExtension = validUriWithoutExtension;
+            var expected = new Uri(this.ValidUriWithoutExtension + ".png");
 
-            _allFormats = Enum.GetValues<CDNImageFormat>();
-            _supportedFormats = supportedFormats;
+            Assert.True(getActual.IsSuccess);
+            Assert.Equal(expected, getActual.Entity);
         }
+    }
 
-        /// <summary>
-        /// Gets a set of image URIs, using the functions under test.
-        /// </summary>
-        /// <param name="imageFormat">The custom image format, if any.</param>
-        /// <param name="imageSize">The custom image size, if any.</param>
-        /// <returns>The results.</returns>
-        protected abstract IEnumerable<Result<Uri>> GetImageUris
-        (
-            Optional<CDNImageFormat> imageFormat = default,
-            Optional<ushort> imageSize = default
-        );
-
-        /// <summary>
-        /// Tests whether the correct address is returned for the simple case.
-        /// </summary>
-        [Fact]
-        public void ReturnsCorrectAddress()
+    /// <summary>
+    /// Tests whether the correct address is returned when a custom image format is requested.
+    /// </summary>
+    [Fact]
+    public void ReturnsCorrectAddressWithCustomImageFormat()
+    {
+        foreach (var supportedFormat in _supportedFormats)
         {
-            foreach (var getActual in GetImageUris())
+            foreach (var getActual in GetImageUris(supportedFormat))
             {
-                var expected = new Uri(this.ValidUriWithoutExtension + ".png");
+                var expected = new Uri
+                (
+                    this.ValidUriWithoutExtension + $".{supportedFormat.ToString().ToLowerInvariant()}"
+                );
 
                 Assert.True(getActual.IsSuccess);
                 Assert.Equal(expected, getActual.Entity);
             }
         }
+    }
 
-        /// <summary>
-        /// Tests whether the correct address is returned when a custom image format is requested.
-        /// </summary>
-        [Fact]
-        public void ReturnsCorrectAddressWithCustomImageFormat()
+    /// <summary>
+    /// Tests whether the correct address is returned when a custom image size is requested.
+    /// </summary>
+    [Fact]
+    public void ReturnsCorrectAddressWithCustomImageSize()
+    {
+        foreach (var customSize in new ushort[] { 16, 32, 64, 128, 256, 512, 1024, 2048, 4096 })
         {
-            foreach (var supportedFormat in _supportedFormats)
+            foreach (var getActual in GetImageUris(imageSize: customSize))
             {
-                foreach (var getActual in GetImageUris(supportedFormat))
-                {
-                    var expected = new Uri
-                    (
-                        this.ValidUriWithoutExtension + $".{supportedFormat.ToString().ToLowerInvariant()}"
-                    );
+                var expected = new Uri
+                (
+                    this.ValidUriWithoutExtension + $".png?size={customSize}"
+                );
 
-                    Assert.True(getActual.IsSuccess);
-                    Assert.Equal(expected, getActual.Entity);
-                }
+                Assert.True(getActual.IsSuccess);
+                Assert.Equal(expected, getActual.Entity);
             }
         }
+    }
 
-        /// <summary>
-        /// Tests whether the correct address is returned when a custom image size is requested.
-        /// </summary>
-        [Fact]
-        public void ReturnsCorrectAddressWithCustomImageSize()
+    /// <summary>
+    /// Tests whether an unsuccessful result is returned if the requested image size is out of range.
+    /// </summary>
+    [Fact]
+    public void ReturnsUnsuccessfulResultIfImageSizeIsOutOfRange()
+    {
+        foreach (var getActual in GetImageUris(imageSize: 8))
         {
-            foreach (var customSize in new ushort[] { 16, 32, 64, 128, 256, 512, 1024, 2048, 4096 })
-            {
-                foreach (var getActual in GetImageUris(imageSize: customSize))
-                {
-                    var expected = new Uri
-                    (
-                        this.ValidUriWithoutExtension + $".png?size={customSize}"
-                    );
-
-                    Assert.True(getActual.IsSuccess);
-                    Assert.Equal(expected, getActual.Entity);
-                }
-            }
+            Assert.False(getActual.IsSuccess);
+            Assert.IsType<ImageSizeOutOfRangeError>(getActual.Error);
         }
 
-        /// <summary>
-        /// Tests whether an unsuccessful result is returned if the requested image size is out of range.
-        /// </summary>
-        [Fact]
-        public void ReturnsUnsuccessfulResultIfImageSizeIsOutOfRange()
+        foreach (var getActual in GetImageUris(imageSize: 8192))
         {
-            foreach (var getActual in GetImageUris(imageSize: 8))
+            Assert.False(getActual.IsSuccess);
+            Assert.IsType<ImageSizeOutOfRangeError>(getActual.Error);
+        }
+    }
+
+    /// <summary>
+    /// Tests whether an unsuccessful result is returned if the requested image size is not a power of two.
+    /// </summary>
+    [Fact]
+    public void ReturnsUnsuccessfulResultIfImageSizeIsNotPowerOfTwo()
+    {
+        foreach (var getActual in GetImageUris(imageSize: 63))
+        {
+            Assert.False(getActual.IsSuccess);
+            Assert.IsType<ImageSizeNotPowerOfTwoError>(getActual.Error);
+        }
+    }
+
+    /// <summary>
+    /// Tests whether an unsuccessful result is returned if the requested image format is not supported by the
+    /// endpoint.
+    /// </summary>
+    [SkippableFact]
+    public void ReturnsUnsuccessfulResultIfImageFormatIsNotSupported()
+    {
+        var unsupportedFormats = _allFormats.Except(_supportedFormats).ToList();
+        if (unsupportedFormats.Count == 0)
+        {
+            throw new SkipException("There are no unsupported formats.");
+        }
+
+        foreach (var unsupportedFormat in unsupportedFormats)
+        {
+            foreach (var getActual in GetImageUris(unsupportedFormat))
             {
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageSizeOutOfRangeError>(getActual.Error);
-            }
-
-            foreach (var getActual in GetImageUris(imageSize: 8192))
-            {
-                Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageSizeOutOfRangeError>(getActual.Error);
-            }
-        }
-
-        /// <summary>
-        /// Tests whether an unsuccessful result is returned if the requested image size is not a power of two.
-        /// </summary>
-        [Fact]
-        public void ReturnsUnsuccessfulResultIfImageSizeIsNotPowerOfTwo()
-        {
-            foreach (var getActual in GetImageUris(imageSize: 63))
-            {
-                Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageSizeNotPowerOfTwoError>(getActual.Error);
-            }
-        }
-
-        /// <summary>
-        /// Tests whether an unsuccessful result is returned if the requested image format is not supported by the
-        /// endpoint.
-        /// </summary>
-        [SkippableFact]
-        public void ReturnsUnsuccessfulResultIfImageFormatIsNotSupported()
-        {
-            var unsupportedFormats = _allFormats.Except(_supportedFormats).ToList();
-            if (unsupportedFormats.Count == 0)
-            {
-                throw new SkipException("There are no unsupported formats.");
-            }
-
-            foreach (var unsupportedFormat in unsupportedFormats)
-            {
-                foreach (var getActual in GetImageUris(unsupportedFormat))
-                {
-                    Assert.False(getActual.IsSuccess);
-                    Assert.IsType<UnsupportedImageFormatError>(getActual.Error);
-                }
+                Assert.IsType<UnsupportedImageFormatError>(getActual.Error);
             }
         }
     }

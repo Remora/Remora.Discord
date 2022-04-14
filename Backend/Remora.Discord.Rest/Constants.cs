@@ -22,48 +22,43 @@
 
 using System;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions;
 
-namespace Remora.Discord.Rest
+namespace Remora.Discord.Rest;
+
+/// <summary>
+/// Holds various constants.
+/// </summary>
+[PublicAPI]
+public static class Constants
 {
     /// <summary>
-    /// Holds various constants.
+    /// Gets the base API URL.
     /// </summary>
-    [PublicAPI]
-    public static class Constants
-    {
-        /// <summary>
-        /// Gets the base API URL.
-        /// </summary>
-        public static Uri BaseURL { get; } = new("https://discord.com/api/v9/");
+    public static Uri BaseURL { get; } = new($"https://discord.com/api/v{(int)DiscordAPIVersion.V10}/");
 
-        /// <summary>
-        /// Gets the name of the audit log reason header.
-        /// </summary>
-        public static string AuditLogHeaderName { get; } = "X-Audit-Log-Reason";
+    /// <summary>
+    /// Gets the name of the audit log reason header.
+    /// </summary>
+    public static string AuditLogHeaderName { get; } = "X-Audit-Log-Reason";
 
-        /// <summary>
-        /// Gets the name of the rate limit header.
-        /// </summary>
-        public static string RateLimitHeaderName { get; } = "X-RateLimit-Limit";
+    /// <summary>
+    /// Gets the name of the rate limit header.
+    /// </summary>
+    public static string RateLimitHeaderName { get; } = "X-RateLimit-Limit";
 
-        /// <summary>
-        /// Gets the name of the remaining rate limit token header.
-        /// </summary>
-        public static string RateLimitRemainingHeaderName { get; } = "X-RateLimit-Remaining";
+    /// <summary>
+    /// Gets the name of the remaining rate limit token header.
+    /// </summary>
+    public static string RateLimitRemainingHeaderName { get; } = "X-RateLimit-Remaining";
 
-        /// <summary>
-        /// Gets the name of the rate limit reset time header.
-        /// </summary>
-        public static string RateLimitResetHeaderName { get; } = "X-RateLimit-Reset";
+    /// <summary>
+    /// Gets the name of the rate limit reset time header.
+    /// </summary>
+    public static string RateLimitResetHeaderName { get; } = "X-RateLimit-Reset";
 
-        /// <summary>
-        /// Gets the name of the rate limit bucket header.
-        /// </summary>
-        public static string RateLimitBucketHeaderName { get; } = "X-RateLimit-Bucket";
-
-        /// <summary>
-        /// Gets the name of the global rate limit header.
-        /// </summary>
-        public static string RateLimitGlobalHeaderName { get; } = "X-RateLimit-Bucket";
-    }
+    /// <summary>
+    /// Gets the name of the rate limit bucket header.
+    /// </summary>
+    public static string RateLimitBucketHeaderName { get; } = "X-RateLimit-Bucket";
 }

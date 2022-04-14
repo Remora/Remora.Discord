@@ -23,70 +23,69 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
-namespace Remora.Discord.Commands.Tests.Conditions
+namespace Remora.Discord.Commands.Tests.Conditions;
+
+/// <summary>
+/// Tests the <see cref="RequireOwnerCondition"/> class.
+/// </summary>
+public class RequireOwnerConditionTests
 {
     /// <summary>
-    /// Tests the <see cref="RequireOwnerCondition"/> class.
+    /// Tests whether the condition returns an unsuccessful result if the command invoker is not the bot owner.
     /// </summary>
-    public class RequireOwnerConditionTests
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task ReturnsFalseIfInvokerIsNotBotOwner()
     {
-        /// <summary>
-        /// Tests whether the condition returns an unsuccessful result if the command invoker is not the bot owner.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task ReturnsFalseIfInvokerIsNotBotOwner()
-        {
-            var contextMock = new Mock<ICommandContext>();
-            contextMock.Setup(c => c.User.ID).Returns(new Snowflake(0));
+        var contextMock = new Mock<ICommandContext>();
+        contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(0));
 
-            var informationMock = new Mock<IApplication>();
-            informationMock.Setup(i => i.Owner!.ID).Returns(new Snowflake(1));
+        var informationMock = new Mock<IApplication>();
+        informationMock.Setup(i => i.Owner!.ID).Returns(DiscordSnowflake.New(1));
 
-            var apiMock = new Mock<IDiscordRestOAuth2API>();
-            apiMock
-                .Setup(a => a.GetCurrentBotApplicationInformationAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<IApplication>.FromSuccess(informationMock.Object));
+        var apiMock = new Mock<IDiscordRestOAuth2API>();
+        apiMock
+            .Setup(a => a.GetCurrentBotApplicationInformationAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result<IApplication>.FromSuccess(informationMock.Object));
 
-            var attribute = new RequireOwnerAttribute();
-            var condition = new RequireOwnerCondition(contextMock.Object, apiMock.Object);
+        var attribute = new RequireOwnerAttribute();
+        var condition = new RequireOwnerCondition(contextMock.Object, apiMock.Object);
 
-            var result = await condition.CheckAsync(attribute);
-            ResultAssert.Unsuccessful(result);
-        }
+        var result = await condition.CheckAsync(attribute);
+        ResultAssert.Unsuccessful(result);
+    }
 
-        /// <summary>
-        /// Tests whether the condition returns a successful result if the command invoker is the bot owner.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task ReturnsTrueIfInvokerIsBotOwner()
-        {
-            var contextMock = new Mock<ICommandContext>();
-            contextMock.Setup(c => c.User.ID).Returns(new Snowflake(0));
+    /// <summary>
+    /// Tests whether the condition returns a successful result if the command invoker is the bot owner.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task ReturnsTrueIfInvokerIsBotOwner()
+    {
+        var contextMock = new Mock<ICommandContext>();
+        contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(0));
 
-            var informationMock = new Mock<IApplication>();
-            informationMock.Setup(i => i.Owner!.ID).Returns(new Snowflake(0));
+        var informationMock = new Mock<IApplication>();
+        informationMock.Setup(i => i.Owner!.ID).Returns(DiscordSnowflake.New(0));
 
-            var apiMock = new Mock<IDiscordRestOAuth2API>();
-            apiMock
-                .Setup(a => a.GetCurrentBotApplicationInformationAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result<IApplication>.FromSuccess(informationMock.Object));
+        var apiMock = new Mock<IDiscordRestOAuth2API>();
+        apiMock
+            .Setup(a => a.GetCurrentBotApplicationInformationAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result<IApplication>.FromSuccess(informationMock.Object));
 
-            var attribute = new RequireOwnerAttribute();
-            var condition = new RequireOwnerCondition(contextMock.Object, apiMock.Object);
+        var attribute = new RequireOwnerAttribute();
+        var condition = new RequireOwnerCondition(contextMock.Object, apiMock.Object);
 
-            var result = await condition.CheckAsync(attribute);
-            ResultAssert.Successful(result);
-        }
+        var result = await condition.CheckAsync(attribute);
+        ResultAssert.Successful(result);
     }
 }

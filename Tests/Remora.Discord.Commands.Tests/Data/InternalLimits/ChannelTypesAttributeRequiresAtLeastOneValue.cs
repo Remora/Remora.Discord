@@ -30,14 +30,13 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.InternalLimits
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
+
+public class ChannelTypesAttributeRequiresAtLeastOneValue : CommandGroup
 {
-    public class ChannelTypesAttributeRequiresAtLeastOneValue : CommandGroup
+    [Command("a")]
+    public Task<IResult> A([ChannelTypes] IChannel value)
     {
-        [Command("a")]
-        public Task<IResult> A([ChannelTypes] IChannel value)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

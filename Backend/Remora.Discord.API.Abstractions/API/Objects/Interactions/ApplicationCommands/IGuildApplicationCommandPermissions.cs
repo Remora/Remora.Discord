@@ -24,45 +24,44 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a set of permissions for a command in a guild.
+/// </summary>
+[PublicAPI]
+public interface IGuildApplicationCommandPermissions : IPartialGuildApplicationCommandPermissions
 {
     /// <summary>
-    /// Represents a set of permissions for a command in a guild.
+    /// Gets the ID of the command.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildApplicationCommandPermissions : IPartialGuildApplicationCommandPermissions
-    {
-        /// <summary>
-        /// Gets the ID of the command.
-        /// </summary>
-        new Snowflake ID { get; }
+    new Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the application the command belongs to.
-        /// </summary>
-        new Snowflake ApplicationID { get; }
+    /// <summary>
+    /// Gets the ID of the application the command belongs to.
+    /// </summary>
+    new Snowflake ApplicationID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        new Snowflake GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    new Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the permissions for the command in the guild.
-        /// </summary>
-        new IReadOnlyList<IApplicationCommandPermissions> Permissions { get; }
+    /// <summary>
+    /// Gets the permissions for the command in the guild.
+    /// </summary>
+    new IReadOnlyList<IApplicationCommandPermissions> Permissions { get; }
 
-        /// <inheritdoc/>
-        Optional<Snowflake> IPartialGuildApplicationCommandPermissions.ID => this.ID;
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialGuildApplicationCommandPermissions.ID => this.ID;
 
-        /// <inheritdoc/>
-        Optional<Snowflake> IPartialGuildApplicationCommandPermissions.ApplicationID => this.ApplicationID;
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialGuildApplicationCommandPermissions.ApplicationID => this.ApplicationID;
 
-        /// <inheritdoc/>
-        Optional<Snowflake> IPartialGuildApplicationCommandPermissions.GuildID => this.GuildID;
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialGuildApplicationCommandPermissions.GuildID => this.GuildID;
 
-        /// <inheritdoc/>
-        Optional<IReadOnlyList<IApplicationCommandPermissions>> IPartialGuildApplicationCommandPermissions.Permissions
-            => new(this.Permissions);
-    }
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IApplicationCommandPermissions>> IPartialGuildApplicationCommandPermissions.Permissions
+        => new(this.Permissions);
 }

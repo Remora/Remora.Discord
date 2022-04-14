@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -33,5 +34,5 @@ namespace Remora.Discord.API.Objects;
 public record InteractionResponse
 (
     InteractionCallbackType Type,
-    Optional<IInteractionCallbackData> Data = default
+    Optional<OneOf<IInteractionMessageCallbackData, IInteractionAutocompleteCallbackData, IInteractionModalCallbackData>> Data = default
 ) : IInteractionResponse;

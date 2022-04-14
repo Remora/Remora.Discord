@@ -27,6 +27,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using OneOf;
 using Remora.Commands.Extensions;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -41,85 +42,87 @@ using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
-namespace Remora.Discord.Commands.Tests.Responders
+namespace Remora.Discord.Commands.Tests.Responders;
+
+/// <summary>
+/// Tests the <see cref="InteractionResponder"/> class.
+/// </summary>
+public class InteractionResponderTests
 {
     /// <summary>
-    /// Tests the <see cref="InteractionResponder"/> class.
+    /// Tests pre-execution events.
     /// </summary>
-    public class InteractionResponderTests
+    public class PreExecutionEvents : InteractionResponderTestBase
     {
+        private readonly Mock<IPreExecutionEvent> _preExecutionEventMock;
+
         /// <summary>
-        /// Tests pre-execution events.
+        /// Initializes a new instance of the <see cref="PreExecutionEvents"/> class.
         /// </summary>
-        public class PreExecutionEvents : InteractionResponderTestBase
+        public PreExecutionEvents()
         {
-            private readonly Mock<IPreExecutionEvent> _preExecutionEventMock;
+            _preExecutionEventMock = new Mock<IPreExecutionEvent>();
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PreExecutionEvents"/> class.
-            /// </summary>
-            public PreExecutionEvents()
-            {
-                _preExecutionEventMock = new Mock<IPreExecutionEvent>();
-
-                _preExecutionEventMock
-                    .Setup(e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>()))
-                    .Returns(Task.FromResult(Result.FromSuccess()));
-            }
-
-            /// <summary>
-            /// Tests whether pre-execution events are executed properly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task AreExecuted()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
-
-                dataMock.Setup(d => d.Name).Returns("successful");
-
-                var eventMock = new Mock<IInteractionCreate>();
-
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
-
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
-
-                _preExecutionEventMock.Verify
-                (
-                    e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>())
-                );
-            }
-
-            /// <inheritdoc />
-            protected override void ConfigureServices(IServiceCollection serviceCollection)
-            {
-                serviceCollection
-                    .Configure<InteractionResponderOptions>(o => o.SuppressAutomaticResponses = true)
-                    .AddCommandGroup<SimpleGroup>()
-                    .AddScoped(_ => _preExecutionEventMock.Object);
-            }
+            _preExecutionEventMock
+                .Setup(e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Result.FromSuccess()));
         }
 
         /// <summary>
-        /// Tests post-execution events.
+        /// Tests whether pre-execution events are executed properly.
         /// </summary>
-        public class PostExecutionEvents : InteractionResponderTestBase
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecuted()
         {
-            private readonly Mock<IPostExecutionEvent> _postExecutionEventMock;
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PostExecutionEvents"/> class.
-            /// </summary>
-            public PostExecutionEvents()
-            {
-                _postExecutionEventMock = new Mock<IPostExecutionEvent>();
+            dataMock.Setup(d => d.Name).Returns("successful");
 
-                _postExecutionEventMock.Setup
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            _preExecutionEventMock.Verify
+            (
+                e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>())
+            );
+        }
+
+        /// <inheritdoc />
+        protected override void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .Configure<InteractionResponderOptions>(o => o.SuppressAutomaticResponses = true)
+                .AddCommandTree()
+                    .WithCommandGroup<SimpleGroup>()
+                .Finish()
+                .AddScoped(_ => _preExecutionEventMock.Object);
+        }
+    }
+
+    /// <summary>
+    /// Tests post-execution events.
+    /// </summary>
+    public class PostExecutionEvents : InteractionResponderTestBase
+    {
+        private readonly Mock<IPostExecutionEvent> _postExecutionEventMock;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PostExecutionEvents"/> class.
+        /// </summary>
+        public PostExecutionEvents()
+        {
+            _postExecutionEventMock = new Mock<IPostExecutionEvent>();
+
+            _postExecutionEventMock.Setup
                 (
                     e => e.AfterExecutionAsync
                     (
@@ -129,184 +132,227 @@ namespace Remora.Discord.Commands.Tests.Responders
                     )
                 )
                 .Returns(Task.FromResult(Result.FromSuccess()));
-            }
-
-            /// <summary>
-            /// Tests whether post-execution events are executed properly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task AreExecuted()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
-
-                dataMock.Setup(d => d.Name).Returns("successful");
-
-                var eventMock = new Mock<IInteractionCreate>();
-
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
-
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
-
-                _postExecutionEventMock.Verify
-                (
-                    e => e.AfterExecutionAsync
-                    (
-                        It.IsAny<ICommandContext>(),
-                        It.Is<IResult>(r => r.IsSuccess),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-            }
-
-            /// <summary>
-            /// Tests whether post-execution events are executed properly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task AreExecutedForUnsuccessfulCommands()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
-
-                dataMock.Setup(d => d.Name).Returns("unsuccessful");
-
-                var eventMock = new Mock<IInteractionCreate>();
-
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
-
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
-
-                _postExecutionEventMock.Verify
-                (
-                    e => e.AfterExecutionAsync
-                    (
-                        It.IsAny<ICommandContext>(),
-                        It.Is<IResult>(r => !r.IsSuccess),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-            }
-
-            /// <summary>
-            /// Tests whether post-execution events are executed properly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task AreExecutedForNotFoundCommands()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
-
-                dataMock.Setup(d => d.Name).Returns("notfound");
-
-                var eventMock = new Mock<IInteractionCreate>();
-
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
-
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
-
-                _postExecutionEventMock.Verify
-                (
-                    e => e.AfterExecutionAsync
-                    (
-                        It.IsAny<ICommandContext>(),
-                        It.Is<IResult>(r => !r.IsSuccess),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-            }
-
-            /// <inheritdoc />
-            protected override void ConfigureServices(IServiceCollection serviceCollection)
-            {
-                serviceCollection
-                    .AddCommandGroup<SimpleGroup>()
-                    .AddScoped(_ => _postExecutionEventMock.Object);
-            }
         }
 
         /// <summary>
-        /// Tests that proper interaction responses are dispatched for ephemeral commands.
+        /// Tests whether post-execution events are executed properly.
         /// </summary>
-        public class EphemeralCommands : InteractionResponderTestBase
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecuted()
         {
-            /// <summary>
-            /// Tests whether ephemeral commands are handled correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task EphemeralHandledCorrectly()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a");
+            dataMock.Setup(d => d.Name).Returns("successful");
 
-                var eventMock = new Mock<IInteractionCreate>();
+            var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
 
-                this.MockInteractionApi.Verify
+            _postExecutionEventMock.Verify
+            (
+                e => e.AfterExecutionAsync
                 (
-                    e => e.CreateInteractionResponseAsync
+                    It.IsAny<ICommandContext>(),
+                    It.Is<IResult>(r => r.IsSuccess),
+                    It.IsAny<CancellationToken>()
+                )
+            );
+        }
+
+        /// <summary>
+        /// Tests whether post-execution events are executed properly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForUnsuccessfulCommands()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
+
+            dataMock.Setup(d => d.Name).Returns("unsuccessful");
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            _postExecutionEventMock.Verify
+            (
+                e => e.AfterExecutionAsync
+                (
+                    It.IsAny<ICommandContext>(),
+                    It.Is<IResult>(r => !r.IsSuccess),
+                    It.IsAny<CancellationToken>()
+                )
+            );
+        }
+
+        /// <summary>
+        /// Tests whether post-execution events are executed properly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForNotFoundCommands()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
+
+            dataMock.Setup(d => d.Name).Returns("notfound");
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            _postExecutionEventMock.Verify
+            (
+                e => e.AfterExecutionAsync
+                (
+                    It.IsAny<ICommandContext>(),
+                    It.Is<IResult>(r => !r.IsSuccess),
+                    It.IsAny<CancellationToken>()
+                )
+            );
+        }
+
+        /// <inheritdoc />
+        protected override void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddCommandTree()
+                    .WithCommandGroup<SimpleGroup>()
+                .Finish()
+                .AddScoped(_ => _postExecutionEventMock.Object);
+        }
+    }
+
+    /// <summary>
+    /// Tests that proper interaction responses are dispatched for ephemeral commands.
+    /// </summary>
+    public class EphemeralCommands : InteractionResponderTestBase
+    {
+        /// <summary>
+        /// Tests whether ephemeral commands are handled correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task EphemeralHandledCorrectly()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
+
+            dataMock.Setup(d => d.Name).Returns("a");
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            this.MockInteractionApi.Verify
+            (
+                e => e.CreateInteractionResponseAsync
+                (
+                    It.IsAny<Snowflake>(),
+                    It.IsAny<string>(),
+                    It.Is<IInteractionResponse>
                     (
-                        It.IsAny<Snowflake>(),
-                        It.IsAny<string>(),
-                        It.Is<IInteractionResponse>
-                        (
-                            r => r.Data.HasValue &&
-                            r.Data.Value.Flags.HasValue &&
-                            (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
-                        ),
-                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-            }
+                        r => r.Data.HasValue &&
+                             r.Data.Value.AsT0.Flags.HasValue &&
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
+                    ),
+                    It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            );
+        }
 
-            /// <summary>
-            /// Tests whether non-ephemeral commands are handled correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task NonEphemeralHandledCorrectly()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
+        /// <summary>
+        /// Tests whether non-ephemeral commands are handled correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task NonEphemeralHandledCorrectly()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("b");
+            dataMock.Setup(d => d.Name).Returns("b");
 
-                var eventMock = new Mock<IInteractionCreate>();
+            var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
 
-                this.MockInteractionApi.Verify
+            this.MockInteractionApi.Verify
+            (
+                e => e.CreateInteractionResponseAsync
+                (
+                    It.IsAny<Snowflake>(),
+                    It.IsAny<string>(),
+                    It.Is<IInteractionResponse>
+                    (
+                        r => !r.Data.HasValue ||
+                             !r.Data.Value.AsT0.Flags.HasValue ||
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
+                    ),
+                    It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            );
+        }
+
+        /// <summary>
+        /// Tests whether commands that explicitly opt out of ephemeral responses are handled correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task DisabledEphemeralHandledCorrectly()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
+
+            dataMock.Setup(d => d.Name).Returns("c");
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            this.MockInteractionApi
+                .Verify
                 (
                     e => e.CreateInteractionResponseAsync
                     (
@@ -315,174 +361,40 @@ namespace Remora.Discord.Commands.Tests.Responders
                         It.Is<IInteractionResponse>
                         (
                             r => !r.Data.HasValue ||
-                            !r.Data.Value.Flags.HasValue ||
-                            (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                         ),
                         It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
-            }
-
-            /// <summary>
-            /// Tests whether commands that explicitly opt out of ephemeral responses are handled correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task DisabledEphemeralHandledCorrectly()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
-
-                dataMock.Setup(d => d.Name).Returns("c");
-
-                var eventMock = new Mock<IInteractionCreate>();
-
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
-
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
-
-                this.MockInteractionApi
-                    .Verify
-                    (
-                        e => e.CreateInteractionResponseAsync
-                        (
-                            It.IsAny<Snowflake>(),
-                            It.IsAny<string>(),
-                            It.Is<IInteractionResponse>
-                            (
-                                r => !r.Data.HasValue ||
-                                !r.Data.Value.Flags.HasValue ||
-                                (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
-                            ),
-                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
-            }
-
-            /// <summary>
-            /// Tests whether commands that explicitly opt out of ephemeral responses are handled correctly, if
-            /// ephemeral responses are globally enabled.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task DisabledEphemeralHandledCorrectlyIfGloballyEphemeral()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
-
-                dataMock.Setup(d => d.Name).Returns("c");
-
-                var eventMock = new Mock<IInteractionCreate>();
-
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
-
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
-
-                this.MockInteractionApi
-                    .Verify
-                    (
-                        e => e.CreateInteractionResponseAsync
-                        (
-                            It.IsAny<Snowflake>(),
-                            It.IsAny<string>(),
-                            It.Is<IInteractionResponse>
-                            (
-                                r => !r.Data.HasValue ||
-                                     !r.Data.Value.Flags.HasValue ||
-                                     (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
-                            ),
-                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
-            }
-
-            /// <inheritdoc />
-            protected override void ConfigureServices(IServiceCollection serviceCollection)
-            {
-                serviceCollection
-                    .AddCommandGroup<EphemeralCommand>();
-            }
         }
 
         /// <summary>
-        /// Tests that proper interaction responses are dispatched for globally-enabled ephemeral commands.
+        /// Tests whether commands that explicitly opt out of ephemeral responses are handled correctly, if
+        /// ephemeral responses are globally enabled.
         /// </summary>
-        public class GlobalEphemeralCommands : InteractionResponderTestBase
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task DisabledEphemeralHandledCorrectlyIfGloballyEphemeral()
         {
-            /// <summary>
-            /// Tests whether ephemeral commands are handled correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task EphemeralHandledCorrectly()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a");
+            dataMock.Setup(d => d.Name).Returns("c");
 
-                var eventMock = new Mock<IInteractionCreate>();
+            var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
 
-                this.MockInteractionApi.Verify
-                (
-                    e => e.CreateInteractionResponseAsync
-                    (
-                        It.IsAny<Snowflake>(),
-                        It.IsAny<string>(),
-                        It.Is<IInteractionResponse>
-                        (
-                            r => r.Data.HasValue &&
-                            r.Data.Value.Flags.HasValue &&
-                            (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
-                        ),
-                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-            }
-
-            /// <summary>
-            /// Tests whether non-ephemeral commands are handled correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task NonEphemeralHandledCorrectly()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
-
-                dataMock.Setup(d => d.Name).Returns("b");
-
-                var eventMock = new Mock<IInteractionCreate>();
-
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
-
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
-
-                this.MockInteractionApi.Verify
+            this.MockInteractionApi
+                .Verify
                 (
                     e => e.CreateInteractionResponseAsync
                     (
@@ -491,63 +403,158 @@ namespace Remora.Discord.Commands.Tests.Responders
                         It.Is<IInteractionResponse>
                         (
                             r => !r.Data.HasValue ||
-                            !r.Data.Value.Flags.HasValue ||
-                            (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                         ),
                         It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
-            }
+        }
 
-            /// <summary>
-            /// Tests whether commands that explicitly opt out of ephemeral responses are handled correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task DisabledEphemeralHandledCorrectly()
-            {
-                var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IInteractionData>();
+        /// <inheritdoc />
+        protected override void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddCommandTree()
+                .WithCommandGroup<EphemeralCommand>();
+        }
+    }
 
-                dataMock.Setup(d => d.Name).Returns("c");
+    /// <summary>
+    /// Tests that proper interaction responses are dispatched for globally-enabled ephemeral commands.
+    /// </summary>
+    public class GlobalEphemeralCommands : InteractionResponderTestBase
+    {
+        /// <summary>
+        /// Tests whether ephemeral commands are handled correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task EphemeralHandledCorrectly()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
 
-                var eventMock = new Mock<IInteractionCreate>();
+            dataMock.Setup(d => d.Name).Returns("a");
 
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-                eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
-                eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+            var eventMock = new Mock<IInteractionCreate>();
 
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
-                this.MockInteractionApi
-                    .Verify
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            this.MockInteractionApi.Verify
+            (
+                e => e.CreateInteractionResponseAsync
+                (
+                    It.IsAny<Snowflake>(),
+                    It.IsAny<string>(),
+                    It.Is<IInteractionResponse>
                     (
-                        e => e.CreateInteractionResponseAsync
-                        (
-                            It.IsAny<Snowflake>(),
-                            It.IsAny<string>(),
-                            It.Is<IInteractionResponse>
-                            (
-                                r => !r.Data.HasValue ||
-                                !r.Data.Value.Flags.HasValue ||
-                                (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
-                            ),
-                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
-            }
+                        r => r.Data.HasValue &&
+                             r.Data.Value.AsT0.Flags.HasValue &&
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
+                    ),
+                    It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            );
+        }
 
-            /// <inheritdoc />
-            protected override void ConfigureServices(IServiceCollection serviceCollection)
-            {
-                serviceCollection
-                    .AddCommandGroup<EphemeralCommand>()
-                    .Configure<InteractionResponderOptions>(o => o.UseEphemeralResponses = true );
-            }
+        /// <summary>
+        /// Tests whether non-ephemeral commands are handled correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task NonEphemeralHandledCorrectly()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
+
+            dataMock.Setup(d => d.Name).Returns("b");
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            this.MockInteractionApi.Verify
+            (
+                e => e.CreateInteractionResponseAsync
+                (
+                    It.IsAny<Snowflake>(),
+                    It.IsAny<string>(),
+                    It.Is<IInteractionResponse>
+                    (
+                        r => !r.Data.HasValue ||
+                             !r.Data.Value.AsT0.Flags.HasValue ||
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
+                    ),
+                    It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            );
+        }
+
+        /// <summary>
+        /// Tests whether commands that explicitly opt out of ephemeral responses are handled correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task DisabledEphemeralHandledCorrectly()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IInteractionData>();
+
+            dataMock.Setup(d => d.Name).Returns("c");
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            this.MockInteractionApi
+                .Verify
+                (
+                    e => e.CreateInteractionResponseAsync
+                    (
+                        It.IsAny<Snowflake>(),
+                        It.IsAny<string>(),
+                        It.Is<IInteractionResponse>
+                        (
+                            r => !r.Data.HasValue ||
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
+                        ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
+
+        /// <inheritdoc />
+        protected override void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddCommandTree()
+                    .WithCommandGroup<EphemeralCommand>()
+                .Finish()
+                .Configure<InteractionResponderOptions>(o => o.UseEphemeralResponses = true );
         }
     }
 }

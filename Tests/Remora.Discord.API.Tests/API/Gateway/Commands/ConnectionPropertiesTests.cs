@@ -25,20 +25,19 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
 using Xunit;
 
-namespace Remora.Discord.API.Tests.Gateway.Commands
+namespace Remora.Discord.API.Tests.Gateway.Commands;
+
+/// <summary>
+/// Tests the <see cref="ConnectionProperties"/> class.
+/// </summary>
+public class ConnectionPropertiesTests : ObjectTestBase<IConnectionProperties>
 {
     /// <summary>
-    /// Tests the <see cref="ConnectionProperties"/> class.
+    /// Tests whether a valid object is created by using the library name only.
     /// </summary>
-    public class ConnectionPropertiesTests : ObjectTestBase<IConnectionProperties>
+    [Fact]
+    public void CanCreateFromLibraryName()
     {
-        /// <summary>
-        /// Tests whether a valid object is created by using the library name only.
-        /// </summary>
-        [Fact]
-        public void CanCreateFromLibraryName()
-        {
-            _ = new ConnectionProperties("Remora.Discord");
-        }
+        _ = new ConnectionProperties("Remora.Discord");
     }
 }

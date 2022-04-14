@@ -25,38 +25,38 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestVoiceAPI" />
-    [PublicAPI]
-    public class DiscordRestVoiceAPI : AbstractDiscordRestAPI, IDiscordRestVoiceAPI
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestVoiceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+namespace Remora.Discord.Rest.API;
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync(CancellationToken ct = default)
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
-            (
-                "voice/regions",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestVoiceAPI" />
+[PublicAPI]
+public class DiscordRestVoiceAPI : AbstractDiscordRestAPI, IDiscordRestVoiceAPI
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestVoiceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
+    {
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync(CancellationToken ct = default)
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
+        (
+            "voice/regions",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
     }
 }

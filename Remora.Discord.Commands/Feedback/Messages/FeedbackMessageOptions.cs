@@ -35,10 +35,12 @@ namespace Remora.Discord.Commands.Feedback.Messages;
 /// <param name="Attachments">The attachments to send with the message.</param>
 /// <param name="AllowedMentions">The allowed mentions for the message.</param>
 /// <param name="MessageComponents">A list of message components to include with the message.</param>
+/// <param name="MessageFlags">The flags to set on the message.</param>
 public record FeedbackMessageOptions
 (
     Optional<bool> IsTTS = default,
     Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> Attachments = default,
     Optional<IAllowedMentions> AllowedMentions = default,
-    Optional<IReadOnlyList<IMessageComponent>> MessageComponents = default
+    Optional<IReadOnlyList<IMessageComponent>> MessageComponents = default,
+    Optional<MessageFlags> MessageFlags = default
 );

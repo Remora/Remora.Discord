@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various types of stickers.
+/// </summary>
+[PublicAPI]
+public enum StickerType
 {
     /// <summary>
-    /// Enumerates various types of stickers.
+    /// An official sticker in a pack, part of Nitro or in a removed purchasable pack.
     /// </summary>
-    [PublicAPI]
-    public enum StickerType
-    {
-        /// <summary>
-        /// An official sticker in a pack, part of Nitro or in a removed purchasable pack.
-        /// </summary>
-        Standard = 1,
+    Standard = 1,
 
-        /// <summary>
-        /// A sticker uploaded to a boosted guild for the guild's members.
-        /// </summary>
-        Guild = 2
-    }
+    /// <summary>
+    /// A sticker uploaded to a boosted guild for the guild's members.
+    /// </summary>
+    Guild = 2
 }

@@ -37,5 +37,16 @@ public record StageInstanceUpdate
     Snowflake ChannelID,
     string Topic,
     StagePrivacyLevel PrivacyLevel,
-    bool IsDiscoveryDisabled
-) : StageInstance(ID, GuildID, ChannelID, Topic, PrivacyLevel, IsDiscoveryDisabled), IStageInstanceUpdate;
+    bool IsDiscoveryDisabled,
+    Snowflake? GuildScheduledEventID
+) : StageInstance
+    (
+        ID,
+        GuildID,
+        ChannelID,
+        Topic,
+        PrivacyLevel,
+        IsDiscoveryDisabled,
+        GuildScheduledEventID
+    ),
+    IStageInstanceUpdate;

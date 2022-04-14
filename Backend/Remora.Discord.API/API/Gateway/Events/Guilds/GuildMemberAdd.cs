@@ -34,6 +34,7 @@ namespace Remora.Discord.API.Gateway.Events;
 [PublicAPI]
 public record GuildMemberAdd
 (
+    Snowflake GuildID,
     Optional<IUser> User,
     Optional<string?> Nickname,
     Optional<IImageHash?> Avatar,
@@ -43,8 +44,8 @@ public record GuildMemberAdd
     bool IsDeafened,
     bool IsMuted,
     Optional<bool?> IsPending,
-    Snowflake GuildID,
-    Optional<IDiscordPermissionSet> Permissions = default
+    Optional<IDiscordPermissionSet> Permissions = default,
+    Optional<DateTimeOffset?> CommunicationDisabledUntil = default
 ) : GuildMember
 (
     User,
@@ -56,9 +57,6 @@ public record GuildMemberAdd
     IsDeafened,
     IsMuted,
     IsPending,
-    Permissions
-), IGuildMemberAdd
-{
-    /// <inheritdoc cref="GuildMember"/>
-    public Snowflake GuildID { get; } = GuildID;
-}
+    Permissions,
+    CommunicationDisabledUntil
+), IGuildMemberAdd;
