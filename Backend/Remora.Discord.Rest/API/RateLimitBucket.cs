@@ -113,7 +113,7 @@ internal class RateLimitBucket
                 return false;
             }
 
-            if (!double.TryParse(rawReset.SingleOrDefault(), NumberStyles.Float | NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var resetsAtEpoch))
+            if (!double.TryParse(rawReset.SingleOrDefault(), NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var resetsAtEpoch))
             {
                 return false;
             }
