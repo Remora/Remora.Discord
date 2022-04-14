@@ -317,7 +317,7 @@ public class EmbedBuilder : BuilderBase<Embed>
             ? avatarUrlResult.Entity
             : CDN.GetDefaultUserAvatarUrl(user, imageSize: 256).Entity;
 
-        this.Author = new EmbedAuthorBuilder($"{user.Username}${user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
+        this.Author = new EmbedAuthorBuilder($"{user.Username}#{user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
         return this;
     }
 
