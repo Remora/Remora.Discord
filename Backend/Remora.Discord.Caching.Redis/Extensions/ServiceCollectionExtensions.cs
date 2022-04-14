@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -39,7 +40,7 @@ public static class ServiceCollectionExtensions
     /// Adds a redis-backed caching implementations of various API types, overriding the normally non-caching versions.
     /// </summary>
     /// <remarks>
-    /// The cache uses a run-of-the-mill <see cref="IDistributedMemoryCache"/>. Cache entry options for any cached type can be
+    /// The cache uses a run-of-the-mill <see cref="IDistributedCache"/>. Cache entry options for any cached type can be
     /// configured using <see cref="IOptions{TOptions}"/>.
     ///
     /// When choosing a cache implementation, it should be noted that choosing this will override the backing store for

@@ -71,7 +71,7 @@ public interface ICacheProvider
     /// <param name="key">The key to evict from the backing store.</param>
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The type to return from the backing store, if it exists.</typeparam>
-    /// <returns>A <see cref=ValueTask" /> representing the result of the potentially asynchronous action.</returns>
+    /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous action.</returns>
     ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
         where TInstance : class;
 }

@@ -293,7 +293,7 @@ public class EarlyCacheResponder :
             foreach (var (key, value) in users)
             {
                 var cacheKey = KeyHelpers.CreateUserCacheKey(key);
-                _cacheService.CacheAsync(cacheKey, value);
+                await _cacheService.CacheAsync(cacheKey, value);
             }
         }
 
