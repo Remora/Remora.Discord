@@ -55,8 +55,14 @@ public class RedisCacheProvider : ICacheProvider
     }
 
     /// <inheritdoc cref="ICacheProvider.CacheAsync{TInstance}"/>
-    public async ValueTask CacheAsync<TInstance>
-        (string key, TInstance instance, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null, CancellationToken ct = default)
+    public virtual async ValueTask CacheAsync<TInstance>
+    (
+        string key,
+        TInstance instance,
+        TimeSpan? absoluteExpiration = null,
+        TimeSpan? slidingExpiration = null,
+        CancellationToken ct = default
+    )
         where TInstance : class
     {
         if (absoluteExpiration == TimeSpan.Zero)
