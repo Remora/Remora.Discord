@@ -114,7 +114,14 @@ public class RedisCacheProvider : ICacheProvider
     }
 
     /// <inheritdoc cref="ICacheProvider.EvictAsync{TInstance}"/>
-    public async ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
+    /// <remarks>
+    /// It should be noted that in this implementation of <see cref="ICacheProvider.EvictAsync{TInstance}"/>,
+    /// there is a strong reliance on the fact that the entity being cached is trivially deserializable from JSON.
+    ///
+    /// In the event that this is not the case, this method can be overriden in a derived class to provide
+    /// a more apt transformation of evicted data.
+    /// </remarks>
+    public virtual async ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
         where TInstance : class
     {
         var existingValue = await _cache.GetAsync(key, ct);
