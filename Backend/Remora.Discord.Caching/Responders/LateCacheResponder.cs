@@ -57,77 +57,77 @@ public class LateCacheResponder :
     }
 
     /// <inheritdoc/>
-    public Task<Result> RespondAsync(IChannelDelete gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IChannelDelete gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateChannelCacheKey(gatewayEvent.ID);
-        _cacheService.Evict<IChannel>(key);
+        await _cacheService.EvictAsync<IChannel>(key);
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc/>
-    public Task<Result> RespondAsync(IGuildBanRemove gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IGuildBanRemove gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateGuildBanCacheKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
-        _cacheService.Evict<IBan>(key);
+        await _cacheService.EvictAsync<IBan>(key).AsTask();
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc/>
-    public Task<Result> RespondAsync(IGuildDelete gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IGuildDelete gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateGuildCacheKey(gatewayEvent.ID);
-        _cacheService.Evict<IGuild>(key);
+        await _cacheService.EvictAsync<IGuild>(key);
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc/>
-    public Task<Result> RespondAsync(IGuildMemberRemove gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IGuildMemberRemove gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
-        _cacheService.Evict<IGuildMember>(key);
+        await _cacheService.EvictAsync<IGuildMember>(key);
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc/>
-    public Task<Result> RespondAsync(IGuildRoleDelete gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IGuildRoleDelete gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.RoleID);
-        _cacheService.Evict<IRole>(key);
+        await _cacheService.EvictAsync<IRole>(key);
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc/>
-    public Task<Result> RespondAsync(IInviteDelete gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IInviteDelete gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateInviteCacheKey(gatewayEvent.Code);
-        _cacheService.Evict<IInvite>(key);
+        await _cacheService.EvictAsync<IInvite>(key);
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc/>
-    public Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
-        _cacheService.Evict<IMessage>(key);
+        await _cacheService.EvictAsync<IMessage>(key);
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc/>
-    public Task<Result> RespondAsync(IMessageDeleteBulk gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IMessageDeleteBulk gatewayEvent, CancellationToken ct = default)
     {
         foreach (var messageID in gatewayEvent.IDs)
         {
             var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, messageID);
-            _cacheService.Evict<IMessage>(key);
+            await _cacheService.EvictAsync<IMessage>(key);
         }
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 }

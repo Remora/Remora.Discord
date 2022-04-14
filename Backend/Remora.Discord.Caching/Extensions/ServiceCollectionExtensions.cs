@@ -20,8 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Text.Json;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -48,16 +50,22 @@ public static class ServiceCollectionExtensions
     /// <remarks>
     /// The cache uses a run-of-the-mill <see cref="IMemoryCache"/>. Cache entry options for any cached type can be
     /// configured using <see cref="IOptions{CacheSettings}"/>.
+    ///
+    /// When choosing a cache implementation, it should be noted that choosing this will override the backing store for
+    /// caching REST clients and responders.
     /// </remarks>
     /// <param name="services">The services.</param>
     /// <returns>The services, with caching enabled.</returns>
     public static IServiceCollection AddDiscordCaching(this IServiceCollection services)
     {
-        services
-            .AddMemoryCache();
+        services.AddMemoryCache();
+
+        services.TryAddSingleton<CacheService>();
+
+        services.TryAddSingleton<MemoryCacheProvider>();
+        services.AddSingleton<ICacheProvider>(s => s.GetRequiredService<MemoryCacheProvider>());
 
         services.AddOptions<CacheSettings>();
-        services.TryAddSingleton<CacheService>();
 
         services
             .Replace(ServiceDescriptor.Transient<IDiscordRestChannelAPI>(s => new CachingDiscordRestChannelAPI
