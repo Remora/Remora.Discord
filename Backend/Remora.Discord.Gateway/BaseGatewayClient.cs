@@ -55,7 +55,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     private Task<Result>? _sendTask;
     private Task<Result>? _receiveTask;
     private Task<Result>? _responderDispatchTask;
-    private volatile bool _isRunning;
+    private volatile bool _hasStarted;
     private volatile bool _isStopping;
     private CancellationTokenSource _dispatchCts;
 
@@ -127,19 +127,9 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                     case GatewayConnectionStatus.Offline:
                     case GatewayConnectionStatus.Disconnected:
                     {
-                        // We might have switched state while running. This is a signal to stop and reconnect.
-                        if (_isRunning)
-                        {
-                            var stopResult = await StopAsync(true);
-                            if (!stopResult.IsSuccess)
-                            {
-                                return stopResult;
-                            }
-                        }
-
-                        _isRunning = true;
                         this.DisconnectRequestedSource.Dispose();
                         this.DisconnectRequestedSource = new CancellationTokenSource();
+                        _hasStarted = true;
 
                         var connectResult = await ConnectAsync(ct);
                         if (!connectResult.IsSuccess)
@@ -241,9 +231,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
             await Task.Delay(20, CancellationToken.None);
 
             // Properly shutdown now
-            await StopAsync(false);
-
-            return Result.FromSuccess();
+            return await StopAsync(false);
         }
         catch (Exception ex)
         {
@@ -346,11 +334,15 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
         CancellationToken ct
     )
     {
+        // TODO: A good check to have? But we shouldn't need it.
+        //if (!this.TransportService.IsConnected)
+        //{
         var connectResult = await this.TransportService.ConnectAsync(gatewayUri, ct).ConfigureAwait(false);
         if (!connectResult.IsSuccess)
         {
             return connectResult;
         }
+        //}
 
         _sendTask = GatewaySenderAsync(this.DisconnectRequestedSource.Token);
 
@@ -365,8 +357,9 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     /// <returns>A task representing the asynchronous operation.</returns>
     protected virtual async Task<Result> StopAsync(bool reconnectionIntended)
     {
-        if (_isStopping || !_isRunning)
+        if (_isStopping || !_hasStarted)
         {
+            _logger.LogWarning("The gateway service is already stopping/stopped! _isStopping: {IsStopping} | _isRunning: {IsRunning}", _isStopping, _hasStarted);
             return Result.FromSuccess();
         }
 
@@ -390,7 +383,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
             var sendResult = await _sendTask;
             if (!sendResult.IsSuccess && !sendResult.HasCancellationError())
             {
-                _logger.LogError("A failure occurred when stopping the send task: {Error}", sendResult.Error);
+                _logger.LogError("An error occured in the send task: {Error}", sendResult.Error);
                 failedResults.Add(sendResult);
             }
         }
@@ -400,23 +393,20 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
             var receiveResult = await _receiveTask;
             if (!receiveResult.IsSuccess && !receiveResult.HasCancellationError())
             {
-                _logger.LogError("A failure occurred when stopping the receive task: {Error}", receiveResult.Error);
+                _logger.LogError("An error occured in the receive task: {Error}", receiveResult.Error);
                 failedResults.Add(receiveResult);
             }
         }
 
-        if (!reconnectionIntended)
+        if (!reconnectionIntended && _responderDispatchTask is not null)
         {
             _dispatchCts.Cancel();
+            var dispatchResult = await _responderDispatchTask;
 
-            if (_responderDispatchTask is not null)
+            if (!dispatchResult.IsSuccess && !dispatchResult.HasCancellationError())
             {
-                var dispatchResult = await _responderDispatchTask;
-                if (!dispatchResult.IsSuccess && !dispatchResult.HasCancellationError())
-                {
-                    _logger.LogError("A failure occurred when stopping the responder dispatch task: {Error}", dispatchResult.Error);
-                    failedResults.Add(dispatchResult);
-                }
+                _logger.LogError("An error occured in the responder dispatch task: {Error}", dispatchResult.Error);
+                failedResults.Add(dispatchResult);
             }
         }
 
@@ -425,7 +415,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
             : GatewayConnectionStatus.Offline;
 
         _isStopping = false;
-        _isRunning = false;
+        _hasStarted = false;
 
         return failedResults.Count > 0
             ? new AggregateError(failedResults)
@@ -582,6 +572,11 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     /// <returns>A value indicating whether or not to attempt a reconnection.</returns>
     private async Task<bool> StopAndCheckResultForReconnectionAsync(Result operationResult)
     {
+        if (!operationResult.IsSuccess)
+        {
+            _logger.LogError("A gateway error occured: {Error}", operationResult.Error);
+        }
+
         var shouldReconnect = ShouldReconnect(operationResult, out var withNewSession);
         await StopAsync(shouldReconnect);
 
