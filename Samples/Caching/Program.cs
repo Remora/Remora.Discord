@@ -69,7 +69,6 @@ public static class Program
         (
             (_, services) =>
             {
-                services.AddDiscordCaching();
                 services.Configure<CacheSettings>(settings =>
                 {
                     // Set the total time for an object to remain in the cache by default.

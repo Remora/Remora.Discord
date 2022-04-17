@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Remora.Discord.Caching.Services;
@@ -184,6 +185,30 @@ public class CacheSettings
 
         var slidingExpiration = GetSlidingExpirationOrDefault<T>();
         if (slidingExpiration is not null)
+        {
+            cacheOptions.SetSlidingExpiration(slidingExpiration.Value);
+        }
+
+        return cacheOptions;
+    }
+
+    /// <summary>
+    /// Gets a set of cache options, with expirations relative to now.
+    /// </summary>
+    /// <typeparam name="T">The cache entry type.</typeparam>
+    /// <returns>The entry options.</returns>
+    public DistributedCacheEntryOptions GetRedisEntryOptions<T>()
+    {
+        var cacheOptions = new DistributedCacheEntryOptions();
+
+        var absoluteExpiration = GetAbsoluteExpirationOrDefault<T>();
+        if (absoluteExpiration is not null)
+        {
+            cacheOptions.SetAbsoluteExpiration(absoluteExpiration.Value);
+        }
+
+        var slidingExpiration = GetSlidingExpirationOrDefault<T>();
+        if (slidingExpiration is not null && absoluteExpiration is not null)
         {
             cacheOptions.SetSlidingExpiration(slidingExpiration.Value);
         }
