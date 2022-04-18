@@ -49,13 +49,13 @@ public static class ServiceCollectionExtensions
     /// When choosing a cache implementation, it should be noted that choosing this will override the backing store for
     /// caching REST clients and responders.
     ///
-    /// It is also very important to know that the stock implementation of <see cref="ICacheProvider"/> that this method adds
-    /// uses JSON to store values for convenience and consistency with Remora's entities. If JSON is not a desireable format,
-    /// the caching methods in <see cref="RedisCacheProvider"/> can be provided, or a custom implementation of
-    /// <see cref="ICacheProvider"/> can be added to the container.
+    /// It is also very important to know that the stock implementation of <see cref="ICacheProvider"/> that this method
+    /// adds uses JSON to store values for convenience and consistency with Remora's entities. If JSON is not a
+    /// desirable format, the caching methods in <see cref="RedisCacheProvider"/> can be provided, or a custom
+    /// implementation of <see cref="ICacheProvider"/> can be added to the container.
     ///
-    /// If using a custom cache provider, it is necessary to add it after calling this method, or it will be overrided by the
-    /// provider implementation this method adds.
+    /// If using a custom cache provider, it is necessary to add it after calling this method, or it will be overridden
+    /// by the provider implementation this method adds.
     /// </remarks>
     /// <param name="services">The services.</param>
     /// <param name="configureRedisAction">An action to configure the redis cache. If none is specified, a

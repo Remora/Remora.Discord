@@ -44,7 +44,7 @@ public enum SpeakingFlags
     /// <summary>
     /// Transmission of context audio for video. No speaking indicator will be shown.
     /// </summary>
-    Soundshare = 1 << 1,
+    SoundShare = 1 << 1,
 
     /// <summary>
     /// Priority speech. Audio of other speakers will be lowered.

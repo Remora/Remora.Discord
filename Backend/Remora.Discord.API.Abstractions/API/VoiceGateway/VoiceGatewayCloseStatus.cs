@@ -61,9 +61,9 @@ public enum VoiceGatewayCloseStatus
     SessionNoLongerValid = 4006,
 
     /// <summary>
-    /// Your session has been ratelimited.
+    /// Your session has been rate limited.
     /// </summary>
-    Ratelimited = 4008,
+    RateLimited = 4008,
 
     /// <summary>
     /// Your session timed out.

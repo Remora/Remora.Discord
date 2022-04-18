@@ -58,7 +58,7 @@ public interface ICacheProvider
         where TInstance : class;
 
     /// <summary>
-    /// Retreives a value from the backing store.
+    /// Retrieves a value from the backing store.
     /// </summary>
     /// <param name="key">The key to retrieve a potential value from the backing store.</param>
     /// <param name="ct">A cancellation token to cancel the operation.</param>

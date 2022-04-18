@@ -659,7 +659,7 @@ public static class CDN
     }
 
     /// <summary>
-    /// Gets the CDN URI of the given guild members's avatar.
+    /// Gets the CDN URI of the given guild member's avatar.
     /// </summary>
     /// <param name="guildID">The guild to retrieve the member avatar of.</param>
     /// <param name="userID">The user ID of the guild member.</param>
