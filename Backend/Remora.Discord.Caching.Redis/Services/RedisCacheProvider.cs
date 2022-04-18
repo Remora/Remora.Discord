@@ -33,19 +33,16 @@ namespace Remora.Discord.Caching.Redis.Services;
 /// </summary>
 public class RedisCacheProvider : ICacheProvider
 {
-    private readonly CacheSettings _cacheSettings;
     private readonly IDistributedCache _cache;
     private readonly JsonSerializerOptions _jsonOptions;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RedisCacheProvider"/> class.
     /// </summary>
-    /// <param name="settings">The settings for the cache.</param>
     /// <param name="cache">The redis cache.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public RedisCacheProvider(IOptions<CacheSettings> settings, IDistributedCache cache, IOptionsMonitor<JsonSerializerOptions> jsonOptions)
+    public RedisCacheProvider(IDistributedCache cache, IOptionsMonitor<JsonSerializerOptions> jsonOptions)
     {
-        _cacheSettings = settings.Value;
         _cache = cache;
         _jsonOptions = jsonOptions.Get("Discord");
     }
