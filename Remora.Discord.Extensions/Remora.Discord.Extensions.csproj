@@ -6,11 +6,7 @@
 
     <PropertyGroup>
         <Version>4.0.1</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package provides utilities and components which extened upon base resources.
-        </Description>
+        <Description>Utilities and components which extened upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
             Use # to separate username and discriminator.
             Update dependencies.

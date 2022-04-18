@@ -6,11 +6,7 @@
 
     <PropertyGroup>
         <Version>1.0.0</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package contains caching abstractions.
-        </Description>
+        <Description>Cache provider abstractions for Remora.Discord</Description>
         <PackageReleaseNotes>
             Initial release.
         </PackageReleaseNotes>

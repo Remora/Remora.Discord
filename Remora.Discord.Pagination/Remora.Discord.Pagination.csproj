@@ -6,11 +6,7 @@
 
     <PropertyGroup>
         <Version>2.0.9</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package provides simple implementations of pagination for messages via buttons.
-        </Description>
+        <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
         </PackageReleaseNotes>

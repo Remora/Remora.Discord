@@ -6,11 +6,7 @@
 
     <PropertyGroup>
         <Version>24.0.1</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package contains cache functionality for the gateway and REST API.
-        </Description>
+        <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
             Merge pull request #166 from VelvetThePanda/feature/redis-cache
         </PackageReleaseNotes>

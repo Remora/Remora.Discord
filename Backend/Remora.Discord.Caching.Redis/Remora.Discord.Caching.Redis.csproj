@@ -6,11 +6,7 @@
 
     <PropertyGroup>
         <Version>1.0.1</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package contains a distributed, Redis-based cache implementation.
-        </Description>
+        <Description>Redis-based cache provider for Remora.Discord</Description>
         <PackageReleaseNotes>
             Initial release.
         </PackageReleaseNotes>

@@ -6,15 +6,7 @@
 
     <PropertyGroup>
         <Version>2022.19</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package is a metapackage for Remora.Discord, providing references to everything you need to get
-            started. Note that this package implies a dependency on the latest version of Remora.Discord's main
-            packages, with no regard for API compatibility across builds.
-
-            Production packages/projects should probably prefer explicit dependencies instead.
-        </Description>
+        <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
             Add check for the guild owner.
             Mark the API version enumeration as public.

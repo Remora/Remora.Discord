@@ -6,11 +6,7 @@
 
     <PropertyGroup>
         <Version>20.1.4</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package provides simple glue code for using Remora.Commands with Remora.Discord.
-        </Description>
+        <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
             Add check for the guild owner.
             Update dependencies.

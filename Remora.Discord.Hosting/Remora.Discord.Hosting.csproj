@@ -6,11 +6,7 @@
 
     <PropertyGroup>
         <Version>5.0.8</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package provides a simple implementation of a hosted service.
-        </Description>
+        <Description>Implementation of a hosted Discord gateway service for the .NET Generic Host</Description>
         <PackageReleaseNotes>
             Update dependencies.
         </PackageReleaseNotes>

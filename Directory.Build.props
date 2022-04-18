@@ -35,6 +35,7 @@
         <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
         <PackageIcon>shark.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
 
         <BaseDescription>
             Remora.Discord is a .NET library for the Discord API, built for performance, reliability, and concurrency.
@@ -119,15 +120,22 @@
     </ItemGroup>
 
     <!-- SourceLink -->
-    <ItemGroup>
+    <ItemGroup Condition="$(IsPackable)">
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     </ItemGroup>
 
     <!-- NuGet Icon -->
-    <ItemGroup>
-        <None Include="$(MSBuildThisFileDirectory)images/shark.png" Pack="true" PackagePath="/">
+    <ItemGroup Condition="$(IsPackable)">
+        <None Include="$(MSBuildThisFileDirectory)/images/shark.png" Pack="true" PackagePath="/">
             <Link>shark.png</Link>
             <InProject>false</InProject>
+        </None>
+    </ItemGroup>
+
+    <!-- NuGet README -->
+    <ItemGroup Condition="$(IsPackable)">
+        <None Include="$(MSBuildProjectDirectory)/README.md" Pack="true" PackagePath="/">
+            <Link>README.md</Link>
         </None>
     </ItemGroup>
 </Project>
