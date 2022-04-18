@@ -175,7 +175,7 @@ public class RequireBotDiscordPermissionsCondition :
         {
             return permissionDeniedError with
             {
-                Message = $"The given channel does not fulfill the permission requirements " +
+                Message = "The given channel does not fulfill the permission requirements " +
                           $"({Explain(permissionInformation, attribute.Operator)})."
             };
         }

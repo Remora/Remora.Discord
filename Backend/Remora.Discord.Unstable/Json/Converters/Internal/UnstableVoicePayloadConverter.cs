@@ -80,9 +80,7 @@ internal class UnstableVoicePayloadConverter : VoicePayloadConverter
         {
             return DeserializePayload<IVoiceSpeakingEvent>(VoiceOperationCode.Speaking, document, options);
         }
-        else
-        {
-            return base.DeserializeFromOperationCode(VoiceOperationCode.Speaking, document, options);
-        }
+
+        return base.DeserializeFromOperationCode(VoiceOperationCode.Speaking, document, options);
     }
 }

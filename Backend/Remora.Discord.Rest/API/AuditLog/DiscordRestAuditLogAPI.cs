@@ -65,7 +65,7 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
             return new ArgumentOutOfRangeError
             (
                 nameof(limit),
-                $"The limit must be between 1 and 100."
+                "The limit must be between 1 and 100."
             );
         }
 

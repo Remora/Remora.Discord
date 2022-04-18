@@ -61,7 +61,7 @@ public static class ServiceCollectionExtensions
     /// <returns>The services, with caching enabled.</returns>
     public static IServiceCollection AddDiscordRedisCaching(this IServiceCollection services, Action<RedisCacheOptions>? configureRedisAction = null)
     {
-        configureRedisAction ??= (s) => s.ConfigurationOptions = new ConfigurationOptions
+        configureRedisAction ??= s => s.ConfigurationOptions = new ConfigurationOptions
         {
             EndPoints = { { "localhost", 6379 } }
         };

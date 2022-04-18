@@ -48,5 +48,5 @@ public enum LogicalOperator
     /// <summary>
     /// XOR, that is, one and only one of the inputs must be logically true.
     /// </summary>
-    Xor,
+    Xor
 }

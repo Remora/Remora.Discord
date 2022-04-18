@@ -48,5 +48,5 @@ public enum ComponentType
     /// <summary>
     /// A text field input.
     /// </summary>
-    TextInput = 4,
+    TextInput = 4
 }

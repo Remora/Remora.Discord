@@ -389,23 +389,23 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: "aaa",
-                    Description: "bbbb",
-                    Options: new List<ApplicationCommandOption>(),
-                    DefaultPermission: true,
-                    Type: ApplicationCommandType.ChatInput
+                    "aaa",
+                    "bbbb",
+                    new List<ApplicationCommandOption>(),
+                    true,
+                    ApplicationCommandType.ChatInput
                 ),
                 new BulkApplicationCommandData
                 (
-                    Name: "ccc",
+                    "ccc",
                     Options: new List<ApplicationCommandOption>(),
                     DefaultPermission: true,
                     Type: ApplicationCommandType.Message
                 ),
                 new BulkApplicationCommandData
                 (
-                    Name: "eee",
-                    Description: "ffff"
+                    "eee",
+                    "ffff"
                 )
             };
 
@@ -484,8 +484,8 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: string.Empty,
-                    Description: "wwww"
+                    string.Empty,
+                    "wwww"
                 )
             };
 
@@ -517,8 +517,8 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: new string('a', 33),
-                    Description: "wwww"
+                    new string('a', 33),
+                    "wwww"
                 )
             };
 
@@ -550,8 +550,8 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: "aaa",
-                    Description: string.Empty
+                    "aaa",
+                    string.Empty
                 )
             };
 
@@ -583,8 +583,8 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: "aaa",
-                    Description: new string('w', 101)
+                    "aaa",
+                    new string('w', 101)
                 )
             };
 
@@ -1304,9 +1304,9 @@ public class DiscordRestApplicationAPITests
                 ),
                 new BulkApplicationCommandData
                 (
-                    Name: "eee",
-                    Description: "ffff"
-                ),
+                    "eee",
+                    "ffff"
+                )
             };
 
             var api = CreateAPI
@@ -1386,8 +1386,8 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: string.Empty,
-                    Description: "wwww"
+                    string.Empty,
+                    "wwww"
                 )
             };
 
@@ -1421,8 +1421,8 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: new string('a', 33),
-                    Description: "wwww"
+                    new string('a', 33),
+                    "wwww"
                 )
             };
 
@@ -1456,8 +1456,8 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: "aaa",
-                    Description: string.Empty
+                    "aaa",
+                    string.Empty
                 )
             };
 
@@ -1491,8 +1491,8 @@ public class DiscordRestApplicationAPITests
             {
                 new BulkApplicationCommandData
                 (
-                    Name: "aaa",
-                    Description: new string('a', 101)
+                    "aaa",
+                    new string('a', 101)
                 )
             };
 

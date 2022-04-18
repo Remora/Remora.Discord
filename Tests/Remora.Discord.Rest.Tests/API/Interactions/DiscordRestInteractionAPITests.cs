@@ -376,7 +376,7 @@ public class DiscordRestInteractionAPITests
                 interactionID,
                 token,
                 interactionResponse,
-                attachments: new OneOf<FileData, IPartialAttachment>[]
+                new OneOf<FileData, IPartialAttachment>[]
                 {
                     new FileData(fileName, file, description),
                     new PartialAttachment(DiscordSnowflake.New(999))

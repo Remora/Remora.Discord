@@ -162,7 +162,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
         (
             $"users/@me/guilds/{guildID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 

@@ -396,7 +396,7 @@ public class ResponderDispatchService : IAsyncDisposable
         {
             _responderTypeRepository.GetEarlyResponderTypes<TGatewayEvent>(),
             _responderTypeRepository.GetResponderTypes<TGatewayEvent>(),
-            _responderTypeRepository.GetLateResponderTypes<TGatewayEvent>(),
+            _responderTypeRepository.GetLateResponderTypes<TGatewayEvent>()
         };
 
         // Run through the groups in order

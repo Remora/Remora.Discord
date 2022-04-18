@@ -182,7 +182,7 @@ public class EmbedBuilder : BuilderBase<Embed>
 
         if (this.Length > EmbedConstants.MaxEmbedLength)
         {
-            return new ValidationError(nameof(this.Length), $"The overall embed length is too long.");
+            return new ValidationError(nameof(this.Length), "The overall embed length is too long.");
         }
 
         return Result.FromSuccess();
@@ -363,7 +363,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     {
         if (_fields.Count >= EmbedConstants.MaxFieldCount)
         {
-            return new ValidationError(nameof(this.Fields), $"Cannot add any more fields to this embed.");
+            return new ValidationError(nameof(this.Fields), "Cannot add any more fields to this embed.");
         }
 
         _fields.Add(field);

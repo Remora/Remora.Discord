@@ -277,7 +277,7 @@ public static class KeyHelpers
     /// <returns>The cache key.</returns>
     public static string CreateCurrentUserCacheKey()
     {
-        return $"User:@me";
+        return "User:@me";
     }
 
     /// <summary>
@@ -314,7 +314,7 @@ public static class KeyHelpers
     /// <returns>The cache key.</returns>
     public static string CreateCurrentApplicationCacheKey()
     {
-        return $"Application:@me";
+        return "Application:@me";
     }
 
     /// <summary>

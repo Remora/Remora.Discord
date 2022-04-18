@@ -277,7 +277,7 @@ public class RequireDiscordPermissionCondition :
         {
             return permissionDeniedError with
             {
-                Message = $"The given role does not fulfill the permission requirements " +
+                Message = "The given role does not fulfill the permission requirements " +
                           $"({Explain(permissionInformation, attribute.Operator)})."
             };
         }

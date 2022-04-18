@@ -507,7 +507,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -524,7 +524,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -542,7 +542,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/{user}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -595,7 +595,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/messages/{messageID}/reactions",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -612,7 +612,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -898,7 +898,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/typing",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -989,7 +989,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/recipients/{userID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -1075,7 +1075,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/thread-members/@me",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -1091,7 +1091,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/thread-members/{userID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -1102,7 +1102,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/thread-members/@me",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -1118,7 +1118,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/thread-members/{userID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 

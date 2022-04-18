@@ -70,7 +70,7 @@ public static class PageFactory
         foreach (var field in enumeratedFields)
         {
             var fieldContentLength = field.Name.Length + field.Value.Length;
-            if (currentPageFields.Count >= maxFieldsPerPage || (pageBaseLength + fieldContentLength >= 1300))
+            if (currentPageFields.Count >= maxFieldsPerPage || pageBaseLength + fieldContentLength >= 1300)
             {
                 pages.Add(pageBase with { Fields = new List<IEmbedField>(currentPageFields) });
                 currentPageFields.Clear();

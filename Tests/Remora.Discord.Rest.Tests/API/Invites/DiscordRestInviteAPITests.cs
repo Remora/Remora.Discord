@@ -66,7 +66,7 @@ public class DiscordRestInviteAPITests
                         {
                             new KeyValuePair<string, string>("with_counts", withCounts.ToString()),
                             new KeyValuePair<string, string>("with_expiration", withExpiration.ToString()),
-                            new KeyValuePair<string, string>("guild_scheduled_event_id", eventID.ToString()),
+                            new KeyValuePair<string, string>("guild_scheduled_event_id", eventID.ToString())
                         }
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
