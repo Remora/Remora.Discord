@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions;
 
 /// <summary>
 /// Enumerates various released versions of the Discord API.
 /// </summary>
+[PublicAPI]
 public enum DiscordAPIVersion
 {
     /// <summary>
