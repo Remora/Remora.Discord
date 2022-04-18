@@ -371,25 +371,25 @@ public class DiscordGatewayClient : IDisposable
 
                 break;
             }
-            case GatewayError gae:
+            case GatewayError(var message, var isSessionResumable, var isCritical):
             {
                 // We'll try reconnecting on non-critical internal errors
-                if (!gae.IsCritical)
+                if (!isCritical)
                 {
                     _log.LogWarning
                     (
                         "Local transient gateway error: {Error}",
-                        gae.Message
+                        message
                     );
 
-                    withNewSession = !gae.IsSessionResumable;
+                    withNewSession = !isSessionResumable;
                     return true;
                 }
 
                 _log.LogError
                 (
                     "Local unrecoverable gateway error: {Error}",
-                    gae.Message
+                    message
                 );
 
                 shouldTerminate = true;
@@ -699,50 +699,53 @@ public class DiscordGatewayClient : IDisposable
                 return Result.FromError(receiveReady);
             }
 
-            if (receiveReady.Entity is IPayload<IHeartbeatAcknowledge>)
+            switch (receiveReady.Entity)
             {
-                continue;
+                case IPayload<IHeartbeatAcknowledge>:
+                {
+                    continue;
+                }
+                case IPayload<IInvalidSession> invalidSession:
+                {
+                    return new GatewayError
+                    (
+                        "The newly created session was invalidated by Discord.",
+                        invalidSession.Data.IsResumable,
+                        false
+                    );
+                }
+                case IPayload<IReady> ready:
+                {
+                    var dispatch = await _responderDispatch.DispatchAsync
+                    (
+                        ready,
+                        _disconnectRequestedSource.Token
+                    );
+
+                    if (!dispatch.IsSuccess)
+                    {
+                        return dispatch;
+                    }
+
+                    _sessionID = ready.Data.SessionID;
+
+                    return Result.FromSuccess();
+                }
+                default:
+                {
+                    _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
+
+                    return new GatewayError
+                    (
+                        $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
+                        $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
+                        $"\tActual: {receiveReady.Entity.GetType().FullName}",
+                        false,
+                        true
+                    );
+                }
             }
-
-            if (receiveReady.Entity is IPayload<IInvalidSession> invalidSession)
-            {
-                return new GatewayError
-                (
-                    "The newly created session was invalidated by Discord.",
-                    invalidSession.Data.IsResumable,
-                    false
-                );
-            }
-
-            if (receiveReady.Entity is not IPayload<IReady> ready)
-            {
-                _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
-                return new GatewayError
-                (
-                    $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
-                    $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
-                    $"\tActual: {receiveReady.Entity.GetType().FullName}",
-                    false,
-                    true
-                );
-            }
-
-            var dispatch = await _responderDispatch.DispatchAsync
-            (
-                receiveReady.Entity,
-                _disconnectRequestedSource.Token
-            );
-
-            if (!dispatch.IsSuccess)
-            {
-                return dispatch;
-            }
-
-            _sessionID = ready.Data.SessionID;
-            break;
         }
-
-        return Result.FromSuccess();
     }
 
     /// <summary>

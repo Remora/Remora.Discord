@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events;
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// <summary>
 /// Sent when a user subscribes to a scheduled event.
 /// </summary>
+[PublicAPI]
 public interface IGuildScheduledEventUserAdd : IGatewayEvent
 {
     /// <summary>

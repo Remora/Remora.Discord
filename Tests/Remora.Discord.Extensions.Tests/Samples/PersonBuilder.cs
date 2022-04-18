@@ -71,11 +71,8 @@ internal class PersonBuilder : BuilderBase<Person>
             return nameValidate;
         }
 
-        if (this.Age < 1 || this.Age > 100)
-        {
-            return new ValidationError(nameof(this.Age), "Age must be between 1 and 100.");
-        }
-
-        return Result.FromSuccess();
+        return this.Age is < 1 or > 100
+            ? new ValidationError(nameof(this.Age), "Age must be between 1 and 100.")
+            : Result.FromSuccess();
     }
 }

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using JetBrains.Annotations;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -37,6 +38,7 @@ namespace Remora.Discord.Extensions.Embeds;
 /// <summary>
 /// Provides utilities for building an embed.
 /// </summary>
+[PublicAPI]
 public class EmbedBuilder : BuilderBase<Embed>
 {
     /// <summary>
@@ -180,12 +182,9 @@ public class EmbedBuilder : BuilderBase<Embed>
             return new ArgumentOutOfRangeError(nameof(this.Fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {this.Fields.Count}.");
         }
 
-        if (this.Length > EmbedConstants.MaxEmbedLength)
-        {
-            return new ValidationError(nameof(this.Length), "The overall embed length is too long.");
-        }
-
-        return Result.FromSuccess();
+        return this.Length > EmbedConstants.MaxEmbedLength
+            ? new ValidationError(nameof(this.Length), "The overall embed length is too long.")
+            : Result.FromSuccess();
     }
 
     /// <summary>

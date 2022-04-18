@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
 using static Remora.Discord.API.Abstractions.Objects.ChannelType;
@@ -30,6 +31,7 @@ namespace Remora.Discord.Commands.Extensions;
 /// <summary>
 /// Defines extension methods for the <see cref="ChannelContext"/> class.
 /// </summary>
+[PublicAPI]
 public static class ChannelContextExtensions
 {
     /// <summary>

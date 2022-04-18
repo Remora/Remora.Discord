@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using OneOf;
 using Remora.Commands.Parsers;
 using Remora.Commands.Services;
@@ -35,6 +36,7 @@ namespace Remora.Discord.Commands.Parsers;
 /// <summary>
 /// Parses various instances of the <see cref="OneOf{T}"/> type.
 /// </summary>
+[PublicAPI]
 public class OneOfParser : AbstractTypeParser
 {
     private static readonly IReadOnlyList<Type> OneOfTypes = new List<Type>

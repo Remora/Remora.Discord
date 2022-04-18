@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Extensions.Builder;
@@ -31,6 +32,7 @@ namespace Remora.Discord.Extensions.Embeds;
 /// <summary>
 /// A builder which validates and builds an <see cref="EmbedAuthor"/>.
 /// </summary>
+[PublicAPI]
 public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
 {
     /// <summary>
@@ -95,11 +97,8 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
         }
 
         var iconResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
-        if (!iconResult.IsSuccess)
-        {
-            return iconResult;
-        }
-
-        return Result.FromSuccess();
+        return !iconResult.IsSuccess
+            ? iconResult
+            : Result.FromSuccess();
     }
 }

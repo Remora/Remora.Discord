@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Results;
 
 namespace Remora.Discord.Extensions.Builder;
@@ -28,6 +29,7 @@ namespace Remora.Discord.Extensions.Builder;
 /// Represents an object responsible for constructing and validating a model.
 /// </summary>
 /// <typeparam name="TEntity">The type of model to build.</typeparam>
+[PublicAPI]
 public interface IBuilder<TEntity>
 {
     /// <summary>

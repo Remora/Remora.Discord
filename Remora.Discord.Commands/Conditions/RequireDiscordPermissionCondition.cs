@@ -321,7 +321,7 @@ public class RequireDiscordPermissionCondition :
                 false,
                 (current, value) => current ^ value
             ),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(logicalOperator))
         };
 
         return passesCheck

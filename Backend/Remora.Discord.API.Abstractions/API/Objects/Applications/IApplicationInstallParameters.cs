@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Represents a set of parameters applied to custom application installation.
 /// </summary>
+[PublicAPI]
 public interface IApplicationInstallParameters
 {
     /// <summary>

@@ -393,11 +393,11 @@ internal class PayloadConverter : JsonConverter<IPayload?>
             }
         );
 
-        if (eventObject is not IPayload)
+        if (eventObject is not IPayload payload)
         {
             throw new JsonException();
         }
 
-        return (IPayload)eventObject;
+        return payload;
     }
 }

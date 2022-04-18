@@ -96,10 +96,7 @@ public class SampleRepository
                 .Replace("_", string.Empty)
                 .Replace(".json", string.Empty);
 
-            resourceFileName = resourceFileName.Substring
-            (
-                resourceFileName.LastIndexOf(".", StringComparison.Ordinal) + 1
-            );
+            resourceFileName = resourceFileName[(resourceFileName.LastIndexOf(".", StringComparison.Ordinal) + 1)..];
 
             var interfaceType = interfaceTypes.Concat(experimentalTypes).FirstOrDefault
             (
