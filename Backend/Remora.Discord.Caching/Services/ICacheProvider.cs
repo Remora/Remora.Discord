@@ -23,6 +23,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.Services;
@@ -30,6 +31,7 @@ namespace Remora.Discord.Caching.Services;
 /// <summary>
 /// Represents an abstraction between a cache service and it's backing store.
 /// </summary>
+[PublicAPI]
 public interface ICacheProvider
 {
     /// <summary>

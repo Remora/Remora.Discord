@@ -21,6 +21,7 @@
 //
 
 using System.Text.Json;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using Remora.Discord.Caching.Services;
@@ -31,6 +32,7 @@ namespace Remora.Discord.Caching.Redis.Services;
 /// <summary>
 /// Handles cache insert/evict operations for various types, using Redis as a backing-store.
 /// </summary>
+[PublicAPI]
 public class RedisCacheProvider : ICacheProvider
 {
     private readonly IDistributedCache _cache;

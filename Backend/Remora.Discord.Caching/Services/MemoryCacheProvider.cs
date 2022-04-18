@@ -23,6 +23,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Memory;
 using Remora.Results;
 
@@ -31,6 +32,7 @@ namespace Remora.Discord.Caching.Services;
 /// <summary>
 /// An <see cref="IMemoryCache"/>-backed cache provider.
 /// </summary>
+[PublicAPI]
 public class MemoryCacheProvider : ICacheProvider
 {
     private readonly IMemoryCache _memoryCache;
