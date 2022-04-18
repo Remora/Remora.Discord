@@ -589,6 +589,7 @@ public class DiscordRestGuildAPITests
             var permissionOverwrites = new List<IPermissionOverwrite>();
             var parentId = DiscordSnowflake.New(1);
             var nsfw = true;
+            var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
             var reason = "test";
 
             var api = CreateAPI
@@ -609,6 +610,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("parent_id", p => p.Is(parentId.ToString()))
                                 .WithProperty("nsfw", p => p.Is(nsfw))
+                                .WithProperty("default_auto_archive_duration", p => p.Is((int)defaultAutoArchiveDuration))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -625,6 +627,7 @@ public class DiscordRestGuildAPITests
                 permissionOverwrites: permissionOverwrites,
                 parentID: parentId,
                 isNsfw: nsfw,
+                defaultAutoArchiveDuration: defaultAutoArchiveDuration,
                 reason: reason
             );
 

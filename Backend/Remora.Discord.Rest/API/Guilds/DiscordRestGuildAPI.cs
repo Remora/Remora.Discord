@@ -305,6 +305,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -328,6 +329,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("permission_overwrites", permissionOverwrites, this.JsonOptions);
                         json.Write("parent_id", parentID, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
+                        json.Write("default_auto_archive_duration", defaultAutoArchiveDuration, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),

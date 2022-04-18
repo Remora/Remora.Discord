@@ -194,6 +194,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
     /// <param name="isNsfw">Whether the new channel is NSFW.</param>
+    /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -210,6 +211,7 @@ public interface IDiscordRestGuildAPI
         Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
