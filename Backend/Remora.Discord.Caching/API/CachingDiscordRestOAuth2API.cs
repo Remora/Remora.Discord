@@ -59,7 +59,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
     )
     {
         var key = KeyHelpers.CreateCurrentApplicationCacheKey();
-        var cacheResult = await _cacheService.TryGetValueAsync<IApplication>(key);
+        var cacheResult = await _cacheService.TryGetValueAsync<IApplication>(key, ct);
 
         if (cacheResult.IsSuccess)
         {
@@ -73,7 +73,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
         }
 
         var application = getCurrent.Entity;
-        await _cacheService.CacheAsync(key, application);
+        await _cacheService.CacheAsync(key, application, ct);
 
         return getCurrent;
     }
@@ -85,7 +85,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
     )
     {
         var key = KeyHelpers.CreateCurrentAuthorizationInformationCacheKey();
-        var cacheResult = await _cacheService.TryGetValueAsync<IAuthorizationInformation>(key);
+        var cacheResult = await _cacheService.TryGetValueAsync<IAuthorizationInformation>(key, ct);
 
         if (cacheResult.IsSuccess)
         {
@@ -98,7 +98,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
             return result;
         }
 
-        await _cacheService.CacheAsync(key, result.Entity);
+        await _cacheService.CacheAsync(key, result.Entity, ct);
 
         return result;
     }

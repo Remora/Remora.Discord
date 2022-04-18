@@ -68,7 +68,7 @@ public class EarlyCacheResponder :
     public async Task<Result> RespondAsync(IChannelCreate gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateChannelCacheKey(gatewayEvent.ID);
-        await _cacheService.CacheAsync<IChannel>(key, gatewayEvent);
+        await _cacheService.CacheAsync<IChannel>(key, gatewayEvent, ct);
 
         return Result.FromSuccess();
     }
@@ -77,7 +77,7 @@ public class EarlyCacheResponder :
     public async Task<Result> RespondAsync(IChannelUpdate gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateChannelCacheKey(gatewayEvent.ID);
-        await _cacheService.CacheAsync<IChannel>(key, gatewayEvent);
+        await _cacheService.CacheAsync<IChannel>(key, gatewayEvent, ct);
 
         return Result.FromSuccess();
     }
@@ -86,7 +86,7 @@ public class EarlyCacheResponder :
     public async Task<Result> RespondAsync(IGuildBanAdd gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateGuildBanCacheKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
-        await _cacheService.CacheAsync<IBan>(key, new Ban(null, gatewayEvent.User));
+        await _cacheService.CacheAsync<IBan>(key, new Ban(null, gatewayEvent.User), ct);
 
         return Result.FromSuccess();
     }
@@ -95,7 +95,7 @@ public class EarlyCacheResponder :
     public async Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateGuildCacheKey(gatewayEvent.ID);
-        await _cacheService.CacheAsync<IGuild>(key, gatewayEvent);
+        await _cacheService.CacheAsync<IGuild>(key, gatewayEvent, ct);
 
         return Result.FromSuccess();
     }
@@ -111,7 +111,7 @@ public class EarlyCacheResponder :
             }
 
             var key = KeyHelpers.CreateEmojiCacheKey(gatewayEvent.GuildID, emoji.ID.Value);
-            await _cacheService.CacheAsync(key, emoji);
+            await _cacheService.CacheAsync(key, emoji, ct);
         }
 
         return Result.FromSuccess();
@@ -126,7 +126,7 @@ public class EarlyCacheResponder :
         }
 
         var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, user.ID);
-        await _cacheService.CacheAsync<IGuildMember>(key, gatewayEvent);
+        await _cacheService.CacheAsync<IGuildMember>(key, gatewayEvent, ct);
 
         return Result.FromSuccess();
     }
@@ -142,7 +142,7 @@ public class EarlyCacheResponder :
             }
 
             var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, user.ID);
-            await _cacheService.CacheAsync(key, member);
+            await _cacheService.CacheAsync(key, member, ct);
         }
 
         if (!gatewayEvent.Presences.IsDefined(out var presences))
@@ -158,7 +158,7 @@ public class EarlyCacheResponder :
             }
 
             var key = KeyHelpers.CreatePresenceCacheKey(gatewayEvent.GuildID, userID);
-            await _cacheService.CacheAsync(key, presence);
+            await _cacheService.CacheAsync(key, presence, ct);
         }
 
         return Result.FromSuccess();
@@ -170,7 +170,7 @@ public class EarlyCacheResponder :
         var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
 
         // Since this event isn't playing nice, we'll have to update by creating an object of our own.
-        var cacheResult = await _cacheService.TryGetValueAsync<IGuildMember>(key);
+        var cacheResult = await _cacheService.TryGetValueAsync<IGuildMember>(key, ct);
 
         var cachedInstance = cacheResult.Entity;
 
@@ -210,7 +210,7 @@ public class EarlyCacheResponder :
             return Result.FromSuccess();
         }
 
-        await _cacheService.CacheAsync(key, cachedInstance);
+        await _cacheService.CacheAsync(key, cachedInstance, ct);
 
         return Result.FromSuccess();
     }
@@ -219,7 +219,7 @@ public class EarlyCacheResponder :
     public async Task<Result> RespondAsync(IGuildRoleCreate gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.Role.ID);
-        await _cacheService.CacheAsync(key, gatewayEvent.Role);
+        await _cacheService.CacheAsync(key, gatewayEvent.Role, ct);
 
         return Result.FromSuccess();
     }
@@ -228,7 +228,7 @@ public class EarlyCacheResponder :
     public async Task<Result> RespondAsync(IGuildRoleUpdate gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.Role.ID);
-        await _cacheService.CacheAsync(key, gatewayEvent.Role);
+        await _cacheService.CacheAsync(key, gatewayEvent.Role, ct);
 
         return Result.FromSuccess();
     }
@@ -237,7 +237,7 @@ public class EarlyCacheResponder :
     public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
-        await _cacheService.CacheAsync<IMessage>(key, gatewayEvent);
+        await _cacheService.CacheAsync<IMessage>(key, gatewayEvent, ct);
 
         return Result.FromSuccess();
     }
@@ -261,7 +261,7 @@ public class EarlyCacheResponder :
         }
 
         var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
-        await _cacheService.CacheAsync(key, member);
+        await _cacheService.CacheAsync(key, member, ct);
 
         return Result.FromSuccess();
     }
@@ -270,7 +270,7 @@ public class EarlyCacheResponder :
     public async Task<Result> RespondAsync(IUserUpdate gatewayEvent, CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateUserCacheKey(gatewayEvent.ID);
-        await _cacheService.CacheAsync<IUser>(key, gatewayEvent);
+        await _cacheService.CacheAsync<IUser>(key, gatewayEvent, ct);
 
         return Result.FromSuccess();
     }
@@ -293,7 +293,7 @@ public class EarlyCacheResponder :
             foreach (var (key, value) in users)
             {
                 var cacheKey = KeyHelpers.CreateUserCacheKey(key);
-                await _cacheService.CacheAsync(cacheKey, value);
+                await _cacheService.CacheAsync(cacheKey, value, ct);
             }
         }
 
@@ -305,7 +305,7 @@ public class EarlyCacheResponder :
         foreach (var (key, value) in roles)
         {
             var cacheKey = KeyHelpers.CreateGuildRoleCacheKey(guildID, key);
-            await _cacheService.CacheAsync(cacheKey, value);
+            await _cacheService.CacheAsync(cacheKey, value, ct);
         }
 
         return Result.FromSuccess();

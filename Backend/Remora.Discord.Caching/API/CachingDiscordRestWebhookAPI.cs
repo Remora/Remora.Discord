@@ -76,7 +76,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         var webhook = createWebhook.Entity;
         var key = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
 
-        await _cacheService.CacheAsync(key, webhook);
+        await _cacheService.CacheAsync(key, webhook, ct);
 
         return createWebhook;
     }
@@ -96,7 +96,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-        await _cacheService.EvictAsync<IWebhook>(key);
+        await _cacheService.EvictAsync<IWebhook>(key, ct);
 
         return deleteWebhook;
     }
@@ -150,7 +150,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var key = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
-        await _cacheService.CacheAsync(key, message);
+        await _cacheService.CacheAsync(key, message, ct);
 
         return execute;
     }
@@ -163,7 +163,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
     )
     {
         var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-        var cacheResult = await _cacheService.TryGetValueAsync<IWebhook>(key);
+        var cacheResult = await _cacheService.TryGetValueAsync<IWebhook>(key, ct);
 
         if (cacheResult.IsSuccess)
         {
@@ -177,7 +177,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var webhook = getWebhook.Entity;
-        await _cacheService.CacheAsync(key, webhook);
+        await _cacheService.CacheAsync(key, webhook, ct);
 
         return getWebhook;
     }
@@ -202,7 +202,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
         var webhook = modifyWebhook.Entity;
 
-        await _cacheService.CacheAsync(key, webhook);
+        await _cacheService.CacheAsync(key, webhook, ct);
 
         return modifyWebhook;
     }
@@ -215,7 +215,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
     )
     {
         var key = KeyHelpers.CreateChannelWebhooksCacheKey(channelID);
-        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IWebhook>>(key);
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IWebhook>>(key, ct);
 
         if (cacheResult.IsSuccess)
         {
@@ -229,12 +229,12 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var webhooks = getWebhooks.Entity;
-        await _cacheService.CacheAsync(key, webhooks);
+        await _cacheService.CacheAsync(key, webhooks, ct);
 
         foreach (var webhook in webhooks)
         {
             var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
-            await _cacheService.CacheAsync(webhookKey, webhook);
+            await _cacheService.CacheAsync(webhookKey, webhook, ct);
         }
 
         return getWebhooks;
@@ -247,7 +247,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
     )
     {
         var key = KeyHelpers.CreateGuildWebhooksCacheKey(guildID);
-        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IWebhook>>(key);
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IWebhook>>(key, ct);
 
         if (cacheResult.IsSuccess)
         {
@@ -261,12 +261,12 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var webhooks = getWebhooks.Entity;
-        await _cacheService.CacheAsync(key, webhooks);
+        await _cacheService.CacheAsync(key, webhooks, ct);
 
         foreach (var webhook in webhooks)
         {
             var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
-            await _cacheService.CacheAsync(webhookKey, webhook);
+            await _cacheService.CacheAsync(webhookKey, webhook, ct);
         }
 
         return getWebhooks;
@@ -288,7 +288,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-        await _cacheService.EvictAsync<IWebhook>(key);
+        await _cacheService.EvictAsync<IWebhook>(key, ct);
 
         return deleteWebhook;
     }
@@ -302,7 +302,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
     )
     {
         var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-        var cacheResult = await _cacheService.TryGetValueAsync<IWebhook>(key);
+        var cacheResult = await _cacheService.TryGetValueAsync<IWebhook>(key, ct);
 
         if (cacheResult.IsSuccess)
         {
@@ -316,7 +316,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var webhook = getWebhook.Entity;
-        await _cacheService.CacheAsync(key, webhook);
+        await _cacheService.CacheAsync(key, webhook, ct);
 
         return getWebhook;
     }
@@ -341,7 +341,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
         var webhook = modifyWebhook.Entity;
 
-        await _cacheService.CacheAsync(key, webhook);
+        await _cacheService.CacheAsync(key, webhook, ct);
 
         return modifyWebhook;
     }
@@ -381,7 +381,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
-        await _cacheService.CacheAsync(key, result.Entity);
+        await _cacheService.CacheAsync(key, result.Entity, ct);
 
         return result;
     }
@@ -403,7 +403,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         }
 
         var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
-        await _cacheService.EvictAsync<IMessage>(key);
+        await _cacheService.EvictAsync<IMessage>(key, ct);
 
         return result;
     }
@@ -419,7 +419,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
     )
     {
         var key = KeyHelpers.CreateWebhookMessageCacheKey(webhookToken, messageID);
-        var cacheResult = await _cacheService.TryGetValueAsync<IMessage>(key);
+        var cacheResult = await _cacheService.TryGetValueAsync<IMessage>(key, ct);
 
         if (cacheResult.IsSuccess)
         {
@@ -432,7 +432,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
             return result;
         }
 
-        await _cacheService.CacheAsync(key, result.Entity);
+        await _cacheService.CacheAsync(key, result.Entity, ct);
 
         return result;
     }

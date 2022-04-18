@@ -78,7 +78,7 @@ public class RedisCacheProvider : ICacheProvider
             SlidingExpiration = slidingExpiration
         };
 
-        await _cache.SetStringAsync(key, serialized, options);
+        await _cache.SetStringAsync(key, serialized, options, ct);
     }
 
     /// <inheritdoc cref="ICacheProvider.RetrieveAsync{TInstance}"/>
