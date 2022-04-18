@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>54.0.0</Version>
+        <Version>55.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,16 +13,12 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Implement guild ban pagination.
-            Implement support for guild directories.
-            Implement support for default authorization.
-            Implement support for stage start notifications.
-            Remove store channels.
-            Implement support for animated guild banners.
-            Remove deprecated field.
-            Mark channel name as nullable.
-            Update enumeration name.
-            Add image_hash audit log change key.
+            Mark the API version enumeration as public.
+            Mark some more types as PublicAPI.
+            Implement default_auto_archive_duration for channel creation.
+            Remove the "none" flag.
+            Implement GuildID in InteractionData.
+            Add PropertyConverter for IApplicationCommandInteractionDataResolved.Attachments
         </PackageReleaseNotes>
     </PropertyGroup>
 
