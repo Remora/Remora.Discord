@@ -291,6 +291,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -308,6 +309,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             permissionOverwrites,
             parentID,
             isNsfw,
+            defaultAutoArchiveDuration,
             reason,
             ct
         );
