@@ -26,9 +26,9 @@ using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Extensions;
 using Remora.Discord.Caching.Redis.Services;
-using Remora.Discord.Caching.Services;
 using StackExchange.Redis;
 
 namespace Remora.Discord.Caching.Redis.Extensions;
@@ -61,7 +61,11 @@ public static class ServiceCollectionExtensions
     /// <param name="configureRedisAction">An action to configure the redis cache. If none is specified, a
     /// default connection of localhost:6379 will be used.</param>
     /// <returns>The services, with caching enabled.</returns>
-    public static IServiceCollection AddDiscordRedisCaching(this IServiceCollection services, Action<RedisCacheOptions>? configureRedisAction = null)
+    public static IServiceCollection AddDiscordRedisCaching
+    (
+        this IServiceCollection services,
+        Action<RedisCacheOptions>? configureRedisAction = null
+    )
     {
         configureRedisAction ??= s => s.ConfigurationOptions = new ConfigurationOptions
         {

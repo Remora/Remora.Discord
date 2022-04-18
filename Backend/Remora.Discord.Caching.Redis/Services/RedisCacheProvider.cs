@@ -24,7 +24,7 @@ using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
-using Remora.Discord.Caching.Services;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.Redis.Services;
@@ -55,19 +55,19 @@ public class RedisCacheProvider : ICacheProvider
     /// there is a strong reliance on the fact that the entity being cached is trivially serializable to JSON.
     ///
     /// In the event that this is not the case, this method can be overriden in a derived class to provide
-    /// a more apt transformation of incoming data..
+    /// a more apt transformation of incoming data.
     /// </remarks>
     public virtual async ValueTask CacheAsync<TInstance>
     (
         string key,
         TInstance instance,
-        TimeSpan? absoluteExpiration = null,
+        DateTimeOffset? absoluteExpiration = null,
         TimeSpan? slidingExpiration = null,
         CancellationToken ct = default
     )
         where TInstance : class
     {
-        if (absoluteExpiration == TimeSpan.Zero)
+        if (absoluteExpiration >= DateTimeOffset.UtcNow)
         {
             return;
         }
@@ -76,7 +76,7 @@ public class RedisCacheProvider : ICacheProvider
 
         var options = new DistributedCacheEntryOptions
         {
-            AbsoluteExpirationRelativeToNow = absoluteExpiration,
+            AbsoluteExpiration = absoluteExpiration,
             SlidingExpiration = slidingExpiration
         };
 
@@ -109,7 +109,22 @@ public class RedisCacheProvider : ICacheProvider
 
         var deserialized = JsonSerializer.Deserialize<TInstance>(value, _jsonOptions);
 
-        return deserialized!;
+        return deserialized;
+    }
+
+    /// <inheritdoc />
+    public async ValueTask<Result> EvictAsync(string key, CancellationToken ct = default)
+    {
+        var existingValue = await _cache.GetAsync(key, ct);
+
+        if (existingValue is null)
+        {
+            return new NotFoundError($"The given key \"{key}\" held no value in the cache.");
+        }
+
+        await _cache.RemoveAsync(key, ct);
+
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc cref="ICacheProvider.EvictAsync{TInstance}"/>
@@ -134,6 +149,6 @@ public class RedisCacheProvider : ICacheProvider
 
         var deserialized = JsonSerializer.Deserialize<TInstance>(existingValue, _jsonOptions);
 
-        return deserialized!;
+        return deserialized;
     }
 }

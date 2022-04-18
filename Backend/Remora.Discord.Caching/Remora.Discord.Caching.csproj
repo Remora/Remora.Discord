@@ -18,6 +18,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Remora.Discord.Caching.Abstractions\Remora.Discord.Caching.Abstractions.csproj" />
       <ProjectReference Include="..\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
     </ItemGroup>
 

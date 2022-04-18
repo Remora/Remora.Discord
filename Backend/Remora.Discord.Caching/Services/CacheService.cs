@@ -27,6 +27,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.Services;
@@ -128,7 +129,14 @@ public class CacheService
 
         var options = _cacheSettings.GetEntryOptions<TInstance>();
 
-        await _cacheProvider.CacheAsync(key, evictionResult.Entity, options.AbsoluteExpirationRelativeToNow, options.SlidingExpiration, ct);
+        await _cacheProvider.CacheAsync
+        (
+            key,
+            evictionResult.Entity,
+            options.AbsoluteExpiration,
+            options.SlidingExpiration,
+            ct
+        );
 
         return evictionResult.Entity;
     }
@@ -340,6 +348,6 @@ public class CacheService
         where TInstance : class
     {
         var options = _cacheSettings.GetEntryOptions<TInstance>();
-        return _cacheProvider.CacheAsync(key, instance, options.AbsoluteExpirationRelativeToNow, options.SlidingExpiration);
+        return _cacheProvider.CacheAsync(key, instance, options.AbsoluteExpiration, options.SlidingExpiration);
     }
 }

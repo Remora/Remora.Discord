@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.Services;
+namespace Remora.Discord.Caching.Abstractions.Services;
 
 /// <summary>
 /// Represents an abstraction between a cache service and it's backing store.
@@ -51,7 +51,7 @@ public interface ICacheProvider
     (
         string key,
         TInstance instance,
-        TimeSpan? absoluteExpiration = null,
+        DateTimeOffset? absoluteExpiration = null,
         TimeSpan? slidingExpiration = null,
         CancellationToken ct = default
     )
@@ -68,7 +68,15 @@ public interface ICacheProvider
         where TInstance : class;
 
     /// <summary>
-    /// Evicts a key from the backing store, returning it's current value if it exists..
+    /// Evicts a key from the backing store.
+    /// </summary>
+    /// <param name="key">The key to evict from the backing store.</param>
+    /// <param name="ct">A cancellation token to cancel the operation.</param>
+    /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous action.</returns>
+    ValueTask<Result> EvictAsync(string key, CancellationToken ct = default);
+
+    /// <summary>
+    /// Evicts a key from the backing store, returning its current value if it exists.
     /// </summary>
     /// <param name="key">The key to evict from the backing store.</param>
     /// <param name="ct">A cancellation token to cancel the operation.</param>

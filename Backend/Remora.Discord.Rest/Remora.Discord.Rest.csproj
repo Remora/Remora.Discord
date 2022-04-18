@@ -27,6 +27,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.API\Remora.Discord.API.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Caching.Abstractions\Remora.Discord.Caching.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

@@ -21,8 +21,8 @@
 //
 
 using JetBrains.Annotations;
-using Microsoft.Extensions.Caching.Memory;
 using Polly;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
@@ -58,7 +58,7 @@ public static class RestRequestBuilderExtensions
     public static RestRequestBuilder WithRateLimitContext
     (
         this RestRequestBuilder builder,
-        IMemoryCache cache,
+        ICacheProvider cache,
         bool isExemptFromGlobalLimits = false
     )
     {

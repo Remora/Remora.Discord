@@ -30,14 +30,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Caching.Memory;
 using OneOf;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
-using Remora.Discord.Rest.Utility;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
@@ -55,7 +54,12 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestChannelAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+    public DiscordRestChannelAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }

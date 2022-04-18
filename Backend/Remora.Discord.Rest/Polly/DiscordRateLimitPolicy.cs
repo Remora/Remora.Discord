@@ -29,6 +29,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Polly;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.API;
 
 namespace Remora.Discord.Rest.Polly;
@@ -79,9 +80,9 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             throw new InvalidOperationException("No endpoint set.");
         }
 
-        if (!context.TryGetValue("cache", out var rawCache) || rawCache is not IMemoryCache cache)
+        if (!context.TryGetValue("cache", out var rawCache) || rawCache is not ICacheProvider cache)
         {
-            throw new InvalidOperationException("No memory cache set.");
+            throw new InvalidOperationException("No cache provider set.");
         }
 
         var now = DateTimeOffset.UtcNow;
@@ -119,7 +120,8 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             bucketIdentifier = endpoint;
         }
 
-        if (cache.TryGetValue<RateLimitBucket>(bucketIdentifier, out var rateLimitBucket))
+        var getValue = await cache.RetrieveAsync<RateLimitBucket>(bucketIdentifier, cancellationToken);
+        if (getValue.IsDefined(out var rateLimitBucket))
         {
             // We don't reset route-specific rate limits ourselves; that's the responsibility of the returned headers
             // from Discord
@@ -149,7 +151,14 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             _endpointBuckets.TryRemove(endpoint, out _);
 
             // use the endpoint and not any mapped identifier, plus an expiration so we don't leak transient rate limits
-            cache.Set(endpoint, newLimits, newLimits.ResetsAt + TimeSpan.FromSeconds(1));
+            // over time
+            await cache.CacheAsync
+            (
+                endpoint,
+                newLimits,
+                newLimits.ResetsAt + TimeSpan.FromSeconds(1),
+                ct: cancellationToken
+            );
 
             return response;
         }
@@ -157,12 +166,18 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
         // Shared bucket
         // save the endpoint-to-id mapping
         _endpointBuckets.AddOrUpdate(endpoint, _ => newLimits.ID, (_, _) => newLimits.ID);
-        cache.Set(newLimits.ID, newLimits, newLimits.ResetsAt + TimeSpan.FromSeconds(1));
+        await cache.CacheAsync
+        (
+            newLimits.ID,
+            newLimits,
+            newLimits.ResetsAt + TimeSpan.FromSeconds(1),
+            ct: cancellationToken
+        );
 
         if (newLimits.ID != bucketIdentifier)
         {
             // evict the old endpoint-specific or shared bucket
-            cache.Remove(bucketIdentifier);
+            await cache.EvictAsync(bucketIdentifier);
         }
 
         return response;

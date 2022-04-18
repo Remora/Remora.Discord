@@ -24,8 +24,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
@@ -39,12 +39,12 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
 {
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, JsonSerializerOptions, IMemoryCache)" />
+    /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
     public CachingDiscordRestOAuth2API
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
-        IMemoryCache rateLimitCache,
+        ICacheProvider rateLimitCache,
         CacheService cacheService
     )
         : base(restHttpClient, jsonOptions, rateLimitCache)

@@ -25,9 +25,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Memory;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.Services;
+namespace Remora.Discord.Rest.Caching;
 
 /// <summary>
 /// An <see cref="IMemoryCache"/>-backed cache provider.
@@ -51,7 +52,7 @@ public class MemoryCacheProvider : ICacheProvider
     (
         string key,
         TInstance instance,
-        TimeSpan? absoluteExpiration = null,
+        DateTimeOffset? absoluteExpiration = null,
         TimeSpan? slidingExpiration = null,
         CancellationToken ct = default
     )
@@ -84,6 +85,18 @@ public class MemoryCacheProvider : ICacheProvider
         }
 
         return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
+    }
+
+    /// <inheritdoc />
+    public ValueTask<Result> EvictAsync(string key, CancellationToken ct = default)
+    {
+        if (!_memoryCache.TryGetValue(key, out _))
+        {
+            return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
+        }
+
+        _memoryCache.Remove(key);
+        return new(Result.FromSuccess());
     }
 
     /// <inheritdoc cref="ICacheProvider.EvictAsync{TInstance}"/>
