@@ -23,9 +23,10 @@
 using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
+using Remora.Discord.Caching.Services;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.Services;
+namespace Remora.Discord.Caching.Redis.Services;
 
 /// <summary>
 /// Handles cache insert/evict operations for various types, using Redis as a backing-store.

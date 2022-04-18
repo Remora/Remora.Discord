@@ -26,6 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Remora.Discord.Caching.Extensions;
+using Remora.Discord.Caching.Redis.Services;
 using Remora.Discord.Caching.Services;
 using StackExchange.Redis;
 
