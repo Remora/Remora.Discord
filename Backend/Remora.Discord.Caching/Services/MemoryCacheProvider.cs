@@ -67,7 +67,7 @@ public class MemoryCacheProvider : ICacheProvider
             options.SetSlidingExpiration(slidingExpiration.Value);
         }
 
-        _memoryCache.Set<TInstance>(key, instance, options);
+        _memoryCache.Set(key, instance, options);
 
         return default;
     }
@@ -80,17 +80,15 @@ public class MemoryCacheProvider : ICacheProvider
         {
             return new(instance);
         }
-        else
-        {
-            return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
-        }
+
+        return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
     }
 
     /// <inheritdoc cref="ICacheProvider.EvictAsync{TInstance}"/>
     public ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
         where TInstance : class
     {
-        if (!_memoryCache.TryGetValue<TInstance>(key, out TInstance existingValue))
+        if (!_memoryCache.TryGetValue(key, out TInstance existingValue))
         {
             return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
         }

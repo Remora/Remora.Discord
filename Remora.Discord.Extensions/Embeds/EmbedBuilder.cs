@@ -62,7 +62,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <summary>
     /// Gets or sets the color of this embed.
     /// </summary>
-    public Color? Colour { get; set; } = null;
+    public Color? Colour { get; set; }
 
     /// <summary>
     /// Gets or sets the footer of this embed.
