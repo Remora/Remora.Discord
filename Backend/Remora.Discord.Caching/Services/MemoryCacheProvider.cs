@@ -78,11 +78,11 @@ public class MemoryCacheProvider : ICacheProvider
     {
         if (_memoryCache.TryGetValue<TInstance>(key, out var instance))
         {
-            return new ValueTask<Result<TInstance>>(Result<TInstance>.FromSuccess(instance));
+            return new(instance);
         }
         else
         {
-            return new ValueTask<Result<TInstance>>(Result<TInstance>.FromError(new NotFoundError($"The key \"{key}\" did not contain a value in cache.")));
+            return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
         }
     }
 
@@ -92,10 +92,10 @@ public class MemoryCacheProvider : ICacheProvider
     {
         if (!_memoryCache.TryGetValue<TInstance>(key, out TInstance existingValue))
         {
-            return new ValueTask<Result<TInstance>>(Result<TInstance>.FromError(new NotFoundError($"The key \"{key}\" did not contain a value in cache.")));
+            return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
         }
 
         _memoryCache.Remove(key);
-        return new ValueTask<Result<TInstance>>(Result<TInstance>.FromSuccess(existingValue));
+        return new(existingValue);
     }
 }

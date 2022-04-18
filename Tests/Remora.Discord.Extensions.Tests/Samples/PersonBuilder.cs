@@ -68,12 +68,12 @@ internal class PersonBuilder : BuilderBase<Person>
         var nameValidate = ValidateLength(nameof(this.Name), this.Name, 5, false);
         if (!nameValidate.IsSuccess)
         {
-            return Result.FromError(nameValidate.Error);
+            return nameValidate;
         }
 
         if (this.Age < 1 || this.Age > 100)
         {
-            return Result.FromError(new ValidationError(nameof(this.Age), "Age must be between 1 and 100."));
+            return new ValidationError(nameof(this.Age), "Age must be between 1 and 100.");
         }
 
         return Result.FromSuccess();

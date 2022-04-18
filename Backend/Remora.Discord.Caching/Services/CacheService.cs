@@ -123,7 +123,7 @@ public class CacheService
 
         if (!evictionResult.IsSuccess)
         {
-            return Result<TInstance>.FromError(evictionResult.Error);
+            return evictionResult;
         }
 
         var options = _cacheSettings.GetEntryOptions<TInstance>();

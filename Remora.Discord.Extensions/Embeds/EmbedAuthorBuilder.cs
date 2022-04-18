@@ -85,19 +85,19 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
         var nameResult = ValidateLength(nameof(this.Name), this.Name, EmbedConstants.MaxAuthorNameLength, false);
         if (!nameResult.IsSuccess)
         {
-            return Result.FromError(nameResult.Error);
+            return nameResult;
         }
 
         var urlResult = ValidateUrl(nameof(this.Url), this.Url, true);
         if (!urlResult.IsSuccess)
         {
-            return Result.FromError(urlResult.Error);
+            return urlResult;
         }
 
         var iconResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
         if (!iconResult.IsSuccess)
         {
-            return Result.FromError(iconResult.Error);
+            return iconResult;
         }
 
         return Result.FromSuccess();

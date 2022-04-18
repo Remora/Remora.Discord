@@ -89,21 +89,25 @@ public class RedisCacheProvider : ICacheProvider
     /// In the event that this is not the case, this method can be overriden in a derived class to provide
     /// a more apt transformation of outgoing data.
     /// </remarks>
-    public virtual async ValueTask<Result<TInstance>> RetrieveAsync<TInstance>(string key, CancellationToken ct = default)
+    public virtual async ValueTask<Result<TInstance>> RetrieveAsync<TInstance>
+    (
+        string key,
+        CancellationToken ct = default
+    )
         where TInstance : class
     {
         var value = await _cache.GetAsync(key, ct);
 
         if (value is null)
         {
-            return Result<TInstance>.FromError(new NotFoundError($"The given key \"{key}\" held no value in the cache."));
+            return new NotFoundError($"The given key \"{key}\" held no value in the cache.");
         }
 
         await _cache.RefreshAsync(key, ct);
 
         var deserialized = JsonSerializer.Deserialize<TInstance>(value, _jsonOptions);
 
-        return Result<TInstance>.FromSuccess(deserialized!);
+        return deserialized!;
     }
 
     /// <inheritdoc cref="ICacheProvider.EvictAsync{TInstance}"/>
@@ -121,13 +125,13 @@ public class RedisCacheProvider : ICacheProvider
 
         if (existingValue is null)
         {
-            return Result<TInstance>.FromError(new NotFoundError($"The given key \"{key}\" held no value in the cache."));
+            return new NotFoundError($"The given key \"{key}\" held no value in the cache.");
         }
 
         await _cache.RemoveAsync(key, ct);
 
         var deserialized = JsonSerializer.Deserialize<TInstance>(existingValue, _jsonOptions);
 
-        return Result<TInstance>.FromSuccess(deserialized!);
+        return deserialized!;
     }
 }

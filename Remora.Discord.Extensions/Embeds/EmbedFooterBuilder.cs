@@ -70,13 +70,13 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
         var textValidationResult = ValidateLength(nameof(this.Text), this.Text, EmbedConstants.MaxFooterTextLength, false);
         if (!textValidationResult.IsSuccess)
         {
-            Result.FromError(textValidationResult.Error);
+            return textValidationResult;
         }
 
         var urlValidationResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
         if (!urlValidationResult.IsSuccess)
         {
-            Result.FromError(urlValidationResult.Error);
+            return urlValidationResult;
         }
 
         return Result.FromSuccess();
