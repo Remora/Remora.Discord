@@ -27,7 +27,6 @@ using JetBrains.Annotations;
 using OneOf;
 using Remora.Commands.Results;
 using Remora.Commands.Services;
-using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
