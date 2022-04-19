@@ -176,7 +176,7 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
         if (newLimits.ID != bucketIdentifier)
         {
             // evict the old endpoint-specific or shared bucket
-            await cache.EvictAsync(bucketIdentifier);
+            await cache.EvictAsync(bucketIdentifier, cancellationToken);
         }
 
         return response;
