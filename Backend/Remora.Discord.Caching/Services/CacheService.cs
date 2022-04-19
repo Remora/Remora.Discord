@@ -108,7 +108,7 @@ public class CacheService
     /// <typeparam name="TInstance">The instance type.</typeparam>
     /// <returns>A <see cref="Result"/> that may or not have succeeded.</returns>
     public ValueTask<Result<TInstance>> TryGetPreviousValueAsync<TInstance>(string key)
-        where TInstance : class => _cacheProvider.RetrieveAsync<TInstance>($"Evicted:{key}");
+        where TInstance : class => _cacheProvider.RetrieveAsync<TInstance>(KeyHelpers.CreateEvictionCacheKey(key));
 
     /// <summary>
     /// Evicts the instance with the given key from the cache.
@@ -131,7 +131,7 @@ public class CacheService
 
         await _cacheProvider.CacheAsync
         (
-            key,
+            KeyHelpers.CreateEvictionCacheKey(key),
             evictionResult.Entity,
             options.AbsoluteExpiration,
             options.SlidingExpiration,

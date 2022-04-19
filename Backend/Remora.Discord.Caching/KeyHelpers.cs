@@ -488,4 +488,14 @@ public static class KeyHelpers
     {
         return $"{CreateGuildCacheKey(guildID)}:Emojis";
     }
+
+    /// <summary>
+    /// Creates a cache key for an evicted entity, identified by the given key.
+    /// </summary>
+    /// <param name="key">The original key.</param>
+    /// <returns>The eviction key.</returns>
+    public static string CreateEvictionCacheKey(string key)
+    {
+        return $"Evicted:{key}";
+    }
 }
