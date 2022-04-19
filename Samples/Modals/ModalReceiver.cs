@@ -31,15 +31,15 @@ namespace Remora.Discord.Samples.Modal;
 /// <inheritdoc />
 public class ModalReceiver : IModalInteractiveEntity
 {
-    private ILogger<ModalReceiver> _log;
+    private readonly ILogger<ModalReceiver> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ModalReceiver"/> class.
     /// </summary>
-    /// <param name="log">Logger used to log the received information.</param>
-    public ModalReceiver(ILogger<ModalReceiver> log)
+    /// <param name="logger">Logger used to log the received information.</param>
+    public ModalReceiver(ILogger<ModalReceiver> logger)
     {
-        _log = log;
+        _logger = logger;
     }
 
     /// <inheritdoc />
@@ -51,10 +51,10 @@ public class ModalReceiver : IModalInteractiveEntity
     /// <inheritdoc />
     public Task<Result> HandleInteractionAsync(IUser user, string customID, IReadOnlyList<IPartialMessageComponent> components, CancellationToken ct = default)
     {
-        _log.LogInformation("Received modal response");
-        var row = (PartialActionRowComponent)components[0];
-        var textInput = (PartialTextInputComponent)row.Components.Value[0];
-        _log.LogInformation("Received input: {0}", textInput.Value);
+        _logger.LogInformation("Received modal response");
+        var actionRow = (PartialActionRowComponent)components[0];
+        var textInput = (PartialTextInputComponent)actionRow.Components.Value[0];
+        _logger.LogInformation("Received input: {0}", textInput.Value);
         return Task.FromResult(Result.FromSuccess());
     }
 }
