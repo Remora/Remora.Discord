@@ -58,6 +58,15 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li class="active"><a href="/Remora.Discord/info">Info</a></li>
+        <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -163,10 +172,10 @@ incoming events at once.</p>
 <p>Remora.Discord is currently fully usable, and has been released for public
 consumption.</p>
 <h3 id="gateway">3.1 Gateway</h3>
-<p>The Discord Gateway API (v9) is fully implemented. The gateway client can
+<p>The Discord Gateway API (v10) is fully implemented. The gateway client can
 connect, heartbeat, reconnect, resume, receive events, and send commands.</p>
 <h3 id="rest">3.2 REST</h3>
-<p>The Discord REST API (v9) is fully implemented.</p>
+<p>The Discord REST API (v10) is fully implemented.</p>
 <h3 id="voice">3.3 Voice</h3>
 <p>The Discord Voice API is not implemented. If you'd like to contribute to the
 library, this would be an excellent start.</p>
@@ -182,7 +191,40 @@ dotnet pack -c Release
 <h2 id="usage">5. Usage</h2>
 <p>Up-to-date documentation for the API, as well as a quickstart guide, is
 available online at <a href="https://nihlus.github.io/Remora.Discord/">the repository pages</a>.</p>
-<p>Please refer to the <a href="https://github.com/Nihlus/Remora.Discord/tree/master/Samples">Samples</a> for community-created example bots.</p>
+<p>Each package has its own README with more detailed information regarding its
+purpose and use. If you want to know more about each one of these, please refer
+to the list below. It's roughly organized in order of importance to end users,
+but feel free to explore.</p>
+<ul>
+<li><a href="Remora.Discord/README.md">Remora.Discord</a>
+<ul>
+<li><a href="Remora.Discord.Extensions/README.md">Remora.Discord.Extensions</a></li>
+<li><a href="Remora.Discord.Hosting/README.md">Remora.Discord.Hosting</a></li>
+<li><a href="Remora.Discord.Interactivity/README.md">Remora.Discord.Interactivity</a></li>
+<li><a href="Remora.Discord.Pagination/README.md">Remora.Discord.Pagination</a></li>
+</ul>
+</li>
+<li><a href="Remora.Discord.Commands/README.md">Remora.Discord.Commands</a></li>
+<li><a href="Backend/Remora.Discord.API/README.md">Remora.Discord.API</a>
+<ul>
+<li><a href="Backend/Remora.Discord.API.Abstractions/README.md">Remora.Discord.API.Abstractions</a></li>
+</ul>
+</li>
+<li><a href="Backend/Remora.Discord.Rest/README.md">Remora.Discord.Rest</a></li>
+<li><a href="Backend/Remora.Discord.Gateway/README.md">Remora.Discord.Gateway</a></li>
+<li><a href="Backend/Remora.Discord.Caching.Abstractions/README.md">Remora.Discord.Caching.Abstractions</a>
+<ul>
+<li><a href="Backend/Remora.Discord.Caching/README.md">Remora.Discord.Caching</a>
+<ul>
+<li><a href="Backend/Remora.Discord.Caching.Redis/README.md">Remora.Discord.Caching.Redis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="Backend/Remora.Discord.Unstable/README.md">Remora.Discord.Unstable</a></li>
+</ul>
+<p>If you want to get started quickly, please refer to the <a href="https://github.com/Nihlus/Remora.Discord/tree/master/Samples">Samples</a> for
+community-created example bots.</p>
 <h3 id="versioning">5.1 Versioning</h3>
 <p>A note on versioning - Remora.Discord uses SEMVER 2.0.0, which, in short, means</p>
 <p>Given a version number MAJOR.MINOR.PATCH, increment the:</p>
