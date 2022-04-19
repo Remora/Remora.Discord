@@ -27,7 +27,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 using Polly;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.API;
