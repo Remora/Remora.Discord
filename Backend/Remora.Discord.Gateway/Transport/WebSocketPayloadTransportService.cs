@@ -142,11 +142,16 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             memoryStream.Seek(0, SeekOrigin.Begin);
 
             // Copy the data
-            var bufferSegment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
-            await memoryStream.ReadAsync(bufferSegment, ct);
+            var copiedBytes = 0;
+            while (copiedBytes < memoryStream.Length)
+            {
+                var bufferSegment = new ArraySegment<byte>(buffer, copiedBytes, (int)memoryStream.Length - copiedBytes);
+                copiedBytes += await memoryStream.ReadAsync(bufferSegment, ct);
+            }
 
             // Send the whole payload as one chunk
-            await _clientWebSocket.SendAsync(bufferSegment, WebSocketMessageType.Text, true, ct);
+            var segment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
+            await _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
 
             if (_clientWebSocket.CloseStatus.HasValue)
             {
