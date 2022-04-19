@@ -127,8 +127,7 @@ public class CacheService
             return evictionResult;
         }
 
-        var options = _cacheSettings.GetEntryOptions<TInstance>();
-
+        var options = _cacheSettings.GetEvictionEntryOptions<TInstance>();
         await _cacheProvider.CacheAsync
         (
             KeyHelpers.CreateEvictionCacheKey(key),
