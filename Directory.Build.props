@@ -36,10 +36,6 @@
         <PackageTags>discord;bot;api;</PackageTags>
         <PackageIcon>shark.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-
-        <BaseDescription>
-            Remora.Discord is a .NET library for the Discord API, built for performance, reliability, and concurrency.
-        </BaseDescription>
     </PropertyGroup>
 
     <!-- Code inspection properties -->
@@ -116,7 +112,7 @@
 
     <!-- JetBrains Annotations -->
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" PrivateAssets="all" />
+        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" PrivateAssets="all" />
     </ItemGroup>
 
     <!-- SourceLink -->
