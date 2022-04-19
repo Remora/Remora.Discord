@@ -60,27 +60,46 @@ public class ModalCommand : CommandGroup
     [SuppressInteractionResponse(true)]
     public async Task<Result> OnModal()
     {
-        var response = new InteractionResponse(
+        var response = new InteractionResponse
+        (
             InteractionCallbackType.Modal,
-            new(
-                new InteractionModalCallbackData("test-modal", "Test Modal", new[]
-                                                 {
-                                                     new ActionRowComponent(new[]
-                                                     {
-                                                         new TextInputComponent(
-                                                                                "modal-text-input",
-                                                                                TextInputStyle.Short,
-                                                                                "Short Text",
-                                                                                1,
-                                                                                32,
-                                                                                true,
-                                                                                string.Empty,
-                                                                                "Short Text here")
-                                                     })
-                                                 }
-            )));
+            new
+            (
+                new InteractionModalCallbackData
+                (
+                    "test-modal",
+                    "Test Modal",
+                    new[]
+                    {
+                        new ActionRowComponent
+                        (
+                           new[]
+                            {
+                                new TextInputComponent
+                                (
+                                    "modal-text-input",
+                                    TextInputStyle.Short,
+                                    "Short Text",
+                                    1,
+                                    32,
+                                    true,
+                                    string.Empty,
+                                    "Short Text here"
+                                )
+                            }
+                        )
+                    }
+                )
+            )
+        );
 
-        var result = await _interactionApi.CreateInteractionResponseAsync(_context.ID, _context.Token, response, ct: CancellationToken);
+        var result = await _interactionApi.CreateInteractionResponseAsync
+        (
+            _context.ID,
+            _context.Token,
+            response,
+            ct: CancellationToken
+        );
         return result;
     }
 }
