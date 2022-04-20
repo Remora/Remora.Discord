@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Attributes;
@@ -36,5 +37,14 @@ public class DiscordDefaultMemberPermissionsAttribute : Attribute
     /// <summary>
     /// Gets the required permissions to execute the command.
     /// </summary>
-    public DiscordPermission Permissions { get; }
+    public IReadOnlyList<DiscordPermission> Permissions { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordDefaultMemberPermissionsAttribute"/> class.
+    /// </summary>
+    /// <param name="permissions">The permissions required for executing the application command.</param>
+    public DiscordDefaultMemberPermissionsAttribute(params DiscordPermission[] permissions)
+    {
+        Permissions = permissions;
+    }
 }
