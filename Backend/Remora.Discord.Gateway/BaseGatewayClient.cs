@@ -358,7 +358,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     {
         if (_isStopping || !_hasStarted)
         {
-            _logger.LogWarning("The gateway service is already stopping/stopped! _isStopping: {IsStopping} | _isRunning: {IsRunning}", _isStopping, _hasStarted);
+            _logger.LogDebug("The gateway service is already stopping/stopped");
             return Result.FromSuccess();
         }
 

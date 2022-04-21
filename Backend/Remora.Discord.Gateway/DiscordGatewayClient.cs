@@ -411,14 +411,14 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
         {
             case IPayload<IReconnect>:
             {
-                _logger.LogDebug("Reconnect requested");
+                _logger.LogDebug("Reconnect requested by gateway");
                 this.Status = GatewayConnectionStatus.Disconnected;
 
                 break;
             }
             case IPayload<IInvalidSession> invalidSession:
             {
-                _logger.LogDebug("Session invalidated");
+                _logger.LogDebug("Session invalidated by gateway");
                 this.Status = invalidSession.Data.IsResumable
                     ? GatewayConnectionStatus.Disconnected
                     : GatewayConnectionStatus.Offline;
