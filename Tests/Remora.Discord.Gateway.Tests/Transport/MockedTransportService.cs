@@ -295,6 +295,17 @@ public class MockedTransportService : IPayloadTransportService
                             this.IsConnected = false;
                             throw se.CreateException();
                         }
+
+                        case SendResultErrorEvent sre:
+                        {
+                            if (!sequence.MoveNext())
+                            {
+                                _finishedSequences.Add(sequence);
+                            }
+
+                            this.IsConnected = false;
+                            return Result<IPayload>.FromError(sre.CreateResultError());
+                        }
                     }
                 }
 

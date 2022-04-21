@@ -27,6 +27,7 @@ using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Tests.Transport.Events;
+using Remora.Results;
 using Xunit.Sdk;
 
 namespace Remora.Discord.Gateway.Tests.Transport;
@@ -157,6 +158,17 @@ public class MockedTransportSequenceBuilder
     public MockedTransportSequenceBuilder SendException(Func<Exception> exceptionFactory)
     {
         _sequence.Add(new SendExceptionEvent(exceptionFactory));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an instruction to return a result error from the transport receive method.
+    /// </summary>
+    /// <param name="errorFactory">A factory function for the result error to be returned.</param>
+    /// <returns>The action builder, with the result error.</returns>
+    public MockedTransportSequenceBuilder SendResultError(Func<IResultError> errorFactory)
+    {
+        _sequence.Add(new SendResultErrorEvent(errorFactory));
         return this;
     }
 
