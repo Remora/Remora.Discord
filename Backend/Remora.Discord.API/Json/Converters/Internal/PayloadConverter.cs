@@ -103,7 +103,7 @@ internal class PayloadConverter : JsonConverter<IPayload?>
 
             // Other
             OperationCode.Unknown => DeserializePayload<IUnknownEvent>(realDocument, options),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => DeserializePayload<IUnknownEvent>(realDocument, options)
         };
 
         return obj;
