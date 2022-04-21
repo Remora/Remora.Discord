@@ -61,9 +61,18 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
     private readonly GatewayHeartbeatData _heartbeatData;
 
     /// <summary>
-    /// Holds the session ID.
+    /// Gets the current session ID. This can be used
+    /// to resume a session directly upon startup.
     /// </summary>
-    private string? _sessionID;
+    public string? SessionID { get; private set; }
+
+    /// <summary>
+    /// Gets the last sequence number received by the gateway.
+    /// This can be used to resume a session directly upon startup.
+    /// </summary>
+    public int? LastSequenceNumber => _heartbeatData.LastSequenceNumber == 0
+        ? null
+        : _heartbeatData.LastSequenceNumber;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordGatewayClient"/> class.
@@ -94,6 +103,29 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
         _random = random;
 
         _heartbeatData = new GatewayHeartbeatData();
+    }
+
+    /// <summary>
+    /// Runs the gateway client. This task will only complete when the
+    /// gateway connection fatally disconnects, or it is cancelled.
+    /// This overload will resume an existing session.
+    /// </summary>
+    /// <param name="sessionID">The ID of the session to resume.</param>
+    /// <param name="sequenceNumber">The last received sequence number of the previous session.</param>
+    /// <param name="ct">A <see cref="CancellationToken"/> that can be used to stop the operation.</param>
+    /// <returns>A result representing the outcome of the operation.</returns>
+    public Task<Result> RunAsync
+    (
+        string sessionID,
+        int sequenceNumber,
+        CancellationToken ct = default
+    )
+    {
+        this.SessionID = sessionID;
+        _heartbeatData.LastSequenceNumber = sequenceNumber;
+        this.Status = GatewayConnectionStatus.Disconnected;
+
+        return RunAsync(ct);
     }
 
     /// <inheritdoc />
@@ -133,7 +165,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
 
         if (endpointInformation.SessionStartLimit.IsDefined(out var startLimit))
         {
-            if (_sessionID is null)
+            if (this.SessionID is null)
             {
                 if (startLimit.Remaining <= 0)
                 {
@@ -222,7 +254,10 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
         _heartbeatData.Interval = hello.Data.HeartbeatInterval;
 
         // Attempt to connect or resume
-        var connectResult = await AttemptConnectionAsync(ct);
+        var connectResult = this.Status is GatewayConnectionStatus.Offline
+            ? await CreateNewSessionAsync(ct)
+            : await ResumeExistingSessionAsync(ct);
+
         if (!connectResult.IsSuccess)
         {
             return connectResult;
@@ -347,6 +382,12 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             }
         }
 
+        _logger.LogWarning
+        (
+            "Transient error in gateway client: {Error}",
+            iterationResult
+        );
+
         // We don't know what happened... try reconnecting?
         return true;
     }
@@ -366,20 +407,26 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             UpdateLastReceivedHeartbeatToNow();
         }
 
-        // Signal the governor task that a reconnection is requested, if necessary.
         switch (payload)
         {
             case IPayload<IReconnect>:
             {
+                _logger.LogDebug("Reconnect requested");
                 this.Status = GatewayConnectionStatus.Disconnected;
 
                 break;
             }
             case IPayload<IInvalidSession> invalidSession:
             {
+                _logger.LogDebug("Session invalidated");
                 this.Status = invalidSession.Data.IsResumable
                     ? GatewayConnectionStatus.Disconnected
                     : GatewayConnectionStatus.Offline;
+
+                if (!invalidSession.Data.IsResumable)
+                {
+                    this.SessionID = null;
+                }
 
                 break;
             }
@@ -442,18 +489,6 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
 
         _heartbeatData.LastSentTime = now;
         return _heartbeatData.Interval - safetyMargin;
-    }
-
-    /// <summary>
-    /// Attempts to identify or resume the gateway connection.
-    /// </summary>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A connection result which may or may not have succeeded.</returns>
-    private Task<Result> AttemptConnectionAsync(CancellationToken ct = default)
-    {
-        return this.Status is GatewayConnectionStatus.Offline
-            ? CreateNewSessionAsync(ct)
-            : ResumeExistingSessionAsync(ct);
     }
 
     /// <summary>
@@ -530,7 +565,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
                 await this.DispatchService.EnqueueEventAsync(gatewayEvent.Data, ct);
             }
 
-            _sessionID = ready.Data.SessionID;
+            this.SessionID = ready.Data.SessionID;
             break;
         }
 
@@ -544,7 +579,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
     /// <returns>A connection result which may or may not have succeeded.</returns>
     private async Task<Result> ResumeExistingSessionAsync(CancellationToken ct = default)
     {
-        if (_sessionID is null)
+        if (this.SessionID is null)
         {
             return new InvalidOperationError("There's no previous session to resume.");
         }
@@ -556,7 +591,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             new Resume
             (
                 _tokenStore.Token,
-                _sessionID,
+                this.SessionID,
                 _heartbeatData.LastSequenceNumber
             ),
             ct

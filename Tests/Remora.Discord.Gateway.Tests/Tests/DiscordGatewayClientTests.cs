@@ -114,6 +114,57 @@ public class DiscordGatewayClientTests
     }
 
     /// <summary>
+    /// Tests whether the client can directly resume a session, rather than connecting anew.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanDirectlyResumeAsync()
+    {
+        var tokenSource = new CancellationTokenSource();
+        var transportMock = new MockedTransportServiceBuilder()
+            .IgnoreUnexpected()
+            .Sequence
+            (
+                s => s
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Resume>
+                    (
+                        r =>
+                        {
+                            Assert.Equal(Constants.MockToken, r?.Token);
+                            Assert.Equal(Constants.MockSessionID, r?.SessionID);
+                            Assert.Equal(Constants.MockLastSequenceNumber, r?.SequenceNumber);
+                            return true;
+                        }
+                    )
+                    .Send<Resumed>()
+            )
+            .Continuously
+            (
+                c => c
+                    .Expect<IHeartbeat>()
+                    .Send<HeartbeatAcknowledge>()
+            )
+            .Finish(tokenSource)
+            .Build();
+
+        var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
+
+        var services = new ServiceCollection()
+            .AddDiscordGateway(_ => Constants.MockToken)
+            .Replace(transportMockDescriptor)
+            .Replace(CreateMockedGatewayAPI())
+            .AddSingleton<IResponderTypeRepository, ResponderService>()
+            .BuildServiceProvider(true);
+
+        var client = services.GetRequiredService<DiscordGatewayClient>();
+        var runResult = await client.RunAsync(Constants.MockSessionID, Constants.MockLastSequenceNumber, tokenSource.Token);
+
+        ResultAssert.Successful(runResult);
+    }
+
+    /// <summary>
     /// Tests whether the client can reconnect and resume properly.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>

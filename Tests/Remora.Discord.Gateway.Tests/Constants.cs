@@ -51,4 +51,9 @@ public static class Constants
     /// Gets the default mocked session ID.
     /// </summary>
     public static string MockSessionID { get; } = "mock-session";
+
+    /// <summary>
+    /// Gets the default mocked last sequence number.
+    /// </summary>
+    public static int MockLastSequenceNumber { get; } = 1024;
 }
