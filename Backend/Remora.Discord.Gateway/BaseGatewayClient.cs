@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Threading;
@@ -49,7 +50,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 {
     private readonly ILogger<BaseGatewayClient> _logger;
     private readonly Channel<IPayload> _payloadSendQueue;
-    private readonly Channel<IPayload> _priorityPayloadSendQueue;
+    private readonly ConcurrentQueue<IPayload> _priorityPayloadSendQueue;
     private readonly Dictionary<Guid, IGatewayCommand> _preShutdownCommands;
 
     private Task<Result>? _sendTask;
@@ -95,7 +96,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     {
         _logger = logger;
         _payloadSendQueue = Channel.CreateUnbounded<IPayload>();
-        _priorityPayloadSendQueue = Channel.CreateUnbounded<IPayload>();
+        _priorityPayloadSendQueue = new ConcurrentQueue<IPayload>();
         _preShutdownCommands = new Dictionary<Guid, IGatewayCommand>();
         this.DispatchService = dispatchService;
         this.TransportService = transportService;
@@ -296,19 +297,18 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     /// Useful, for example, for updating the heartbeat state.
     /// </summary>
     /// <param name="payload">The payload.</param>
-    /// <param name="ct">A <see cref="CancellationToken"/> that can be used to stop the operation.</param>
     /// <returns>A value indicating whether or not the payload should be dispatched.</returns>
-    protected abstract ValueTask<bool> ProcessPayloadAsync(IPayload payload, CancellationToken ct);
+    protected abstract bool ProcessPayload(IPayload payload);
 
     /// <summary>
-    /// Sends a heartbeat if required.
+    /// Sends a heartbeat if required. Any heartbeats should be
+    /// enqueued using <see cref="EnqueuePriorityCommand{TCommand}"/>.
     /// </summary>
-    /// <param name="ct">A <see cref="CancellationToken"/> that can be used to stop the operation.</param>
     /// <returns>
-    /// A <see cref="Result"/> representing the outcome of the operation,
-    /// and containing the maximum safe amount of time needed until the next heartbeat if the operation was successful.
+    /// A <see cref="Result"/> representing the outcome of the operation, and containing the maximum
+    /// safe amount of time needed until the next heartbeat if the operation was successful.
     /// </returns>
-    protected abstract Task<Result<TimeSpan>> SendHeartbeatAsync(CancellationToken ct);
+    protected abstract Result<TimeSpan> SendHeartbeat();
 
     /// <summary>
     /// Enqueues a command to the priority queue. These will be dispatched
@@ -318,13 +318,11 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     /// </summary>
     /// <typeparam name="TCommand">The type of the command.</typeparam>
     /// <param name="command">The command to dispatch.</param>
-    /// <param name="ct">A <see cref="CancellationToken"/> that can be used to stop the operation.</param>
-    /// <returns>A <see cref="ValueTask"/> representing the potentially asynchronous operation.</returns>
-    protected async ValueTask EnqueuePriorityCommandAsync<TCommand>(TCommand command, CancellationToken ct)
+    protected void EnqueuePriorityCommand<TCommand>(TCommand command)
         where TCommand : IGatewayCommand
     {
         var payload = new Payload<TCommand>(command);
-        await _payloadSendQueue.Writer.WriteAsync(payload, ct);
+        _priorityPayloadSendQueue.Enqueue(payload);
     }
 
     /// <summary>
@@ -480,7 +478,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                         : Result.FromError(receiveResult);
                 }
 
-                if (!await ProcessPayloadAsync(receiveResult.Entity, ct))
+                if (!ProcessPayload(receiveResult.Entity))
                 {
                     continue;
                 }
@@ -501,7 +499,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 
     /// <summary>
     /// This method acts as the main entrypoint for the gateway sender task.
-    /// It processes and sends submitted payloads to the gateway, and calls <see cref="SendHeartbeatAsync"/>.
+    /// It processes and sends submitted payloads to the gateway, and calls <see cref="SendHeartbeat"/>.
     /// </summary>
     /// <param name="ct">A token for requests to disconnect the socket.</param>
     /// <returns>
@@ -517,14 +515,14 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 
             while (!ct.IsCancellationRequested)
             {
-                var heartbeatResult = await SendHeartbeatAsync(ct);
+                var heartbeatResult = SendHeartbeat();
                 if (!heartbeatResult.IsDefined(out var maxSleepTime))
                 {
                     return Result.FromError(heartbeatResult);
                 }
 
                 // Dispatch any priority commands
-                while (_priorityPayloadSendQueue.Reader.TryRead(out var priorityPayload))
+                while (_priorityPayloadSendQueue.TryDequeue(out var priorityPayload))
                 {
                     var prioritySendResult = await this.TransportService.SendPayloadAsync(priorityPayload, ct);
                     if (!prioritySendResult.IsSuccess)

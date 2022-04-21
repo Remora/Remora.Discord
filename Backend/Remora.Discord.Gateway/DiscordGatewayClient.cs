@@ -393,7 +393,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
     }
 
     /// <inheritdoc />
-    protected override async ValueTask<bool> ProcessPayloadAsync(IPayload payload, CancellationToken ct)
+    protected override bool ProcessPayload(IPayload payload)
     {
         // Update the sequence number
         if (payload is IEventPayload eventPayload)
@@ -432,13 +432,12 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             }
             case IPayload<IHeartbeat>:
             {
-                await EnqueuePriorityCommandAsync
+                EnqueuePriorityCommand
                 (
                     new Heartbeat
                     (
                         _heartbeatData.LastSequenceNumber == 0 ? null : _heartbeatData.LastSequenceNumber
-                    ),
-                    ct
+                    )
                 );
 
                 break;
@@ -449,7 +448,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
     }
 
     /// <inheritdoc />
-    protected override async Task<Result<TimeSpan>> SendHeartbeatAsync(CancellationToken ct)
+    protected override Result<TimeSpan> SendHeartbeat()
     {
         if (_heartbeatData.Interval == TimeSpan.Zero)
         {
@@ -478,13 +477,12 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             );
         }
 
-        await EnqueuePriorityCommandAsync
+        EnqueuePriorityCommand
         (
             new Heartbeat
             (
                 _heartbeatData.LastSequenceNumber == 0 ? null : _heartbeatData.LastSequenceNumber
-            ),
-            ct
+            )
         );
 
         _heartbeatData.LastSentTime = now;
@@ -508,7 +506,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             ? default
             : new Optional<IUpdatePresence>(_gatewayOptions.Presence);
 
-        await EnqueuePriorityCommandAsync
+        EnqueuePriorityCommand
         (
             new Identify
             (
@@ -519,8 +517,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
                 Shard: shardInformation,
                 Presence: initialPresence,
                 LargeThreshold: _gatewayOptions.LargeThreshold
-            ),
-            ct
+            )
         );
 
         while (true)
@@ -586,15 +583,14 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
 
         _logger.LogInformation("Resuming existing session...");
 
-        await EnqueuePriorityCommandAsync
+        EnqueuePriorityCommand
         (
             new Resume
             (
                 _tokenStore.Token,
                 this.SessionID,
                 _heartbeatData.LastSequenceNumber
-            ),
-            ct
+            )
         );
 
         // Push resumed events onto the queue
