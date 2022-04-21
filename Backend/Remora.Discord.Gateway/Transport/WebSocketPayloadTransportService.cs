@@ -251,7 +251,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
                     await _clientWebSocket.CloseAsync
                     (
                         closeCode,
-                        "Terminating connection by user request.",
+                        string.Empty,
                         ct
                     );
                 }
