@@ -107,7 +107,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     /// <inheritdoc />
     public virtual async Task<Result> RunAsync(CancellationToken ct = default)
     {
-        if (this.Status is not GatewayConnectionStatus.Offline)
+        if (_hasStarted || _isStopping)
         {
             return new InvalidOperationError("Already running.");
         }
@@ -127,9 +127,19 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                     case GatewayConnectionStatus.Offline:
                     case GatewayConnectionStatus.Disconnected:
                     {
+                        // We may have been switched to a disconnected state
+                        // in response to a websocket message, so cleanup.
+                        // Any errors as a result of this stop operation are either:
+                        // 1. Gateway errors from the last run cycle, which will
+                        // have already been acted on OR will result in immediate errors
+                        // during the connection process.
+                        // 2. Library errors, which shouldn't exist :P.
+                        // Regardless, we don't need to return if stopping fails.
+                        await StopAsync(true);
+
+                        _hasStarted = true;
                         this.DisconnectRequestedSource.Dispose();
                         this.DisconnectRequestedSource = new CancellationTokenSource();
-                        _hasStarted = true;
 
                         var connectResult = await ConnectAsync(ct);
                         if (!connectResult.IsSuccess)
@@ -148,6 +158,15 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                             continue;
                         }
 
+                        if (_sendTask is null)
+                        {
+                            await StopAsync(false);
+                            throw new InvalidOperationException
+                            (
+                                "Implementing type must call " + nameof(ConnectToGatewayAndBeginSendTaskAsync) + " when connecting"
+                            );
+                        }
+
                         _receiveTask = GatewayReceiverAsync(this.DisconnectRequestedSource.Token);
 
                         break;
@@ -164,40 +183,26 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                             _responderDispatchTask = this.DispatchService.RunAsync(_dispatchCts.Token);
                         }
 
-                        if (_sendTask is null)
-                        {
-                            // Something has gone very wrong! Signal a complete restart
-                            await StopAsync(true);
-                            this.Status = GatewayConnectionStatus.Offline;
-
-                            continue;
-                        }
-
-                        if (_sendTask.IsCompleted)
+                        if (_sendTask!.IsCompleted)
                         {
                             var stopResult = await _sendTask;
                             if (!await StopAndCheckResultForReconnectionAsync(stopResult))
                             {
                                 return stopResult;
                             }
+
+                            break;
                         }
 
-                        if (_receiveTask is null)
-                        {
-                            // Something has gone very wrong! Signal a complete restart
-                            await StopAsync(true);
-                            this.Status = GatewayConnectionStatus.Offline;
-
-                            continue;
-                        }
-
-                        if (_receiveTask.IsCompleted)
+                        if (_receiveTask!.IsCompleted)
                         {
                             var stopResult = await _receiveTask;
                             if (!await StopAndCheckResultForReconnectionAsync(stopResult))
                             {
                                 return stopResult;
                             }
+
+                            break;
                         }
 
                         // Take a breath
@@ -334,15 +339,11 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
         CancellationToken ct
     )
     {
-        // TODO: A good check to have? But we shouldn't need it.
-        //if (!this.TransportService.IsConnected)
-        //{
         var connectResult = await this.TransportService.ConnectAsync(gatewayUri, ct).ConfigureAwait(false);
         if (!connectResult.IsSuccess)
         {
             return connectResult;
         }
-        //}
 
         _sendTask = GatewaySenderAsync(this.DisconnectRequestedSource.Token);
 
@@ -454,7 +455,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 
             while (!ct.IsCancellationRequested)
             {
-                var receiveResult = await this.TransportService.ReceivePayloadAsync(ct);
+                var receiveResult = await this.TransportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
 
                 if (!receiveResult.IsSuccess)
                 {
@@ -464,6 +465,8 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                     // only payloads.
                     if (receiveResult.Error is UnrecognisedPayloadError upe)
                     {
+                        // TODO: Needs testing, this will actually be a JSON exception
+                        // that we need to catch in the transport service
                         _logger.LogWarning
                         (
                             "Received an unknown payload with the OP Code {OpCode}. Additional data: {Message}",
@@ -493,10 +496,6 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 
             return Result.FromSuccess();
         }
-        catch (Exception ex) when (ex is OperationCanceledException or TaskCanceledException)
-        {
-            return Result.FromSuccess();
-        }
         catch (Exception ex)
         {
             return ex;
@@ -505,7 +504,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 
     /// <summary>
     /// This method acts as the main entrypoint for the gateway sender task.
-    /// It processes and sends submitted payloads to the gateway, and calls <see cref="SendHeartbeatAsync(CancellationToken)"/>.
+    /// It processes and sends submitted payloads to the gateway, and calls <see cref="SendHeartbeatAsync"/>.
     /// </summary>
     /// <param name="ct">A token for requests to disconnect the socket.</param>
     /// <returns>
@@ -555,10 +554,6 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 
             return Result.FromSuccess();
         }
-        catch (Exception ex) when (ex is OperationCanceledException or TaskCanceledException)
-        {
-            return Result.FromSuccess();
-        }
         catch (Exception ex)
         {
             return ex;
@@ -572,9 +567,10 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     /// <returns>A value indicating whether or not to attempt a reconnection.</returns>
     private async Task<bool> StopAndCheckResultForReconnectionAsync(Result operationResult)
     {
-        if (!operationResult.IsSuccess)
+        if (operationResult.HasCancellationError())
         {
-            _logger.LogError("A gateway error occured: {Error}", operationResult.Error);
+            // A shutdown has been requested
+            return false;
         }
 
         var shouldReconnect = ShouldReconnect(operationResult, out var withNewSession);
@@ -587,6 +583,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 
         if (withNewSession)
         {
+            _logger.LogDebug("Errored result resulted in restarting with a new session");
             this.Status = GatewayConnectionStatus.Offline;
         }
 
