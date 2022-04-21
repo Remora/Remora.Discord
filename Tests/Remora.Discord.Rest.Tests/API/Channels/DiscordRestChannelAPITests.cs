@@ -884,12 +884,7 @@ public class DiscordRestChannelAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -973,12 +968,7 @@ public class DiscordRestChannelAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -1068,12 +1058,8 @@ public class DiscordRestChannelAPITests
                             {
                                 return false;
                             }
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
 
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -1540,12 +1526,7 @@ public class DiscordRestChannelAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -1624,12 +1605,7 @@ public class DiscordRestChannelAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -1714,12 +1690,8 @@ public class DiscordRestChannelAPITests
                             {
                                 return false;
                             }
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
 
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload

@@ -83,5 +83,5 @@ public enum ApplicationCommandOptionType
     /// <summary>
     /// The option is an attachment (an image, document, etc).
     /// </summary>
-    Attachment = 11,
+    Attachment = 11
 }

@@ -30,4 +30,6 @@ namespace Remora.Discord.Extensions.Errors;
 /// </summary>
 /// <param name="PropertyName">The name of the argument.</param>
 /// <param name="Reason">The reason validation failed.</param>
-public record ValidationError([InvokerParameterName] string PropertyName, string Reason) : ResultError($"Failed to validate {PropertyName}: {Reason}");
+[PublicAPI]
+public record ValidationError([InvokerParameterName] string PropertyName, string Reason) :
+    ResultError($"Failed to validate {PropertyName}: {Reason}");

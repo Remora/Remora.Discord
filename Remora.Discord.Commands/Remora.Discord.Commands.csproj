@@ -5,14 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>20.1.2</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package provides simple glue code for using Remora.Commands with Remora.Discord.
-        </Description>
+        <Version>20.1.4</Version>
+        <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
-            Register RequireBotDiscordPermissionsCondition.
+            Add check for the guild owner.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -23,8 +20,8 @@
     <ItemGroup>
         <PackageReference Include="FuzzySharp" Version="2.0.2" />
         <PackageReference Include="Humanizer.Core" Version="2.14.1" />
-        <PackageReference Include="Remora.Commands" Version="9.0.2" />
-        <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.2" />
+        <PackageReference Include="Remora.Commands" Version="9.0.4" />
+        <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.3" />
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 

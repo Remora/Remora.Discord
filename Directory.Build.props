@@ -35,10 +35,7 @@
         <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
         <PackageIcon>shark.png</PackageIcon>
-
-        <BaseDescription>
-            Remora.Discord is a .NET library for the Discord API, built for performance, reliability, and concurrency.
-        </BaseDescription>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <!-- Code inspection properties -->
@@ -115,19 +112,26 @@
 
     <!-- JetBrains Annotations -->
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" PrivateAssets="all" />
+        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" PrivateAssets="all" />
     </ItemGroup>
 
     <!-- SourceLink -->
-    <ItemGroup>
+    <ItemGroup Condition="$(IsPackable)">
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     </ItemGroup>
 
     <!-- NuGet Icon -->
-    <ItemGroup>
-        <None Include="$(MSBuildThisFileDirectory)images/shark.png" Pack="true" PackagePath="/">
+    <ItemGroup Condition="$(IsPackable)">
+        <None Include="$(MSBuildThisFileDirectory)/images/shark.png" Pack="true" PackagePath="/">
             <Link>shark.png</Link>
             <InProject>false</InProject>
+        </None>
+    </ItemGroup>
+
+    <!-- NuGet README -->
+    <ItemGroup Condition="$(IsPackable)">
+        <None Include="$(MSBuildProjectDirectory)/README.md" Pack="true" PackagePath="/">
+            <Link>README.md</Link>
         </None>
     </ItemGroup>
 </Project>

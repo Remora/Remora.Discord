@@ -76,13 +76,8 @@ internal class UnstableVoicePayloadConverter : VoicePayloadConverter
             ? nameof(IVoiceSpeakingEvent.UserID)
             : options.PropertyNamingPolicy.ConvertName(nameof(IVoiceSpeakingEvent.UserID));
 
-        if (dataElement.TryGetProperty(userIDPropertyName, out _))
-        {
-            return DeserializePayload<IVoiceSpeakingEvent>(VoiceOperationCode.Speaking, document, options);
-        }
-        else
-        {
-            return base.DeserializeFromOperationCode(VoiceOperationCode.Speaking, document, options);
-        }
+        return dataElement.TryGetProperty(userIDPropertyName, out _)
+            ? DeserializePayload<IVoiceSpeakingEvent>(VoiceOperationCode.Speaking, document, options)
+            : base.DeserializeFromOperationCode(VoiceOperationCode.Speaking, document, options);
     }
 }

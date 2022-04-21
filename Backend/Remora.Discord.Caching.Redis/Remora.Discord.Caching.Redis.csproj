@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>1.0.2</Version>
+        <Description>Redis-based cache provider for Remora.Discord</Description>
+        <PackageReleaseNotes>
+            Update dependencies.
+        </PackageReleaseNotes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Remora.Discord.Caching\Remora.Discord.Caching.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.4" />
+    </ItemGroup>
+
+</Project>

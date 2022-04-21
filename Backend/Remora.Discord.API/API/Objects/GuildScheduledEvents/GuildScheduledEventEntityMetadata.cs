@@ -20,12 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IGuildScheduledEventEntityMetadata"/>
+[PublicAPI]
 public record GuildScheduledEventEntityMetadata
 (
     Optional<string> Location = default

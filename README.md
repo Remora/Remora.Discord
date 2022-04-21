@@ -62,11 +62,11 @@ Remora.Discord is currently fully usable, and has been released for public
 consumption.
 
 ### 3.1 Gateway
-The Discord Gateway API (v9) is fully implemented. The gateway client can 
+The Discord Gateway API (v10) is fully implemented. The gateway client can 
 connect, heartbeat, reconnect, resume, receive events, and send commands.
 
 ### 3.2 REST
-The Discord REST API (v9) is fully implemented.
+The Discord REST API (v10) is fully implemented.
 
 ### 3.3 Voice
 The Discord Voice API is not implemented. If you'd like to contribute to the 
@@ -89,7 +89,28 @@ dotnet pack -c Release
 Up-to-date documentation for the API, as well as a quickstart guide, is 
 available online at [the repository pages][1].
 
-Please refer to the [Samples][7] for community-created example bots.
+Each package has its own README with more detailed information regarding its 
+purpose and use. If you want to know more about each one of these, please refer
+to the list below. It's roughly organized in order of importance to end users, 
+but feel free to explore.
+
+  * [Remora.Discord](Remora.Discord/README.md)
+    * [Remora.Discord.Extensions](Remora.Discord.Extensions/README.md)
+    * [Remora.Discord.Hosting](Remora.Discord.Hosting/README.md)
+    * [Remora.Discord.Interactivity](Remora.Discord.Interactivity/README.md)
+    * [Remora.Discord.Pagination](Remora.Discord.Pagination/README.md)
+  * [Remora.Discord.Commands](Remora.Discord.Commands/README.md)
+  * [Remora.Discord.API](Backend/Remora.Discord.API/README.md)
+    * [Remora.Discord.API.Abstractions](Backend/Remora.Discord.API.Abstractions/README.md)
+  * [Remora.Discord.Rest](Backend/Remora.Discord.Rest/README.md)
+  * [Remora.Discord.Gateway](Backend/Remora.Discord.Gateway/README.md)
+  * [Remora.Discord.Caching.Abstractions](Backend/Remora.Discord.Caching.Abstractions/README.md)
+    * [Remora.Discord.Caching](Backend/Remora.Discord.Caching/README.md)
+      * [Remora.Discord.Caching.Redis](Backend/Remora.Discord.Caching.Redis/README.md)
+  * [Remora.Discord.Unstable](Backend/Remora.Discord.Unstable/README.md)
+
+If you want to get started quickly, please refer to the [Samples][7] for 
+community-created example bots.
 
 ### 5.1 Versioning
 A note on versioning - Remora.Discord uses SEMVER 2.0.0, which, in short, means

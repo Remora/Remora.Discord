@@ -25,6 +25,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Commands.Extensions;
@@ -44,6 +45,7 @@ namespace Remora.Discord.Commands.Responders;
 /// <summary>
 /// Responds to autocompletion interactions, routing the request to the appropriate provider.
 /// </summary>
+[PublicAPI]
 public class AutocompleteResponder : IResponder<IInteractionCreate>
 {
     private readonly SlashService _slashService;

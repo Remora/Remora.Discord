@@ -53,6 +53,11 @@ public interface IInteractionData
     Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
 
     /// <summary>
+    /// Gets the ID of the guild the command is registered to.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
+
+    /// <summary>
     /// Gets the custom ID associated with this interaction.
     /// </summary>
     Optional<string> CustomID { get; }

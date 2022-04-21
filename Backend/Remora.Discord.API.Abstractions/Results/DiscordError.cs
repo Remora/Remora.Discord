@@ -259,7 +259,7 @@ public enum DiscordError
     /// <summary>
     /// Explicit content cannot be sent to the intended recipient(s).
     /// </summary>
-    ExplictContentCannotBeSent = 20009,
+    ExplicitContentCannotBeSent = 20009,
 
     /// <summary>
     /// You are not allowed to perform that operation on this application.

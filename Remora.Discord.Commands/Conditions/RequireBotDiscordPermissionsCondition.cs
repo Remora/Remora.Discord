@@ -71,7 +71,11 @@ public class RequireBotDiscordPermissionsCondition :
     }
 
     /// <inheritdoc />
-    public async ValueTask<Result> CheckAsync(RequireBotDiscordPermissionsAttribute attribute, CancellationToken ct = default)
+    public async ValueTask<Result> CheckAsync
+    (
+        RequireBotDiscordPermissionsAttribute attribute,
+        CancellationToken ct = default
+    )
     {
         if (!_context.GuildID.IsDefined())
         {
@@ -109,17 +113,7 @@ public class RequireBotDiscordPermissionsCondition :
             );
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
-
-        if (!getRoles.IsSuccess)
-        {
-            return Result.FromError(getRoles);
-        }
-
-        var guildRoles = getRoles.Entity;
-
         var getUser = await _userAPI.GetCurrentUserAsync(ct);
-
         if (!getUser.IsSuccess)
         {
             return Result.FromError(getUser);
@@ -127,8 +121,28 @@ public class RequireBotDiscordPermissionsCondition :
 
         var user = getUser.Entity;
 
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
+        if (!getGuild.IsSuccess)
+        {
+            return Result.FromError(getGuild);
+        }
 
+        var guild = getGuild.Entity;
+        if (guild.OwnerID == user.ID)
+        {
+            // guild owner is always allowed
+            return Result.FromSuccess();
+        }
+
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        if (!getRoles.IsSuccess)
+        {
+            return Result.FromError(getRoles);
+        }
+
+        var guildRoles = getRoles.Entity;
+
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
         if (!getMember.IsSuccess)
         {
             return Result.FromError(getMember);
@@ -175,7 +189,7 @@ public class RequireBotDiscordPermissionsCondition :
         {
             return permissionDeniedError with
             {
-                Message = $"The given channel does not fulfill the permission requirements " +
+                Message = "The given channel does not fulfill the permission requirements " +
                           $"({Explain(permissionInformation, attribute.Operator)})."
             };
         }
@@ -219,7 +233,7 @@ public class RequireBotDiscordPermissionsCondition :
                 false,
                 (current, value) => current ^ value
             ),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(logicalOperator))
         };
 
         return passesCheck

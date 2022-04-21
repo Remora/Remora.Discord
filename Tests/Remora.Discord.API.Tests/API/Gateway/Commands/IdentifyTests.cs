@@ -37,7 +37,7 @@ public class IdentifyTests : GatewayCommandTestBase<IIdentify>
     {
         AllowMissing = new[]
         {
-            "id", // undocumented value upon "presence.activities[]" objects
+            "id" // undocumented value upon "presence.activities[]" objects
         }
     };
 }

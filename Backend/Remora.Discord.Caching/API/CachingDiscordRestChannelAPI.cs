@@ -27,10 +27,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Caching.Memory;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
@@ -47,12 +48,12 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
 {
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestChannelAPI" />
+    /// <inheritdoc cref="DiscordRestChannelAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
     public CachingDiscordRestChannelAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
-        IMemoryCache rateLimitCache,
+        ICacheProvider rateLimitCache,
         CacheService cacheService
     )
         : base(restHttpClient, jsonOptions, rateLimitCache)
@@ -68,9 +69,12 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     )
     {
         var key = KeyHelpers.CreateChannelCacheKey(channelID);
-        if (_cacheService.TryGetValue<IChannel>(key, out var cachedInstance))
+
+        var cacheResult = await _cacheService.TryGetValueAsync<Channel>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IChannel>.FromSuccess(cachedInstance);
+            return Result<IChannel>.FromSuccess(cacheResult.Entity);
         }
 
         var getChannel = await base.GetChannelAsync(channelID, ct);
@@ -80,7 +84,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var channel = getChannel.Entity;
-        _cacheService.Cache(key, channel);
+        await _cacheService.CacheAsync(key, channel, ct);
 
         return getChannel;
     }
@@ -141,7 +145,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
 
         var channel = modificationResult.Entity;
         var key = KeyHelpers.CreateChannelCacheKey(channelID);
-        _cacheService.Cache(key, channel);
+        await _cacheService.CacheAsync(key, channel, ct);
 
         return modificationResult;
     }
@@ -161,7 +165,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var key = KeyHelpers.CreateChannelCacheKey(channelID);
-        _cacheService.Evict<IChannel>(key);
+        await _cacheService.EvictAsync<IChannel>(key, ct);
 
         return deleteResult;
     }
@@ -175,9 +179,11 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     )
     {
         var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-        if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
+
+        var cacheResult = await _cacheService.TryGetValueAsync<Message>(key, ct);
+        if (cacheResult.IsSuccess)
         {
-            return Result<IMessage>.FromSuccess(cachedInstance);
+            return Result<IMessage>.FromSuccess(cacheResult.Entity);
         }
 
         var getMessage = await base.GetChannelMessageAsync(channelID, messageID, ct);
@@ -187,7 +193,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var message = getMessage.Entity;
-        _cacheService.Cache(key, message);
+        await _cacheService.CacheAsync(key, message, ct);
 
         return getMessage;
     }
@@ -232,7 +238,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
 
         var message = createResult.Entity;
         var key = KeyHelpers.CreateMessageCacheKey(channelID, message.ID);
-        _cacheService.Cache(key, message);
+        await _cacheService.CacheAsync(key, message, ct);
 
         return createResult;
     }
@@ -271,7 +277,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
 
         var message = editResult.Entity;
         var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-        _cacheService.Cache(key, message);
+        await _cacheService.CacheAsync(key, message, ct);
 
         return editResult;
     }
@@ -292,7 +298,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-        _cacheService.Evict<IMessage>(key);
+        await _cacheService.EvictAsync<IMessage>(key, ct);
 
         return deleteResult;
     }
@@ -315,7 +321,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         foreach (var messageID in messageIDs)
         {
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-            _cacheService.Evict<IMessage>(key);
+            await _cacheService.EvictAsync<IMessage>(key, ct);
         }
 
         return deleteResult;
@@ -357,7 +363,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
 
         var invite = createResult.Entity;
         var key = KeyHelpers.CreateInviteCacheKey(invite.Code);
-        _cacheService.Cache(key, invite);
+        await _cacheService.CacheAsync(key, invite, ct);
 
         return createResult;
     }
@@ -378,7 +384,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var key = KeyHelpers.CreateChannelPermissionCacheKey(channelID, overwriteID);
-        _cacheService.Evict<IPermissionOverwrite>(key);
+        await _cacheService.EvictAsync<IPermissionOverwrite>(key, ct);
 
         return deleteResult;
     }
@@ -391,9 +397,12 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     )
     {
         var key = KeyHelpers.CreatePinnedMessagesCacheKey(channelID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IMessage>>(key, out var cachedInstance))
+
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IMessage>>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IMessage>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IMessage>>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetPinnedMessagesAsync(channelID, ct);
@@ -403,12 +412,12 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var messages = getResult.Entity;
-        _cacheService.Cache(key, messages);
+        await _cacheService.CacheAsync(key, messages, ct);
 
         foreach (var message in messages)
         {
             var messageKey = KeyHelpers.CreateMessageCacheKey(channelID, message.ID);
-            _cacheService.Cache(messageKey, message);
+            await _cacheService.CacheAsync(messageKey, message, ct);
         }
 
         return getResult;
@@ -430,7 +439,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-        _cacheService.Evict<IMessage>(key);
+        await _cacheService.EvictAsync<IMessage>(key, ct);
 
         return deleteResult;
     }
@@ -464,7 +473,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var key = KeyHelpers.CreateChannelCacheKey(channelID);
-        _cacheService.Cache(key, createResult.Entity);
+        await _cacheService.CacheAsync(key, createResult.Entity, ct);
 
         return createResult;
     }
@@ -500,7 +509,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var key = KeyHelpers.CreateChannelCacheKey(channelID);
-        _cacheService.Cache(key, createResult.Entity);
+        await _cacheService.CacheAsync(key, createResult.Entity, ct);
 
         return createResult;
     }
@@ -525,7 +534,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         foreach (var message in getResult.Entity)
         {
             var key = KeyHelpers.CreateMessageCacheKey(channelID, message.ID);
-            _cacheService.Cache(key, message);
+            await _cacheService.CacheAsync(key, message, ct);
         }
 
         return getResult;
@@ -547,7 +556,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
 
         var message = result.Entity;
         var key = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
-        _cacheService.Cache(key, message);
+        await _cacheService.CacheAsync(key, message, ct);
 
         return result;
     }
@@ -560,9 +569,12 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     )
     {
         var key = KeyHelpers.CreateChannelInvitesCacheKey(channelID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IInvite>>(key, out var cachedInstance))
+
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IInvite>>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IInvite>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IInvite>>.FromSuccess(cacheResult.Entity);
         }
 
         var result = await base.GetChannelInvitesAsync(channelID, ct);
@@ -571,12 +583,12 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             return result;
         }
 
-        _cacheService.Cache(key, result.Entity);
+        await _cacheService.CacheAsync(key, result.Entity, ct);
 
         foreach (var invite in result.Entity)
         {
             var inviteKey = KeyHelpers.CreateInviteCacheKey(invite.Code);
-            _cacheService.Cache(inviteKey, invite);
+            await _cacheService.CacheAsync(inviteKey, invite, ct);
         }
 
         return result;
@@ -591,9 +603,12 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     )
     {
         var key = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
-        if (_cacheService.TryGetValue<IThreadMember>(key, out var cachedInstance))
+
+        var cacheResult = await _cacheService.TryGetValueAsync<IThreadMember>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IThreadMember>.FromSuccess(cachedInstance);
+            return Result<IThreadMember>.FromSuccess(cacheResult.Entity);
         }
 
         var result = await base.GetThreadMemberAsync(channelID, userID, ct);
@@ -603,7 +618,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var threadMember = result.Entity;
-        _cacheService.Cache(key, threadMember);
+        await _cacheService.CacheAsync(key, threadMember, ct);
 
         return result;
     }
@@ -616,9 +631,12 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     )
     {
         var key = KeyHelpers.CreateThreadMembersCacheKey(channelID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IThreadMember>>(key, out var cachedInstance))
+
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IThreadMember>>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IThreadMember>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IThreadMember>>.FromSuccess(cacheResult.Entity);
         }
 
         var result = await base.ListThreadMembersAsync(channelID, ct);
@@ -635,7 +653,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             }
 
             var memberKey = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
-            _cacheService.Cache(memberKey, threadMember);
+            await _cacheService.CacheAsync(memberKey, threadMember, ct);
         }
 
         return result;
@@ -656,7 +674,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         }
 
         var key = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
-        _cacheService.Evict<IThreadMember>(key);
+        await _cacheService.EvictAsync<IThreadMember>(key, ct);
 
         return result;
     }

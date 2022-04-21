@@ -32,11 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public enum UserFlags
 {
     /// <summary>
-    /// No flags.
-    /// </summary>
-    None = 0,
-
-    /// <summary>
     /// The user is a Discord employee.
     /// </summary>
     DiscordEmployee = 1 << 0,

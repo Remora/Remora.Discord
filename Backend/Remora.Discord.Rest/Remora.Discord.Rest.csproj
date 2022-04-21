@@ -5,28 +5,25 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>32.0.0</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package contains the default implementations of Discord's REST API, complete with client-side sanity
-            checks and rate limiting support.
-        </Description>
+        <Version>33.0.0</Version>
+        <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
-            Implement guild ban pagination.
-            Lots of rate limit refactoring and improvements.
+            Implement default_auto_archive_duration for channel creation.
+            Merge pull request #166 from VelvetThePanda/feature/redis-cache
+            Parse X-RateLimit-Reset independent of system culture
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
-      <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.4" />
       <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
-        <PackageReference Include="Remora.Rest" Version="1.2.2" />
+        <PackageReference Include="Remora.Rest" Version="1.2.3" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.API\Remora.Discord.API.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Caching.Abstractions\Remora.Discord.Caching.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

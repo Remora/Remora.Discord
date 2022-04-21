@@ -29,9 +29,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Utility;
 using Remora.Rest;
@@ -51,7 +51,12 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestGuildAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+    public DiscordRestGuildAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -272,7 +277,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         (
             $"guilds/{guildID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -305,6 +310,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -328,6 +334,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("permission_overwrites", permissionOverwrites, this.JsonOptions);
                         json.Write("parent_id", parentID, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
+                        json.Write("default_auto_archive_duration", defaultAutoArchiveDuration, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),

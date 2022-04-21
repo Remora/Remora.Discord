@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using JetBrains.Annotations;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -37,6 +38,7 @@ namespace Remora.Discord.Extensions.Embeds;
 /// <summary>
 /// Provides utilities for building an embed.
 /// </summary>
+[PublicAPI]
 public class EmbedBuilder : BuilderBase<Embed>
 {
     /// <summary>
@@ -62,7 +64,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <summary>
     /// Gets or sets the color of this embed.
     /// </summary>
-    public Color? Colour { get; set; } = null;
+    public Color? Colour { get; set; }
 
     /// <summary>
     /// Gets or sets the footer of this embed.
@@ -180,12 +182,9 @@ public class EmbedBuilder : BuilderBase<Embed>
             return new ArgumentOutOfRangeError(nameof(this.Fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {this.Fields.Count}.");
         }
 
-        if (this.Length > EmbedConstants.MaxEmbedLength)
-        {
-            return new ValidationError(nameof(this.Length), $"The overall embed length is too long.");
-        }
-
-        return Result.FromSuccess();
+        return this.Length > EmbedConstants.MaxEmbedLength
+            ? new ValidationError(nameof(this.Length), "The overall embed length is too long.")
+            : Result.FromSuccess();
     }
 
     /// <summary>
@@ -317,7 +316,7 @@ public class EmbedBuilder : BuilderBase<Embed>
             ? avatarUrlResult.Entity
             : CDN.GetDefaultUserAvatarUrl(user, imageSize: 256).Entity;
 
-        this.Author = new EmbedAuthorBuilder($"{user.Username}${user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
+        this.Author = new EmbedAuthorBuilder($"{user.Username}#{user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
         return this;
     }
 
@@ -363,7 +362,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     {
         if (_fields.Count >= EmbedConstants.MaxFieldCount)
         {
-            return new ValidationError(nameof(this.Fields), $"Cannot add any more fields to this embed.");
+            return new ValidationError(nameof(this.Fields), "Cannot add any more fields to this embed.");
         }
 
         _fields.Add(field);

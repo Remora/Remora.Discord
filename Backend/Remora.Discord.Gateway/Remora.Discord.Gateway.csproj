@@ -5,15 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.0.2</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package provides a fully-featured implementation of a Discord gateway client, complete with resume
-            capabilities and user-facing events.
-        </Description>
+        <Version>8.0.3</Version>
+        <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Prevent ResponderDispatchService.DisposeAsync from throwing.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

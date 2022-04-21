@@ -76,7 +76,7 @@ public class InteractiveCommands : CommandGroup
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "Morbi sollicitudin velit eu nisi sagittis condimentum.",
             "Donec molestie ex ac mollis vestibulum.",
-            "Nam mollis felis at accumsan consectetur.",
+            "Nam mollis felis at accumsan consectetur."
         };
 
         var images = new[]
@@ -84,7 +84,7 @@ public class InteractiveCommands : CommandGroup
             "https://picsum.photos/800",
             "https://picsum.photos/801",
             "https://picsum.photos/802",
-            "https://picsum.photos/803",
+            "https://picsum.photos/803"
         };
 
         var pages = imageCaptions.Zip

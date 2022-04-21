@@ -129,21 +129,10 @@ internal static class EnumExtensions
     /// <summary>
     /// Gets a string that should be displayed for the given enumeration value in user-facing interfaces.
     /// </summary>
-    /// <param name="value">The value.</param>
-    /// <typeparam name="TEnum">The enumeration type.</typeparam>
-    /// <returns>The display string.</returns>
-    public static string GetDisplayString<TEnum>(this TEnum value) where TEnum : struct, Enum
-    {
-        return GetDisplayString(typeof(TEnum), value);
-    }
-
-    /// <summary>
-    /// Gets a string that should be displayed for the given enumeration value in user-facing interfaces.
-    /// </summary>
     /// <param name="enumType">The type of the enumeration.</param>
     /// <param name="enumValue">The enumeration value.</param>
     /// <returns>The display string.</returns>
-    public static string GetDisplayString(Type enumType, object enumValue)
+    private static string GetDisplayString(Type enumType, object enumValue)
     {
         var enumName = Enum.GetName(enumType, enumValue) ?? throw new InvalidOperationException();
         var enumMember = enumType.GetMember(enumName).Single();

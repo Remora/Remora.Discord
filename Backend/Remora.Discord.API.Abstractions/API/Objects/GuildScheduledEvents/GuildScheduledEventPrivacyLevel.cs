@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Enumerates various privacy levels for a scheduled event.
 /// </summary>
+[PublicAPI]
 public enum GuildScheduledEventPrivacyLevel
 {
     /// <summary>

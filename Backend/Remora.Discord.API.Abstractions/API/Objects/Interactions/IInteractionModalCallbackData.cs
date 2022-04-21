@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Represents return payload data for an interaction response.
 /// </summary>
+[PublicAPI]
 public interface IInteractionModalCallbackData
 {
     /// <summary>

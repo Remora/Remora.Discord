@@ -86,6 +86,19 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
+        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
+        if (!getGuild.IsSuccess)
+        {
+            return Result.FromError(getGuild);
+        }
+
+        var guild = getGuild.Entity;
+        if (guild.OwnerID == _context.User.ID)
+        {
+            // guild owner is always allowed
+            return Result.FromSuccess();
+        }
+
         // Grab required information
         var getMember = await _guildAPI.GetGuildMemberAsync(guildID, _context.User.ID, ct);
         if (!getMember.IsSuccess)
@@ -131,7 +144,7 @@ public class RequireDiscordPermissionCondition :
 
     /// <inheritdoc />
     /// <remarks>
-    /// This method checks the condition against the target user.
+    /// This method checks the condition against the target member.
     /// </remarks>
     public async ValueTask<Result> CheckAsync
     (
@@ -277,7 +290,7 @@ public class RequireDiscordPermissionCondition :
         {
             return permissionDeniedError with
             {
-                Message = $"The given role does not fulfill the permission requirements " +
+                Message = "The given role does not fulfill the permission requirements " +
                           $"({Explain(permissionInformation, attribute.Operator)})."
             };
         }
@@ -321,7 +334,7 @@ public class RequireDiscordPermissionCondition :
                 false,
                 (current, value) => current ^ value
             ),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(logicalOperator))
         };
 
         return passesCheck

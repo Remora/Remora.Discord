@@ -28,8 +28,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
@@ -46,12 +46,12 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
 {
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestGuildAPI" />
+    /// <inheritdoc cref="DiscordRestGuildAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
     public CachingDiscordRestGuildAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
-        IMemoryCache rateLimitCache,
+        ICacheProvider rateLimitCache,
         CacheService cacheService
     )
         : base(restHttpClient, jsonOptions, rateLimitCache)
@@ -99,7 +99,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
 
         var guild = createResult.Entity;
         var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
-        _cacheService.Cache(key, guild);
+        await _cacheService.CacheAsync(key, guild, ct);
 
         return createResult;
     }
@@ -113,9 +113,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var key = KeyHelpers.CreateGuildCacheKey(guildID);
-        if (_cacheService.TryGetValue<IGuild>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IGuild>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IGuild>.FromSuccess(cachedInstance);
+            return Result<IGuild>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildAsync(guildID, withCounts, ct);
@@ -125,7 +127,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var guild = getResult.Entity;
-        _cacheService.Cache(key, guild);
+        await _cacheService.CacheAsync(key, guild, ct);
 
         return getResult;
     }
@@ -138,9 +140,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var key = KeyHelpers.CreateGuildPreviewCacheKey(guildID);
-        if (_cacheService.TryGetValue<IGuildPreview>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IGuildPreview>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IGuildPreview>.FromSuccess(cachedInstance);
+            return Result<IGuildPreview>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildPreviewAsync(guildID, ct);
@@ -150,7 +154,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var guildPreview = getResult.Entity;
-        _cacheService.Cache(key, guildPreview);
+        await _cacheService.CacheAsync(key, guildPreview, ct);
 
         return getResult;
     }
@@ -215,7 +219,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
 
         var guild = modifyResult.Entity;
         var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
-        _cacheService.Cache(key, guild);
+        await _cacheService.CacheAsync(key, guild, ct);
 
         return modifyResult;
     }
@@ -235,7 +239,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var key = KeyHelpers.CreateGuildCacheKey(guildID);
-        _cacheService.Evict<IGuild>(key);
+        await _cacheService.EvictAsync<IGuild>(key, ct);
 
         return deleteResult;
     }
@@ -248,9 +252,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var key = KeyHelpers.CreateGuildChannelsCacheKey(guildID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IChannel>>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IChannel>>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IChannel>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IChannel>>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildChannelsAsync(guildID, ct);
@@ -260,12 +266,12 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var channels = getResult.Entity;
-        _cacheService.Cache(key, channels);
+        await _cacheService.CacheAsync(key, channels, ct);
 
         foreach (var channel in channels)
         {
             var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
-            _cacheService.Cache(channelKey, channel);
+            await _cacheService.CacheAsync(channelKey, channel, ct);
         }
 
         return getResult;
@@ -285,6 +291,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -302,6 +309,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             permissionOverwrites,
             parentID,
             isNsfw,
+            defaultAutoArchiveDuration,
             reason,
             ct
         );
@@ -313,7 +321,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
 
         var guild = createResult.Entity;
         var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
-        _cacheService.Cache(key, guild);
+        await _cacheService.CacheAsync(key, guild, ct);
 
         return createResult;
     }
@@ -327,9 +335,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var key = KeyHelpers.CreateGuildMemberKey(guildID, userID);
-        if (_cacheService.TryGetValue<IGuildMember>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IGuildMember>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IGuildMember>.FromSuccess(cachedInstance);
+            return Result<IGuildMember>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildMemberAsync(guildID, userID, ct);
@@ -339,7 +349,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var guildMember = getResult.Entity;
-        _cacheService.Cache(key, guildMember);
+        await _cacheService.CacheAsync(key, guildMember, ct);
 
         if (!guildMember.User.IsDefined(out var user))
         {
@@ -347,7 +357,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
-        _cacheService.Cache(userKey, user);
+        await _cacheService.CacheAsync(userKey, user, ct);
 
         return getResult;
     }
@@ -362,9 +372,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var collectionKey = KeyHelpers.CreateGuildMembersKey(guildID, limit, after);
-        if (_cacheService.TryGetValue<IReadOnlyList<IGuildMember>>(collectionKey, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IGuildMember>>(collectionKey, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IGuildMember>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IGuildMember>>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.ListGuildMembersAsync(guildID, limit, after, ct);
@@ -374,7 +386,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var members = getResult.Entity;
-        _cacheService.Cache(collectionKey, members);
+        await _cacheService.CacheAsync(collectionKey, members, ct);
 
         foreach (var member in members)
         {
@@ -384,7 +396,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             }
 
             var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
-            _cacheService.Cache(key, member);
+            await _cacheService.CacheAsync(key, member, ct);
         }
 
         return getResult;
@@ -427,7 +439,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var key = KeyHelpers.CreateGuildMemberKey(guildID, userID);
-        _cacheService.Cache(key, member);
+        await _cacheService.CacheAsync(key, member, ct);
         return getResult;
     }
 
@@ -454,10 +466,10 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
-        _cacheService.Cache(key, guildMember);
+        await _cacheService.CacheAsync(key, guildMember, ct);
 
         var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
-        _cacheService.Cache(userKey, user);
+        await _cacheService.CacheAsync(userKey, user, ct);
 
         return getResult;
     }
@@ -478,7 +490,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var memberKey = KeyHelpers.CreateGuildMemberKey(guildID, userID);
-        _cacheService.Evict<IGuildMember>(memberKey);
+        await _cacheService.EvictAsync<IGuildMember>(memberKey, ct);
 
         return removeMember;
     }
@@ -494,9 +506,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var collectionKey = KeyHelpers.CreateGuildBansCacheKey(guildID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IBan>>(collectionKey, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IBan>>(collectionKey, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IBan>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IBan>>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildBansAsync(guildID, limit, before, after, ct);
@@ -506,12 +520,12 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var bans = getResult.Entity;
-        _cacheService.Cache(collectionKey, bans);
+        await _cacheService.CacheAsync(collectionKey, bans, ct);
 
         foreach (var ban in bans)
         {
             var key = KeyHelpers.CreateGuildBanCacheKey(guildID, ban.User.ID);
-            _cacheService.Cache(key, ban);
+            await _cacheService.CacheAsync(key, ban, ct);
         }
 
         return getResult;
@@ -526,9 +540,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var key = KeyHelpers.CreateGuildBanCacheKey(guildID, userID);
-        if (_cacheService.TryGetValue<IBan>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IBan>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IBan>.FromSuccess(cachedInstance);
+            return Result<IBan>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildBanAsync(guildID, userID, ct);
@@ -538,7 +554,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var ban = getResult.Entity;
-        _cacheService.Cache(key, ban);
+        await _cacheService.CacheAsync(key, ban, ct);
 
         return getResult;
     }
@@ -559,7 +575,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var key = KeyHelpers.CreateGuildBanCacheKey(guildID, userID);
-        _cacheService.Evict<IBan>(key);
+        await _cacheService.EvictAsync<IBan>(key, ct);
 
         return deleteResult;
     }
@@ -572,9 +588,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var collectionKey = KeyHelpers.CreateGuildRolesCacheKey(guildID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IRole>>(collectionKey, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IRole>>(collectionKey, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IRole>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IRole>>.FromSuccess(cacheResult.Entity);
         }
 
         var getRoles = await base.GetGuildRolesAsync(guildID, ct);
@@ -584,12 +602,12 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var roles = getRoles.Entity;
-        _cacheService.Cache(collectionKey, roles);
+        await _cacheService.CacheAsync(collectionKey, roles, ct);
 
         foreach (var role in roles)
         {
             var key = KeyHelpers.CreateGuildRoleCacheKey(guildID, role.ID);
-            _cacheService.Cache(key, role);
+            await _cacheService.CacheAsync(key, role, ct);
         }
 
         return getRoles;
@@ -631,7 +649,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
 
         var role = createResult.Entity;
         var key = KeyHelpers.CreateGuildRoleCacheKey(guildID, role.ID);
-        _cacheService.Cache(key, role);
+        await _cacheService.CacheAsync(key, role, ct);
 
         return createResult;
     }
@@ -654,12 +672,12 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
 
         var roles = modifyResult.Entity;
         var collectionKey = KeyHelpers.CreateGuildRolesCacheKey(guildID);
-        _cacheService.Cache(collectionKey, roles);
+        await _cacheService.CacheAsync(collectionKey, roles, ct);
 
         foreach (var role in roles)
         {
             var key = KeyHelpers.CreateGuildRoleCacheKey(guildID, role.ID);
-            _cacheService.Cache(key, role);
+            await _cacheService.CacheAsync(key, role, ct);
         }
 
         return modifyResult;
@@ -703,7 +721,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
 
         var role = modifyResult.Entity;
         var key = KeyHelpers.CreateGuildRoleCacheKey(guildID, roleID);
-        _cacheService.Cache(key, role);
+        await _cacheService.CacheAsync(key, role, ct);
 
         return modifyResult;
     }
@@ -724,7 +742,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var key = KeyHelpers.CreateGuildRoleCacheKey(guildId, roleID);
-        _cacheService.Evict<IRole>(key);
+        await _cacheService.EvictAsync<IRole>(key, ct);
 
         return deleteResult;
     }
@@ -737,9 +755,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var collectionKey = KeyHelpers.CreateGuildVoiceRegionsCacheKey(guildID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IVoiceRegion>>(collectionKey, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IVoiceRegion>>(collectionKey, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildVoiceRegionsAsync(guildID, ct);
@@ -750,12 +770,12 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var voiceRegions = getResult.Entity;
-        _cacheService.Cache(collectionKey, voiceRegions);
+        await _cacheService.CacheAsync(collectionKey, voiceRegions, ct);
 
         foreach (var voiceRegion in voiceRegions)
         {
             var key = KeyHelpers.CreateGuildVoiceRegionCacheKey(guildID, voiceRegion.ID);
-            _cacheService.Cache(key, voiceRegion);
+            await _cacheService.CacheAsync(key, voiceRegion, ct);
         }
 
         return getResult;
@@ -769,9 +789,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var collectionKey = KeyHelpers.CreateGuildInvitesCacheKey(guildID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IInvite>>(collectionKey, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IInvite>>(collectionKey, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IInvite>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IInvite>>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildInvitesAsync(guildID, ct);
@@ -782,12 +804,12 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var invites = getResult.Entity;
-        _cacheService.Cache(collectionKey, invites);
+        await _cacheService.CacheAsync(collectionKey, invites, ct);
 
         foreach (var invite in invites)
         {
             var key = KeyHelpers.CreateInviteCacheKey(invite.Code);
-            _cacheService.Cache(key, invite);
+            await _cacheService.CacheAsync(key, invite, ct);
         }
 
         return getResult;
@@ -802,9 +824,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var collectionKey = KeyHelpers.CreateGuildIntegrationsCacheKey(guildID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IIntegration>>(collectionKey, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IIntegration>>(collectionKey, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IIntegration>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IIntegration>>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildIntegrationsAsync(guildID, includeApplications, ct);
@@ -815,12 +839,12 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var integrations = getResult.Entity;
-        _cacheService.Cache(collectionKey, integrations);
+        await _cacheService.CacheAsync(collectionKey, integrations, ct);
 
         foreach (var integration in integrations)
         {
             var key = KeyHelpers.CreateGuildIntegrationCacheKey(guildID, integration.ID);
-            _cacheService.Cache(key, integration);
+            await _cacheService.CacheAsync(key, integration, ct);
         }
 
         return getResult;
@@ -834,9 +858,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var key = KeyHelpers.CreateGuildWidgetSettingsCacheKey(guildID);
-        if (_cacheService.TryGetValue<IGuildWidgetSettings>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IGuildWidgetSettings>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IGuildWidgetSettings>.FromSuccess(cachedInstance);
+            return Result<IGuildWidgetSettings>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildWidgetSettingsAsync(guildID, ct);
@@ -846,7 +872,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var widget = getResult.Entity;
-        _cacheService.Cache(key, widget);
+        await _cacheService.CacheAsync(key, widget, ct);
 
         return getResult;
     }
@@ -869,7 +895,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
 
         var key = KeyHelpers.CreateGuildWidgetSettingsCacheKey(guildID);
         var widget = modifyResult.Entity;
-        _cacheService.Cache(key, widget);
+        await _cacheService.CacheAsync(key, widget, ct);
 
         return modifyResult;
     }
@@ -882,9 +908,11 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     )
     {
         var key = KeyHelpers.CreateGuildWelcomeScreenCacheKey(guildID);
-        if (_cacheService.TryGetValue<IWelcomeScreen>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IWelcomeScreen>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IWelcomeScreen>.FromSuccess(cachedInstance);
+            return Result<IWelcomeScreen>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildWelcomeScreenAsync(guildID, ct);
@@ -894,7 +922,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         }
 
         var welcomeScreen = getResult.Entity;
-        _cacheService.Cache(key, welcomeScreen);
+        await _cacheService.CacheAsync(key, welcomeScreen, ct);
 
         return getResult;
     }
@@ -922,7 +950,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             }
 
             var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
-            _cacheService.Cache(key, guildMember);
+            await _cacheService.CacheAsync(key, guildMember, ct);
         }
 
         return result;

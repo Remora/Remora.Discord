@@ -122,12 +122,7 @@ public class DiscordRestInteractionAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -219,12 +214,7 @@ public class DiscordRestInteractionAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -322,12 +312,8 @@ public class DiscordRestInteractionAPITests
                             {
                                 return false;
                             }
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
 
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -376,7 +362,7 @@ public class DiscordRestInteractionAPITests
                 interactionID,
                 token,
                 interactionResponse,
-                attachments: new OneOf<FileData, IPartialAttachment>[]
+                new OneOf<FileData, IPartialAttachment>[]
                 {
                     new FileData(fileName, file, description),
                     new PartialAttachment(DiscordSnowflake.New(999))
@@ -566,12 +552,7 @@ public class DiscordRestInteractionAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -881,12 +862,7 @@ public class DiscordRestInteractionAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -965,12 +941,7 @@ public class DiscordRestInteractionAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -1055,12 +1026,8 @@ public class DiscordRestInteractionAPITests
                             {
                                 return false;
                             }
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
 
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -1245,12 +1212,7 @@ public class DiscordRestInteractionAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -1335,12 +1297,7 @@ public class DiscordRestInteractionAPITests
                                 return false;
                             }
 
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
-
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload
@@ -1431,12 +1388,8 @@ public class DiscordRestInteractionAPITests
                             {
                                 return false;
                             }
-                            if (!multipart.ContainsContent<StringContent>("payload_json"))
-                            {
-                                return false;
-                            }
 
-                            return true;
+                            return multipart.ContainsContent<StringContent>("payload_json");
                         }
                     )
                     .WithMultipartJsonPayload

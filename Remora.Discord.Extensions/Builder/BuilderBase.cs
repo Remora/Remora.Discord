@@ -91,11 +91,8 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
             return new ValidationError(propertyName, $"The {propertyName} cannot be an empty string.");
         }
 
-        if (text.Length > upperBound)
-        {
-            return new ValidationError(propertyName, $"The {propertyName} is too long. Expected: shorter than {upperBound}. Actual: {text.Length}");
-        }
-
-        return Result.FromSuccess();
+        return text.Length > upperBound
+            ? new ValidationError(propertyName, $"The {propertyName} is too long. Expected: shorter than {upperBound}. Actual: {text.Length}")
+            : Result.FromSuccess();
     }
 }

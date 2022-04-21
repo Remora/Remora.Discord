@@ -70,6 +70,7 @@ public partial class RequireDiscordPermissionConditionTests
         _contextMock = new Mock<ICommandContext>();
 
         // Result mocks
+        var guildMock = new Mock<IGuild>();
         _everyoneRoleMock = new Mock<IRole>();
         _userMock = new Mock<IUser>();
         _memberMock = new Mock<IGuildMember>();
@@ -79,6 +80,9 @@ public partial class RequireDiscordPermissionConditionTests
         _contextMock.Setup(c => c.User.ID).Returns(_userID);
         _contextMock.Setup(c => c.GuildID).Returns(_guildID);
         _contextMock.Setup(c => c.ChannelID).Returns(channelID);
+
+        guildMock.Setup(g => g.ID).Returns(_guildID);
+        guildMock.Setup(g => g.OwnerID).Returns(DiscordSnowflake.New(3));
 
         _channelMock.Setup(c => c.ID).Returns(channelID);
         _channelMock
@@ -103,6 +107,18 @@ public partial class RequireDiscordPermissionConditionTests
                 )
             )
             .ReturnsAsync(Result<IGuildMember>.FromSuccess(_memberMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildAsync
+                (
+                    It.Is<Snowflake>(s => s == _guildID),
+                    It.IsAny<Optional<bool>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuild>.FromSuccess(guildMock.Object));
 
         _guildAPIMock
             .Setup
@@ -269,6 +285,325 @@ public partial class RequireDiscordPermissionConditionTests
         );
 
         var result = await condition.CheckAsync(attribute, _everyoneRoleMock.Object);
+        Assert.Equal(expected, result.IsSuccess);
+    }
+
+    /// <summary>
+    /// Tests whether the condition respects the owner of a guild having all permissions.
+    /// </summary>
+    /// <typeparam name="TPermission">The required permissions.</typeparam>
+    /// <param name="logicalOperator">The logical operator to apply.</param>
+    /// <param name="required">The permissions required by the condition.</param>
+    /// <param name="effectivePermissions">The effective permissions.</param>
+    /// <param name="expected">The expected result.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Theory]
+    [MemberData(nameof(Cases))]
+    public async Task RespectsGuildOwner<TPermission>
+    (
+        LogicalOperator logicalOperator,
+        TPermission[] required,
+        DiscordPermission[] effectivePermissions,
+        bool expected
+    )
+        where TPermission : struct, Enum
+    {
+        _ = expected;
+        _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
+
+        var userOwnedGuildID = DiscordSnowflake.New(4);
+
+        var userOwnedGuildMock = new Mock<IGuild>();
+        userOwnedGuildMock.Setup(g => g.ID).Returns(userOwnedGuildID);
+        userOwnedGuildMock.Setup(g => g.OwnerID).Returns(_userID);
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildMemberAsync
+                (
+                    It.Is<Snowflake>(s => s == userOwnedGuildID),
+                    It.Is<Snowflake>(s => s == _userID),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuildMember>.FromSuccess(_memberMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildAsync
+                (
+                    It.Is<Snowflake>(s => s == userOwnedGuildID),
+                    It.IsAny<Optional<bool>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuild>.FromSuccess(userOwnedGuildMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildRolesAsync(It.Is<Snowflake>(s => s == userOwnedGuildID), It.IsAny<CancellationToken>())
+            )
+            .ReturnsAsync(new[] { _everyoneRoleMock.Object });
+
+        _everyoneRoleMock.Setup(r => r.ID).Returns(userOwnedGuildID);
+        _contextMock.Setup(c => c.GuildID).Returns(userOwnedGuildID);
+
+        var requiredPermissions = required.Cast<DiscordPermission>().ToArray();
+        var attribute = new RequireDiscordPermissionAttribute(requiredPermissions)
+        {
+            Operator = logicalOperator
+        };
+
+        var condition = new RequireDiscordPermissionCondition
+        (
+            _guildAPIMock.Object,
+            _channelAPIMock.Object,
+            _contextMock.Object
+        );
+
+        var result = await condition.CheckAsync(attribute);
+        ResultAssert.Successful(result);
+    }
+
+    /// <summary>
+    /// Tests whether the condition ignores the invoker being the guild owner for role targets.
+    /// </summary>
+    /// <typeparam name="TPermission">The required permissions.</typeparam>
+    /// <param name="logicalOperator">The logical operator to apply.</param>
+    /// <param name="required">The permissions required by the condition.</param>
+    /// <param name="effectivePermissions">The effective permissions.</param>
+    /// <param name="expected">The expected result.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Theory]
+    [MemberData(nameof(Cases))]
+    public async Task IgnoresGuildOwnerForRole<TPermission>
+    (
+        LogicalOperator logicalOperator,
+        TPermission[] required,
+        DiscordPermission[] effectivePermissions,
+        bool expected
+    )
+        where TPermission : struct, Enum
+    {
+        _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
+
+        var userOwnedGuildID = DiscordSnowflake.New(4);
+
+        var userOwnedGuildMock = new Mock<IGuild>();
+        userOwnedGuildMock.Setup(g => g.ID).Returns(userOwnedGuildID);
+        userOwnedGuildMock.Setup(g => g.OwnerID).Returns(_userID);
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildMemberAsync
+                (
+                    It.Is<Snowflake>(s => s == userOwnedGuildID),
+                    It.Is<Snowflake>(s => s == _userID),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuildMember>.FromSuccess(_memberMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildAsync
+                (
+                    It.Is<Snowflake>(s => s == userOwnedGuildID),
+                    It.IsAny<Optional<bool>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuild>.FromSuccess(userOwnedGuildMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildRolesAsync(It.Is<Snowflake>(s => s == userOwnedGuildID), It.IsAny<CancellationToken>())
+            )
+            .ReturnsAsync(new[] { _everyoneRoleMock.Object });
+
+        _everyoneRoleMock.Setup(r => r.ID).Returns(userOwnedGuildID);
+        _contextMock.Setup(c => c.GuildID).Returns(userOwnedGuildID);
+
+        var requiredPermissions = required.Cast<DiscordPermission>().ToArray();
+        var attribute = new RequireDiscordPermissionAttribute(requiredPermissions)
+        {
+            Operator = logicalOperator
+        };
+
+        var condition = new RequireDiscordPermissionCondition
+        (
+            _guildAPIMock.Object,
+            _channelAPIMock.Object,
+            _contextMock.Object
+        );
+
+        var result = await condition.CheckAsync(attribute, _everyoneRoleMock.Object);
+        Assert.Equal(expected, result.IsSuccess);
+    }
+
+    /// <summary>
+    /// Tests whether the condition ignores the invoker being the guild owner for user targets.
+    /// </summary>
+    /// <typeparam name="TPermission">The required permissions.</typeparam>
+    /// <param name="logicalOperator">The logical operator to apply.</param>
+    /// <param name="required">The permissions required by the condition.</param>
+    /// <param name="effectivePermissions">The effective permissions.</param>
+    /// <param name="expected">The expected result.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Theory]
+    [MemberData(nameof(Cases))]
+    public async Task IgnoresGuildOwnerForUser<TPermission>
+    (
+        LogicalOperator logicalOperator,
+        TPermission[] required,
+        DiscordPermission[] effectivePermissions,
+        bool expected
+    )
+        where TPermission : struct, Enum
+    {
+        _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
+        _contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(4));
+
+        var userOwnedGuildID = DiscordSnowflake.New(5);
+
+        var userOwnedGuildMock = new Mock<IGuild>();
+        userOwnedGuildMock.Setup(g => g.ID).Returns(userOwnedGuildID);
+        userOwnedGuildMock.Setup(g => g.OwnerID).Returns(_userID);
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildMemberAsync
+                (
+                    It.Is<Snowflake>(s => s == userOwnedGuildID),
+                    It.Is<Snowflake>(s => s == _userID),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuildMember>.FromSuccess(_memberMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildAsync
+                (
+                    It.Is<Snowflake>(s => s == userOwnedGuildID),
+                    It.IsAny<Optional<bool>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuild>.FromSuccess(userOwnedGuildMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildRolesAsync(It.Is<Snowflake>(s => s == userOwnedGuildID), It.IsAny<CancellationToken>())
+            )
+            .ReturnsAsync(new[] { _everyoneRoleMock.Object });
+
+        _everyoneRoleMock.Setup(r => r.ID).Returns(userOwnedGuildID);
+        _contextMock.Setup(c => c.GuildID).Returns(userOwnedGuildID);
+
+        var requiredPermissions = required.Cast<DiscordPermission>().ToArray();
+        var attribute = new RequireDiscordPermissionAttribute(requiredPermissions)
+        {
+            Operator = logicalOperator
+        };
+
+        var condition = new RequireDiscordPermissionCondition
+        (
+            _guildAPIMock.Object,
+            _channelAPIMock.Object,
+            _contextMock.Object
+        );
+
+        var result = await condition.CheckAsync(attribute, _userMock.Object);
+        Assert.Equal(expected, result.IsSuccess);
+    }
+
+    /// <summary>
+    /// Tests whether the condition ignores the invoker being the guild owner for member targets.
+    /// </summary>
+    /// <typeparam name="TPermission">The required permissions.</typeparam>
+    /// <param name="logicalOperator">The logical operator to apply.</param>
+    /// <param name="required">The permissions required by the condition.</param>
+    /// <param name="effectivePermissions">The effective permissions.</param>
+    /// <param name="expected">The expected result.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Theory]
+    [MemberData(nameof(Cases))]
+    public async Task IgnoresGuildOwnerForMember<TPermission>
+    (
+        LogicalOperator logicalOperator,
+        TPermission[] required,
+        DiscordPermission[] effectivePermissions,
+        bool expected
+    )
+        where TPermission : struct, Enum
+    {
+        _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
+        _contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(4));
+
+        var userOwnedGuildID = DiscordSnowflake.New(5);
+
+        var userOwnedGuildMock = new Mock<IGuild>();
+        userOwnedGuildMock.Setup(g => g.ID).Returns(userOwnedGuildID);
+        userOwnedGuildMock.Setup(g => g.OwnerID).Returns(_userID);
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildMemberAsync
+                (
+                    It.Is<Snowflake>(s => s == userOwnedGuildID),
+                    It.Is<Snowflake>(s => s == _userID),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuildMember>.FromSuccess(_memberMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildAsync
+                (
+                    It.Is<Snowflake>(s => s == userOwnedGuildID),
+                    It.IsAny<Optional<bool>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result<IGuild>.FromSuccess(userOwnedGuildMock.Object));
+
+        _guildAPIMock
+            .Setup
+            (
+                a => a.GetGuildRolesAsync(It.Is<Snowflake>(s => s == userOwnedGuildID), It.IsAny<CancellationToken>())
+            )
+            .ReturnsAsync(new[] { _everyoneRoleMock.Object });
+
+        _everyoneRoleMock.Setup(r => r.ID).Returns(userOwnedGuildID);
+        _contextMock.Setup(c => c.GuildID).Returns(userOwnedGuildID);
+
+        var requiredPermissions = required.Cast<DiscordPermission>().ToArray();
+        var attribute = new RequireDiscordPermissionAttribute(requiredPermissions)
+        {
+            Operator = logicalOperator
+        };
+
+        var condition = new RequireDiscordPermissionCondition
+        (
+            _guildAPIMock.Object,
+            _channelAPIMock.Object,
+            _contextMock.Object
+        );
+
+        var result = await condition.CheckAsync(attribute, _userMock.Object);
         Assert.Equal(expected, result.IsSuccess);
     }
 
