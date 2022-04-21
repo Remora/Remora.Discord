@@ -465,13 +465,10 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                     // only payloads.
                     if (receiveResult.Error is UnrecognisedPayloadError upe)
                     {
-                        // TODO: Needs testing, this will actually be a JSON exception
-                        // that we need to catch in the transport service
                         _logger.LogWarning
                         (
-                            "Received an unknown payload with the OP Code {OpCode}. Additional data: {Message}",
-                            upe.OpCode,
-                            upe.Message
+                            "Received an unknown payload: {RawJson}",
+                            upe.RawPayloadJson
                         );
 
                         continue;

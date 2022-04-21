@@ -24,6 +24,7 @@ using System;
 using System.Buffers;
 using System.IO;
 using System.Net.WebSockets;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -211,7 +212,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
             var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
             return payload is null
-                ? new UnrecognisedPayloadError("The received payload deserialized as a null value")
+                ? new UnrecognisedPayloadError(Encoding.UTF8.GetString(memoryStream.GetBuffer()))
                 : Result<IPayload>.FromSuccess(payload);
         }
         catch (Exception ex)

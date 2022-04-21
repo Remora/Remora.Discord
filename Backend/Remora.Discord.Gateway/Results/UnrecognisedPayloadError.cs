@@ -28,8 +28,7 @@ namespace Remora.Discord.Gateway.Results;
 /// <summary>
 /// Represents an error that occurs as a result of an inbound gateway payload not being recognised.
 /// </summary>
-/// <param name="Message">The error message.</param>
-/// <param name="OpCode">The OP code of the payload.</param>
+/// <param name="RawPayloadJson">The raw JSON of the payload.</param>
 [PublicAPI]
-public record UnrecognisedPayloadError(string Message, int? OpCode = null)
-    : ResultError(Message);
+public record UnrecognisedPayloadError(string RawPayloadJson)
+    : ResultError(RawPayloadJson);
