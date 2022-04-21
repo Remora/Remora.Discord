@@ -239,11 +239,12 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             {
                 try
                 {
-                    // 1012 is used here instead of normal closure, because close codes 1000 and 1001 don't
-                    // allow for reconnection. 1012 is referenced in the websocket protocol as "Service restart",
-                    // which makes sense for our use case.
+                    // "When you close the connection to the gateway with the close code 1000 or 1001,
+                    // your session will be invalidated and your bot will appear offline.
+                    // If you simply close the TCP connection, or use a different close code,
+                    // the bot session will remain active and timeout after a few minutes."
                     var closeCode = reconnectionIntended
-                        ? (WebSocketCloseStatus)1012
+                        ? WebSocketCloseStatus.Empty
                         : WebSocketCloseStatus.NormalClosure;
 
                     await _clientWebSocket.CloseAsync
