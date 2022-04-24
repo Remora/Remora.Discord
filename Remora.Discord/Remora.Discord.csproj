@@ -18,6 +18,7 @@
         <EmbedUntrackedSources>false</EmbedUntrackedSources>
         <EmbedAllSources>false</EmbedAllSources>
         <IncludeBuildOutput>false</IncludeBuildOutput>
+        <NoPackageAnalysis>true</NoPackageAnalysis>
     </PropertyGroup>
 
     <ItemGroup>
