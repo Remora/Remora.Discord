@@ -97,8 +97,6 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
         }
 
         var iconResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
-        return !iconResult.IsSuccess
-            ? iconResult
-            : Result.FromSuccess();
+        return iconResult;
     }
 }
