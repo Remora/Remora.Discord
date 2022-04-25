@@ -312,12 +312,6 @@ public static class CommandTreeExtensions
                     return Result<IApplicationCommandOption?>.FromSuccess(null);
                 }
 
-                var validateDescriptionResult = ValidateNodeDescription(command.Shape.Description, command);
-                if (!validateDescriptionResult.IsSuccess)
-                {
-                    return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
-                }
-
                 var commandType = command.GetCommandType();
                 if (commandType is not ApplicationCommandType.ChatInput)
                 {
@@ -353,6 +347,12 @@ public static class CommandTreeExtensions
                 var description = commandType is not ApplicationCommandType.ChatInput
                     ? string.Empty
                     : command.Shape.Description;
+
+                var validateDescriptionResult = ValidateNodeDescription(description, command);
+                if (!validateDescriptionResult.IsSuccess)
+                {
+                    return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
+                }
 
                 var localizedNames = localizationProvider.GetStrings(name);
                 var localizedDescriptions = localizationProvider.GetStrings(description);
