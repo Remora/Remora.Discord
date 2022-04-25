@@ -28,7 +28,6 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Contexts;
-using Remora.Discord.Commands.Responders;
 using Remora.Results;
 
 namespace Remora.Discord.Samples.Modal;
@@ -98,7 +97,7 @@ public class ModalCommand : CommandGroup
             _context.ID,
             _context.Token,
             response,
-            ct: CancellationToken
+            ct: this.CancellationToken
         );
         return result;
     }
