@@ -54,7 +54,7 @@ public class ModalReceiver : IModalInteractiveEntity
         _logger.LogInformation("Received modal response");
         var actionRow = (PartialActionRowComponent)components[0];
         var textInput = (PartialTextInputComponent)actionRow.Components.Value[0];
-        _logger.LogInformation("Received input: {0}", textInput.Value);
+        _logger.LogInformation("Received input: {Input}", textInput.Value);
         return Task.FromResult(Result.FromSuccess());
     }
 }
