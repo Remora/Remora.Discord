@@ -28,6 +28,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using NGettext;
 using OneOf;
+using Remora.Commands;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
@@ -347,6 +348,11 @@ public static class CommandTreeExtensions
                 var description = commandType is not ApplicationCommandType.ChatInput
                     ? string.Empty
                     : command.Shape.Description;
+
+                if (command.Shape.Description != Constants.DefaultDescription)
+                {
+                    return new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
+                }
 
                 var validateDescriptionResult = ValidateNodeDescription(description, command);
                 if (!validateDescriptionResult.IsSuccess)
