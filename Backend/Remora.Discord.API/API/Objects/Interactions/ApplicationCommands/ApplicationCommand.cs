@@ -41,5 +41,9 @@ public record ApplicationCommand
     string Description,
     Optional<IReadOnlyList<IApplicationCommandOption>> Options,
     Optional<bool> DefaultPermission,
-    Snowflake Version
+    Snowflake Version,
+    Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
+    Optional<string> NameLocalized = default,
+    Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default,
+    Optional<string> DescriptionLocalized = default
 ) : IApplicationCommand;

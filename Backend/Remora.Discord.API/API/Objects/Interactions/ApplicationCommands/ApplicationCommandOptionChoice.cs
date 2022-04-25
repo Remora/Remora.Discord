@@ -20,9 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
@@ -33,5 +35,7 @@ namespace Remora.Discord.API.Objects;
 public record ApplicationCommandOptionChoice
 (
     string Name,
-    OneOf<string, int, double> Value
+    OneOf<string, int, double> Value,
+    Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
+    Optional<string> NameLocalized = default
 ) : IApplicationCommandOptionChoice;

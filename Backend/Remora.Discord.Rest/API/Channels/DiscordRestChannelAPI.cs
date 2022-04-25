@@ -37,6 +37,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
+using Remora.Discord.Rest.Utility;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
@@ -119,24 +120,13 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             return new ArgumentOutOfRangeError(nameof(userLimit), "The user limit must be between 0 and 99.");
         }
 
-        Optional<string> base64EncodedIcon = default;
-        if (icon.HasValue)
+        var packImage = await ImagePacker.PackImageAsync(icon!, ct);
+        if (!packImage.IsSuccess)
         {
-            byte[] bytes;
-            if (icon.Value is MemoryStream ms)
-            {
-                bytes = ms.ToArray();
-            }
-            else
-            {
-                await using var copy = new MemoryStream();
-                await icon.Value.CopyToAsync(copy, ct);
-
-                bytes = copy.ToArray();
-            }
-
-            base64EncodedIcon = Convert.ToBase64String(bytes);
+            return Result<IChannel>.FromError(packImage);
         }
+
+        Optional<string> base64EncodedIcon = packImage.Entity!;
 
         return await this.RestHttpClient.PatchAsync<IChannel>
         (

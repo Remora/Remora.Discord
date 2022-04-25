@@ -29,6 +29,7 @@ using FuzzySharp;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Services;
 
 namespace Remora.Discord.Commands.Autocomplete;
 
@@ -40,14 +41,21 @@ public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
     where TEnum : struct, Enum
 {
     private readonly ILogger<EnumAutocompleteProvider<TEnum>> _logger;
+    private readonly ILocalizationProvider _localizationProvider;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EnumAutocompleteProvider{TEnum}"/> class.
     /// </summary>
     /// <param name="logger">The logging instance for this type.</param>
-    public EnumAutocompleteProvider(ILogger<EnumAutocompleteProvider<TEnum>> logger)
+    /// <param name="localizationProvider">The localization provider.</param>
+    public EnumAutocompleteProvider
+    (
+        ILogger<EnumAutocompleteProvider<TEnum>> logger,
+        ILocalizationProvider localizationProvider
+    )
     {
         _logger = logger;
+        _localizationProvider = localizationProvider;
     }
 
     /// <inheritdoc />
@@ -58,7 +66,7 @@ public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
         CancellationToken ct = default
     )
     {
-        var getChoices = EnumExtensions.GetEnumChoices<TEnum>();
+        var getChoices = EnumExtensions.GetEnumChoices<TEnum>(_localizationProvider);
         if (getChoices.IsDefined(out var choices))
         {
             return new ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>>

@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Remora.Discord.Samples.Localization\n"
+"POT-Creation-Date: 2022-04-05 19:29+0200\n"
+"PO-Revision-Date: 2022-04-05 20:39+0200\n"
+"Last-Translator: Jarl Gullberg <jarl.gullberg@gmail.com>\n"
+"Language-Team: \n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: Command:1,1t;Group:1,1t;Description:1,1t\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: Commands/HttpCatCommands.cs:62
+msgid "Cattify"
+msgstr "Kattifiera"
+
+#: Commands/HttpCatCommands.cs:91
+msgid "cat"
+msgstr "katt"
+
+#: Commands/HttpCatCommands.cs:92 Commands/HttpCatCommands.cs:112
+msgid "Posts a cat image that represents the given error code."
+msgstr "Skickar en kattbild som representerar den givna felkoden."
+
+#: Commands/HttpCatCommands.cs:93 Commands/HttpCatCommands.cs:114
+msgid "The HTTP code."
+msgstr "HTTP-koden."
+
+#: Commands/HttpCatCommands.cs:111
+msgid "ephemeral-cat"
+msgstr "kortlivad-katt"
+
+#: Commands/HttpCatCommands.cs:131
+msgid "user-cat"
+msgstr "användar-katt"
+
+#: Commands/HttpCatCommands.cs:132
+msgid "Posts a cat image that matches the user."
+msgstr "Skickar en kattbild som matchar användaren."
+
+#: Commands/HttpCatCommands.cs:133
+msgid "The user to cattify"
+msgstr "Användaren att kattifiera"
+
+#: Commands/HttpCatCommands.cs:149
+msgid "channel-cat"
+msgstr "kanal-katt"
+
+#: Commands/HttpCatCommands.cs:150
+msgid "Posts a cat image that matches the provided channel."
+msgstr "Skickar en kattbild som matchar den givna kanalen."
+
+#: Commands/HttpCatCommands.cs:153
+msgid "The channel to cattify"
+msgstr "Kanalen att kattifiera"
