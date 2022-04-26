@@ -60,7 +60,7 @@ public static class KeyHelpers
     /// <returns>The cache key.</returns>
     public static string CreateGuildInvitesCacheKey(in Snowflake guildID)
     {
-        return $"Guid:{guildID}:Invites";
+        return $"{CreateGuildCacheKey(guildID)}:Invites";
     }
 
     /// <summary>
