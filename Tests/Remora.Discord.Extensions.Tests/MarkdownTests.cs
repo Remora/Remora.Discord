@@ -278,13 +278,25 @@ public partial class MarkdownTests
     [InlineData(1052218560, TimestampStyle.LongDateTime)]
     [InlineData(1052218560, TimestampStyle.RelativeTime)]
     [InlineData(1052218560, null)]
-    public void TimestampWithUnixTimestampAndTimestampStyleSuccess(long unixTimestamp, TimestampStyle timestampStyle)
+    public void TimestampWithUnixTimestampAndTimestampStyleSuccess(long unixTimestamp, TimestampStyle? timestampStyle)
     {
-        var expected = $"<t:{unixTimestamp}>";
-        var actual = Markdown.Timestamp(unixTimestamp);
+        var expected = timestampStyle switch
+        {
+            TimestampStyle.ShortTime => $"<t:{unixTimestamp}:t>",
+            TimestampStyle.LongTime => $"<t:{unixTimestamp}:T>",
+            TimestampStyle.ShortDate => $"<t:{unixTimestamp}:d>",
+            TimestampStyle.LongDate => $"<t:{unixTimestamp}:D>",
+            TimestampStyle.ShortDateTime => $"<t:{unixTimestamp}:f>",
+            TimestampStyle.LongDateTime => $"<t:{unixTimestamp}:F>",
+            TimestampStyle.RelativeTime => $"<t:{unixTimestamp}:R>",
+            null => $"<t:{unixTimestamp}>",
+            _ => throw new ArgumentOutOfRangeException(nameof(timestampStyle), timestampStyle, null)
+        };
+
+        var actual = Markdown.Timestamp(unixTimestamp, timestampStyle);
         Assert.Equal(expected, actual);
     }
-
+    
     /// <summary>
     /// Generates sample uri test data.
     /// </summary>
