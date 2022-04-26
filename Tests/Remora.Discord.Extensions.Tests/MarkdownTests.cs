@@ -30,7 +30,7 @@ namespace Remora.Discord.Extensions.Tests;
 /// <summary>
 /// Tests to ensure the <see cref="Markdown"/> formats inputs correctly to Discord markdown standards.
 /// </summary>
-public partial class MarkdownTests
+public class MarkdownTests
 {
     /// <summary>
     /// Tests to see if the <see cref="Markdown.Bold"/> method bolds input text based on Discord's markdown format.
@@ -296,7 +296,7 @@ public partial class MarkdownTests
         var actual = Markdown.Timestamp(unixTimestamp, timestampStyle);
         Assert.Equal(expected, actual);
     }
-    
+
     /// <summary>
     /// Generates sample uri test data.
     /// </summary>
