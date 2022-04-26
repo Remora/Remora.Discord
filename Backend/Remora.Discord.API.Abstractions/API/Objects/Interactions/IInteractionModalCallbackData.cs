@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Represents return payload data for an interaction response.
 /// </summary>
+[PublicAPI]
 public interface IInteractionModalCallbackData
 {
     /// <summary>
@@ -35,7 +37,7 @@ public interface IInteractionModalCallbackData
     string CustomID { get; }
 
     /// <summary>
-    /// Gets the title for the modal.
+    /// Gets the title for the modal. Max 45 characters.
     /// </summary>
     string Title { get; }
 

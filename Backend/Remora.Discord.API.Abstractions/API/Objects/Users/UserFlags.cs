@@ -32,11 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public enum UserFlags
 {
     /// <summary>
-    /// No flags.
-    /// </summary>
-    None = 0,
-
-    /// <summary>
     /// The user is a Discord employee.
     /// </summary>
     DiscordEmployee = 1 << 0,
@@ -47,9 +42,9 @@ public enum UserFlags
     PartneredServerOwner = 1 << 1,
 
     /// <summary>
-    /// The user is part of HypeSquad events.
+    /// The user is a member of a HypeSquad event.
     /// </summary>
-    HypeSquadEvents = 1 << 2,
+    HypeSquad = 1 << 2,
 
     /// <summary>
     /// The user is a hunter (level 1).

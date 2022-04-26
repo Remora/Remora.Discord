@@ -5,30 +5,18 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>56.0.0</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package contains a complete set of type and API abstractions for the Discord API. It provides no
-            concrete implementations; rather, it acts as a general, library-agnostic standard definition of Discord's
-            API.
-        </Description>
+        <Version>59.0.0</Version>
+        <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Chuck out obsolete members.
-            Update field nullability.
-            Update error code.
-            Various mixed fixes.
-            Add another error code.
-            Update layout of permission enumerations.
-            Update permission name.
-            Update enumeration member name.
+            Fix property optionality.
+            Implement application command localization.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="OneOf" Version="3.0.216" />
-      <PackageReference Include="Remora.Rest.Core" Version="2.0.1" />
-      <PackageReference Include="Remora.Results" Version="7.1.1" />
+      <PackageReference Include="Remora.Rest.Core" Version="2.0.2" />
+      <PackageReference Include="Remora.Results" Version="7.1.3" />
     </ItemGroup>
 
     <ItemGroup>

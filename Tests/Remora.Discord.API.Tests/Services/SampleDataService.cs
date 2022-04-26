@@ -91,7 +91,7 @@ public class SampleDataService
         where TType : IVoiceGatewayCommand
         => GetSampleDataSet<TType>(Path.Combine("VoiceGateway", "Commands"));
 
-    private Result<string> GetBaseSampleDataPath()
+    private static Result<string> GetBaseSampleDataPath()
     {
         var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         if (basePath is null)
@@ -115,7 +115,7 @@ public class SampleDataService
 
         if (typeof(TType).IsInterface && samplesDirectoryName.StartsWith('I'))
         {
-            samplesDirectoryName = samplesDirectoryName.Substring(2);
+            samplesDirectoryName = samplesDirectoryName[2..];
         }
 
         var samplesPath = Path.Combine(basePath, samplesDirectoryName);

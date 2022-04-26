@@ -50,7 +50,7 @@ public interface IFeedbackTheme
 
     /// <summary>
     /// Gets a variant of <see cref="TextSecondary"/>, which is used to indicate the associated element is currently
-    /// non-interactable.
+    /// non-interactive.
     /// </summary>
     Color TextSecondaryDisabled { get; }
 
@@ -61,7 +61,7 @@ public interface IFeedbackTheme
 
     /// <summary>
     /// Gets a variant of <see cref="Primary"/>, which is used to indicate the associated element is currently
-    /// non-interactable.
+    /// non-interactive.
     /// </summary>
     Color PrimaryDisabled { get; }
 
@@ -72,7 +72,7 @@ public interface IFeedbackTheme
 
     /// <summary>
     /// Gets a variant of <see cref="Secondary"/>, which is used to indicate the associated element is currently
-    /// non-interactable.
+    /// non-interactive.
     /// </summary>
     Color SecondaryDisabled { get; }
 
@@ -83,7 +83,7 @@ public interface IFeedbackTheme
 
     /// <summary>
     /// Gets a variant of <see cref="Success"/>, which is used to indicate the associated element is currently
-    /// non-interactable.
+    /// non-interactive.
     /// </summary>
     Color SuccessDisabled { get; }
 
@@ -95,7 +95,7 @@ public interface IFeedbackTheme
 
     /// <summary>
     /// Gets a variant of <see cref="Warning"/>, which is used to indicate the associated element is currently
-    /// non-interactable.
+    /// non-interactive.
     /// </summary>
     Color WarningDisabled { get; }
 
@@ -107,7 +107,7 @@ public interface IFeedbackTheme
 
     /// <summary>
     /// Gets a variant of <see cref="FaultOrDanger"/>, which is used to indicate the associated element is currently
-    /// non-interactable.
+    /// non-interactive.
     /// </summary>
     Color FaultOrDangerDisabled { get; }
 }

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Extensions.Builder;
 using Remora.Results;
@@ -29,6 +30,7 @@ namespace Remora.Discord.Extensions.Embeds;
 /// <summary>
 /// A builder which validates and builds an <see cref="EmbedImageBuilder"/>.
 /// </summary>
+[PublicAPI]
 public sealed class EmbedImageBuilder : BuilderBase<EmbedImage>
 {
     /// <summary>

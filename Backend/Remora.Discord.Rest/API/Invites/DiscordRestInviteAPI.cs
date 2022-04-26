@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Rest.Core;
@@ -42,8 +43,9 @@ public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAP
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public DiscordRestInviteAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestInviteAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -77,7 +79,7 @@ public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAP
                     b.AddQueryParameter("guild_scheduled_event_id", guildScheduledEventID.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -94,7 +96,7 @@ public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAP
         return this.RestHttpClient.DeleteAsync<IInvite>
         (
             $"invites/{inviteCode}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

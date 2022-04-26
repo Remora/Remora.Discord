@@ -27,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
@@ -41,14 +42,15 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
 {
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestUserAPI(IRestHttpClient, JsonSerializerOptions)" />
+    /// <inheritdoc cref="DiscordRestUserAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
     public CachingDiscordRestUserAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
         _cacheService = cacheService;
     }
@@ -61,9 +63,11 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     )
     {
         var key = KeyHelpers.CreateUserCacheKey(userID);
-        if (_cacheService.TryGetValue<IUser>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IUser>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IUser>.FromSuccess(cachedInstance);
+            return Result<IUser>.FromSuccess(cacheResult.Entity);
         }
 
         var getUser = await base.GetUserAsync(userID, ct);
@@ -73,7 +77,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
         }
 
         var user = getUser.Entity;
-        _cacheService.Cache(key, user);
+        await _cacheService.CacheAsync(key, user, ct);
 
         return getUser;
     }
@@ -93,7 +97,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
         var dm = createDM.Entity;
         var key = KeyHelpers.CreateChannelCacheKey(dm.ID);
 
-        _cacheService.Cache(key, dm);
+        await _cacheService.CacheAsync(key, dm, ct);
 
         return createDM;
     }
@@ -102,9 +106,11 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     public override async Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateCurrentUserCacheKey();
-        if (_cacheService.TryGetValue<IUser>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IUser>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IUser>.FromSuccess(cachedInstance);
+            return Result<IUser>.FromSuccess(cacheResult.Entity);
         }
 
         var getUser = await base.GetCurrentUserAsync(ct);
@@ -117,8 +123,8 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
         var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
 
         // Cache this as both a normal user and our current user
-        _cacheService.Cache(key, user);
-        _cacheService.Cache(userKey, user);
+        await _cacheService.CacheAsync(key, user, ct);
+        await _cacheService.CacheAsync(userKey, user, ct);
 
         return getUser;
     }
@@ -130,9 +136,11 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     )
     {
         var key = KeyHelpers.CreateCurrentUserConnectionsCacheKey();
-        if (_cacheService.TryGetValue<IReadOnlyList<IConnection>>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IConnection>>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IConnection>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IConnection>>.FromSuccess(cacheResult.Entity);
         }
 
         var getUserConnections = await base.GetUserConnectionsAsync(ct);
@@ -142,12 +150,12 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
         }
 
         var connections = getUserConnections.Entity;
-        _cacheService.Cache(key, connections);
+        await _cacheService.CacheAsync(key, connections, ct);
 
         foreach (var connection in connections)
         {
             var connectionKey = KeyHelpers.CreateConnectionCacheKey(connection.ID);
-            _cacheService.Cache(connectionKey, connection);
+            await _cacheService.CacheAsync(connectionKey, connection, ct);
         }
 
         return getUserConnections;
@@ -171,8 +179,8 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
         var key = KeyHelpers.CreateCurrentUserCacheKey();
         var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
 
-        _cacheService.Cache(key, user);
-        _cacheService.Cache(userKey, user);
+        await _cacheService.CacheAsync(key, user, ct);
+        await _cacheService.CacheAsync(userKey, user, ct);
 
         return modifyUser;
     }
@@ -184,9 +192,11 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     )
     {
         var key = KeyHelpers.CreateCurrentUserDMsCacheKey();
-        if (_cacheService.TryGetValue<IReadOnlyList<IChannel>>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IChannel>>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IChannel>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IChannel>>.FromSuccess(cacheResult.Entity);
         }
 
         var getUserDMs = await base.GetUserDMsAsync(ct);
@@ -196,12 +206,12 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
         }
 
         var userDMs = getUserDMs.Entity;
-        _cacheService.Cache(key, userDMs);
+        await _cacheService.CacheAsync(key, userDMs, ct);
 
         foreach (var dm in userDMs)
         {
             var channelKey = KeyHelpers.CreateChannelCacheKey(dm.ID);
-            _cacheService.Cache(channelKey, dm);
+            await _cacheService.CacheAsync(channelKey, dm, ct);
         }
 
         return getUserDMs;
@@ -227,7 +237,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
         }
 
         var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
-        _cacheService.Cache(key, member);
+        await _cacheService.CacheAsync(key, member, ct);
 
         return result;
     }

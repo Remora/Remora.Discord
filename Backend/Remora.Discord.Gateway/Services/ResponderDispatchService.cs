@@ -27,12 +27,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Gateway.Services;
@@ -40,6 +40,7 @@ namespace Remora.Discord.Gateway.Services;
 /// <summary>
 /// Manages dispatch and processing of gateway payloads.
 /// </summary>
+[PublicAPI]
 public class ResponderDispatchService : IAsyncDisposable
 {
     private readonly IServiceProvider _services;
@@ -49,12 +50,16 @@ public class ResponderDispatchService : IAsyncDisposable
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
     private readonly Dictionary<Type, MethodInfo> _cachedDispatchMethods;
 
-    private bool _isRunning;
     private CancellationTokenSource? _dispatchCancellationSource;
     private Task? _dispatcher;
     private Task? _finalizer;
     private Channel<IPayload>? _payloadsToDispatch;
     private Channel<Task<IReadOnlyList<Result>>>? _respondersToFinalize;
+
+    /// <summary>
+    /// Gets a value indicating whether the dispatch service is currently running.
+    /// </summary>
+    public bool IsRunning { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponderDispatchService"/> class.
@@ -83,13 +88,16 @@ public class ResponderDispatchService : IAsyncDisposable
     /// returned a successful result) will be allowed to run to completion.
     /// </summary>
     /// <param name="payload">The payload to dispatch.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <param name="ct">
+    /// The cancellation token for this operation. Note that this is *not* the cancellation token which will be passed
+    /// to any instantiated responders.
+    /// </param>
     /// <returns>A result which may or may not have succeeded.</returns>
     public async Task<Result> DispatchAsync(IPayload payload, CancellationToken ct = default)
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
-            return new NotRunningError();
+            throw new InvalidOperationException();
         }
 
         if (_dispatchCancellationSource is null)
@@ -117,16 +125,14 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <summary>
     /// Starts the dispatch service, beginning acceptance of payloads for dispatch.
     /// </summary>
-    /// <param name="ct">The cancellation token for the dispatch service.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    internal Result Start(CancellationToken ct = default)
+    public void Start()
     {
-        if (_isRunning)
+        if (this.IsRunning)
         {
-            return new AlreadyStartedError();
+            throw new InvalidOperationException("The dispatch service is already running.");
         }
 
-        _dispatchCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        _dispatchCancellationSource = new();
         _payloadsToDispatch = Channel.CreateBounded<IPayload>
         (
             new BoundedChannelOptions(100) { FullMode = BoundedChannelFullMode.Wait }
@@ -134,22 +140,21 @@ public class ResponderDispatchService : IAsyncDisposable
 
         _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
 
-        _dispatcher = Task.Run(DispatcherTaskAsync, ct);
-        _finalizer = Task.Run(FinalizerTaskAsync, ct);
+        _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
+        _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
 
-        _isRunning = true;
-        return Result.FromSuccess();
+        this.IsRunning = true;
     }
 
     /// <summary>
     /// Stops the dispatch service, finishing any pending payloads.
     /// </summary>
     /// <returns>A result which may or may not have succeeded.</returns>
-    internal async Task<Result> StopAsync()
+    public async Task StopAsync()
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
-            return new NotRunningError();
+            throw new InvalidOperationException("The dispatch service is not running.");
         }
 
         if (_dispatcher is null)
@@ -177,19 +182,31 @@ public class ResponderDispatchService : IAsyncDisposable
             throw new InvalidOperationException();
         }
 
+        // Stop!
         _dispatchCancellationSource.Cancel();
         _payloadsToDispatch.Writer.Complete();
-        await _dispatcher;
-        await _finalizer;
+
+        try
+        {
+            // Wait for everything to actually stop...
+            await _dispatcher;
+            await _finalizer;
+        }
+        catch (OperationCanceledException)
+        {
+            // OCE is always thrown when cancellation is requested.
+        }
+
+        // Reset state so we can start again
+        _dispatchCancellationSource = null;
 
         _dispatcher = null;
         _finalizer = null;
-        _dispatchCancellationSource = null;
+
         _payloadsToDispatch = null;
         _respondersToFinalize = null;
 
-        _isRunning = false;
-        return Result.FromSuccess();
+        this.IsRunning = false;
     }
 
     /// <summary>
@@ -238,6 +255,8 @@ public class ResponderDispatchService : IAsyncDisposable
 
             await _respondersToFinalize.Writer.WriteAsync(dispatch.Entity, _dispatchCancellationSource.Token);
         }
+
+        _respondersToFinalize.Writer.Complete();
     }
 
     /// <summary>
@@ -257,12 +276,26 @@ public class ResponderDispatchService : IAsyncDisposable
 
         while (!_dispatchCancellationSource.Token.IsCancellationRequested)
         {
-            var responderResults = await await _respondersToFinalize.Reader.ReadAsync
+            var responderResults = await _respondersToFinalize.Reader.ReadAsync
             (
                 _dispatchCancellationSource.Token
             );
 
-            FinalizeResponderDispatch(responderResults);
+            if (!responderResults.IsCompleted)
+            {
+                var timeout = Task.Delay(TimeSpan.FromMilliseconds(10));
+
+                var finishedTask = await Task.WhenAny(responderResults, timeout);
+                if (finishedTask == timeout)
+                {
+                    // This responder is taking too long... put it back on the channel and look at some other stuff
+                    // in the meantime.
+                    await _respondersToFinalize.Writer.WriteAsync(responderResults, _dispatchCancellationSource.Token);
+                    continue;
+                }
+            }
+
+            FinalizeResponderDispatch(await responderResults);
         }
 
         await _respondersToFinalize.Reader.Completion;
@@ -363,7 +396,7 @@ public class ResponderDispatchService : IAsyncDisposable
         {
             _responderTypeRepository.GetEarlyResponderTypes<TGatewayEvent>(),
             _responderTypeRepository.GetResponderTypes<TGatewayEvent>(),
-            _responderTypeRepository.GetLateResponderTypes<TGatewayEvent>(),
+            _responderTypeRepository.GetLateResponderTypes<TGatewayEvent>()
         };
 
         // Run through the groups in order
@@ -376,7 +409,7 @@ public class ResponderDispatchService : IAsyncDisposable
                 (
                     async rt =>
                     {
-                        using var serviceScope = _services.CreateScope();
+                        await using var serviceScope = _services.CreateAsyncScope();
                         var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider
                             .GetRequiredService(rt);
 
@@ -387,23 +420,6 @@ public class ResponderDispatchService : IAsyncDisposable
                         catch (Exception e)
                         {
                             return e;
-                        }
-                        finally
-                        {
-                            // Suspicious type conversions are disabled here, since the user-defined responders may
-                            // implement IDisposable or IAsyncDisposable.
-
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            if (responder is IDisposable disposable)
-                            {
-                                disposable.Dispose();
-                            }
-
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            if (responder is IAsyncDisposable asyncDisposable)
-                            {
-                                await asyncDisposable.DisposeAsync();
-                            }
                         }
                     }
                 )
@@ -481,15 +497,11 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <inheritdoc />
     public async ValueTask DisposeAsync()
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
             return;
         }
 
-        var stopDispatch = await StopAsync();
-        if (!stopDispatch.IsSuccess)
-        {
-            _log.LogError("Failed to stop the dispatch service in DisposeAsync. Panic!");
-        }
+        await StopAsync();
     }
 }

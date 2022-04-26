@@ -60,7 +60,7 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
         (
             Uri.IsWellFormedUriString(url, UriKind.Absolute) &&
             Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
-            uri is { Scheme: "http" or "https" }
+            uri is { Scheme: "http" or "https" or "attachment" }
         )
         {
             return Result.FromSuccess();
@@ -91,11 +91,8 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
             return new ValidationError(propertyName, $"The {propertyName} cannot be an empty string.");
         }
 
-        if (text.Length > upperBound)
-        {
-            return new ValidationError(propertyName, $"The {propertyName} is too long. Expected: shorter than {upperBound}. Actual: {text.Length}");
-        }
-
-        return Result.FromSuccess();
+        return text.Length > upperBound
+            ? new ValidationError(propertyName, $"The {propertyName} is too long. Expected: shorter than {upperBound}. Actual: {text.Length}")
+            : Result.FromSuccess();
     }
 }

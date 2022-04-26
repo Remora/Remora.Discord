@@ -215,12 +215,9 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        if (guild.Splash is null)
-        {
-            return new ImageNotFoundError();
-        }
-
-        return GetGuildSplashUrl(guild.ID, guild.Splash, imageFormat, imageSize);
+        return guild.Splash is null
+            ? new ImageNotFoundError()
+            : GetGuildSplashUrl(guild.ID, guild.Splash, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -287,12 +284,9 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        if (guild.DiscoverySplash is null)
-        {
-            return new ImageNotFoundError();
-        }
-
-        return GetGuildDiscoverySplashUrl(guild.ID, guild.DiscoverySplash, imageFormat, imageSize);
+        return guild.DiscoverySplash is null
+            ? new ImageNotFoundError()
+            : GetGuildDiscoverySplashUrl(guild.ID, guild.DiscoverySplash, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -385,7 +379,8 @@ public static class CDN
             imageFormat,
             CDNImageFormat.PNG,
             CDNImageFormat.JPEG,
-            CDNImageFormat.WebP
+            CDNImageFormat.WebP,
+            CDNImageFormat.GIF
         );
 
         if (!formatValidation.IsSuccess)
@@ -658,7 +653,7 @@ public static class CDN
     }
 
     /// <summary>
-    /// Gets the CDN URI of the given guild members's avatar.
+    /// Gets the CDN URI of the given guild member's avatar.
     /// </summary>
     /// <param name="guildID">The guild to retrieve the member avatar of.</param>
     /// <param name="userID">The user ID of the guild member.</param>
@@ -724,12 +719,9 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        if (application.Icon is null)
-        {
-            return new ImageNotFoundError();
-        }
-
-        return GetApplicationIconUrl(application.ID, application.Icon, imageFormat, imageSize);
+        return application.Icon is null
+            ? new ImageNotFoundError()
+            : GetApplicationIconUrl(application.ID, application.Icon, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -1069,12 +1061,9 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        if (team.Icon is null)
-        {
-            return new ImageNotFoundError();
-        }
-
-        return GetTeamIconUrl(team.ID, team.Icon, imageFormat, imageSize);
+        return team.Icon is null
+            ? new ImageNotFoundError()
+            : GetTeamIconUrl(team.ID, team.Icon, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -1202,12 +1191,9 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        if (!role.Icon.IsDefined(out var icon))
-        {
-            return new ImageNotFoundError();
-        }
-
-        return GetRoleIconUrl(role.ID, icon, imageFormat, imageSize);
+        return !role.Icon.IsDefined(out var icon)
+            ? new ImageNotFoundError()
+            : GetRoleIconUrl(role.ID, icon, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -1274,12 +1260,9 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        if (scheduledEvent.Image is null)
-        {
-            return new ImageNotFoundError();
-        }
-
-        return GetGuildScheduledEventBannerUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
+        return scheduledEvent.Image is null
+            ? new ImageNotFoundError()
+            : GetGuildScheduledEventBannerUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -1364,11 +1347,8 @@ public static class CDN
         }
 
         var isPowerOfTwo = (size & (size - 1)) == 0;
-        if (!isPowerOfTwo)
-        {
-            return new ImageSizeNotPowerOfTwoError();
-        }
-
-        return Result.FromSuccess();
+        return !isPowerOfTwo
+            ? new ImageSizeNotPowerOfTwoError()
+            : Result.FromSuccess();
     }
 }

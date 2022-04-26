@@ -1,5 +1,5 @@
 //
-//  NotRunningError.cs
+//  IApplicationInstallParameters.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,11 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Results;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
-namespace Remora.Discord.Gateway.Results;
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Indicates that an operation could not be stopped because it was not running.
+/// Represents a set of parameters applied to custom application installation.
 /// </summary>
-public record NotRunningError() : ResultError("The task is not running.");
+[PublicAPI]
+public interface IApplicationInstallParameters
+{
+    /// <summary>
+    /// Gets the OAuth2 scopes to add the application to the server with.
+    /// </summary>
+    IReadOnlyList<string> Scopes { get; }
+
+    /// <summary>
+    /// Gets the permissions to request for the created bot role.
+    /// </summary>
+    IDiscordPermissionSet Permissions { get; }
+}

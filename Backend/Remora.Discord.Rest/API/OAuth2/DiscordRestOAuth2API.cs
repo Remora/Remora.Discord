@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Results;
@@ -41,8 +42,9 @@ public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2AP
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public DiscordRestOAuth2API(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestOAuth2API(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -55,7 +57,7 @@ public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2AP
         return this.RestHttpClient.GetAsync<IApplication>
         (
             "oauth2/applications/@me",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -69,7 +71,7 @@ public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2AP
         return this.RestHttpClient.GetAsync<IAuthorizationInformation>
         (
             "oauth2/@me",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

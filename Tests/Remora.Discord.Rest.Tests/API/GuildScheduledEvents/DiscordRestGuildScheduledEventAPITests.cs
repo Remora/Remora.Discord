@@ -315,7 +315,7 @@ public class DiscordRestGuildScheduledEventAPITests
                             new KeyValuePair<string, string>("limit", limit.ToString()),
                             new KeyValuePair<string, string>("with_member", withMember.ToString()),
                             new KeyValuePair<string, string>("before", before.ToString()),
-                            new KeyValuePair<string, string>("after", after.ToString()),
+                            new KeyValuePair<string, string>("after", after.ToString())
                         }
                     )
                     .Respond("application/json", "[ ]")

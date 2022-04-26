@@ -37,7 +37,7 @@ public class UpdatePresenceTests : GatewayCommandTestBase<IUpdatePresence>
     {
         AllowMissing = new[]
         {
-            "id", // undocumented value upon "activities[]" objects
+            "id" // undocumented value upon "activities[]" objects
         }
     };
 }

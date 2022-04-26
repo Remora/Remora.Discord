@@ -6,17 +6,8 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>6.0.2</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package contains unstable features from the Discord API - that is, features that aren't in the official
-            documentation yet, but may be documented in a pull request or through community efforts.
-
-            The API in this package should never be considered stable, and breaking changes may be introduced in any
-            release. Once unstable features move into the official documentation, they will be transferred from this
-            component to the appropriate stable component of Remora.Discord.
-        </Description>
+        <Version>6.0.5</Version>
+        <Description>Unstable or experimental features of Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
         </PackageReleaseNotes>
@@ -29,7 +20,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-      <PackageReference Include="System.Text.Json" Version="6.0.2" />
+      <PackageReference Include="System.Text.Json" Version="6.0.3" />
     </ItemGroup>
 
     <ItemGroup>

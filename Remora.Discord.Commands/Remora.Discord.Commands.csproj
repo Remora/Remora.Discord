@@ -5,14 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>20.1.0</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package provides simple glue code for using Remora.Commands with Remora.Discord.
-        </Description>
+        <Version>20.2.0</Version>
+        <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
-            Merge pull request #155 from VelvetThePanda/feature/channel-permission-condition
+            Implement application command localization.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -23,8 +19,9 @@
     <ItemGroup>
         <PackageReference Include="FuzzySharp" Version="2.0.2" />
         <PackageReference Include="Humanizer.Core" Version="2.14.1" />
-        <PackageReference Include="Remora.Commands" Version="9.0.2" />
-        <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.2" />
+        <PackageReference Include="NGettext" Version="0.6.7" />
+        <PackageReference Include="Remora.Commands" Version="9.0.4" />
+        <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.3" />
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 

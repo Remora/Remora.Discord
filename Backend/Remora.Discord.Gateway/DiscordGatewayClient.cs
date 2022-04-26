@@ -210,6 +210,9 @@ public class DiscordGatewayClient : IDisposable
             _disconnectRequestedSource.Dispose();
             _disconnectRequestedSource = new CancellationTokenSource();
 
+            _log.LogInformation("Starting dispatch service...");
+            _responderDispatch.Start();
+
             while (!stopRequested.IsCancellationRequested)
             {
                 var iterationResult = await RunConnectionIterationAsync(stopRequested);
@@ -235,12 +238,6 @@ public class DiscordGatewayClient : IDisposable
                         // Couldn't disconnect cleanly :(
                         return disconnectResult;
                     }
-                }
-
-                var stopDispatch = await _responderDispatch.StopAsync();
-                if (!stopDispatch.IsSuccess)
-                {
-                    return stopDispatch;
                 }
 
                 if (stopRequested.IsCancellationRequested)
@@ -270,6 +267,8 @@ public class DiscordGatewayClient : IDisposable
                 _disconnectRequestedSource.Dispose();
                 _disconnectRequestedSource = new CancellationTokenSource();
             }
+
+            await _responderDispatch.StopAsync();
 
             var userRequestedDisconnect = await _transportService.DisconnectAsync(false, stopRequested);
             if (!userRequestedDisconnect.IsSuccess)
@@ -372,25 +371,25 @@ public class DiscordGatewayClient : IDisposable
 
                 break;
             }
-            case GatewayError gae:
+            case GatewayError(var message, var isSessionResumable, var isCritical):
             {
                 // We'll try reconnecting on non-critical internal errors
-                if (!gae.IsCritical)
+                if (!isCritical)
                 {
                     _log.LogWarning
                     (
                         "Local transient gateway error: {Error}",
-                        gae.Message
+                        message
                     );
 
-                    withNewSession = !gae.IsSessionResumable;
+                    withNewSession = !isSessionResumable;
                     return true;
                 }
 
                 _log.LogError
                 (
                     "Local unrecoverable gateway error: {Error}",
-                    gae.Message
+                    message
                 );
 
                 shouldTerminate = true;
@@ -505,7 +504,7 @@ public class DiscordGatewayClient : IDisposable
                 {
                     _log.LogWarning
                     (
-                        "There's no session start limits available for this connection. Rate limits may be " +
+                        "There are no session start limits available for this connection. Rate limits may be " +
                         "unexpectedly hit"
                     );
                 }
@@ -519,13 +518,6 @@ public class DiscordGatewayClient : IDisposable
                         false,
                         true
                     );
-                }
-
-                _log.LogInformation("Starting dispatch service...");
-                var startDispatch = _responderDispatch.Start(_disconnectRequestedSource.Token);
-                if (!startDispatch.IsSuccess)
-                {
-                    return new GatewayError("Failed to start the dispatch service.", false, true);
                 }
 
                 _log.LogInformation("Connecting to the gateway...");
@@ -557,7 +549,12 @@ public class DiscordGatewayClient : IDisposable
                     );
                 }
 
-                var dispatch = await _responderDispatch.DispatchAsync(receiveHello.Entity, _disconnectRequestedSource.Token);
+                var dispatch = await _responderDispatch.DispatchAsync
+                (
+                    receiveHello.Entity,
+                    _disconnectRequestedSource.Token
+                );
+
                 if (!dispatch.IsSuccess)
                 {
                     return dispatch;
@@ -686,11 +683,11 @@ public class DiscordGatewayClient : IDisposable
             (
                 _tokenStore.Token,
                 _gatewayOptions.ConnectionProperties,
-                Compress: false,
-                LargeThreshold: _gatewayOptions.LargeThreshold,
-                Shard: shardInformation,
-                Presence: initialPresence,
-                Intents: _gatewayOptions.Intents
+                false,
+                _gatewayOptions.LargeThreshold,
+                shardInformation,
+                initialPresence,
+                _gatewayOptions.Intents
             )
         );
 
@@ -702,45 +699,53 @@ public class DiscordGatewayClient : IDisposable
                 return Result.FromError(receiveReady);
             }
 
-            if (receiveReady.Entity is IPayload<IHeartbeatAcknowledge>)
+            switch (receiveReady.Entity)
             {
-                continue;
-            }
+                case IPayload<IHeartbeatAcknowledge>:
+                {
+                    continue;
+                }
+                case IPayload<IInvalidSession> invalidSession:
+                {
+                    return new GatewayError
+                    (
+                        "The newly created session was invalidated by Discord.",
+                        invalidSession.Data.IsResumable,
+                        false
+                    );
+                }
+                case IPayload<IReady> ready:
+                {
+                    var dispatch = await _responderDispatch.DispatchAsync
+                    (
+                        ready,
+                        _disconnectRequestedSource.Token
+                    );
 
-            if (receiveReady.Entity is IPayload<IInvalidSession> invalidSession)
-            {
-                return new GatewayError
-                (
-                    "The newly created session was invalidated by Discord.",
-                    invalidSession.Data.IsResumable,
-                    false
-                );
-            }
+                    if (!dispatch.IsSuccess)
+                    {
+                        return dispatch;
+                    }
 
-            if (receiveReady.Entity is not IPayload<IReady> ready)
-            {
-                _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
-                return new GatewayError
-                (
-                    $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
-                    $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
-                    $"\tActual: {receiveReady.Entity.GetType().FullName}",
-                    false,
-                    true
-                );
-            }
+                    _sessionID = ready.Data.SessionID;
 
-            var dispatch = await _responderDispatch.DispatchAsync(receiveReady.Entity, _disconnectRequestedSource.Token);
-            if (!dispatch.IsSuccess)
-            {
-                return dispatch;
-            }
+                    return Result.FromSuccess();
+                }
+                default:
+                {
+                    _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
 
-            _sessionID = ready.Data.SessionID;
-            break;
+                    return new GatewayError
+                    (
+                        $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
+                        $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
+                        $"\tActual: {receiveReady.Entity.GetType().FullName}",
+                        false,
+                        true
+                    );
+                }
+            }
         }
-
-        return Result.FromSuccess();
     }
 
     /// <summary>
@@ -802,7 +807,12 @@ public class DiscordGatewayClient : IDisposable
                 }
             }
 
-            var dispatch = await _responderDispatch.DispatchAsync(receiveEvent.Entity, _disconnectRequestedSource.Token);
+            var dispatch = await _responderDispatch.DispatchAsync
+            (
+                receiveEvent.Entity,
+                _disconnectRequestedSource.Token
+            );
+
             if (!dispatch.IsSuccess)
             {
                 return dispatch;
@@ -971,7 +981,12 @@ public class DiscordGatewayClient : IDisposable
                 }
 
                 // Enqueue the payload for dispatch
-                var dispatch = await _responderDispatch.DispatchAsync(receivedPayload.Entity, _disconnectRequestedSource.Token);
+                var dispatch = await _responderDispatch.DispatchAsync
+                (
+                    receivedPayload.Entity,
+                    _disconnectRequestedSource.Token
+                );
+
                 if (!dispatch.IsSuccess)
                 {
                     return dispatch;
@@ -996,7 +1011,15 @@ public class DiscordGatewayClient : IDisposable
                     }
                     case IPayload<IHeartbeat>:
                     {
-                        SubmitCommand(new HeartbeatAcknowledge());
+                        // 32-bit reads are atomic, so this is fine
+                        var lastSequenceNumber = _lastSequenceNumber;
+
+                        var heartbeat = new Heartbeat
+                        (
+                            lastSequenceNumber == 0 ? null : lastSequenceNumber
+                        );
+
+                        SubmitCommand(heartbeat);
                         continue;
                     }
                     default:

@@ -27,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
@@ -43,14 +44,15 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
 {
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestEmojiAPI" />
+    /// <inheritdoc cref="DiscordRestEmojiAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
     public CachingDiscordRestEmojiAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
         _cacheService = cacheService;
     }
@@ -64,9 +66,11 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
     )
     {
         var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
-        if (_cacheService.TryGetValue<IEmoji>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IEmoji>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IEmoji>.FromSuccess(cachedInstance);
+            return Result<IEmoji>.FromSuccess(cacheResult.Entity);
         }
 
         var getResult = await base.GetGuildEmojiAsync(guildID, emojiID, ct);
@@ -76,7 +80,7 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
         }
 
         var emoji = getResult.Entity;
-        _cacheService.Cache(key, emoji);
+        await _cacheService.CacheAsync(key, emoji, ct);
 
         return getResult;
     }
@@ -106,7 +110,7 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
         }
 
         var key = KeyHelpers.CreateEmojiCacheKey(guildID, emoji.ID.Value);
-        _cacheService.Cache(key, emoji);
+        await _cacheService.CacheAsync(key, emoji, ct);
 
         return createResult;
     }
@@ -130,7 +134,7 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
 
         var emoji = modifyResult.Entity;
         var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
-        _cacheService.Cache(key, emoji);
+        await _cacheService.CacheAsync(key, emoji, ct);
 
         return modifyResult;
     }
@@ -151,7 +155,7 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
         }
 
         var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
-        _cacheService.Evict<IEmoji>(key);
+        await _cacheService.EvictAsync<IEmoji>(key, ct);
 
         return deleteResult;
     }
@@ -164,9 +168,11 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
     )
     {
         var key = KeyHelpers.CreateGuildEmojisCacheKey(guildID);
-        if (_cacheService.TryGetValue<IReadOnlyList<IEmoji>>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IEmoji>>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IEmoji>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IEmoji>>.FromSuccess(cacheResult.Entity);
         }
 
         var result = await base.ListGuildEmojisAsync(guildID, ct);
@@ -183,7 +189,7 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
             }
 
             var emojiKey = KeyHelpers.CreateEmojiCacheKey(guildID, emoji.ID.Value);
-            _cacheService.Cache(emojiKey, emoji);
+            await _cacheService.CacheAsync(emojiKey, emoji, ct);
         }
 
         return result;

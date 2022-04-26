@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Utility;
 using Remora.Rest;
@@ -48,9 +49,15 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     /// Initializes a new instance of the <see cref="DiscordRestGuildAPI"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
-    /// <param name="jsonOptions">The json options.</param>
-    public DiscordRestGuildAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestGuildAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -117,7 +124,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("system_channel_flags", systemChannelFlags, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -140,7 +147,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                     b.AddQueryParameter("with_counts", withCounts.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -156,7 +163,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IGuildPreview>
         (
             $"guilds/{guildID}/preview",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -258,7 +265,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("premium_progress_bar_enabled", isPremiumProgressBarEnabled, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -269,8 +276,8 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.DeleteAsync
         (
             $"guilds/{guildID}",
-            b => b.WithRateLimitContext(),
-            ct: ct
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct
         );
     }
 
@@ -284,7 +291,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IReadOnlyList<IChannel>>
         (
             $"guilds/{guildID}/channels",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -303,6 +310,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -326,9 +334,10 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("permission_overwrites", permissionOverwrites, this.JsonOptions);
                         json.Write("parent_id", parentID, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
+                        json.Write("default_auto_archive_duration", defaultAutoArchiveDuration, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -395,7 +404,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         }
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -411,7 +420,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IGuildMember>
         (
             $"guilds/{guildID}/members/{userID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -445,7 +454,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                     b.AddQueryParameter("after", after.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -477,7 +486,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                     b.AddQueryParameter("limit", limit.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -510,7 +519,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("deaf", isDeafened, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             true,
             ct
         );
@@ -548,7 +557,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("communication_disabled_until", communicationDisabledUntil, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -568,7 +577,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             b => b
                 .AddAuditLogReason(reason)
                 .WithJson(json => json.Write("nick", nickname, this.JsonOptions))
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -586,7 +595,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.PutAsync
         (
             $"guilds/{guildID}/members/{userID}/roles/{roleID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -604,7 +613,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.DeleteAsync
         (
             $"guilds/{guildID}/members/{userID}/roles/{roleID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -621,7 +630,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.DeleteAsync
         (
             $"guilds/{guildID}/members/{userID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -630,13 +639,34 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     public virtual Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
     (
         Snowflake guildID,
+        Optional<int> limit = default,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<IBan>>
         (
             $"guilds/{guildID}/bans",
-            b => b.WithRateLimitContext(),
+            b =>
+            {
+                if (limit.HasValue)
+                {
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
+
+                if (before.HasValue)
+                {
+                    b.AddQueryParameter("before", before.Value.ToString());
+                }
+
+                if (after.HasValue)
+                {
+                    b.AddQueryParameter("after", after.Value.ToString());
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
@@ -652,7 +682,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IBan>
         (
             $"guilds/{guildID}/bans/{userID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -679,7 +709,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("delete_message_days", deleteMessageDays, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -696,7 +726,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.DeleteAsync
         (
             $"guilds/{guildID}/bans/{userID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -711,7 +741,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IReadOnlyList<IRole>>
         (
             $"guilds/{guildID}/roles",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -763,7 +793,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -797,7 +827,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         }
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -844,7 +874,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -861,7 +891,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.DeleteAsync
         (
             $"guilds/{guildId}/roles/{roleID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -903,7 +933,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                     );
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -943,7 +973,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("include_roles", includeRoles, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -958,7 +988,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
         (
             $"guilds/{guildID}/regions",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -973,7 +1003,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
         (
             $"guilds/{guildID}/invites",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -991,7 +1021,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             $"guilds/{guildID}/integrations",
             b =>
             {
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
 
                 if (!includeApplications.HasValue)
                 {
@@ -1018,7 +1048,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IGuildWidgetSettings>
         (
             $"guilds/{guildID}/widget",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1046,7 +1076,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("channel_id", channelID, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1057,7 +1087,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IGuildWidget>
         (
             $"guilds/{guildID}/widget.json",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1072,7 +1102,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IPartialInvite>
         (
             $"guilds/{guildID}/vanity-url",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1095,7 +1125,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                     b.AddQueryParameter("style", style.Value.ToString().ToLowerInvariant());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct
         );
@@ -1111,7 +1141,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IWelcomeScreen>
         (
             $"guilds/{guildID}/welcome-screen",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1141,7 +1171,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("description", description, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1168,7 +1198,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("request_to_speak_timestamp", requestToSpeakTimestamp, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -1194,7 +1224,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("suppress", suppress, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1209,7 +1239,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         return this.RestHttpClient.GetAsync<IGuildThreadQueryResponse>
         (
             $"guilds/{guildID}/threads/active",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

@@ -22,14 +22,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using NGettext;
 using Remora.Commands.Extensions;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Autocomplete;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
@@ -49,6 +51,61 @@ namespace Remora.Discord.Commands.Extensions;
 [PublicAPI]
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// Adds NGetText localization information from the given assembly to the service provider.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="localizationDirectory">The resource directory where localizations are stored.</param>
+    /// <param name="localizationAssembly">The assembly to load localizations from.</param>
+    /// <returns>The service collection, with localizations added.</returns>
+    public static IServiceCollection AddNGetTextLocalizations
+    (
+        this IServiceCollection serviceCollection,
+        string localizationDirectory = ".remora.locales.",
+        Assembly? localizationAssembly = null
+    )
+    {
+        localizationAssembly ??= Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+
+        // try to find a localization catalog
+        var names = localizationAssembly.GetManifestResourceNames()
+            .Where(n => n.Contains(localizationDirectory))
+            .Where(n => n.EndsWith(".mo"));
+
+        var localizationCatalogues = new Dictionary<CultureInfo, Catalog>();
+        foreach (var name in names)
+        {
+            // try to figure out the localization name
+            var index = name.IndexOf(localizationDirectory, StringComparison.Ordinal);
+            if (index == -1)
+            {
+                continue;
+            }
+
+            var everythingAfter = name[(index + localizationDirectory.Length)..];
+
+            var firstDotIndex = everythingAfter.IndexOf('.');
+            if (firstDotIndex == -1)
+            {
+                continue;
+            }
+
+            var cultureInfo = new CultureInfo(everythingAfter[..firstDotIndex].Replace('_', '-'));
+            using var resourceStream = localizationAssembly.GetManifestResourceStream(name);
+
+            var catalog = new Catalog(resourceStream, cultureInfo);
+            localizationCatalogues.Add(catalog.CultureInfo, catalog);
+        }
+
+        serviceCollection.AddSingleton(new NGetTextLocalizationProvider(localizationCatalogues));
+        serviceCollection.AddSingleton<ILocalizationProvider>
+        (
+            s => s.GetRequiredService<NGetTextLocalizationProvider>()
+        );
+
+        return serviceCollection;
+    }
+
     /// <summary>
     /// Adds all services required for Discord-integrated commands.
     /// </summary>
@@ -129,6 +186,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddCondition<RequireContextCondition>();
         serviceCollection.AddCondition<RequireOwnerCondition>();
         serviceCollection.AddCondition<RequireDiscordPermissionCondition>();
+        serviceCollection.AddCondition<RequireBotDiscordPermissionsCondition>();
 
         serviceCollection
             .AddParser<ChannelParser>()

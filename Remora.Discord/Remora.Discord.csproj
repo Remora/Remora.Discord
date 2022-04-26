@@ -5,28 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.13</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package is a metapackage for Remora.Discord, providing references to everything you need to get
-            started. Note that this package implies a dependency on the latest version of Remora.Discord's main
-            packages, with no regard for API compatibility across builds.
-
-            Production packages/projects should probably prefer explicit dependencies instead.
-        </Description>
+        <Version>2022.21</Version>
+        <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Chuck out obsolete members.
-            Update field nullability.
-            Update error code.
-            Various mixed fixes.
-            Add another error code.
-            Implement support for checking IInvalidSession on new sessions.
-            feat: Dodge cache by providing TimeSpan.Zero
-            Allow large_threshold to be specified
-            Update layout of permission enumerations.
-            Update permission name.
-            Update enumeration member name.
+            Fix property optionality.
+            Implement application command localization.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
@@ -35,6 +18,7 @@
         <EmbedUntrackedSources>false</EmbedUntrackedSources>
         <EmbedAllSources>false</EmbedAllSources>
         <IncludeBuildOutput>false</IncludeBuildOutput>
+        <NoPackageAnalysis>true</NoPackageAnalysis>
     </PropertyGroup>
 
     <ItemGroup>

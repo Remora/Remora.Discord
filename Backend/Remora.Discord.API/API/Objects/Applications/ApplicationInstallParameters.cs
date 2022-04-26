@@ -1,5 +1,5 @@
 //
-//  AlreadyStartedError.cs
+//  ApplicationInstallParameters.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,11 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Results;
+using System.Collections.Generic;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.Gateway.Results;
+namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Indicates that an operation could not be started because one was already in progress.
-/// </summary>
-public record AlreadyStartedError() : ResultError("The task has already been started.");
+/// <inheritdoc cref="IApplicationInstallParameters" />
+[PublicAPI]
+public record ApplicationInstallParameters
+(
+    IReadOnlyList<string> Scopes,
+    IDiscordPermissionSet Permissions
+) : IApplicationInstallParameters;

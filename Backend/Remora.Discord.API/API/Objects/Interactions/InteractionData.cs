@@ -37,6 +37,7 @@ public record InteractionData
     Optional<string> Name,
     Optional<IApplicationCommandInteractionDataResolved> Resolved,
     Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
+    Optional<Snowflake> GuildID = default,
     Optional<string> CustomID = default,
     Optional<ComponentType> ComponentType = default,
     Optional<IReadOnlyList<string>> Values = default,

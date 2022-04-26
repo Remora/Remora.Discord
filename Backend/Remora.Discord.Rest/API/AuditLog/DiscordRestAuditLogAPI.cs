@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Rest.Core;
@@ -42,8 +43,9 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public DiscordRestAuditLogAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestAuditLogAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -63,7 +65,7 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
             return new ArgumentOutOfRangeError
             (
                 nameof(limit),
-                $"The limit must be between 1 and 100."
+                "The limit must be between 1 and 100."
             );
         }
 
@@ -92,7 +94,7 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
                     b.AddQueryParameter("limit", limit.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );

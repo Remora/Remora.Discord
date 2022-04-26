@@ -96,6 +96,7 @@ public abstract class InteractionResponderTestBase : IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
+        GC.SuppressFinalize(this);
         _scope.Dispose();
     }
 }

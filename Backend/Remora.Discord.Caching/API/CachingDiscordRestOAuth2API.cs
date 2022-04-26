@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
@@ -38,14 +39,15 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
 {
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, JsonSerializerOptions)" />
+    /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
     public CachingDiscordRestOAuth2API
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
         _cacheService = cacheService;
     }
@@ -57,9 +59,11 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
     )
     {
         var key = KeyHelpers.CreateCurrentApplicationCacheKey();
-        if (_cacheService.TryGetValue<IApplication>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IApplication>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IApplication>.FromSuccess(cachedInstance);
+            return Result<IApplication>.FromSuccess(cacheResult.Entity);
         }
 
         var getCurrent = await base.GetCurrentBotApplicationInformationAsync(ct);
@@ -69,7 +73,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
         }
 
         var application = getCurrent.Entity;
-        _cacheService.Cache(key, application);
+        await _cacheService.CacheAsync(key, application, ct);
 
         return getCurrent;
     }
@@ -81,9 +85,11 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
     )
     {
         var key = KeyHelpers.CreateCurrentAuthorizationInformationCacheKey();
-        if (_cacheService.TryGetValue<IAuthorizationInformation>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IAuthorizationInformation>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IAuthorizationInformation>.FromSuccess(cachedInstance);
+            return Result<IAuthorizationInformation>.FromSuccess(cacheResult.Entity);
         }
 
         var result = await base.GetCurrentAuthorizationInformationAsync(ct);
@@ -92,7 +98,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
             return result;
         }
 
-        _cacheService.Cache(key, result.Entity);
+        await _cacheService.CacheAsync(key, result.Entity, ct);
 
         return result;
     }

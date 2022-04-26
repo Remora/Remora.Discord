@@ -174,13 +174,10 @@ public abstract class CDNTestBase
             throw new SkipException("There are no unsupported formats.");
         }
 
-        foreach (var unsupportedFormat in unsupportedFormats)
+        foreach (var getActual in unsupportedFormats.SelectMany(unsupportedFormat => GetImageUris(unsupportedFormat)))
         {
-            foreach (var getActual in GetImageUris(unsupportedFormat))
-            {
-                Assert.False(getActual.IsSuccess);
-                Assert.IsType<UnsupportedImageFormatError>(getActual.Error);
-            }
+            Assert.False(getActual.IsSuccess);
+            Assert.IsType<UnsupportedImageFormatError>(getActual.Error);
         }
     }
 }

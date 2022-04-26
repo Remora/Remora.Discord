@@ -40,6 +40,9 @@ public enum DiscordStagePermission
     /// <inheritdoc cref="DiscordPermission.ViewChannel"/>
     ViewChannel = DiscordPermission.ViewChannel,
 
+    /// <inheritdoc cref="DiscordPermission.MentionEveryone"/>
+    MentionEveryone = DiscordPermission.MentionEveryone,
+
     /// <inheritdoc cref="DiscordPermission.Connect"/>
     Connect = DiscordPermission.Connect,
 

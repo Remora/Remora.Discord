@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using OneOf;
 
 namespace Remora.Discord.Commands.Attributes;
@@ -28,6 +29,7 @@ namespace Remora.Discord.Commands.Attributes;
 /// <summary>
 /// Defines an allowed range for a marked parameter.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Parameter)]
 public class MaxValueAttribute : Attribute
 {

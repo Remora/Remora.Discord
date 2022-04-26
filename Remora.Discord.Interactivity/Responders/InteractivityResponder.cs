@@ -94,11 +94,11 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         _contextInjectionService.Context = context;
 
         return context.Data.Components.HasValue
-            ? await HandleModalInteractionAsync(ct, context)
-            : await HandleComponentInteractionAsync(ct, context);
+            ? await HandleModalInteractionAsync(context, ct)
+            : await HandleComponentInteractionAsync(context, ct);
     }
 
-    private async Task<Result> HandleModalInteractionAsync(CancellationToken ct, InteractionContext context)
+    private async Task<Result> HandleModalInteractionAsync(InteractionContext context, CancellationToken ct)
     {
         if (!context.Data.Components.IsDefined(out var components))
         {
@@ -149,7 +149,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             : new AggregateError(interactionResults.Where(r => !r.IsSuccess).Cast<IResult>().ToArray());
     }
 
-    private async Task<Result> HandleComponentInteractionAsync(CancellationToken ct, InteractionContext context)
+    private async Task<Result> HandleComponentInteractionAsync(InteractionContext context, CancellationToken ct)
     {
         if (!context.Data.ComponentType.IsDefined(out var componentType))
         {

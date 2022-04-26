@@ -26,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
@@ -39,14 +40,15 @@ public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
 {
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestVoiceAPI(IRestHttpClient, JsonSerializerOptions)" />
+    /// <inheritdoc cref="DiscordRestVoiceAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
     public CachingDiscordRestVoiceAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
         _cacheService = cacheService;
     }
@@ -58,9 +60,11 @@ public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
     )
     {
         var key = KeyHelpers.CreateVoiceRegionsCacheKey();
-        if (_cacheService.TryGetValue<IReadOnlyList<IVoiceRegion>>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IVoiceRegion>>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cacheResult.Entity);
         }
 
         var listRegions = await base.ListVoiceRegionsAsync(ct);
@@ -70,12 +74,12 @@ public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
         }
 
         var regions = listRegions.Entity;
-        _cacheService.Cache(key, regions);
+        await _cacheService.CacheAsync(key, regions, ct);
 
         foreach (var voiceRegion in regions)
         {
             var regionKey = KeyHelpers.CreateVoiceRegionCacheKey(voiceRegion.ID);
-            _cacheService.Cache(regionKey, voiceRegion);
+            await _cacheService.CacheAsync(regionKey, voiceRegion, ct);
         }
 
         return listRegions;

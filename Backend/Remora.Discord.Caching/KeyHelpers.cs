@@ -20,8 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -40,9 +38,9 @@ public static class KeyHelpers
     /// <param name="channelID">The ID of the channel the overwrite is for.</param>
     /// <param name="overwriteID">The ID of the overwrite.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateChannelPermissionCacheKey(in Snowflake channelID, in Snowflake overwriteID)
+    public static string CreateChannelPermissionCacheKey(in Snowflake channelID, in Snowflake overwriteID)
     {
-        return (typeof(IPermissionOverwrite), overwriteID, CreateChannelCacheKey(channelID));
+        return $"{CreateChannelCacheKey(channelID)}:Overwrite:{overwriteID}";
     }
 
     /// <summary>
@@ -50,9 +48,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="code">The invite code.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateInviteCacheKey(string code)
+    public static string CreateInviteCacheKey(string code)
     {
-        return (typeof(IInvite), code);
+        return $"Invite:{code}";
     }
 
     /// <summary>
@@ -60,9 +58,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildInvitesCacheKey(in Snowflake guildID)
+    public static string CreateGuildInvitesCacheKey(in Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<IInvite>), guildID);
+        return $"{CreateGuildCacheKey(guildID)}:Invites";
     }
 
     /// <summary>
@@ -70,9 +68,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateChannelCacheKey(in Snowflake channelID)
+    public static string CreateChannelCacheKey(in Snowflake channelID)
     {
-        return (typeof(IChannel), channelID);
+        return $"Channel:{channelID}";
     }
 
     /// <summary>
@@ -80,9 +78,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>
     /// <returns>The cache key.</returns>
-    public static object CreatePinnedMessagesCacheKey(in Snowflake channelID)
+    public static string CreatePinnedMessagesCacheKey(in Snowflake channelID)
     {
-        return ("Pinned", typeof(IReadOnlyList<IMessage>), CreateChannelCacheKey(channelID));
+        return $"{CreateChannelCacheKey(channelID)}:Messages:Pinned";
     }
 
     /// <summary>
@@ -91,10 +89,9 @@ public static class KeyHelpers
     /// <param name="channelID">The ID of the channel the message is in.</param>
     /// <param name="messageID">The ID of the message.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateMessageCacheKey(in Snowflake channelID, in Snowflake messageID)
+    public static string CreateMessageCacheKey(in Snowflake channelID, in Snowflake messageID)
     {
-        var key = (typeof(IMessage), messageID, CreateChannelCacheKey(channelID));
-        return key;
+        return $"{CreateChannelCacheKey(channelID)}:Message:{messageID}";
     }
 
     /// <summary>
@@ -103,9 +100,9 @@ public static class KeyHelpers
     /// <param name="guildID">The ID of the guild the emoji is in.</param>
     /// <param name="emojiID">The ID of the emoji.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateEmojiCacheKey(in Snowflake guildID, in Snowflake emojiID)
+    public static string CreateEmojiCacheKey(in Snowflake guildID, in Snowflake emojiID)
     {
-        return (typeof(IEmoji), emojiID, CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Emoji:{emojiID}";
     }
 
     /// <summary>
@@ -113,9 +110,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildCacheKey(in Snowflake guildID)
+    public static string CreateGuildCacheKey(in Snowflake guildID)
     {
-        return (typeof(IGuild), guildID);
+        return $"Guild:{guildID}";
     }
 
     /// <summary>
@@ -123,9 +120,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildChannelsCacheKey(in Snowflake guildID)
+    public static string CreateGuildChannelsCacheKey(in Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<IChannel>), guildID);
+        return $"{CreateGuildCacheKey(guildID)}:Channels";
     }
 
     /// <summary>
@@ -133,9 +130,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildPreviewID">The ID of the guild preview.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildPreviewCacheKey(in Snowflake guildPreviewID)
+    public static string CreateGuildPreviewCacheKey(in Snowflake guildPreviewID)
     {
-        return (typeof(IGuildPreview), guildPreviewID);
+        return $"GuildPreview:{guildPreviewID}";
     }
 
     /// <summary>
@@ -144,9 +141,9 @@ public static class KeyHelpers
     /// <param name="guildID">The ID of the guild the member is in.</param>
     /// <param name="userID">The ID of the member.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildMemberKey(in Snowflake guildID, in Snowflake userID)
+    public static string CreateGuildMemberKey(in Snowflake guildID, in Snowflake userID)
     {
-        return (typeof(IGuildMember), userID, CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Member:{userID}";
     }
 
     /// <summary>
@@ -157,14 +154,17 @@ public static class KeyHelpers
     /// <param name="limit">The limit parameter.</param>
     /// <param name="after">The after parameter.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildMembersKey
+    public static string CreateGuildMembersKey
     (
         in Snowflake guildID,
         in Optional<int> limit,
         in Optional<Snowflake> after
     )
     {
-        return (typeof(IReadOnlyList<IGuildMember>), guildID, limit, after);
+        var limitKey = limit.HasValue ? $":Limit:{limit.Value}" : string.Empty;
+        var afterKey = after.HasValue ? $":After:{after.Value}" : string.Empty;
+
+        return $"{CreateGuildCacheKey(guildID)}:Members{limitKey}{afterKey}";
     }
 
     /// <summary>
@@ -172,9 +172,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildBansCacheKey(in Snowflake guildID)
+    public static string CreateGuildBansCacheKey(in Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<IBan>), guildID);
+        return $"{CreateGuildCacheKey(guildID)}:Bans";
     }
 
     /// <summary>
@@ -183,9 +183,9 @@ public static class KeyHelpers
     /// <param name="guildID">The ID of the guild the ban is in.</param>
     /// <param name="userID">The ID of the banned user.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildBanCacheKey(in Snowflake guildID, in Snowflake userID)
+    public static string CreateGuildBanCacheKey(in Snowflake guildID, in Snowflake userID)
     {
-        return (typeof(IBan), userID, CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Ban:{userID}";
     }
 
     /// <summary>
@@ -193,9 +193,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildRolesCacheKey(in Snowflake guildID)
+    public static string CreateGuildRolesCacheKey(in Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<IRole>), guildID);
+        return $"{CreateGuildCacheKey(guildID)}:Roles";
     }
 
     /// <summary>
@@ -204,9 +204,9 @@ public static class KeyHelpers
     /// <param name="guildID">The ID of the guild the role is in.</param>
     /// <param name="roleID">The ID of the role.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildRoleCacheKey(in Snowflake guildID, in Snowflake roleID)
+    public static string CreateGuildRoleCacheKey(in Snowflake guildID, in Snowflake roleID)
     {
-        return (typeof(IRole), roleID, CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Role:{roleID}";
     }
 
     /// <summary>
@@ -214,9 +214,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildVoiceRegionsCacheKey(in Snowflake guildID)
+    public static string CreateGuildVoiceRegionsCacheKey(in Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<IVoiceRegion>), guildID);
+        return $"{CreateGuildCacheKey(guildID)}:VoiceRegions";
     }
 
     /// <summary>
@@ -225,9 +225,9 @@ public static class KeyHelpers
     /// <param name="guildID">The ID of the guildID the voice region is for.</param>
     /// <param name="voiceRegionID">The voice region ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildVoiceRegionCacheKey(in Snowflake guildID, string voiceRegionID)
+    public static string CreateGuildVoiceRegionCacheKey(in Snowflake guildID, string voiceRegionID)
     {
-        return (typeof(IVoiceRegion), voiceRegionID, CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:VoiceRegion:{voiceRegionID}";
     }
 
     /// <summary>
@@ -235,9 +235,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildIntegrationsCacheKey(in Snowflake guildID)
+    public static string CreateGuildIntegrationsCacheKey(in Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<IIntegration>), guildID);
+        return $"{CreateGuildCacheKey(guildID)}:Integrations";
     }
 
     /// <summary>
@@ -246,9 +246,9 @@ public static class KeyHelpers
     /// <param name="guildID">The ID of the guild the integration is in.</param>
     /// <param name="integrationID">The ID of the integration.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildIntegrationCacheKey(in Snowflake guildID, in Snowflake integrationID)
+    public static string CreateGuildIntegrationCacheKey(in Snowflake guildID, in Snowflake integrationID)
     {
-        return (typeof(IIntegration), integrationID, CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Integration:{integrationID}";
     }
 
     /// <summary>
@@ -256,9 +256,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildWidgetSettingsCacheKey(in Snowflake guildID)
+    public static string CreateGuildWidgetSettingsCacheKey(in Snowflake guildID)
     {
-        return (typeof(IGuildWidgetSettings), guildID);
+        return $"{CreateGuildCacheKey(guildID)}:WidgetSettings";
     }
 
     /// <summary>
@@ -266,36 +266,36 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="userID">The ID of the user.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateUserCacheKey(in Snowflake userID)
+    public static string CreateUserCacheKey(in Snowflake userID)
     {
-        return (typeof(IUser), userID);
+        return $"User:{userID}";
     }
 
     /// <summary>
     /// Creates a cache key for the current <see cref="IUser"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static object CreateCurrentUserCacheKey()
+    public static string CreateCurrentUserCacheKey()
     {
-        return (typeof(IUser), "@me");
+        return "User:@me";
     }
 
     /// <summary>
     /// Creates a cache key for the <see cref="IConnection"/> objects of the current <see cref="IUser"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static object CreateCurrentUserConnectionsCacheKey()
+    public static string CreateCurrentUserConnectionsCacheKey()
     {
-        return (typeof(IReadOnlyList<IConnection>), CreateCurrentUserCacheKey());
+        return $"{CreateCurrentUserCacheKey()}:Connections";
     }
 
     /// <summary>
     /// Creates a cache key for the <see cref="IChannel"/> DM objects of the current <see cref="IUser"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static object CreateCurrentUserDMsCacheKey()
+    public static string CreateCurrentUserDMsCacheKey()
     {
-        return (typeof(IReadOnlyList<IChannel>), CreateCurrentUserCacheKey());
+        return $"{CreateCurrentUserCacheKey()}:Channels";
     }
 
     /// <summary>
@@ -303,18 +303,18 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="connectionID">The ID of the connection.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateConnectionCacheKey(string connectionID)
+    public static string CreateConnectionCacheKey(string connectionID)
     {
-        return (typeof(IConnection), connectionID);
+        return $"Connection:{connectionID}";
     }
 
     /// <summary>
     /// Creates a cache key for the current <see cref="IApplication"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static object CreateCurrentApplicationCacheKey()
+    public static string CreateCurrentApplicationCacheKey()
     {
-        return (typeof(IApplication), "@me");
+        return "Application:@me";
     }
 
     /// <summary>
@@ -322,9 +322,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="templateCode">The template code.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateTemplateCacheKey(string templateCode)
+    public static string CreateTemplateCacheKey(string templateCode)
     {
-        return (typeof(ITemplate), templateCode);
+        return $"Template:{templateCode}";
     }
 
     /// <summary>
@@ -332,18 +332,18 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild..</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildTemplatesCacheKey(in Snowflake guildID)
+    public static string CreateGuildTemplatesCacheKey(in Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<ITemplate>), CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Templates";
     }
 
     /// <summary>
     /// Creates a cache key for a set of available <see cref="IVoiceRegion"/> instances.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static object CreateVoiceRegionsCacheKey()
+    public static string CreateVoiceRegionsCacheKey()
     {
-        return typeof(IReadOnlyList<IVoiceRegion>);
+        return "VoiceRegions";
     }
 
     /// <summary>
@@ -351,9 +351,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="voiceRegionID">The voice region ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateVoiceRegionCacheKey(string voiceRegionID)
+    public static string CreateVoiceRegionCacheKey(string voiceRegionID)
     {
-        return (typeof(IVoiceRegion), voiceRegionID);
+        return $"VoiceRegion:{voiceRegionID}";
     }
 
     /// <summary>
@@ -361,9 +361,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="webhookID">The webhook ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateWebhookCacheKey(in Snowflake webhookID)
+    public static string CreateWebhookCacheKey(in Snowflake webhookID)
     {
-        return (typeof(IWebhook), webhookID);
+        return $"Webhook:{webhookID}";
     }
 
     /// <summary>
@@ -371,9 +371,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="channelID">The channel ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateChannelWebhooksCacheKey(in Snowflake channelID)
+    public static string CreateChannelWebhooksCacheKey(in Snowflake channelID)
     {
-        return (typeof(IReadOnlyList<IWebhook>), CreateChannelCacheKey(channelID));
+        return $"{CreateChannelCacheKey(channelID)}:Webhooks";
     }
 
     /// <summary>
@@ -381,9 +381,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The guild ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildWebhooksCacheKey(in Snowflake guildID)
+    public static string CreateGuildWebhooksCacheKey(in Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<IWebhook>), CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Webhooks";
     }
 
     /// <summary>
@@ -392,9 +392,9 @@ public static class KeyHelpers
     /// <param name="guildID">The guild ID.</param>
     /// <param name="userID">The user ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreatePresenceCacheKey(in Snowflake guildID, in Snowflake userID)
+    public static string CreatePresenceCacheKey(in Snowflake guildID, in Snowflake userID)
     {
-        return (typeof(IPresence), CreateGuildCacheKey(guildID), CreateUserCacheKey(userID));
+        return $"{CreateGuildMemberKey(guildID, userID)}:Presence";
     }
 
     /// <summary>
@@ -402,9 +402,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The guild ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildWelcomeScreenCacheKey(in Snowflake guildID)
+    public static string CreateGuildWelcomeScreenCacheKey(in Snowflake guildID)
     {
-        return (typeof(IWelcomeScreen), CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:WelcomeScreen";
     }
 
     /// <summary>
@@ -413,18 +413,18 @@ public static class KeyHelpers
     /// <param name="threadID">The ID of the thread.</param>
     /// <param name="userID">The ID of the user.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateThreadMemberCacheKey(in Snowflake threadID, in Snowflake userID)
+    public static string CreateThreadMemberCacheKey(in Snowflake threadID, in Snowflake userID)
     {
-        return (typeof(IThreadMember), CreateChannelCacheKey(threadID), CreateUserCacheKey(userID));
+        return $"Thread:{threadID}:Member:{userID}";
     }
 
     /// <summary>
     /// Creates a cache key for a <see cref="IAuthorizationInformation"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static object CreateCurrentAuthorizationInformationCacheKey()
+    public static string CreateCurrentAuthorizationInformationCacheKey()
     {
-        return typeof(IAuthorizationInformation);
+        return "CurrentAuthorizationInformation";
     }
 
     /// <summary>
@@ -432,9 +432,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="token">The interaction token.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateOriginalInteractionMessageCacheKey(string token)
+    public static string CreateOriginalInteractionMessageCacheKey(string token)
     {
-        return (typeof(IMessage), token, "@original");
+        return $"Interaction:{token}:Original";
     }
 
     /// <summary>
@@ -443,7 +443,7 @@ public static class KeyHelpers
     /// <param name="token">The interaction token.</param>
     /// <param name="messageID">The message ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateFollowupMessageCacheKey(string token, in Snowflake messageID)
+    public static string CreateFollowupMessageCacheKey(string token, in Snowflake messageID)
     {
         return CreateWebhookMessageCacheKey(token, messageID);
     }
@@ -454,9 +454,9 @@ public static class KeyHelpers
     /// <param name="token">The webhook token.</param>
     /// <param name="messageID">The message ID.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateWebhookMessageCacheKey(string token, in Snowflake messageID)
+    public static string CreateWebhookMessageCacheKey(string token, in Snowflake messageID)
     {
-        return (typeof(IMessage), token, messageID);
+        return $"Webhook:{token}:Message:{messageID}";
     }
 
     /// <summary>
@@ -464,9 +464,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="channelID">The ID of the queried channel.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateChannelInvitesCacheKey(in Snowflake channelID)
+    public static string CreateChannelInvitesCacheKey(in Snowflake channelID)
     {
-        return (typeof(IReadOnlyList<IInvite>), CreateChannelCacheKey(channelID));
+        return $"{CreateChannelCacheKey(channelID)}:Invites";
     }
 
     /// <summary>
@@ -474,9 +474,9 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="channelID">The ID of the queried channel.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateThreadMembersCacheKey(Snowflake channelID)
+    public static string CreateThreadMembersCacheKey(Snowflake channelID)
     {
-        return (typeof(IReadOnlyList<IThreadMember>), CreateChannelCacheKey(channelID));
+        return $"Thread:{channelID}:Members";
     }
 
     /// <summary>
@@ -484,8 +484,18 @@ public static class KeyHelpers
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildEmojisCacheKey(Snowflake guildID)
+    public static string CreateGuildEmojisCacheKey(Snowflake guildID)
     {
-        return (typeof(IReadOnlyList<IEmoji>), CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Emojis";
+    }
+
+    /// <summary>
+    /// Creates a cache key for an evicted entity, identified by the given key.
+    /// </summary>
+    /// <param name="key">The original key.</param>
+    /// <returns>The eviction key.</returns>
+    public static string CreateEvictionCacheKey(string key)
+    {
+        return $"Evicted:{key}";
     }
 }

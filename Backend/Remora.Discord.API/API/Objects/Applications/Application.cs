@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
@@ -43,12 +44,14 @@ public record Application
     Optional<string> TermsOfServiceURL,
     Optional<string> PrivacyPolicyURL,
     IPartialUser? Owner,
-    string Summary,
     string VerifyKey,
     ITeam? Team,
     Optional<Snowflake> GuildID = default,
     Optional<Snowflake> PrimarySKUID = default,
     Optional<string> Slug = default,
     Optional<IImageHash> CoverImage = default,
-    Optional<ApplicationFlags> Flags = default
+    Optional<ApplicationFlags> Flags = default,
+    Optional<IReadOnlyList<string>> Tags = default,
+    Optional<IApplicationInstallParameters> InstallParams = default,
+    Optional<Uri> CustomInstallUrl = default
 ) : IApplication;

@@ -27,7 +27,6 @@ using JetBrains.Annotations;
 using OneOf;
 using Remora.Commands.Results;
 using Remora.Commands.Services;
-using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
@@ -45,6 +44,7 @@ public class SlashService
     private readonly CommandTreeAccessor _commandTreeAccessor;
     private readonly IDiscordRestOAuth2API _oauth2API;
     private readonly IDiscordRestApplicationAPI _applicationAPI;
+    private readonly ILocalizationProvider _localizationProvider;
 
     /// <summary>
     /// Gets a mapping of Discord's assigned snowflakes to their corresponding command nodes.
@@ -66,16 +66,19 @@ public class SlashService
     /// <param name="commandTreeAccessor">The command tree accessor.</param>
     /// <param name="oauth2API">The OAuth2 API.</param>
     /// <param name="applicationAPI">The application API.</param>
+    /// <param name="localizationProvider">The localization provider.</param>
     public SlashService
     (
         CommandTreeAccessor commandTreeAccessor,
         IDiscordRestOAuth2API oauth2API,
-        IDiscordRestApplicationAPI applicationAPI
+        IDiscordRestApplicationAPI applicationAPI,
+        ILocalizationProvider localizationProvider
     )
     {
         _commandTreeAccessor = commandTreeAccessor;
         _applicationAPI = applicationAPI;
         _oauth2API = oauth2API;
+        _localizationProvider = localizationProvider;
 
         this.CommandMap = new Dictionary
         <
@@ -99,7 +102,7 @@ public class SlashService
         // TODO: Improve
         // Yes, this is inefficient. Generally, this method is only expected to be called a limited number of times on
         // startup.
-        var couldCreate = tree.CreateApplicationCommands();
+        var couldCreate = tree.CreateApplicationCommands(_localizationProvider);
 
         return couldCreate.IsSuccess
             ? Result.FromSuccess()
@@ -135,7 +138,7 @@ public class SlashService
         }
 
         var application = getApplication.Entity;
-        var createCommands = tree.CreateApplicationCommands();
+        var createCommands = tree.CreateApplicationCommands(_localizationProvider);
         if (!createCommands.IsSuccess)
         {
             return Result.FromError(createCommands);
