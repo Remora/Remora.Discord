@@ -219,7 +219,7 @@ public static class CommandTreeExtensions
 
                     if (memberPermissionsAttribute is not null)
                     {
-                        defaultMemberPermissions = new DiscordPermissionSet(memberPermissionsAttribute.Permissions);
+                        defaultMemberPermissions = new DiscordPermissionSet(memberPermissionsAttribute.Permissions.ToArray());
                     }
 
                     if (directMessagePermissionAttribute is not null)
@@ -242,7 +242,7 @@ public static class CommandTreeExtensions
 
                     if (memberPermissionsAttribute is not null)
                     {
-                        defaultMemberPermissions = new DiscordPermissionSet(memberPermissionsAttribute.Permissions);
+                        defaultMemberPermissions = new DiscordPermissionSet(memberPermissionsAttribute.Permissions.ToArray());
                     }
 
                     if (directMessagePermissionAttribute is not null)
