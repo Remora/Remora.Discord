@@ -312,9 +312,10 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <param name="ct">The cancellation token for the dispatched event.</param>
     private Result<Task<IReadOnlyList<Result>>> UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
     {
-        if (!_cachedInterfaceTypeArguments.TryGetValue(payload.GetType(), out var interfaceArgument))
+        var payloadType = payload.GetType();
+
+        if (!_cachedInterfaceTypeArguments.TryGetValue(payloadType, out var interfaceArgument))
         {
-            var payloadType = payload.GetType();
             if (!payloadType.IsGenericType)
             {
                 _log.LogWarning
@@ -343,7 +344,7 @@ public class ResponderDispatchService : IAsyncDisposable
             }
 
             interfaceArgument = payloadInterfaceType.GetGenericArguments()[0];
-            _cachedInterfaceTypeArguments.Add(payload.GetType(), interfaceArgument);
+            _cachedInterfaceTypeArguments.Add(payloadType, interfaceArgument);
         }
 
         if (!_cachedDispatchMethods.TryGetValue(interfaceArgument, out var boundDispatchMethod))
