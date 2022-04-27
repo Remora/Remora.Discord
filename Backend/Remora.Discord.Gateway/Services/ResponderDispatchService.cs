@@ -48,7 +48,7 @@ public class ResponderDispatchService : IAsyncDisposable
     private readonly IResponderTypeRepository _responderTypeRepository;
 
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
-    private readonly Dictionary<Type, MethodInfo> _cachedDispatchMethods;
+    private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchMethods;
 
     private CancellationTokenSource? _dispatchCancellationSource;
     private Task? _dispatcher;
@@ -360,21 +360,15 @@ public class ResponderDispatchService : IAsyncDisposable
                 throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEventAsync));
             }
 
-            boundDispatchMethod = dispatchMethod.MakeGenericMethod(interfaceArgument);
+            // We have to cast because CreateDelegate<T> doesn't play nicely with netstandard.
+            boundDispatchMethod = (Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>)dispatchMethod
+                .MakeGenericMethod(interfaceArgument)
+                .CreateDelegate(typeof(Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>), this);
+
             _cachedDispatchMethods.Add(interfaceArgument, boundDispatchMethod);
         }
 
-        var responderTask = Task.Run
-        (
-            () =>
-            {
-                var task = boundDispatchMethod.Invoke(this, new object?[] { payload, ct })
-                           ?? throw new InvalidOperationException();
-
-                return (Task<IReadOnlyList<Result>>)task;
-            },
-            ct
-        );
+        var responderTask = Task.Run(() => boundDispatchMethod(payload, ct), ct);
 
         return responderTask;
     }
@@ -387,11 +381,14 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
     private async Task<IReadOnlyList<Result>> DispatchEventAsync<TGatewayEvent>
     (
-        IPayload<TGatewayEvent> gatewayEvent,
+        IPayload gatewayEvent,
         CancellationToken ct = default
     )
         where TGatewayEvent : IGatewayEvent
     {
+        // This is only called from one place, should be fine to cast.
+        var castedGatewayEvent = (IPayload<TGatewayEvent>)gatewayEvent;
+
         // Batch up the responders according to their groups
         var responderGroups = new[]
         {
@@ -416,7 +413,7 @@ public class ResponderDispatchService : IAsyncDisposable
 
                         try
                         {
-                            return await responder.RespondAsync(gatewayEvent.Data, ct);
+                            return await responder.RespondAsync(castedGatewayEvent.Data, ct);
                         }
                         catch (Exception e)
                         {
