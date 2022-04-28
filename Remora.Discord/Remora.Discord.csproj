@@ -5,9 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.22</Version>
+        <Version>2022.23</Version>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
+            Fix early bailout not checking for slash command
+            Register default localization provider.
+            Fix typo in `CreateGuildInvitesCacheKey` by using `CreateGuildCacheKey`
             Fix property optionality.
             Implement application command localization.
         </PackageReleaseNotes>
