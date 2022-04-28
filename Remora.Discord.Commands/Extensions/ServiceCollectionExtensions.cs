@@ -203,6 +203,9 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSingleton(FeedbackTheme.DiscordLight);
         serviceCollection.AddSingleton(FeedbackTheme.DiscordDark);
 
+        // Add the null localization provider if the end user hasn't already registered one
+        serviceCollection.TryAddSingleton<ILocalizationProvider, NullLocalizationProvider>();
+
         if (!enableSlash)
         {
             return serviceCollection;
