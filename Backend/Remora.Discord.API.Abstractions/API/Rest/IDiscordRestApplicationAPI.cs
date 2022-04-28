@@ -40,11 +40,17 @@ public interface IDiscordRestApplicationAPI
     /// Gets the global commands for the application.
     /// </summary>
     /// <param name="applicationID">The ID of the bot application.</param>
+    /// <param name="withLocalizations">
+    /// Indicates whether the full localization dictionaries should be returned, instead of just the requested locale.
+    /// </param>
+    /// <param name="locale">The locale to request the response in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
     (
         Snowflake applicationID,
+        Optional<bool> withLocalizations = default,
+        Optional<string> locale = default,
         CancellationToken ct = default
     );
 
@@ -60,6 +66,8 @@ public interface IDiscordRestApplicationAPI
     /// <param name="options">The parameters for the command.</param>
     /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
     /// <param name="type">The type of the application command.</param>
+    /// <param name="nameLocalizations">The localized names of the command.</param>
+    /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
@@ -70,6 +78,8 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
         Optional<bool> defaultPermission = default,
         Optional<ApplicationCommandType> type = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         CancellationToken ct = default
     );
 
@@ -110,6 +120,8 @@ public interface IDiscordRestApplicationAPI
     /// <param name="description">The description of the command. 1-100 characters.</param>
     /// <param name="options">The parameters for the command.</param>
     /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
+    /// <param name="nameLocalizations">The localized names of the command.</param>
+    /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
@@ -120,6 +132,8 @@ public interface IDiscordRestApplicationAPI
         Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
         Optional<bool> defaultPermission = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         CancellationToken ct = default
     );
 
@@ -142,28 +156,18 @@ public interface IDiscordRestApplicationAPI
     /// </summary>
     /// <param name="applicationID">The ID of the bot application.</param>
     /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="withLocalizations">
+    /// Indicates whether the full localization dictionaries should be returned, instead of just the requested locale.
+    /// </param>
+    /// <param name="locale">The locale to request the response in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IReadOnlyList<IApplicationCommand>>> GetGuildApplicationCommandsAsync
     (
         Snowflake applicationID,
         Snowflake guildID,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
-    /// Overwrites all guild commands with the given command set. Any commands not in the set will be deleted.
-    /// </summary>
-    /// <param name="applicationID">The ID of the bot application.</param>
-    /// <param name="guildID">The ID of the guild.</param>
-    /// <param name="commands">The commands.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A creation result which may or may not have succeeded.</returns>
-    Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGuildApplicationCommandsAsync
-    (
-        Snowflake applicationID,
-        Snowflake guildID,
-        IReadOnlyList<IBulkApplicationCommandData> commands,
+        Optional<bool> withLocalizations = default,
+        Optional<string> locale = default,
         CancellationToken ct = default
     );
 
@@ -180,6 +184,8 @@ public interface IDiscordRestApplicationAPI
     /// <param name="options">The parameters for the command.</param>
     /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
     /// <param name="type">The type of the application command.</param>
+    /// <param name="nameLocalizations">The localized names of the command.</param>
+    /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
@@ -191,6 +197,24 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
         Optional<bool> defaultPermission = default,
         Optional<ApplicationCommandType> type = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Overwrites all guild commands with the given command set. Any commands not in the set will be deleted.
+    /// </summary>
+    /// <param name="applicationID">The ID of the bot application.</param>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="commands">The commands.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGuildApplicationCommandsAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        IReadOnlyList<IBulkApplicationCommandData> commands,
         CancellationToken ct = default
     );
 
@@ -220,6 +244,8 @@ public interface IDiscordRestApplicationAPI
     /// <param name="description">The description of the command. 1-100 characters.</param>
     /// <param name="options">The parameters for the command.</param>
     /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
+    /// <param name="nameLocalizations">The localized names of the command.</param>
+    /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
@@ -231,6 +257,8 @@ public interface IDiscordRestApplicationAPI
         Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
         Optional<bool> defaultPermission = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         CancellationToken ct = default
     );
 

@@ -48,7 +48,7 @@ namespace Remora.Discord.Commands.Tests.Extensions;
 public class CommandTreeExtensionTests
 {
     /// <summary>
-    /// Tests the <see cref="CommandTreeExtensions.CreateApplicationCommands"/> method.
+    /// Tests the <see cref="CommandTreeExtensions.CreateApplicationCommands(CommandTree)"/> method.
     /// </summary>
     public class CreateApplicationCommands
     {

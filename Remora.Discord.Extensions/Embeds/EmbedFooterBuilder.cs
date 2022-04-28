@@ -76,9 +76,7 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
         }
 
         var urlValidationResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
-        return !urlValidationResult.IsSuccess
-            ? urlValidationResult
-            : Result.FromSuccess();
+        return urlValidationResult;
     }
 
     /// <summary>

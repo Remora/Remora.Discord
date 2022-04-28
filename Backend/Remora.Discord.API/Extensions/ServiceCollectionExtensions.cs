@@ -76,7 +76,6 @@ public static class ServiceCollectionExtensions
                 options =>
                 {
                     options.PropertyNamingPolicy = snakeCase;
-                    options.DictionaryKeyPolicy = snakeCase;
 
                     options.Converters.Add(new PayloadConverter(allowUnknownEvents));
                     options.Converters.Add(new VoicePayloadConverter());
@@ -928,6 +927,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(o => o.EnableAutocomplete, "autocomplete");
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
+        options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>();
 
         options.AddDataObjectConverter
             <

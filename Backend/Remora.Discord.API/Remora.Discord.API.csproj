@@ -5,15 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>55.0.0</Version>
+        <Version>56.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Mark the API version enumeration as public.
-            Mark some more types as PublicAPI.
-            Implement default_auto_archive_duration for channel creation.
-            Remove the "none" flag.
-            Implement GuildID in InteractionData.
-            Add PropertyConverter for IApplicationCommandInteractionDataResolved.Attachments
+            Fix property optionality.
+            Implement application command localization.
         </PackageReleaseNotes>
     </PropertyGroup>
 

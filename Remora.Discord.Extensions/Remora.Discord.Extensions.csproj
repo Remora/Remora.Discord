@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.0.1</Version>
+        <Version>4.0.2</Version>
         <Description>Utilities and components which extened upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
             Use # to separate username and discriminator.

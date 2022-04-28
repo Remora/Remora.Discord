@@ -38,6 +38,8 @@ public record BulkApplicationCommandData
     [property: Obsolete($"This property is deprecated in favor of {nameof(BulkApplicationCommandData.DefaultMemberPermissions)}", false)]
     Optional<bool> DefaultPermission = default,
     Optional<ApplicationCommandType> Type = default,
+    Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
+    Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default,
     Optional<IDiscordPermissionSet?> DefaultMemberPermissions = default,
     Optional<bool> DmPermission = default
 ) : IBulkApplicationCommandData;

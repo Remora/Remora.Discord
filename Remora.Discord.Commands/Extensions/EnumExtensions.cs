@@ -32,6 +32,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Results;
+using Remora.Discord.Commands.Services;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Extensions;
@@ -54,11 +55,15 @@ internal static class EnumExtensions
     /// This method is relatively expensive on the first call, after which the results will be cached. This method is
     /// thread-safe.
     /// </remarks>
+    /// <param name="localizationProvider">The localization provider.</param>
     /// <typeparam name="TEnum">The enumeration type.</typeparam>
     /// <returns>The choices.</returns>
-    public static Result<IReadOnlyList<IApplicationCommandOptionChoice>> GetEnumChoices<TEnum>()
+    public static Result<IReadOnlyList<IApplicationCommandOptionChoice>> GetEnumChoices<TEnum>
+    (
+        ILocalizationProvider localizationProvider
+    )
         where TEnum : struct, Enum
-        => GetEnumChoices(typeof(TEnum));
+        => GetEnumChoices(typeof(TEnum), localizationProvider);
 
     /// <summary>
     /// Gets the Discord choices that the given enumeration is composed of.
@@ -68,8 +73,13 @@ internal static class EnumExtensions
     /// thread-safe.
     /// </remarks>
     /// <param name="enumType">The enumeration type.</param>
+    /// <param name="localizationProvider">The localization provider.</param>
     /// <returns>The choices.</returns>
-    public static Result<IReadOnlyList<IApplicationCommandOptionChoice>> GetEnumChoices(Type enumType)
+    public static Result<IReadOnlyList<IApplicationCommandOptionChoice>> GetEnumChoices
+    (
+        Type enumType,
+        ILocalizationProvider localizationProvider
+    )
     {
         return ChoiceCache.GetOrAdd
         (
@@ -90,20 +100,32 @@ internal static class EnumExtensions
                     }
 
                     var displayString = GetDisplayString(type, value);
-                    if (displayString.Length > MaxChoiceNameLength)
+                    var localizedDisplayNames = localizationProvider.GetStrings(displayString);
+                    foreach (var (locale, localizedDisplayName) in localizedDisplayNames)
                     {
-                        return new UnsupportedFeatureError
-                        (
-                            $"The display name of the enumeration member {type.Name}::{enumName} is too long " +
-                            $"(max {MaxChoiceNameLength}). Either configure a shorter name with " +
-                            "[Description] or [Display], or rename the member."
-                        );
+                        if (localizedDisplayName.Length > MaxChoiceNameLength)
+                        {
+                            return new UnsupportedFeatureError
+                            (
+                                $"The localized display name for the locale {locale} of the enumeration member " +
+                                $"{type.Name}::{enumName} is too long (max {MaxChoiceNameLength})."
+                            );
+                        }
                     }
 
                     var valueString = enumName;
                     if (valueString.Length <= MaxChoiceValueLength)
                     {
-                        choices.Add(new ApplicationCommandOptionChoice(displayString, valueString));
+                        choices.Add
+                        (
+                            new ApplicationCommandOptionChoice
+                            (
+                                displayString,
+                                valueString,
+                                localizedDisplayNames.Count > 0 ? new(localizedDisplayNames) : default
+                            )
+                        );
+
                         continue;
                     }
 
@@ -118,7 +140,15 @@ internal static class EnumExtensions
                         );
                     }
 
-                    choices.Add(new ApplicationCommandOptionChoice(displayString, valueString));
+                    choices.Add
+                    (
+                        new ApplicationCommandOptionChoice
+                        (
+                            displayString,
+                            valueString,
+                            localizedDisplayNames.Count > 0 ? new(localizedDisplayNames) : default
+                        )
+                    );
                 }
 
                 return choices;

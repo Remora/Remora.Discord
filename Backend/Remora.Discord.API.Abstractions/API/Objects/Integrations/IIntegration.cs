@@ -50,7 +50,7 @@ public interface IIntegration : IPartialIntegration
     /// <summary>
     /// Gets a value indicating whether the integration is enabled.
     /// </summary>
-    new bool IsEnabled { get; }
+    new Optional<bool> IsEnabled { get; }
 
     /// <summary>
     /// Gets a value indicating whether the integration is syncing.

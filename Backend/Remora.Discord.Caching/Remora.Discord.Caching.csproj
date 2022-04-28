@@ -5,12 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>24.1.0</Version>
+        <Version>25.0.0</Version>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            Add support for configuring expiration times for evicted values independently of the primary cache.
-            Fix incorrect key used for evicted entities.
-            Merge pull request #166 from VelvetThePanda/feature/redis-cache
+            Implement application command localization.
         </PackageReleaseNotes>
     </PropertyGroup>
 
