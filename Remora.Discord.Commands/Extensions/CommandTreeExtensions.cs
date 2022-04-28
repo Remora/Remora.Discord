@@ -292,7 +292,7 @@ public static class CommandTreeExtensions
         {
             return new UnsupportedFeatureError
             (
-                $"A sub-command or group was nested too deeply (depth {treeDepth}, max {MaxTreeDepth}.",
+                $"A sub-command or group was nested too deeply (depth {treeDepth}, max {MaxTreeDepth}).",
                 node
             );
         }
