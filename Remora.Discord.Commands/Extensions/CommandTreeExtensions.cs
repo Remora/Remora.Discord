@@ -215,6 +215,7 @@ public static class CommandTreeExtensions
                         (
                             t => t.GetCustomAttribute<DiscordDefaultPermissionAttribute>()
                         )
+                        .Where(a => a is not null)
                         .ToList();
 
                     if (defaultPermissionAttributes.Count > 1)
