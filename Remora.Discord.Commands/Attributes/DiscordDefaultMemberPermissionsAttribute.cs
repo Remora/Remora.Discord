@@ -28,9 +28,13 @@ namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
 /// Marks a group with a set of permissions, that is the permissions required
-/// for the user to be able to execute the commands within the group. Permissions
-/// can be overridden by moderators.
+/// for the user to be able to execute the commands within the group.
 /// </summary>
+/// <remarks>
+/// Permissions serve as a base for command access, however moderators with the appropriate
+/// permissisons can add additional filters to the command, either adding or removing applicable
+/// users.
+/// </remarks>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public class DiscordDefaultMemberPermissionsAttribute : Attribute
 {
