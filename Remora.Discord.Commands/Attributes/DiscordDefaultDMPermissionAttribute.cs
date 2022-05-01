@@ -33,13 +33,13 @@ public class DiscordDefaultDMPermissionAttribute : Attribute
     /// <summary>
     /// Gets a value indicating whether the command group is executable in a DM.
     /// </summary>
-    public bool? IsExecutableInDMs { get; }
+    public bool IsExecutableInDMs { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordDefaultDMPermissionAttribute"/> class.
     /// </summary>
     /// <param name="isExecutableInDMs">Whether this command group is executable in a DM.</param>
-    public DiscordDefaultDMPermissionAttribute(bool? isExecutableInDMs = null)
+    public DiscordDefaultDMPermissionAttribute(bool isExecutableInDMs = false)
     {
         IsExecutableInDMs = isExecutableInDMs;
     }
