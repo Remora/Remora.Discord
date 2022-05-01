@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Extensions.Builder;
@@ -31,6 +32,7 @@ namespace Remora.Discord.Extensions.Embeds;
 /// <summary>
 /// A builder which validates and builds an <see cref="EmbedFooter"/>.
 /// </summary>
+[PublicAPI]
 public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
 {
     /// <summary>
@@ -70,16 +72,11 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
         var textValidationResult = ValidateLength(nameof(this.Text), this.Text, EmbedConstants.MaxFooterTextLength, false);
         if (!textValidationResult.IsSuccess)
         {
-            Result.FromError(textValidationResult.Error);
+            return textValidationResult;
         }
 
         var urlValidationResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
-        if (!urlValidationResult.IsSuccess)
-        {
-            Result.FromError(urlValidationResult.Error);
-        }
-
-        return Result.FromSuccess();
+        return urlValidationResult;
     }
 
     /// <summary>

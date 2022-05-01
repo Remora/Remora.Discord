@@ -223,30 +223,6 @@ public interface IDiscordRestChannelAPI
     );
 
     /// <summary>
-    /// Modifies the given guild store channel.
-    /// </summary>
-    /// <param name="channelID">The ID of the channel.</param>
-    /// <param name="name">The new name of the channel.</param>
-    /// <param name="position">The new position of the channel in the listing.</param>
-    /// <param name="isNsfw">The new NSFW status of the channel.</param>
-    /// <param name="permissionOverwrites">The new permission overwrites.</param>
-    /// <param name="parentId">The new parent category ID.</param>
-    /// <param name="reason">The reason to mark the action in the audit log with.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IChannel>> ModifyGuildStoreChannelAsync
-    (
-        Snowflake channelID,
-        Optional<string> name = default,
-        Optional<int?> position = default,
-        Optional<bool?> isNsfw = default,
-        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
-        Optional<Snowflake?> parentId = default,
-        Optional<string> reason = default,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
     /// Modifies the given channel.
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>

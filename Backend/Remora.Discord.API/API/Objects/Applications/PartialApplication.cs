@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
@@ -43,12 +44,14 @@ public record PartialApplication
     Optional<string> TermsOfServiceURL = default,
     Optional<string> PrivacyPolicyURL = default,
     Optional<IPartialUser?> Owner = default,
-    Optional<string> Summary = default,
     Optional<string> VerifyKey = default,
     Optional<ITeam?> Team = default,
     Optional<Snowflake> GuildID = default,
     Optional<Snowflake> PrimarySKUID = default,
     Optional<string> Slug = default,
     Optional<IImageHash> CoverImage = default,
-    Optional<ApplicationFlags> Flags = default
+    Optional<ApplicationFlags> Flags = default,
+    Optional<IReadOnlyList<string>> Tags = default,
+    Optional<IApplicationInstallParameters> InstallParams = default,
+    Optional<Uri> CustomInstallUrl = default
 ) : IPartialApplication;

@@ -21,12 +21,14 @@
 //
 
 using System.Drawing;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Extensions.Embeds;
 
 /// <summary>
 /// Provides a set of constant values for embed validation.
 /// </summary>
+[PublicAPI]
 public static class EmbedConstants
 {
     /// <summary>

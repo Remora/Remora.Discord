@@ -48,7 +48,7 @@ namespace Remora.Discord.Commands.Tests.Extensions;
 public class CommandTreeExtensionTests
 {
     /// <summary>
-    /// Tests the <see cref="CommandTreeExtensions.CreateApplicationCommands"/> method.
+    /// Tests the <see cref="CommandTreeExtensions.CreateApplicationCommands(CommandTree)"/> method.
     /// </summary>
     public class CreateApplicationCommands
     {
@@ -617,7 +617,7 @@ public class CommandTreeExtensionTests
                     typeof(SpecialTypedCommands),
                     "hinted-snowflake-value",
                     ApplicationCommandOptionType.Channel
-                },
+                }
             };
 
             /// <summary>
@@ -965,7 +965,7 @@ public class CommandTreeExtensionTests
 
                 Assert.Equal("a", group.Name);
 
-                var nestedGroup = @group.Options.Value.Single();
+                var nestedGroup = group.Options.Value.Single();
 
                 Assert.Equal(SubCommandGroup, nestedGroup.Type);
                 Assert.Equal("b", nestedGroup.Name);
@@ -1362,10 +1362,10 @@ public class CommandTreeExtensionTests
                         new ApplicationCommandOption(SubCommandGroup, subGroupNode.Key, string.Empty, Options: new[]
                         {
                             new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty),
-                            new ApplicationCommandOption(SubCommand, commandNodeD.Key, string.Empty),
+                            new ApplicationCommandOption(SubCommand, commandNodeD.Key, string.Empty)
                         }),
                         new ApplicationCommandOption(SubCommand, commandNodeE.Key, string.Empty),
-                        new ApplicationCommandOption(SubCommand, commandNodeF.Key, string.Empty),
+                        new ApplicationCommandOption(SubCommand, commandNodeF.Key, string.Empty)
                     },
                     default,
                     default

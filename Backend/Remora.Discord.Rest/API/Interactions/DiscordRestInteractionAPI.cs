@@ -33,6 +33,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Rest.Core;
@@ -49,9 +50,10 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
     /// Initializes a new instance of the <see cref="DiscordRestInteractionAPI"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
-    /// <param name="jsonOptions">The json options.</param>
-    public DiscordRestInteractionAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestInteractionAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -132,7 +134,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                     }
 
                     b.WithJson(json => JsonSerializer.Serialize(json, response, this.JsonOptions), false);
-                    b.WithRateLimitContext(true);
+                    b.WithRateLimitContext(this.RateLimitCache, true);
                 },
                 ct
             )
@@ -150,7 +152,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         return this.RestHttpClient.GetAsync<IMessage>
         (
             $"webhooks/{applicationID}/{interactionToken}/messages/@original",
-            b => b.WithRateLimitContext(true),
+            b => b.WithRateLimitContext(this.RateLimitCache, true),
             ct: ct
         );
     }
@@ -221,7 +223,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         json.Write("attachments", attachmentList, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(true);
+                .WithRateLimitContext(this.RateLimitCache, true);
             },
             ct: ct
         );
@@ -238,7 +240,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{applicationID}/{token}/messages/@original",
-            b => b.WithRateLimitContext(true),
+            b => b.WithRateLimitContext(this.RateLimitCache, true),
             ct
         );
     }
@@ -303,7 +305,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         json.Write("flags", flags, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(true);
+                .WithRateLimitContext(this.RateLimitCache, true);
             },
             ct: ct
         );
@@ -321,7 +323,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         return this.RestHttpClient.GetAsync<IMessage>
         (
             $"webhooks/{applicationID}/{token}/messages/{messageID}",
-            b => b.WithRateLimitContext(true),
+            b => b.WithRateLimitContext(this.RateLimitCache, true),
             ct: ct
         );
     }
@@ -393,7 +395,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         json.Write("attachments", attachmentList, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(true);
+                .WithRateLimitContext(this.RateLimitCache, true);
             },
             ct: ct
         );
@@ -411,7 +413,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{applicationID}/{token}/messages/{messageID}",
-            b => b.WithRateLimitContext(true),
+            b => b.WithRateLimitContext(this.RateLimitCache, true),
             ct
         );
     }

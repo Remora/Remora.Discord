@@ -76,7 +76,6 @@ public static class ServiceCollectionExtensions
                 options =>
                 {
                     options.PropertyNamingPolicy = snakeCase;
-                    options.DictionaryKeyPolicy = snakeCase;
 
                     options.Converters.Add(new PayloadConverter(allowUnknownEvents));
                     options.Converters.Add(new VoicePayloadConverter());
@@ -928,6 +927,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(o => o.EnableAutocomplete, "autocomplete");
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
+        options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>();
 
         options.AddDataObjectConverter
             <
@@ -938,7 +938,8 @@ public static class ServiceCollectionExtensions
             .WithPropertyConverter(r => r.Members, new SnowflakeDictionaryConverter<IPartialGuildMember>(Constants.DiscordEpoch))
             .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>(Constants.DiscordEpoch))
             .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>(Constants.DiscordEpoch));
+            .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>(Constants.DiscordEpoch))
+            .WithPropertyConverter(r => r.Attachments, new SnowflakeDictionaryConverter<IAttachment>(Constants.DiscordEpoch));
 
         options.AddDataObjectConverter<IGuildApplicationCommandPermissions, GuildApplicationCommandPermissions>();
         options.AddDataObjectConverter
@@ -1002,6 +1003,8 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(a => a.IsBotPublic, "bot_public")
             .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
             .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+
+        options.AddDataObjectConverter<IApplicationInstallParameters, ApplicationInstallParameters>();
 
         options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>();
 

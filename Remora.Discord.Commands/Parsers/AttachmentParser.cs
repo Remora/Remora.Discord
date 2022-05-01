@@ -52,27 +52,27 @@ public class AttachmentParser : AbstractTypeParser<IAttachment>
     {
         if (_context is not InteractionContext interactionContext)
         {
-            return new(Result<IAttachment>.FromError(new InvalidOperationError("Cannot parse attachments outside the context of an interaction.")));
+            return new(new InvalidOperationError("Cannot parse attachments outside the context of an interaction."));
         }
 
         if (!Snowflake.TryParse(token, out var attachmentID))
         {
-            return new(Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Invalid attachment ID.")));
+            return new(new ParsingError<IAttachment>(token, "Invalid attachment ID."));
         }
 
         if (!interactionContext.Data.Resolved.IsDefined(out var resolvedData))
         {
-            return new(Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved data.")));
+            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved data."));
         }
 
         if (!resolvedData.Attachments.IsDefined(out var resolvedAttachments))
         {
-            return new(Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved attachments.")));
+            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved attachments."));
         }
 
         if (!resolvedAttachments.TryGetValue(attachmentID.Value, out var resolvedAttachment))
         {
-            return new(Result<IAttachment>.FromError(new InvalidOperationError($"Attachment with ID {attachmentID} present in options, but not in resolved attachments.")));
+            return new(new InvalidOperationError($"Attachment with ID {attachmentID} present in options, but not in resolved attachments."));
         }
 
         return new(Result<IAttachment>.FromSuccess(resolvedAttachment));

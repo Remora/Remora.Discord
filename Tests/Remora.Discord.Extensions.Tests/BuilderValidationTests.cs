@@ -59,10 +59,10 @@ public class BuilderValidationTests
     public void PersonAndBuilderEqual()
     {
         var person = new Person("Gary", 5);
-        var personBuider = new PersonBuilder(person.Name, person.Age);
+        var personBuilder = new PersonBuilder(person.Name, person.Age);
 
-        Assert.Equal(person.Name, personBuider.Name);
-        Assert.Equal(person.Age, personBuider.Age);
+        Assert.Equal(person.Name, personBuilder.Name);
+        Assert.Equal(person.Age, personBuilder.Age);
     }
 
     /// <summary>

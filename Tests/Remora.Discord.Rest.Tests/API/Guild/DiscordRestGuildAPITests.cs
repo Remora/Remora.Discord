@@ -196,7 +196,7 @@ public class DiscordRestGuildAPITests
             var result = await api.CreateGuildAsync
             (
                 name,
-                icon: icon
+                icon
             );
 
             ResultAssert.Unsuccessful(result);
@@ -589,6 +589,7 @@ public class DiscordRestGuildAPITests
             var permissionOverwrites = new List<IPermissionOverwrite>();
             var parentId = DiscordSnowflake.New(1);
             var nsfw = true;
+            var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
             var reason = "test";
 
             var api = CreateAPI
@@ -609,6 +610,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("parent_id", p => p.Is(parentId.ToString()))
                                 .WithProperty("nsfw", p => p.Is(nsfw))
+                                .WithProperty("default_auto_archive_duration", p => p.Is((int)defaultAutoArchiveDuration))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -625,6 +627,7 @@ public class DiscordRestGuildAPITests
                 permissionOverwrites: permissionOverwrites,
                 parentID: parentId,
                 isNsfw: nsfw,
+                defaultAutoArchiveDuration: defaultAutoArchiveDuration,
                 reason: reason
             );
 
@@ -1305,17 +1308,32 @@ public class DiscordRestGuildAPITests
         public async Task PerformsRequestCorrectly()
         {
             var guildId = DiscordSnowflake.New(0);
+            var limit = 1;
+            var before = new Snowflake(2);
+            var after = new Snowflake(3);
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/bans")
+                    .WithQueryString
+                    (
+                        new[]
+                        {
+                            new KeyValuePair<string, string>("limit", limit.ToString()),
+                            new KeyValuePair<string, string>("before", before.ToString()),
+                            new KeyValuePair<string, string>("after", after.ToString())
+                        }
+                    )
                     .Respond("application/json", "[ ]")
             );
 
             var result = await api.GetGuildBansAsync
             (
-                guildId
+                guildId,
+                limit,
+                before,
+                after
             );
 
             ResultAssert.Successful(result);

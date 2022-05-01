@@ -35,5 +35,7 @@ public record BulkApplicationCommandData
     Optional<string> Description = default,
     Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
     Optional<bool> DefaultPermission = default,
-    Optional<ApplicationCommandType> Type = default
+    Optional<ApplicationCommandType> Type = default,
+    Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
+    Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default
 ) : IBulkApplicationCommandData;

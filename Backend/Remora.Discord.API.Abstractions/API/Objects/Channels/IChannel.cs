@@ -61,7 +61,7 @@ public interface IChannel : IPartialChannel
     /// <summary>
     /// Gets the name of the channel.
     /// </summary>
-    new Optional<string> Name { get; }
+    new Optional<string?> Name { get; }
 
     /// <summary>
     /// Gets the topic of the channel.
@@ -182,7 +182,7 @@ public interface IChannel : IPartialChannel
     Optional<IReadOnlyList<IPermissionOverwrite>> IPartialChannel.PermissionOverwrites => this.PermissionOverwrites;
 
     /// <inheritdoc/>
-    Optional<string> IPartialChannel.Name => this.Name;
+    Optional<string?> IPartialChannel.Name => this.Name;
 
     /// <inheritdoc/>
     Optional<string?> IPartialChannel.Topic => this.Topic;

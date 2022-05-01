@@ -28,6 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Utility;
 using Remora.Rest;
@@ -44,9 +45,10 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     /// Initializes a new instance of the <see cref="DiscordRestGuildScheduledEventAPI"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
-    /// <param name="jsonOptions">The json options.</param>
-    public DiscordRestGuildScheduledEventAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestGuildScheduledEventAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -68,7 +70,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                     b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -123,19 +125,13 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        var imageData = default(Optional<string?>);
-
-        if (image.IsDefined(out var imageStream))
+        var packImage = await ImagePacker.PackImageAsync(image!, ct);
+        if (!packImage.IsSuccess)
         {
-            var imageDataResult = await ImagePacker.PackImageAsync(imageStream, ct);
-
-            if (!imageDataResult.IsSuccess)
-            {
-                return Result<IGuildScheduledEvent>.FromError(imageDataResult.Error);
-            }
-
-            imageData = imageDataResult.Entity;
+            return Result<IGuildScheduledEvent>.FromError(packImage);
         }
+
+        Optional<string> imageData = packImage.Entity!;
 
         return await this.RestHttpClient.PostAsync<IGuildScheduledEvent>
         (
@@ -159,7 +155,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                 );
 
                 b.AddAuditLogReason(reason);
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -184,7 +180,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                     b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -241,19 +237,13 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        var imageData = default(Optional<string?>);
-
-        if (image.IsDefined(out var imageStream))
+        var packImage = await ImagePacker.PackImageAsync(image!, ct);
+        if (!packImage.IsSuccess)
         {
-            var imageDataResult = await ImagePacker.PackImageAsync(imageStream, ct);
-
-            if (!imageDataResult.IsSuccess)
-            {
-                return Result<IGuildScheduledEvent>.FromError(imageDataResult.Error);
-            }
-
-            imageData = imageDataResult.Entity;
+            return Result<IGuildScheduledEvent>.FromError(packImage);
         }
+
+        Optional<string> imageData = packImage.Entity!;
 
         return await this.RestHttpClient.PatchAsync<IGuildScheduledEvent>
         (
@@ -278,7 +268,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                 );
 
                 b.AddAuditLogReason(reason);
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -290,7 +280,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         return this.RestHttpClient.DeleteAsync
         (
             $"guilds/{guildID}/scheduled-events/{eventID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -337,7 +327,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                     b.AddQueryParameter("after", after.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );

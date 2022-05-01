@@ -47,7 +47,7 @@ public interface ITextInputComponent : IMessageComponent, IPartialTextInputCompo
     new TextInputStyle Style { get; }
 
     /// <summary>
-    /// Gets the label on the text input.
+    /// Gets the label on the text input. Max 45 characters.
     /// </summary>
     new string Label { get; }
 

@@ -49,7 +49,7 @@ public interface IPartialChannel
     Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites { get; }
 
     /// <inheritdoc cref="IChannel.Name" />
-    Optional<string> Name { get; }
+    Optional<string?> Name { get; }
 
     /// <inheritdoc cref="IChannel.Topic" />
     Optional<string?> Topic { get; }

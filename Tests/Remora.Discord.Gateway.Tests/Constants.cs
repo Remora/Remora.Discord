@@ -45,10 +45,10 @@ public static class Constants
     /// <summary>
     /// Gets the default mocked token.
     /// </summary>
-    public static string MockToken { get; } = "mock-token";
+    public static string MockToken => "mock-token";
 
     /// <summary>
     /// Gets the default mocked session ID.
     /// </summary>
-    public static string MockSessionID { get; } = "mock-session";
+    public static string MockSessionID => "mock-session";
 }

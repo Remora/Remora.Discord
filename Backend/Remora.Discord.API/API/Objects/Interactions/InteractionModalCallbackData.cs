@@ -21,11 +21,13 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IInteractionModalCallbackData"/>
+[PublicAPI]
 public record InteractionModalCallbackData
 (
     string CustomID,

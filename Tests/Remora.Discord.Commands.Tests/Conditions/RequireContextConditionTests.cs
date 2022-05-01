@@ -54,7 +54,6 @@ public class RequireContextConditionTests
     [InlineData(ChannelContext.Guild, ChannelType.GroupDM, false)]
     [InlineData(ChannelContext.Guild, ChannelType.GuildCategory, true)]
     [InlineData(ChannelContext.Guild, ChannelType.GuildNews, true)]
-    [InlineData(ChannelContext.Guild, ChannelType.GuildStore, true)]
     [InlineData(ChannelContext.Guild, ChannelType.GuildNewsThread, true)]
     [InlineData(ChannelContext.Guild, ChannelType.GuildPublicThread, true)]
     [InlineData(ChannelContext.Guild, ChannelType.GuildPrivateThread, true)]

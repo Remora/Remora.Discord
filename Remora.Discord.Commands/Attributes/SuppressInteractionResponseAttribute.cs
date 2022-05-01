@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
 /// Marks a command group or individual command with a desired response behaviour for interactions.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class SuppressInteractionResponseAttribute : Attribute
 {

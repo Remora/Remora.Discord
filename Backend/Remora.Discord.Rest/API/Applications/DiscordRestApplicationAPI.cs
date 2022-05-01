@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Rest.Core;
@@ -44,9 +45,10 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     /// Initializes a new instance of the <see cref="DiscordRestApplicationAPI"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
-    /// <param name="jsonOptions">The json options.</param>
-    public DiscordRestApplicationAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestApplicationAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -54,13 +56,28 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     public virtual Task<Result<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
     (
         Snowflake applicationID,
-        CancellationToken ct
+        Optional<bool> withLocalizations = default,
+        Optional<string> locale = default,
+        CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/commands",
-            b => b.WithRateLimitContext(),
+            b =>
+            {
+                if (withLocalizations.HasValue)
+                {
+                    b.AddQueryParameter("with_localizations", withLocalizations.Value.ToString());
+                }
+
+                if (locale.HasValue)
+                {
+                    b.AddHeader(Constants.LocaleHeaderName, locale.Value);
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
@@ -71,10 +88,12 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake applicationID,
         string name,
         string description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> options,
-        Optional<bool> defaultPermission,
-        Optional<ApplicationCommandType> type,
-        CancellationToken ct
+        Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
+        Optional<bool> defaultPermission = default,
+        Optional<ApplicationCommandType> type = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
     )
     {
         if (name.Length is < 1 or > 32)
@@ -114,9 +133,11 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
+                        json.Write("name_localizations", nameLocalizations, this.JsonOptions);
+                        json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -157,28 +178,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/commands",
-            b => b.WithJsonArray
-                (
-                    json =>
-                    {
-                        foreach (var command in commands)
-                        {
-                            json.WriteStartObject();
-                            json.WriteString("name", command.Name);
-                            json.Write("type", command.Type, this.JsonOptions);
-
-                            if (!command.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput)
-                            {
-                                json.Write("description", command.Description, this.JsonOptions);
-                            }
-
-                            json.Write("options", command.Options, this.JsonOptions);
-                            json.Write("default_permission", command.DefaultPermission);
-                            json.WriteEndObject();
-                        }
-                    }
-                )
-                .WithRateLimitContext(),
+            b => b
+                .WithJsonArray(json => JsonSerializer.Serialize(json, commands, this.JsonOptions), false)
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -194,7 +196,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IApplicationCommand>
         (
             $"applications/{applicationID}/commands/{commandID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -204,11 +206,13 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     (
         Snowflake applicationID,
         Snowflake commandID,
-        Optional<string> name,
-        Optional<string> description,
-        Optional<IReadOnlyList<IApplicationCommandOption>?> options,
-        Optional<bool> defaultPermission,
-        CancellationToken ct
+        Optional<string> name = default,
+        Optional<string> description = default,
+        Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
+        Optional<bool> defaultPermission = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
     )
     {
         if (name.HasValue && name.Value.Length is < 1 or > 32)
@@ -241,9 +245,11 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description", description, this.JsonOptions);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
+                        json.Write("name_localizations", nameLocalizations, this.JsonOptions);
+                        json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -259,8 +265,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.DeleteAsync
         (
             $"applications/{applicationID}/commands/{commandID}",
-            b => b.WithRateLimitContext(),
-            ct: ct
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct
         );
     }
 
@@ -269,26 +275,40 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     (
         Snowflake applicationID,
         Snowflake guildID,
-        CancellationToken ct
+        Optional<bool> withLocalizations = default,
+        Optional<string> locale = default,
+        CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands",
-            b => b.WithRateLimitContext(),
+            b =>
+            {
+                if (withLocalizations.HasValue)
+                {
+                    b.AddQueryParameter("with_localizations", withLocalizations.Value.ToString());
+                }
+
+                if (locale.HasValue)
+                {
+                    b.AddHeader(Constants.LocaleHeaderName, locale.Value);
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
 
     /// <inheritdoc />
-    public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>>
-        BulkOverwriteGuildApplicationCommandsAsync
-        (
-            Snowflake applicationID,
-            Snowflake guildID,
-            IReadOnlyList<IBulkApplicationCommandData> commands,
-            CancellationToken ct = default
-        )
+    public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGuildApplicationCommandsAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        IReadOnlyList<IBulkApplicationCommandData> commands,
+        CancellationToken ct = default
+    )
     {
         if (commands.Any(c => c.Name.Length is < 1 or > 32))
         {
@@ -319,28 +339,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands",
-            b => b.WithJsonArray
-                (
-                    json =>
-                    {
-                        foreach (var command in commands)
-                        {
-                            json.WriteStartObject();
-                            json.WriteString("name", command.Name);
-                            json.Write("type", command.Type, this.JsonOptions);
-
-                            if (!command.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput)
-                            {
-                                json.Write("description", command.Description, this.JsonOptions);
-                            }
-
-                            json.Write("options", command.Options, this.JsonOptions);
-                            json.Write("default_permission", command.DefaultPermission);
-                            json.WriteEndObject();
-                        }
-                    }
-                )
-                .WithRateLimitContext(),
+            b => b
+                .WithJsonArray(json => JsonSerializer.Serialize(json, commands, this.JsonOptions), false)
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -352,10 +353,12 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake guildID,
         string name,
         string description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> options,
-        Optional<bool> defaultPermission,
-        Optional<ApplicationCommandType> type,
-        CancellationToken ct
+        Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
+        Optional<bool> defaultPermission = default,
+        Optional<ApplicationCommandType> type = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
     )
     {
         if (name.Length is < 1 or > 32)
@@ -395,9 +398,11 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
+                        json.Write("name_localizations", nameLocalizations, this.JsonOptions);
+                        json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -414,7 +419,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IApplicationCommand>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -425,11 +430,13 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake applicationID,
         Snowflake guildID,
         Snowflake commandID,
-        Optional<string> name,
-        Optional<string> description,
-        Optional<IReadOnlyList<IApplicationCommandOption>?> options,
-        Optional<bool> defaultPermission,
-        CancellationToken ct
+        Optional<string> name = default,
+        Optional<string> description = default,
+        Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
+        Optional<bool> defaultPermission = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
     )
     {
         if (name.HasValue && name.Value.Length is < 1 or > 32)
@@ -461,9 +468,11 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description", description, this.JsonOptions);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
+                        json.Write("name_localizations", nameLocalizations, this.JsonOptions);
+                        json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -480,8 +489,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.DeleteAsync
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
-            b => b.WithRateLimitContext(),
-            ct: ct
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct
         );
     }
 
@@ -497,7 +506,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -514,7 +523,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IGuildApplicationCommandPermissions>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -540,7 +549,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         JsonSerializer.Serialize(json, permissions, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -568,7 +577,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         }
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

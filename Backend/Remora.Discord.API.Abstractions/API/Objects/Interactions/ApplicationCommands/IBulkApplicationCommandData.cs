@@ -46,4 +46,10 @@ public interface IBulkApplicationCommandData
 
     /// <inheritdoc cref="IApplicationCommand.Type"/>
     Optional<ApplicationCommandType> Type { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.NameLocalizations"/>
+    Optional<IReadOnlyDictionary<string, string>?> NameLocalizations { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.DescriptionLocalizations"/>
+    Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations { get; }
 }

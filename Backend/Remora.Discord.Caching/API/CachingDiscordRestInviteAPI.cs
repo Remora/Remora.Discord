@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
@@ -39,14 +40,15 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
 {
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestInviteAPI(IRestHttpClient, JsonSerializerOptions)" />
+    /// <inheritdoc cref="DiscordRestInviteAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
     public CachingDiscordRestInviteAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
         _cacheService = cacheService;
     }
@@ -62,9 +64,11 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
     )
     {
         var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
-        if (_cacheService.TryGetValue<IInvite>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IInvite>(key, ct);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IInvite>.FromSuccess(cachedInstance);
+            return Result<IInvite>.FromSuccess(cacheResult.Entity);
         }
 
         var getInvite = await base.GetInviteAsync
@@ -82,7 +86,7 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
         }
 
         var invite = getInvite.Entity;
-        _cacheService.Cache(key, invite);
+        await _cacheService.CacheAsync(key, invite, ct);
 
         return getInvite;
     }
@@ -102,7 +106,7 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
         }
 
         var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
-        _cacheService.Evict<IInvite>(key);
+        await _cacheService.EvictAsync<IInvite>(key, ct);
 
         return deleteInvite;
     }

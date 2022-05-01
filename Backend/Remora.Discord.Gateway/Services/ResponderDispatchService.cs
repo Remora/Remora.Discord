@@ -27,12 +27,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Gateway.Services;
@@ -40,6 +40,7 @@ namespace Remora.Discord.Gateway.Services;
 /// <summary>
 /// Manages dispatch and processing of gateway payloads.
 /// </summary>
+[PublicAPI]
 public class ResponderDispatchService : IAsyncDisposable
 {
     private readonly IServiceProvider _services;
@@ -47,14 +48,18 @@ public class ResponderDispatchService : IAsyncDisposable
     private readonly IResponderTypeRepository _responderTypeRepository;
 
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
-    private readonly Dictionary<Type, MethodInfo> _cachedDispatchMethods;
+    private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchMethods;
 
-    private bool _isRunning;
     private CancellationTokenSource? _dispatchCancellationSource;
     private Task? _dispatcher;
     private Task? _finalizer;
     private Channel<IPayload>? _payloadsToDispatch;
     private Channel<Task<IReadOnlyList<Result>>>? _respondersToFinalize;
+
+    /// <summary>
+    /// Gets a value indicating whether the dispatch service is currently running.
+    /// </summary>
+    public bool IsRunning { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponderDispatchService"/> class.
@@ -90,9 +95,9 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <returns>A result which may or may not have succeeded.</returns>
     public async Task<Result> DispatchAsync(IPayload payload, CancellationToken ct = default)
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
-            return new NotRunningError();
+            throw new InvalidOperationException();
         }
 
         if (_dispatchCancellationSource is null)
@@ -120,12 +125,11 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <summary>
     /// Starts the dispatch service, beginning acceptance of payloads for dispatch.
     /// </summary>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    public Result Start()
+    public void Start()
     {
-        if (_isRunning)
+        if (this.IsRunning)
         {
-            return new AlreadyStartedError();
+            throw new InvalidOperationException("The dispatch service is already running.");
         }
 
         _dispatchCancellationSource = new();
@@ -139,19 +143,18 @@ public class ResponderDispatchService : IAsyncDisposable
         _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
         _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
 
-        _isRunning = true;
-        return Result.FromSuccess();
+        this.IsRunning = true;
     }
 
     /// <summary>
     /// Stops the dispatch service, finishing any pending payloads.
     /// </summary>
     /// <returns>A result which may or may not have succeeded.</returns>
-    public async Task<Result> StopAsync()
+    public async Task StopAsync()
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
-            return new NotRunningError();
+            throw new InvalidOperationException("The dispatch service is not running.");
         }
 
         if (_dispatcher is null)
@@ -183,9 +186,16 @@ public class ResponderDispatchService : IAsyncDisposable
         _dispatchCancellationSource.Cancel();
         _payloadsToDispatch.Writer.Complete();
 
-        // Wait for everything to actually stop...
-        await _dispatcher;
-        await _finalizer;
+        try
+        {
+            // Wait for everything to actually stop...
+            await _dispatcher;
+            await _finalizer;
+        }
+        catch (OperationCanceledException)
+        {
+            // OCE is always thrown when cancellation is requested.
+        }
 
         // Reset state so we can start again
         _dispatchCancellationSource = null;
@@ -196,8 +206,7 @@ public class ResponderDispatchService : IAsyncDisposable
         _payloadsToDispatch = null;
         _respondersToFinalize = null;
 
-        _isRunning = false;
-        return Result.FromSuccess();
+        this.IsRunning = false;
     }
 
     /// <summary>
@@ -303,9 +312,10 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <param name="ct">The cancellation token for the dispatched event.</param>
     private Result<Task<IReadOnlyList<Result>>> UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
     {
-        if (!_cachedInterfaceTypeArguments.TryGetValue(payload.GetType(), out var interfaceArgument))
+        var payloadType = payload.GetType();
+
+        if (!_cachedInterfaceTypeArguments.TryGetValue(payloadType, out var interfaceArgument))
         {
-            var payloadType = payload.GetType();
             if (!payloadType.IsGenericType)
             {
                 _log.LogWarning
@@ -334,7 +344,7 @@ public class ResponderDispatchService : IAsyncDisposable
             }
 
             interfaceArgument = payloadInterfaceType.GetGenericArguments()[0];
-            _cachedInterfaceTypeArguments.Add(payload.GetType(), interfaceArgument);
+            _cachedInterfaceTypeArguments.Add(payloadType, interfaceArgument);
         }
 
         if (!_cachedDispatchMethods.TryGetValue(interfaceArgument, out var boundDispatchMethod))
@@ -350,21 +360,15 @@ public class ResponderDispatchService : IAsyncDisposable
                 throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEventAsync));
             }
 
-            boundDispatchMethod = dispatchMethod.MakeGenericMethod(interfaceArgument);
+            // We have to cast because CreateDelegate<T> doesn't play nicely with netstandard.
+            boundDispatchMethod = (Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>)dispatchMethod
+                .MakeGenericMethod(interfaceArgument)
+                .CreateDelegate(typeof(Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>), this);
+
             _cachedDispatchMethods.Add(interfaceArgument, boundDispatchMethod);
         }
 
-        var responderTask = Task.Run
-        (
-            () =>
-            {
-                var task = boundDispatchMethod.Invoke(this, new object?[] { payload, ct })
-                           ?? throw new InvalidOperationException();
-
-                return (Task<IReadOnlyList<Result>>)task;
-            },
-            ct
-        );
+        var responderTask = Task.Run(() => boundDispatchMethod(payload, ct), ct);
 
         return responderTask;
     }
@@ -377,17 +381,20 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
     private async Task<IReadOnlyList<Result>> DispatchEventAsync<TGatewayEvent>
     (
-        IPayload<TGatewayEvent> gatewayEvent,
+        IPayload gatewayEvent,
         CancellationToken ct = default
     )
         where TGatewayEvent : IGatewayEvent
     {
+        // This is only called from one place, should be fine to cast.
+        var castedGatewayEvent = (IPayload<TGatewayEvent>)gatewayEvent;
+
         // Batch up the responders according to their groups
         var responderGroups = new[]
         {
             _responderTypeRepository.GetEarlyResponderTypes<TGatewayEvent>(),
             _responderTypeRepository.GetResponderTypes<TGatewayEvent>(),
-            _responderTypeRepository.GetLateResponderTypes<TGatewayEvent>(),
+            _responderTypeRepository.GetLateResponderTypes<TGatewayEvent>()
         };
 
         // Run through the groups in order
@@ -400,34 +407,17 @@ public class ResponderDispatchService : IAsyncDisposable
                 (
                     async rt =>
                     {
-                        using var serviceScope = _services.CreateScope();
+                        await using var serviceScope = _services.CreateAsyncScope();
                         var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider
                             .GetRequiredService(rt);
 
                         try
                         {
-                            return await responder.RespondAsync(gatewayEvent.Data, ct);
+                            return await responder.RespondAsync(castedGatewayEvent.Data, ct);
                         }
                         catch (Exception e)
                         {
                             return e;
-                        }
-                        finally
-                        {
-                            // Suspicious type conversions are disabled here, since the user-defined responders may
-                            // implement IDisposable or IAsyncDisposable.
-
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            if (responder is IDisposable disposable)
-                            {
-                                disposable.Dispose();
-                            }
-
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            if (responder is IAsyncDisposable asyncDisposable)
-                            {
-                                await asyncDisposable.DisposeAsync();
-                            }
                         }
                     }
                 )
@@ -505,15 +495,11 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <inheritdoc />
     public async ValueTask DisposeAsync()
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
             return;
         }
 
-        var stopDispatch = await StopAsync();
-        if (!stopDispatch.IsSuccess)
-        {
-            _log.LogError("Failed to stop the dispatch service in DisposeAsync. Panic!");
-        }
+        await StopAsync();
     }
 }

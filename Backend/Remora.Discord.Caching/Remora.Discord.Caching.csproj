@@ -5,23 +5,17 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>22.0.0</Version>
-        <Description>
-            $(BaseDescription)
-
-            This package contains memory cache functionality for the gateway and REST API.
-        </Description>
+        <Version>25.0.1</Version>
+        <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            feat: Dodge cache by providing TimeSpan.Zero
+            Fix typo in `CreateGuildInvitesCacheKey` by using `CreateGuildCacheKey`
+            Implement application command localization.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Remora.Discord.Caching.Abstractions\Remora.Discord.Caching.Abstractions.csproj" />
       <ProjectReference Include="..\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     </ItemGroup>
 
 </Project>
