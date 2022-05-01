@@ -35,7 +35,7 @@ namespace Remora.Discord.Commands.Attributes;
 /// permissisons can add additional filters to the command, either adding or removing applicable
 /// users.
 /// </remarks>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
 public class DiscordDefaultMemberPermissionsAttribute : Attribute
 {
     /// <summary>
