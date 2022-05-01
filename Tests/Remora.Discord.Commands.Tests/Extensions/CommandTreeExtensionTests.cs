@@ -242,6 +242,23 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
+            public void ReturnsUnsuccessfulIfMultipleNamedGroupsWithTheSameNameHaveADefaultDMPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<AtMostOneDMPermissionAttributeAllowed.Named.GroupOne>();
+                builder.RegisterModule<AtMostOneDMPermissionAttributeAllowed.Named.GroupTwo>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
             public void ReturnsUnsuccessfulIfContextMenuHasDescription()
             {
                 var builder = new CommandTreeBuilder();
@@ -470,6 +487,21 @@ public class CommandTreeExtensionTests
 
                 Assert.Equal(8, a.DefaultMemberPermissions.Value!.Value);
                 Assert.Equal(4, b.DefaultMemberPermissions.Value!.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesUngroupedTopLevleCommandsWithDefaultDMPermissionCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<MultipleCommandsWithDMPermission.GroupOne>();
+                builder.RegisterModule<MultipleCommandsWithDMPermission.GroupTwo>();
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
             }
 
             /// <summary>
