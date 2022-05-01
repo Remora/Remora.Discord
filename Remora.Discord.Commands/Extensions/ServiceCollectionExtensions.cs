@@ -22,12 +22,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using NGettext;
 using Remora.Commands.Extensions;
 using Remora.Commands.Tokenization;
@@ -264,7 +266,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TEvent">The event type.</typeparam>
     /// <returns>The collection, with the event.</returns>
-    public static IServiceCollection AddPreExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddPreExecutionEvent
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEvent
+        >(this IServiceCollection serviceCollection)
         where TEvent : class, IPreExecutionEvent
     {
         serviceCollection.AddScoped<IPreExecutionEvent, TEvent>();
@@ -277,7 +283,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TEvent">The event type.</typeparam>
     /// <returns>The collection, with the event.</returns>
-    public static IServiceCollection AddPostExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddPostExecutionEvent
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEvent
+        >(this IServiceCollection serviceCollection)
         where TEvent : class, IPostExecutionEvent
     {
         serviceCollection.AddScoped<IPostExecutionEvent, TEvent>();
@@ -290,7 +300,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TEvent">The event type.</typeparam>
     /// <returns>The collection, with the event.</returns>
-    public static IServiceCollection AddExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddExecutionEvent
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEvent
+        >(this IServiceCollection serviceCollection)
         where TEvent : class, IPreExecutionEvent, IPostExecutionEvent
     {
         serviceCollection
@@ -306,7 +320,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TProvider">The autocomplete provider.</typeparam>
     /// <returns>The collection, with the provider.</returns>
-    public static IServiceCollection AddAutocompleteProvider<TProvider>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddAutocompleteProvider
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TProvider
+        >(this IServiceCollection serviceCollection)
         where TProvider : class, IAutocompleteProvider
     {
         return serviceCollection.AddAutocompleteProvider(typeof(TProvider));
