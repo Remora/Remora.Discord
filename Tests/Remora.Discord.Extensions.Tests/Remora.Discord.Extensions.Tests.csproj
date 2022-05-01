@@ -8,4 +8,8 @@
     <ProjectReference Include="..\..\Remora.Discord.Extensions\Remora.Discord.Extensions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.17.2" />
+  </ItemGroup>
+
 </Project>
