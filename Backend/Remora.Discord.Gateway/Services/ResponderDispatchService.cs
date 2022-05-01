@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ public class ResponderDispatchService : IAsyncDisposable
     private readonly IResponderTypeRepository _responderTypeRepository;
 
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
-    private readonly Dictionary<Type, MethodInfo> _cachedDispatchMethods;
+    private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchDelegates;
 
     private CancellationTokenSource? _dispatchCancellationSource;
     private Task? _dispatcher;
@@ -79,7 +80,7 @@ public class ResponderDispatchService : IAsyncDisposable
         _log = log;
 
         _cachedInterfaceTypeArguments = new();
-        _cachedDispatchMethods = new();
+        _cachedDispatchDelegates = new();
     }
 
     /// <summary>
@@ -312,9 +313,10 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <param name="ct">The cancellation token for the dispatched event.</param>
     private Result<Task<IReadOnlyList<Result>>> UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
     {
-        if (!_cachedInterfaceTypeArguments.TryGetValue(payload.GetType(), out var interfaceArgument))
+        var payloadType = payload.GetType();
+
+        if (!_cachedInterfaceTypeArguments.TryGetValue(payloadType, out var interfaceArgument))
         {
-            var payloadType = payload.GetType();
             if (!payloadType.IsGenericType)
             {
                 _log.LogWarning
@@ -343,10 +345,10 @@ public class ResponderDispatchService : IAsyncDisposable
             }
 
             interfaceArgument = payloadInterfaceType.GetGenericArguments()[0];
-            _cachedInterfaceTypeArguments.Add(payload.GetType(), interfaceArgument);
+            _cachedInterfaceTypeArguments.Add(payloadType, interfaceArgument);
         }
 
-        if (!_cachedDispatchMethods.TryGetValue(interfaceArgument, out var boundDispatchMethod))
+        if (!_cachedDispatchDelegates.TryGetValue(interfaceArgument, out var dispatchDelegate))
         {
             var dispatchMethod = GetType().GetMethod
             (
@@ -359,21 +361,25 @@ public class ResponderDispatchService : IAsyncDisposable
                 throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEventAsync));
             }
 
-            boundDispatchMethod = dispatchMethod.MakeGenericMethod(interfaceArgument);
-            _cachedDispatchMethods.Add(interfaceArgument, boundDispatchMethod);
+            var delegateType = typeof(Func<,,>).MakeGenericType
+            (
+                typeof(IPayload<>).MakeGenericType(interfaceArgument),
+                typeof(CancellationToken),
+                typeof(Task<IReadOnlyList<Result>>)
+            );
+
+            // Naughty unsafe cast, because we know we're calling it with compatible types in this method
+            dispatchDelegate = Unsafe.As<Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>>
+            (
+                dispatchMethod
+                .MakeGenericMethod(interfaceArgument)
+                .CreateDelegate(delegateType, this)
+            );
+
+            _cachedDispatchDelegates.Add(interfaceArgument, dispatchDelegate);
         }
 
-        var responderTask = Task.Run
-        (
-            () =>
-            {
-                var task = boundDispatchMethod.Invoke(this, new object?[] { payload, ct })
-                           ?? throw new InvalidOperationException();
-
-                return (Task<IReadOnlyList<Result>>)task;
-            },
-            ct
-        );
+        var responderTask = Task.Run(() => dispatchDelegate(payload, ct), ct);
 
         return responderTask;
     }

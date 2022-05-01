@@ -327,7 +327,7 @@ public static class CommandTreeExtensions
         {
             return new UnsupportedFeatureError
             (
-                $"A sub-command or group was nested too deeply (depth {treeDepth}, max {MaxTreeDepth}.",
+                $"A sub-command or group was nested too deeply (depth {treeDepth}, max {MaxTreeDepth}).",
                 node
             );
         }
@@ -382,7 +382,7 @@ public static class CommandTreeExtensions
                     ? string.Empty
                     : command.Shape.Description;
 
-                if (command.Shape.Description != Constants.DefaultDescription)
+                if (commandType is not ApplicationCommandType.ChatInput && command.Shape.Description != Constants.DefaultDescription)
                 {
                     return new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
                 }
