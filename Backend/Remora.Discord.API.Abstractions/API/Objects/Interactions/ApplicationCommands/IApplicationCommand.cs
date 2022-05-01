@@ -115,5 +115,5 @@ public interface IApplicationCommand
     /// <summary>
     /// Gets a value that indicates whether this command can be executed in DMs.
     /// </summary>
-    Optional<bool> DmPermission { get; }
+    Optional<bool> DMPermission { get; }
 }

@@ -27,8 +27,8 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
-/// Marks a group with a set of permissions, that is the permissions required
-/// for the user to be able to execute the commands within the group.
+/// Marks a command as requring the executor of the command to have the specified permissions.
+/// Specifying no permissions will make the command inaccessible to anyone.
 /// </summary>
 /// <remarks>
 /// Permissions serve as a base for command access, however moderators with the appropriate

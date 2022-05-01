@@ -553,32 +553,4 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             ct: ct
         );
     }
-
-    /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
-        BatchEditApplicationCommandPermissionsAsync
-        (
-            Snowflake applicationID,
-            Snowflake guildID,
-            IReadOnlyList<IPartialGuildApplicationCommandPermissions> permissions,
-            CancellationToken ct = default
-        )
-    {
-        return this.RestHttpClient.PutAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
-        (
-            $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
-            b => b.WithJsonArray
-                (
-                    json =>
-                    {
-                        foreach (var permission in permissions)
-                        {
-                            JsonSerializer.Serialize(json, permission, this.JsonOptions);
-                        }
-                    }
-                )
-                .WithRateLimitContext(this.RateLimitCache),
-            ct: ct
-        );
-    }
 }

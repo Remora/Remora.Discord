@@ -24,6 +24,7 @@ using System;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
@@ -37,7 +38,7 @@ public class MultipleCommandsWithDefaultPermission
     /// <summary>
     /// The first group.
     /// </summary>
-    [DiscordDefaultPermission(true)]
+    [DiscordDefaultMemberPermissions(DiscordPermission.Administrator)]
     public class GroupOne : CommandGroup
     {
         /// <summary>
@@ -51,7 +52,7 @@ public class MultipleCommandsWithDefaultPermission
     /// <summary>
     /// The second group.
     /// </summary>
-    [DiscordDefaultPermission(false)]
+    [DiscordDefaultMemberPermissions(DiscordPermission.BanMembers)]
     public class GroupTwo : CommandGroup
     {
         /// <summary>
