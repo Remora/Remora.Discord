@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ public class ResponderDispatchService : IAsyncDisposable
     private readonly IResponderTypeRepository _responderTypeRepository;
 
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
-    private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchMethods;
+    private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchDelegates;
 
     private CancellationTokenSource? _dispatchCancellationSource;
     private Task? _dispatcher;
@@ -79,7 +80,7 @@ public class ResponderDispatchService : IAsyncDisposable
         _log = log;
 
         _cachedInterfaceTypeArguments = new();
-        _cachedDispatchMethods = new();
+        _cachedDispatchDelegates = new();
     }
 
     /// <summary>
@@ -347,7 +348,7 @@ public class ResponderDispatchService : IAsyncDisposable
             _cachedInterfaceTypeArguments.Add(payloadType, interfaceArgument);
         }
 
-        if (!_cachedDispatchMethods.TryGetValue(interfaceArgument, out var boundDispatchMethod))
+        if (!_cachedDispatchDelegates.TryGetValue(interfaceArgument, out var dispatchDelegate))
         {
             var dispatchMethod = GetType().GetMethod
             (
@@ -360,15 +361,25 @@ public class ResponderDispatchService : IAsyncDisposable
                 throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEventAsync));
             }
 
-            // We have to cast because CreateDelegate<T> doesn't play nicely with netstandard.
-            boundDispatchMethod = (Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>)dispatchMethod
-                .MakeGenericMethod(interfaceArgument)
-                .CreateDelegate(typeof(Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>), this);
+            var delegateType = typeof(Func<,,>).MakeGenericType
+            (
+                typeof(IPayload<>).MakeGenericType(interfaceArgument),
+                typeof(CancellationToken),
+                typeof(Task<IReadOnlyList<Result>>)
+            );
 
-            _cachedDispatchMethods.Add(interfaceArgument, boundDispatchMethod);
+            // Naughty unsafe cast, because we know we're calling it with compatible types in this method
+            dispatchDelegate = Unsafe.As<Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>>
+            (
+                dispatchMethod
+                .MakeGenericMethod(interfaceArgument)
+                .CreateDelegate(delegateType, this)
+            );
+
+            _cachedDispatchDelegates.Add(interfaceArgument, dispatchDelegate);
         }
 
-        var responderTask = Task.Run(() => boundDispatchMethod(payload, ct), ct);
+        var responderTask = Task.Run(() => dispatchDelegate(payload, ct), ct);
 
         return responderTask;
     }
@@ -381,14 +392,11 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
     private async Task<IReadOnlyList<Result>> DispatchEventAsync<TGatewayEvent>
     (
-        IPayload gatewayEvent,
+        IPayload<TGatewayEvent> gatewayEvent,
         CancellationToken ct = default
     )
         where TGatewayEvent : IGatewayEvent
     {
-        // This is only called from one place, should be fine to cast.
-        var castedGatewayEvent = (IPayload<TGatewayEvent>)gatewayEvent;
-
         // Batch up the responders according to their groups
         var responderGroups = new[]
         {
@@ -413,7 +421,7 @@ public class ResponderDispatchService : IAsyncDisposable
 
                         try
                         {
-                            return await responder.RespondAsync(castedGatewayEvent.Data, ct);
+                            return await responder.RespondAsync(gatewayEvent.Data, ct);
                         }
                         catch (Exception e)
                         {
