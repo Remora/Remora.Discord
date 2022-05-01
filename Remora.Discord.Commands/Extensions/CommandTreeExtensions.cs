@@ -266,9 +266,13 @@ public static class CommandTreeExtensions
 
                     // Top-level command outside of a group
                     var memberPermissionsAttribute = commandNode.GroupType
+                        .GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
+                                                     commandNode.CommandMethod
                         .GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
 
                     var directMessagePermissionAttribute = commandNode.GroupType
+                        .GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
+                                                           commandNode.CommandMethod
                         .GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
 
                     if (memberPermissionsAttribute is not null)
