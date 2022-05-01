@@ -71,12 +71,6 @@ public interface IApplicationCommand
     Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
 
     /// <summary>
-    /// Gets a value indicating whether the command is enabled by default when added to a guild.
-    /// </summary>
-    [Obsolete($"This property is deprecated in favor of {nameof(DefaultMemberPermissions)}", false)]
-    Optional<bool> DefaultPermission { get; }
-
-    /// <summary>
     /// Gets a value that increments on substantial changes.
     /// </summary>
     Snowflake Version { get; }
