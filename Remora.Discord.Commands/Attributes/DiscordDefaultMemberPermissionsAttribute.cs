@@ -28,7 +28,7 @@ namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
 /// Marks a command as requring the executor of the command to have the specified permissions.
-/// Specifying no permissions will make the command inaccessible to anyone.
+/// Specifying no permissions will make the command or group inaccessible to anyone.
 /// </summary>
 /// <remarks>
 /// Permissions serve as a base for command access, however moderators with the appropriate
