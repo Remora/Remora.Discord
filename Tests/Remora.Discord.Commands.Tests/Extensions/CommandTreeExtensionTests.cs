@@ -508,6 +508,21 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a successful case.
             /// </summary>
             [Fact]
+            public void CreatesMultipartGroupWithDefaultDMPermissionCorrectly()
+            {
+                var buidler = new CommandTreeBuilder();
+                buidler.RegisterModule<MultipartNamedGroupWithDMPermission>();
+
+                var tree = buidler.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
             public void CreatesContextMenuCommandsCorrectly()
             {
                 var builder = new CommandTreeBuilder();
