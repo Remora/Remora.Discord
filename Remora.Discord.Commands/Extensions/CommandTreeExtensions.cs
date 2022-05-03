@@ -206,30 +206,58 @@ public static class CommandTreeExtensions
 
             // Translate from options to bulk data
             Optional<ApplicationCommandType> commandType = default;
-            Optional<bool> defaultPermission = default;
+            Optional<bool?> directMessagePermission = default;
+            Optional<IDiscordPermissionSet?> defaultMemberPermissions = default;
             switch (node)
             {
                 case GroupNode groupNode:
                 {
-                    var defaultPermissionAttributes = groupNode.GroupTypes.Select
+                    var memberPermissionAttributes = groupNode.GroupTypes.Select
                         (
-                            t => t.GetCustomAttribute<DiscordDefaultPermissionAttribute>()
+                            t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
                         )
-                        .ToList();
+                        .Where(attribute => attribute is not null)
+                        .ToArray();
 
-                    if (defaultPermissionAttributes.Count > 1)
+                    var directMessagePermisisonAttributes = groupNode.GroupTypes.Select
+                        (
+                            t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
+                        )
+                        .Where(attribute => attribute is not null)
+                        .ToArray();
+
+                    if (memberPermissionAttributes.Length > 1)
                     {
                         return new UnsupportedFeatureError
                         (
                             "In a set of groups with the same name, only one may be marked with a default " +
-                            $"permission attribute (had {defaultPermissionAttributes.Count})."
+                            $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                            node
                         );
                     }
 
-                    var permissionAttribute = defaultPermissionAttributes.SingleOrDefault();
-                    if (permissionAttribute is not null)
+                    var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
+
+                    if (defaultMemberPermissionsAttribute is not null)
                     {
-                        defaultPermission = permissionAttribute.DefaultPermission;
+                        defaultMemberPermissions = new DiscordPermissionSet(defaultMemberPermissionsAttribute.Permissions.ToArray());
+                    }
+
+                    if (directMessagePermisisonAttributes.Length > 1)
+                    {
+                        return new UnsupportedFeatureError
+                        (
+                            "In a set of groups with the same name, only one may be marked with a default " +
+                            $"DM permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                            node
+                        );
+                    }
+
+                    var directMessagePermissionAttribute = directMessagePermisisonAttributes.SingleOrDefault();
+
+                    if (directMessagePermissionAttribute is not null)
+                    {
+                        directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
                     }
 
                     break;
@@ -239,12 +267,22 @@ public static class CommandTreeExtensions
                     commandType = commandNode.GetCommandType();
 
                     // Top-level command outside of a group
-                    var permissionAttribute = commandNode.GroupType
-                        .GetCustomAttribute<DiscordDefaultPermissionAttribute>();
+                    var memberPermissionsAttribute =
+                        commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
+                        commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
 
-                    if (permissionAttribute is not null)
+                    var directMessagePermissionAttribute =
+                        commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
+                        commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
+
+                    if (memberPermissionsAttribute is not null)
                     {
-                        defaultPermission = permissionAttribute.DefaultPermission;
+                        defaultMemberPermissions = new DiscordPermissionSet(memberPermissionsAttribute.Permissions.ToArray());
+                    }
+
+                    if (directMessagePermissionAttribute is not null)
+                    {
+                        directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
                     }
 
                     break;
@@ -261,10 +299,11 @@ public static class CommandTreeExtensions
                     option.Name,
                     string.IsNullOrWhiteSpace(option.Description) ? default(Optional<string>) : option.Description,
                     option.Options,
-                    defaultPermission,
                     commandType,
                     localizedNames.Count > 0 ? new(localizedNames) : default,
-                    localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
+                    localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
+                    defaultMemberPermissions,
+                    directMessagePermission
                 )
             );
         }

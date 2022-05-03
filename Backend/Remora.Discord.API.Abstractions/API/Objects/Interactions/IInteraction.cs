@@ -94,4 +94,9 @@ public interface IInteraction
     /// This is sent for all interaction types, except <see cref="InteractionType.Ping"/>.
     /// </remarks>
     Optional<string> Locale { get; }
+
+    /// <summary>
+    /// Gets the locale of the guild the interaction was sent from.
+    /// </summary>
+    Optional<string> GuildLocale { get; }
 }

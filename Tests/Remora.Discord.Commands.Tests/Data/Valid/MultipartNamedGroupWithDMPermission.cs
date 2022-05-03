@@ -1,5 +1,5 @@
 //
-//  NamedGroupWithDefaultPermission.cs
+//  MultipartNamedGroupWithDMPermission.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,23 +24,42 @@ using System;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Tests.Data.Valid;
 
 /// <summary>
-/// A group with a default permission set.
+/// A container for two group parts.
 /// </summary>
-[DiscordDefaultMemberPermissions(DiscordPermission.Administrator)]
-[Group("a")]
-public class NamedGroupWithDefaultPermission : CommandGroup
+public class MultipartNamedGroupWithDMPermission : CommandGroup
 {
     /// <summary>
-    /// The first command.
+    /// The first group.
     /// </summary>
-    /// <returns>Nothing.</returns>
-    [Command("b")]
-    public Task<Result> B() => throw new NotImplementedException();
+    [Group("a")]
+    [DiscordDefaultDMPermission(false)]
+    public class MultipartNamedGroupWithDMPermissionPart1 : CommandGroup
+    {
+        /// <summary>
+        /// The command.
+        /// </summary>
+        /// <returns>Nothing.</returns>
+        [Command("b")]
+        public Task<Result> A() => throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// The second group part.
+    /// </summary>
+    [Group("a")]
+    public class MultipartNamedGroupWithDMPermissionPart2 : CommandGroup
+    {
+        /// <summary>
+        /// The command.
+        /// </summary>
+        /// <returns>Nothing.</returns>
+        [Command("c")]
+        public Task<Result> A() => throw new NotImplementedException();
+    }
 }

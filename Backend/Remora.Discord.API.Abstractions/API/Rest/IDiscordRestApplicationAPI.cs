@@ -317,28 +317,15 @@ public interface IDiscordRestApplicationAPI
     /// <param name="permissions">The permissions to overwrite the existing ones with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>An edit result which may or may not have succeeded.</returns>
+    /// <remarks>
+    /// Using this method requires a bearer token authorized with the applications.commands.permissions.update OAuth2 scope.
+    /// </remarks>
     Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
     (
         Snowflake applicationID,
         Snowflake guildID,
         Snowflake commandID,
         IReadOnlyList<IApplicationCommandPermissions> permissions,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
-    /// Overwrites the entire permission set in the given guild.
-    /// </summary>
-    /// <param name="applicationID">The ID of the application.</param>
-    /// <param name="guildID">The ID of the guild.</param>
-    /// <param name="permissions">The permission set to overwrite the existing one with.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>An edit result which may or may not have succeeded.</returns>
-    Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>> BatchEditApplicationCommandPermissionsAsync
-    (
-        Snowflake applicationID,
-        Snowflake guildID,
-        IReadOnlyList<IPartialGuildApplicationCommandPermissions> permissions,
         CancellationToken ct = default
     );
 }

@@ -1,5 +1,5 @@
 //
-//  AtMostOneDefaultPermissionAttributeAllowed.cs
+//  AtMostOneDMPermissionAttributeAllowed.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,10 +21,10 @@
 //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
@@ -33,18 +33,18 @@ namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
 /// <summary>
 /// Wraps two test groups.
 /// </summary>
-public class AtMostOneDefaultPermissionAttributeAllowed
+public class AtMostOneDMPermissionAttributeAllowed
 {
     /// <summary>
-    /// Wraps named test groups.
+    /// Wraps two named test groups.
     /// </summary>
     public class Named
     {
         /// <summary>
         /// The first group.
         /// </summary>
-        [DiscordDefaultMemberPermissions(DiscordPermission.Administrator)]
         [Group("a")]
+        [DiscordDefaultDMPermission(true)]
         public class GroupOne : CommandGroup
         {
             /// <summary>
@@ -52,14 +52,15 @@ public class AtMostOneDefaultPermissionAttributeAllowed
             /// </summary>
             /// <returns>Nothing.</returns>
             [Command("b")]
+            [DoesNotReturn]
             public Task<Result> B() => throw new NotImplementedException();
         }
 
         /// <summary>
         /// The second group.
         /// </summary>
-        [DiscordDefaultMemberPermissions(DiscordPermission.BanMembers)]
         [Group("a")]
+        [DiscordDefaultDMPermission(false)]
         public class GroupTwo : CommandGroup
         {
             /// <summary>
@@ -67,6 +68,7 @@ public class AtMostOneDefaultPermissionAttributeAllowed
             /// </summary>
             /// <returns>Nothing.</returns>
             [Command("c")]
+            [DoesNotReturn]
             public Task<Result> C() => throw new NotImplementedException();
         }
     }

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
@@ -34,8 +35,9 @@ public record BulkApplicationCommandData
     string Name,
     Optional<string> Description = default,
     Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-    Optional<bool> DefaultPermission = default,
     Optional<ApplicationCommandType> Type = default,
     Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
-    Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default
+    Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default,
+    Optional<IDiscordPermissionSet?> DefaultMemberPermissions = default,
+    Optional<bool?> DMPermission = default
 ) : IBulkApplicationCommandData;

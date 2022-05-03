@@ -41,9 +41,6 @@ public interface IBulkApplicationCommandData
     /// <inheritdoc cref="IApplicationCommand.Options"/>
     Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
 
-    /// <inheritdoc cref="IApplicationCommand.DefaultPermission"/>
-    Optional<bool> DefaultPermission { get; }
-
     /// <inheritdoc cref="IApplicationCommand.Type"/>
     Optional<ApplicationCommandType> Type { get; }
 
@@ -52,4 +49,10 @@ public interface IBulkApplicationCommandData
 
     /// <inheritdoc cref="IApplicationCommand.DescriptionLocalizations"/>
     Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.DefaultMemberPermissions"/>
+    Optional<IDiscordPermissionSet?> DefaultMemberPermissions { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.DMPermission"/>
+    Optional<bool?> DMPermission { get; }
 }

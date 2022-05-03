@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
@@ -70,11 +71,6 @@ public interface IApplicationCommand
     Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
 
     /// <summary>
-    /// Gets a value indicating whether the command is enabled by default when added to a guild.
-    /// </summary>
-    Optional<bool> DefaultPermission { get; }
-
-    /// <summary>
     /// Gets a value that increments on substantial changes.
     /// </summary>
     Snowflake Version { get; }
@@ -104,4 +100,14 @@ public interface IApplicationCommand
     /// This field is only supplied by Discord as a response, and is not used to set the actual localized string.
     /// </remarks>
     Optional<string> DescriptionLocalized { get; }
+
+    /// <summary>
+    /// Gets a value that indicates the requisite permissions to execute the command.
+    /// </summary>
+    Optional<IDiscordPermissionSet?> DefaultMemberPermissions { get; }
+
+    /// <summary>
+    /// Gets a value that indicates whether this command can be executed in DMs.
+    /// </summary>
+    Optional<bool?> DMPermission { get; }
 }
