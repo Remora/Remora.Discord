@@ -60,13 +60,13 @@
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -414,11 +414,20 @@ public interface IBulkApplicationCommandData</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBulkApplicationCommandData/62E6A299">DefaultPermission</a></td>
-								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBulkApplicationCommandData/3A2826D4">DMPermission</a></td>
+								<td>Optional<wbr>&lt;bool?&gt;<wbr></td>
 								<td>
 									<div>
-    Gets a value indicating whether the command is enabled by default when added to a guild.
+    Gets a value that indicates whether this command can be executed in DMs.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBulkApplicationCommandData/CA2A0605">Default<wbr>Member<wbr>Permissions</a></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet">I<wbr>Discord<wbr>Permission<wbr>Set?</a>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets a value that indicates the requisite permissions to execute the command.
     </div>
 								</td>
 							</tr>
