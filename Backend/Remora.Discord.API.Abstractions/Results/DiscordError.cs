@@ -654,6 +654,11 @@ public enum DiscordError
     CannotDeleteCommunityRequiredChannel = 50074,
 
     /// <summary>
+    /// Stickers sent in a message can't be edited.
+    /// </summary>
+    CannotEditStickersInMessage = 50080,
+
+    /// <summary>
     /// Invalid sticker sent.
     /// </summary>
     InvalidSticker = 50081,
