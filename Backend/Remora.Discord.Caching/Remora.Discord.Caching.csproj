@@ -5,11 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>25.0.1</Version>
+        <Version>25.0.2</Version>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            Fix typo in `CreateGuildInvitesCacheKey` by using `CreateGuildCacheKey`
-            Implement application command localization.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

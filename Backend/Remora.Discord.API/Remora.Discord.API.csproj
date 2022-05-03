@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>56.0.0</Version>
+        <Version>57.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Fix property optionality.
-            Implement application command localization.
+            Implement Permissions v2
+            Add support for guild locales
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -5,15 +5,15 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.24</Version>
+        <Version>2022.25</Version>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Add caching to the metapackage.
-            Fix early bailout not checking for slash command
-            Register default localization provider.
-            Fix typo in `CreateGuildInvitesCacheKey` by using `CreateGuildCacheKey`
-            Fix property optionality.
-            Implement application command localization.
+            Implement Permissions v2
+            Add support for guild locales
+            Add `MeansImplicitUse` to `Add____` extensions
+            Implement formatting helpers
+            Use delegates instead of MethodInfo
+            add missing ) in error message
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

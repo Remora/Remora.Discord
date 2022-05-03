@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>34.0.0</Version>
+        <Version>35.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
-            Implement application command localization.
+            Implement Permissions v2
         </PackageReleaseNotes>
     </PropertyGroup>
 
