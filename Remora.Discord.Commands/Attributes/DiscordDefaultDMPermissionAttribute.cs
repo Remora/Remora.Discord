@@ -41,6 +41,6 @@ public class DiscordDefaultDMPermissionAttribute : Attribute
     /// <param name="isExecutableInDMs">Whether this command group is executable in a DM.</param>
     public DiscordDefaultDMPermissionAttribute(bool isExecutableInDMs = false)
     {
-        IsExecutableInDMs = isExecutableInDMs;
+        this.IsExecutableInDMs = isExecutableInDMs;
     }
 }
