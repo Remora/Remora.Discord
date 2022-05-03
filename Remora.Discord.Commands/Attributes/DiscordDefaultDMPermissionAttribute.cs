@@ -25,7 +25,7 @@ using System;
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
-/// Marks a command group as being either executable or non-executable in a DM by default.
+/// Marks a command group as being either executable or non-executable in a DM.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
 public class DiscordDefaultDMPermissionAttribute : Attribute
