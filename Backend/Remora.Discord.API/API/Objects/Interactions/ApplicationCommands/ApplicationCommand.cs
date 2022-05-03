@@ -46,5 +46,5 @@ public record ApplicationCommand
     Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default,
     Optional<string> DescriptionLocalized = default,
     Optional<IDiscordPermissionSet?> DefaultMemberPermissions = default,
-    Optional<bool> DMPermission = default
+    Optional<bool?> DMPermission = default
 ) : IApplicationCommand;
