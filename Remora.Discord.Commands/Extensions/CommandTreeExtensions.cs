@@ -216,12 +216,14 @@ public static class CommandTreeExtensions
                         (
                             t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
                         )
+                        .Where(attribute => attribute is not null)
                         .ToArray();
 
                     var directMessagePermisisonAttributes = groupNode.GroupTypes.Select
                         (
                             t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
                         )
+                        .Where(attribute => attribute is not null)
                         .ToArray();
 
                     if (memberPermissionAttributes.Length > 1)
