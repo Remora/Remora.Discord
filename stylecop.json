@@ -27,7 +27,8 @@
             "allowedHungarianPrefixes" : [
                 "gl",
                 "f",
-                "db"
+                "db",
+                "dm"
             ]
         },
         "maintainabilityRules" : {
