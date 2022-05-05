@@ -39,7 +39,7 @@ public class DiscordDefaultDMPermissionAttribute : Attribute
     /// Initializes a new instance of the <see cref="DiscordDefaultDMPermissionAttribute"/> class.
     /// </summary>
     /// <param name="isExecutableInDMs">Whether this command group is executable in a DM.</param>
-    public DiscordDefaultDMPermissionAttribute(bool isExecutableInDMs = false)
+    public DiscordDefaultDMPermissionAttribute(bool isExecutableInDMs = true)
     {
         this.IsExecutableInDMs = isExecutableInDMs;
     }
