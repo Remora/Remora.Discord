@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' == 'netcoreapp' Or '$(TargetFramework.TrimEnd(`0123456789.`))' == 'net'" >
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
         <PackageReference Include="xunit.runner.console" Version="2.4.1" />
     </ItemGroup>
 </Project>

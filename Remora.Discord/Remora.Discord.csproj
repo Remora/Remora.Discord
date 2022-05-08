@@ -5,15 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.25</Version>
+        <Version>2022.26</Version>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Implement Permissions v2
-            Add support for guild locales
-            Add `MeansImplicitUse` to `Add____` extensions
-            Implement formatting helpers
-            Use delegates instead of MethodInfo
-            add missing ) in error message
+            Upgrade Remora.Commands.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
