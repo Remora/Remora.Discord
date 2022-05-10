@@ -35,7 +35,6 @@ namespace Remora.Discord.API.Abstractions.Rest;
 /// Represents the Discord application API.
 /// </summary>
 [PublicAPI]
-[SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "DM is an abbreviation.")]
 public interface IDiscordRestApplicationAPI
 {
     /// <summary>
