@@ -114,6 +114,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
                                 .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
+                                .WithProperty("dm_permission", p => p.Is(false))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -126,6 +127,7 @@ public class DiscordRestApplicationAPITests
                 description,
                 options,
                 defaultMemberPermissions: permissions,
+                dmPermission: false,
                 type: type
             );
 
