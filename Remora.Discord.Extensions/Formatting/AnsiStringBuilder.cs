@@ -215,10 +215,10 @@ public class AnsiStringBuilder
         /// </summary>
         public void Reset()
         {
-            IsBold = false;
-            IsUnderlined = false;
-            ForegroundColor = AnsiForegroundColor.None;
-            BackgroundColor = AnsiBackgroundColor.None;
+            this.IsBold = false;
+            this.IsUnderlined = false;
+            this.ForegroundColor = AnsiForegroundColor.None;
+            this.BackgroundColor = AnsiBackgroundColor.None;
         }
 
         /// <summary>
