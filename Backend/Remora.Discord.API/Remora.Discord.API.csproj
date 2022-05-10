@@ -16,7 +16,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-        <PackageReference Include="System.Text.Json" Version="6.0.3" />
+        <PackageReference Include="System.Text.Json" Version="6.0.4" />
         <PackageReference Include="Remora.Rest" Version="1.2.4" />
     </ItemGroup>
 
