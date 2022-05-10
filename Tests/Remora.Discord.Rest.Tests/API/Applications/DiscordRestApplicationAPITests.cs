@@ -98,6 +98,7 @@ public class DiscordRestApplicationAPITests
             var name = "aaa";
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
+            var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
 
             var api = CreateAPI
             (
@@ -112,6 +113,8 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
+                                .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
+                                .WithProperty("dm_permission", p => p.Is(false))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -123,6 +126,8 @@ public class DiscordRestApplicationAPITests
                 name,
                 description,
                 options,
+                defaultMemberPermissions: permissions,
+                dmPermission: false,
                 type: type
             );
 
@@ -959,6 +964,7 @@ public class DiscordRestApplicationAPITests
             var name = "aaa";
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
+            var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
 
             var api = CreateAPI
             (
@@ -977,6 +983,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
+                                .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -989,6 +996,7 @@ public class DiscordRestApplicationAPITests
                 name,
                 description,
                 options,
+                defaultMemberPermissions: permissions,
                 type: type
             );
 
