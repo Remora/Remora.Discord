@@ -113,7 +113,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
-                                .WithProperty("defualt_member_permissions", p => p.Is(permissions.Value.ToString()))
+                                .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
