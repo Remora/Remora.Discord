@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.0.5</Version>
+        <Version>8.0.6</Version>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Use delegates instead of MethodInfo
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

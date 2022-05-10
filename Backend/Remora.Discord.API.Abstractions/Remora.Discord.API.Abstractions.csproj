@@ -5,12 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>60.0.0</Version>
+        <Version>60.1.0</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Implement Permissions v2
-            Add support for guild locales
-            Implement formatting helpers
+            Add missing gateway event.
+            Update nuget packages.
         </PackageReleaseNotes>
     </PropertyGroup>
 

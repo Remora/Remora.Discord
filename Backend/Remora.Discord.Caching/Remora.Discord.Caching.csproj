@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>25.0.2</Version>
+        <Version>25.0.3</Version>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
             Update dependencies.

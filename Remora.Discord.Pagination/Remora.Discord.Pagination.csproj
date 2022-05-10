@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.0.15</Version>
+        <Version>2.0.16</Version>
         <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.

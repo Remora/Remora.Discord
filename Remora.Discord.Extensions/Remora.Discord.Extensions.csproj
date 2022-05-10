@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.1.0</Version>
+        <Version>4.1.1</Version>
         <Description>Utilities and components which extened upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
-            Implement formatting helpers
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
