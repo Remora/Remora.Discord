@@ -375,6 +375,10 @@ public static class ServiceCollectionExtensions
         // Stickers
         options.AddDataObjectConverter<IGuildStickersUpdate, GuildStickersUpdate>();
 
+        // Application commands
+        options.AddDataObjectConverter<IApplicationCommandPermissionsUpdate, ApplicationCommandPermissionsUpdate>()
+            .WithPropertyName(p => p.HasPermission, "permission");
+
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
