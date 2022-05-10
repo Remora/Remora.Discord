@@ -54,6 +54,7 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         { "channel_id", typeof(Snowflake) },
         { "code", typeof(string) },
         { "color", typeof(Color) },
+        { "command_id", typeof(Snowflake) },
         { "communication_disabled_until", typeof(DateTimeOffset) },
         { "deaf", typeof(bool) },
         { "default_auto_archive_duration", typeof(AutoArchiveDuration) },
