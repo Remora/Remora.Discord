@@ -27,6 +27,7 @@ using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
@@ -65,7 +66,8 @@ public static class ServiceCollectionExtensions
         serviceCollection.TryAddTransient<IPayloadTransportService>(s => new WebSocketPayloadTransportService
         (
             s,
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ILogger<WebSocketPayloadTransportService>>()
         ));
 
         return serviceCollection;
