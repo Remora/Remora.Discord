@@ -42,4 +42,13 @@ public record InteractionContext
     IInteractionData Data,
     Optional<IMessage> Message,
     Optional<string> Locale
-) : CommandContext(GuildID, ChannelID, User);
+) : CommandContext(GuildID, ChannelID, User)
+{
+    /// <summary>
+    /// Gets a value indicating whether the interaction has been responded to.
+    /// </summary>
+    /// <remarks>
+    /// Note that this value is only updated if the response is created after the context is instantiated.
+    /// </remarks>
+    public bool HasRespondedToInteraction { get; internal set; }
+}

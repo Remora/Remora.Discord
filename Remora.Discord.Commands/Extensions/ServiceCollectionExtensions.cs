@@ -22,18 +22,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using NGettext;
 using Remora.Commands.Extensions;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
+using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Commands.API;
 using Remora.Discord.Commands.Autocomplete;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
@@ -43,6 +43,7 @@ using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Rest.Extensions;
 using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Commands.Extensions;
@@ -127,6 +128,8 @@ public static class ServiceCollectionExtensions
         // Add the helpers used for context injection.
         serviceCollection
             .TryAddScoped<ContextInjectionService>();
+
+        serviceCollection.Decorate<IDiscordRestInteractionAPI, ResponseTrackingInteractionAPI>();
 
         // Set up context injection
         serviceCollection
