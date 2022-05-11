@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -248,5 +249,48 @@ public static class ServiceCollectionExtensions
         buildClient?.Invoke(clientBuilder);
 
         return serviceCollection;
+    }
+
+    /// <summary>
+    /// Registers a decorator service, replacing the existing interface.
+    /// </summary>
+    /// <remarks>
+    /// Implementation based off of https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection/.
+    /// </remarks>
+    /// <param name="services">The service collection.</param>
+    /// <typeparam name="TInterface">The interface type to decorate.</typeparam>
+    /// <typeparam name="TDecorator">The decorator type.</typeparam>
+    /// <returns>The service collection, with the decorated service.</returns>
+    public static IServiceCollection Decorate<TInterface, TDecorator>(this IServiceCollection services)
+        where TInterface : class
+        where TDecorator : class, TInterface
+    {
+        var wrappedDescriptor = services.First(s => s.ServiceType == typeof(TInterface));
+
+        var objectFactory = ActivatorUtilities.CreateFactory(typeof(TDecorator), new[] { typeof(TInterface) });
+        services.Replace(ServiceDescriptor.Describe
+        (
+            typeof(TInterface),
+            s => (TInterface)objectFactory(s, new[] { s.CreateInstance(wrappedDescriptor) }),
+            wrappedDescriptor.Lifetime)
+        );
+
+        return services;
+    }
+
+    private static object CreateInstance(this IServiceProvider services, ServiceDescriptor descriptor)
+    {
+        if (descriptor.ImplementationInstance is not null)
+        {
+            return descriptor.ImplementationInstance;
+        }
+
+        return descriptor.ImplementationFactory is not null
+            ? descriptor.ImplementationFactory(services)
+            : ActivatorUtilities.GetServiceOrCreateInstance
+            (
+                services,
+                descriptor.ImplementationType ?? throw new InvalidOperationException()
+            );
     }
 }

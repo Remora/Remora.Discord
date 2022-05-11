@@ -20,41 +20,43 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Caching.Abstractions.Services;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest.API;
-using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
-/// <inheritdoc />
+/// <summary>
+/// Decorates the registered invite API with caching functionality.
+/// </summary>
 [PublicAPI]
-public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
+public class CachingDiscordRestInviteAPI : IDiscordRestInviteAPI
 {
+    private readonly IDiscordRestInviteAPI _actual;
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestInviteAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CachingDiscordRestInviteAPI"/> class.
+    /// </summary>
+    /// <param name="actual">The decorated instance.</param>
+    /// <param name="cacheService">The cache service.</param>
     public CachingDiscordRestInviteAPI
     (
-        IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions,
-        ICacheProvider rateLimitCache,
+        IDiscordRestInviteAPI actual,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _actual = actual;
         _cacheService = cacheService;
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IInvite>> GetInviteAsync
+    public async Task<Result<IInvite>> GetInviteAsync
     (
         string inviteCode,
         Optional<bool> withCounts = default,
@@ -71,7 +73,7 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
             return Result<IInvite>.FromSuccess(cacheResult.Entity);
         }
 
-        var getInvite = await base.GetInviteAsync
+        var getInvite = await _actual.GetInviteAsync
         (
             inviteCode,
             withCounts,
@@ -92,14 +94,14 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IInvite>> DeleteInviteAsync
+    public async Task<Result<IInvite>> DeleteInviteAsync
     (
         string inviteCode,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        var deleteInvite = await base.DeleteInviteAsync(inviteCode, reason, ct);
+        var deleteInvite = await _actual.DeleteInviteAsync(inviteCode, reason, ct);
         if (!deleteInvite.IsSuccess)
         {
             return deleteInvite;

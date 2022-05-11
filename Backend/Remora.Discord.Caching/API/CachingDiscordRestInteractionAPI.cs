@@ -21,43 +21,44 @@
 //
 
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest.API;
-using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
-/// <inheritdoc />
+/// <summary>
+/// Decorates the registered interaction API with caching functionality.
+/// </summary>
 [PublicAPI]
-public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
+public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionAPI
 {
+    private readonly IDiscordRestInteractionAPI _actual;
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestInteractionAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CachingDiscordRestInteractionAPI"/> class.
+    /// </summary>
+    /// <param name="actual">The decorated instance.</param>
+    /// <param name="cacheService">The cache service.</param>
     public CachingDiscordRestInteractionAPI
     (
-        IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions,
-        ICacheProvider rateLimitCache,
+        IDiscordRestInteractionAPI actual,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _actual = actual;
         _cacheService = cacheService;
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> CreateFollowupMessageAsync
+    public async Task<Result<IMessage>> CreateFollowupMessageAsync
     (
         Snowflake applicationID,
         string token,
@@ -71,7 +72,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
         CancellationToken ct = default
     )
     {
-        var result = await base.CreateFollowupMessageAsync
+        var result = await _actual.CreateFollowupMessageAsync
         (
             applicationID,
             token,
@@ -102,7 +103,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> DeleteFollowupMessageAsync
+    public async Task<Result> DeleteFollowupMessageAsync
     (
         Snowflake applicationID,
         string token,
@@ -110,7 +111,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
         CancellationToken ct = default
     )
     {
-        var result = await base.DeleteFollowupMessageAsync(applicationID, token, messageID, ct);
+        var result = await _actual.DeleteFollowupMessageAsync(applicationID, token, messageID, ct);
         if (!result.IsSuccess)
         {
             return result;
@@ -123,7 +124,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> GetFollowupMessageAsync
+    public async Task<Result<IMessage>> GetFollowupMessageAsync
     (
         Snowflake applicationID,
         string token,
@@ -139,7 +140,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
             return Result<IMessage>.FromSuccess(cacheResult.Entity);
         }
 
-        var result = await base.GetFollowupMessageAsync(applicationID, token, messageID, ct);
+        var result = await _actual.GetFollowupMessageAsync(applicationID, token, messageID, ct);
         if (!result.IsSuccess)
         {
             return result;
@@ -151,7 +152,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> EditFollowupMessageAsync
+    public async Task<Result<IMessage>> EditFollowupMessageAsync
     (
         Snowflake applicationID,
         string token,
@@ -164,7 +165,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
         CancellationToken ct = default
     )
     {
-        var result = await base.EditFollowupMessageAsync
+        var result = await _actual.EditFollowupMessageAsync
         (
             applicationID,
             token,
@@ -189,7 +190,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> GetOriginalInteractionResponseAsync
+    public async Task<Result<IMessage>> GetOriginalInteractionResponseAsync
     (
         Snowflake applicationID,
         string interactionToken,
@@ -204,7 +205,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
             return Result<IMessage>.FromSuccess(cacheResult.Entity);
         }
 
-        var result = await base.GetOriginalInteractionResponseAsync(applicationID, interactionToken, ct);
+        var result = await _actual.GetOriginalInteractionResponseAsync(applicationID, interactionToken, ct);
         if (!result.IsSuccess)
         {
             return result;
@@ -221,7 +222,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> EditOriginalInteractionResponseAsync
+    public async Task<Result<IMessage>> EditOriginalInteractionResponseAsync
     (
         Snowflake applicationID,
         string token,
@@ -233,7 +234,7 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
         CancellationToken ct = default
     )
     {
-        var result = await base.EditOriginalInteractionResponseAsync
+        var result = await _actual.EditOriginalInteractionResponseAsync
         (
             applicationID,
             token,
@@ -262,14 +263,14 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> DeleteOriginalInteractionResponseAsync
+    public async Task<Result> DeleteOriginalInteractionResponseAsync
     (
         Snowflake applicationID,
         string token,
         CancellationToken ct = default
     )
     {
-        var result = await base.DeleteOriginalInteractionResponseAsync(applicationID, token, ct);
+        var result = await _actual.DeleteOriginalInteractionResponseAsync(applicationID, token, ct);
         if (!result.IsSuccess)
         {
             return result;

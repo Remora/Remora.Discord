@@ -22,41 +22,43 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Caching.Abstractions.Services;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest.API;
-using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
-/// <inheritdoc />
+/// <summary>
+/// Decorates the registered user API with caching functionality.
+/// </summary>
 [PublicAPI]
-public class CachingDiscordRestUserAPI : DiscordRestUserAPI
+public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI
 {
+    private readonly IDiscordRestUserAPI _actual;
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestUserAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CachingDiscordRestUserAPI"/> class.
+    /// </summary>
+    /// <param name="actual">The decorated instance.</param>
+    /// <param name="cacheService">The cache service.</param>
     public CachingDiscordRestUserAPI
     (
-        IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions,
-        ICacheProvider rateLimitCache,
+        IDiscordRestUserAPI actual,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _actual = actual;
         _cacheService = cacheService;
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IUser>> GetUserAsync
+    public async Task<Result<IUser>> GetUserAsync
     (
         Snowflake userID,
         CancellationToken ct = default
@@ -70,7 +72,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
             return Result<IUser>.FromSuccess(cacheResult.Entity);
         }
 
-        var getUser = await base.GetUserAsync(userID, ct);
+        var getUser = await _actual.GetUserAsync(userID, ct);
         if (!getUser.IsSuccess)
         {
             return getUser;
@@ -83,12 +85,12 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IChannel>> CreateDMAsync
+    public async Task<Result<IChannel>> CreateDMAsync
     (
         Snowflake recipientID,
         CancellationToken ct = default)
     {
-        var createDM = await base.CreateDMAsync(recipientID, ct);
+        var createDM = await _actual.CreateDMAsync(recipientID, ct);
         if (!createDM.IsSuccess)
         {
             return createDM;
@@ -103,7 +105,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
+    public async Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
     {
         var key = KeyHelpers.CreateCurrentUserCacheKey();
         var cacheResult = await _cacheService.TryGetValueAsync<IUser>(key, ct);
@@ -113,7 +115,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
             return Result<IUser>.FromSuccess(cacheResult.Entity);
         }
 
-        var getUser = await base.GetCurrentUserAsync(ct);
+        var getUser = await _actual.GetCurrentUserAsync(ct);
         if (!getUser.IsSuccess)
         {
             return getUser;
@@ -130,7 +132,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    public async Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
     (
         CancellationToken ct = default
     )
@@ -143,7 +145,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
             return Result<IReadOnlyList<IConnection>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getUserConnections = await base.GetUserConnectionsAsync(ct);
+        var getUserConnections = await _actual.GetUserConnectionsAsync(ct);
         if (!getUserConnections.IsSuccess)
         {
             return getUserConnections;
@@ -162,14 +164,14 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IUser>> ModifyCurrentUserAsync
+    public async Task<Result<IUser>> ModifyCurrentUserAsync
     (
         Optional<string> username,
         Optional<Stream?> avatar = default,
         CancellationToken ct = default
     )
     {
-        var modifyUser = await base.ModifyCurrentUserAsync(username, avatar, ct);
+        var modifyUser = await _actual.ModifyCurrentUserAsync(username, avatar, ct);
         if (!modifyUser.IsSuccess)
         {
             return modifyUser;
@@ -186,7 +188,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
+    public async Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
     (
         CancellationToken ct = default
     )
@@ -199,7 +201,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
             return Result<IReadOnlyList<IChannel>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getUserDMs = await base.GetUserDMsAsync(ct);
+        var getUserDMs = await _actual.GetUserDMsAsync(ct);
         if (!getUserDMs.IsSuccess)
         {
             return getUserDMs;
@@ -218,13 +220,13 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildMember>> GetCurrentUserGuildMemberAsync
+    public async Task<Result<IGuildMember>> GetCurrentUserGuildMemberAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
-        var result = await base.GetCurrentUserGuildMemberAsync(guildID, ct);
+        var result = await _actual.GetCurrentUserGuildMemberAsync(guildID, ct);
         if (!result.IsSuccess)
         {
             return result;
