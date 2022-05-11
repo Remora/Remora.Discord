@@ -489,50 +489,115 @@ public class FeedbackService
                 var messageFlags = options?.MessageFlags ?? default;
                 if (this.HasEditedOriginalMessage && _isOriginalEphemeral)
                 {
-                    if (messageFlags.HasValue)
-                    {
-                        messageFlags = messageFlags.Value | MessageFlags.Ephemeral;
-                    }
-                    else
-                    {
-                        messageFlags = MessageFlags.Ephemeral;
-                    }
+                    messageFlags = messageFlags.HasValue
+                        ? messageFlags.Value | MessageFlags.Ephemeral
+                        : MessageFlags.Ephemeral;
                 }
 
-                var result = await _interactionAPI.CreateFollowupMessageAsync
-                (
-                    interactionContext.ApplicationID,
-                    interactionContext.Token,
-                    isTTS: options?.IsTTS ?? default,
-                    embeds: new[] { embed },
-                    allowedMentions: options?.AllowedMentions ?? default,
-                    components: options?.MessageComponents ?? default,
-                    flags: messageFlags,
-                    attachments: options?.Attachments ?? default,
-                    ct: ct
-                );
-
-                if (!result.IsSuccess)
-                {
-                    return result;
-                }
-
-                if (this.HasEditedOriginalMessage)
-                {
-                    return result;
-                }
-
-                var message = result.Entity;
-                _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
-
-                this.HasEditedOriginalMessage = true;
-                return result;
+                return interactionContext.HasRespondedToInteraction
+                    ? await SendFollowupEmbedAsync(embed, options, interactionContext, messageFlags, ct)
+                    : await SendInteractionResponseEmbedAsync(embed, options, messageFlags, interactionContext, ct);
             }
             default:
             {
                 throw new InvalidOperationException();
             }
         }
+    }
+
+    private async Task<Result<IMessage>> SendInteractionResponseEmbedAsync
+    (
+        Embed embed,
+        FeedbackMessageOptions? options,
+        Optional<MessageFlags> messageFlags,
+        InteractionContext interactionContext,
+        CancellationToken ct = default
+    )
+    {
+        var callbackData = new InteractionMessageCallbackData
+        (
+            IsTTS: options?.IsTTS ?? default,
+            Embeds: new[] { embed },
+            AllowedMentions: options?.AllowedMentions ?? default,
+            Components: options?.MessageComponents ?? default,
+            Flags: messageFlags
+        );
+
+        var result = await _interactionAPI.CreateInteractionResponseAsync
+        (
+            interactionContext.ID,
+            interactionContext.Token,
+            new InteractionResponse(InteractionCallbackType.ChannelMessageWithSource, new(callbackData)),
+            options?.Attachments ?? default,
+            ct
+        );
+
+        if (!result.IsSuccess)
+        {
+            return Result<IMessage>.FromError(result);
+        }
+
+        var getOriginalMessage = await _interactionAPI.GetOriginalInteractionResponseAsync
+        (
+            interactionContext.ApplicationID,
+            interactionContext.Token,
+            ct
+        );
+
+        if (!getOriginalMessage.IsSuccess)
+        {
+            return getOriginalMessage;
+        }
+
+        var message = getOriginalMessage.Entity;
+        if (this.HasEditedOriginalMessage)
+        {
+            return Result<IMessage>.FromSuccess(message);
+        }
+
+        _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+
+        this.HasEditedOriginalMessage = true;
+        return Result<IMessage>.FromSuccess(message);
+    }
+
+    private async Task<Result<IMessage>> SendFollowupEmbedAsync
+    (
+        Embed embed,
+        FeedbackMessageOptions? options,
+        InteractionContext interactionContext,
+        Optional<MessageFlags> messageFlags,
+        CancellationToken ct = default
+    )
+    {
+        var result = await _interactionAPI.CreateFollowupMessageAsync
+        (
+            interactionContext.ApplicationID,
+            interactionContext.Token,
+            isTTS: options?.IsTTS ?? default,
+            embeds: new[] { embed },
+            allowedMentions: options?.AllowedMentions ?? default,
+            components: options?.MessageComponents ?? default,
+            flags: messageFlags,
+            attachments: options?.Attachments ?? default,
+            ct: ct
+        );
+
+        if (!result.IsSuccess)
+        {
+            return result;
+        }
+
+        if (this.HasEditedOriginalMessage)
+        {
+            return result;
+        }
+
+        var message = result.Entity;
+        _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+
+        this.HasEditedOriginalMessage = true;
+        return result;
     }
 
     /// <summary>
