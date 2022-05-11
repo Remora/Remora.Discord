@@ -52,6 +52,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     private readonly IServiceProvider _services;
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly AsyncRetryPolicy _retryPolicy;
+    private readonly AsyncRetryPolicy<ClientWebSocket> _connectRetryPolicy;
     private readonly AsyncRetryPolicy<WebSocketReceiveResult> _receiveRetryPolicy;
     private readonly ILogger<WebSocketPayloadTransportService> _log;
 
@@ -86,6 +87,10 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
             .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
 
+        _connectRetryPolicy = Policy<ClientWebSocket>
+            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
+            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
+
         _receiveRetryPolicy = Policy<WebSocketReceiveResult>
             .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
             .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
@@ -99,11 +104,28 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The transport service is already connected.");
         }
 
-        var socket = _services.GetRequiredService<ClientWebSocket>();
-
         try
         {
-            await _retryPolicy.ExecuteAsync(c => socket.ConnectAsync(endpoint, c), ct);
+            var socket = await _connectRetryPolicy.ExecuteAsync
+            (
+                async c =>
+                {
+                    var socket = _services.GetRequiredService<ClientWebSocket>();
+                    try
+                    {
+                        await socket.ConnectAsync(endpoint, c);
+                    }
+                    catch
+                    {
+                        socket.Dispose();
+                        throw;
+                    }
+
+                    return socket;
+                },
+                ct
+            );
+
             switch (socket.State)
             {
                 case WebSocketState.Open:
@@ -121,14 +143,13 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
                     );
                 }
             }
+
+            _clientWebSocket = socket;
         }
         catch (Exception e)
         {
-            socket.Dispose();
             return e;
         }
-
-        _clientWebSocket = socket;
 
         this.IsConnected = true;
         return Result.FromSuccess();
@@ -344,7 +365,23 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         _log.LogInformation
         (
             result,
-            "Transient failure in websocket action - retrying after {Delay:hh:mm:ss} (retry #{Count})",
+            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
+            delay,
+            count
+        );
+    }
+
+    private void LogRetry(DelegateResult<ClientWebSocket> result, TimeSpan delay, int count, Context context)
+    {
+        if (result.Result is not null)
+        {
+            return;
+        }
+
+        _log.LogInformation
+        (
+            result.Exception,
+            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
             delay,
             count
         );
@@ -360,7 +397,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         _log.LogInformation
         (
             result.Exception,
-            "Transient failure in websocket action - retrying after {Delay:hh:mm:ss} (retry #{Count})",
+            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
             delay,
             count
         );
