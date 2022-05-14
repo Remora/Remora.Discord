@@ -205,89 +205,13 @@ public static class CommandTreeExtensions
             }
 
             // Translate from options to bulk data
-            Optional<ApplicationCommandType> commandType = default;
-            Optional<bool?> directMessagePermission = default;
-            Optional<IDiscordPermissionSet?> defaultMemberPermissions = default;
-            switch (node)
+            var translateNode = GetNodeMetadata(node);
+            if (!translateNode.IsDefined(out var tuple))
             {
-                case GroupNode groupNode:
-                {
-                    var memberPermissionAttributes = groupNode.GroupTypes.Select
-                        (
-                            t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
-                        )
-                        .Where(attribute => attribute is not null)
-                        .ToArray();
-
-                    var directMessagePermisisonAttributes = groupNode.GroupTypes.Select
-                        (
-                            t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
-                        )
-                        .Where(attribute => attribute is not null)
-                        .ToArray();
-
-                    if (memberPermissionAttributes.Length > 1)
-                    {
-                        return new UnsupportedFeatureError
-                        (
-                            "In a set of groups with the same name, only one may be marked with a default " +
-                            $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
-                            node
-                        );
-                    }
-
-                    var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
-
-                    if (defaultMemberPermissionsAttribute is not null)
-                    {
-                        defaultMemberPermissions = new DiscordPermissionSet(defaultMemberPermissionsAttribute.Permissions.ToArray());
-                    }
-
-                    if (directMessagePermisisonAttributes.Length > 1)
-                    {
-                        return new UnsupportedFeatureError
-                        (
-                            "In a set of groups with the same name, only one may be marked with a default " +
-                            $"DM permissions attribute, but {memberPermissionAttributes.Length} were found.",
-                            node
-                        );
-                    }
-
-                    var directMessagePermissionAttribute = directMessagePermisisonAttributes.SingleOrDefault();
-
-                    if (directMessagePermissionAttribute is not null)
-                    {
-                        directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
-                    }
-
-                    break;
-                }
-                case CommandNode commandNode:
-                {
-                    commandType = commandNode.GetCommandType();
-
-                    // Top-level command outside of a group
-                    var memberPermissionsAttribute =
-                        commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
-                        commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
-
-                    var directMessagePermissionAttribute =
-                        commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
-                        commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
-
-                    if (memberPermissionsAttribute is not null)
-                    {
-                        defaultMemberPermissions = new DiscordPermissionSet(memberPermissionsAttribute.Permissions.ToArray());
-                    }
-
-                    if (directMessagePermissionAttribute is not null)
-                    {
-                        directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
-                    }
-
-                    break;
-                }
+                return Result<IReadOnlyList<IBulkApplicationCommandData>>.FromError(translateNode);
             }
+
+            var (commandType, directMessagePermission, defaultMemberPermissions) = tuple;
 
             var localizedNames = localizationProvider.GetStrings(option.Name);
             var localizedDescriptions = localizationProvider.GetStrings(option.Description);
@@ -320,6 +244,108 @@ public static class CommandTreeExtensions
         return commands;
     }
 
+    private static Result
+    <(
+        Optional<ApplicationCommandType> CommandType,
+        Optional<bool?> DirectMessagePermission,
+        Optional<IDiscordPermissionSet?> DefaultMemberPermission
+    )> GetNodeMetadata(IChildNode node)
+    {
+
+        Optional<ApplicationCommandType> commandType = default;
+        Optional<bool?> directMessagePermission = default;
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default;
+
+        switch (node)
+        {
+            case GroupNode groupNode:
+            {
+                var memberPermissionAttributes = groupNode.GroupTypes.Select
+                (
+                    t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
+                )
+                .Where(attribute => attribute is not null)
+                .ToArray();
+
+                var directMessagePermissionAttributes = groupNode.GroupTypes.Select
+                (
+                    t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
+                )
+                .Where(attribute => attribute is not null)
+                .ToArray();
+
+                if (memberPermissionAttributes.Length > 1)
+                {
+                    return new UnsupportedFeatureError
+                    (
+                        "In a set of groups with the same name, only one may be marked with a default " +
+                        $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                        node
+                    );
+                }
+
+                var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
+
+                if (defaultMemberPermissionsAttribute is not null)
+                {
+                    defaultMemberPermissions = new DiscordPermissionSet
+                    (
+                        defaultMemberPermissionsAttribute.Permissions.ToArray()
+                    );
+                }
+
+                if (directMessagePermissionAttributes.Length > 1)
+                {
+                    return new UnsupportedFeatureError
+                    (
+                        "In a set of groups with the same name, only one may be marked with a default " +
+                        $"DM permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                        node
+                    );
+                }
+
+                var directMessagePermissionAttribute = directMessagePermissionAttributes.SingleOrDefault();
+
+                if (directMessagePermissionAttribute is not null)
+                {
+                    directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+                }
+
+                break;
+            }
+            case CommandNode commandNode:
+            {
+                commandType = commandNode.GetCommandType();
+
+                // Top-level command outside of a group
+                var memberPermissionsAttribute =
+                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
+                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
+
+                var directMessagePermissionAttribute =
+                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
+                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
+
+                if (memberPermissionsAttribute is not null)
+                {
+                    defaultMemberPermissions = new DiscordPermissionSet
+                    (
+                        memberPermissionsAttribute.Permissions.ToArray()
+                    );
+                }
+
+                if (directMessagePermissionAttribute is not null)
+                {
+                    directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+                }
+
+                break;
+            }
+        }
+
+        return (commandType, directMessagePermission, defaultMemberPermissions);
+    }
+
     private static Result<IApplicationCommandOption?> TryTranslateCommandNode
     (
         IChildNode node,
@@ -336,164 +362,178 @@ public static class CommandTreeExtensions
             );
         }
 
-        switch (node)
+        return node switch
         {
-            case CommandNode command:
+            CommandNode command => TryTranslateCommandNode(command, treeDepth, localizationProvider),
+            GroupNode group => TryTranslateGroupNode(group, treeDepth, localizationProvider),
+            _ => throw new InvalidOperationException
+            (
+                $"Unable to translate node of type {node.GetType().FullName} into an application command."
+            )
+        };
+    }
+
+    private static Result<IApplicationCommandOption?> TryTranslateGroupNode
+    (
+        GroupNode group,
+        int treeDepth,
+        ILocalizationProvider localizationProvider
+    )
+    {
+        var validateDescriptionResult = ValidateNodeDescription(group.Description, group);
+        if (!validateDescriptionResult.IsSuccess)
+        {
+            return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
+        }
+
+        var groupOptions = new List<IApplicationCommandOption>();
+        var groupOptionNames = new HashSet<string>();
+        var subCommandCount = 0;
+        foreach (var childNode in group.Children)
+        {
+            var translateChildNodeResult = TryTranslateCommandNode
+            (
+                childNode,
+                treeDepth + 1,
+                localizationProvider
+            );
+
+            if (!translateChildNodeResult.IsSuccess)
             {
-                if (command.GroupType.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
-                {
-                    return Result<IApplicationCommandOption?>.FromSuccess(null);
-                }
+                return Result<IApplicationCommandOption?>.FromError(translateChildNodeResult);
+            }
 
-                if (command.CommandMethod.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
-                {
-                    return Result<IApplicationCommandOption?>.FromSuccess(null);
-                }
+            if (translateChildNodeResult.Entity is null)
+            {
+                // Skipped
+                continue;
+            }
 
-                var commandType = command.GetCommandType();
-                if (commandType is not ApplicationCommandType.ChatInput)
-                {
-                    if (treeDepth > 1)
-                    {
-                        return new UnsupportedFeatureError
-                        (
-                            "Context menu commands may not be nested.",
-                            command
-                        );
-                    }
+            if (translateChildNodeResult.Entity.Type is SubCommand)
+            {
+                ++subCommandCount;
+            }
 
-                    if (command.CommandMethod.GetParameters().Length > 0)
-                    {
-                        return new UnsupportedFeatureError
-                        (
-                            "Context menu commands may not have parameters.",
-                            command
-                        );
-                    }
-                }
+            if (!groupOptionNames.Add(translateChildNodeResult.Entity.Name))
+            {
+                return new UnsupportedFeatureError("Overloads are not supported.", group);
+            }
 
-                var buildOptionsResult = CreateCommandParameterOptions(command, localizationProvider);
-                if (!buildOptionsResult.IsSuccess)
-                {
-                    return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
-                }
+            groupOptions.Add(translateChildNodeResult.Entity);
+        }
 
-                var name = commandType is not ApplicationCommandType.ChatInput
-                    ? command.Key
-                    : command.Key.ToLowerInvariant();
+        if (groupOptions.Count == 0)
+        {
+            return Result<IApplicationCommandOption?>.FromSuccess(null);
+        }
 
-                var description = commandType is not ApplicationCommandType.ChatInput
-                    ? string.Empty
-                    : command.Shape.Description;
+        if (subCommandCount > MaxGroupCommands)
+        {
+            return new UnsupportedFeatureError
+            (
+                $"Too many commands under a group ({subCommandCount}, max {MaxGroupCommands}).",
+                group
+            );
+        }
 
-                if (commandType is not ApplicationCommandType.ChatInput && command.Shape.Description != Constants.DefaultDescription)
-                {
-                    return new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
-                }
+        var name = group.Key.ToLowerInvariant();
 
-                var validateDescriptionResult = ValidateNodeDescription(description, command);
-                if (!validateDescriptionResult.IsSuccess)
-                {
-                    return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
-                }
+        var localizedNames = localizationProvider.GetStrings(name);
+        var localizedDescriptions = localizationProvider.GetStrings(group.Description);
 
-                var localizedNames = localizationProvider.GetStrings(name);
-                var localizedDescriptions = localizationProvider.GetStrings(description);
+        return new ApplicationCommandOption
+        (
+            SubCommandGroup,
+            name,
+            group.Description,
+            Options: new(groupOptions),
+            NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+            DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
+        );
+    }
 
-                return new ApplicationCommandOption
+    private static Result<IApplicationCommandOption?> TryTranslateCommandNode
+    (
+        CommandNode command,
+        int treeDepth,
+        ILocalizationProvider localizationProvider
+    )
+    {
+        if (command.GroupType.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
+        {
+            return Result<IApplicationCommandOption?>.FromSuccess(null);
+        }
+
+        if (command.CommandMethod.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
+        {
+            return Result<IApplicationCommandOption?>.FromSuccess(null);
+        }
+
+        var commandType = command.GetCommandType();
+        if (commandType is not ApplicationCommandType.ChatInput)
+        {
+            if (treeDepth > 1)
+            {
+                return new UnsupportedFeatureError
                 (
-                    SubCommand, // Might not actually be a sub-command, but the caller will handle that + TODO: Should this just use commandType directly?
-                    name,
-                    description,
-                    Options: new(buildOptionsResult.Entity),
-                    NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
-                    DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
+                    "Context menu commands may not be nested.",
+                    command
                 );
             }
-            case GroupNode group:
+
+            if (command.CommandMethod.GetParameters().Length > 0)
             {
-                var validateDescriptionResult = ValidateNodeDescription(group.Description, group);
-                if (!validateDescriptionResult.IsSuccess)
-                {
-                    return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
-                }
-
-                var groupOptions = new List<IApplicationCommandOption>();
-                var groupOptionNames = new HashSet<string>();
-                var subCommandCount = 0;
-                foreach (var childNode in group.Children)
-                {
-                    var translateChildNodeResult = TryTranslateCommandNode
-                    (
-                        childNode,
-                        treeDepth + 1,
-                        localizationProvider
-                    );
-
-                    if (!translateChildNodeResult.IsSuccess)
-                    {
-                        return Result<IApplicationCommandOption?>.FromError(translateChildNodeResult);
-                    }
-
-                    if (translateChildNodeResult.Entity is null)
-                    {
-                        // Skipped
-                        continue;
-                    }
-
-                    if (translateChildNodeResult.Entity.Type is SubCommand)
-                    {
-                        ++subCommandCount;
-                    }
-
-                    if (!groupOptionNames.Add(translateChildNodeResult.Entity.Name))
-                    {
-                        return new UnsupportedFeatureError("Overloads are not supported.", group);
-                    }
-
-                    groupOptions.Add(translateChildNodeResult.Entity);
-                }
-
-                if (groupOptions.Count == 0)
-                {
-                    return Result<IApplicationCommandOption?>.FromSuccess(null);
-                }
-
-                if (subCommandCount > MaxGroupCommands)
-                {
-                    return new UnsupportedFeatureError
-                    (
-                        $"Too many commands under a group ({subCommandCount}, max {MaxGroupCommands}).",
-                        group
-                    );
-                }
-
-                var name = group.Key.ToLowerInvariant();
-
-                var localizedNames = localizationProvider.GetStrings(name);
-                var localizedDescriptions = localizationProvider.GetStrings(group.Description);
-
-                return new ApplicationCommandOption
+                return new UnsupportedFeatureError
                 (
-                    SubCommandGroup,
-                    name,
-                    group.Description,
-                    Options: new(groupOptions),
-                    NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
-                    DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
-                );
-            }
-            default:
-            {
-                throw new InvalidOperationException
-                (
-                    $"Unable to translate node of type {node.GetType().FullName} into an application command"
+                    "Context menu commands may not have parameters.",
+                    command
                 );
             }
         }
+
+        var buildOptionsResult = TryCreateCommandParameterOptions(command, localizationProvider);
+        if (!buildOptionsResult.IsSuccess)
+        {
+            return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
+        }
+
+        var name = commandType is not ApplicationCommandType.ChatInput
+            ? command.Key
+            : command.Key.ToLowerInvariant();
+
+        var description = commandType is not ApplicationCommandType.ChatInput
+            ? string.Empty
+            : command.Shape.Description;
+
+        if (commandType is not ApplicationCommandType.ChatInput &&
+            command.Shape.Description != Constants.DefaultDescription)
+        {
+            return new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", command);
+        }
+
+        var validateDescriptionResult = ValidateNodeDescription(description, command);
+        if (!validateDescriptionResult.IsSuccess)
+        {
+            return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
+        }
+
+        var localizedNames = localizationProvider.GetStrings(name);
+        var localizedDescriptions = localizationProvider.GetStrings(description);
+
+        // Might not actually be a sub-command, but the caller will handle that
+        // TODO: Should this just use commandType directly?
+        return new ApplicationCommandOption
+        (
+            SubCommand,
+            name,
+            description,
+            Options: new(buildOptionsResult.Entity),
+            NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+            DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
+        );
     }
 
-    private static Result<IReadOnlyList<IApplicationCommandOption>> CreateCommandParameterOptions
+    private static Result<IReadOnlyList<IApplicationCommandOption>> TryCreateCommandParameterOptions
     (
         CommandNode command,
         ILocalizationProvider localizationProvider
@@ -542,7 +582,7 @@ public static class CommandTreeExtensions
                 ? ToApplicationCommandOptionType(actualParameterType)
                 : (ApplicationCommandOptionType)typeHint.TypeHint;
 
-            var getChannelTypes = CreateChannelTypesOption(command, parameter, discordType);
+            var getChannelTypes = TryCreateChannelTypesOption(command, parameter, discordType);
             if (!getChannelTypes.IsSuccess)
             {
                 return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(getChannelTypes);
@@ -628,7 +668,7 @@ public static class CommandTreeExtensions
         return Result<IReadOnlyList<IApplicationCommandOption>>.FromSuccess(parameterOptions);
     }
 
-    private static Result<Optional<IReadOnlyList<ChannelType>>> CreateChannelTypesOption
+    private static Result<Optional<IReadOnlyList<ChannelType>>> TryCreateChannelTypesOption
     (
         CommandNode command,
         IParameterShape parameter,
