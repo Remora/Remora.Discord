@@ -27,15 +27,14 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
-/// Marks a command as requring the executor of the command to have the specified permissions.
-/// Specifying no permissions will make the command or group inaccessible to anyone.
+/// Marks a command as requiring the executor of the command to have the specified permissions. Specifying no
+/// permissions will make the command or group inaccessible to anyone.
 /// </summary>
 /// <remarks>
-/// Permissions serve as a base for command access, however moderators with the appropriate
-/// permissisons can add additional filters to the command, either adding or removing applicable
-/// users.
+/// Permissions serve as a base for command access, however moderators with the appropriate permissions can add
+/// additional filters to the command, either adding or removing applicable users.
 /// </remarks>
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class DiscordDefaultMemberPermissionsAttribute : Attribute
 {
     /// <summary>
@@ -49,6 +48,6 @@ public class DiscordDefaultMemberPermissionsAttribute : Attribute
     /// <param name="permissions">The permissions required for executing the application command.</param>
     public DiscordDefaultMemberPermissionsAttribute(params DiscordPermission[] permissions)
     {
-        Permissions = permissions;
+        this.Permissions = permissions;
     }
 }

@@ -44,7 +44,7 @@ public class AtMostOneDMPermissionAttributeAllowed
         /// The first group.
         /// </summary>
         [Group("a")]
-        [DiscordDefaultDMPermission(true)]
+        [DiscordDefaultDMPermission]
         public class GroupOne : CommandGroup
         {
             /// <summary>

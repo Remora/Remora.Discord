@@ -38,7 +38,7 @@ public class MultipleCommandsWithDMPermission
     /// <summary>
     /// The first group.
     /// </summary>
-    [DiscordDefaultDMPermission(true)]
+    [DiscordDefaultDMPermission]
     public class GroupOne : CommandGroup
     {
         /// <summary>
