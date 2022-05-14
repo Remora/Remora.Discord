@@ -272,8 +272,8 @@ public static class ServiceCollectionExtensions
         (
             typeof(TInterface),
             s => (TInterface)objectFactory(s, new[] { s.CreateInstance(wrappedDescriptor) }),
-            wrappedDescriptor.Lifetime)
-        );
+            wrappedDescriptor.Lifetime
+        ));
 
         return services;
     }
