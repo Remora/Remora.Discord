@@ -26,6 +26,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -211,5 +212,28 @@ public partial class CachingDiscordRestGuildAPI
     )
     {
         return _actual.ModifyUserVoiceStateAsync(guildID, userID, channelID, suppress, ct);
+    }
+
+    /// <inheritdoc/>
+    public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
+    {
+        if (_actual is not IRestCustomizable customizable)
+        {
+            // TODO: not ideal...
+            throw new NotImplementedException("The decorated API type is not customizable.");
+        }
+
+        return customizable.WithCustomization(requestCustomizer);
+    }
+
+    /// <inheritdoc/>
+    void IRestCustomizable.RemoveCustomization(RestRequestCustomization customization)
+    {
+        if (_actual is not IRestCustomizable customizable)
+        {
+            return;
+        }
+
+        customizable.RemoveCustomization(customization);
     }
 }

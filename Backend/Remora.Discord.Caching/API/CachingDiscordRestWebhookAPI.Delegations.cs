@@ -1,5 +1,5 @@
 //
-//  CachingDiscordRestInteractionAPI.Delegations.cs
+//  CachingDiscordRestWebhookAPI.Delegations.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,33 +21,12 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Rest;
 using Remora.Rest;
-using Remora.Rest.Core;
-using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
-public partial class CachingDiscordRestInteractionAPI
+public partial class CachingDiscordRestWebhookAPI
 {
-    /// <inheritdoc />
-    public Task<Result> CreateInteractionResponseAsync
-    (
-        Snowflake interactionID,
-        string interactionToken,
-        IInteractionResponse response,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-        CancellationToken ct = default
-    )
-    {
-        return _actual.CreateInteractionResponseAsync(interactionID, interactionToken, response, attachments, ct);
-    }
-
     /// <inheritdoc/>
     public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
     {

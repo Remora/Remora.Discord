@@ -30,6 +30,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -39,7 +40,7 @@ namespace Remora.Discord.Caching.API;
 /// Decorates the registered guild API with caching functionality.
 /// </summary>
 [PublicAPI]
-public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI
+public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCustomizable
 {
     private readonly IDiscordRestGuildAPI _actual;
     private readonly CacheService _cacheService;

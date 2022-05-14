@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -40,7 +41,7 @@ namespace Remora.Discord.Caching.API;
 /// Decorates the registered channel API with caching functionality.
 /// </summary>
 [PublicAPI]
-public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI
+public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRestCustomizable
 {
     private readonly IDiscordRestChannelAPI _actual;
     private readonly CacheService _cacheService;

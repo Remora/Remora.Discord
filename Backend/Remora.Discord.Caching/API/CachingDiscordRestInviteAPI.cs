@@ -26,6 +26,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -35,7 +36,7 @@ namespace Remora.Discord.Caching.API;
 /// Decorates the registered invite API with caching functionality.
 /// </summary>
 [PublicAPI]
-public class CachingDiscordRestInviteAPI : IDiscordRestInviteAPI
+public partial class CachingDiscordRestInviteAPI : IDiscordRestInviteAPI, IRestCustomizable
 {
     private readonly IDiscordRestInviteAPI _actual;
     private readonly CacheService _cacheService;

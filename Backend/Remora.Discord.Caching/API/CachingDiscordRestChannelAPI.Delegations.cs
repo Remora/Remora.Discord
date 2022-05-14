@@ -20,11 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -324,5 +326,28 @@ public partial class CachingDiscordRestChannelAPI
     public Task<Result> LeaveThreadAsync(Snowflake channelID, CancellationToken ct = default)
     {
         return _actual.LeaveThreadAsync(channelID, ct);
+    }
+
+    /// <inheritdoc/>
+    public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
+    {
+        if (_actual is not IRestCustomizable customizable)
+        {
+            // TODO: not ideal...
+            throw new NotImplementedException("The decorated API type is not customizable.");
+        }
+
+        return customizable.WithCustomization(requestCustomizer);
+    }
+
+    /// <inheritdoc/>
+    void IRestCustomizable.RemoveCustomization(RestRequestCustomization customization)
+    {
+        if (_actual is not IRestCustomizable customizable)
+        {
+            return;
+        }
+
+        customizable.RemoveCustomization(customization);
     }
 }

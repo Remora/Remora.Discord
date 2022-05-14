@@ -28,6 +28,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -37,7 +38,7 @@ namespace Remora.Discord.Caching.API;
 /// Decorates the registered emoji API with caching functionality.
 /// </summary>
 [PublicAPI]
-public class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI
+public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCustomizable
 {
     private readonly IDiscordRestEmojiAPI _actual;
     private readonly CacheService _cacheService;

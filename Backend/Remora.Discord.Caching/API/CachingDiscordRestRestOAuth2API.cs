@@ -1,5 +1,5 @@
 //
-//  CachingDiscordRestOAuth2API.cs
+//  CachingDiscordRestRestOAuth2API.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,6 +26,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
@@ -34,7 +35,7 @@ namespace Remora.Discord.Caching.API;
 /// Decorates the registered OAuth2 API with caching functionality.
 /// </summary>
 [PublicAPI]
-public class CachingDiscordRestOAuth2API : IDiscordRestOAuth2API
+public partial class CachingDiscordRestOAuth2API : IDiscordRestOAuth2API, IRestCustomizable
 {
     private readonly IDiscordRestOAuth2API _actual;
     private readonly CacheService _cacheService;

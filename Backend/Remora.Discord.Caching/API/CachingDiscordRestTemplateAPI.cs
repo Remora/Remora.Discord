@@ -28,6 +28,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -35,7 +36,7 @@ namespace Remora.Discord.Caching.API;
 
 /// <inheritdoc />
 [PublicAPI]
-public class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI
+public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IRestCustomizable
 {
     private readonly IDiscordRestTemplateAPI _actual;
     private readonly CacheService _cacheService;

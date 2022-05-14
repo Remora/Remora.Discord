@@ -30,6 +30,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Services;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -38,7 +39,7 @@ namespace Remora.Discord.Commands.API;
 /// <summary>
 /// Implements a tracking system for whether an interaction has been responded to.
 /// </summary>
-internal class ResponseTrackingInteractionAPI : IDiscordRestInteractionAPI
+internal partial class ResponseTrackingInteractionAPI : IDiscordRestInteractionAPI, IRestCustomizable
 {
     private readonly ContextInjectionService? _contextInjector;
     private readonly IDiscordRestInteractionAPI _actual;

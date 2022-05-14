@@ -28,6 +28,7 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -37,7 +38,7 @@ namespace Remora.Discord.Caching.API;
 /// Decorates the registered interaction API with caching functionality.
 /// </summary>
 [PublicAPI]
-public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionAPI
+public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionAPI, IRestCustomizable
 {
     private readonly IDiscordRestInteractionAPI _actual;
     private readonly CacheService _cacheService;

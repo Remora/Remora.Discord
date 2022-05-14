@@ -29,6 +29,7 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
@@ -38,7 +39,7 @@ namespace Remora.Discord.Caching.API;
 /// Decorates the registered webhook API with caching functionality.
 /// </summary>
 [PublicAPI]
-public class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI
+public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRestCustomizable
 {
     private readonly IDiscordRestWebhookAPI _actual;
     private readonly CacheService _cacheService;

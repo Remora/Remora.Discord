@@ -27,6 +27,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
+using Remora.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
@@ -35,7 +36,7 @@ namespace Remora.Discord.Caching.API;
 /// Decorates the registered voice API with caching functionality.
 /// </summary>
 [PublicAPI]
-public class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI
+public partial class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCustomizable
 {
     private readonly IDiscordRestVoiceAPI _actual;
     private readonly CacheService _cacheService;
