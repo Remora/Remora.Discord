@@ -42,9 +42,9 @@ public class AnsiStringBuilder
     }
 
     /// <summary>
-    /// Sets the current bold state of <see cref="AnsiStringBuilder"/> wether the upcoming the should be bold.
+    /// Sets the current bold state of <see cref="AnsiStringBuilder"/> whether the upcoming the should be bold.
     /// </summary>
-    /// <param name="bold">Wether to upcoming text should be bold.</param>
+    /// <param name="bold">Whether to upcoming text should be bold.</param>
     /// <returns>The current <see cref="AnsiStringBuilder"/> for chaining.</returns>
     public AnsiStringBuilder Bold(bool bold = true)
     {
@@ -53,9 +53,10 @@ public class AnsiStringBuilder
     }
 
     /// <summary>
-    /// Sets the current underline state of <see cref="AnsiStringBuilder"/> wether the upcoming the should be underlined.
+    /// Sets the current underline state of <see cref="AnsiStringBuilder"/> whether the upcoming the should be
+    /// underlined.
     /// </summary>
-    /// <param name="underline">Wether to upcoming text should be underlined.</param>
+    /// <param name="underline">Whether to upcoming text should be underlined.</param>
     /// <returns>The current <see cref="AnsiStringBuilder"/> for chaining.</returns>
     public AnsiStringBuilder Underline(bool underline = true)
     {
@@ -64,7 +65,7 @@ public class AnsiStringBuilder
     }
 
     /// <summary>
-    /// Sets the current foreround color of the <see cref="AnsiStringBuilder"/> to the specific foreground color.
+    /// Sets the current foreground color of the <see cref="AnsiStringBuilder"/> to the specific foreground color.
     /// </summary>
     /// <param name="foregroundColor">The foreground color.</param>
     /// <returns>The current <see cref="AnsiStringBuilder"/> for chaining.</returns>
@@ -86,7 +87,7 @@ public class AnsiStringBuilder
     }
 
     /// <summary>
-    /// Resets all specified stylings.
+    /// Resets all styling.
     /// </summary>
     /// <returns>The current <see cref="AnsiStringBuilder"/> for chaining.</returns>
     public AnsiStringBuilder Reset()
@@ -140,9 +141,9 @@ public class AnsiStringBuilder
     {
         private const char EscapeChar = '\u001b';
 
-        private bool _hasChanged = false;
-        private bool _isBold = false;
-        private bool _isUnderlined = false;
+        private bool _hasChanged;
+        private bool _isBold;
+        private bool _isUnderlined;
         private AnsiForegroundColor _foregroundColor = AnsiForegroundColor.None;
         private AnsiBackgroundColor _backgroundColor = AnsiBackgroundColor.None;
 
@@ -154,11 +155,13 @@ public class AnsiStringBuilder
             get => _isBold;
             set
             {
-                if (_isBold != value)
+                if (_isBold == value)
                 {
-                    _isBold = value;
-                    _hasChanged = true;
+                    return;
                 }
+
+                _isBold = value;
+                _hasChanged = true;
             }
         }
 
@@ -170,11 +173,13 @@ public class AnsiStringBuilder
             get => _isUnderlined;
             set
             {
-                if (_isUnderlined != value)
+                if (_isUnderlined == value)
                 {
-                    _isUnderlined = value;
-                    _hasChanged = true;
+                    return;
                 }
+
+                _isUnderlined = value;
+                _hasChanged = true;
             }
         }
 
@@ -186,11 +191,13 @@ public class AnsiStringBuilder
             get => _foregroundColor;
             set
             {
-                if (_foregroundColor != value)
+                if (_foregroundColor == value)
                 {
-                    _foregroundColor = value;
-                    _hasChanged = true;
+                    return;
                 }
+
+                _foregroundColor = value;
+                _hasChanged = true;
             }
         }
 
@@ -202,11 +209,13 @@ public class AnsiStringBuilder
             get => _backgroundColor;
             set
             {
-                if (_backgroundColor != value)
+                if (_backgroundColor == value)
                 {
-                    _backgroundColor = value;
-                    _hasChanged = true;
+                    return;
                 }
+
+                _backgroundColor = value;
+                _hasChanged = true;
             }
         }
 
@@ -237,27 +246,27 @@ public class AnsiStringBuilder
 
             stringBuilder.Append($"{EscapeChar}[{AnsiStyle.Reset}");
 
-            if (_isBold)
+            if (this.IsBold)
             {
                 stringBuilder.Append($";{AnsiStyle.Bold}");
             }
 
-            if (_isUnderlined)
+            if (this.IsUnderlined)
             {
                 stringBuilder.Append($";{AnsiStyle.Underline}");
             }
 
-            if (_backgroundColor is not AnsiBackgroundColor.None)
+            if (this.BackgroundColor is not AnsiBackgroundColor.None)
             {
-                stringBuilder.Append($";{(int)_backgroundColor}");
+                stringBuilder.Append($";{(int)this.BackgroundColor}");
             }
 
-            if (_foregroundColor is not AnsiForegroundColor.None)
+            if (this.ForegroundColor is not AnsiForegroundColor.None)
             {
-                stringBuilder.Append($";{(int)_foregroundColor}");
+                stringBuilder.Append($";{(int)this.ForegroundColor}");
             }
 
-            stringBuilder.Append("m");
+            stringBuilder.Append('m');
         }
     }
 }
