@@ -252,8 +252,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
             .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
-            .WithPropertyName(g => g.IsLarge, "large")
-            .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
@@ -549,8 +547,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
             .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
-            .WithPropertyName(g => g.IsLarge, "large")
-            .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
@@ -559,8 +555,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
             .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
-            .WithPropertyName(g => g.IsLarge, "large")
-            .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));

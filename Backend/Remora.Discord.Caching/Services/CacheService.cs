@@ -215,28 +215,6 @@ public class CacheService
     {
         await CacheInstanceAsync(key, guild);
 
-        if (guild.Channels.IsDefined(out var channels))
-        {
-            foreach (var channel in channels)
-            {
-                var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
-
-                if (!channel.GuildID.HasValue && channel.Type is not (ChannelType.DM or ChannelType.GroupDM))
-                {
-                    if (channel is Channel record)
-                    {
-                        // Polyfill the instance with contextual data - bit of a cheat, but it's okay in this
-                        // instance
-                        await CacheAsync(channelKey, record with { GuildID = guild.ID });
-                    }
-                }
-                else
-                {
-                    await CacheAsync(channelKey, channel);
-                }
-            }
-        }
-
         foreach (var emoji in guild.Emojis)
         {
             if (emoji.ID is null)
@@ -246,23 +224,6 @@ public class CacheService
 
             var emojiKey = KeyHelpers.CreateEmojiCacheKey(guild.ID, emoji.ID.Value);
             await CacheAsync(emojiKey, emoji);
-        }
-
-        if (guild.Members.IsDefined(out var members))
-        {
-            var membersKey = KeyHelpers.CreateGuildMembersKey(guild.ID, default, default);
-            await CacheAsync(membersKey, members);
-
-            foreach (var guildMember in members)
-            {
-                if (!guildMember.User.IsDefined(out var user))
-                {
-                    continue;
-                }
-
-                var memberKey = KeyHelpers.CreateGuildMemberKey(guild.ID, user.ID);
-                await CacheAsync(memberKey, guildMember);
-            }
         }
 
         var rolesKey = KeyHelpers.CreateGuildRolesCacheKey(guild.ID);

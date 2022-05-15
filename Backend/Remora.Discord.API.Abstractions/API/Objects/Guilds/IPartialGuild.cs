@@ -102,33 +102,6 @@ public interface IPartialGuild
     /// <inheritdoc cref="IGuild.RulesChannelID" />
     Optional<Snowflake?> RulesChannelID { get; }
 
-    /// <inheritdoc cref="IGuild.JoinedAt" />
-    Optional<DateTimeOffset> JoinedAt { get; }
-
-    /// <inheritdoc cref="IGuild.IsLarge" />
-    Optional<bool> IsLarge { get; }
-
-    /// <inheritdoc cref="IGuild.IsUnavailable" />
-    Optional<bool> IsUnavailable { get; }
-
-    /// <inheritdoc cref="IGuild.MemberCount" />
-    Optional<int> MemberCount { get; }
-
-    /// <inheritdoc cref="IGuild.VoiceStates" />
-    Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates { get; }
-
-    /// <inheritdoc cref="IGuild.Members" />
-    Optional<IReadOnlyList<IGuildMember>> Members { get; }
-
-    /// <inheritdoc cref="IGuild.Channels" />
-    Optional<IReadOnlyList<IChannel>> Channels { get; }
-
-    /// <inheritdoc cref="IGuild.Threads"/>
-    Optional<IReadOnlyList<IChannel>> Threads { get; }
-
-    /// <inheritdoc cref="IGuild.Presences" />
-    Optional<IReadOnlyList<IPartialPresence>> Presences { get; }
-
     /// <inheritdoc cref="IGuild.MaxPresences" />
     Optional<int?> MaxPresences { get; }
 
@@ -171,14 +144,8 @@ public interface IPartialGuild
     /// <inheritdoc cref="IGuild.NSFWLevel" />
     Optional<GuildNSFWLevel> NSFWLevel { get; }
 
-    /// <inheritdoc cref="IGuild.StageInstances" />
-    Optional<IReadOnlyList<IStageInstance>> StageInstances { get; }
-
     /// <inheritdoc cref="IGuild.Stickers"/>
     Optional<IReadOnlyList<ISticker>> Stickers { get; }
-
-    /// <inheritdoc cref="IGuild.GuildScheduledEvents"/>
-    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents { get; }
 
     /// <inheritdoc cref="IGuild.IsPremiumProgressBarEnabled"/>
     Optional<bool> IsPremiumProgressBarEnabled { get; }
