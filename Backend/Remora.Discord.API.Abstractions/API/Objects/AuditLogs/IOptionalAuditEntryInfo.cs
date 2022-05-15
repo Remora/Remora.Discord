@@ -35,7 +35,7 @@ public interface IOptionalAuditEntryInfo
     /// Gets the application for which entities were targeted.
     /// </summary>
     /// <remarks>
-    /// Relevant for <see cref="AuditLogEvent.ApplicationCommandPermissionUpdate"/>
+    /// Relevant for <see cref="AuditLogEvent.ApplicationCommandPermissionUpdate"/>.
     /// </remarks>
     Optional<Snowflake> ApplicationID { get; }
 
