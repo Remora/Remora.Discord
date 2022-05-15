@@ -38,7 +38,7 @@ public interface IAuditLogChange
     /// This is the raw unparsed value from Discord's payload. Use the additional information available in the audit log
     /// entry to determine an appropriate type to parse it into.
     /// </remarks>
-    Optional<string?> NewValue { get; }
+    Optional<string> NewValue { get; }
 
     /// <summary>
     /// Gets the old value of the key.
@@ -47,7 +47,7 @@ public interface IAuditLogChange
     /// This is the raw unparsed value from Discord's payload. Use the additional information available in the audit log
     /// entry to determine an appropriate type to parse it into.
     /// </remarks>
-    Optional<string?> OldValue { get; }
+    Optional<string> OldValue { get; }
 
     /// <summary>
     /// Gets the name of the audit log change key.

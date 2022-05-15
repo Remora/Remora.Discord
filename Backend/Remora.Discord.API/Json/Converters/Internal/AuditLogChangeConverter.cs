@@ -55,8 +55,8 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
             throw new JsonException();
         }
 
-        Optional<string?> newValue = default;
-        Optional<string?> oldValue = default;
+        Optional<string> newValue = default;
+        Optional<string> oldValue = default;
 
         if (jsonDocument.RootElement.TryGetProperty("old_value", out var oldValueProperty))
         {
@@ -78,8 +78,18 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         writer.WriteStartObject();
         {
             writer.Write("key", value.Key, options);
-            writer.Write("new_value", value.NewValue, options);
-            writer.Write("old_value", value.OldValue, options);
+
+            if (value.NewValue.HasValue)
+            {
+                writer.WritePropertyName("new_value");
+                writer.WriteRawValue(value.NewValue.Value);
+            }
+
+            if (value.OldValue.HasValue)
+            {
+                writer.WritePropertyName("old_value");
+                writer.WriteRawValue(value.OldValue.Value);
+            }
         }
         writer.WriteEndObject();
     }
