@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.1.1</Version>
+        <Version>4.2.0</Version>
         <Description>Utilities and components which extened upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Add ANSI formatting string builder
         </PackageReleaseNotes>
     </PropertyGroup>
 

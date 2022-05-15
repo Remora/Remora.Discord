@@ -5,11 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>60.1.0</Version>
+        <Version>61.0.0</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Add missing gateway event.
-            Update nuget packages.
+            Update audit log definitions.
+            Move create-only fields from IGuild.
+            Add missing permission parameters
         </PackageReleaseNotes>
     </PropertyGroup>
 

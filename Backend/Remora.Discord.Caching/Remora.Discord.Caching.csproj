@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>25.0.3</Version>
+        <Version>26.0.0</Version>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Change caching API implementations to use the decorator pattern.
         </PackageReleaseNotes>
     </PropertyGroup>
 

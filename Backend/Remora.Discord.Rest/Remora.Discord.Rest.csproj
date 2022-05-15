@@ -5,10 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>35.0.1</Version>
+        <Version>36.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Retry clientside rate-limited API calls forever.
+            Update audit log definitions.
+            Add missing permission parameters
         </PackageReleaseNotes>
     </PropertyGroup>
 

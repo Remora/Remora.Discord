@@ -5,12 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>57.1.0</Version>
+        <Version>58.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Add missing gateway event.
-            Add new changelog key.
-            Update nuget packages.
+            Update audit log definitions.
+            Move create-only fields from IGuild.
+            Add missing permission parameters
         </PackageReleaseNotes>
     </PropertyGroup>
 
