@@ -2460,7 +2460,7 @@ public class DiscordRestChannelAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestChannelAPI.StartThreadWithMessageAsync"/> method.
+    /// Tests the <see cref="DiscordRestChannelAPI.StartThreadFromMessageAsync"/> method.
     /// </summary>
     public class StartThreadWithMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
@@ -2500,7 +2500,7 @@ public class DiscordRestChannelAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
             );
 
-            var result = await api.StartThreadWithMessageAsync(channelId, messageId, name, duration, rateLimit, reason);
+            var result = await api.StartThreadFromMessageAsync(channelId, messageId, name, duration, rateLimit, reason);
             ResultAssert.Successful(result);
         }
     }
@@ -2558,6 +2558,329 @@ public class DiscordRestChannelAPITests
                 isInvitable,
                 rateLimit,
                 reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestChannelAPI.StartThreadInForumChannelAsync"/> method.
+    /// </summary>
+    public class StartThreadInForumChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNormalRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var name = "wooga";
+            var content = "brr";
+            var allowedMentions = new AllowedMentions();
+            var flags = MessageFlags.SuppressEmbeds;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty
+                                (
+                                    "message",
+                                    p => p.IsObject
+                                    (
+                                        po => po
+                                            .WithProperty("content", pop => pop.Is(content))
+                                            .WithProperty("allowed_mentions", pop => pop.IsObject())
+                                            .WithProperty("flags", pop => pop.Is((int)flags))
+                                    )
+                                )
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.StartThreadInForumChannelAsync
+            (
+                channelId,
+                name,
+                content: content,
+                allowedMentions: allowedMentions,
+                flags: flags
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsEmbedRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var embeds = new List<Embed>();
+            var name = "wooga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty
+                                (
+                                    "message",
+                                    p => p.IsObject
+                                    (
+                                        po => po
+                                            .WithProperty("embeds", pop => pop.IsArray())
+                                    )
+                                )
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.StartThreadInForumChannelAsync
+            (
+                channelId,
+                name,
+                embeds: embeds
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsComponentRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var name = "wooga";
+            var content = "content";
+            var components = new List<IMessageComponent>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty
+                                (
+                                    "message",
+                                    p => p.IsObject
+                                    (
+                                        po => po
+                                            .WithProperty("content", pop => pop.Is(content))
+                                            .WithProperty("components", poa => poa.IsArray())
+                                    )
+                                )
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.StartThreadInForumChannelAsync
+            (
+                channelId,
+                name,
+                content: content,
+                components: components
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsFileUploadRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var name = "wooga";
+            await using var file = new MemoryStream();
+            var fileName = "file.bin";
+            var description = "wooga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .With
+                    (
+                        m =>
+                        {
+                            if (m.Content is not MultipartFormDataContent multipart)
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[0]", fileName))
+                            {
+                                return false;
+                            }
+
+                            return multipart.ContainsContent<StringContent>("payload_json");
+                        }
+                    )
+                    .WithMultipartJsonPayload
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("message", p => p.IsObject
+                                (
+                                    po => po
+                                        .WithProperty("attachments", poa => poa.IsArray
+                                        (
+                                            a => a
+                                                .WithElement
+                                                (
+                                                    0,
+                                                    e => e.IsObject
+                                                    (
+                                                        eo => eo
+                                                            .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                            .WithProperty("filename", ep => ep.Is(fileName))
+                                                            .WithProperty("description", ep => ep.Is(description))
+                                                    )
+                                                )
+                                        ))
+                                ))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.StartThreadInForumChannelAsync
+            (
+                channelId,
+                name,
+                attachments: new[] { new FileData(fileName, file, description) }
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsMultiFileUploadRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var name = "wooga";
+
+            await using var file1 = new MemoryStream();
+            await using var file2 = new MemoryStream();
+            var fileName1 = "file1.bin";
+            var fileName2 = "file2.bin";
+
+            var description1 = "wooga";
+            var description2 = "booga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .With
+                    (
+                        m =>
+                        {
+                            if (m.Content is not MultipartFormDataContent multipart)
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[0]", fileName1))
+                            {
+                                return false;
+                            }
+
+                            if (!multipart.ContainsContent("files[1]", fileName2))
+                            {
+                                return false;
+                            }
+
+                            return multipart.ContainsContent<StringContent>("payload_json");
+                        }
+                    )
+                    .WithMultipartJsonPayload
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("message", p => p.IsObject
+                                (
+                                    po => po
+                                        .WithProperty("attachments", poa => poa.IsArray
+                                        (
+                                            a => a
+                                                .WithElement
+                                                (
+                                                    0,
+                                                    e => e.IsObject
+                                                    (
+                                                        eo => eo
+                                                            .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                            .WithProperty("filename", ep => ep.Is(fileName1))
+                                                            .WithProperty("description", ep => ep.Is(description1))
+                                                    )
+                                                )
+                                                .WithElement
+                                                (
+                                                    1,
+                                                    e => e.IsObject
+                                                    (
+                                                        eo => eo
+                                                            .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                            .WithProperty("filename", ep => ep.Is(fileName2))
+                                                            .WithProperty("description", ep => ep.Is(description2))
+                                                    )
+                                                )
+                                        ))
+                                ))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.StartThreadInForumChannelAsync
+            (
+                channelId,
+                name,
+                attachments: new[]
+                {
+                    new FileData(fileName1, file1, description1),
+                    new FileData(fileName2, file2, description2)
+                }
             );
 
             ResultAssert.Successful(result);

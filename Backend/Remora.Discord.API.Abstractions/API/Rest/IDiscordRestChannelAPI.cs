@@ -768,7 +768,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result<IChannel>> StartThreadWithMessageAsync
+    Task<Result<IChannel>> StartThreadFromMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -803,6 +803,42 @@ public interface IDiscordRestChannelAPI
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Creates a new thread in a forum channel, and sends a message within the created thread.
+    /// </summary>
+    /// <param name="channelID">The channel to start the thread in.</param>
+    /// <param name="name">The name of the thread.</param>
+    /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
+    /// <param name="rateLimitPerUser">
+    /// The message rate limit per user, that is, the number of seconds they have to wait between sending messages.
+    /// </param>
+    /// <param name="content">The content of the message.</param>
+    /// <param name="embeds">The rich embeds in the message.</param>
+    /// <param name="allowedMentions">An object describing the allowed mention types.</param>
+    /// <param name="components">The components of the message.</param>
+    /// <param name="stickerIds">The stickers to send with the message (max 3).</param>
+    /// <param name="attachments">The attachments to associate with the response.</param>
+    /// <param name="flags">The message flags.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A channel with a nested message object.</returns>
+    Task<Result<IChannel>> StartThreadInForumChannelAsync
+    (
+        Snowflake channelID,
+        string name,
+        Optional<AutoArchiveDuration> autoArchiveDuration = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<string> content = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IAllowedMentions> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<Snowflake>> stickerIds = default,
+        Optional<IReadOnlyList<FileData>> attachments = default,
+        Optional<MessageFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

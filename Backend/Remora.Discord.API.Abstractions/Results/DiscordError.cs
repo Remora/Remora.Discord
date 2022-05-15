@@ -247,6 +247,11 @@ public enum DiscordError
     UnknownGuildScheduledEventUser = 10071,
 
     /// <summary>
+    /// Unknown tag.
+    /// </summary>
+    UnknownTag = 10087,
+
+    /// <summary>
     /// Bots cannot use this endpoint.
     /// </summary>
     NoBotsAllowed = 20001,
@@ -510,6 +515,11 @@ public enum DiscordError
     /// The interaction has already been acknowledged by the application.
     /// </summary>
     InteractionHasAlreadyBeenAcknowledged = 40060,
+
+    /// <summary>
+    /// Tag names in a forum channel must be unique.
+    /// </summary>
+    TagNamesMustBeUnique = 40061,
 
     /// <summary>
     /// Missing access.

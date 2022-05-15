@@ -448,7 +448,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
     }
 
     /// <inheritdoc />
-    public async Task<Result<IChannel>> StartThreadWithMessageAsync
+    public async Task<Result<IChannel>> StartThreadFromMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -459,7 +459,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         CancellationToken ct = default
     )
     {
-        var createResult = await _actual.StartThreadWithMessageAsync
+        var createResult = await _actual.StartThreadFromMessageAsync
         (
             channelID,
             messageID,
