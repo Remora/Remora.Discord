@@ -227,9 +227,8 @@ public static class ServiceCollectionExtensions
             .AddPolicyHandler
             (
                 Policy.HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
-                    .WaitAndRetryAsync
+                    .WaitAndRetryForeverAsync
                     (
-                        1,
                         (_, response, _) =>
                         {
                             if (response.Result == default)
