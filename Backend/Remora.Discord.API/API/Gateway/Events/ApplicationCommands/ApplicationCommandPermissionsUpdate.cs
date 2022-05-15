@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -33,7 +34,8 @@ namespace Remora.Discord.API.Gateway.Events;
 public record ApplicationCommandPermissionsUpdate
 (
     Snowflake ID,
-    ApplicationCommandPermissionType Type,
-    bool HasPermission
-) : ApplicationCommandPermissions(ID, Type, HasPermission),
+    Snowflake ApplicationID,
+    Snowflake GuildID,
+    IReadOnlyList<IApplicationCommandPermissions> Permissions
+) : GuildApplicationCommandPermissions(ID, ApplicationID, GuildID, Permissions),
     IApplicationCommandPermissionsUpdate;
