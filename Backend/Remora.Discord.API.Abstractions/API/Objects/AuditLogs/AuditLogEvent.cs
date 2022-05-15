@@ -263,5 +263,10 @@ public enum AuditLogEvent
     /// <summary>
     /// A thread was deleted.
     /// </summary>
-    ThreadDelete = 112
+    ThreadDelete = 112,
+
+    /// <summary>
+    /// The permissions for an application command were updated.
+    /// </summary>
+    ApplicationCommandPermissionUpdate = 121
 }

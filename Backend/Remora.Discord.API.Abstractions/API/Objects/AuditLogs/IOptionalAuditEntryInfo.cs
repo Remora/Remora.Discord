@@ -32,6 +32,14 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IOptionalAuditEntryInfo
 {
     /// <summary>
+    /// Gets the application for which entities were targeted.
+    /// </summary>
+    /// <remarks>
+    /// Relevant for <see cref="AuditLogEvent.ApplicationCommandPermissionUpdate"/>
+    /// </remarks>
+    Optional<Snowflake> ApplicationID { get; }
+
+    /// <summary>
     /// Gets the channel in which the entities were targeted.
     /// <remarks>
     /// Relevant for <see cref="AuditLogEvent.MemberMove"/>, <see cref="AuditLogEvent.MessagePin"/>,
