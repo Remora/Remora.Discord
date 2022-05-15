@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -245,7 +245,8 @@
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent">IGatewayEvent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData">IGatewayPayloadData</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandPermissions">I<wbr>Application<wbr>Command<wbr>Permissions</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions">I<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuildApplicationCommandPermissions">I<wbr>Partial<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>								
 									</ul>
 								</dd>
 							
@@ -260,8 +261,10 @@
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent"
 	Type-.-&gt;Interface1["IGatewayPayloadData"]
 	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
-	Type-.-&gt;Interface2["IApplicationCommandPermissions"]
-	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandPermissions"
+	Type-.-&gt;Interface2["IGuildApplicationCommandPermissions"]
+	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions"
+	Type-.-&gt;Interface3["IPartialGuildApplicationCommandPermissions"]
+	click Interface3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuildApplicationCommandPermissions"
 	Type["IApplicationCommandPermissionsUpdate"]
 class Type type-node
 
@@ -274,7 +277,7 @@ class Type type-node
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
 public interface IApplicationCommandPermissionsUpdate : IGatewayEvent, IGatewayPayloadData, 
-    IApplicationCommandPermissions</code></pre>
+    IGuildApplicationCommandPermissions, IPartialGuildApplicationCommandPermissions</code></pre>
 
 
 

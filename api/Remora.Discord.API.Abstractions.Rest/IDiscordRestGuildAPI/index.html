@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -202,8 +202,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI">Caching<wbr>Discord<wbr>Rest<wbr>Guild<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -213,10 +213,10 @@
 							graph BT
 	Type["IDiscordRestGuildAPI"]
 class Type type-node
-	Implementing0["DiscordRestGuildAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
-	Implementing1["CachingDiscordRestGuildAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI"
+	Implementing0["CachingDiscordRestGuildAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI"
+	Implementing1["DiscordRestGuildAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
 
 						</div>
 					</div>
@@ -495,7 +495,7 @@ public interface IDiscordRestGuildAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/0D284D10">List<wbr>Active<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/2A09F95F">List<wbr>Active<wbr>Guild<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
