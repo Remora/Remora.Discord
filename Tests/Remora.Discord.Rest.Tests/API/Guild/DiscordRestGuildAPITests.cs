@@ -2273,7 +2273,7 @@ public class DiscordRestGuildAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestGuildAPI.ListActiveThreadsAsync"/> method.
+    /// Tests the <see cref="DiscordRestGuildAPI.ListActiveGuildThreadsAsync"/> method.
     /// </summary>
     public class ListActiveThreadsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
@@ -2298,7 +2298,7 @@ public class DiscordRestGuildAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildThreadQueryResponse)])
             );
 
-            var result = await api.ListActiveThreadsAsync(guildID);
+            var result = await api.ListActiveGuildThreadsAsync(guildID);
             ResultAssert.Successful(result);
         }
     }

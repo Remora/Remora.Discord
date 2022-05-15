@@ -246,7 +246,11 @@ public interface IDiscordRestGuildAPI
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result<IGuildThreadQueryResponse>> ListActiveThreadsAsync(Snowflake guildID, CancellationToken ct = default);
+    Task<Result<IGuildThreadQueryResponse>> ListActiveGuildThreadsAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    );
 
     /// <summary>
     /// Gets member information about the given user.

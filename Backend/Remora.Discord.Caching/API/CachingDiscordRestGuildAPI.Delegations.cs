@@ -47,13 +47,13 @@ public partial class CachingDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public Task<Result<IGuildThreadQueryResponse>> ListActiveThreadsAsync
+    public Task<Result<IGuildThreadQueryResponse>> ListActiveGuildThreadsAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
-        return _actual.ListActiveThreadsAsync(guildID, ct);
+        return _actual.ListActiveGuildThreadsAsync(guildID, ct);
     }
 
     /// <inheritdoc />
