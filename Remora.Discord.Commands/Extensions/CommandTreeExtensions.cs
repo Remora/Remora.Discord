@@ -251,7 +251,6 @@ public static class CommandTreeExtensions
         Optional<IDiscordPermissionSet?> DefaultMemberPermission
     )> GetNodeMetadata(IChildNode node)
     {
-
         Optional<ApplicationCommandType> commandType = default;
         Optional<bool?> directMessagePermission = default;
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default;
