@@ -36,7 +36,6 @@ using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Results;
 using Remora.Discord.Commands.Services;
 using Remora.Rest.Core;
-using Remora.Rest.Extensions;
 using Remora.Results;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 
@@ -569,17 +568,8 @@ public static class CommandTreeExtensions
                 }
             }
 
-            // Unwrap the parameter type if it's a Nullable<T> or Optional<T>
-            // TODO: Maybe more cases?
-            var parameterType = parameter.Parameter.ParameterType;
-            var actualParameterType = parameterType.IsNullable() || parameterType.IsOptional()
-                ? parameterType.GetGenericArguments().Single()
-                : parameterType;
-
-            var typeHint = parameter.Parameter.GetCustomAttribute<DiscordTypeHintAttribute>();
-            var discordType = typeHint is null
-                ? ToApplicationCommandOptionType(actualParameterType)
-                : (ApplicationCommandOptionType)typeHint.TypeHint;
+            var actualParameterType = parameter.GetActualParameterType();
+            var discordType = parameter.GetDiscordType();
 
             var getChannelTypes = TryCreateChannelTypesOption(command, parameter, discordType);
             if (!getChannelTypes.IsSuccess)
@@ -587,35 +577,19 @@ public static class CommandTreeExtensions
                 return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(getChannelTypes);
             }
 
-            Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
-            Optional<bool> enableAutocomplete = default;
+            var getParameterChoices = TryGetParameterChoices
+            (
+                parameter.Parameter,
+                actualParameterType,
+                localizationProvider
+            );
 
-            if (actualParameterType.IsEnum)
+            if (!getParameterChoices.IsDefined(out var tuple))
             {
-                // Add the choices directly
-                if (Enum.GetValues(actualParameterType).Length <= MaxChoiceValues)
-                {
-                    var createChoices = EnumExtensions.GetEnumChoices(actualParameterType, localizationProvider);
-                    if (!createChoices.IsSuccess)
-                    {
-                        return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createChoices);
-                    }
+                return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(getParameterChoices);
+            }
 
-                    choices = new(createChoices.Entity);
-                }
-                else
-                {
-                    // Enable autocomplete for this enum type
-                    enableAutocomplete = true;
-                }
-            }
-            else
-            {
-                if (parameter.Parameter.GetCustomAttribute<AutocompleteAttribute>() is not null)
-                {
-                    enableAutocomplete = true;
-                }
-            }
+            var (enableAutocomplete, choices) = tuple;
 
             var minValue = parameter.Parameter.GetCustomAttribute<MinValueAttribute>();
             var maxValue = parameter.Parameter.GetCustomAttribute<MaxValueAttribute>();
@@ -667,6 +641,50 @@ public static class CommandTreeExtensions
         return Result<IReadOnlyList<IApplicationCommandOption>>.FromSuccess(parameterOptions);
     }
 
+    private static Result
+    <(
+        Optional<bool> EnableAutocomplete,
+        Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices
+    )>
+    TryGetParameterChoices(ParameterInfo parameter, Type actualParameterType, ILocalizationProvider localizationProvider)
+    {
+        Optional<bool> enableAutocomplete = default;
+        Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
+
+        if (actualParameterType.IsEnum)
+        {
+            // Add the choices directly
+            if (Enum.GetValues(actualParameterType).Length <= MaxChoiceValues)
+            {
+                var createChoices = EnumExtensions.GetEnumChoices(actualParameterType, localizationProvider);
+                if (!createChoices.IsSuccess)
+                {
+                    return Result
+                    <(
+                        Optional<bool> EnableAutocomplete,
+                        Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices
+                    )>.FromError(createChoices);
+                }
+
+                choices = new(createChoices.Entity);
+            }
+            else
+            {
+                // Enable autocomplete for this enum type
+                enableAutocomplete = true;
+            }
+        }
+        else
+        {
+            if (parameter.GetCustomAttribute<AutocompleteAttribute>() is not null)
+            {
+                enableAutocomplete = true;
+            }
+        }
+
+        return (enableAutocomplete, choices);
+    }
+
     private static Result<Optional<IReadOnlyList<ChannelType>>> TryCreateChannelTypesOption
     (
         CommandNode command,
@@ -700,24 +718,6 @@ public static class CommandTreeExtensions
         }
 
         return channelTypes;
-    }
-
-    private static ApplicationCommandOptionType ToApplicationCommandOptionType(Type parameterType)
-    {
-        var discordType = parameterType switch
-        {
-            var t when t == typeof(bool) => ApplicationCommandOptionType.Boolean,
-            var t when t == typeof(IRole) => ApplicationCommandOptionType.Role,
-            var t when t == typeof(IUser) => ApplicationCommandOptionType.User,
-            var t when t == typeof(IGuildMember) => ApplicationCommandOptionType.User,
-            var t when t == typeof(IChannel) => ApplicationCommandOptionType.Channel,
-            var t when t.IsInteger() => Integer,
-            var t when t.IsFloatingPoint() => Number,
-            var t when t == typeof(IAttachment) => ApplicationCommandOptionType.Attachment,
-            _ => ApplicationCommandOptionType.String
-        };
-
-        return discordType;
     }
 
     private static int GetCommandStringifiedLength(IApplicationCommandOption option)
