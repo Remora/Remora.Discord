@@ -34,7 +34,9 @@ using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
-/// <inheritdoc />
+/// <summary>
+/// Decorates the registered template API with caching functionality.
+/// </summary>
 [PublicAPI]
 public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IRestCustomizable
 {
