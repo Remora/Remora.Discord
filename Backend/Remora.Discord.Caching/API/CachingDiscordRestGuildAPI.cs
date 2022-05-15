@@ -24,14 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Caching.Abstractions.Services;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -39,28 +37,31 @@ using Remora.Results;
 namespace Remora.Discord.Caching.API;
 
 /// <summary>
-/// Implements a caching version of the channel API.
+/// Decorates the registered guild API with caching functionality.
 /// </summary>
 [PublicAPI]
-public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
+public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCustomizable
 {
+    private readonly IDiscordRestGuildAPI _actual;
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestGuildAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CachingDiscordRestGuildAPI"/> class.
+    /// </summary>
+    /// <param name="actual">The decorated instance.</param>
+    /// <param name="cacheService">The cache service.</param>
     public CachingDiscordRestGuildAPI
     (
-        IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions,
-        ICacheProvider rateLimitCache,
+        IDiscordRestGuildAPI actual,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _actual = actual;
         _cacheService = cacheService;
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuild>> CreateGuildAsync
+    public async Task<Result<IGuild>> CreateGuildAsync
     (
         string name,
         Optional<Stream> icon = default,
@@ -76,7 +77,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var createResult = await base.CreateGuildAsync
+        var createResult = await _actual.CreateGuildAsync
         (
             name,
             icon,
@@ -105,7 +106,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuild>> GetGuildAsync
+    public async Task<Result<IGuild>> GetGuildAsync
     (
         Snowflake guildID,
         Optional<bool> withCounts = default,
@@ -120,7 +121,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IGuild>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildAsync(guildID, withCounts, ct);
+        var getResult = await _actual.GetGuildAsync(guildID, withCounts, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -133,7 +134,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildPreview>> GetGuildPreviewAsync
+    public async Task<Result<IGuildPreview>> GetGuildPreviewAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -147,7 +148,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IGuildPreview>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildPreviewAsync(guildID, ct);
+        var getResult = await _actual.GetGuildPreviewAsync(guildID, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -160,7 +161,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuild>> ModifyGuildAsync
+    public async Task<Result<IGuild>> ModifyGuildAsync
     (
         Snowflake guildID,
         Optional<string> name = default,
@@ -186,7 +187,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var modifyResult = await base.ModifyGuildAsync
+        var modifyResult = await _actual.ModifyGuildAsync
         (
             guildID,
             name,
@@ -225,13 +226,13 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> DeleteGuildAsync
+    public async Task<Result> DeleteGuildAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
-        var deleteResult = await base.DeleteGuildAsync(guildID, ct);
+        var deleteResult = await _actual.DeleteGuildAsync(guildID, ct);
 
         if (!deleteResult.IsSuccess)
         {
@@ -245,7 +246,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
+    public async Task<Result<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -259,7 +260,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IReadOnlyList<IChannel>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildChannelsAsync(guildID, ct);
+        var getResult = await _actual.GetGuildChannelsAsync(guildID, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -278,7 +279,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IChannel>> CreateGuildChannelAsync
+    public async Task<Result<IChannel>> CreateGuildChannelAsync
     (
         Snowflake guildID,
         string name,
@@ -296,7 +297,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var createResult = await base.CreateGuildChannelAsync
+        var createResult = await _actual.CreateGuildChannelAsync
         (
             guildID,
             name,
@@ -327,7 +328,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildMember>> GetGuildMemberAsync
+    public async Task<Result<IGuildMember>> GetGuildMemberAsync
     (
         Snowflake guildID,
         Snowflake userID,
@@ -342,7 +343,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IGuildMember>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildMemberAsync(guildID, userID, ct);
+        var getResult = await _actual.GetGuildMemberAsync(guildID, userID, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -363,7 +364,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
+    public async Task<Result<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
     (
         Snowflake guildID,
         Optional<int> limit = default,
@@ -379,7 +380,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IReadOnlyList<IGuildMember>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.ListGuildMembersAsync(guildID, limit, after, ct);
+        var getResult = await _actual.ListGuildMembersAsync(guildID, limit, after, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -403,7 +404,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildMember?>> AddGuildMemberAsync
+    public async Task<Result<IGuildMember?>> AddGuildMemberAsync
     (
         Snowflake guildID,
         Snowflake userID,
@@ -415,7 +416,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var getResult = await base.AddGuildMemberAsync
+        var getResult = await _actual.AddGuildMemberAsync
         (
             guildID,
             userID,
@@ -444,7 +445,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildMember>> ModifyCurrentMemberAsync
+    public async Task<Result<IGuildMember>> ModifyCurrentMemberAsync
     (
         Snowflake guildID,
         Optional<string?> nickname = default,
@@ -452,7 +453,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var getResult = await base.ModifyCurrentMemberAsync(guildID, nickname, reason, ct);
+        var getResult = await _actual.ModifyCurrentMemberAsync(guildID, nickname, reason, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -475,7 +476,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> RemoveGuildMemberAsync
+    public async Task<Result> RemoveGuildMemberAsync
     (
         Snowflake guildID,
         Snowflake userID,
@@ -483,7 +484,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var removeMember = await base.RemoveGuildMemberAsync(guildID, userID, reason, ct);
+        var removeMember = await _actual.RemoveGuildMemberAsync(guildID, userID, reason, ct);
         if (!removeMember.IsSuccess)
         {
             return removeMember;
@@ -496,7 +497,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
+    public async Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
     (
         Snowflake guildID,
         Optional<int> limit = default,
@@ -513,7 +514,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IReadOnlyList<IBan>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildBansAsync(guildID, limit, before, after, ct);
+        var getResult = await _actual.GetGuildBansAsync(guildID, limit, before, after, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -532,7 +533,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IBan>> GetGuildBanAsync
+    public async Task<Result<IBan>> GetGuildBanAsync
     (
         Snowflake guildID,
         Snowflake userID,
@@ -547,7 +548,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IBan>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildBanAsync(guildID, userID, ct);
+        var getResult = await _actual.GetGuildBanAsync(guildID, userID, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -560,7 +561,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> RemoveGuildBanAsync
+    public async Task<Result> RemoveGuildBanAsync
     (
         Snowflake guildID,
         Snowflake userID,
@@ -568,7 +569,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var deleteResult = await base.RemoveGuildBanAsync(guildID, userID, reason, ct);
+        var deleteResult = await _actual.RemoveGuildBanAsync(guildID, userID, reason, ct);
         if (!deleteResult.IsSuccess)
         {
             return deleteResult;
@@ -581,7 +582,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IRole>>> GetGuildRolesAsync
+    public async Task<Result<IReadOnlyList<IRole>>> GetGuildRolesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -595,7 +596,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IReadOnlyList<IRole>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getRoles = await base.GetGuildRolesAsync(guildID, ct);
+        var getRoles = await _actual.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
             return getRoles;
@@ -614,7 +615,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IRole>> CreateGuildRoleAsync
+    public async Task<Result<IRole>> CreateGuildRoleAsync
     (
         Snowflake guildID,
         Optional<string> name = default,
@@ -628,7 +629,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var createResult = await base.CreateGuildRoleAsync
+        var createResult = await _actual.CreateGuildRoleAsync
         (
             guildID,
             name,
@@ -655,7 +656,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
+    public async Task<Result<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
     (
         Snowflake guildID,
         IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
@@ -663,7 +664,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var modifyResult = await base.ModifyGuildRolePositionsAsync(guildID, modifiedPositions, reason, ct);
+        var modifyResult = await _actual.ModifyGuildRolePositionsAsync(guildID, modifiedPositions, reason, ct);
 
         if (!modifyResult.IsSuccess)
         {
@@ -684,7 +685,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IRole>> ModifyGuildRoleAsync
+    public async Task<Result<IRole>> ModifyGuildRoleAsync
     (
         Snowflake guildID,
         Snowflake roleID,
@@ -699,7 +700,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var modifyResult = await base.ModifyGuildRoleAsync
+        var modifyResult = await _actual.ModifyGuildRoleAsync
         (
             guildID,
             roleID,
@@ -727,7 +728,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> DeleteGuildRoleAsync
+    public async Task<Result> DeleteGuildRoleAsync
     (
         Snowflake guildId,
         Snowflake roleID,
@@ -735,7 +736,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var deleteResult = await base.DeleteGuildRoleAsync(guildId, roleID, reason, ct);
+        var deleteResult = await _actual.DeleteGuildRoleAsync(guildId, roleID, reason, ct);
         if (!deleteResult.IsSuccess)
         {
             return deleteResult;
@@ -748,7 +749,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
+    public async Task<Result<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -762,7 +763,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildVoiceRegionsAsync(guildID, ct);
+        var getResult = await _actual.GetGuildVoiceRegionsAsync(guildID, ct);
 
         if (!getResult.IsSuccess)
         {
@@ -782,7 +783,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+    public async Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -796,7 +797,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IReadOnlyList<IInvite>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildInvitesAsync(guildID, ct);
+        var getResult = await _actual.GetGuildInvitesAsync(guildID, ct);
 
         if (!getResult.IsSuccess)
         {
@@ -816,7 +817,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
+    public async Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
     (
         Snowflake guildID,
         Optional<bool> includeApplications = default,
@@ -831,7 +832,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IReadOnlyList<IIntegration>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildIntegrationsAsync(guildID, includeApplications, ct);
+        var getResult = await _actual.GetGuildIntegrationsAsync(guildID, includeApplications, ct);
 
         if (!getResult.IsSuccess)
         {
@@ -851,7 +852,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildWidgetSettings>> GetGuildWidgetSettingsAsync
+    public async Task<Result<IGuildWidgetSettings>> GetGuildWidgetSettingsAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -865,7 +866,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IGuildWidgetSettings>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildWidgetSettingsAsync(guildID, ct);
+        var getResult = await _actual.GetGuildWidgetSettingsAsync(guildID, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -878,7 +879,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildWidgetSettings>> ModifyGuildWidgetAsync
+    public async Task<Result<IGuildWidgetSettings>> ModifyGuildWidgetAsync
     (
         Snowflake guildID,
         Optional<bool> isEnabled = default,
@@ -887,7 +888,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var modifyResult = await base.ModifyGuildWidgetAsync(guildID, isEnabled, channelID, reason, ct);
+        var modifyResult = await _actual.ModifyGuildWidgetAsync(guildID, isEnabled, channelID, reason, ct);
         if (!modifyResult.IsSuccess)
         {
             return modifyResult;
@@ -901,7 +902,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IWelcomeScreen>> GetGuildWelcomeScreenAsync
+    public async Task<Result<IWelcomeScreen>> GetGuildWelcomeScreenAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -915,7 +916,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IWelcomeScreen>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetGuildWelcomeScreenAsync(guildID, ct);
+        var getResult = await _actual.GetGuildWelcomeScreenAsync(guildID, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -928,7 +929,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IGuildMember>>> SearchGuildMembersAsync
+    public async Task<Result<IReadOnlyList<IGuildMember>>> SearchGuildMembersAsync
     (
         Snowflake guildID,
         string query,
@@ -936,7 +937,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        var result = await base.SearchGuildMembersAsync(guildID, query, limit, ct);
+        var result = await _actual.SearchGuildMembersAsync(guildID, query, limit, ct);
         if (!result.IsSuccess)
         {
             return result;

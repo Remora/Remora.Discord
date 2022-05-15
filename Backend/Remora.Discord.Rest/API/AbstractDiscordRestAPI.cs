@@ -32,7 +32,7 @@ namespace Remora.Discord.Rest.API;
 /// Acts as an abstract base for REST API instances.
 /// </summary>
 [PublicAPI]
-public abstract class AbstractDiscordRestAPI
+public abstract class AbstractDiscordRestAPI : IRestCustomizable
 {
     /// <summary>
     /// Gets the <see cref="RestHttpClient{TError}"/> available to the API instance.
@@ -71,5 +71,11 @@ public abstract class AbstractDiscordRestAPI
     public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
     {
         return this.RestHttpClient.WithCustomization(requestCustomizer);
+    }
+
+    /// <inheritdoc cref="RestHttpClient{TError}.WithCustomization"/>
+    void IRestCustomizable.RemoveCustomization(RestRequestCustomization customization)
+    {
+        this.RestHttpClient.RemoveCustomization(customization);
     }
 }

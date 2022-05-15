@@ -17,4 +17,37 @@
       <ProjectReference Include="..\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="API\CachingDiscordRestChannelAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestChannelAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestGuildAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestGuildAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestInteractionAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestInteractionAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestUserAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestUserAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestEmojiAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestEmojiAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestInviteAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestInviteAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestOAuth2API.Delegations.cs">
+        <DependentUpon>CachingDiscordRestOAuth2API.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestTemplateAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestTemplateAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestVoiceAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestVoiceAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestWebhookAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestWebhookAPI.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

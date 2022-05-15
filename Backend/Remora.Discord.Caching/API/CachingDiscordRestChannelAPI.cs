@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -31,9 +30,7 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -41,28 +38,31 @@ using Remora.Results;
 namespace Remora.Discord.Caching.API;
 
 /// <summary>
-/// Implements a caching version of the channel API.
+/// Decorates the registered channel API with caching functionality.
 /// </summary>
 [PublicAPI]
-public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
+public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRestCustomizable
 {
+    private readonly IDiscordRestChannelAPI _actual;
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestChannelAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CachingDiscordRestChannelAPI"/> class.
+    /// </summary>
+    /// <param name="actual">The decorated instance.</param>
+    /// <param name="cacheService">The cache service.</param>
     public CachingDiscordRestChannelAPI
     (
-        IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions,
-        ICacheProvider rateLimitCache,
+        IDiscordRestChannelAPI actual,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _actual = actual;
         _cacheService = cacheService;
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IChannel>> GetChannelAsync
+    public async Task<Result<IChannel>> GetChannelAsync
     (
         Snowflake channelID,
         CancellationToken ct = default
@@ -77,7 +77,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             return Result<IChannel>.FromSuccess(cacheResult.Entity);
         }
 
-        var getChannel = await base.GetChannelAsync(channelID, ct);
+        var getChannel = await _actual.GetChannelAsync(channelID, ct);
         if (!getChannel.IsSuccess)
         {
             return getChannel;
@@ -90,7 +90,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IChannel>> ModifyChannelAsync
+    public async Task<Result<IChannel>> ModifyChannelAsync
     (
         Snowflake channelID,
         Optional<string> name = default,
@@ -114,7 +114,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var modificationResult = await base.ModifyChannelAsync
+        var modificationResult = await _actual.ModifyChannelAsync
         (
             channelID,
             name,
@@ -151,14 +151,14 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> DeleteChannelAsync
+    public async Task<Result> DeleteChannelAsync
     (
         Snowflake channelID,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        var deleteResult = await base.DeleteChannelAsync(channelID, reason, ct);
+        var deleteResult = await _actual.DeleteChannelAsync(channelID, reason, ct);
         if (!deleteResult.IsSuccess)
         {
             return deleteResult;
@@ -171,7 +171,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> GetChannelMessageAsync
+    public async Task<Result<IMessage>> GetChannelMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -186,7 +186,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             return Result<IMessage>.FromSuccess(cacheResult.Entity);
         }
 
-        var getMessage = await base.GetChannelMessageAsync(channelID, messageID, ct);
+        var getMessage = await _actual.GetChannelMessageAsync(channelID, messageID, ct);
         if (!getMessage.IsSuccess)
         {
             return getMessage;
@@ -199,7 +199,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> CreateMessageAsync
+    public async Task<Result<IMessage>> CreateMessageAsync
     (
         Snowflake channelID,
         Optional<string> content = default,
@@ -215,7 +215,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var createResult = await base.CreateMessageAsync
+        var createResult = await _actual.CreateMessageAsync
         (
             channelID,
             content,
@@ -244,7 +244,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> EditMessageAsync
+    public async Task<Result<IMessage>> EditMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -257,7 +257,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var editResult = await base.EditMessageAsync
+        var editResult = await _actual.EditMessageAsync
         (
             channelID,
             messageID,
@@ -283,7 +283,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> DeleteMessageAsync
+    public async Task<Result> DeleteMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -291,7 +291,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var deleteResult = await base.DeleteMessageAsync(channelID, messageID, reason, ct);
+        var deleteResult = await _actual.DeleteMessageAsync(channelID, messageID, reason, ct);
         if (!deleteResult.IsSuccess)
         {
             return deleteResult;
@@ -304,7 +304,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> BulkDeleteMessagesAsync
+    public async Task<Result> BulkDeleteMessagesAsync
     (
         Snowflake channelID,
         IReadOnlyList<Snowflake> messageIDs,
@@ -312,7 +312,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var deleteResult = await base.BulkDeleteMessagesAsync(channelID, messageIDs, reason, ct);
+        var deleteResult = await _actual.BulkDeleteMessagesAsync(channelID, messageIDs, reason, ct);
         if (!deleteResult.IsSuccess)
         {
             return deleteResult;
@@ -328,7 +328,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IInvite>> CreateChannelInviteAsync
+    public async Task<Result<IInvite>> CreateChannelInviteAsync
     (
         Snowflake channelID,
         Optional<TimeSpan> maxAge = default,
@@ -342,7 +342,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var createResult = await base.CreateChannelInviteAsync
+        var createResult = await _actual.CreateChannelInviteAsync
         (
             channelID,
             maxAge,
@@ -369,7 +369,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> DeleteChannelPermissionAsync
+    public async Task<Result> DeleteChannelPermissionAsync
     (
         Snowflake channelID,
         Snowflake overwriteID,
@@ -377,7 +377,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var deleteResult = await base.DeleteChannelPermissionAsync(channelID, overwriteID, reason, ct);
+        var deleteResult = await _actual.DeleteChannelPermissionAsync(channelID, overwriteID, reason, ct);
         if (!deleteResult.IsSuccess)
         {
             return deleteResult;
@@ -390,7 +390,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
+    public async Task<Result<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
     (
         Snowflake channelID,
         CancellationToken ct = default
@@ -405,7 +405,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             return Result<IReadOnlyList<IMessage>>.FromSuccess(cacheResult.Entity);
         }
 
-        var getResult = await base.GetPinnedMessagesAsync(channelID, ct);
+        var getResult = await _actual.GetPinnedMessagesAsync(channelID, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -424,7 +424,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> UnpinMessageAsync
+    public async Task<Result> UnpinMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -432,7 +432,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var deleteResult = await base.UnpinMessageAsync(channelID, messageID, reason, ct);
+        var deleteResult = await _actual.UnpinMessageAsync(channelID, messageID, reason, ct);
         if (!deleteResult.IsSuccess)
         {
             return deleteResult;
@@ -445,7 +445,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IChannel>> StartThreadWithMessageAsync
+    public async Task<Result<IChannel>> StartThreadWithMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -456,7 +456,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var createResult = await base.StartThreadWithMessageAsync
+        var createResult = await _actual.StartThreadWithMessageAsync
         (
             channelID,
             messageID,
@@ -479,7 +479,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IChannel>> StartThreadWithoutMessageAsync
+    public async Task<Result<IChannel>> StartThreadWithoutMessageAsync
     (
         Snowflake channelID,
         string name,
@@ -491,7 +491,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var createResult = await base.StartThreadWithoutMessageAsync
+        var createResult = await _actual.StartThreadWithoutMessageAsync
         (
             channelID,
             name,
@@ -515,7 +515,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
+    public async Task<Result<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
     (
         Snowflake channelID,
         Optional<Snowflake> around = default,
@@ -525,7 +525,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        var getResult = await base.GetChannelMessagesAsync(channelID, around, before, after, limit, ct);
+        var getResult = await _actual.GetChannelMessagesAsync(channelID, around, before, after, limit, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
@@ -541,14 +541,14 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IMessage>> CrosspostMessageAsync
+    public async Task<Result<IMessage>> CrosspostMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
         CancellationToken ct = default
     )
     {
-        var result = await base.CrosspostMessageAsync(channelID, messageID, ct);
+        var result = await _actual.CrosspostMessageAsync(channelID, messageID, ct);
         if (!result.IsSuccess)
         {
             return result;
@@ -562,7 +562,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
+    public async Task<Result<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
     (
         Snowflake channelID,
         CancellationToken ct = default
@@ -577,7 +577,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             return Result<IReadOnlyList<IInvite>>.FromSuccess(cacheResult.Entity);
         }
 
-        var result = await base.GetChannelInvitesAsync(channelID, ct);
+        var result = await _actual.GetChannelInvitesAsync(channelID, ct);
         if (!result.IsSuccess)
         {
             return result;
@@ -595,7 +595,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IThreadMember>> GetThreadMemberAsync
+    public async Task<Result<IThreadMember>> GetThreadMemberAsync
     (
         Snowflake channelID,
         Snowflake userID,
@@ -611,7 +611,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             return Result<IThreadMember>.FromSuccess(cacheResult.Entity);
         }
 
-        var result = await base.GetThreadMemberAsync(channelID, userID, ct);
+        var result = await _actual.GetThreadMemberAsync(channelID, userID, ct);
         if (!result.IsSuccess)
         {
             return result;
@@ -624,7 +624,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
+    public async Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
     (
         Snowflake channelID,
         CancellationToken ct = default
@@ -639,7 +639,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             return Result<IReadOnlyList<IThreadMember>>.FromSuccess(cacheResult.Entity);
         }
 
-        var result = await base.ListThreadMembersAsync(channelID, ct);
+        var result = await _actual.ListThreadMembersAsync(channelID, ct);
         if (!result.IsSuccess)
         {
             return result;
@@ -660,14 +660,14 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result> RemoveThreadMemberAsync
+    public async Task<Result> RemoveThreadMemberAsync
     (
         Snowflake channelID,
         Snowflake userID,
         CancellationToken ct = default
     )
     {
-        var result = await base.RemoveThreadMemberAsync(channelID, userID, ct);
+        var result = await _actual.RemoveThreadMemberAsync(channelID, userID, ct);
         if (!result.IsSuccess)
         {
             return result;

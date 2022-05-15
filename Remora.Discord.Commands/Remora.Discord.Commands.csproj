@@ -26,4 +26,10 @@
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="API\ResponseTrackingInteractionAPI.Delegations.cs">
+        <DependentUpon>ResponseTrackingInteractionAPI.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

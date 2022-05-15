@@ -21,40 +21,43 @@
 //
 
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Caching.Abstractions.Services;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
-/// <inheritdoc />
+/// <summary>
+/// Decorates the registered voice API with caching functionality.
+/// </summary>
 [PublicAPI]
-public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
+public partial class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCustomizable
 {
+    private readonly IDiscordRestVoiceAPI _actual;
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestVoiceAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CachingDiscordRestVoiceAPI"/> class.
+    /// </summary>
+    /// <param name="actual">The decorated instance.</param>
+    /// <param name="cacheService">The cache service.</param>
     public CachingDiscordRestVoiceAPI
     (
-        IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions,
-        ICacheProvider rateLimitCache,
+        IDiscordRestVoiceAPI actual,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _actual = actual;
         _cacheService = cacheService;
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
+    public async Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
     (
         CancellationToken ct = default
     )
@@ -67,7 +70,7 @@ public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
             return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cacheResult.Entity);
         }
 
-        var listRegions = await base.ListVoiceRegionsAsync(ct);
+        var listRegions = await _actual.ListVoiceRegionsAsync(ct);
         if (!listRegions.IsSuccess)
         {
             return listRegions;
