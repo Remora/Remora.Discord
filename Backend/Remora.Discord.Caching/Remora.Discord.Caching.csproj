@@ -37,7 +37,7 @@
         <DependentUpon>CachingDiscordRestInviteAPI.cs</DependentUpon>
       </Compile>
       <Compile Update="API\CachingDiscordRestOAuth2API.Delegations.cs">
-        <DependentUpon>CachingDiscordRestOAuth2API.cs</DependentUpon>
+        <DependentUpon>CachingDiscordRestRestOAuth2API.cs</DependentUpon>
       </Compile>
       <Compile Update="API\CachingDiscordRestTemplateAPI.Delegations.cs">
         <DependentUpon>CachingDiscordRestTemplateAPI.cs</DependentUpon>
