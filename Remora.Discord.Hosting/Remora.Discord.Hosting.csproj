@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>5.0.12</Version>
+        <Version>5.0.13</Version>
         <Description>Implementation of a hosted Discord gateway service for the .NET Generic Host</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Upgrade dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

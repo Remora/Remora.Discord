@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.1.0</Version>
+        <Version>8.1.1</Version>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Implement Polly-based retry logic for the websocket.
+            Fix another event that can pop up when connecting.
         </PackageReleaseNotes>
     </PropertyGroup>
 

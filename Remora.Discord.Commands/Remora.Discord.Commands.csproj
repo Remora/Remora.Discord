@@ -5,11 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>23.0.0</Version>
+        <Version>23.0.1</Version>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
-            Rework the feedback service to use responses.
-            Implement interaction response tracking.
+            Upgrade dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
