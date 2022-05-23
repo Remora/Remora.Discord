@@ -705,6 +705,15 @@ public class DiscordGatewayClient : IDisposable
                 {
                     continue;
                 }
+                case IPayload<IReconnect>:
+                {
+                    return new GatewayError
+                    (
+                        "The newly created session was invalidated by Discord.",
+                        false,
+                        false
+                    );
+                }
                 case IPayload<IInvalidSession> invalidSession:
                 {
                     return new GatewayError
