@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.1.1</Version>
+        <Version>8.1.2</Version>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Fix another event that can pop up when connecting.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

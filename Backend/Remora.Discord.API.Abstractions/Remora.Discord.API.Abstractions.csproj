@@ -5,12 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>61.0.0</Version>
+        <Version>62.0.0</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Update audit log definitions.
-            Move create-only fields from IGuild.
-            Add missing permission parameters
+            Update channel modification API.
+            Add new error code.
         </PackageReleaseNotes>
     </PropertyGroup>
 

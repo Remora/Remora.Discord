@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.18</Version>
+        <Version>3.0.19</Version>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
-            Upgrade dependencies.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
