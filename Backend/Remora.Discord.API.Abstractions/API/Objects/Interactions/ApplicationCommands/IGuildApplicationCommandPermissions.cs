@@ -33,8 +33,12 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IGuildApplicationCommandPermissions : IPartialGuildApplicationCommandPermissions
 {
     /// <summary>
-    /// Gets the ID of the command.
+    /// Gets the ID of the command or the application the permission applies to.
     /// </summary>
+    /// <remarks>
+    /// If this ID is that of an application, its permissions apply to all commands that do not have an explicit
+    /// permission set.
+    /// </remarks>
     new Snowflake ID { get; }
 
     /// <summary>
