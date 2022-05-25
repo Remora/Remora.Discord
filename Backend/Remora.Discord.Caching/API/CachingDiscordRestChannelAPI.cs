@@ -110,6 +110,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         Optional<bool> isLocked = default,
         Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
+        Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -134,6 +135,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
             isLocked,
             defaultAutoArchiveDuration,
             rtcRegion,
+            flags,
             reason,
             ct
         );

@@ -79,7 +79,7 @@ public interface IChannel : IPartialChannel
     new Optional<Snowflake?> LastMessageID { get; }
 
     /// <summary>
-    /// Gets the bitrate (in bits) of the channel.
+    /// Gets the bitrate (in bits) of the channel. Minimum 8000.
     /// </summary>
     new Optional<int> Bitrate { get; }
 

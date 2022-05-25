@@ -77,6 +77,7 @@ public interface IDiscordRestChannelAPI
     /// The default time of inactivity after which threads in the channel are archived.
     /// </param>
     /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
+    /// <param name="flags">The channel flags to use.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -100,6 +101,7 @@ public interface IDiscordRestChannelAPI
         Optional<bool> isLocked = default,
         Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
+        Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -192,6 +194,30 @@ public interface IDiscordRestChannelAPI
     );
 
     /// <summary>
+    /// Modifies the given guild stage channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the channel.</param>
+    /// <param name="name">The new name of the channel.</param>
+    /// <param name="position">The new position of the channel in the listing.</param>
+    /// <param name="bitrate">The new bitrate.</param>
+    /// <param name="permissionOverwrites">The new permission overwrites.</param>
+    /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> ModifyGuildStageChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<int?> bitrate = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<string?> rtcRegion = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Modifies the given guild news channel.
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>
@@ -231,6 +257,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
     /// <param name="isLocked">Whether the thread is locked.</param>
     /// <param name="rateLimitPerUser">The new rate limit per user.</param>
+    /// <param name="flags">The channel flags to use.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -242,6 +269,7 @@ public interface IDiscordRestChannelAPI
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
         Optional<int?> rateLimitPerUser = default,
+        Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

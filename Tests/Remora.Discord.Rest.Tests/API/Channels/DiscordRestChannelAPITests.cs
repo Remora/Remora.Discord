@@ -246,6 +246,56 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        public async Task PerformsStageChannelRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var name = "brr";
+            var position = 1;
+            var bitrate = 8000;
+            var permissionOverwrites = new List<PermissionOverwrite>();
+            var rtcRegion = "somewhere";
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j
+                            .IsObject
+                            (
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("position", p => p.Is(position))
+                                    .WithProperty("bitrate", p => p.Is(bitrate))
+                                    .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("rtc_region", p => p.Is(rtcRegion))
+                            )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.ModifyGuildStageChannelAsync
+            (
+                channelId,
+                name,
+                position,
+                bitrate,
+                permissionOverwrites,
+                rtcRegion,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
         public async Task PerformsThreadChannelRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
@@ -255,6 +305,7 @@ public class DiscordRestChannelAPITests
             var isLocked = false;
             var rateLimitPerUser = 10;
             var reason = "test";
+            var flags = ChannelFlags.Pinned;
 
             var api = CreateAPI
             (
@@ -272,6 +323,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("auto_archive_duration", p => p.Is((int)autoArchiveDuration))
                                     .WithProperty("locked", p => p.Is(isLocked))
                                     .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
+                                    .WithProperty("flags", p => p.Is((int)flags))
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -285,6 +337,7 @@ public class DiscordRestChannelAPITests
                 autoArchiveDuration,
                 isLocked,
                 rateLimitPerUser,
+                flags,
                 reason
             );
 
@@ -317,6 +370,8 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("user_limit", p => p.IsNull())
                                     .WithProperty("permission_overwrites", p => p.IsNull())
                                     .WithProperty("parent_id", p => p.IsNull())
+                                    .WithProperty("video_quality_mode", p => p.IsNull())
+                                    .WithProperty("rtc_region", p => p.IsNull())
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -325,17 +380,16 @@ public class DiscordRestChannelAPITests
             var result = await api.ModifyChannelAsync
             (
                 channelId,
-                default,
-                default,
-                default,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+                position: null,
+                topic: null,
+                isNsfw: null,
+                rateLimitPerUser: null,
+                bitrate: null,
+                userLimit: null,
+                permissionOverwrites: null,
+                parentId: null,
+                videoQualityMode: null,
+                rtcRegion: null
             );
 
             ResultAssert.Successful(result);

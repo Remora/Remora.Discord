@@ -113,6 +113,32 @@ public partial class CachingDiscordRestChannelAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<IChannel>> ModifyGuildStageChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<int?> bitrate = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<string?> rtcRegion = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ModifyGuildStageChannelAsync
+        (
+            channelID,
+            name,
+            position,
+            bitrate,
+            permissionOverwrites,
+            rtcRegion,
+            reason,
+            ct
+        );
+    }
+
+    /// <inheritdoc />
     public Task<Result<IChannel>> ModifyGuildNewsChannelAsync
     (
         Snowflake channelID,
@@ -151,6 +177,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
         Optional<int?> rateLimitPerUser = default,
+        Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -163,6 +190,7 @@ public partial class CachingDiscordRestChannelAPI
             autoArchiveDuration,
             isLocked,
             rateLimitPerUser,
+            flags,
             reason,
             ct
         );
