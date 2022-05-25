@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - IDiscordRestChannelAPI.ModifyChannelAsync(Snowflake, Optional&lt;string&gt;, Optional&lt;Stream&gt;, Optional&lt;ChannelType&gt;, Optional&lt;int?&gt;, Optional&lt;string?&gt;, Optional&lt;bool?&gt;, Optional&lt;int?&gt;, Optional&lt;int?&gt;, Optional&lt;int?&gt;, Optional&lt;IReadOnlyList&lt;IPartialPermissionOverwrite&gt;?&gt;, Optional&lt;Snowflake?&gt;, Optional&lt;VideoQualityMode?&gt;, Optional&lt;bool&gt;, Optional&lt;AutoArchiveDuration&gt;, Optional&lt;bool&gt;, Optional&lt;AutoArchiveDuration&gt;, Optional&lt;string?&gt;, Optional&lt;string&gt;, CancellationToken) Method</title>
+        <title>Remora.Discord Documentation - API - IDiscordRestChannelAPI.ModifyGuildStageChannelAsync(Snowflake, Optional&lt;string&gt;, Optional&lt;int?&gt;, Optional&lt;int?&gt;, Optional&lt;IReadOnlyList&lt;IPartialPermissionOverwrite&gt;?&gt;, Optional&lt;string?&gt;, Optional&lt;string&gt;, CancellationToken) Method</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -83,7 +83,6 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Remarks">Remarks</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -178,12 +177,13 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/35BFAB20">JoinThreadAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/62F49941">LeaveThreadAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/5B666037">List<wbr>Thread<wbr>Members<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/BF88355F">ModifyChannelAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream&gt;<wbr>, <wbr>Optional<wbr>&lt;ChannelType&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Video<wbr>Quality<wbr>Mode?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/F37486F9">ModifyChannelAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream&gt;<wbr>, <wbr>Optional<wbr>&lt;ChannelType&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Video<wbr>Quality<wbr>Mode?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;ChannelFlags&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/0AAF5B64">Modify<wbr>Group<wbr>D<wbr>M<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/F1ADFE55">Modify<wbr>Guild<wbr>News<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;ChannelType&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/A5885C13">Modify<wbr>Guild<wbr>Stage<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/71BDAC9B">Modify<wbr>Guild<wbr>Text<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;ChannelType&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/612109D8">Modify<wbr>Guild<wbr>Voice<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Video<wbr>Quality<wbr>Mode?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/47CEE76F">Modify<wbr>Thread<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/137BE5BA">Modify<wbr>Thread<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;ChannelFlags&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/EB18E0D3">PinMessageAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/A7B80008">Remove<wbr>Thread<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/3FCA0D6F">Start<wbr>Thread<wbr>With<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
@@ -205,14 +205,14 @@
 
 <section class="content-header">
 			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI">I<wbr>Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a>.</h3>
-	<h1>ModifyChannelAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream&gt;<wbr>, <wbr>Optional<wbr>&lt;ChannelType&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Video<wbr>Quality<wbr>Mode?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr> <small>Method</small></h1>
+	<h1>Modify<wbr>Guild<wbr>Stage<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Modifies the given channel.
+    Modifies the given guild stage channel.
     </div>
 
 		<div class="panel panel-default">
@@ -230,14 +230,9 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Task&lt;Result&lt;IChannel&gt;&gt; ModifyChannelAsync(Snowflake channelID, Optional&lt;string&gt; name = null, Optional&lt;Stream&gt; icon = null, Optional&lt;ChannelType&gt; type = null, Optional&lt;int?&gt; position = null, Optional&lt;string?&gt; topic = null, Optional&lt;bool?&gt; isNsfw = null, Optional&lt;int?&gt; rateLimitPerUser = null, Optional&lt;int?&gt; bitrate = null, Optional&lt;int?&gt; userLimit = null, Optional&lt;IReadOnlyList&lt;IPartialPermissionOverwrite&gt;?&gt; permissionOverwrites = null, Optional&lt;Snowflake?&gt; parentId = null, Optional&lt;VideoQualityMode?&gt; videoQualityMode = null, Optional&lt;bool&gt; isArchived = null, Optional&lt;AutoArchiveDuration&gt; autoArchiveDuration = null, Optional&lt;bool&gt; isLocked = null, Optional&lt;AutoArchiveDuration&gt; defaultAutoArchiveDuration = null, Optional&lt;string?&gt; rtcRegion = null, Optional&lt;string&gt; reason = null, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>Task&lt;Result&lt;IChannel&gt;&gt; ModifyGuildStageChannelAsync(Snowflake channelID, Optional&lt;string&gt; name = null, Optional&lt;int?&gt; position = null, Optional&lt;int?&gt; bitrate = null, Optional&lt;IReadOnlyList&lt;IPartialPermissionOverwrite&gt;?&gt; permissionOverwrites = null, Optional&lt;string?&gt; rtcRegion = null, Optional&lt;string&gt; reason = null, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
-	<h1 id="Remarks">Remarks</h1>
-	<div>
-    Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
-    afterwards, ensure that what you pass is a copy that the method can take ownership of.
-    </div>
 
 
 
@@ -263,37 +258,9 @@
 						<td>The new name of the channel.</td>
 					</tr>
 					<tr>
-						<td>icon</td>
-						<td>Optional<wbr>&lt;Stream&gt;<wbr></td>
-						<td>The new icon.</td>
-					</tr>
-					<tr>
-						<td>type</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ChannelType">ChannelType</a>&gt;<wbr></td>
-						<td>
-    The new type of the channel. Only conversions between <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ChannelType/BFE54D8D">GuildText</a></code> and
-    <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ChannelType/28DB15AB">GuildNews</a></code> are supported.
-    </td>
-					</tr>
-					<tr>
 						<td>position</td>
 						<td>Optional<wbr>&lt;int?&gt;<wbr></td>
 						<td>The new position of the channel in the listing.</td>
-					</tr>
-					<tr>
-						<td>topic</td>
-						<td>Optional<wbr>&lt;string?&gt;<wbr></td>
-						<td>The new topic of the channel.</td>
-					</tr>
-					<tr>
-						<td>isNsfw</td>
-						<td>Optional<wbr>&lt;bool?&gt;<wbr></td>
-						<td>The new NSFW status of the channel.</td>
-					</tr>
-					<tr>
-						<td>rateLimitPerUser</td>
-						<td>Optional<wbr>&lt;int?&gt;<wbr></td>
-						<td>The new rate limit per user.</td>
 					</tr>
 					<tr>
 						<td>bitrate</td>
@@ -301,46 +268,9 @@
 						<td>The new bitrate.</td>
 					</tr>
 					<tr>
-						<td>userLimit</td>
-						<td>Optional<wbr>&lt;int?&gt;<wbr></td>
-						<td>The new user limit.</td>
-					</tr>
-					<tr>
 						<td>permissionOverwrites</td>
 						<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPermissionOverwrite">I<wbr>Partial<wbr>Permission<wbr>Overwrite</a>&gt;<wbr>?&gt;<wbr></td>
 						<td>The new permission overwrites.</td>
-					</tr>
-					<tr>
-						<td>parentId</td>
-						<td>Optional<wbr>&lt;Snowflake?&gt;<wbr></td>
-						<td>The new parent category ID.</td>
-					</tr>
-					<tr>
-						<td>videoQualityMode</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/VideoQualityMode">VideoQualityMode?</a>&gt;<wbr></td>
-						<td>The new video quality mode.</td>
-					</tr>
-					<tr>
-						<td>isArchived</td>
-						<td>Optional<wbr>&lt;bool&gt;<wbr></td>
-						<td>Whether the thread is archived.</td>
-					</tr>
-					<tr>
-						<td>autoArchiveDuration</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoArchiveDuration">AutoArchiveDuration</a>&gt;<wbr></td>
-						<td>The time of inactivity after which the thread is archived.</td>
-					</tr>
-					<tr>
-						<td>isLocked</td>
-						<td>Optional<wbr>&lt;bool&gt;<wbr></td>
-						<td>Whether the thread is locked.</td>
-					</tr>
-					<tr>
-						<td>defaultAutoArchiveDuration</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoArchiveDuration">AutoArchiveDuration</a>&gt;<wbr></td>
-						<td>
-    The default time of inactivity after which threads in the channel are archived.
-    </td>
 					</tr>
 					<tr>
 						<td>rtcRegion</td>
