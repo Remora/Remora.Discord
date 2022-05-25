@@ -704,6 +704,11 @@ public enum DiscordError
     InvalidJSONInRequestBody = 50109,
 
     /// <summary>
+    /// You do not have permission to send this sticker.
+    /// </summary>
+    MissingPermissionToSendSticker = 50600,
+
+    /// <summary>
     /// Two factor is required for this operation.
     /// </summary>
     TwoFactorRequired = 60003,
