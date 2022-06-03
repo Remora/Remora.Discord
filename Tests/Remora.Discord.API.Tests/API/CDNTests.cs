@@ -1043,7 +1043,7 @@ public class CDNTests
     }
 
     /// <summary>
-    /// Tests the <see cref="CDN.GetGuildScheduledEventBannerUrl(IGuildScheduledEvent, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+    /// Tests the <see cref="CDN.GetGuildScheduledEventCoverUrl"/> method and its
     /// overloads.
     /// </summary>
     public class GetGuildScheduledEventBannerUrl : CDNTestBase
@@ -1071,7 +1071,7 @@ public class CDNTests
 
             var scheduledEvent = mockedEvent.Object;
 
-            var getActual = CDN.GetGuildScheduledEventBannerUrl(scheduledEvent, CDNImageFormat.PNG);
+            var getActual = CDN.GetGuildScheduledEventCoverUrl(scheduledEvent, CDNImageFormat.PNG);
 
             Assert.False(getActual.IsSuccess);
             Assert.IsType<ImageNotFoundError>(getActual.Error);
@@ -1091,8 +1091,8 @@ public class CDNTests
             mockedEvent.SetupGet(g => g.Image).Returns(imageHash);
 
             var scheduledEvent = mockedEvent.Object;
-            yield return CDN.GetGuildScheduledEventBannerUrl(scheduledEvent, imageFormat, imageSize);
-            yield return CDN.GetGuildScheduledEventBannerUrl(scheduledEvent.ID, imageHash, imageFormat, imageSize);
+            yield return CDN.GetGuildScheduledEventCoverUrl(scheduledEvent, imageFormat, imageSize);
+            yield return CDN.GetGuildScheduledEventCoverUrl(scheduledEvent.ID, imageHash, imageFormat, imageSize);
         }
     }
 }

@@ -1253,7 +1253,7 @@ public static class CDN
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    public static Result<Uri> GetGuildScheduledEventBannerUrl
+    public static Result<Uri> GetGuildScheduledEventCoverUrl
     (
         IGuildScheduledEvent scheduledEvent,
         Optional<CDNImageFormat> imageFormat = default,
@@ -1262,7 +1262,7 @@ public static class CDN
     {
         return scheduledEvent.Image is null
             ? new ImageNotFoundError()
-            : GetGuildScheduledEventBannerUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
+            : GetGuildScheduledEventCoverUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -1273,7 +1273,7 @@ public static class CDN
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    public static Result<Uri> GetGuildScheduledEventBannerUrl
+    public static Result<Uri> GetGuildScheduledEventCoverUrl
     (
         Snowflake eventID,
         IImageHash bannerHash,
