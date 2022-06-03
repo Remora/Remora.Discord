@@ -80,7 +80,7 @@ public interface IDiscordRestApplicationAPI
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
-        Optional<IDiscordPermissionSet> defaultMemberPermissions = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         CancellationToken ct = default
     );
@@ -136,7 +136,7 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
-        Optional<IDiscordPermissionSet> defaultMemberPermissions = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         CancellationToken ct = default
     );
@@ -202,7 +202,7 @@ public interface IDiscordRestApplicationAPI
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
-        Optional<IDiscordPermissionSet> defaultMemberPermissions = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         CancellationToken ct = default
     );
 
@@ -263,7 +263,7 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
-        Optional<IDiscordPermissionSet> defaultMemberPermissions = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         CancellationToken ct = default
     );
 
