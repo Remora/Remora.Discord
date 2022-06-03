@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscordRestApplicationAPI.CreateGlobalApplicationCommandAsync(Snowflake, string, string, Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt;, Optional&lt;ApplicationCommandType&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt;, Optional&lt;IDiscordPermissionSet&gt;, Optional&lt;bool?&gt;, CancellationToken) Method</title>
+        <title>Remora.Discord Documentation - API - DiscordRestApplicationAPI.EditGlobalApplicationCommandAsync(Snowflake, Snowflake, Optional&lt;string&gt;, Optional&lt;string&gt;, Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;?&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt;, Optional&lt;IDiscordPermissionSet?&gt;, Optional&lt;bool?&gt;, CancellationToken) Method</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -59,13 +59,13 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
@@ -83,7 +83,6 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Remarks">Remarks</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -154,13 +153,13 @@
 			<li class="header">Method Members</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/CB2D6AB9">Bulk<wbr>Overwrite<wbr>Global<wbr>Application<wbr>Commands<wbr>Async<wbr>(Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>I<wbr>Bulk<wbr>Application<wbr>Command<wbr>Data&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/FB8C5EAB">Bulk<wbr>Overwrite<wbr>Guild<wbr>Application<wbr>Commands<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>I<wbr>Bulk<wbr>Application<wbr>Command<wbr>Data&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/EBC3829E">Create<wbr>Global<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>string, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Application<wbr>Command<wbr>Type&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/C35562C4">Create<wbr>Guild<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>string, <wbr>string, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Application<wbr>Command<wbr>Type&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/527435E1">Create<wbr>Global<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>string, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Application<wbr>Command<wbr>Type&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/83FF67FD">Create<wbr>Guild<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>string, <wbr>string, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Application<wbr>Command<wbr>Type&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/FC3426A0">Delete<wbr>Global<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/627515A8">Delete<wbr>Guild<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/851466CF">Edit<wbr>Application<wbr>Command<wbr>Permissions<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Permissions&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/CFC5B72E">Edit<wbr>Global<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/B49AD9A7">Edit<wbr>Guild<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/8FBC8A38">Edit<wbr>Global<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/E96C40E9">Edit<wbr>Guild<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/A8F93067">Get<wbr>Application<wbr>Command<wbr>Permissions<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/E61F2F07">Get<wbr>Global<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI/CC1F0330">Get<wbr>Global<wbr>Application<wbr>Commands<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
@@ -187,14 +186,14 @@
 
 <section class="content-header">
 			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI">Discord<wbr>Rest<wbr>Application<wbr>A<wbr>P<wbr>I</a>.</h3>
-	<h1>Create<wbr>Global<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>string, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Application<wbr>Command<wbr>Type&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>CancellationToken)<wbr> <small>Method</small></h1>
+	<h1>Edit<wbr>Global<wbr>Application<wbr>Command<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Application<wbr>Command<wbr>Option&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Read<wbr>Only<wbr>Dictionary<wbr>&lt;string, <wbr>string&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>CancellationToken)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Creates a new global command.
+    Edits a new global command.
     </div>
 
 		<div class="panel panel-default">
@@ -212,13 +211,9 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public virtual Task&lt;Result&lt;IApplicationCommand&gt;&gt; CreateGlobalApplicationCommandAsync(Snowflake applicationID, string name, string description, Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt; options = null, Optional&lt;ApplicationCommandType&gt; type = null, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt; nameLocalizations = null, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt; descriptionLocalizations = null, Optional&lt;IDiscordPermissionSet&gt; defaultMemberPermissions = null, Optional&lt;bool?&gt; dmPermission = null, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public virtual Task&lt;Result&lt;IApplicationCommand&gt;&gt; EditGlobalApplicationCommandAsync(Snowflake applicationID, Snowflake commandID, Optional&lt;string&gt; name = null, Optional&lt;string&gt; description = null, Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;?&gt; options = null, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt; nameLocalizations = null, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt; descriptionLocalizations = null, Optional&lt;IDiscordPermissionSet?&gt; defaultMemberPermissions = null, Optional&lt;bool?&gt; dmPermission = null, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
-	<h1 id="Remarks">Remarks</h1>
-	<div>
-    Creating a new command with the same name as an existing command will overwrite the old command.
-    </div>
 
 
 
@@ -239,24 +234,24 @@
 						<td>The ID of the bot application.</td>
 					</tr>
 					<tr>
+						<td>commandID</td>
+						<td>Snowflake</td>
+						<td>The ID of the command.</td>
+					</tr>
+					<tr>
 						<td>name</td>
-						<td>string</td>
+						<td>Optional<wbr>&lt;string&gt;<wbr></td>
 						<td>The name of the command. 3-32 characters.</td>
 					</tr>
 					<tr>
 						<td>description</td>
-						<td>string</td>
+						<td>Optional<wbr>&lt;string&gt;<wbr></td>
 						<td>The description of the command. 1-100 characters.</td>
 					</tr>
 					<tr>
 						<td>options</td>
-						<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandOption">I<wbr>Application<wbr>Command<wbr>Option</a>&gt;<wbr>&gt;<wbr></td>
+						<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandOption">I<wbr>Application<wbr>Command<wbr>Option</a>&gt;<wbr>?&gt;<wbr></td>
 						<td>The parameters for the command.</td>
-					</tr>
-					<tr>
-						<td>type</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandType">Application<wbr>Command<wbr>Type</a>&gt;<wbr></td>
-						<td>The type of the application command.</td>
 					</tr>
 					<tr>
 						<td>nameLocalizations</td>
@@ -270,7 +265,7 @@
 					</tr>
 					<tr>
 						<td>defaultMemberPermissions</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet">I<wbr>Discord<wbr>Permission<wbr>Set</a>&gt;<wbr></td>
+						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet">I<wbr>Discord<wbr>Permission<wbr>Set?</a>&gt;<wbr></td>
 						<td>The permissions required to execute the command.</td>
 					</tr>
 					<tr>
