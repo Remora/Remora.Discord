@@ -446,18 +446,7 @@ public class FeedbackService
         FeedbackMessageOptions? options = null,
         CancellationToken ct = default
     )
-    {
-        return _channelAPI.CreateMessageAsync
-        (
-            channel,
-            isTTS: options?.IsTTS ?? default,
-            embeds: new[] { embed },
-            allowedMentions: options?.AllowedMentions ?? default,
-            components: options?.MessageComponents ?? default,
-            attachments: options?.Attachments ?? default,
-            ct: ct
-        );
-    }
+        => SendAsync(channel, embeds: new[] { embed }, options: options, ct: ct);
 
     /// <summary>
     /// Sends the given embed to current context.
@@ -466,139 +455,13 @@ public class FeedbackService
     /// <param name="options">The message options to use.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    public async Task<Result<IMessage>> SendContextualEmbedAsync
+    public Task<Result<IMessage>> SendContextualEmbedAsync
     (
         Embed embed,
         FeedbackMessageOptions? options = null,
         CancellationToken ct = default
     )
-    {
-        if (_contextInjection.Context is null)
-        {
-            return new InvalidOperationError("Contextual sends require a context to be available.");
-        }
-
-        switch (_contextInjection.Context)
-        {
-            case MessageContext messageContext:
-            {
-                return await SendEmbedAsync(messageContext.ChannelID, embed, options, ct);
-            }
-            case InteractionContext interactionContext:
-            {
-                var messageFlags = options?.MessageFlags ?? default;
-                if (this.HasEditedOriginalMessage && _isOriginalEphemeral)
-                {
-                    messageFlags = messageFlags.HasValue
-                        ? messageFlags.Value | MessageFlags.Ephemeral
-                        : MessageFlags.Ephemeral;
-                }
-
-                return interactionContext.HasRespondedToInteraction
-                    ? await SendFollowupEmbedAsync(embed, options, interactionContext, messageFlags, ct)
-                    : await SendInteractionResponseEmbedAsync(embed, options, messageFlags, interactionContext, ct);
-            }
-            default:
-            {
-                throw new InvalidOperationException();
-            }
-        }
-    }
-
-    private async Task<Result<IMessage>> SendInteractionResponseEmbedAsync
-    (
-        Embed embed,
-        FeedbackMessageOptions? options,
-        Optional<MessageFlags> messageFlags,
-        InteractionContext interactionContext,
-        CancellationToken ct = default
-    )
-    {
-        var callbackData = new InteractionMessageCallbackData
-        (
-            IsTTS: options?.IsTTS ?? default,
-            Embeds: new[] { embed },
-            AllowedMentions: options?.AllowedMentions ?? default,
-            Components: options?.MessageComponents ?? default,
-            Flags: messageFlags
-        );
-
-        var result = await _interactionAPI.CreateInteractionResponseAsync
-        (
-            interactionContext.ID,
-            interactionContext.Token,
-            new InteractionResponse(InteractionCallbackType.ChannelMessageWithSource, new(callbackData)),
-            options?.Attachments ?? default,
-            ct
-        );
-
-        if (!result.IsSuccess)
-        {
-            return Result<IMessage>.FromError(result);
-        }
-
-        var getOriginalMessage = await _interactionAPI.GetOriginalInteractionResponseAsync
-        (
-            interactionContext.ApplicationID,
-            interactionContext.Token,
-            ct
-        );
-
-        if (!getOriginalMessage.IsSuccess)
-        {
-            return getOriginalMessage;
-        }
-
-        var message = getOriginalMessage.Entity;
-        if (this.HasEditedOriginalMessage)
-        {
-            return Result<IMessage>.FromSuccess(message);
-        }
-
-        _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
-
-        this.HasEditedOriginalMessage = true;
-        return Result<IMessage>.FromSuccess(message);
-    }
-
-    private async Task<Result<IMessage>> SendFollowupEmbedAsync
-    (
-        Embed embed,
-        FeedbackMessageOptions? options,
-        InteractionContext interactionContext,
-        Optional<MessageFlags> messageFlags,
-        CancellationToken ct = default
-    )
-    {
-        var result = await _interactionAPI.CreateFollowupMessageAsync
-        (
-            interactionContext.ApplicationID,
-            interactionContext.Token,
-            isTTS: options?.IsTTS ?? default,
-            embeds: new[] { embed },
-            allowedMentions: options?.AllowedMentions ?? default,
-            components: options?.MessageComponents ?? default,
-            flags: messageFlags,
-            attachments: options?.Attachments ?? default,
-            ct: ct
-        );
-
-        if (!result.IsSuccess)
-        {
-            return result;
-        }
-
-        if (this.HasEditedOriginalMessage)
-        {
-            return result;
-        }
-
-        var message = result.Entity;
-        _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
-
-        this.HasEditedOriginalMessage = true;
-        return result;
-    }
+        => SendContextualAsync(embeds: new[] { embed }, options: options, ct: ct);
 
     /// <summary>
     /// Sends the given embed to the given user in their private DM channel.
@@ -608,24 +471,14 @@ public class FeedbackService
     /// <param name="options">The message options to use.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    public async Task<Result<IMessage>> SendPrivateEmbedAsync
+    public Task<Result<IMessage>> SendPrivateEmbedAsync
     (
         Snowflake user,
         Embed embed,
         FeedbackMessageOptions? options = null,
         CancellationToken ct = default
     )
-    {
-        var getUserDM = await _userAPI.CreateDMAsync(user, ct);
-        if (!getUserDM.IsSuccess)
-        {
-            return Result<IMessage>.FromError(getUserDM);
-        }
-
-        var dm = getUserDM.Entity;
-
-        return await SendEmbedAsync(dm.ID, embed, options, ct);
-    }
+        => SendPrivateAsync(user, embeds: new[] { embed }, options: options, ct: ct);
 
     /// <summary>
     /// Sends the given string as one or more sequential embeds, chunked into sets of 1024 characters.
@@ -722,6 +575,233 @@ public class FeedbackService
 
         var dm = getUserDM.Entity;
         return await SendContentAsync(dm.ID, contents, color, null, options, ct);
+    }
+
+    /// <summary>
+    /// Sends an unformatted message.
+    /// </summary>
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="content">The content of the message.</param>
+    /// <param name="embeds">The embeds of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The created message.</returns>
+    public Task<Result<IMessage>> SendAsync
+    (
+        Snowflake channel,
+        Optional<string> content = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    )
+    {
+        return _channelAPI.CreateMessageAsync
+        (
+            channel,
+            content: content,
+            isTTS: options?.IsTTS ?? default,
+            embeds: embeds,
+            allowedMentions: options?.AllowedMentions ?? default,
+            components: options?.MessageComponents ?? default,
+            attachments: options?.Attachments ?? default,
+            ct: ct
+        );
+    }
+
+    /// <summary>
+    /// Sends an unformatted message to the current context.
+    /// </summary>
+    /// <param name="content">The content of the message.</param>
+    /// <param name="embeds">The embeds of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The created message.</returns>
+    public async Task<Result<IMessage>> SendContextualAsync
+    (
+        Optional<string> content = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    )
+    {
+        if (_contextInjection.Context is null)
+        {
+            return new InvalidOperationError("Contextual sends require a context to be available.");
+        }
+
+        switch (_contextInjection.Context)
+        {
+            case MessageContext messageContext:
+            {
+                return await SendAsync(messageContext.ChannelID, content, embeds, options, ct);
+            }
+            case InteractionContext interactionContext:
+            {
+                var messageFlags = options?.MessageFlags ?? default;
+                if (this.HasEditedOriginalMessage && _isOriginalEphemeral)
+                {
+                    messageFlags = messageFlags.HasValue
+                        ? messageFlags.Value | MessageFlags.Ephemeral
+                        : MessageFlags.Ephemeral;
+                }
+
+                return interactionContext.HasRespondedToInteraction
+                    ? await SendFollowupAsync(content, embeds, options, messageFlags, interactionContext, ct)
+                    : await SendInteractionResponseAsync(content, embeds, options, messageFlags, interactionContext, ct);
+            }
+            default:
+            {
+                throw new InvalidOperationException();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Sends an unformatted message to the given user in their private DM channel.
+    /// </summary>
+    /// <param name="user">The user to send the message to.</param>
+    /// <param name="content">The content of the message.</param>
+    /// <param name="embeds">The embeds of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The created message.</returns>
+    public async Task<Result<IMessage>> SendPrivateAsync
+    (
+        Snowflake user,
+        Optional<string> content = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    )
+    {
+        var getUserDM = await _userAPI.CreateDMAsync(user, ct);
+        if (!getUserDM.IsSuccess)
+        {
+            return Result<IMessage>.FromError(getUserDM);
+        }
+
+        var dm = getUserDM.Entity;
+
+        return await SendAsync(dm.ID, content, embeds, options, ct);
+    }
+
+    /// <summary>
+    /// Sends an interaction response.
+    /// </summary>
+    /// <param name="content">The contents of the message to send.</param>
+    /// <param name="embeds">The embeds to send.</param>
+    /// <param name="options">The feedback message options.</param>
+    /// <param name="messageFlags">The message flags to use.</param>
+    /// <param name="interactionContext">The interaction context.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The created message.</returns>
+    private async Task<Result<IMessage>> SendInteractionResponseAsync
+    (
+        Optional<string> content,
+        Optional<IReadOnlyList<IEmbed>> embeds,
+        FeedbackMessageOptions? options,
+        Optional<MessageFlags> messageFlags,
+        InteractionContext interactionContext,
+        CancellationToken ct = default
+    )
+    {
+        var callbackData = new InteractionMessageCallbackData
+        (
+            Content: content,
+            IsTTS: options?.IsTTS ?? default,
+            Embeds: embeds,
+            AllowedMentions: options?.AllowedMentions ?? default,
+            Components: options?.MessageComponents ?? default,
+            Flags: messageFlags
+        );
+
+        var result = await _interactionAPI.CreateInteractionResponseAsync
+        (
+            interactionContext.ID,
+            interactionContext.Token,
+            new InteractionResponse(InteractionCallbackType.ChannelMessageWithSource, new(callbackData)),
+            options?.Attachments ?? default,
+            ct
+        );
+
+        if (!result.IsSuccess)
+        {
+            return Result<IMessage>.FromError(result);
+        }
+
+        var getOriginalMessage = await _interactionAPI.GetOriginalInteractionResponseAsync
+        (
+            interactionContext.ApplicationID,
+            interactionContext.Token,
+            ct
+        );
+
+        if (!getOriginalMessage.IsSuccess)
+        {
+            return getOriginalMessage;
+        }
+
+        var message = getOriginalMessage.Entity;
+        if (this.HasEditedOriginalMessage)
+        {
+            return Result<IMessage>.FromSuccess(message);
+        }
+
+        _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+
+        this.HasEditedOriginalMessage = true;
+        return Result<IMessage>.FromSuccess(message);
+    }
+
+    /// <summary>
+    /// Sends a followup message.
+    /// </summary>
+    /// <param name="content">The contents of the message to send.</param>
+    /// <param name="embeds">The embeds to send.</param>
+    /// <param name="options">The feedback message options.</param>
+    /// <param name="messageFlags">The message flags to use.</param>
+    /// <param name="interactionContext">The interaction context.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The created message.</returns>
+    private async Task<Result<IMessage>> SendFollowupAsync
+    (
+        Optional<string> content,
+        Optional<IReadOnlyList<IEmbed>> embeds,
+        FeedbackMessageOptions? options,
+        Optional<MessageFlags> messageFlags,
+        InteractionContext interactionContext,
+        CancellationToken ct = default
+    )
+    {
+        var result = await _interactionAPI.CreateFollowupMessageAsync
+        (
+            interactionContext.ApplicationID,
+            interactionContext.Token,
+            content: content,
+            isTTS: options?.IsTTS ?? default,
+            embeds: embeds,
+            allowedMentions: options?.AllowedMentions ?? default,
+            components: options?.MessageComponents ?? default,
+            flags: messageFlags,
+            attachments: options?.Attachments ?? default,
+            ct: ct
+        );
+
+        if (!result.IsSuccess)
+        {
+            return result;
+        }
+
+        if (this.HasEditedOriginalMessage)
+        {
+            return result;
+        }
+
+        var message = result.Entity;
+        _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+
+        this.HasEditedOriginalMessage = true;
+        return result;
     }
 
     /// <summary>
