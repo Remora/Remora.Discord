@@ -60,6 +60,12 @@ public enum DiscordAPIVersion
     V10 = 10,
 
     /// <summary>
+    /// The default version of the API.
+    /// </summary>
+    [Obsolete("The default API version is currently obsolete. Use a more recent version for new applications.")]
+    Default = V6,
+
+    /// <summary>
     /// The stable version of the API.
     /// </summary>
     Stable = V9
