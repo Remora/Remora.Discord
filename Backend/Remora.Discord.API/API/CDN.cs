@@ -1315,6 +1315,59 @@ public static class CDN
         return ub.Uri;
     }
 
+    /// <summary>
+    /// Gets the CDN URI of the given guild member's banner.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="userID">The ID of the user.</param>
+    /// <param name="bannerHash">The banner hash.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetGuildMemberBannerUrl
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        IImageHash bannerHash,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        var formatValidation = ValidateOrDefaultImageFormat
+        (
+            imageFormat,
+            CDNImageFormat.PNG,
+            CDNImageFormat.JPEG,
+            CDNImageFormat.WebP,
+            CDNImageFormat.GIF
+        );
+
+        if (!formatValidation.IsSuccess)
+        {
+            return Result<Uri>.FromError(formatValidation);
+        }
+
+        var format = formatValidation.Entity;
+
+        var checkImageSize = CheckImageSize(imageSize);
+        if (!checkImageSize.IsSuccess)
+        {
+            return Result<Uri>.FromError(checkImageSize);
+        }
+
+        var ub = new UriBuilder(Constants.CDNBaseURL)
+        {
+            Path = $"guilds/{guildID}/users/{userID}/banners/{bannerHash.Value}.{format.ToFileExtension()}"
+        };
+
+        if (imageSize.HasValue)
+        {
+            ub.Query = $"size={imageSize.Value}";
+        }
+
+        return ub.Uri;
+    }
+
     private static Result<CDNImageFormat> ValidateOrDefaultImageFormat
     (
         Optional<CDNImageFormat> imageFormat,
