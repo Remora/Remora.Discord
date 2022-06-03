@@ -68,5 +68,5 @@ public enum DiscordAPIVersion
     /// <summary>
     /// The stable version of the API.
     /// </summary>
-    Stable = V9
+    Stable = V10
 }
