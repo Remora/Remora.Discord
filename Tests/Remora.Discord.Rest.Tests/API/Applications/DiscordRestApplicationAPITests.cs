@@ -441,7 +441,7 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("description", p => p.Is(commands[0].Description.Value))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions.Value!.Value.ToString()))
+                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
                                     )
                                 )
                                 .WithElement
@@ -454,7 +454,7 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions.Value!.Value.ToString()))
+                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString()))
                                     )
                                 )
                                 .WithElement
@@ -467,7 +467,7 @@ public class DiscordRestApplicationAPITests
                                             .WithoutProperty("type")
                                             .WithProperty("description", p => p.Is(commands[2].Description.Value))
                                             .WithoutProperty("options")
-                                            .WithoutProperty("default_member_permissions")
+                                            .WithProperty("default_member_permissions", p => p.IsNull())
                                     )
                                 )
                         )
@@ -1350,7 +1350,7 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("description", p => p.Is(commands[0].Description.Value))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions.Value!.Value.ToString()))
+                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
                                     )
                                 )
                                 .WithElement
@@ -1363,7 +1363,7 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions.Value!.Value.ToString()))
+                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString()))
                                     )
                                 )
                                 .WithElement
@@ -1376,7 +1376,7 @@ public class DiscordRestApplicationAPITests
                                             .WithoutProperty("type")
                                             .WithProperty("description", p => p.Is(commands[2].Description.Value))
                                             .WithoutProperty("options")
-                                            .WithoutProperty("default_member_permissions")
+                                            .WithProperty("default_member_permissions", p => p.IsNull())
                                     )
                                 )
                         )

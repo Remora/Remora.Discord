@@ -440,7 +440,7 @@ public class CommandTreeExtensionTests
                 Assert.NotNull(commands);
 
                 var command = commands.SingleOrDefault();
-                Assert.Equal(8, command!.DefaultMemberPermissions.Value!.Value);
+                Assert.Equal(8, command!.DefaultMemberPermissions?.Value);
             }
 
             /// <summary>
@@ -461,7 +461,7 @@ public class CommandTreeExtensionTests
                 Assert.NotNull(commands);
 
                 var command = commands.SingleOrDefault();
-                Assert.Equal(8, command!.DefaultMemberPermissions.Value!.Value);
+                Assert.Equal(8, command!.DefaultMemberPermissions?.Value);
             }
 
             /// <summary>
@@ -485,8 +485,8 @@ public class CommandTreeExtensionTests
                 var a = commands[0];
                 var b = commands[1];
 
-                Assert.Equal(8, a.DefaultMemberPermissions.Value!.Value);
-                Assert.Equal(4, b.DefaultMemberPermissions.Value!.Value);
+                Assert.Equal(8, a.DefaultMemberPermissions?.Value);
+                Assert.Equal(4, b.DefaultMemberPermissions?.Value);
             }
 
             /// <summary>

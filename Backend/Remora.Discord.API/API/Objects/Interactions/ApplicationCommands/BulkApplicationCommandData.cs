@@ -37,6 +37,6 @@ public record BulkApplicationCommandData
     Optional<ApplicationCommandType> Type = default,
     Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
     Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default,
-    Optional<IDiscordPermissionSet?> DefaultMemberPermissions = default,
-    Optional<bool?> DMPermission = default
+    IDiscordPermissionSet? DefaultMemberPermissions = default,
+    Optional<bool> DMPermission = default
 ) : IBulkApplicationCommandData;

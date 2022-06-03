@@ -103,10 +103,10 @@ public interface IApplicationCommand
     /// <summary>
     /// Gets a value that indicates the requisite permissions to execute the command.
     /// </summary>
-    Optional<IDiscordPermissionSet?> DefaultMemberPermissions { get; }
+    IDiscordPermissionSet? DefaultMemberPermissions { get; }
 
     /// <summary>
     /// Gets a value that indicates whether this command can be executed in DMs.
     /// </summary>
-    Optional<bool?> DMPermission { get; }
+    Optional<bool> DMPermission { get; }
 }

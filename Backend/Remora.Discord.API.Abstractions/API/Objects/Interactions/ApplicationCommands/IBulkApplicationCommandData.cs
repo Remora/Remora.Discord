@@ -51,8 +51,8 @@ public interface IBulkApplicationCommandData
     Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations { get; }
 
     /// <inheritdoc cref="IApplicationCommand.DefaultMemberPermissions"/>
-    Optional<IDiscordPermissionSet?> DefaultMemberPermissions { get; }
+    IDiscordPermissionSet? DefaultMemberPermissions { get; }
 
     /// <inheritdoc cref="IApplicationCommand.DMPermission"/>
-    Optional<bool?> DMPermission { get; }
+    Optional<bool> DMPermission { get; }
 }

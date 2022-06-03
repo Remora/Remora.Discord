@@ -246,13 +246,13 @@ public static class CommandTreeExtensions
     private static Result
     <(
         Optional<ApplicationCommandType> CommandType,
-        Optional<bool?> DirectMessagePermission,
-        Optional<IDiscordPermissionSet?> DefaultMemberPermission
+        Optional<bool> DirectMessagePermission,
+        IDiscordPermissionSet? DefaultMemberPermission
     )> GetNodeMetadata(IChildNode node)
     {
         Optional<ApplicationCommandType> commandType = default;
-        Optional<bool?> directMessagePermission = default;
-        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default;
+        Optional<bool> directMessagePermission = default;
+        IDiscordPermissionSet? defaultMemberPermissions = default;
 
         switch (node)
         {
