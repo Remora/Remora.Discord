@@ -287,6 +287,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<string> threadName = default,
         CancellationToken ct = default
     )
     {
@@ -341,6 +342,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
+                            json.Write("thread_name", threadName, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);

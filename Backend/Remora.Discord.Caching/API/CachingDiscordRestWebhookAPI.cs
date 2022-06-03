@@ -119,6 +119,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<string> threadName = default,
         CancellationToken ct = default
     )
     {
@@ -137,6 +138,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             components,
             attachments,
             flags,
+            threadName,
             ct
         );
 

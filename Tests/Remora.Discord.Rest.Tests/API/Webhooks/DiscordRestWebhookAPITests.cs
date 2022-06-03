@@ -656,6 +656,64 @@ public class DiscordRestWebhookAPITests
             var avatarUrl = "http://aaaa";
             var tts = false;
             var allowedMentions = new AllowedMentions();
+            var components = new List<IMessageComponent>();
+            var flags = MessageFlags.SuppressEmbeds;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("content", p => p.Is(content))
+                                .WithProperty("username", p => p.Is(username))
+                                .WithProperty("avatar_url", p => p.Is(avatarUrl))
+                                .WithProperty("tts", p => p.Is(tts))
+                                .WithProperty("allowed_mentions", p => p.IsObject())
+                                .WithProperty("components", p => p.IsArray())
+                                .WithProperty("flags", p => p.Is((int)flags))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                shouldWait,
+                content,
+                username,
+                avatarUrl,
+                tts,
+                allowedMentions: allowedMentions,
+                components: components,
+                flags: flags
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsInThreadRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
+
+            var shouldWait = true;
+            var content = "brr";
+            var username = "aaaag";
+            var avatarUrl = "http://aaaa";
+            var tts = false;
+            var allowedMentions = new AllowedMentions();
             var threadID = DiscordSnowflake.New(1);
             var components = new List<IMessageComponent>();
             var flags = MessageFlags.SuppressEmbeds;
@@ -696,6 +754,67 @@ public class DiscordRestWebhookAPITests
                 threadID: threadID,
                 components: components,
                 flags: flags
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsForumThreadRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
+
+            var shouldWait = true;
+            var content = "brr";
+            var username = "aaaag";
+            var avatarUrl = "http://aaaa";
+            var tts = false;
+            var allowedMentions = new AllowedMentions();
+            var components = new List<IMessageComponent>();
+            var flags = MessageFlags.SuppressEmbeds;
+            var threadName = "agaga";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("content", p => p.Is(content))
+                                .WithProperty("username", p => p.Is(username))
+                                .WithProperty("avatar_url", p => p.Is(avatarUrl))
+                                .WithProperty("tts", p => p.Is(tts))
+                                .WithProperty("allowed_mentions", p => p.IsObject())
+                                .WithProperty("components", p => p.IsArray())
+                                .WithProperty("flags", p => p.Is((int)flags))
+                                .WithProperty("thread_name", p => p.Is(threadName))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                shouldWait,
+                content,
+                username,
+                avatarUrl,
+                tts,
+                allowedMentions: allowedMentions,
+                components: components,
+                flags: flags,
+                threadName: threadName
             );
 
             ResultAssert.Successful(result);
