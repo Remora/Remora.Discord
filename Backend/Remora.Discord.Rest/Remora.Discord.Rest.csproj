@@ -5,10 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>37.0.0</Version>
+        <Version>38.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
-            Update channel modification API.
+            Add support for thread_name.
+            Update optionality and nullability.
+            fix nullability of defaultMemberPermissions param
         </PackageReleaseNotes>
     </PropertyGroup>
 

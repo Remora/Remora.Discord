@@ -5,11 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>62.0.0</Version>
+        <Version>63.0.0</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Update channel modification API.
-            Add new error code.
+            Add support for thread_name.
+            Update optionality and nullability.
+            fix nullability of defaultMemberPermissions param
         </PackageReleaseNotes>
     </PropertyGroup>
 

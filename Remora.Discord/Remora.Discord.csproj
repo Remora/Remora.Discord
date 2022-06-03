@@ -5,11 +5,18 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.31</Version>
+        <Version>2022.32</Version>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Update channel modification API.
-            Add new error code.
+            Add support for sending unformatted messages.
+            Add support for thread_name.
+            Discord now considers v10 the stable default.
+            Add a default version alias.
+            Remove references to discontinued API versions.
+            Update optionality and nullability.
+            Add support for guild member banners in the CDN.
+            Rename endpoint to match documentation.
+            fix nullability of defaultMemberPermissions param
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
