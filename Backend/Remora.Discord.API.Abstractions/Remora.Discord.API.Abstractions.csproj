@@ -5,12 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>63.0.0</Version>
+        <Version>63.0.1</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Add support for thread_name.
-            Update optionality and nullability.
-            fix nullability of defaultMemberPermissions param
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

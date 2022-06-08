@@ -5,17 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>59.0.0</Version>
+        <Version>59.0.1</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Add support for thread_name.
-            Discord now considers v10 the stable default.
-            Add a default version alias.
-            Remove references to discontinued API versions.
-            Update optionality and nullability.
-            Add support for guild member banners in the CDN.
-            Rename endpoint to match documentation.
-            fix nullability of defaultMemberPermissions param
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
