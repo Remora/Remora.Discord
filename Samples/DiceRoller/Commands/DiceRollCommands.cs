@@ -71,11 +71,7 @@ public class DiceRollCommands : CommandGroup
         var getRolls = await GetRollsAsync(rollRequests);
         if (!getRolls.IsSuccess)
         {
-            var replyWithFailure = await ReplyWithFailureAsync();
-
-            return replyWithFailure.IsSuccess
-                ? Result.FromError(getRolls)
-                : replyWithFailure;
+            return await ReplyWithFailureAsync();
         }
 
         var rollResponse = getRolls.Entity;
@@ -110,15 +106,11 @@ public class DiceRollCommands : CommandGroup
 
     private async Task<Result> ReplyWithFailureAsync()
     {
-        var replyFail = await _feedbackService.SendContextualErrorAsync
+        return (Result)await _feedbackService.SendContextualErrorAsync
         (
             "Dice rolling failed :(",
             ct: this.CancellationToken
         );
-
-        return !replyFail.IsSuccess
-            ? Result.FromError(replyFail)
-            : Result.FromSuccess();
     }
 
     private async Task<Result> ReplyWithRollsAsync(RollResponse rollResponse)
@@ -134,10 +126,6 @@ public class DiceRollCommands : CommandGroup
         var fields = rolls.Select(kvp => new EmbedField(kvp.Key, kvp.Value.ToString(), true)).ToList();
         var embed = new Embed("Rolls", Fields: fields, Colour: _feedbackService.Theme.Success);
 
-        var replyRolls = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
-
-        return !replyRolls.IsSuccess
-            ? Result.FromError(replyRolls)
-            : Result.FromSuccess();
+        return (Result)await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
     }
 }

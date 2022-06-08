@@ -70,7 +70,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IUser>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getUser = await _actual.GetUserAsync(userID, ct);
@@ -113,7 +113,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IUser>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getUser = await _actual.GetCurrentUserAsync(ct);
@@ -143,7 +143,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IConnection>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getUserConnections = await _actual.GetUserConnectionsAsync(ct);
@@ -199,7 +199,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IChannel>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getUserDMs = await _actual.GetUserDMsAsync(ct);

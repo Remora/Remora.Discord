@@ -67,7 +67,7 @@ public partial class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var listRegions = await _actual.ListVoiceRegionsAsync(ct);

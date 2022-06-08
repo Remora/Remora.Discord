@@ -70,7 +70,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
 
         if (cacheResult.IsSuccess)
         {
-            return Result<ITemplate>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getTemplate = await _actual.GetTemplateAsync(templateCode, ct);
@@ -140,7 +140,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<ITemplate>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getTemplates = await _actual.GetGuildTemplatesAsync(guildID, ct);

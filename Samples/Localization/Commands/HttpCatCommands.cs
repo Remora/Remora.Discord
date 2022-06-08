@@ -95,11 +95,7 @@ public class HttpCatCommands : CommandGroup
         var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
         var embed = new Embed(Colour: _feedbackService.Theme.Secondary, Image: embedImage);
 
-        var reply = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
-
-        return !reply.IsSuccess
-            ? Result.FromError(reply)
-            : Result.FromSuccess();
+        return (Result)await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
     }
 
     /// <summary>
@@ -116,11 +112,7 @@ public class HttpCatCommands : CommandGroup
         var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
         var embed = new Embed(Colour: _feedbackService.Theme.Secondary, Image: embedImage);
 
-        var reply = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
-
-        return !reply.IsSuccess
-            ? Result.FromError(reply)
-            : Result.FromSuccess();
+        return (Result)await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
     }
 
     /// <summary>

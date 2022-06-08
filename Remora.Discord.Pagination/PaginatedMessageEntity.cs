@@ -153,9 +153,7 @@ internal sealed class PaginatedMessageEntity :
                     ct
                 );
 
-                return sendHelp.IsSuccess
-                    ? Result.FromSuccess()
-                    : Result.FromError(sendHelp);
+                return (Result)sendHelp;
             }
             default:
             {
@@ -180,8 +178,6 @@ internal sealed class PaginatedMessageEntity :
             ct: ct
         );
 
-        return editOriginal.IsSuccess
-            ? Result.FromSuccess()
-            : Result.FromError(editOriginal);
+        return (Result)editOriginal;
     }
 }

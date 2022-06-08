@@ -87,7 +87,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
-            return Result.FromError(createContext);
+            return (Result)createContext;
         }
 
         var context = createContext.Entity;
@@ -267,7 +267,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
                 var determineInterest = await entity.IsInterestedAsync(componentType, customID, ct);
                 if (!determineInterest.IsSuccess)
                 {
-                    return Result.FromError(determineInterest);
+                    return (Result)determineInterest;
                 }
 
                 if (determineInterest.IsDefined(out var isInterested) && !isInterested)
@@ -325,7 +325,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var determineInterest = await entity.IsInterestedAsync(componentType, customID, ct);
         if (!determineInterest.IsSuccess)
         {
-            return Result.FromError(determineInterest);
+            return (Result)determineInterest;
         }
 
         if (determineInterest.IsDefined(out var isInterested) && !isInterested)

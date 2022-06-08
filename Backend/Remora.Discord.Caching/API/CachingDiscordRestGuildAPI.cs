@@ -118,7 +118,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IGuild>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildAsync(guildID, withCounts, ct);
@@ -145,7 +145,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IGuildPreview>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildPreviewAsync(guildID, ct);
@@ -257,7 +257,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IChannel>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildChannelsAsync(guildID, ct);
@@ -340,7 +340,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IGuildMember>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildMemberAsync(guildID, userID, ct);
@@ -377,7 +377,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IGuildMember>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.ListGuildMembersAsync(guildID, limit, after, ct);
@@ -511,7 +511,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IBan>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildBansAsync(guildID, limit, before, after, ct);
@@ -545,7 +545,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IBan>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildBanAsync(guildID, userID, ct);
@@ -593,7 +593,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IRole>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getRoles = await _actual.GetGuildRolesAsync(guildID, ct);
@@ -760,7 +760,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildVoiceRegionsAsync(guildID, ct);
@@ -794,7 +794,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IInvite>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildInvitesAsync(guildID, ct);
@@ -829,7 +829,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IIntegration>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildIntegrationsAsync(guildID, includeApplications, ct);
@@ -863,7 +863,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IGuildWidgetSettings>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildWidgetSettingsAsync(guildID, ct);
@@ -913,7 +913,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IWelcomeScreen>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildWelcomeScreenAsync(guildID, ct);

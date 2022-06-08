@@ -66,7 +66,7 @@ public partial class CachingDiscordRestOAuth2API : IDiscordRestOAuth2API, IRestC
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IApplication>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getCurrent = await _actual.GetCurrentBotApplicationInformationAsync(ct);
@@ -92,7 +92,7 @@ public partial class CachingDiscordRestOAuth2API : IDiscordRestOAuth2API, IRestC
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IAuthorizationInformation>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var result = await _actual.GetCurrentAuthorizationInformationAsync(ct);

@@ -171,7 +171,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IWebhook>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getWebhook = await _actual.GetWebhookAsync(webhookID, ct);
@@ -223,7 +223,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IWebhook>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getWebhooks = await _actual.GetChannelWebhooksAsync(channelID, ct);
@@ -255,7 +255,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IWebhook>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getWebhooks = await _actual.GetGuildWebhooksAsync(guildID, ct);
@@ -310,7 +310,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IWebhook>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getWebhook = await _actual.GetWebhookWithTokenAsync(webhookID, token, ct);
@@ -427,7 +427,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IMessage>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var result = await _actual.GetWebhookMessageAsync(webhookID, webhookToken, messageID, threadID, ct);

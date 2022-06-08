@@ -71,7 +71,7 @@ public partial class CachingDiscordRestInviteAPI : IDiscordRestInviteAPI, IRestC
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IInvite>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getInvite = await _actual.GetInviteAsync

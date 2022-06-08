@@ -114,7 +114,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
-            return Result.FromError(createContext);
+            return (Result)createContext;
         }
 
         var context = createContext.Entity;
@@ -138,7 +138,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             var getTreeName = await _treeNameResolver.GetTreeNameAsync(context, ct);
             if (!getTreeName.IsSuccess)
             {
-                return Result.FromError(getTreeName);
+                return (Result)getTreeName;
             }
 
             (treeName, allowDefaultTree) = getTreeName.Entity;
@@ -198,7 +198,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
 
         if (!prepareCommand.IsSuccess)
         {
-            return Result.FromError(prepareCommand);
+            return (Result)prepareCommand;
         }
 
         var preparedCommand = prepareCommand.Entity;

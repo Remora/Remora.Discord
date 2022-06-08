@@ -70,11 +70,11 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
     {
         var key = KeyHelpers.CreateChannelCacheKey(channelID);
 
-        var cacheResult = await _cacheService.TryGetValueAsync<Channel>(key, ct);
+        var cacheResult = await _cacheService.TryGetValueAsync<IChannel>(key, ct);
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IChannel>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getChannel = await _actual.GetChannelAsync(channelID, ct);
@@ -182,10 +182,10 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
     {
         var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
 
-        var cacheResult = await _cacheService.TryGetValueAsync<Message>(key, ct);
+        var cacheResult = await _cacheService.TryGetValueAsync<IMessage>(key, ct);
         if (cacheResult.IsSuccess)
         {
-            return Result<IMessage>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getMessage = await _actual.GetChannelMessageAsync(channelID, messageID, ct);
@@ -404,7 +404,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IMessage>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetPinnedMessagesAsync(channelID, ct);
@@ -576,7 +576,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IInvite>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var result = await _actual.GetChannelInvitesAsync(channelID, ct);
@@ -610,7 +610,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IThreadMember>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var result = await _actual.GetThreadMemberAsync(channelID, userID, ct);
@@ -638,7 +638,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IThreadMember>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var result = await _actual.ListThreadMembersAsync(channelID, ct);

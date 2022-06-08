@@ -398,7 +398,7 @@ public static class CommandTreeExtensions
 
             if (!translateChildNodeResult.IsSuccess)
             {
-                return Result<IApplicationCommandOption?>.FromError(translateChildNodeResult);
+                return translateChildNodeResult;
             }
 
             if (translateChildNodeResult.Entity is null)

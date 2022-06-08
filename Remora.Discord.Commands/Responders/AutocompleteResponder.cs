@@ -84,7 +84,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
-            return Result.FromError(createContext);
+            return (Result)createContext;
         }
 
         var context = createContext.Entity;

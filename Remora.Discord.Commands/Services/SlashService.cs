@@ -102,11 +102,7 @@ public class SlashService
         // TODO: Improve
         // Yes, this is inefficient. Generally, this method is only expected to be called a limited number of times on
         // startup.
-        var couldCreate = tree.CreateApplicationCommands(_localizationProvider);
-
-        return couldCreate.IsSuccess
-            ? Result.FromSuccess()
-            : Result.FromError(couldCreate);
+        return (Result)tree.CreateApplicationCommands(_localizationProvider);
     }
 
     /// <summary>
@@ -134,14 +130,14 @@ public class SlashService
         var getApplication = await _oauth2API.GetCurrentBotApplicationInformationAsync(ct);
         if (!getApplication.IsSuccess)
         {
-            return Result.FromError(getApplication);
+            return (Result)getApplication;
         }
 
         var application = getApplication.Entity;
         var createCommands = tree.CreateApplicationCommands(_localizationProvider);
         if (!createCommands.IsSuccess)
         {
-            return Result.FromError(createCommands);
+            return (Result)createCommands;
         }
 
         // Upsert the current valid command set
@@ -165,7 +161,7 @@ public class SlashService
 
         if (!updateResult.IsSuccess)
         {
-            return Result.FromError(updateResult);
+            return (Result)updateResult;
         }
 
         // Update our command mapping

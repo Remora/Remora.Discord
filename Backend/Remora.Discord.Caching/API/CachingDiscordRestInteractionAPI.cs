@@ -138,7 +138,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IMessage>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var result = await _actual.GetFollowupMessageAsync(applicationID, token, messageID, ct);
@@ -203,7 +203,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IMessage>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var result = await _actual.GetOriginalInteractionResponseAsync(applicationID, interactionToken, ct);

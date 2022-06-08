@@ -71,7 +71,7 @@ public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IEmoji>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var getResult = await _actual.GetGuildEmojiAsync(guildID, emojiID, ct);
@@ -173,7 +173,7 @@ public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCus
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IEmoji>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
         var result = await _actual.ListGuildEmojisAsync(guildID, ct);
