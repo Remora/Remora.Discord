@@ -568,6 +568,11 @@ public enum DiscordError
     TooFewOrTooManyMessagesToDelete = 50016,
 
     /// <summary>
+    /// The provided MFA level was invalid.
+    /// </summary>
+    InvalidMFALevel = 50017,
+
+    /// <summary>
     /// A message and only be pinned  to the channel it was went in.
     /// </summary>
     MessageCanOnlyBePinnedInSameChannel = 50019,
