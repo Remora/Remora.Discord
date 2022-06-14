@@ -55,6 +55,7 @@ public static class MessageUpdateExtensions
 
         return new MessageContext
         (
+            messageUpdate.GuildID,
             channelID,
             author,
             messageID,

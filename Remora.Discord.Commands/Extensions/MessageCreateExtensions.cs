@@ -20,12 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
-using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Extensions;
@@ -44,42 +40,11 @@ public static class MessageCreateExtensions
     {
         return new MessageContext
         (
+            messageCreate.GuildID,
             messageCreate.ChannelID,
             messageCreate.Author,
             messageCreate.ID,
-            new PartialMessage
-            (
-                messageCreate.ID,
-                messageCreate.ChannelID,
-                messageCreate.GuildID,
-                new Optional<IUser>(messageCreate.Author),
-                messageCreate.Member,
-                messageCreate.Content,
-                messageCreate.Timestamp,
-                messageCreate.EditedTimestamp,
-                messageCreate.IsTTS,
-                messageCreate.MentionsEveryone,
-                new Optional<IReadOnlyList<IUserMention>>(messageCreate.Mentions),
-                new Optional<IReadOnlyList<Snowflake>>(messageCreate.MentionedRoles),
-                messageCreate.MentionedChannels,
-                new Optional<IReadOnlyList<IAttachment>>(messageCreate.Attachments),
-                new Optional<IReadOnlyList<IEmbed>>(messageCreate.Embeds),
-                messageCreate.Reactions,
-                messageCreate.Nonce,
-                messageCreate.IsPinned,
-                messageCreate.WebhookID,
-                messageCreate.Type,
-                messageCreate.Activity,
-                messageCreate.Application,
-                messageCreate.ApplicationID,
-                messageCreate.MessageReference,
-                messageCreate.Flags,
-                messageCreate.ReferencedMessage,
-                messageCreate.Interaction,
-                messageCreate.Thread,
-                messageCreate.Components,
-                messageCreate.StickerItems
-            )
+            messageCreate
         );
     }
 }

@@ -89,9 +89,8 @@ public class ContextTests
     public async Task CanExecuteCommandFromGroupThatWantsMessageContext()
     {
         var dummyMessage = new Mock<IPartialMessage>();
-        dummyMessage.Setup(m => m.GuildID).Returns(default(Snowflake));
 
-        var dummyContext = new MessageContext(default, null!, default, dummyMessage.Object);
+        var dummyContext = new MessageContext(default, default, null!, default, dummyMessage.Object);
         _contextInjection.Context = dummyContext;
 
         var result = await _commands.TryExecuteAsync("message command", _services);
