@@ -5,10 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>59.0.1</Version>
+        <Version>60.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Separate interaction data structures.
+            Break out event-only fields.
         </PackageReleaseNotes>
     </PropertyGroup>
 

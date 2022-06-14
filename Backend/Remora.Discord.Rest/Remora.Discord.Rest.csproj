@@ -5,10 +5,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>38.0.1</Version>
+        <Version>39.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Update voice channel endpoints and permissions.
+            Remove audit log reason from modify channel position.
+            Implement Modify Guild MFA Level.
+            Break out event-only fields.
         </PackageReleaseNotes>
     </PropertyGroup>
 

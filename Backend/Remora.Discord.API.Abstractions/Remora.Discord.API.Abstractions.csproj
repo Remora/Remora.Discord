@@ -5,10 +5,17 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>63.0.1</Version>
+        <Version>64.0.0</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Separate interaction data structures.
+            Update voice channel endpoints and permissions.
+            Remove audit log reason from modify channel position.
+            Add new error code.
+            Implement Modify Guild MFA Level.
+            Add new error code.
+            Break out event-only fields.
+            Add new error codes.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -5,11 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>28.0.1</Version>
+        <Version>29.0.0</Version>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            Improve result usage.
-            Update dependencies.
+            Separate interaction data structures.
+            Update voice channel endpoints and permissions.
+            Implement Modify Guild MFA Level.
         </PackageReleaseNotes>
     </PropertyGroup>
 

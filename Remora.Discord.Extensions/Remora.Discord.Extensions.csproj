@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.2.3</Version>
+        <Version>4.2.4</Version>
         <Description>Utilities and components which extened upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
             Update dependencies.
