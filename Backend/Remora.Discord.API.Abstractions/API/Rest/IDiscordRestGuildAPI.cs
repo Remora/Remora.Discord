@@ -221,7 +221,6 @@ public interface IDiscordRestGuildAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="positionModifications">The new positions of the modified channels.</param>
-    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     Task<Result> ModifyGuildChannelPositionsAsync
@@ -236,7 +235,6 @@ public interface IDiscordRestGuildAPI
             Snowflake? ParentID
             )
         > positionModifications,
-        Optional<string> reason = default,
         CancellationToken ct = default
     );
 

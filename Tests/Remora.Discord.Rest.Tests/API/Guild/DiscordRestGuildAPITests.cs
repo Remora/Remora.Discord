@@ -708,13 +708,11 @@ public class DiscordRestGuildAPITests
                 (DiscordSnowflake.New(3), 3, false, DiscordSnowflake.New(0)),
                 (DiscordSnowflake.New(4), 4, false, DiscordSnowflake.New(0))
             };
-            var reason = "test";
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/channels")
-                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
                         j => j.IsArray
@@ -774,7 +772,7 @@ public class DiscordRestGuildAPITests
                     .Respond(HttpStatusCode.NoContent)
             );
 
-            var result = await api.ModifyGuildChannelPositionsAsync(guildId, swaps, reason);
+            var result = await api.ModifyGuildChannelPositionsAsync(guildId, swaps);
 
             ResultAssert.Successful(result);
         }

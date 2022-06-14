@@ -355,7 +355,6 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             Snowflake? ParentID
             )
         > positionModifications,
-        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -363,7 +362,6 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         (
             $"guilds/{guildID}/channels",
             b => b
-                .AddAuditLogReason(reason)
                 .WithJsonArray
                 (
                     json =>

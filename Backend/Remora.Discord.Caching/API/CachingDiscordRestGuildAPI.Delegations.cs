@@ -39,11 +39,10 @@ public partial class CachingDiscordRestGuildAPI
     (
         Snowflake guildID,
         IReadOnlyList<(Snowflake ChannelID, int? Position, bool? LockPermissions, Snowflake? ParentID)> positionModifications,
-        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        return _actual.ModifyGuildChannelPositionsAsync(guildID, positionModifications, reason, ct);
+        return _actual.ModifyGuildChannelPositionsAsync(guildID, positionModifications, ct);
     }
 
     /// <inheritdoc />
