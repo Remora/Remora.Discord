@@ -816,5 +816,10 @@ public enum DiscordError
     /// <summary>
     /// For whatever reason, the system failed to create a stage for the stage event.
     /// </summary>
-    FailedToCreatedStageForEvent = 180002
+    FailedToCreatedStageForEvent = 180002,
+
+    /// <summary>
+    /// Webhooks can only create threads in forum channels, not in other channels.
+    /// </summary>
+    WebhooksCanOnlyCreateThreadsInForumChannels = 220003
 }
