@@ -880,6 +880,30 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<MultiFactorAuthenticationLevel>> ModifyGuildMFALevelAsync
+    (
+        Snowflake guildID,
+        MultiFactorAuthenticationLevel level,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<MultiFactorAuthenticationLevel>
+        (
+            $"guilds/{guildID}/mfa",
+            b => b
+                .WithJson
+                (
+                    json =>
+                    {
+                        json.Write("level", level, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
     public virtual Task<Result> DeleteGuildRoleAsync
     (
         Snowflake guildId,

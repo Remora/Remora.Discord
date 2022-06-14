@@ -126,6 +126,17 @@ public partial class CachingDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<MultiFactorAuthenticationLevel>> ModifyGuildMFALevelAsync
+    (
+        Snowflake guildID,
+        MultiFactorAuthenticationLevel level,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ModifyGuildMFALevelAsync(guildID, level, ct);
+    }
+
+    /// <inheritdoc />
     public Task<Result<IPruneCount>> GetGuildPruneCountAsync
     (
         Snowflake guildID,

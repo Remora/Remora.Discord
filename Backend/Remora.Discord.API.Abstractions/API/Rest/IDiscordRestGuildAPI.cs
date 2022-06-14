@@ -588,6 +588,20 @@ public interface IDiscordRestGuildAPI
     );
 
     /// <summary>
+    /// Modifies a guild's multi-factor authentication level. Requires guild ownership.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild to modify.</param>
+    /// <param name="level">The new MFA level.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<MultiFactorAuthenticationLevel>> ModifyGuildMFALevelAsync
+    (
+        Snowflake guildID,
+        MultiFactorAuthenticationLevel level,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Deletes the given role.
     /// </summary>
     /// <param name="guildId">The ID of the guild.</param>
