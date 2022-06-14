@@ -417,6 +417,21 @@ public enum DiscordError
     MaxNumberOfEditsToMessagesOlderThanOneHourReached = 30046,
 
     /// <summary>
+    /// The maximum number of pinned threads in the forum channel has been reached.
+    /// </summary>
+    MaxNumberOfPinnedThreadsInForumChannelReached = 30047,
+
+    /// <summary>
+    /// The maximum number of tags in the forum channel has been reached.
+    /// </summary>
+    MaxNumberOfTagsInForumChannelReached = 30048,
+
+    /// <summary>
+    /// The requested bitrate is too high for a channel of this type.
+    /// </summary>
+    BitrateTooHighForChannelType = 30052,
+
+    /// <summary>
     /// Unauthorized. Provide a valid token and try again.
     /// </summary>
     Unauthorized = 40001,
