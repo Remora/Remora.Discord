@@ -283,7 +283,12 @@ public class EarlyCacheResponder :
             return Result.FromSuccess();
         }
 
-        if (!data.Resolved.IsDefined(out var resolved))
+        if (!data.TryPickT0(out var commandData, out _))
+        {
+            return Result.FromSuccess();
+        }
+
+        if (!commandData.Resolved.IsDefined(out var resolved))
         {
             return Result.FromSuccess();
         }

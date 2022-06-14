@@ -68,7 +68,12 @@ public class HttpCatCommands : CommandGroup
             return Result.FromSuccess();
         }
 
-        if (!interactionContext.Data.Resolved.IsDefined(out var resolved))
+        if (!interactionContext.Data.TryPickT0(out var commandData, out _))
+        {
+            return Result.FromSuccess();
+        }
+
+        if (!commandData.Resolved.IsDefined(out var resolved))
         {
             return Result.FromSuccess();
         }
@@ -122,10 +127,15 @@ public class HttpCatCommands : CommandGroup
     /// <returns>The result of the command.</returns>
     [Command("user-cat")]
     [Description("Posts a cat image that matches the user.")]
-    public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IUser catUser)
+    public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IPartialUser catUser)
     {
+        if (!catUser.ID.IsDefined(out var id))
+        {
+            return Task.FromResult<IResult>(Result.FromSuccess());
+        }
+
         var values = Enum.GetValues<HttpStatusCode>();
-        var index = Map(catUser.ID.Value, 0, ulong.MaxValue, 0, (ulong)(values.Length - 1));
+        var index = Map(id.Value, 0, ulong.MaxValue, 0, (ulong)(values.Length - 1));
 
         var code = values[index];
         return PostHttpCatAsync((int)code);

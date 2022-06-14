@@ -1,5 +1,5 @@
 //
-//  IInteractionData.cs
+//  IApplicationCommandData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,20 +27,25 @@ using Remora.Rest.Core;
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents payload data for a command.
+/// Represents interaction data received when a slash command is invoked or autocomplete data is requested.
 /// </summary>
 [PublicAPI]
-public interface IInteractionData
+public interface IApplicationCommandData
 {
     /// <summary>
     /// Gets the ID of the invoked command.
     /// </summary>
-    Optional<Snowflake> ID { get; }
+    Snowflake ID { get; }
 
     /// <summary>
     /// Gets the name of the invoked command.
     /// </summary>
-    Optional<string> Name { get; }
+    string Name { get; }
+
+    /// <summary>
+    /// Gets the type of the invoked command.
+    /// </summary>
+    ApplicationCommandType Type { get; }
 
     /// <summary>
     /// Gets any entities that were resolved while executing the command serverside.
@@ -58,27 +63,7 @@ public interface IInteractionData
     Optional<Snowflake> GuildID { get; }
 
     /// <summary>
-    /// Gets the custom ID associated with this interaction.
-    /// </summary>
-    Optional<string> CustomID { get; }
-
-    /// <summary>
-    /// Gets the type of component that the data originated from.
-    /// </summary>
-    Optional<ComponentType> ComponentType { get; }
-
-    /// <summary>
-    /// Gets the values selected by the user.
-    /// </summary>
-    Optional<IReadOnlyList<string>> Values { get; }
-
-    /// <summary>
     /// Gets the ID of the user or message targeted by an interaction.
     /// </summary>
     Optional<Snowflake> TargetID { get; }
-
-    /// <summary>
-    /// Gets the components for this interaction.
-    /// </summary>
-    Optional<IReadOnlyList<IPartialMessageComponent>> Components { get; }
 }

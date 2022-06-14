@@ -33,7 +33,6 @@ using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Contexts;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Xunit;
 
 namespace Remora.Discord.Commands.Tests;
@@ -104,7 +103,20 @@ public class ContextTests
     [Fact]
     public async Task CanExecuteCommandFromGroupThatWantsInteractionContext()
     {
-        var dummyContext = new InteractionContext(default, default, null!, default, null!, default, default, null!, default, default);
+        var dummyContext = new InteractionContext
+        (
+            default,
+            default,
+            null!,
+            default,
+            null!,
+            default,
+            default,
+            default,
+            default,
+            default
+        );
+
         _contextInjection.Context = dummyContext;
 
         var result = await _commands.TryExecuteAsync("interaction command", _services);

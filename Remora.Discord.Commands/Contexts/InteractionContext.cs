@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -39,7 +40,7 @@ public record InteractionContext
     string Token,
     Snowflake ID,
     Snowflake ApplicationID,
-    IInteractionData Data,
+    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData> Data,
     Optional<IMessage> Message,
     Optional<string> Locale
 ) : CommandContext(GuildID, ChannelID, User)

@@ -111,6 +111,11 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
+        if (!gatewayEvent.Data.IsDefined(out var data) || !data.TryPickT0(out var commandData, out _))
+        {
+            return Result.FromSuccess();
+        }
+
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
@@ -122,7 +127,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         // Provide the created context to any services inside this scope
         _contextInjection.Context = context;
 
-        context.Data.UnpackInteraction(out var commandPath, out var parameters);
+        commandData.UnpackInteraction(out var commandPath, out var parameters);
 
         // Run any user-provided pre-execution events
         var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);

@@ -81,6 +81,11 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
+        if (!gatewayEvent.Data.IsDefined(out var data) || !data.TryPickT0(out var autocompleteData, out _))
+        {
+            return Result.FromSuccess();
+        }
+
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
@@ -89,21 +94,16 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
 
         var context = createContext.Entity;
 
-        if (!context.Data.ID.IsDefined(out var id))
-        {
-            return new InvalidOperationError("Autocomplete interaction without command ID received. Bug?");
-        }
-
-        if (!context.Data.Options.IsDefined(out var options))
+        if (!autocompleteData.Options.IsDefined(out var options))
         {
             return new InvalidOperationError("Autocomplete interaction without options received. Bug?");
         }
 
         // Check for a global command
-        if (!_slashService.CommandMap.TryGetValue((default, id), out var value))
+        if (!_slashService.CommandMap.TryGetValue((default, autocompleteData.ID), out var value))
         {
             // Check for a guild command
-            if (!_slashService.CommandMap.TryGetValue((gatewayEvent.GuildID, id), out value))
+            if (!_slashService.CommandMap.TryGetValue((gatewayEvent.GuildID, autocompleteData.ID), out value))
             {
                 return new InvalidOperationError
                 (
@@ -112,14 +112,14 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             }
         }
 
-        context.Data.UnpackInteraction(out var path, out _);
+        autocompleteData.UnpackInteraction(out var path, out _);
         var commandNode = value.Match
         (
             map => map[string.Join("::", path)],
             node => node
         );
 
-        if (!TryFindFocusedParameter(context.Data, out var focusedParameter))
+        if (!TryFindFocusedParameter(autocompleteData, out var focusedParameter))
         {
             return new InvalidOperationError("Autocomplete interaction without focused option received. Desync?");
         }
@@ -196,7 +196,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
 
     private static bool TryFindFocusedParameter
     (
-        IInteractionData data,
+        IApplicationCommandData data,
         [NotNullWhen(true)] out IApplicationCommandInteractionDataOption? focusedParameter
     )
     {

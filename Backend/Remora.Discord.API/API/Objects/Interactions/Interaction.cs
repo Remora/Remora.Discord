@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -35,7 +36,7 @@ public record Interaction
     Snowflake ID,
     Snowflake ApplicationID,
     InteractionType Type,
-    Optional<IInteractionData> Data,
+    Optional<OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>> Data,
     Optional<Snowflake> GuildID,
     Optional<Snowflake> ChannelID,
     Optional<IGuildMember> Member,

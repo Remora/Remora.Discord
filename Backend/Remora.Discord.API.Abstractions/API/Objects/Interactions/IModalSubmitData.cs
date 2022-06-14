@@ -1,5 +1,5 @@
 //
-//  InteractionCreate.cs
+//  IModalSubmitData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Gateway.Events;
-
-/// <inheritdoc cref="IInteractionCreate" />
+/// <summary>
+/// Represents interaction data received when a modal is submitted.
+/// </summary>
 [PublicAPI]
-public record InteractionCreate
-(
-    Snowflake ID,
-    Snowflake ApplicationID,
-    InteractionType Type,
-    Optional<OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>> Data,
-    Optional<Snowflake> GuildID,
-    Optional<Snowflake> ChannelID,
-    Optional<IGuildMember> Member,
-    Optional<IUser> User,
-    string Token,
-    int Version,
-    Optional<IMessage> Message = default,
-    Optional<string> Locale = default,
-    Optional<string> GuildLocale = default
-) : IInteractionCreate;
+public interface IModalSubmitData
+{
+    /// <summary>
+    /// Gets the custom ID associated with this interaction.
+    /// </summary>
+    string CustomID { get; }
+
+    /// <summary>
+    /// Gets the components for this interaction.
+    /// </summary>
+    IReadOnlyList<IPartialMessageComponent> Components { get; }
+}
