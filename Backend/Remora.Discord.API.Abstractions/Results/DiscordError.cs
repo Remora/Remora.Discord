@@ -37,7 +37,7 @@ public enum DiscordError
     Unknown = -1,
 
     /// <summary>
-    /// A general error (suc as a malformed request body, amongst other things).
+    /// A general error (such as a malformed request body, amongst other things).
     /// </summary>
     GeneralError = 0,
 
