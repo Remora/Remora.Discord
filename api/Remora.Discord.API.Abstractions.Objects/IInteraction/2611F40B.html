@@ -59,13 +59,13 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
@@ -183,7 +183,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets the command data payload.
+    Gets the data payload.
     </div>
 
 		<div class="panel panel-default">
@@ -201,7 +201,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Optional&lt;IInteractionData&gt; Data { get; }</code></pre>
+	<pre><code>Optional&lt;OneOf&lt;IApplicationCommandData, IMessageComponentData, IModalSubmitData&gt;&gt; Data { get; }</code></pre>
 
 
 
@@ -218,7 +218,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionData">IInteractionData</a>&gt;<wbr></td>
+					<td>Optional<wbr>&lt;OneOf<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandData">I<wbr>Application<wbr>Command<wbr>Data</a>, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponentData">I<wbr>Message<wbr>Component<wbr>Data</a>, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IModalSubmitData">IModalSubmitData</a>&gt;<wbr>&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>

@@ -59,13 +59,13 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
@@ -202,8 +202,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI">Caching<wbr>Discord<wbr>Rest<wbr>Guild<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -213,10 +213,10 @@
 							graph BT
 	Type["IDiscordRestGuildAPI"]
 class Type type-node
-	Implementing0["DiscordRestGuildAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
-	Implementing1["CachingDiscordRestGuildAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI"
+	Implementing0["CachingDiscordRestGuildAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI"
+	Implementing1["DiscordRestGuildAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
 
 						</div>
 					</div>
@@ -540,11 +540,20 @@ public interface IDiscordRestGuildAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/ADA5ED61">Modify<wbr>Guild<wbr>Channel<wbr>Positions<wbr>Async<wbr>(Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>(<wbr>Snowflake <wbr>Channel<wbr>I<wbr>D, <wbr>int? Position, <wbr>bool? <wbr>Lock<wbr>Permissions, <wbr>Snowflake? ParentID)<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/E511B5C3">Modify<wbr>Guild<wbr>Channel<wbr>Positions<wbr>Async<wbr>(Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>(<wbr>Snowflake <wbr>Channel<wbr>I<wbr>D, <wbr>int? Position, <wbr>bool? <wbr>Lock<wbr>Permissions, <wbr>Snowflake? ParentID)<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
     Modifies the positions of a set of channels in the guild.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/A6B0F069">Modify<wbr>Guild<wbr>M<wbr>F<wbr>A<wbr>Level<wbr>Async<wbr>(Snowflake, <wbr>Multi<wbr>Factor<wbr>Authentication<wbr>Level, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MultiFactorAuthenticationLevel">Multi<wbr>Factor<wbr>Authentication<wbr>Level</a>&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Modifies a guild's multi-factor authentication level. Requires guild ownership.
     </div>
 								</td>
 							</tr>
