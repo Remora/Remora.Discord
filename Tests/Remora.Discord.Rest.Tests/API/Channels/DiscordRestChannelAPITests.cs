@@ -192,6 +192,7 @@ public class DiscordRestChannelAPITests
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
             var position = 1;
+            var isNsfw = true;
             var bitrate = 8000;
             var userLimit = 10;
             var permissionOverwrites = new List<PermissionOverwrite>();
@@ -213,6 +214,7 @@ public class DiscordRestChannelAPITests
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("position", p => p.Is(position))
+                                    .WithProperty("nsfw", p => p.Is(isNsfw))
                                     .WithProperty("bitrate", p => p.Is(bitrate))
                                     .WithProperty("user_limit", p => p.Is(userLimit))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
@@ -229,6 +231,7 @@ public class DiscordRestChannelAPITests
                 channelId,
                 name,
                 position,
+                isNsfw,
                 bitrate,
                 userLimit,
                 permissionOverwrites,

@@ -169,6 +169,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="channelID">The ID of the channel.</param>
     /// <param name="name">The new name of the channel.</param>
     /// <param name="position">The new position of the channel in the listing.</param>
+    /// <param name="isNsfw">The new NSFW status of the channel.</param>
     /// <param name="bitrate">The new bitrate.</param>
     /// <param name="userLimit">The new user limit.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
@@ -183,6 +184,7 @@ public interface IDiscordRestChannelAPI
         Snowflake channelID,
         Optional<string> name = default,
         Optional<int?> position = default,
+        Optional<bool?> isNsfw = default,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
