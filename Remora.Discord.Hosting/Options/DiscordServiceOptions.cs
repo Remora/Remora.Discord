@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Rest.Core;
+
 namespace Remora.Discord.Hosting.Options;
 
 /// <summary>
@@ -28,4 +30,20 @@ namespace Remora.Discord.Hosting.Options;
 /// <param name="TerminateApplicationOnCriticalGatewayErrors">
 /// Whether the service should stop the application if a critical gateway error is encountered.
 /// </param>
-public record DiscordServiceOptions(bool TerminateApplicationOnCriticalGatewayErrors = true);
+/// <param name="CheckSlashCommandsSupport">
+/// Whether the service should check if slash commands are supported.
+/// </param>
+/// <param name="UpdateSlashCommands">
+/// Whether the service should update slash commands automatically.
+/// </param>
+/// <param name="UpdateSlashGuild">
+/// The guild that the service should update slash commands for.
+/// When null, it updates global commands.
+/// </param>
+public record DiscordServiceOptions
+(
+    bool TerminateApplicationOnCriticalGatewayErrors = true,
+    bool CheckSlashCommandsSupport = false,
+    bool UpdateSlashCommands = false,
+    Snowflake? UpdateSlashGuild = null
+);

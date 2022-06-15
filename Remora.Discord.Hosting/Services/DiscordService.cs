@@ -27,6 +27,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Results;
 using Remora.Discord.Hosting.Options;
@@ -44,22 +45,26 @@ public class DiscordService : BackgroundService
     private readonly IHostApplicationLifetime _lifetime;
     private readonly DiscordServiceOptions _options;
     private readonly ILogger<DiscordService> _logger;
+    private readonly SlashService _slashService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordService"/> class.
     /// </summary>
+    /// <param name="slashService">The service for slash commands.</param>
     /// <param name="gatewayClient">The gateway client.</param>
     /// <param name="lifetime">The application lifetime.</param>
     /// <param name="options">The service options.</param>
     /// <param name="logger">The <see cref="ILogger"/>.</param>
     public DiscordService
     (
+        SlashService slashService,
         DiscordGatewayClient gatewayClient,
         IHostApplicationLifetime lifetime,
         IOptions<DiscordServiceOptions> options,
         ILogger<DiscordService> logger
     )
     {
+        _slashService = slashService;
         _gatewayClient = gatewayClient;
         _lifetime = lifetime;
         _options = options.Value;
@@ -69,6 +74,41 @@ public class DiscordService : BackgroundService
     /// <inheritdoc />
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        if (_options.CheckSlashCommandsSupport)
+        {
+            _logger.LogInformation("Checking for slash commands support.");
+            var checkSlashSupport = _slashService.SupportsSlashCommands();
+            if (!checkSlashSupport.IsSuccess)
+            {
+                // write to log.
+                _logger.LogError(
+                    "The registered commands of the bot don't support slash commands: {Message}",
+                    checkSlashSupport.Error.Message);
+
+                // stop the application.
+                _lifetime.StopApplication();
+            }
+            else
+            {
+                if (_options.UpdateSlashCommands)
+                {
+                    _logger.LogInformation("Updating slash commands.");
+                    var updateSlash = await _slashService.UpdateSlashCommandsAsync(
+                        _options.UpdateSlashGuild, ct: default).ConfigureAwait(false);
+                    if (!updateSlash.IsSuccess)
+                    {
+                        // write to log.
+                        _logger.LogError(
+                            "Failed to update slash commands: {0}",
+                            updateSlash.Error.Message);
+
+                        // stop the application.
+                        _lifetime.StopApplication();
+                    }
+                }
+            }
+        }
+
         var runResult = await _gatewayClient.RunAsync(stoppingToken);
 
         if (!runResult.IsSuccess)
