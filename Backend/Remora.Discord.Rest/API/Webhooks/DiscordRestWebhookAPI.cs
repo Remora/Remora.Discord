@@ -441,17 +441,17 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                 }
 
                 b.WithJson
-                    (
-                        json =>
-                        {
-                            json.Write("content", content, this.JsonOptions);
-                            json.Write("embeds", embeds, this.JsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("components", components, this.JsonOptions);
-                            json.Write("attachments", attachmentList, this.JsonOptions);
-                        }
-                    )
-                    .WithRateLimitContext(this.RateLimitCache);
+                (
+                    json =>
+                    {
+                        json.Write("content", content, this.JsonOptions);
+                        json.Write("embeds", embeds, this.JsonOptions);
+                        json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                        json.Write("components", components, this.JsonOptions);
+                        json.Write("attachments", attachmentList, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );

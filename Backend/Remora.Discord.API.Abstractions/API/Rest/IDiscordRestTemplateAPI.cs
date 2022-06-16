@@ -124,8 +124,8 @@ public interface IDiscordRestTemplateAPI
     (
         Snowflake guildID,
         string templateCode,
-        string name,
-        Optional<string> description,
+        Optional<string> name,
+        Optional<string?> description,
         CancellationToken ct = default
     );
 

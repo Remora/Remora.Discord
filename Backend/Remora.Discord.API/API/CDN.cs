@@ -1001,13 +1001,13 @@ public static class CDN
     /// <summary>
     /// Gets the CDN URI of the given sticker pack's banner.
     /// </summary>
-    /// <param name="bannerAssetId">The asset ID of the sticker pack.</param>
+    /// <param name="bannerAssetID">The asset ID of the sticker pack.</param>
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     public static Result<Uri> GetStickerPackBannerUrl
     (
-        Snowflake bannerAssetId,
+        Snowflake bannerAssetID,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
     )
@@ -1036,7 +1036,7 @@ public static class CDN
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
             // Yes, all stickers are stored under this hardcoded application. This is intentional.
-            Path = $"app-assets/710982414301790216/store/{bannerAssetId}.{format.ToFileExtension()}"
+            Path = $"app-assets/710982414301790216/store/{bannerAssetID}.{format.ToFileExtension()}"
         };
 
         if (imageSize.HasValue)
@@ -1133,13 +1133,13 @@ public static class CDN
     /// <summary>
     /// Gets the CDN URI of the given sticker.
     /// </summary>
-    /// <param name="stickerId">The ID of the sticker.</param>
+    /// <param name="stickerID">The ID of the sticker.</param>
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     public static Result<Uri> GetStickerUrl
     (
-        Snowflake stickerId,
+        Snowflake stickerID,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
     )
@@ -1166,7 +1166,7 @@ public static class CDN
 
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
-            Path = $"stickers/{stickerId}.{format.ToFileExtension()}"
+            Path = $"stickers/{stickerID}.{format.ToFileExtension()}"
         };
 
         if (imageSize.HasValue)
