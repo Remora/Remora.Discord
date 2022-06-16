@@ -30,20 +30,20 @@ public enum AutoModerationTriggerType
     /// <summary>
     /// Check if content contains words from a user defined list of keywords.
     /// </summary>
-    Keyword,
+    Keyword = 1,
 
     /// <summary>
     /// Check if content contains any harmful links.
     /// </summary>
-    HarmfulLink,
+    HarmfulLink = 2,
 
     /// <summary>
     /// Check if content represents generic spam.
     /// </summary>
-    Spam,
+    Spam = 3,
 
     /// <summary>
     /// Check if content contains words from internal pre-defined wordsets.
     /// </summary>
-    KeywordPreset
+    KeywordPreset = 4
 }

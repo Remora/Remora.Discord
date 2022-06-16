@@ -30,12 +30,12 @@ public enum AutoModerationActionType
     /// <summary>
     /// Blocks the content of a message according to the rule.
     /// </summary>
-    BlockMessage,
+    BlockMessage = 1,
 
     /// <summary>
     /// Logs user content to a specified channel.
     /// </summary>
-    SendAlertMessage,
+    SendAlertMessage = 2,
 
     /// <summary>
     /// Timeout user for a specified duration.
@@ -44,5 +44,5 @@ public enum AutoModerationActionType
     /// A <see cref="Timeout"/> action can only be setup for <see cref="AutoModerationTriggerType.Keyword"/> rules and the
     /// <see cref="DiscordPermission.ModerateMembers"/> permission is required.
     /// </remarks>
-    Timeout
+    Timeout = 3
 }
