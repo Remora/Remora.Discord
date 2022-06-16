@@ -22,6 +22,7 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects.AutoModeration;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects.AutoModeration;
 
@@ -30,5 +31,5 @@ namespace Remora.Discord.API.Objects.AutoModeration;
 public record AutoModerationAction
 (
     AutoModerationActionType Type,
-    IAutoModerationActionMetadata Metadata
+    Optional<IAutoModerationActionMetadata> Metadata
 ) : IAutoModerationAction;

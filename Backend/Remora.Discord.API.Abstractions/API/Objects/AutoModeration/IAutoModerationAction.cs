@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Rest.Core;
+
 namespace Remora.Discord.API.Abstractions.Objects.AutoModeration;
 
 /// <summary>
@@ -40,5 +42,5 @@ public interface IAutoModerationAction
     /// <see cref="IAutoModerationActionMetadata"/> to understand which <see cref="Type"/> values require metadata
     /// to be set.
     /// </remarks>
-    IAutoModerationActionMetadata Metadata { get; }
+    Optional<IAutoModerationActionMetadata> Metadata { get; }
 }
