@@ -194,7 +194,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
     /// <param name="isNsfw">Whether the new channel is NSFW.</param>
-    /// <param name="voiceRegionID">The ID of the voice region of the voice or stage channel.</param>
+    /// <param name="rtcRegion">The ID of the voice region of the voice or stage channel.</param>
     /// <param name="videoQualityMode">The video quality mode of the voice channel.</param>
     /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
@@ -213,7 +213,7 @@ public interface IDiscordRestGuildAPI
         Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
-        Optional<string> voiceRegionID = default,
+        Optional<string> rtcRegion = default,
         Optional<VideoQualityMode> videoQualityMode = default,
         Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,

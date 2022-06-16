@@ -1956,14 +1956,12 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/integrations")
-                    .WithQueryString("include_applications", "true")
                     .Respond("application/json", "[ ]")
             );
 
             var result = await api.GetGuildIntegrationsAsync
             (
-                guildId,
-                true
+                guildId
             );
 
             ResultAssert.Successful(result);

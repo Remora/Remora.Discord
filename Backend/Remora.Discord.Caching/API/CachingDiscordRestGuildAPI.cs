@@ -292,6 +292,8 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
+        Optional<string> rtcRegion = default,
+        Optional<VideoQualityMode> videoQualityMode = default,
         Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -310,6 +312,8 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             permissionOverwrites,
             parentID,
             isNsfw,
+            rtcRegion,
+            videoQualityMode,
             defaultAutoArchiveDuration,
             reason,
             ct
@@ -820,7 +824,6 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
     public async Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
     (
         Snowflake guildID,
-        Optional<bool> includeApplications = default,
         CancellationToken ct = default
     )
     {
@@ -832,7 +835,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return cacheResult;
         }
 
-        var getResult = await _actual.GetGuildIntegrationsAsync(guildID, includeApplications, ct);
+        var getResult = await _actual.GetGuildIntegrationsAsync(guildID, ct);
 
         if (!getResult.IsSuccess)
         {
@@ -955,5 +958,17 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         }
 
         return result;
+    }
+
+    /// <inheritdoc />
+    public Task<Result> DeleteGuildIntegrationAsync
+    (
+        Snowflake guildID,
+        Snowflake integrationID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.DeleteGuildIntegrationAsync(guildID, integrationID, reason, ct);
     }
 }

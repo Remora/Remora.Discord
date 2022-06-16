@@ -390,7 +390,7 @@ public class DiscordRestChannelAPITests
                 bitrate: null,
                 userLimit: null,
                 permissionOverwrites: null,
-                parentId: null,
+                parentID: null,
                 videoQualityMode: null,
                 rtcRegion: null
             );
@@ -2439,8 +2439,8 @@ public class DiscordRestChannelAPITests
             (
                 channelId,
                 name,
-                duration,
                 type,
+                duration,
                 isInvitable,
                 rateLimit,
                 reason

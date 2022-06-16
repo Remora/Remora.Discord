@@ -103,11 +103,12 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
-        Optional<Snowflake?> parentId = default,
+        Optional<Snowflake?> parentID = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<bool> isArchived = default,
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
+        Optional<bool> isInvitable = default,
         Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
@@ -128,11 +129,12 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
             bitrate,
             userLimit,
             permissionOverwrites,
-            parentId,
+            parentID,
             videoQualityMode,
             isArchived,
             autoArchiveDuration,
             isLocked,
+            isInvitable,
             defaultAutoArchiveDuration,
             rtcRegion,
             flags,
@@ -485,8 +487,8 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
     (
         Snowflake channelID,
         string name,
-        AutoArchiveDuration autoArchiveDuration,
         ChannelType type,
+        Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<string> reason = default,
@@ -497,8 +499,8 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         (
             channelID,
             name,
-            autoArchiveDuration,
             type,
+            autoArchiveDuration,
             isInvitable,
             rateLimitPerUser,
             reason,
@@ -679,5 +681,41 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         await _cacheService.EvictAsync<IThreadMember>(key, ct);
 
         return result;
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListPublicArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListPublicArchivedThreadsAsync(channelID, before, limit, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListPrivateArchivedThreadsAsync(channelID, before, limit, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<Snowflake> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListJoinedPrivateArchivedThreadsAsync(channelID, before, limit, ct);
     }
 }

@@ -277,8 +277,8 @@ public partial class CachingDiscordRestChannelAPI
     (
         Snowflake channelID,
         Snowflake overwriteID,
-        Optional<IDiscordPermissionSet> allow = default,
-        Optional<IDiscordPermissionSet> deny = default,
+        Optional<IDiscordPermissionSet?> allow = default,
+        Optional<IDiscordPermissionSet?> deny = default,
         Optional<PermissionOverwriteType> type = default,
         Optional<string> reason = default,
         CancellationToken ct = default
