@@ -157,7 +157,7 @@ public class ResponderDispatchService : IAsyncDisposable
 
         _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
 
-        if (_options.EnableParallelDispatch)
+        if (!_options.EnableParallelDispatch)
         {
             _dispatcher = Task.Run(() => DispatcherTaskAsync(0), _dispatchCancellationSource.Token);
         }
