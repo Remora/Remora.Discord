@@ -1085,7 +1085,6 @@ public class DiscordGatewayClient : IDisposable
 
     private TimeSpan CalculateAllowedSleepTime(TimeSpan heartbeatInterval)
     {
-        // Let's sleep for a little while
         var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
         var lastSentHeartbeat = lastSentHeartbeatBinary > 0
             ? DateTime.FromBinary(lastSentHeartbeatBinary)
