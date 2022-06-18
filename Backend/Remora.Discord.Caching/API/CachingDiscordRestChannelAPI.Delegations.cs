@@ -358,6 +358,42 @@ public partial class CachingDiscordRestChannelAPI
         return _actual.LeaveThreadAsync(channelID, ct);
     }
 
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListPublicArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListPublicArchivedThreadsAsync(channelID, before, limit, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListPrivateArchivedThreadsAsync(channelID, before, limit, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<Snowflake> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListJoinedPrivateArchivedThreadsAsync(channelID, before, limit, ct);
+    }
+
     /// <inheritdoc/>
     public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
     {
