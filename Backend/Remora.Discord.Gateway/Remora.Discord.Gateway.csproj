@@ -5,10 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.1.5</Version>
+        <Version>9.0.0</Version>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Upgrade nuget packegs.
+            Refactor heartbeating and connection watchdog.
+            feat: Configure REST from AddDiscordGateway
         </PackageReleaseNotes>
     </PropertyGroup>
 
