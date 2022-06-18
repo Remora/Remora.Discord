@@ -38,7 +38,6 @@ using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.API.AutoModeration;
 using Remora.Discord.Rest.Caching;
 using Remora.Discord.Rest.Polly;
 using Remora.Rest;

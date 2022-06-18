@@ -33,7 +33,7 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API.AutoModeration;
+namespace Remora.Discord.Rest.API;
 
 /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestAutoModerationAPI" />
 public class DiscordRestAutoModerationAPI : AbstractDiscordRestAPI, IDiscordRestAutoModerationAPI
