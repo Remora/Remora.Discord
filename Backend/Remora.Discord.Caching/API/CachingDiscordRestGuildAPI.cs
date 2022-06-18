@@ -961,7 +961,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
     }
 
     /// <inheritdoc />
-    public Task<Result> DeleteGuildIntegrationAsync
+    public async Task<Result> DeleteGuildIntegrationAsync
     (
         Snowflake guildID,
         Snowflake integrationID,
@@ -969,6 +969,18 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        return _actual.DeleteGuildIntegrationAsync(guildID, integrationID, reason, ct);
+        var deleteResult = await _actual.DeleteGuildIntegrationAsync(guildID, integrationID, reason, ct);
+        if (!deleteResult.IsSuccess)
+        {
+            return deleteResult;
+        }
+
+        var key = KeyHelpers.CreateGuildIntegrationCacheKey(guildID, integrationID);
+        await _cacheService.EvictAsync<IIntegration>(key, ct);
+
+        var collectionKey = KeyHelpers.CreateGuildIntegrationsCacheKey(guildID);
+        await _cacheService.EvictAsync<IReadOnlyList<IIntegration>>(collectionKey, ct);
+
+        return deleteResult;
     }
 }
