@@ -70,7 +70,7 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <param name="services">The available services.</param>
     /// <param name="responderTypeRepository">The responder type repository.</param>
     /// <param name="log">The logging instance for this type.</param>
-    /// <param name="options">The options for dispatch.</param>
+    /// <param name="options">Options for dispatch.</param>
     public ResponderDispatchService
     (
         IServiceProvider services,
@@ -139,36 +139,14 @@ public class ResponderDispatchService : IAsyncDisposable
         }
 
         _dispatchCancellationSource = new();
-
-        if (_options.EnableParallelDispatch)
-        {
-            _payloadsToDispatch = Channel.CreateUnbounded<IPayload>
-            (
-                new UnboundedChannelOptions() { SingleWriter = true, SingleReader = false }
-            );
-        }
-        else
-        {
-            _payloadsToDispatch = Channel.CreateBounded<IPayload>
-            (
-                new BoundedChannelOptions((int)_options.MaxItems) { FullMode = BoundedChannelFullMode.Wait }
-            );
-        }
+        _payloadsToDispatch = Channel.CreateBounded<IPayload>
+        (
+            new BoundedChannelOptions((int)_options.MaxItems) { FullMode = BoundedChannelFullMode.Wait }
+        );
 
         _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
 
-        if (!_options.EnableParallelDispatch)
-        {
-            _dispatcher = Task.Run(() => DispatcherTaskAsync(0), _dispatchCancellationSource.Token);
-        }
-        else
-        {
-            var dispatchTasks = Enumerable.Range(0, (int?)_options.MaxParallelism ?? Environment.ProcessorCount / 2)
-                                          .Select(id => Task.Run(() => DispatcherTaskAsync(id), _dispatchCancellationSource.Token));
-
-            _dispatcher = Task.WhenAll(dispatchTasks); // Task.Run will cancel when we yeet the token, so this is fine.
-        }
-
+        _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
         _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
 
         this.IsRunning = true;
@@ -240,7 +218,7 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <summary>
     /// Runs the main loop of the dispatcher task.
     /// </summary>
-    private async Task DispatcherTaskAsync(int dispatcherID)
+    private async Task DispatcherTaskAsync()
     {
         if (_dispatchCancellationSource is null)
         {
@@ -268,13 +246,6 @@ public class ResponderDispatchService : IAsyncDisposable
             }
 
             await _respondersToFinalize.Writer.WriteAsync(dispatch.Entity, _dispatchCancellationSource.Token);
-        }
-
-        if (dispatcherID is not 0)
-        {
-            // In this instance, we're parallelized; only the
-            // first dispatcher should cleanup, so we're done here.
-            return;
         }
 
         // Finish up remaining dispatches
