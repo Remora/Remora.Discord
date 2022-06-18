@@ -235,6 +235,9 @@ public interface IDiscordRestChannelAPI
     /// <param name="isNsfw">The new NSFW status of the channel.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
     /// <param name="parentID">The new parent category ID.</param>
+    /// <param name="defaultAutoArchiveDuration">
+    /// The default time of inactivity after which threads in the channel are archived.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -248,6 +251,7 @@ public interface IDiscordRestChannelAPI
         Optional<bool?> isNsfw = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -260,6 +264,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="isArchived">Whether the thread is archived.</param>
     /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
     /// <param name="isLocked">Whether the thread is locked.</param>
+    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>
     /// <param name="rateLimitPerUser">The new rate limit per user.</param>
     /// <param name="flags">The channel flags to use.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
@@ -272,6 +277,7 @@ public interface IDiscordRestChannelAPI
         Optional<bool> isArchived = default,
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
+        Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,

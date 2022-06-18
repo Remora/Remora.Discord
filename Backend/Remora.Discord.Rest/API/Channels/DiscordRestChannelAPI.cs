@@ -282,6 +282,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<bool?> isNsfw = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -296,6 +297,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             isNsfw: isNsfw,
             permissionOverwrites: permissionOverwrites,
             parentID: parentID,
+            defaultAutoArchiveDuration: defaultAutoArchiveDuration,
             reason: reason,
             ct: ct
         );
@@ -309,6 +311,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<bool> isArchived = default,
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
+        Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
@@ -322,6 +325,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             isArchived: isArchived,
             autoArchiveDuration: autoArchiveDuration,
             isLocked: isLocked,
+            isInvitable: isInvitable,
             rateLimitPerUser: rateLimitPerUser,
             flags: flags,
             reason: reason,
