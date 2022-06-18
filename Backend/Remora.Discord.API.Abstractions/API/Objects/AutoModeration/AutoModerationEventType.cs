@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Objects.AutoModeration;
+using JetBrains.Annotations;
+
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Indicates in what event context a rule should be checked.
 /// </summary>
+[PublicAPI]
 public enum AutoModerationEventType
 {
     /// <summary>

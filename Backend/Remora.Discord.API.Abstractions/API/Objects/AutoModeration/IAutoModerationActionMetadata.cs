@@ -20,14 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects.AutoModeration;
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Additional data used when an action is executed. Different fields are relevant based on value of the
 /// <see cref="AutoModerationActionType"/>.
 /// </summary>
+[PublicAPI]
 public interface IAutoModerationActionMetadata
 {
     /// <summary>

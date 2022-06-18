@@ -21,13 +21,15 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects.AutoModeration;
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Represents an auto-moderation rule.
 /// </summary>
+[PublicAPI]
 public interface IAutoModerationRule
 {
     /// <summary>

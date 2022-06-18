@@ -20,13 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects.AutoModeration;
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// An action which will execute whenever a rule is triggered.
 /// </summary>
+[PublicAPI]
 public interface IAutoModerationAction
 {
     /// <summary>

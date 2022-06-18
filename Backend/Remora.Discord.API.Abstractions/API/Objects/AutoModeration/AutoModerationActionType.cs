@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Objects.AutoModeration;
+using JetBrains.Annotations;
+
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Enumerates the types of actions taken whenever a rule is triggered.
 /// </summary>
+[PublicAPI]
 public enum AutoModerationActionType
 {
     /// <summary>

@@ -21,14 +21,16 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects.AutoModeration;
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Additional data used to determine whether a rule should be triggered. Different fields are relevant based
 /// on the value of <see cref="AutoModerationTriggerType"/>.
 /// </summary>
+[PublicAPI]
 public interface IAutoModerationTriggerMetadata
 {
     /// <summary>
