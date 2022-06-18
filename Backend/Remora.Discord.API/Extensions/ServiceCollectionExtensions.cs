@@ -145,9 +145,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IIdentify, Identify>();
 
         options.AddDataObjectConverter<IConnectionProperties, ConnectionProperties>()
-            .WithPropertyName(p => p.OperatingSystem, "$os")
-            .WithPropertyName(p => p.Browser, "$browser")
-            .WithPropertyName(p => p.Device, "$device");
+            .WithPropertyName(p => p.OperatingSystem, "os")
+            .WithPropertyName(p => p.Browser, "browser")
+            .WithPropertyName(p => p.Device, "device");
 
         options.AddConverter<ShardIdentificationConverter>();
 
