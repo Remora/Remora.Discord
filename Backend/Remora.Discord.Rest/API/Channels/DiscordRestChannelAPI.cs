@@ -100,7 +100,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
         Optional<bool> isInvitable = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
@@ -189,7 +189,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<int?> rateLimitPerUser = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -282,7 +282,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<bool?> isNsfw = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -655,11 +655,11 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Snowflake channelID,
         Snowflake messageID,
         Optional<string?> content = default,
-        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
         Optional<MessageFlags?> flags = default,
         Optional<IAllowedMentions?> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<IReadOnlyList<IMessageComponent>?> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
         CancellationToken ct = default
     )
     {
@@ -677,7 +677,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             b =>
             {
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                if (attachments.HasValue)
+                if (attachments.HasValue && attachments.Value is not null)
                 {
                     // build attachment list
                     attachmentList = attachments.Value.Select

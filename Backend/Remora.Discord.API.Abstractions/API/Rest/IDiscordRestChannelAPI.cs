@@ -101,7 +101,7 @@ public interface IDiscordRestChannelAPI
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
         Optional<bool> isInvitable = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
@@ -160,7 +160,7 @@ public interface IDiscordRestChannelAPI
         Optional<int?> rateLimitPerUser = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -251,7 +251,7 @@ public interface IDiscordRestChannelAPI
         Optional<bool?> isNsfw = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -528,11 +528,11 @@ public interface IDiscordRestChannelAPI
         Snowflake channelID,
         Snowflake messageID,
         Optional<string?> content = default,
-        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
         Optional<MessageFlags?> flags = default,
         Optional<IAllowedMentions?> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<IReadOnlyList<IMessageComponent>?> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
         CancellationToken ct = default
     );
 

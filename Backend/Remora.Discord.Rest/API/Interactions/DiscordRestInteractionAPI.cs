@@ -165,8 +165,8 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         Optional<string?> content = default,
         Optional<IReadOnlyList<IEmbed>?> embeds = default,
         Optional<IAllowedMentions?> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<IReadOnlyList<IMessageComponent>?> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
         CancellationToken ct = default
     )
     {
@@ -186,7 +186,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             b =>
             {
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                if (attachments.HasValue)
+                if (attachments.HasValue && attachments.Value is not null)
                 {
                     // build attachment list
                     attachmentList = attachments.Value.Select
@@ -337,8 +337,8 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         Optional<string?> content = default,
         Optional<IReadOnlyList<IEmbed>?> embeds = default,
         Optional<IAllowedMentions?> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<IReadOnlyList<IMessageComponent>?> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
         CancellationToken ct = default
     )
     {
@@ -358,7 +358,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             b =>
             {
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                if (attachments.HasValue)
+                if (attachments.HasValue && attachments.Value is not null)
                 {
                     // build attachment list
                     attachmentList = attachments.Value.Select
