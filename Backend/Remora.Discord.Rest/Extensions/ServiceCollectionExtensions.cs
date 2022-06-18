@@ -38,6 +38,7 @@ using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.API.AutoModeration;
 using Remora.Discord.Rest.Caching;
 using Remora.Discord.Rest.Polly;
 using Remora.Rest;
@@ -76,6 +77,13 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ITokenStore>(serviceProvider => new TokenStore(tokenFactory(serviceProvider)));
 
         serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ICacheProvider>()
+        ));
+
+        serviceCollection.TryAddTransient<IDiscordRestAutoModerationAPI>(s => new DiscordRestAutoModerationAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
             s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
