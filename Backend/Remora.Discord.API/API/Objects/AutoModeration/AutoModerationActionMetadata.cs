@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -31,5 +32,5 @@ namespace Remora.Discord.API.Objects;
 public record AutoModerationActionMetadata
 (
     Optional<Snowflake> ChannelID,
-    Optional<int> Duration
+    Optional<TimeSpan> Duration
 ) : IAutoModerationActionMetadata;
