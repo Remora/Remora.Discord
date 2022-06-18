@@ -29,7 +29,6 @@ using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Rest;
 using Remora.Rest.Core;
