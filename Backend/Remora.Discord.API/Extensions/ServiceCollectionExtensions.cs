@@ -193,6 +193,20 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IReconnect, Reconnect>();
         options.AddDataObjectConverter<IResumed, Resumed>();
 
+        // Auto Moderation
+        options.AddDataObjectConverter<IAutoModerationActionExecution, AutoModerationActionExecution>()
+            .WithPropertyName(e => e.TriggerType, "rule_trigger_type")
+            .WithPropertyName(e => e.SystemAlertMessageID, "alert_system_message_id");
+
+        options.AddDataObjectConverter<IAutoModerationRuleCreate, AutoModerationRuleCreate>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
+        options.AddDataObjectConverter<IAutoModerationRuleUpdate, AutoModerationRuleUpdate>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
+        options.AddDataObjectConverter<IAutoModerationRuleDelete, AutoModerationRuleDelete>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
         // Channels
         options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
