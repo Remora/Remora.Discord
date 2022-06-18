@@ -263,5 +263,25 @@ public enum AuditLogEvent
     /// <summary>
     /// A thread was deleted.
     /// </summary>
-    ThreadDelete = 112
+    ThreadDelete = 112,
+
+    /// <summary>
+    /// An Auto Moderation rule was created.
+    /// </summary>
+    AutoModerationRuleCreate = 140,
+
+    /// <summary>
+    /// An Auto Moderation rule was updated.
+    /// </summary>
+    AutoModerationRuleUpdate = 141,
+
+    /// <summary>
+    /// An Auto Moderation rule was deleted.
+    /// </summary>
+    AutoModerationRuleDelete = 142,
+
+    /// <summary>
+    /// A message was blocked by AutoMod (according to a rule).
+    /// </summary>
+    AutoModerationBlockMessage = 143
 }
