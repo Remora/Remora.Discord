@@ -42,4 +42,4 @@ public record AutoModerationRule
     bool IsEnabled,
     IReadOnlyList<Snowflake> ExemptRoles,
     IReadOnlyList<Snowflake> ExemptChannels
-);
+) : IAutoModerationRule;
