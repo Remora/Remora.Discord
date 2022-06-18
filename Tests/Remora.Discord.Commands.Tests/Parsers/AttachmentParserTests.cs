@@ -1,5 +1,5 @@
 //
-//  PartialAttachmentParserTests.cs
+//  AttachmentParserTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -34,14 +34,14 @@ using Xunit;
 namespace Remora.Discord.Commands.Tests.Parsers;
 
 /// <summary>
-/// Tests the <see cref="PartialAttachmentParser"/> class.
+/// Tests the <see cref="AttachmentParser"/> class.
 /// </summary>
-public class PartialAttachmentParserTests
+public class AttachmentParserTests
 {
     private readonly Snowflake _attachmentID = Snowflake.CreateTimestampSnowflake();
 
     /// <summary>
-    /// Tests that the <see cref="PartialAttachmentParser"/> class cannot parse an attachment
+    /// Tests that the <see cref="AttachmentParser"/> class cannot parse an attachment
     /// if the given context is not a <see cref="InteractionContext"/>.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
@@ -50,7 +50,7 @@ public class PartialAttachmentParserTests
     {
         var mockContext = new Mock<ICommandContext>();
 
-        var parser = new PartialAttachmentParser(mockContext.Object);
+        var parser = new AttachmentParser(mockContext.Object);
 
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
@@ -58,7 +58,7 @@ public class PartialAttachmentParserTests
     }
 
     /// <summary>
-    /// Tests that the <see cref="PartialAttachmentParser"/> class cannot parse an attachment
+    /// Tests that the <see cref="AttachmentParser"/> class cannot parse an attachment
     /// if the given token is not a valid attachment ID.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
@@ -79,7 +79,7 @@ public class PartialAttachmentParserTests
                 default
             );
 
-        var parser = new PartialAttachmentParser(mockContext);
+        var parser = new AttachmentParser(mockContext);
 
         var result = await parser.TryParseAsync("invalid-snowflake");
 
@@ -87,7 +87,7 @@ public class PartialAttachmentParserTests
     }
 
     /// <summary>
-    ///  Tests that the <see cref="PartialAttachmentParser"/> class cannot parse an attachment
+    ///  Tests that the <see cref="AttachmentParser"/> class cannot parse an attachment
     /// if the given context does not contain resolved data.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
@@ -108,7 +108,7 @@ public class PartialAttachmentParserTests
             default
         );
 
-        var parser = new PartialAttachmentParser(mockContext);
+        var parser = new AttachmentParser(mockContext);
 
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
@@ -116,7 +116,7 @@ public class PartialAttachmentParserTests
     }
 
     /// <summary>
-    ///  Tests that the <see cref="PartialAttachmentParser"/> class cannot parse an attachment
+    ///  Tests that the <see cref="AttachmentParser"/> class cannot parse an attachment
     /// if the given context does not contain resolved data.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
@@ -142,14 +142,14 @@ public class PartialAttachmentParserTests
             default
         );
 
-        var parser = new PartialAttachmentParser(mockContext);
+        var parser = new AttachmentParser(mockContext);
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
         ResultAssert.Unsuccessful(result);
     }
 
     /// <summary>
-    ///  Tests that the <see cref="PartialAttachmentParser"/> class cannot parse an attachment
+    ///  Tests that the <see cref="AttachmentParser"/> class cannot parse an attachment
     /// if the given context does not contain the specified attachment ID.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
@@ -163,7 +163,7 @@ public class PartialAttachmentParserTests
 
         mockResolvedData
             .Setup(x => x.Attachments)
-            .Returns(() => new Dictionary<Snowflake, IPartialAttachment>());
+            .Returns(() => new Dictionary<Snowflake, IAttachment>());
 
         var mockContext = new InteractionContext
         (
@@ -179,14 +179,14 @@ public class PartialAttachmentParserTests
             default
         );
 
-        var parser = new PartialAttachmentParser(mockContext);
+        var parser = new AttachmentParser(mockContext);
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
         ResultAssert.Unsuccessful(result);
     }
 
     /// <summary>
-    /// Tests that the <see cref="PartialAttachmentParser"/> class can parse an attachment.
+    /// Tests that the <see cref="AttachmentParser"/> class can parse an attachment.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
@@ -202,7 +202,7 @@ public class PartialAttachmentParserTests
 
         mockResolvedData
             .Setup(x => x.Attachments)
-            .Returns(() => new Dictionary<Snowflake, IPartialAttachment>
+            .Returns(() => new Dictionary<Snowflake, IAttachment>
             {
                 { _attachmentID, mockAttachment.Object }
             });
@@ -221,7 +221,7 @@ public class PartialAttachmentParserTests
             default
         );
 
-        var parser = new PartialAttachmentParser(mockContext);
+        var parser = new AttachmentParser(mockContext);
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
         ResultAssert.Successful(result);

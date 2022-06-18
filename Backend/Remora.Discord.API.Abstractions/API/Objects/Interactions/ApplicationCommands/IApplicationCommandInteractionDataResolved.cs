@@ -35,7 +35,7 @@ public interface IApplicationCommandInteractionDataResolved
     /// <summary>
     /// Gets the resolved users, if any.
     /// </summary>
-    Optional<IReadOnlyDictionary<Snowflake, IPartialUser>> Users { get; }
+    Optional<IReadOnlyDictionary<Snowflake, IUser>> Users { get; }
 
     /// <summary>
     /// Gets the resolved guild members, if any.
@@ -45,7 +45,7 @@ public interface IApplicationCommandInteractionDataResolved
     /// <summary>
     /// Gets the resolved roles, if any.
     /// </summary>
-    Optional<IReadOnlyDictionary<Snowflake, IPartialRole>> Roles { get; }
+    Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles { get; }
 
     /// <summary>
     /// Gets the resolved channels, if any.
@@ -60,5 +60,5 @@ public interface IApplicationCommandInteractionDataResolved
     /// <summary>
     /// Gets the resolved attachments, if any.
     /// </summary>
-    Optional<IReadOnlyDictionary<Snowflake, IPartialAttachment>> Attachments { get; }
+    Optional<IReadOnlyDictionary<Snowflake, IAttachment>> Attachments { get; }
 }

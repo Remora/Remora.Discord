@@ -1,5 +1,5 @@
 //
-//  PartialAttachmentParser.cs
+//  AttachmentParser.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -32,23 +32,23 @@ using Remora.Results;
 namespace Remora.Discord.Commands.Parsers;
 
 /// <summary>
-/// Parses instances of <see cref="IPartialAttachment"/> from an interaction.
+/// Parses instances of <see cref="IAttachment"/> from an interaction.
 /// </summary>
-public class PartialAttachmentParser : AbstractTypeParser<IPartialAttachment>
+public class AttachmentParser : AbstractTypeParser<IAttachment>
 {
     private readonly ICommandContext _context;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PartialAttachmentParser"/> class.
+    /// Initializes a new instance of the <see cref="AttachmentParser"/> class.
     /// </summary>
     /// <param name="context">The command context.</param>
-    public PartialAttachmentParser(ICommandContext context)
+    public AttachmentParser(ICommandContext context)
     {
         _context = context;
     }
 
     /// <inheritdoc/>
-    public override ValueTask<Result<IPartialAttachment>> TryParseAsync(string token, CancellationToken ct = default)
+    public override ValueTask<Result<IAttachment>> TryParseAsync(string token, CancellationToken ct = default)
     {
         if (_context is not InteractionContext interactionContext)
         {
@@ -57,22 +57,22 @@ public class PartialAttachmentParser : AbstractTypeParser<IPartialAttachment>
 
         if (!Snowflake.TryParse(token, out var attachmentID))
         {
-            return new(new ParsingError<IPartialAttachment>(token, "Invalid attachment ID."));
+            return new(new ParsingError<IAttachment>(token, "Invalid attachment ID."));
         }
 
         if (!interactionContext.Data.TryPickT0(out var commandData, out _))
         {
-            return new(new ParsingError<IPartialAttachment>(token, "Cannot parse attachments without command data."));
+            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without command data."));
         }
 
         if (!commandData.Resolved.IsDefined(out var resolvedData))
         {
-            return new(new ParsingError<IPartialAttachment>(token, "Cannot parse attachments without resolved data."));
+            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved data."));
         }
 
         if (!resolvedData.Attachments.IsDefined(out var resolvedAttachments))
         {
-            return new(new ParsingError<IPartialAttachment>(token, "Cannot parse attachments without resolved attachments."));
+            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved attachments."));
         }
 
         if (!resolvedAttachments.TryGetValue(attachmentID.Value, out var resolvedAttachment))
@@ -80,6 +80,6 @@ public class PartialAttachmentParser : AbstractTypeParser<IPartialAttachment>
             return new(new InvalidOperationError($"Attachment with ID {attachmentID} present in options, but not in resolved attachments."));
         }
 
-        return new(Result<IPartialAttachment>.FromSuccess(resolvedAttachment));
+        return new(Result<IAttachment>.FromSuccess(resolvedAttachment));
     }
 }
