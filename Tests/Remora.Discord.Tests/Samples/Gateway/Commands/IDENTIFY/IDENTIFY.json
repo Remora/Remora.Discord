@@ -3,9 +3,9 @@
   "d": {
     "token": "none",
     "properties": {
-      "$os": "linux",
-      "$browser": "disco",
-      "$device": "disco"
+      "os": "linux",
+      "browser": "disco",
+      "device": "disco"
     },
     "compress": true,
     "large_threshold": 250,
