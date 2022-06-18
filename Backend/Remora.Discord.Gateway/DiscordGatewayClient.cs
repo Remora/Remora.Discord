@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway;
@@ -86,13 +87,18 @@ public class DiscordGatewayClient : IDisposable
     private int _lastSequenceNumber;
 
     /// <summary>
-    /// Holds the time when the last heartbeat was sent, using
-    /// <see cref="DateTime.ToBinary"/>.
+    /// Holds the time when the last heartbeat was sent, using <see cref="DateTime.ToBinary"/>.
     /// </summary>
     private long _lastSentHeartbeat;
 
     /// <summary>
-    /// Holds the time when the last heartbeat acknowledgement was received, using
+    /// Holds the time when the last event acknowledgement was received, encoded using
+    /// <see cref="DateTime.ToBinary()"/>.
+    /// </summary>
+    private long _lastReceivedEvent;
+
+    /// <summary>
+    /// Holds the time when the last heartbeat acknowledgement was received, encoded using
     /// <see cref="DateTime.ToBinary()"/>.
     /// </summary>
     private long _lastReceivedHeartbeatAck;
@@ -116,6 +122,12 @@ public class DiscordGatewayClient : IDisposable
     /// Holds the task responsible for receiving payloads from the gateway.
     /// </summary>
     private Task<Result> _receiveTask;
+
+    /// <summary>
+    /// Holds the task responsible for managing heartbeats to and from the gateway. This also serves as a connection
+    /// watchdog.
+    /// </summary>
+    private Task<Result> _heartbeatTask;
 
     /// <summary>
     /// Holds a value indicating that the client should reconnect and resume at its earliest convenience.
@@ -172,6 +184,7 @@ public class DiscordGatewayClient : IDisposable
         _disconnectRequestedSource = new CancellationTokenSource();
         _sendTask = Task.FromResult(Result.FromSuccess());
         _receiveTask = Task.FromResult(Result.FromSuccess());
+        _heartbeatTask = Task.FromResult(Result.FromSuccess());
     }
 
     /// <summary>
@@ -563,6 +576,7 @@ public class DiscordGatewayClient : IDisposable
                 // Set up the send task
                 var heartbeatInterval = hello.Data.HeartbeatInterval;
 
+                _heartbeatTask = GatewayHeartbeaterAsync(heartbeatInterval, _disconnectRequestedSource.Token);
                 _sendTask = GatewaySenderAsync(heartbeatInterval, _disconnectRequestedSource.Token);
 
                 // Attempt to connect or resume
@@ -580,6 +594,7 @@ public class DiscordGatewayClient : IDisposable
                 _shouldReconnect = false;
                 _isSessionResumable = false;
                 _lastReceivedHeartbeatAck = 0;
+                _lastReceivedEvent = 0;
 
                 _connectionStatus = GatewayConnectionStatus.Connected;
 
@@ -588,6 +603,15 @@ public class DiscordGatewayClient : IDisposable
             case GatewayConnectionStatus.Connected:
             {
                 // Check the send and receive tasks for errors
+                if (_heartbeatTask.IsCompleted)
+                {
+                    var heartbeatResult = await _heartbeatTask;
+                    if (!heartbeatResult.IsSuccess)
+                    {
+                        return heartbeatResult;
+                    }
+                }
+
                 if (_sendTask.IsCompleted)
                 {
                     var sendResult = await _sendTask;
@@ -627,6 +651,7 @@ public class DiscordGatewayClient : IDisposable
 
         // The results of the send and receive tasks are discarded here, because we know that it's going to be a
         // cancellation
+        _ = await _heartbeatTask;
         _ = await _sendTask;
         _ = await _receiveTask;
 
@@ -832,11 +857,97 @@ public class DiscordGatewayClient : IDisposable
     }
 
     /// <summary>
+    /// This method acts as the main entrypoint for the gateway heartbeater task. It keeps the connection alive by
+    /// sending heartbeats at specified intervals, and terminates the connection if it remains silent for too long.
+    /// </summary>
+    /// <param name="heartbeatInterval">The interval at which heartbeats should be sent.</param>
+    /// <param name="disconnectRequested">A token for requests to disconnect the socket.</param>
+    /// <returns>A heartbeat result which may or may not have been successful. A failed result indicates that something
+    /// has gone wrong when keeping the connection alive, and that it has been deemed nonviable. A nonviable
+    /// connection should be either terminated, reestablished, or resumed as appropriate.</returns>
+    private async Task<Result> GatewayHeartbeaterAsync
+    (
+        TimeSpan heartbeatInterval,
+        CancellationToken disconnectRequested
+    )
+    {
+        await Task.Yield();
+
+        try
+        {
+            while (!disconnectRequested.IsCancellationRequested)
+            {
+                var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
+                var lastSentHeartbeat = lastSentHeartbeatBinary > 0
+                    ? DateTime.FromBinary(lastSentHeartbeatBinary)
+                    : (DateTime?)null;
+
+                var lastReceivedEvent = Interlocked.Read(ref _lastReceivedHeartbeatAck);
+                var lastReceivedEventTime = lastReceivedEvent > 0
+                    ? DateTime.FromBinary(lastReceivedEvent)
+                    : (DateTime?)null;
+
+                var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
+                var lastHeartbeatAckTime = lastReceivedHeartbeatAck > 0
+                    ? DateTime.FromBinary(lastReceivedHeartbeatAck)
+                    : (DateTime?)null;
+
+                var now = DateTime.UtcNow;
+                var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
+
+                var needsHeartbeat = lastSentHeartbeat is null ||
+                                     now - lastSentHeartbeat >= heartbeatInterval - safetyMargin;
+
+                if (!needsHeartbeat)
+                {
+                    await Task.Delay(CalculateAllowedSleepTime(heartbeatInterval), disconnectRequested);
+                    continue;
+                }
+
+                var isConnectionSilent = lastHeartbeatAckTime < lastSentHeartbeat &&
+                                         now - lastReceivedEventTime >= heartbeatInterval - safetyMargin;
+
+                if (isConnectionSilent)
+                {
+                    return new GatewayError
+                    (
+                        "The server did not respond in time with a heartbeat acknowledgement.",
+                        true,
+                        false
+                    );
+                }
+
+                // 32-bit reads are atomic, so this is fine
+                var lastSequenceNumber = _lastSequenceNumber;
+
+                SubmitCommand(new Heartbeat
+                (
+                    lastSequenceNumber == 0 ? null : lastSequenceNumber
+                ));
+
+                lastSentHeartbeat = DateTime.UtcNow;
+                Interlocked.Exchange(ref _lastSentHeartbeat, lastSentHeartbeat.Value.ToBinary());
+            }
+
+            return Result.FromSuccess();
+        }
+        catch (OperationCanceledException)
+        {
+            // Cancellation is a success
+            return Result.FromSuccess();
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
+    }
+
+    /// <summary>
     /// This method acts as the main entrypoint for the gateway sender task. It processes payloads that are
     /// submitted by the application to the gateway, sending them to it.
     /// </summary>
     /// <param name="heartbeatInterval">The interval at which heartbeats should be sent.</param>
-    /// <param name="disconnectRequested">A token for requests to disconnect the socket..</param>
+    /// <param name="disconnectRequested">A token for requests to disconnect the socket.</param>
     /// <returns>A sender result which may or may not have been successful. A failed result indicates that something
     /// has gone wrong when sending a payload, and that the connection has been deemed nonviable. A nonviable
     /// connection should be either terminated, reestablished, or resumed as appropriate.</returns>
@@ -848,74 +959,43 @@ public class DiscordGatewayClient : IDisposable
     {
         await Task.Yield();
 
+        var rateLimitPolicy = Policy.RateLimitAsync<Result>
+        (
+            120,
+            TimeSpan.FromSeconds(60),
+            _gatewayOptions.CommandBurstRate,
+            (retryAfter, _) => new RetryAfterError(retryAfter)
+        );
+
         try
         {
-            var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
-            var lastSentHeartbeat = lastSentHeartbeatBinary > 0
-                ? DateTime.FromBinary(lastSentHeartbeatBinary)
-                : (DateTime?)null;
-
             while (!disconnectRequested.IsCancellationRequested)
             {
-                var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
-                var lastHeartbeatAck = lastReceivedHeartbeatAck > 0
-                    ? DateTime.FromBinary(lastReceivedHeartbeatAck)
-                    : (DateTime?)null;
-
-                // Heartbeat, if required
-                var now = DateTime.UtcNow;
-                var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
-
-                if (lastSentHeartbeat is null || now - lastSentHeartbeat >= heartbeatInterval - safetyMargin)
-                {
-                    if (lastHeartbeatAck < lastSentHeartbeat)
-                    {
-                        return new GatewayError
-                        (
-                            "The server did not respond in time with a heartbeat acknowledgement.",
-                            true,
-                            false
-                        );
-                    }
-
-                    // 32-bit reads are atomic, so this is fine
-                    var lastSequenceNumber = _lastSequenceNumber;
-
-                    var heartbeatPayload = new Payload<IHeartbeat>
-                    (
-                        new Heartbeat
-                        (
-                            lastSequenceNumber == 0 ? null : lastSequenceNumber
-                        )
-                    );
-
-                    var sendHeartbeat = await _transportService.SendPayloadAsync(heartbeatPayload, disconnectRequested);
-
-                    if (!sendHeartbeat.IsSuccess)
-                    {
-                        return Result.FromError
-                        (
-                            new GatewayError("Failed to send a heartbeat.", true, false),
-                            sendHeartbeat
-                        );
-                    }
-
-                    lastSentHeartbeat = DateTime.UtcNow;
-                    Interlocked.Exchange(ref _lastSentHeartbeat, lastSentHeartbeat.Value.ToBinary());
-                }
-
                 // Check if there are any user-submitted payloads to send
                 if (!_payloadsToSend.TryDequeue(out var payload))
                 {
                     // Let's sleep for a little while
-                    var maxSleepTime = lastSentHeartbeat.Value + heartbeatInterval - safetyMargin - now;
-                    var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
-
-                    await Task.Delay(sleepTime, disconnectRequested);
+                    await Task.Delay(CalculateAllowedSleepTime(heartbeatInterval), disconnectRequested);
                     continue;
                 }
 
-                var sendResult = await _transportService.SendPayloadAsync(payload, disconnectRequested);
+                Result sendResult;
+                while (true)
+                {
+                    sendResult = await rateLimitPolicy.ExecuteAsync
+                    (
+                        () => _transportService.SendPayloadAsync(payload, disconnectRequested)
+                    );
+
+                    if (sendResult.Error is RetryAfterError rae)
+                    {
+                        await Task.Delay(rae.RetryAfter, disconnectRequested);
+                        continue;
+                    }
+
+                    break;
+                }
+
                 if (sendResult.IsSuccess)
                 {
                     continue;
@@ -957,6 +1037,8 @@ public class DiscordGatewayClient : IDisposable
             while (!disconnectRequested.IsCancellationRequested)
             {
                 var receivedPayload = await _transportService.ReceivePayloadAsync(disconnectRequested);
+                var receivedAt = DateTime.UtcNow;
+
                 if (!receivedPayload.IsSuccess)
                 {
                     // Normal closures are okay
@@ -969,12 +1051,12 @@ public class DiscordGatewayClient : IDisposable
                 if (receivedPayload.Entity is IEventPayload eventPayload)
                 {
                     Interlocked.Exchange(ref _lastSequenceNumber, eventPayload.SequenceNumber);
+                    Interlocked.Exchange(ref _lastReceivedEvent, receivedAt.ToBinary());
                 }
 
                 // Update the ack timestamp
                 if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
                 {
-                    var receivedAt = DateTime.UtcNow;
                     Interlocked.Exchange(ref _lastReceivedHeartbeatAck, receivedAt.ToBinary());
 
                     // Update the latency
@@ -1051,6 +1133,26 @@ public class DiscordGatewayClient : IDisposable
         {
             return e;
         }
+    }
+
+    private TimeSpan CalculateAllowedSleepTime(TimeSpan heartbeatInterval)
+    {
+        // Let's sleep for a little while
+        var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
+        var lastSentHeartbeat = lastSentHeartbeatBinary > 0
+            ? DateTime.FromBinary(lastSentHeartbeatBinary)
+            : (DateTime?)null;
+
+        var now = DateTime.UtcNow;
+        var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
+
+        var maxSleepTime = lastSentHeartbeat + heartbeatInterval - safetyMargin - now;
+
+        return maxSleepTime is null
+            ? safetyMargin
+            : maxSleepTime.Value <= TimeSpan.Zero
+                ? TimeSpan.Zero
+                : TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.Value.TotalMilliseconds));
     }
 
     /// <inheritdoc />
