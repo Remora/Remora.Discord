@@ -79,6 +79,17 @@ public class DiscordGatewayClientOptions
     public GatewayIntents Intents { get; set; } = GatewayIntents.Guilds | GatewayIntents.GuildMessages;
 
     /// <summary>
+    /// Gets or sets the number of commands that may be sent as a burst within the gateway's rate limit window. A burst
+    /// of 60, for example, would allow 60 commands to be sent within the first time slot in the window while the
+    /// remaining commands allowed within the window would be evenly spaced across the remaining slots.
+    /// </summary>
+    /// <remarks>
+    /// The default value is relatively conservative, and can most likely be increased to at least 100. You should,
+    /// however, avoid setting this at or near the actual rate limit.
+    /// </remarks>
+    public byte CommandBurstRate { get; set; } = 100;
+
+    /// <summary>
     /// Calculates the true heartbeat safety margin, based on the heartbeat interval.
     /// </summary>
     /// <param name="heartbeatInterval">The heartbeat interval.</param>

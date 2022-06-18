@@ -51,16 +51,16 @@ public class AnsiStringBuilderTests
     /// Tests to see if the <see cref="AnsiStringBuilder.Bold"/> method bolds the first n characters.
     /// </summary>
     /// <param name="data">The input text to format.</param>
-    /// <param name="charCount">The n leading characeters that should be bold.</param>
+    /// <param name="charCount">The n leading characters that should be bold.</param>
     [Theory]
     [InlineData("Sample", 3)]
     [InlineData("Remora.Discord", 7)]
     public void BoldLeadingCharsSuccess(string data, int charCount)
     {
         var expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}m{data.Remove(charCount)}" +
-                       $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data.Substring(charCount)}";
+                       $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
         var actual = new AnsiStringBuilder().Bold().Append(data.Remove(charCount))
-                                            .Bold(false).Append(data.Substring(charCount))
+                                            .Bold(false).Append(data[charCount..])
                                             .Build();
         Assert.Equal(expected, actual);
     }
@@ -83,16 +83,16 @@ public class AnsiStringBuilderTests
     /// Tests to see if the <see cref="AnsiStringBuilder.Underline"/> method underlines the first n characters.
     /// </summary>
     /// <param name="data">The input text to format.</param>
-    /// <param name="charCount">The n leading characeters that should be underlined.</param>
+    /// <param name="charCount">The n leading characters that should be underlined.</param>
     [Theory]
     [InlineData("Sample", 3)]
     [InlineData("Remora.Discord", 7)]
     public void UnderlineLeadingCharsSuccess(string data, int charCount)
     {
         var expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}m{data.Remove(charCount)}" +
-                       $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data.Substring(charCount)}";
+                       $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
         var actual = new AnsiStringBuilder().Underline().Append(data.Remove(charCount))
-                                            .Underline(false).Append(data.Substring(charCount))
+                                            .Underline(false).Append(data[charCount..])
                                             .Build();
         Assert.Equal(expected, actual);
     }
@@ -106,21 +106,14 @@ public class AnsiStringBuilderTests
     [InlineData("Remora.Discord")]
     public void ForegroundDefaultSuccess(string data)
     {
-        AnsiForegroundColor[] foregroundColors = Enum.GetValues<AnsiForegroundColor>();
+        var foregroundColors = Enum.GetValues<AnsiForegroundColor>();
 
         foreach (var foregroundColor in foregroundColors)
         {
-            string expected;
-
             // Foreground color None has some special handling
-            if (foregroundColor == AnsiForegroundColor.None)
-            {
-                expected = $"{data}";
-            }
-            else
-            {
-                expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}m{data}";
-            }
+            var expected = foregroundColor is AnsiForegroundColor.None
+                ? $"{data}"
+                : $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}m{data}";
 
             var actual = new AnsiStringBuilder().Foreground(foregroundColor).Append(data).Build();
             Assert.Equal(expected, actual);
@@ -131,31 +124,31 @@ public class AnsiStringBuilderTests
     /// Tests to see if the <see cref="AnsiStringBuilder.Foreground"/> method sets the foreground color for the first n characters.
     /// </summary>
     /// <param name="data">The input text to format.</param>
-    /// <param name="charCount">The n leading characeters that should have a foreground color.</param>
+    /// <param name="charCount">The n leading characters that should have a foreground color.</param>
     [Theory]
     [InlineData("Sample", 3)]
     [InlineData("Remora.Discord", 7)]
     public void ForegroundLeadingCharsSuccess(string data, int charCount)
     {
-        AnsiForegroundColor[] foregroundColors = Enum.GetValues<AnsiForegroundColor>();
+        var foregroundColors = Enum.GetValues<AnsiForegroundColor>();
 
         foreach (var foregroundColor in foregroundColors)
         {
             string expected;
 
             // Foreground color None has some special handling
-            if (foregroundColor == AnsiForegroundColor.None)
+            if (foregroundColor is AnsiForegroundColor.None)
             {
                 expected = $"{data}";
             }
             else
             {
                 expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}m{data.Remove(charCount)}" +
-                           $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data.Substring(charCount)}";
+                           $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
             }
 
             var actual = new AnsiStringBuilder().Foreground(foregroundColor).Append(data.Remove(charCount))
-                                                .Foreground().Append(data.Substring(charCount))
+                                                .Foreground().Append(data[charCount..])
                                                 .Build();
             Assert.Equal(expected, actual);
         }
@@ -170,21 +163,14 @@ public class AnsiStringBuilderTests
     [InlineData("Remora.Discord")]
     public void BackgroundDefaultSuccess(string data)
     {
-        AnsiBackgroundColor[] backgroundColors = Enum.GetValues<AnsiBackgroundColor>();
+        var backgroundColors = Enum.GetValues<AnsiBackgroundColor>();
 
         foreach (var backgroundColor in backgroundColors)
         {
-            string expected;
-
             // Background color None has some special handling
-            if (backgroundColor == AnsiBackgroundColor.None)
-            {
-                expected = $"{data}";
-            }
-            else
-            {
-                expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}m{data}";
-            }
+            var expected = backgroundColor is AnsiBackgroundColor.None
+                ? $"{data}"
+                : $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}m{data}";
 
             var actual = new AnsiStringBuilder().Background(backgroundColor).Append(data).Build();
             Assert.Equal(expected, actual);
@@ -195,31 +181,31 @@ public class AnsiStringBuilderTests
     /// Tests to see if the <see cref="AnsiStringBuilder.Background"/> method sets the background color for the first n characters.
     /// </summary>
     /// <param name="data">The input text to format.</param>
-    /// <param name="charCount">The n leading characeters that should have a background color.</param>
+    /// <param name="charCount">The n leading characters that should have a background color.</param>
     [Theory]
     [InlineData("Sample", 3)]
     [InlineData("Remora.Discord", 7)]
     public void BackgroundLeadingCharsSuccess(string data, int charCount)
     {
-        AnsiBackgroundColor[] backgroundColors = Enum.GetValues<AnsiBackgroundColor>();
+        var backgroundColors = Enum.GetValues<AnsiBackgroundColor>();
 
         foreach (var backgroundColor in backgroundColors)
         {
             string expected;
 
             // Foreground color None has some special handling
-            if (backgroundColor == AnsiBackgroundColor.None)
+            if (backgroundColor is AnsiBackgroundColor.None)
             {
                 expected = $"{data}";
             }
             else
             {
                 expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}m{data.Remove(charCount)}" +
-                           $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data.Substring(charCount)}";
+                           $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
             }
 
             var actual = new AnsiStringBuilder().Background(backgroundColor).Append(data.Remove(charCount))
-                                                .Background().Append(data.Substring(charCount))
+                                                .Background().Append(data[charCount..])
                                                 .Build();
             Assert.Equal(expected, actual);
         }

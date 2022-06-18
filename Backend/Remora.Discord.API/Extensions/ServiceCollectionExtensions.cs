@@ -145,9 +145,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IIdentify, Identify>();
 
         options.AddDataObjectConverter<IConnectionProperties, ConnectionProperties>()
-            .WithPropertyName(p => p.OperatingSystem, "$os")
-            .WithPropertyName(p => p.Browser, "$browser")
-            .WithPropertyName(p => p.Device, "$device");
+            .WithPropertyName(p => p.OperatingSystem, "os")
+            .WithPropertyName(p => p.Browser, "browser")
+            .WithPropertyName(p => p.Device, "device");
 
         options.AddConverter<ShardIdentificationConverter>();
 
@@ -933,12 +933,12 @@ public static class ServiceCollectionExtensions
                 IApplicationCommandInteractionDataResolved,
                 ApplicationCommandInteractionDataResolved
             >()
-            .WithPropertyConverter(r => r.Users, new SnowflakeDictionaryConverter<IPartialUser>(Constants.DiscordEpoch))
+            .WithPropertyConverter(r => r.Users, new SnowflakeDictionaryConverter<IUser>(Constants.DiscordEpoch))
             .WithPropertyConverter(r => r.Members, new SnowflakeDictionaryConverter<IPartialGuildMember>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IPartialRole>(Constants.DiscordEpoch))
+            .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>(Constants.DiscordEpoch))
             .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>(Constants.DiscordEpoch))
             .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Attachments, new SnowflakeDictionaryConverter<IPartialAttachment>(Constants.DiscordEpoch));
+            .WithPropertyConverter(r => r.Attachments, new SnowflakeDictionaryConverter<IAttachment>(Constants.DiscordEpoch));
 
         options.AddDataObjectConverter<IGuildApplicationCommandPermissions, GuildApplicationCommandPermissions>();
         options.AddDataObjectConverter

@@ -20,12 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Extensions.Formatting;
 
 /// <summary>
 /// Discord supported ANSI foreground colors.
 /// </summary>
 /// <remarks>Discord ANSI colors are based on Solarized palette.</remarks>
+[PublicAPI]
 public enum AnsiForegroundColor
 {
     /// <summary>

@@ -34,9 +34,9 @@ namespace Remora.Discord.API.Gateway.Events;
 [PublicAPI]
 public record MessageUpdate
 (
-    Optional<Snowflake> GuildID,
-    Optional<IPartialGuildMember> Member,
-    IReadOnlyList<IUserMention> Mentions,
+    Optional<Snowflake> GuildID = default,
+    Optional<IPartialGuildMember> Member = default,
+    Optional<IReadOnlyList<IUserMention>> Mentions = default,
     Optional<Snowflake> ID = default,
     Optional<Snowflake> ChannelID = default,
     Optional<IUser> Author = default,
