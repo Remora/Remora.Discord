@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
@@ -45,6 +46,7 @@ namespace Remora.Discord.Gateway.Services;
 public class ResponderDispatchService : IAsyncDisposable
 {
     private readonly IServiceProvider _services;
+    private readonly ResponderDispatchOptions _options;
     private readonly ILogger<ResponderDispatchService> _log;
     private readonly IResponderTypeRepository _responderTypeRepository;
 
@@ -68,16 +70,19 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <param name="services">The available services.</param>
     /// <param name="responderTypeRepository">The responder type repository.</param>
     /// <param name="log">The logging instance for this type.</param>
+    /// <param name="options">The options for dispatch.</param>
     public ResponderDispatchService
     (
         IServiceProvider services,
         IResponderTypeRepository responderTypeRepository,
-        ILogger<ResponderDispatchService> log
+        ILogger<ResponderDispatchService> log,
+        IOptions<ResponderDispatchOptions> options
     )
     {
         _services = services;
         _responderTypeRepository = responderTypeRepository;
         _log = log;
+        _options = options.Value;
 
         _cachedInterfaceTypeArguments = new();
         _cachedDispatchDelegates = new();
@@ -134,14 +139,36 @@ public class ResponderDispatchService : IAsyncDisposable
         }
 
         _dispatchCancellationSource = new();
-        _payloadsToDispatch = Channel.CreateBounded<IPayload>
-        (
-            new BoundedChannelOptions(100) { FullMode = BoundedChannelFullMode.Wait }
-        );
+
+        if (_options.EnableParallelDispatch)
+        {
+            _payloadsToDispatch = Channel.CreateUnbounded<IPayload>
+            (
+                new UnboundedChannelOptions() { SingleWriter = true, SingleReader = false }
+            );
+        }
+        else
+        {
+            _payloadsToDispatch = Channel.CreateBounded<IPayload>
+            (
+                new BoundedChannelOptions((int)_options.MaxItems) { FullMode = BoundedChannelFullMode.Wait }
+            );
+        }
 
         _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
 
-        _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
+        if (_options.EnableParallelDispatch)
+        {
+            _dispatcher = Task.Run(() => DispatcherTaskAsync(0), _dispatchCancellationSource.Token);
+        }
+        else
+        {
+            var dispatchTasks = Enumerable.Range(0, (int?)_options.MaxParallelism ?? Environment.ProcessorCount / 2)
+                                          .Select(id => Task.Run(() => DispatcherTaskAsync(id), _dispatchCancellationSource.Token));
+
+            _dispatcher = Task.WhenAll(dispatchTasks); // Task.Run will cancel when we yeet the token, so this is fine.
+        }
+
         _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
 
         this.IsRunning = true;
@@ -213,7 +240,7 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <summary>
     /// Runs the main loop of the dispatcher task.
     /// </summary>
-    private async Task DispatcherTaskAsync()
+    private async Task DispatcherTaskAsync(int dispatcherID)
     {
         if (_dispatchCancellationSource is null)
         {
@@ -241,6 +268,13 @@ public class ResponderDispatchService : IAsyncDisposable
             }
 
             await _respondersToFinalize.Writer.WriteAsync(dispatch.Entity, _dispatchCancellationSource.Token);
+        }
+
+        if (dispatcherID is not 0)
+        {
+            // In this instance, we're parallelized; only the
+            // first dispatcher should cleanup, so we're done here.
+            return;
         }
 
         // Finish up remaining dispatches
