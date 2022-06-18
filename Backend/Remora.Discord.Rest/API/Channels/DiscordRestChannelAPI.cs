@@ -1198,8 +1198,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             {
                 if (before.HasValue)
                 {
-                    TimeSpan offset = before.Value.Offset;
-                    b.AddQueryParameter("before", before.Value.ToString($"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"));
+                    b.AddQueryParameter("before", before.Value.ToISO8601String());
                 }
 
                 if (limit.HasValue)
@@ -1229,8 +1228,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             {
                 if (before.HasValue)
                 {
-                    TimeSpan offset = before.Value.Offset;
-                    b.AddQueryParameter("before", before.Value.ToString($"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"));
+                    b.AddQueryParameter("before", before.Value.ToISO8601String());
                 }
 
                 if (limit.HasValue)
