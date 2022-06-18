@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - ServiceCollectionExtensions.AddDiscordGateway(IServiceCollection, Func&lt;IServiceProvider, string&gt;) Method</title>
+        <title>Remora.Discord Documentation - API - DiscordGatewayClientOptions.CommandBurstRate Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -83,8 +83,8 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
+<p><a href="#Remarks">Remarks</a></p>
+<p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -144,14 +144,21 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Extensions</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway">Remora<wbr>.Discord<wbr>.Gateway</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions">Service<wbr>Collection<wbr>Extensions</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions">Discord<wbr>Gateway<wbr>Client<wbr>Options</a></li>
 		<li role="separator" class="divider"></li>
+			<li class="header">Property Members</li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/60C01EB5">CommandBurstRate</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/6617E465">ConnectionProperties</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/4338B192">Heartbeat<wbr>Safety<wbr>Margin</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/11725919">Intents</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/DEB54DEE">LargeThreshold</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/6F739983">MinimumSafetyMargin</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/8ADFA1ED">Presence</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/97D88451">ShardIdentification</a></li>
 			<li class="header">Method Members</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions/18F12262">AddDiscordGateway<wbr>(<wbr>I<wbr>Service<wbr>Collection, <wbr>Func<wbr>&lt;<wbr>I<wbr>Service<wbr>Provider, <wbr>string&gt;<wbr>)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions/D7E223A5">AddResponder<wbr>&lt;TResponder&gt;<wbr><wbr>(<wbr>I<wbr>Service<wbr>Collection, <wbr>ResponderGroup)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions/67B74BF1">AddResponder<wbr>(<wbr>I<wbr>Service<wbr>Collection, <wbr>Type, <wbr>ResponderGroup)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/3D14CBA9">Get<wbr>True<wbr>Heartbeat<wbr>Safety<wbr>Margin<wbr>(TimeSpan)<wbr></a></li>
 
 
                     </ul>
@@ -166,64 +173,46 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions">Service<wbr>Collection<wbr>Extensions</a>.</h3>
-	<h1>AddDiscordGateway<wbr>(<wbr>I<wbr>Service<wbr>Collection, <wbr>Func<wbr>&lt;<wbr>I<wbr>Service<wbr>Provider, <wbr>string&gt;<wbr>)<wbr> <small>Method</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions">Discord<wbr>Gateway<wbr>Client<wbr>Options</a>.</h3>
+	<h1>CommandBurstRate <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Adds services required by the Discord Gateway system.
+    Gets or sets the number of commands that may be sent as a burst within the gateway's rate limit window. A burst
+    of 60, for example, would allow 60 commands to be sent within the first time slot in the window while the
+    remaining commands allowed within the window would be evenly spaced across the remaining slots.
     </div>
 
 		<div class="panel panel-default">
-  			<div class="panel-body">	
+  			<div class="panel-body">
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Extensions</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Gateway">Remora<wbr>.Discord<wbr>.Gateway</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions">Service<wbr>Collection<wbr>Extensions</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions">Discord<wbr>Gateway<wbr>Client<wbr>Options</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public static IServiceCollection AddDiscordGateway(this IServiceCollection serviceCollection, Func&lt;IServiceProvider, string&gt; tokenFactory)</code></pre>
+	<pre><code>public byte CommandBurstRate { get; set; }</code></pre>
+
+
+	<h1 id="Remarks">Remarks</h1>
+	<div>
+    The default value is relatively conservative, and can most likely be increased to at least 100. You should,
+    however, avoid setting this at or near the actual rate limit.
+    </div>
 
 
 
-
-
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>serviceCollection</td>
-						<td>IServiceCollection</td>
-						<td>The service collection.</td>
-					</tr>
-					<tr>
-						<td>tokenFactory</td>
-						<td>Func<wbr>&lt;IServiceProvider, <wbr>string&gt;<wbr></td>
-						<td>A function that retrieves the bot token.</td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-	<h1 id="ReturnValue">Return Value</h1>
+	<h1 id="Value">Value</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -234,8 +223,8 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>IServiceCollection</td>
-					<td>The service collection, with the services added.</td>
+					<td>byte</td>
+					<td></td>
 				</tr>
 			</tbody></table>
 		</div>
