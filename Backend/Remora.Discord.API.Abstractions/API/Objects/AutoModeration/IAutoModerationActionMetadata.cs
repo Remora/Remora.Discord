@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -47,5 +48,5 @@ public interface IAutoModerationActionMetadata
     /// <para>Maximum of 2419200 seconds (4 weeks).</para>
     /// <para>The associated action type for this property is <see cref="AutoModerationActionType.Timeout"/>.</para>
     /// </remarks>
-    Optional<int> Duration { get; }
+    Optional<TimeSpan> Duration { get; }
 }
