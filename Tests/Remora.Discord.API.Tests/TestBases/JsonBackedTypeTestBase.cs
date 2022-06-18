@@ -48,11 +48,6 @@ public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSample
     public static TheoryData SampleSource => new TSampleSource();
 
     /// <summary>
-    /// Gets the sample data service.
-    /// </summary>
-    protected SampleDataService SampleData { get; }
-
-    /// <summary>
     /// Gets the configured JSON serializer options.
     /// </summary>
     protected JsonSerializerOptions Options { get; }
@@ -75,11 +70,9 @@ public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSample
         // ReSharper disable once VirtualMemberCallInConstructor
         var services = new ServiceCollection()
             .ConfigureDiscordJsonConverters(allowUnknownEvents: this.AllowUnknownEvents)
-            .AddSingleton<SampleDataService>()
             .AddExperimentalDiscordApi()
             .BuildServiceProvider(true);
 
-        this.SampleData = services.GetRequiredService<SampleDataService>();
         this.Options = services.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>()
             .Get("Discord");
     }

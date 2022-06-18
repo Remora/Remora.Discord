@@ -1056,6 +1056,8 @@ public class DiscordGatewayClient : IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
+        GC.SuppressFinalize(this);
+
         _disconnectRequestedSource.Dispose();
     }
 }

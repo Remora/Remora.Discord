@@ -508,6 +508,8 @@ public class ResponderDispatchService : IAsyncDisposable
             return;
         }
 
+        GC.SuppressFinalize(this);
+
         await StopAsync();
     }
 }
