@@ -408,8 +408,12 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
             $"webhooks/{webhookID}/{token}/messages/{messageID}",
             b =>
             {
-                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                if (attachments.HasValue && attachments.Value is not null)
+                Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = default;
+                if (attachments.HasValue && attachments.Value is null)
+                {
+                    attachmentList = null;
+                }
+                else if (attachments.HasValue && attachments.Value is not null)
                 {
                     // build attachment list
                     attachmentList = attachments.Value.Select
