@@ -49,14 +49,12 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
     /// <param name="buildClient">Extra options to configure the rest client.</param>
-    /// <param name="maxDispatchItems">How many items can be concurrently queued for dispatch.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordGateway
     (
         this IServiceCollection serviceCollection,
         Func<IServiceProvider, string> tokenFactory,
-        Action<IHttpClientBuilder>? buildClient = null,
-        int maxDispatchItems = 100
+        Action<IHttpClientBuilder>? buildClient = null
     )
     {
         serviceCollection
@@ -75,7 +73,7 @@ public static class ServiceCollectionExtensions
             s.GetRequiredService<ILogger<WebSocketPayloadTransportService>>()
         ));
 
-        serviceCollection.Configure<ResponderDispatchOptions>(dispatch => dispatch with { MaxItems = (uint)maxDispatchItems });
+        serviceCollection.Configure<ResponderDispatchOptions>(() => new());
 
         return serviceCollection;
     }
