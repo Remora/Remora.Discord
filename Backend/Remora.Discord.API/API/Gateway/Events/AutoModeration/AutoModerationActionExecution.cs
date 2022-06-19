@@ -34,11 +34,11 @@ public record AutoModerationActionExecution
     Snowflake GuildID,
     IAutoModerationAction Action,
     Snowflake RuleID,
-    AutoModerationTriggerType TriggerType,
+    AutoModerationTriggerType RuleTriggerType,
     Snowflake UserID,
     Optional<Snowflake> ChannelID,
     Optional<Snowflake> MessageID,
-    Optional<Snowflake> SystemAlertMessageID,
+    Optional<Snowflake> AlertSystemMessageID,
     string Content,
     string? MatchedKeyword,
     string? MatchedContent
