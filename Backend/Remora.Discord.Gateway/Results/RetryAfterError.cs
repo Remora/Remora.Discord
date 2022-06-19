@@ -1,5 +1,5 @@
 //
-//  TimestampStyle.cs
+//  RetryAfterError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,45 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.Extensions.Formatting;
+using System;
+using Remora.Results;
+
+namespace Remora.Discord.Gateway.Results;
 
 /// <summary>
-/// Represents the possible display formats for Timestamp Markdown.
+/// Indicates that an operation failed due to some circumstance but should be retried after a certain time.
 /// </summary>
-public enum TimestampStyle
-{
-    /// <summary>
-    /// 16:20.
-    /// </summary>
-    ShortTime,
-
-    /// <summary>
-    /// 16:20:30.
-    /// </summary>
-    LongTime,
-
-    /// <summary>
-    /// 20/04/2021.
-    /// </summary>
-    ShortDate,
-
-    /// <summary>
-    /// 20 April 2021.
-    /// </summary>
-    LongDate,
-
-    /// <summary>
-    /// 20 April 2021 16:20.
-    /// </summary>
-    ShortDateTime,
-
-    /// <summary>
-    /// Tuesday, 20 April 2021 16:20.
-    /// </summary>
-    LongDateTime,
-
-    /// <summary>
-    /// 2 months ago.
-    /// </summary>
-    RelativeTime
-}
+internal record RetryAfterError(TimeSpan RetryAfter) : ResultError($"The operation failed. Retry after {RetryAfter}.");

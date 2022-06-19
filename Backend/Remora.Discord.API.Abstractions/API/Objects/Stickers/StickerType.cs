@@ -36,7 +36,7 @@ public enum StickerType
     Standard = 1,
 
     /// <summary>
-    /// A sticker uploaded to a boosted guild for the guild's members.
+    /// A sticker uploaded to a guild for the guild's members.
     /// </summary>
     Guild = 2
 }

@@ -47,6 +47,7 @@
 
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
+        <AnalysisLevel>7</AnalysisLevel>
         <CodeAnalysisRuleSet>$(StyleCopRuleset)</CodeAnalysisRuleSet>
         <WarningsAsErrors>
             CS8600;

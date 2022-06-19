@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.12</Version>
+        <Version>1.0.13</Version>
         <Description>Redis-based cache provider for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.5" />
+      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.6" />
     </ItemGroup>
 
 </Project>

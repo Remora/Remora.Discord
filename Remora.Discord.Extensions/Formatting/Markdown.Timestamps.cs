@@ -22,68 +22,67 @@
 
 using System;
 
-namespace Remora.Discord.Extensions.Formatting
+namespace Remora.Discord.Extensions.Formatting;
+
+public partial class Markdown
 {
-    public partial class Markdown
+    /// <summary>
+    /// Formats a Unix timestamp value into Discord Markdown Timestamp.
+    /// </summary>
+    /// <param name="unixTimestamp">The Unix timestamp to format.</param>
+    /// <param name="timestampStyle">The style to format into.</param>
+    /// <returns>
+    /// A Discord markdown-formatted Timestamp string.
+    /// </returns>
+    public static string Timestamp(long unixTimestamp, TimestampStyle? timestampStyle = default)
     {
-        /// <summary>
-        /// Formats a Unix timestamp value into Discord Markdown Timestamp.
-        /// </summary>
-        /// <param name="unixTimestamp">The Unix timestamp to format.</param>
-        /// <param name="timestampStyle">The style to format into.</param>
-        /// <returns>
-        /// A Discord markdown-formatted Timestamp string.
-        /// </returns>
-        public static string Timestamp(long unixTimestamp, TimestampStyle? timestampStyle = default)
+        return timestampStyle.HasValue
+            ? $"<t:{unixTimestamp}:{TimestampStyleToCode(timestampStyle)}>"
+            : $"<t:{unixTimestamp}>";
+    }
+
+    /// <summary>
+    /// Formats a Unix timestamp value into Discord Markdown Timestamp.
+    /// </summary>
+    /// <param name="dateTimeOffset">The time to format.</param>
+    /// <param name="timestampStyle">The style to format into.</param>
+    /// <returns>
+    /// A Discord markdown-formatted Timestamp string.
+    /// </returns>
+    public static string Timestamp(DateTimeOffset dateTimeOffset, TimestampStyle? timestampStyle = default)
+        => Timestamp(dateTimeOffset.ToUnixTimeSeconds(), timestampStyle);
+
+    /// <summary>
+    /// Formats a Unix timestamp value into Discord Markdown Timestamp.
+    /// </summary>
+    /// <param name="dateTime">The time to format.</param>
+    /// <param name="timestampStyle">The style to format into.</param>
+    /// <returns>
+    /// A Discord markdown-formatted Timestamp string.
+    /// </returns>
+    public static string Timestamp(DateTime dateTime, TimestampStyle? timestampStyle = default)
+        => Timestamp(((DateTimeOffset)dateTime).ToUnixTimeSeconds(), timestampStyle);
+
+    /// <summary>
+    /// Converts a <see cref="TimestampStyle"/> to its Discord Markdown code.
+    /// </summary>
+    /// <param name="timestampStyle">The style to convert.</param>
+    /// <returns>
+    /// The Discord Markdown code for the given style.
+    /// </returns>
+    private static char TimestampStyleToCode(TimestampStyle? timestampStyle)
+    {
+        return timestampStyle switch
         {
-            return timestampStyle.HasValue
-                ? $"<t:{unixTimestamp}:{TimestampStyleToCode(timestampStyle)}>"
-                : $"<t:{unixTimestamp}>";
-        }
-
-        /// <summary>
-        /// Formats a Unix timestamp value into Discord Markdown Timestamp.
-        /// </summary>
-        /// <param name="dateTimeOffset">The time to format.</param>
-        /// <param name="timestampStyle">The style to format into.</param>
-        /// <returns>
-        /// A Discord markdown-formatted Timestamp string.
-        /// </returns>
-        public static string Timestamp(DateTimeOffset dateTimeOffset, TimestampStyle? timestampStyle = default)
-            => Timestamp(dateTimeOffset.ToUnixTimeSeconds(), timestampStyle);
-
-        /// <summary>
-        /// Formats a Unix timestamp value into Discord Markdown Timestamp.
-        /// </summary>
-        /// <param name="dateTime">The time to format.</param>
-        /// <param name="timestampStyle">The style to format into.</param>
-        /// <returns>
-        /// A Discord markdown-formatted Timestamp string.
-        /// </returns>
-        public static string Timestamp(DateTime dateTime, TimestampStyle? timestampStyle = default)
-            => Timestamp(((DateTimeOffset)dateTime).ToUnixTimeSeconds(), timestampStyle);
-
-        /// <summary>
-        /// Converts a <see cref="TimestampStyle"/> to its Discord Markdown code.
-        /// </summary>
-        /// <param name="timestampStyle">The style to convert.</param>
-        /// <returns>
-        /// The Discord Markdown code for the given style.
-        /// </returns>
-        private static char TimestampStyleToCode(TimestampStyle? timestampStyle)
-        {
-            return timestampStyle switch
-            {
-                TimestampStyle.ShortTime => 't',
-                TimestampStyle.LongTime => 'T',
-                TimestampStyle.ShortDate => 'd',
-                TimestampStyle.LongDate => 'D',
-                TimestampStyle.ShortDateTime => 'f',
-                TimestampStyle.LongDateTime => 'F',
-                TimestampStyle.RelativeTime => 'R',
-                null => TimestampStyleToCode(TimestampStyle.ShortDateTime),
-                _ => throw new ArgumentOutOfRangeException(nameof(timestampStyle), timestampStyle, "The specified timestamp style was invalid.")
-            };
-        }
+            TimestampStyle.ShortTime => 't',
+            TimestampStyle.LongTime => 'T',
+            TimestampStyle.ShortDate => 'd',
+            TimestampStyle.LongDate => 'D',
+            TimestampStyle.ShortDateTime => 'f',
+            TimestampStyle.LongDateTime => 'F',
+            TimestampStyle.RelativeTime => 'R',
+            null => TimestampStyleToCode(TimestampStyle.ShortDateTime),
+            _ => throw new ArgumentOutOfRangeException(nameof(timestampStyle), timestampStyle, "The specified timestamp style was invalid.")
+        };
     }
 }

@@ -33,10 +33,10 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record ApplicationCommandInteractionDataResolved
 (
-    Optional<IReadOnlyDictionary<Snowflake, IPartialUser>> Users,
+    Optional<IReadOnlyDictionary<Snowflake, IUser>> Users,
     Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members,
-    Optional<IReadOnlyDictionary<Snowflake, IPartialRole>> Roles,
+    Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles,
     Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels,
     Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages,
-    Optional<IReadOnlyDictionary<Snowflake, IPartialAttachment>> Attachments
+    Optional<IReadOnlyDictionary<Snowflake, IAttachment>> Attachments
 ) : IApplicationCommandInteractionDataResolved;

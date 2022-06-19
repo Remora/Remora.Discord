@@ -224,7 +224,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.TryAddSingleton<SlashService>();
         serviceCollection.AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
         serviceCollection.AddResponder<AutocompleteResponder>();
-        serviceCollection.AddParser<PartialAttachmentParser>();
+        serviceCollection.AddParser<AttachmentParser>();
 
         return serviceCollection;
     }

@@ -411,6 +411,8 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return;
         }
 
+        GC.SuppressFinalize(this);
+
         await DisconnectAsync(false);
     }
 }

@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
@@ -31,6 +32,7 @@ namespace Remora.Discord.Interactivity;
 /// <summary>
 /// Represents an entity that responds to modal submissions.
 /// </summary>
+[PublicAPI]
 public interface IModalInteractiveEntity : IInteractiveEntity
 {
     /// <summary>

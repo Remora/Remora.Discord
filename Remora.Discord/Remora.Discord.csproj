@@ -5,17 +5,21 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.34</Version>
+        <Version>2022.35</Version>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Separate interaction data structures.
-            Update voice channel endpoints and permissions.
-            Remove audit log reason from modify channel position.
-            Add new error code.
-            Implement Modify Guild MFA Level.
-            Add new error code.
-            Break out event-only fields.
-            Add new error codes.
+            Upgrade nuget packegs.
+            Go away, bad comment.
+            Revert to having heartbeat code in the send task.
+            Refactor heartbeating and connection watchdog.
+            Various tiny style/language usage fixes.
+            Increase analysis level to enable wave warnings.
+            Remove unused usings.
+            Stickers are no longer just for boosted guilds.
+            Fix optional member.
+            Revert partialization of some resolved entities.
+            Remove deprecated prefix in IIdentify connection fields [API v11]
+            feat: Configure REST from AddDiscordGateway
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

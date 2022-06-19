@@ -5,19 +5,22 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>60.0.0</Version>
+        <Version>61.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Separate interaction data structures.
-            Break out event-only fields.
+            Upgrade nuget packegs.
+            Stickers are no longer just for boosted guilds.
+            Fix optional member.
+            Revert partialization of some resolved entities.
+            Remove deprecated prefix in IIdentify connection fields [API v11]
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-        <PackageReference Include="System.Text.Json" Version="6.0.4" />
-        <PackageReference Include="Remora.Rest" Version="2.0.2" />
+        <PackageReference Include="System.Text.Json" Version="6.0.5" />
+        <PackageReference Include="Remora.Rest" Version="2.0.3" />
     </ItemGroup>
 
     <ItemGroup>

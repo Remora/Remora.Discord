@@ -223,7 +223,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             (
                 "No interested interactive entities were found. Did you forget to add any entities interested " +
                 $"in {data.ComponentType.Humanize().ToLowerInvariant()} components (with the ID {data.CustomID}) to " +
-                $"the service collection?"
+                "the service collection?"
             );
         }
 

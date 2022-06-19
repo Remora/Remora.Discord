@@ -29,32 +29,25 @@ namespace Remora.Discord.API.Tests.Services;
 /// </summary>
 public class SampleDataDescriptor
 {
+    private readonly string _basePath;
+    private readonly string _relativePath;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="SampleDataDescriptor"/> class.
     /// </summary>
-    /// <param name="basePath">The value to use for <see cref="BasePath"/>.</param>
-    /// <param name="relativePath">The value to use for <see cref="RelativePath"/>.</param>
+    /// <param name="basePath">The value to use for the data file's base filesystem path.</param>
+    /// <param name="relativePath">The value to use for the data file's relative filesystem path.</param>
     public SampleDataDescriptor(string basePath, string relativePath)
     {
-        this.BasePath = basePath;
-        this.RelativePath = relativePath;
+        _basePath = basePath;
+        _relativePath = relativePath;
     }
-
-    /// <summary>
-    /// Gets the base path at which the sample data file may be found.
-    /// </summary>
-    public string BasePath { get; }
 
     /// <summary>
     /// Gets the full filesystem path of the sample data file.
     /// </summary>
-    public string FullPath => Path.Combine(this.BasePath, this.RelativePath);
-
-    /// <summary>
-    /// Gets the path to the sample data file, relative to other sample data files.
-    /// </summary>
-    public string RelativePath { get; }
+    public string FullPath => Path.Combine(_basePath, _relativePath);
 
     /// <inheritdoc/>
-    public override string ToString() => this.RelativePath;
+    public override string ToString() => _relativePath;
 }

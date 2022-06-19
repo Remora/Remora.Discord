@@ -48,5 +48,5 @@ public interface IMessageUpdate : IPartialMessage, IGatewayEvent
     /// <summary>
     /// Gets a list of users mentioned in the message.
     /// </summary>
-    IReadOnlyList<IUserMention> Mentions { get; }
+    Optional<IReadOnlyList<IUserMention>> Mentions { get; }
 }

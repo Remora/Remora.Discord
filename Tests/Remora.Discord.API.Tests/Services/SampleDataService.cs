@@ -102,7 +102,7 @@ public class SampleDataService
         return Path.Combine(basePath, "Samples");
     }
 
-    private Result<IReadOnlyList<SampleDataDescriptor>> GetSampleDataSet<TType>(string subfolder)
+    private static Result<IReadOnlyList<SampleDataDescriptor>> GetSampleDataSet<TType>(string subfolder)
     {
         var getBasePath = GetBaseSampleDataPath();
         if (!getBasePath.IsSuccess)
