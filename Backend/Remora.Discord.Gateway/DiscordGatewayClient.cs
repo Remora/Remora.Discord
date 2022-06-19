@@ -867,43 +867,33 @@ public class DiscordGatewayClient : IDisposable
         {
             while (!disconnectRequested.IsCancellationRequested)
             {
-                var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
-                var lastSentHeartbeat = lastSentHeartbeatBinary > 0
-                    ? DateTime.FromBinary(lastSentHeartbeatBinary)
-                    : (DateTime?)null;
-
-                var lastReceivedEvent = Interlocked.Read(ref _lastReceivedHeartbeatAck);
-                var lastReceivedEventTime = lastReceivedEvent > 0
-                    ? DateTime.FromBinary(lastReceivedEvent)
-                    : (DateTime?)null;
-
-                var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
-                var lastHeartbeatAckTime = lastReceivedHeartbeatAck > 0
-                    ? DateTime.FromBinary(lastReceivedHeartbeatAck)
-                    : (DateTime?)null;
+                var lastSentHeartbeatTime = ReadTimeAtomic(ref _lastSentHeartbeat);
 
                 var now = DateTime.UtcNow;
                 var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
 
-                var needsHeartbeat = lastSentHeartbeat is null ||
-                                     now - lastSentHeartbeat >= heartbeatInterval - safetyMargin;
-
-                var isConnectionSilent = lastHeartbeatAckTime < lastSentHeartbeat &&
-                                         now - lastReceivedEventTime >= heartbeatInterval - safetyMargin;
-
-                if (isConnectionSilent)
-                {
-                    return new GatewayError
-                    (
-                        "The server did not respond in time with a heartbeat acknowledgement.",
-                        true,
-                        false
-                    );
-                }
+                var needsHeartbeat = lastSentHeartbeatTime is null ||
+                                     now - lastSentHeartbeatTime >= heartbeatInterval - safetyMargin;
 
                 IPayload? payloadToSend;
                 if (needsHeartbeat)
                 {
+                    var lastReceivedEventTime = ReadTimeAtomic(ref _lastReceivedEvent);
+                    var lastHeartbeatAckTime = ReadTimeAtomic(ref _lastReceivedHeartbeatAck);
+
+                    var isConnectionSilent = lastHeartbeatAckTime < lastSentHeartbeatTime &&
+                                             now - lastReceivedEventTime >= heartbeatInterval - safetyMargin;
+
+                    if (isConnectionSilent)
+                    {
+                        return new GatewayError
+                        (
+                            "The server did not respond in time with a heartbeat acknowledgement or an incoming event.",
+                            true,
+                            false
+                        );
+                    }
+
                     // 32-bit reads are atomic, so this is fine
                     var lastSequenceNumber = _lastSequenceNumber;
 
@@ -912,8 +902,7 @@ public class DiscordGatewayClient : IDisposable
                         lastSequenceNumber == 0 ? null : lastSequenceNumber
                     ));
 
-                    lastSentHeartbeat = DateTime.UtcNow;
-                    Interlocked.Exchange(ref _lastSentHeartbeat, lastSentHeartbeat.Value.ToBinary());
+                    WriteTimeAtomic(ref _lastSentHeartbeat, DateTime.UtcNow);
                 }
                 else
                 {
@@ -999,20 +988,16 @@ public class DiscordGatewayClient : IDisposable
                 if (receivedPayload.Entity is IEventPayload eventPayload)
                 {
                     Interlocked.Exchange(ref _lastSequenceNumber, eventPayload.SequenceNumber);
-                    Interlocked.Exchange(ref _lastReceivedEvent, receivedAt.ToBinary());
+                    WriteTimeAtomic(ref _lastReceivedEvent, receivedAt);
                 }
 
                 // Update the ack timestamp
                 if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
                 {
-                    Interlocked.Exchange(ref _lastReceivedHeartbeatAck, receivedAt.ToBinary());
+                    WriteTimeAtomic(ref _lastReceivedHeartbeatAck, receivedAt);
 
                     // Update the latency
-                    var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
-                    var lastSentHeartbeat = lastSentHeartbeatBinary > 0
-                        ? DateTime.FromBinary(lastSentHeartbeatBinary)
-                        : (DateTime?)null;
-
+                    var lastSentHeartbeat = ReadTimeAtomic(ref _lastSentHeartbeat);
                     if (lastSentHeartbeat != null)
                     {
                         this.Latency = receivedAt - lastSentHeartbeat.Value;
@@ -1081,6 +1066,19 @@ public class DiscordGatewayClient : IDisposable
         {
             return e;
         }
+    }
+
+    private static DateTime? ReadTimeAtomic(ref long field)
+    {
+        var binary = Interlocked.Read(ref field);
+        return binary > 0
+            ? DateTime.FromBinary(binary)
+            : null;
+    }
+
+    private static void WriteTimeAtomic(ref long field, DateTime value)
+    {
+        Interlocked.Exchange(ref field, value.ToBinary());
     }
 
     private TimeSpan CalculateAllowedSleepTime(TimeSpan heartbeatInterval)
