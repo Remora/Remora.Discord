@@ -194,9 +194,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IResumed, Resumed>();
 
         // Auto Moderation
-        options.AddDataObjectConverter<IAutoModerationActionExecution, AutoModerationActionExecution>()
-            .WithPropertyName(e => e.TriggerType, "rule_trigger_type")
-            .WithPropertyName(e => e.SystemAlertMessageID, "alert_system_message_id");
+        options.AddDataObjectConverter<IAutoModerationActionExecution, AutoModerationActionExecution>();
 
         options.AddDataObjectConverter<IAutoModerationRuleCreate, AutoModerationRuleCreate>()
             .WithPropertyName(r => r.IsEnabled, "enabled");

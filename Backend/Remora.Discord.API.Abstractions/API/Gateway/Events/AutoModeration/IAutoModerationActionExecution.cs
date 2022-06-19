@@ -48,7 +48,7 @@ public interface IAutoModerationActionExecution : IGatewayEvent
     /// <summary>
     /// Gets the trigger type of rule which was triggered.
     /// </summary>
-    AutoModerationTriggerType TriggerType { get; }
+    AutoModerationTriggerType RuleTriggerType { get; }
 
     /// <summary>
     /// Gets the ID of the user which generated the content which triggered the rule.
@@ -74,7 +74,7 @@ public interface IAutoModerationActionExecution : IGatewayEvent
     /// <remarks>
     /// This will not exist if this event does not correspond to an action with type <see cref="AutoModerationActionType.SendAlertMessage"/>.
     /// </remarks>
-    Optional<Snowflake> SystemAlertMessageID { get; }
+    Optional<Snowflake> AlertSystemMessageID { get; }
 
     /// <summary>
     /// Gets the user generated text content.
