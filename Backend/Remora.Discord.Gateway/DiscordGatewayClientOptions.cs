@@ -90,6 +90,20 @@ public class DiscordGatewayClientOptions
     public byte CommandBurstRate { get; set; } = 100;
 
     /// <summary>
+    /// Gets or sets the number of extra rate limit slots that should be taken up by the heartbeat function (beyond the
+    /// ones strictly required based on the heartbeat interval and rate limit window).
+    ///
+    /// For example, if the rate limit window is 60 seconds, and the heartbeat interval is 2 seconds, the number of
+    /// strictly required slots would be 30. Adding a headroom of 2 to this would result in 32 reserved slots within the
+    /// rate limit window for heartbeats, leaving 88 slots for user-submitted events.
+    ///
+    /// This value is primarily used to take up the slack of any rounding errors in the calculations, as well as
+    /// potential timing issues since few if any bots run on hard realtime systems. The default value of 2 has been
+    /// arbitrarily picked, but should suffice for most use cases.
+    /// </summary>
+    public byte HeartbeatHeadroom { get; set; } = 2;
+
+    /// <summary>
     /// Calculates the true heartbeat safety margin, based on the heartbeat interval.
     /// </summary>
     /// <param name="heartbeatInterval">The heartbeat interval.</param>
