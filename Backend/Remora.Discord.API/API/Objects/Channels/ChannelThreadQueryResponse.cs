@@ -33,6 +33,4 @@ public record ChannelThreadQueryResponse
     IReadOnlyList<IChannel> Threads,
     IReadOnlyList<IThreadMember> Members,
     bool HasMore
-) : IChannelThreadQueryResponse
-{
-}
+) : IChannelThreadQueryResponse;
