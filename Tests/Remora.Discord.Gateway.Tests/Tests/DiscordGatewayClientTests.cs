@@ -28,7 +28,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using Moq;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
@@ -43,7 +42,6 @@ using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Tests.Transport;
 using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Tests;
-using Remora.Extensions.Options.Immutable;
 using Remora.Results;
 using Xunit;
 

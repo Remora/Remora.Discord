@@ -133,7 +133,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
         }
 
-        if (description.IsDefined(out var descriptionValue) && descriptionValue != null && (descriptionValue.Length > 120))
+        if (description.IsDefined(out var descriptionValue) && descriptionValue.Length > 120)
         {
             return new ArgumentOutOfRangeError(nameof(description), "The description must be between 0 and 120 characters.");
         }
@@ -185,7 +185,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
         }
 
-        if (description.IsDefined(out var descriptionValue) && descriptionValue != null && (descriptionValue.Length > 120))
+        if (description.IsDefined(out var descriptionValue) && descriptionValue.Length > 120)
         {
             return new ArgumentOutOfRangeError(nameof(description), "The description must be between 0 and 120 characters.");
         }
