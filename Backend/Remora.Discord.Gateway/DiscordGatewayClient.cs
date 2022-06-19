@@ -973,6 +973,7 @@ public class DiscordGatewayClient : IDisposable
                         {
                             // Dequeue the peeked payload, now that we've sent it
                             _payloadsToSend.TryDequeue(out _);
+                            break;
                         }
 
                         if (sendResult.Error is RetryAfterError rae)
