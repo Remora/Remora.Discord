@@ -40,7 +40,7 @@ public interface IDiscordRestAutoModerationAPI
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IReadOnlyList<IAutoModerationRule>>> ListGuildRulesAsync
+    Task<Result<IReadOnlyList<IAutoModerationRule>>> ListGuildAutoModerationRulesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -53,7 +53,7 @@ public interface IDiscordRestAutoModerationAPI
     /// <param name="ruleID">The ID of the rule.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IAutoModerationRule>> GetGuildRuleAsync
+    Task<Result<IAutoModerationRule>> GetGuildAutoModerationRuleAsync
     (
         Snowflake guildID,
         Snowflake ruleID,
@@ -74,7 +74,7 @@ public interface IDiscordRestAutoModerationAPI
     /// <param name="exemptChannels">The channel IDs that should not be affected by this rule.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IAutoModerationRule>> CreateGuildRuleAsync
+    Task<Result<IAutoModerationRule>> CreateGuildAutoModerationRuleAsync
     (
         Snowflake guildID,
         string name,
@@ -103,7 +103,7 @@ public interface IDiscordRestAutoModerationAPI
     /// <param name="exemptChannels">The channel IDs that should not be affected by this rule.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IAutoModerationRule>> ModifyGuildRuleAsync
+    Task<Result<IAutoModerationRule>> ModifyGuildAutoModerationRuleAsync
     (
         Snowflake guildID,
         Snowflake ruleID,
@@ -125,7 +125,7 @@ public interface IDiscordRestAutoModerationAPI
     /// <param name="ruleID">The ID of the rule.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A deletion result which may or may not have succeeded.</returns>
-    Task<Result> DeleteGuildRuleAsync
+    Task<Result> DeleteGuildAutoModerationRuleAsync
     (
         Snowflake guildID,
         Snowflake ruleID,
