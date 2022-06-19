@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.Gateway.Services;
+
 namespace Remora.Discord.Gateway;
 
 /// <summary>
