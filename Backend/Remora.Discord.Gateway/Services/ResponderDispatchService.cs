@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
@@ -45,6 +46,7 @@ namespace Remora.Discord.Gateway.Services;
 public class ResponderDispatchService : IAsyncDisposable
 {
     private readonly IServiceProvider _services;
+    private readonly ResponderDispatchOptions _options;
     private readonly ILogger<ResponderDispatchService> _log;
     private readonly IResponderTypeRepository _responderTypeRepository;
 
@@ -68,16 +70,19 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <param name="services">The available services.</param>
     /// <param name="responderTypeRepository">The responder type repository.</param>
     /// <param name="log">The logging instance for this type.</param>
+    /// <param name="options">Options for dispatch.</param>
     public ResponderDispatchService
     (
         IServiceProvider services,
         IResponderTypeRepository responderTypeRepository,
-        ILogger<ResponderDispatchService> log
+        ILogger<ResponderDispatchService> log,
+        IOptions<ResponderDispatchOptions> options
     )
     {
         _services = services;
         _responderTypeRepository = responderTypeRepository;
         _log = log;
+        _options = options.Value;
 
         _cachedInterfaceTypeArguments = new();
         _cachedDispatchDelegates = new();
@@ -136,7 +141,7 @@ public class ResponderDispatchService : IAsyncDisposable
         _dispatchCancellationSource = new();
         _payloadsToDispatch = Channel.CreateBounded<IPayload>
         (
-            new BoundedChannelOptions(100) { FullMode = BoundedChannelFullMode.Wait }
+            new BoundedChannelOptions((int)_options.MaxItems) { FullMode = BoundedChannelFullMode.Wait }
         );
 
         _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
