@@ -26,7 +26,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Rest;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -343,42 +342,6 @@ public partial class CachingDiscordRestChannelAPI
     )
     {
         return _actual.GroupDMRemoveRecipientAsync(channelID, userID, ct);
-    }
-
-    /// <inheritdoc />
-    public Task<Result<IChannel>> StartThreadInForumChannelAsync
-    (
-        Snowflake channelID,
-        string name,
-        Optional<AutoArchiveDuration> autoArchiveDuration = default,
-        Optional<int?> rateLimitPerUser = default,
-        Optional<string> content = default,
-        Optional<IReadOnlyList<IEmbed>> embeds = default,
-        Optional<IAllowedMentions> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<Snowflake>> stickerIds = default,
-        Optional<IReadOnlyList<FileData>> attachments = default,
-        Optional<MessageFlags> flags = default,
-        Optional<string> reason = default,
-        CancellationToken ct = default
-    )
-    {
-        return _actual.StartThreadInForumChannelAsync
-        (
-            channelID,
-            name,
-            autoArchiveDuration,
-            rateLimitPerUser,
-            content,
-            embeds,
-            allowedMentions,
-            components,
-            stickerIds,
-            attachments,
-            flags,
-            reason,
-            ct
-        );
     }
 
     /// <inheritdoc />
