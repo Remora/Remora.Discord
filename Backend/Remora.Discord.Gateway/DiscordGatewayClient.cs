@@ -955,7 +955,7 @@ public class DiscordGatewayClient : IDisposable
                 }
                 else
                 {
-                    if (!_payloadsToSend.TryDequeue(out var userPayload))
+                    if (!_payloadsToSend.TryPeek(out var userPayload))
                     {
                         // Sleep for a little bit
                         await Task.Delay(CalculateAllowedSleepTime(heartbeatInterval), disconnectRequested);
@@ -969,8 +969,24 @@ public class DiscordGatewayClient : IDisposable
                             () => _transportService.SendPayloadAsync(userPayload, disconnectRequested)
                         );
 
+                        if (sendResult.IsSuccess)
+                        {
+                            // Dequeue the peeked payload, now that we've sent it
+                            _payloadsToSend.TryDequeue(out _);
+                        }
+
                         if (sendResult.Error is RetryAfterError rae)
                         {
+                            var allowedSleepTime = CalculateAllowedSleepTime(heartbeatInterval);
+                            if (rae.RetryAfter >= allowedSleepTime)
+                            {
+                                // Won't have time to send this until we have to heartbeat again... give up for now
+                                await Task.Delay(allowedSleepTime, disconnectRequested);
+
+                                sendResult = Result.FromSuccess();
+                                break;
+                            }
+
                             await Task.Delay(rae.RetryAfter, disconnectRequested);
                             continue;
                         }
