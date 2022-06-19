@@ -5,14 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>61.0.0</Version>
+        <Version>62.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Upgrade nuget packegs.
-            Stickers are no longer just for boosted guilds.
-            Fix optional member.
-            Revert partialization of some resolved entities.
-            Remove deprecated prefix in IIdentify connection fields [API v11]
+            Merge pull request #206 from VelvetThePanda/feat/dispatch-customization
+            Merge pull request #201 from MazeXP/rest-corrections
         </PackageReleaseNotes>
     </PropertyGroup>
 

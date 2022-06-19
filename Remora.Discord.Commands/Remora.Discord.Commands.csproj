@@ -5,11 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>25.0.0</Version>
+        <Version>25.0.1</Version>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
-            Upgrade nuget packegs.
-            Revert partialization of some resolved entities.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

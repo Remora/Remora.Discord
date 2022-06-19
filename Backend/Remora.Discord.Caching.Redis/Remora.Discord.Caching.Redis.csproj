@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.13</Version>
+        <Version>1.0.14</Version>
         <Description>Redis-based cache provider for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.

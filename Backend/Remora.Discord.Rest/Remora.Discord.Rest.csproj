@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>39.0.1</Version>
+        <Version>40.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Merge pull request #201 from MazeXP/rest-corrections
         </PackageReleaseNotes>
     </PropertyGroup>
 

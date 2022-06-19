@@ -5,13 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>65.0.0</Version>
+        <Version>66.0.0</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Upgrade nuget packegs.
-            Stickers are no longer just for boosted guilds.
-            Fix optional member.
-            Revert partialization of some resolved entities.
+            Rework alive checking a little bit more.
+            Merge pull request #206 from VelvetThePanda/feat/dispatch-customization
+            Merge pull request #201 from MazeXP/rest-corrections
         </PackageReleaseNotes>
     </PropertyGroup>
 
