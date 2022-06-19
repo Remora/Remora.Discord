@@ -1,5 +1,5 @@
-//
-//  IGuildThreadQueryResponse.cs
+﻿//
+//  DateTimeOffsetExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
+using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects;
+namespace Remora.Discord.Rest.Extensions;
 
 /// <summary>
-/// Represents a response object from the Guild REST API regarding a thread query.
+/// Defines extensions to the <see cref="DateTimeOffset"/> struct.
 /// </summary>
 [PublicAPI]
-public interface IGuildThreadQueryResponse
+public static class DateTimeOffsetExtensions
 {
     /// <summary>
-    /// Gets the threads returned by the query.
+    /// Converts <see cref="DateTimeOffset"/> to ISO8601 string representation.
     /// </summary>
-    IReadOnlyList<IChannel> Threads { get; }
-
-    /// <summary>
-    /// Gets a set of member objects that map to the returned threads the current user has joined.
-    /// </summary>
-    IReadOnlyList<IThreadMember> Members { get; }
+    /// <param name="dateTimeOffset">The date time offset.</param>
+    /// <returns>The ISO8601 string representation of date time offset.</returns>
+    public static string ToISO8601String(this DateTimeOffset dateTimeOffset)
+    {
+        var offset = dateTimeOffset.Offset;
+        return dateTimeOffset.ToString($"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}");
+    }
 }

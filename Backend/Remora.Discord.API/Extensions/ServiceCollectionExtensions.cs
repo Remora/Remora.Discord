@@ -498,6 +498,8 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 
+        options.AddDataObjectConverter<IChannelThreadQueryResponse, ChannelThreadQueryResponse>();
+
         return options;
     }
 

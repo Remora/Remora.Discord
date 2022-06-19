@@ -263,7 +263,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     (
         Snowflake applicationID,
         Snowflake commandID,
-        CancellationToken ct
+        CancellationToken ct = default
     )
     {
         return this.RestHttpClient.DeleteAsync
@@ -487,7 +487,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake applicationID,
         Snowflake guildID,
         Snowflake commandID,
-        CancellationToken ct
+        CancellationToken ct = default
     )
     {
         return this.RestHttpClient.DeleteAsync

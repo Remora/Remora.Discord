@@ -169,7 +169,7 @@ internal sealed class PaginatedMessageEntity :
             message.ChannelID,
             message.ID,
             embeds: new[] { newPage },
-            components: new Optional<IReadOnlyList<IMessageComponent>>
+            components: new Optional<IReadOnlyList<IMessageComponent>?>
             (
                 message.Components.IsDefined(out var existingComponents)
                      ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()

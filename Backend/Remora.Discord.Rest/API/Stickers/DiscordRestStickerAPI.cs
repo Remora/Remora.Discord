@@ -53,11 +53,11 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<ISticker>> GetStickerAsync(Snowflake id, CancellationToken ct = default)
+    public virtual Task<Result<ISticker>> GetStickerAsync(Snowflake stickerID, CancellationToken ct = default)
     {
         return this.RestHttpClient.GetAsync<ISticker>
         (
-            $"stickers/{id}",
+            $"stickers/{stickerID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
@@ -77,13 +77,13 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
     /// <inheritdoc />
     public virtual Task<Result<IReadOnlyList<ISticker>>> ListGuildStickersAsync
     (
-        Snowflake guildId,
+        Snowflake guildID,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<ISticker>>
         (
-            $"guilds/{guildId}/stickers",
+            $"guilds/{guildID}/stickers",
             b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
@@ -92,14 +92,14 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
     /// <inheritdoc />
     public virtual Task<Result<ISticker>> GetGuildStickerAsync
     (
-        Snowflake guildId,
-        Snowflake stickerId,
+        Snowflake guildID,
+        Snowflake stickerID,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<ISticker>
         (
-            $"guilds/{guildId}/stickers/{stickerId}",
+            $"guilds/{guildID}/stickers/{stickerID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
@@ -108,7 +108,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
     /// <inheritdoc />
     public virtual async Task<Result<ISticker>> CreateGuildStickerAsync
     (
-        Snowflake guildId,
+        Snowflake guildID,
         string name,
         string description,
         string tags,
@@ -137,7 +137,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 
         return await this.RestHttpClient.PostAsync<ISticker>
         (
-            $"guilds/{guildId}/stickers",
+            $"guilds/{guildID}/stickers",
             b => b
                 .AddAuditLogReason(reason)
                 .AddContent(new StringContent(name), nameof(name))
@@ -152,8 +152,8 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
     /// <inheritdoc />
     public virtual async Task<Result<ISticker>> ModifyGuildStickerAsync
     (
-        Snowflake guildId,
-        Snowflake stickerId,
+        Snowflake guildID,
+        Snowflake stickerID,
         Optional<string> name = default,
         Optional<string?> description = default,
         Optional<string> tags = default,
@@ -181,7 +181,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 
         return await this.RestHttpClient.PatchAsync<ISticker>
         (
-            $"guilds/{guildId}/stickers/{stickerId}",
+            $"guilds/{guildID}/stickers/{stickerID}",
             b => b
                 .AddAuditLogReason(reason)
                 .WithJson
@@ -201,15 +201,15 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
     /// <inheritdoc />
     public virtual Task<Result> DeleteGuildStickerAsync
     (
-        Snowflake guildId,
-        Snowflake stickerId,
+        Snowflake guildID,
+        Snowflake stickerID,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.DeleteAsync
         (
-            $"guilds/{guildId}/stickers/{stickerId}",
+            $"guilds/{guildID}/stickers/{stickerID}",
             b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );

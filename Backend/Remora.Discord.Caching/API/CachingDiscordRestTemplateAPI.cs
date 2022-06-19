@@ -166,8 +166,8 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
     (
         Snowflake guildID,
         string templateCode,
-        string name,
-        Optional<string> description,
+        Optional<string> name,
+        Optional<string?> description,
         CancellationToken ct = default
     )
     {

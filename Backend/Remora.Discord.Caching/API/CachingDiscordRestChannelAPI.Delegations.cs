@@ -58,7 +58,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<int?> rateLimitPerUser = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentId = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -151,6 +151,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<bool?> isNsfw = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentId = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -165,6 +166,7 @@ public partial class CachingDiscordRestChannelAPI
             isNsfw,
             permissionOverwrites,
             parentId,
+            defaultAutoArchiveDuration,
             reason,
             ct
         );
@@ -178,6 +180,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<bool> isArchived = default,
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
+        Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
@@ -191,6 +194,7 @@ public partial class CachingDiscordRestChannelAPI
             isArchived,
             autoArchiveDuration,
             isLocked,
+            isInvitable,
             rateLimitPerUser,
             flags,
             reason,
@@ -277,8 +281,8 @@ public partial class CachingDiscordRestChannelAPI
     (
         Snowflake channelID,
         Snowflake overwriteID,
-        Optional<IDiscordPermissionSet> allow = default,
-        Optional<IDiscordPermissionSet> deny = default,
+        Optional<IDiscordPermissionSet?> allow = default,
+        Optional<IDiscordPermissionSet?> deny = default,
         Optional<PermissionOverwriteType> type = default,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -356,6 +360,42 @@ public partial class CachingDiscordRestChannelAPI
     public Task<Result> LeaveThreadAsync(Snowflake channelID, CancellationToken ct = default)
     {
         return _actual.LeaveThreadAsync(channelID, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListPublicArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListPublicArchivedThreadsAsync(channelID, before, limit, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListPrivateArchivedThreadsAsync(channelID, before, limit, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IChannelThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<Snowflake> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ListJoinedPrivateArchivedThreadsAsync(channelID, before, limit, ct);
     }
 
     /// <inheritdoc/>

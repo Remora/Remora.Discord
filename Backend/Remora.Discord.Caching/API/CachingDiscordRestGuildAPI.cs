@@ -283,16 +283,18 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
     (
         Snowflake guildID,
         string name,
-        Optional<ChannelType> type = default,
-        Optional<string> topic = default,
-        Optional<int> bitrate = default,
-        Optional<int> userLimit = default,
-        Optional<int> rateLimitPerUser = default,
-        Optional<int> position = default,
-        Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
-        Optional<Snowflake> parentID = default,
-        Optional<bool> isNsfw = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<ChannelType?> type = default,
+        Optional<string?> topic = default,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -310,6 +312,8 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             permissionOverwrites,
             parentID,
             isNsfw,
+            rtcRegion,
+            videoQualityMode,
             defaultAutoArchiveDuration,
             reason,
             ct
@@ -820,7 +824,6 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
     public async Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
     (
         Snowflake guildID,
-        Optional<bool> includeApplications = default,
         CancellationToken ct = default
     )
     {
@@ -832,7 +835,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return cacheResult;
         }
 
-        var getResult = await _actual.GetGuildIntegrationsAsync(guildID, includeApplications, ct);
+        var getResult = await _actual.GetGuildIntegrationsAsync(guildID, ct);
 
         if (!getResult.IsSuccess)
         {
@@ -955,5 +958,29 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         }
 
         return result;
+    }
+
+    /// <inheritdoc />
+    public async Task<Result> DeleteGuildIntegrationAsync
+    (
+        Snowflake guildID,
+        Snowflake integrationID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var deleteResult = await _actual.DeleteGuildIntegrationAsync(guildID, integrationID, reason, ct);
+        if (!deleteResult.IsSuccess)
+        {
+            return deleteResult;
+        }
+
+        var key = KeyHelpers.CreateGuildIntegrationCacheKey(guildID, integrationID);
+        await _cacheService.EvictAsync<IIntegration>(key, ct);
+
+        var collectionKey = KeyHelpers.CreateGuildIntegrationsCacheKey(guildID);
+        await _cacheService.EvictAsync<IReadOnlyList<IIntegration>>(collectionKey, ct);
+
+        return deleteResult;
     }
 }

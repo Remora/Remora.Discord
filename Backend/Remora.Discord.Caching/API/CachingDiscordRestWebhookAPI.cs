@@ -359,8 +359,8 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         Optional<string?> content = default,
         Optional<IReadOnlyList<IEmbed>?> embeds = default,
         Optional<IAllowedMentions?> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<IReadOnlyList<IMessageComponent>?> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
         Optional<Snowflake> threadID = default,
         CancellationToken ct = default
     )

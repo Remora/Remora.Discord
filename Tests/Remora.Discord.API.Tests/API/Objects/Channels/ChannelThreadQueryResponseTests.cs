@@ -1,5 +1,5 @@
 //
-//  IGuildThreadQueryResponse.cs
+//  ChannelThreadQueryResponseTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Abstractions.Objects;
+namespace Remora.Discord.API.Tests.Objects;
 
-/// <summary>
-/// Represents a response object from the Guild REST API regarding a thread query.
-/// </summary>
-[PublicAPI]
-public interface IGuildThreadQueryResponse
+/// <inheritdoc />
+public class ChannelThreadQueryResponseTests : ObjectTestBase<IChannelThreadQueryResponse>
 {
-    /// <summary>
-    /// Gets the threads returned by the query.
-    /// </summary>
-    IReadOnlyList<IChannel> Threads { get; }
-
-    /// <summary>
-    /// Gets a set of member objects that map to the returned threads the current user has joined.
-    /// </summary>
-    IReadOnlyList<IThreadMember> Members { get; }
 }
