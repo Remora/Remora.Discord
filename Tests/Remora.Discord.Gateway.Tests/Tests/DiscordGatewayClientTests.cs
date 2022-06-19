@@ -103,7 +103,6 @@ public class DiscordGatewayClientTests
         var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
         var services = new ServiceCollection()
-            .Configure<ResponderDispatchOptions>(() => new())
             .AddDiscordGateway(_ => Constants.MockToken)
             .Replace(transportMockDescriptor)
             .Replace(CreateMockedGatewayAPI())
@@ -177,7 +176,6 @@ public class DiscordGatewayClientTests
         var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
         var services = new ServiceCollection()
-            .Configure<ResponderDispatchOptions>(() => new())
             .AddDiscordGateway(_ => Constants.MockToken)
             .Replace(transportMockDescriptor)
             .Replace(CreateMockedGatewayAPI())
@@ -271,7 +269,6 @@ public class DiscordGatewayClientTests
         var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
         var services = new ServiceCollection()
-            .Configure<ResponderDispatchOptions>(() => new())
             .AddDiscordGateway(_ => Constants.MockToken)
             .Replace(transportMockDescriptor)
             .Replace(CreateMockedGatewayAPI())
@@ -347,7 +344,6 @@ public class DiscordGatewayClientTests
         var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
         var services = new ServiceCollection()
-            .Configure<ResponderDispatchOptions>(() => new())
             .AddDiscordGateway(_ => Constants.MockToken)
             .Replace(transportMockDescriptor)
             .Replace(CreateMockedGatewayAPI())
@@ -423,7 +419,6 @@ public class DiscordGatewayClientTests
         var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
         var services = new ServiceCollection()
-            .Configure<ResponderDispatchOptions>(() => new())
             .AddDiscordGateway(_ => Constants.MockToken)
             .Replace(transportMockDescriptor)
             .Replace(CreateMockedGatewayAPI())
@@ -530,7 +525,6 @@ public class DiscordGatewayClientTests
         var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
         var services = new ServiceCollection()
-            .Configure<ResponderDispatchOptions>(() => new())
             .AddDiscordGateway(_ => Constants.MockToken)
             .Replace(transportMockDescriptor)
             .Replace(CreateMockedGatewayAPI())

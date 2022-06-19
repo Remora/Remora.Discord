@@ -33,6 +33,7 @@ using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Rest.Extensions;
+using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Gateway.Extensions;
 
@@ -48,12 +49,14 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
     /// <param name="buildClient">Extra options to configure the rest client.</param>
+    /// <param name="maxDispatchItems">How many items can be concurrently queued for dispatch.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordGateway
     (
         this IServiceCollection serviceCollection,
         Func<IServiceProvider, string> tokenFactory,
-        Action<IHttpClientBuilder>? buildClient = null
+        Action<IHttpClientBuilder>? buildClient = null,
+        int maxDispatchItems = 100
     )
     {
         serviceCollection
@@ -71,6 +74,8 @@ public static class ServiceCollectionExtensions
             s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
             s.GetRequiredService<ILogger<WebSocketPayloadTransportService>>()
         ));
+
+        serviceCollection.Configure<ResponderDispatchOptions>(dispatch => dispatch with { MaxItems = (uint)maxDispatchItems });
 
         return serviceCollection;
     }
