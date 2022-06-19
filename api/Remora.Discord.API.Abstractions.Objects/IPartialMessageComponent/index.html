@@ -59,12 +59,12 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
@@ -176,6 +176,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelMention">IChannelMention</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelTemplate">IChannelTemplate</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelThreadQueryResponse">I<wbr>Channel<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IClientStatuses">IClientStatuses</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IConnection">IConnection</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet">I<wbr>Discord<wbr>Permission<wbr>Set</a></li>
@@ -363,14 +364,14 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActionRowComponent">IActionRowComponent</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent">IButtonComponent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent">I<wbr>Partial<wbr>Select<wbr>Menu<wbr>Component</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialActionRowComponent">I<wbr>Partial<wbr>Action<wbr>Row<wbr>Component</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialTextInputComponent">I<wbr>Partial<wbr>Text<wbr>Input<wbr>Component</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent">ISelectMenuComponent</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent">IButtonComponent</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialTextInputComponent">I<wbr>Partial<wbr>Text<wbr>Input<wbr>Component</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialButtonComponent">I<wbr>Partial<wbr>Button<wbr>Component</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialActionRowComponent">I<wbr>Partial<wbr>Action<wbr>Row<wbr>Component</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActionRowComponent">IActionRowComponent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITextInputComponent">ITextInputComponent</a></li>								
 									</ul>
 								</dd>				
@@ -381,22 +382,22 @@
 							graph BT
 	Type["IPartialMessageComponent"]
 class Type type-node
-	Implementing0["IActionRowComponent"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActionRowComponent"
-	Implementing1["IButtonComponent"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent"
-	Implementing2["IPartialSelectMenuComponent"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent"
-	Implementing3["IPartialActionRowComponent"]-.-&gt;Type
-	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialActionRowComponent"
-	Implementing4["IPartialTextInputComponent"]-.-&gt;Type
-	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialTextInputComponent"
-	Implementing5["ISelectMenuComponent"]-.-&gt;Type
-	click Implementing5 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent"
-	Implementing6["IMessageComponent"]-.-&gt;Type
-	click Implementing6 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent"
-	Implementing7["IPartialButtonComponent"]-.-&gt;Type
-	click Implementing7 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialButtonComponent"
+	Implementing0["IPartialSelectMenuComponent"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent"
+	Implementing1["ISelectMenuComponent"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent"
+	Implementing2["IButtonComponent"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent"
+	Implementing3["IPartialTextInputComponent"]-.-&gt;Type
+	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialTextInputComponent"
+	Implementing4["IPartialButtonComponent"]-.-&gt;Type
+	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialButtonComponent"
+	Implementing5["IMessageComponent"]-.-&gt;Type
+	click Implementing5 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent"
+	Implementing6["IPartialActionRowComponent"]-.-&gt;Type
+	click Implementing6 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialActionRowComponent"
+	Implementing7["IActionRowComponent"]-.-&gt;Type
+	click Implementing7 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActionRowComponent"
 	Implementing8["ITextInputComponent"]-.-&gt;Type
 	click Implementing8 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITextInputComponent"
 

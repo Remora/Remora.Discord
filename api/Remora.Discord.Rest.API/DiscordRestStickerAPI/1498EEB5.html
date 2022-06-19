@@ -59,12 +59,12 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
@@ -203,7 +203,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public virtual Task&lt;Result&lt;ISticker&gt;&gt; GetStickerAsync(Snowflake id, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public virtual Task&lt;Result&lt;ISticker&gt;&gt; GetStickerAsync(Snowflake stickerID, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
 
@@ -221,7 +221,7 @@
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>id</td>
+						<td>stickerID</td>
 						<td>Snowflake</td>
 						<td>The ID of the sticker.</td>
 					</tr>
