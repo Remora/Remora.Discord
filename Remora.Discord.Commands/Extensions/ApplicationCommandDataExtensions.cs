@@ -1,5 +1,5 @@
 //
-//  InteractionDataExtensions.cs
+//  ApplicationCommandDataExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,10 +30,10 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.Commands.Extensions;
 
 /// <summary>
-/// Defines extensions for the <see cref="IInteractionData"/> interface.
+/// Defines extensions for the <see cref="IApplicationCommandData"/> interface.
 /// </summary>
 [PublicAPI]
-public static class InteractionDataExtensions
+public static class ApplicationCommandDataExtensions
 {
     /// <summary>
     /// Unpacks an interaction into a command name string and a set of parameters.
@@ -45,19 +45,14 @@ public static class InteractionDataExtensions
     /// <param name="parameters">The parameters supplied to the command.</param>
     public static void UnpackInteraction
     (
-        this IInteractionData commandData,
+        this IApplicationCommandData commandData,
         out IReadOnlyList<string> commandPath,
         out IReadOnlyDictionary<string, IReadOnlyList<string>> parameters
     )
     {
-        if (!commandData.Name.IsDefined(out var dataName))
-        {
-            throw new InvalidOperationException();
-        }
-
         if (!commandData.Options.IsDefined(out var options))
         {
-            commandPath = new[] { commandData.Name.Value };
+            commandPath = new[] { commandData.Name };
             parameters = new Dictionary<string, IReadOnlyList<string>>();
 
             return;
@@ -65,7 +60,7 @@ public static class InteractionDataExtensions
 
         UnpackInteractionOptions(options, out var nestedCommandPath, out var nestedParameters);
 
-        var path = new List<string> { dataName };
+        var path = new List<string> { commandData.Name };
         path.AddRange(nestedCommandPath);
 
         commandPath = path;

@@ -127,7 +127,7 @@ public class ColourDropdownEntity : ISelectMenuInteractiveEntity
             })
         };
 
-        var editMessage = await _channelAPI.EditMessageAsync
+        return (Result)await _channelAPI.EditMessageAsync
         (
             _context.ChannelID,
             message.ID,
@@ -135,9 +135,5 @@ public class ColourDropdownEntity : ISelectMenuInteractiveEntity
             components: newComponents,
             ct: ct
         );
-
-        return editMessage.IsSuccess
-            ? Result.FromSuccess()
-            : Result.FromError(editMessage);
     }
 }

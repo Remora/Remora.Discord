@@ -27,11 +27,13 @@ using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Rest.Extensions;
+using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Gateway.Extensions;
 
@@ -46,15 +48,17 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
+    /// <param name="buildClient">Extra options to configure the rest client.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordGateway
     (
         this IServiceCollection serviceCollection,
-        Func<IServiceProvider, string> tokenFactory
+        Func<IServiceProvider, string> tokenFactory,
+        Action<IHttpClientBuilder>? buildClient = null
     )
     {
         serviceCollection
-            .AddDiscordRest(tokenFactory);
+            .AddDiscordRest(tokenFactory, buildClient);
 
         serviceCollection.TryAddSingleton<Random>();
         serviceCollection.TryAddSingleton<ResponderDispatchService>();
@@ -65,8 +69,11 @@ public static class ServiceCollectionExtensions
         serviceCollection.TryAddTransient<IPayloadTransportService>(s => new WebSocketPayloadTransportService
         (
             s,
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ILogger<WebSocketPayloadTransportService>>()
         ));
+
+        serviceCollection.Configure<ResponderDispatchOptions>(() => new());
 
         return serviceCollection;
     }
@@ -79,7 +86,11 @@ public static class ServiceCollectionExtensions
     /// <param name="group">The group the responder belongs to.</param>
     /// <typeparam name="TResponder">The concrete responder type.</typeparam>
     /// <returns>The service collection, with the responder added.</returns>
-    public static IServiceCollection AddResponder<TResponder>
+    public static IServiceCollection AddResponder
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TResponder
+        >
     (
         this IServiceCollection serviceCollection,
         ResponderGroup group = ResponderGroup.Normal

@@ -68,15 +68,17 @@ public interface IDiscordRestChannelAPI
     /// <param name="bitrate">The new bitrate.</param>
     /// <param name="userLimit">The new user limit.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
-    /// <param name="parentId">The new parent category ID.</param>
+    /// <param name="parentID">The new parent category ID.</param>
     /// <param name="videoQualityMode">The new video quality mode.</param>
     /// <param name="isArchived">Whether the thread is archived.</param>
     /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
     /// <param name="isLocked">Whether the thread is locked.</param>
+    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>
     /// <param name="defaultAutoArchiveDuration">
     /// The default time of inactivity after which threads in the channel are archived.
     /// </param>
     /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
+    /// <param name="flags">The channel flags to use.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -93,13 +95,15 @@ public interface IDiscordRestChannelAPI
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
-        Optional<Snowflake?> parentId = default,
+        Optional<Snowflake?> parentID = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<bool> isArchived = default,
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<bool> isInvitable = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
+        Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -138,7 +142,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="isNsfw">The new NSFW status of the channel.</param>
     /// <param name="rateLimitPerUser">The new rate limit per user.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
-    /// <param name="parentId">The new parent category ID.</param>
+    /// <param name="parentID">The new parent category ID.</param>
     /// <param name="defaultAutoArchiveDuration">
     /// The default time of inactivity after which threads in the channel are archived.
     /// </param>
@@ -155,8 +159,8 @@ public interface IDiscordRestChannelAPI
         Optional<bool?> isNsfw = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
-        Optional<Snowflake?> parentId = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -167,10 +171,11 @@ public interface IDiscordRestChannelAPI
     /// <param name="channelID">The ID of the channel.</param>
     /// <param name="name">The new name of the channel.</param>
     /// <param name="position">The new position of the channel in the listing.</param>
+    /// <param name="isNsfw">The new NSFW status of the channel.</param>
     /// <param name="bitrate">The new bitrate.</param>
     /// <param name="userLimit">The new user limit.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
-    /// <param name="parentId">The new parent category ID.</param>
+    /// <param name="parentID">The new parent category ID.</param>
     /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
     /// <param name="videoQualityMode">The new video quality mode.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
@@ -181,12 +186,37 @@ public interface IDiscordRestChannelAPI
         Snowflake channelID,
         Optional<string> name = default,
         Optional<int?> position = default,
+        Optional<bool?> isNsfw = default,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
-        Optional<Snowflake?> parentId = default,
+        Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Modifies the given guild stage channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the channel.</param>
+    /// <param name="name">The new name of the channel.</param>
+    /// <param name="position">The new position of the channel in the listing.</param>
+    /// <param name="bitrate">The new bitrate.</param>
+    /// <param name="permissionOverwrites">The new permission overwrites.</param>
+    /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> ModifyGuildStageChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<int?> bitrate = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<string?> rtcRegion = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -204,7 +234,10 @@ public interface IDiscordRestChannelAPI
     /// <param name="topic">The new topic of the channel.</param>
     /// <param name="isNsfw">The new NSFW status of the channel.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
-    /// <param name="parentId">The new parent category ID.</param>
+    /// <param name="parentID">The new parent category ID.</param>
+    /// <param name="defaultAutoArchiveDuration">
+    /// The default time of inactivity after which threads in the channel are archived.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -217,7 +250,8 @@ public interface IDiscordRestChannelAPI
         Optional<string?> topic = default,
         Optional<bool?> isNsfw = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
-        Optional<Snowflake?> parentId = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -230,7 +264,9 @@ public interface IDiscordRestChannelAPI
     /// <param name="isArchived">Whether the thread is archived.</param>
     /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
     /// <param name="isLocked">Whether the thread is locked.</param>
+    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>
     /// <param name="rateLimitPerUser">The new rate limit per user.</param>
+    /// <param name="flags">The channel flags to use.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -241,7 +277,9 @@ public interface IDiscordRestChannelAPI
         Optional<bool> isArchived = default,
         Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isLocked = default,
+        Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
+        Optional<ChannelFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -320,7 +358,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="allowedMentions">An object describing the allowed mention types.</param>
     /// <param name="messageReference">A reference to another message.</param>
     /// <param name="components">The components of the message.</param>
-    /// <param name="stickerIds">The stickers to send with the message (max 3).</param>
+    /// <param name="stickerIDs">The stickers to send with the message (max 3).</param>
     /// <param name="attachments">
     /// The attachments to associate with the response. Each file may be a new file in the form of
     /// <see cref="FileData"/>, or an existing one that should be retained in the form of a
@@ -340,7 +378,7 @@ public interface IDiscordRestChannelAPI
         Optional<IAllowedMentions> allowedMentions = default,
         Optional<IMessageReference> messageReference = default,
         Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<Snowflake>> stickerIds = default,
+        Optional<IReadOnlyList<Snowflake>> stickerIDs = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
         CancellationToken ct = default
@@ -490,11 +528,11 @@ public interface IDiscordRestChannelAPI
         Snowflake channelID,
         Snowflake messageID,
         Optional<string?> content = default,
-        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
         Optional<MessageFlags?> flags = default,
         Optional<IAllowedMentions?> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<IReadOnlyList<IMessageComponent>?> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
         CancellationToken ct = default
     );
 
@@ -549,8 +587,8 @@ public interface IDiscordRestChannelAPI
     (
         Snowflake channelID,
         Snowflake overwriteID,
-        Optional<IDiscordPermissionSet> allow = default,
-        Optional<IDiscordPermissionSet> deny = default,
+        Optional<IDiscordPermissionSet?> allow = default,
+        Optional<IDiscordPermissionSet?> deny = default,
         Optional<PermissionOverwriteType> type = default,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -746,11 +784,11 @@ public interface IDiscordRestChannelAPI
     /// </summary>
     /// <param name="channelID">The channel to start the thread in.</param>
     /// <param name="name">The name of the thread.</param>
-    /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
     /// <param name="type">
     /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
     /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
-    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the thread.</param>
+    /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
+    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>
     /// <param name="rateLimitPerUser">
     /// The message rate limit per user, that is, the number of seconds they have to wait between sending messages.
     /// </param>
@@ -761,8 +799,8 @@ public interface IDiscordRestChannelAPI
     (
         Snowflake channelID,
         string name,
-        AutoArchiveDuration autoArchiveDuration,
         ChannelType type,
+        Optional<AutoArchiveDuration> autoArchiveDuration = default,
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<string> reason = default,
@@ -844,6 +882,54 @@ public interface IDiscordRestChannelAPI
     Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
     (
         Snowflake channelID,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets the public archived threads for a channel.
+    /// </summary>
+    /// <param name="channelID">The channel to list the threads of.</param>
+    /// <param name="before">The timestamp to return threads before of.</param>
+    /// <param name="limit">The maximum number of threads to retrieve.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IChannelThreadQueryResponse>> ListPublicArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets the private archived threads for a channel.
+    /// </summary>
+    /// <param name="channelID">The channel to list the threads of.</param>
+    /// <param name="before">The timestamp to return threads before of.</param>
+    /// <param name="limit">The maximum number of threads to retrieve.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IChannelThreadQueryResponse>> ListPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets the private archived threads for a channel that the user has joined.
+    /// </summary>
+    /// <param name="channelID">The channel to list the threads of.</param>
+    /// <param name="before">The snowflake to return threads before of.</param>
+    /// <param name="limit">The maximum number of threads to retrieve.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IChannelThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<Snowflake> before = default,
+        Optional<int> limit = default,
         CancellationToken ct = default
     );
 }

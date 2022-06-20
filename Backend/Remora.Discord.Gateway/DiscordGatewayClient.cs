@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway;
@@ -86,13 +87,18 @@ public class DiscordGatewayClient : IDisposable
     private int _lastSequenceNumber;
 
     /// <summary>
-    /// Holds the time when the last heartbeat was sent, using
-    /// <see cref="DateTime.ToBinary"/>.
+    /// Holds the time when the last heartbeat was sent, using <see cref="DateTime.ToBinary"/>.
     /// </summary>
     private long _lastSentHeartbeat;
 
     /// <summary>
-    /// Holds the time when the last heartbeat acknowledgement was received, using
+    /// Holds the time when the last event acknowledgement was received, encoded using
+    /// <see cref="DateTime.ToBinary()"/>.
+    /// </summary>
+    private long _lastReceivedEvent;
+
+    /// <summary>
+    /// Holds the time when the last heartbeat acknowledgement was received, encoded using
     /// <see cref="DateTime.ToBinary()"/>.
     /// </summary>
     private long _lastReceivedHeartbeatAck;
@@ -528,7 +534,14 @@ public class DiscordGatewayClient : IDisposable
                     return transportConnectResult;
                 }
 
-                var receiveHello = await _transportService.ReceivePayloadAsync(stopRequested);
+                var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(TimeSpan.FromSeconds(5));
+
+                var receiveHello = await timeoutPolicy.ExecuteAsync
+                (
+                    c => _transportService.ReceivePayloadAsync(c),
+                    stopRequested
+                );
+
                 if (!receiveHello.IsSuccess)
                 {
                     return Result.FromError
@@ -573,13 +586,14 @@ public class DiscordGatewayClient : IDisposable
                 }
 
                 // Now, set up the receive task and start receiving events normally
-                _receiveTask = GatewayReceiverAsync(_disconnectRequestedSource.Token);
+                _receiveTask = GatewayReceiverAsync(heartbeatInterval, _disconnectRequestedSource.Token);
 
                 _log.LogInformation("Connected");
 
                 _shouldReconnect = false;
                 _isSessionResumable = false;
                 _lastReceivedHeartbeatAck = 0;
+                _lastReceivedEvent = 0;
 
                 _connectionStatus = GatewayConnectionStatus.Connected;
 
@@ -667,84 +681,102 @@ public class DiscordGatewayClient : IDisposable
     /// <returns>A connection result which may or may not have succeeded.</returns>
     private async Task<Result> CreateNewSessionAsync(CancellationToken ct = default)
     {
-        _log.LogInformation("Creating a new session...");
-
-        var shardInformation = _gatewayOptions.ShardIdentification is null
-            ? default
-            : new Optional<IShardIdentification>(_gatewayOptions.ShardIdentification);
-
-        var initialPresence = _gatewayOptions.Presence is null
-            ? default
-            : new Optional<IUpdatePresence>(_gatewayOptions.Presence);
-
-        SubmitCommand
-        (
-            new Identify
-            (
-                _tokenStore.Token,
-                _gatewayOptions.ConnectionProperties,
-                false,
-                _gatewayOptions.LargeThreshold,
-                shardInformation,
-                initialPresence,
-                _gatewayOptions.Intents
-            )
-        );
-
-        while (true)
+        try
         {
-            var receiveReady = await _transportService.ReceivePayloadAsync(ct);
-            if (!receiveReady.IsSuccess)
-            {
-                return Result.FromError(receiveReady);
-            }
+            _log.LogInformation("Creating a new session...");
 
-            switch (receiveReady.Entity)
-            {
-                case IPayload<IHeartbeatAcknowledge>:
-                {
-                    continue;
-                }
-                case IPayload<IInvalidSession> invalidSession:
-                {
-                    return new GatewayError
-                    (
-                        "The newly created session was invalidated by Discord.",
-                        invalidSession.Data.IsResumable,
-                        false
-                    );
-                }
-                case IPayload<IReady> ready:
-                {
-                    var dispatch = await _responderDispatch.DispatchAsync
-                    (
-                        ready,
-                        _disconnectRequestedSource.Token
-                    );
+            var shardInformation = _gatewayOptions.ShardIdentification is null
+                ? default
+                : new Optional<IShardIdentification>(_gatewayOptions.ShardIdentification);
 
-                    if (!dispatch.IsSuccess)
+            var initialPresence = _gatewayOptions.Presence is null
+                ? default
+                : new Optional<IUpdatePresence>(_gatewayOptions.Presence);
+
+            SubmitCommand
+            (
+                new Identify
+                (
+                    _tokenStore.Token,
+                    _gatewayOptions.ConnectionProperties,
+                    false,
+                    _gatewayOptions.LargeThreshold,
+                    shardInformation,
+                    initialPresence,
+                    _gatewayOptions.Intents
+                )
+            );
+
+            var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(TimeSpan.FromSeconds(5));
+
+            while (true)
+            {
+                var receiveReady = await timeoutPolicy.ExecuteAsync(c => _transportService.ReceivePayloadAsync(c), ct);
+                if (!receiveReady.IsSuccess)
+                {
+                    return Result.FromError(receiveReady);
+                }
+
+                switch (receiveReady.Entity)
+                {
+                    case IPayload<IHeartbeatAcknowledge>:
                     {
-                        return dispatch;
+                        continue;
                     }
+                    case IPayload<IReconnect>:
+                    {
+                        return new GatewayError
+                        (
+                            "The newly created session was invalidated by Discord.",
+                            false,
+                            false
+                        );
+                    }
+                    case IPayload<IInvalidSession> invalidSession:
+                    {
+                        return new GatewayError
+                        (
+                            "The newly created session was invalidated by Discord.",
+                            invalidSession.Data.IsResumable,
+                            false
+                        );
+                    }
+                    case IPayload<IReady> ready:
+                    {
+                        var dispatch = await _responderDispatch.DispatchAsync
+                        (
+                            ready,
+                            _disconnectRequestedSource.Token
+                        );
 
-                    _sessionID = ready.Data.SessionID;
+                        if (!dispatch.IsSuccess)
+                        {
+                            return dispatch;
+                        }
 
-                    return Result.FromSuccess();
-                }
-                default:
-                {
-                    _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
+                        _sessionID = ready.Data.SessionID;
 
-                    return new GatewayError
-                    (
-                        $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
-                        $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
-                        $"\tActual: {receiveReady.Entity.GetType().FullName}",
-                        false,
-                        true
-                    );
+                        return Result.FromSuccess();
+                    }
+                    default:
+                    {
+                        _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
+
+                        return new GatewayError
+                        (
+                            $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
+                            $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
+                            $"\tActual: {receiveReady.Entity.GetType().FullName}",
+                            false,
+                            true
+                        );
+                    }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            return ex;
         }
     }
 
@@ -755,71 +787,80 @@ public class DiscordGatewayClient : IDisposable
     /// <returns>A connection result which may or may not have succeeded.</returns>
     private async Task<Result> ResumeExistingSessionAsync(CancellationToken ct = default)
     {
-        if (_sessionID is null)
+        try
         {
-            return new InvalidOperationError("There's no previous session to resume.");
-        }
+            if (_sessionID is null)
+            {
+                return new InvalidOperationError("There's no previous session to resume.");
+            }
 
-        _log.LogInformation("Resuming existing session...");
+            _log.LogInformation("Resuming existing session...");
 
-        SubmitCommand
-        (
-            new Resume
+            SubmitCommand
             (
-                _tokenStore.Token,
-                _sessionID,
-                _lastSequenceNumber
-            )
-        );
-
-        // Push resumed events onto the queue
-        var resuming = true;
-        while (resuming)
-        {
-            if (ct.IsCancellationRequested)
-            {
-                return new GatewayError("Operation was cancelled.", false, false);
-            }
-
-            var receiveEvent = await _transportService.ReceivePayloadAsync(ct);
-            if (!receiveEvent.IsSuccess)
-            {
-                return Result.FromError(new GatewayError("Failed to receive a payload.", true, false), receiveEvent);
-            }
-
-            switch (receiveEvent.Entity)
-            {
-                case IPayload<IHeartbeatAcknowledge>:
-                {
-                    continue;
-                }
-                case IPayload<IInvalidSession>:
-                {
-                    _log.LogInformation("Resume rejected by the gateway");
-
-                    await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
-                    return await CreateNewSessionAsync(ct);
-                }
-                case IPayload<IResumed>:
-                {
-                    resuming = false;
-                    break;
-                }
-            }
-
-            var dispatch = await _responderDispatch.DispatchAsync
-            (
-                receiveEvent.Entity,
-                _disconnectRequestedSource.Token
+                new Resume
+                (
+                    _tokenStore.Token,
+                    _sessionID,
+                    _lastSequenceNumber
+                )
             );
 
-            if (!dispatch.IsSuccess)
-            {
-                return dispatch;
-            }
-        }
+            var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(TimeSpan.FromSeconds(5));
 
-        return Result.FromSuccess();
+            // Push resumed events onto the queue
+            var resuming = true;
+            while (resuming)
+            {
+                if (ct.IsCancellationRequested)
+                {
+                    return new GatewayError("Operation was cancelled.", false, false);
+                }
+
+                var receiveEvent = await timeoutPolicy.ExecuteAsync(c => _transportService.ReceivePayloadAsync(c), ct);
+                if (!receiveEvent.IsSuccess)
+                {
+                    return Result.FromError(new GatewayError("Failed to receive a payload.", true, false), receiveEvent);
+                }
+
+                switch (receiveEvent.Entity)
+                {
+                    case IPayload<IHeartbeatAcknowledge>:
+                    {
+                        continue;
+                    }
+                    case IPayload<IInvalidSession>:
+                    {
+                        _log.LogInformation("Resume rejected by the gateway");
+
+                        await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
+                        return await CreateNewSessionAsync(ct);
+                    }
+                    case IPayload<IResumed>:
+                    {
+                        resuming = false;
+                        break;
+                    }
+                }
+
+                var dispatch = await _responderDispatch.DispatchAsync
+                (
+                    receiveEvent.Entity,
+                    _disconnectRequestedSource.Token
+                );
+
+                if (!dispatch.IsSuccess)
+                {
+                    return dispatch;
+                }
+            }
+
+            return Result.FromSuccess();
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
     }
 
     /// <summary>
@@ -827,7 +868,7 @@ public class DiscordGatewayClient : IDisposable
     /// submitted by the application to the gateway, sending them to it.
     /// </summary>
     /// <param name="heartbeatInterval">The interval at which heartbeats should be sent.</param>
-    /// <param name="disconnectRequested">A token for requests to disconnect the socket..</param>
+    /// <param name="disconnectRequested">A token for requests to disconnect the socket.</param>
     /// <returns>A sender result which may or may not have been successful. A failed result indicates that something
     /// has gone wrong when sending a payload, and that the connection has been deemed nonviable. A nonviable
     /// connection should be either terminated, reestablished, or resumed as appropriate.</returns>
@@ -841,29 +882,61 @@ public class DiscordGatewayClient : IDisposable
 
         try
         {
-            var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
-            var lastSentHeartbeat = lastSentHeartbeatBinary > 0
-                ? DateTime.FromBinary(lastSentHeartbeatBinary)
-                : (DateTime?)null;
+            // Figure out how many slots we need to reserve for heartbeats
+            var rateLimitWindow = TimeSpan.FromSeconds(60);
+            var heartbeatsPerRateLimitWindow = (int)Math.Ceiling(rateLimitWindow / heartbeatInterval);
+
+            int maxEventsPerRateLimitWindow;
+            if (heartbeatsPerRateLimitWindow + _gatewayOptions.HeartbeatHeadroom >= 120)
+            {
+                _log.LogWarning
+                (
+                    "Unreasonable heartbeat interval ({Interval}) requested - not reserving any slots",
+                    heartbeatInterval
+                );
+
+                maxEventsPerRateLimitWindow = 120;
+            }
+            else
+            {
+                maxEventsPerRateLimitWindow = 120 - heartbeatsPerRateLimitWindow - _gatewayOptions.HeartbeatHeadroom;
+            }
+
+            var rateLimitPolicy = Policy.RateLimitAsync<Result>
+            (
+                maxEventsPerRateLimitWindow,
+                rateLimitWindow,
+                _gatewayOptions.CommandBurstRate,
+                (retryAfter, _) => new RetryAfterError(retryAfter)
+            );
 
             while (!disconnectRequested.IsCancellationRequested)
             {
-                var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
-                var lastHeartbeatAck = lastReceivedHeartbeatAck > 0
-                    ? DateTime.FromBinary(lastReceivedHeartbeatAck)
-                    : (DateTime?)null;
+                var lastSentHeartbeatTime = ReadTimeAtomic(ref _lastSentHeartbeat);
 
-                // Heartbeat, if required
                 var now = DateTime.UtcNow;
                 var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
 
-                if (lastSentHeartbeat is null || now - lastSentHeartbeat >= heartbeatInterval - safetyMargin)
+                var needsHeartbeat = lastSentHeartbeatTime is null ||
+                                     now - lastSentHeartbeatTime >= heartbeatInterval - safetyMargin;
+
+                Result sendResult;
+
+                // Heartbeats are prioritized over user-submitted payloads, and are sent without using the rate limit
+                // policy to avoid timing issues.
+                if (needsHeartbeat)
                 {
-                    if (lastHeartbeatAck < lastSentHeartbeat)
+                    var lastReceivedEventTime = ReadTimeAtomic(ref _lastReceivedEvent);
+                    var lastHeartbeatAckTime = ReadTimeAtomic(ref _lastReceivedHeartbeatAck);
+
+                    var isConnectionSilent = lastHeartbeatAckTime < lastSentHeartbeatTime &&
+                                             now - lastReceivedEventTime >= heartbeatInterval - safetyMargin;
+
+                    if (isConnectionSilent)
                     {
                         return new GatewayError
                         (
-                            "The server did not respond in time with a heartbeat acknowledgement.",
+                            "The server did not respond in time with a heartbeat acknowledgement or an incoming event.",
                             true,
                             false
                         );
@@ -872,41 +945,57 @@ public class DiscordGatewayClient : IDisposable
                     // 32-bit reads are atomic, so this is fine
                     var lastSequenceNumber = _lastSequenceNumber;
 
-                    var heartbeatPayload = new Payload<IHeartbeat>
+                    var heartbeatPayload = new Payload<IHeartbeat>(new Heartbeat
                     (
-                        new Heartbeat
-                        (
-                            lastSequenceNumber == 0 ? null : lastSequenceNumber
-                        )
-                    );
+                        lastSequenceNumber == 0 ? null : lastSequenceNumber
+                    ));
 
-                    var sendHeartbeat = await _transportService.SendPayloadAsync(heartbeatPayload, disconnectRequested);
-
-                    if (!sendHeartbeat.IsSuccess)
+                    sendResult = await _transportService.SendPayloadAsync(heartbeatPayload, disconnectRequested);
+                    WriteTimeAtomic(ref _lastSentHeartbeat, DateTime.UtcNow);
+                }
+                else
+                {
+                    if (!_payloadsToSend.TryPeek(out var userPayload))
                     {
-                        return Result.FromError
-                        (
-                            new GatewayError("Failed to send a heartbeat.", true, false),
-                            sendHeartbeat
-                        );
+                        // Sleep for a little bit
+                        await Task.Delay(CalculateAllowedSleepTime(heartbeatInterval), disconnectRequested);
+                        continue;
                     }
 
-                    lastSentHeartbeat = DateTime.UtcNow;
-                    Interlocked.Exchange(ref _lastSentHeartbeat, lastSentHeartbeat.Value.ToBinary());
+                    while (true)
+                    {
+                        sendResult = await rateLimitPolicy.ExecuteAsync
+                        (
+                            () => _transportService.SendPayloadAsync(userPayload, disconnectRequested)
+                        );
+
+                        if (sendResult.IsSuccess)
+                        {
+                            // Dequeue the peeked payload, now that we've sent it
+                            _payloadsToSend.TryDequeue(out _);
+                            break;
+                        }
+
+                        if (sendResult.Error is RetryAfterError rae)
+                        {
+                            var allowedSleepTime = CalculateAllowedSleepTime(heartbeatInterval);
+                            if (rae.RetryAfter >= allowedSleepTime)
+                            {
+                                // Won't have time to send this until we have to heartbeat again... give up for now
+                                await Task.Delay(allowedSleepTime, disconnectRequested);
+
+                                sendResult = Result.FromSuccess();
+                                break;
+                            }
+
+                            await Task.Delay(rae.RetryAfter, disconnectRequested);
+                            continue;
+                        }
+
+                        break;
+                    }
                 }
 
-                // Check if there are any user-submitted payloads to send
-                if (!_payloadsToSend.TryDequeue(out var payload))
-                {
-                    // Let's sleep for a little while
-                    var maxSleepTime = lastSentHeartbeat.Value + heartbeatInterval - safetyMargin - now;
-                    var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
-
-                    await Task.Delay(sleepTime, disconnectRequested);
-                    continue;
-                }
-
-                var sendResult = await _transportService.SendPayloadAsync(payload, disconnectRequested);
                 if (sendResult.IsSuccess)
                 {
                     continue;
@@ -935,19 +1024,29 @@ public class DiscordGatewayClient : IDisposable
     /// This method acts as the main entrypoint for the gateway receiver task. It processes payloads that are
     /// sent from the gateway to the application, submitting them to it.
     /// </summary>
+    /// <param name="heartbeatInterval">The interval at which heartbeats should be sent.</param>
     /// <param name="disconnectRequested">A token for requests to disconnect the socket.</param>
     /// <returns>A receiver result which may or may not have been successful. A failed result indicates that
     /// something has gone wrong when receiving a payload, and that the connection has been deemed nonviable. A
     /// nonviable connection should be either terminated, reestablished, or resumed as appropriate.</returns>
-    private async Task<Result> GatewayReceiverAsync(CancellationToken disconnectRequested)
+    private async Task<Result> GatewayReceiverAsync(TimeSpan heartbeatInterval, CancellationToken disconnectRequested)
     {
         await Task.Yield();
 
         try
         {
+            var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(heartbeatInterval * 2);
+
             while (!disconnectRequested.IsCancellationRequested)
             {
-                var receivedPayload = await _transportService.ReceivePayloadAsync(disconnectRequested);
+                var receivedPayload = await timeoutPolicy.ExecuteAsync
+                (
+                    c => _transportService.ReceivePayloadAsync(c),
+                    disconnectRequested
+                );
+
+                var receivedAt = DateTime.UtcNow;
+
                 if (!receivedPayload.IsSuccess)
                 {
                     // Normal closures are okay
@@ -960,20 +1059,16 @@ public class DiscordGatewayClient : IDisposable
                 if (receivedPayload.Entity is IEventPayload eventPayload)
                 {
                     Interlocked.Exchange(ref _lastSequenceNumber, eventPayload.SequenceNumber);
+                    WriteTimeAtomic(ref _lastReceivedEvent, receivedAt);
                 }
 
                 // Update the ack timestamp
                 if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
                 {
-                    var receivedAt = DateTime.UtcNow;
-                    Interlocked.Exchange(ref _lastReceivedHeartbeatAck, receivedAt.ToBinary());
+                    WriteTimeAtomic(ref _lastReceivedHeartbeatAck, receivedAt);
 
                     // Update the latency
-                    var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
-                    var lastSentHeartbeat = lastSentHeartbeatBinary > 0
-                        ? DateTime.FromBinary(lastSentHeartbeatBinary)
-                        : (DateTime?)null;
-
+                    var lastSentHeartbeat = ReadTimeAtomic(ref _lastSentHeartbeat);
                     if (lastSentHeartbeat != null)
                     {
                         this.Latency = receivedAt - lastSentHeartbeat.Value;
@@ -1044,9 +1139,43 @@ public class DiscordGatewayClient : IDisposable
         }
     }
 
+    private static DateTime? ReadTimeAtomic(ref long field)
+    {
+        var binary = Interlocked.Read(ref field);
+        return binary > 0
+            ? DateTime.FromBinary(binary)
+            : null;
+    }
+
+    private static void WriteTimeAtomic(ref long field, DateTime value)
+    {
+        Interlocked.Exchange(ref field, value.ToBinary());
+    }
+
+    private TimeSpan CalculateAllowedSleepTime(TimeSpan heartbeatInterval)
+    {
+        var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
+        var lastSentHeartbeat = lastSentHeartbeatBinary > 0
+            ? DateTime.FromBinary(lastSentHeartbeatBinary)
+            : (DateTime?)null;
+
+        var now = DateTime.UtcNow;
+        var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
+
+        var maxSleepTime = lastSentHeartbeat + heartbeatInterval - safetyMargin - now;
+
+        return maxSleepTime is null
+            ? safetyMargin
+            : maxSleepTime.Value <= TimeSpan.Zero
+                ? TimeSpan.Zero
+                : TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.Value.TotalMilliseconds));
+    }
+
     /// <inheritdoc />
     public void Dispose()
     {
+        GC.SuppressFinalize(this);
+
         _disconnectRequestedSource.Dispose();
     }
 }

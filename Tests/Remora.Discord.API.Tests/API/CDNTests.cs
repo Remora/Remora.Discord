@@ -1043,15 +1043,15 @@ public class CDNTests
     }
 
     /// <summary>
-    /// Tests the <see cref="CDN.GetGuildScheduledEventBannerUrl(IGuildScheduledEvent, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
-    /// overloads.
+    /// Tests the <see cref="CDN.GetGuildScheduledEventCoverUrl(IGuildScheduledEvent, Optional{CDNImageFormat}, Optional{ushort})"/>
+    /// method and its overloads.
     /// </summary>
-    public class GetGuildScheduledEventBannerUrl : CDNTestBase
+    public class GetGuildScheduledEventCoverUrl : CDNTestBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetGuildScheduledEventBannerUrl"/> class.
+        /// Initializes a new instance of the <see cref="GetGuildScheduledEventCoverUrl"/> class.
         /// </summary>
-        public GetGuildScheduledEventBannerUrl()
+        public GetGuildScheduledEventCoverUrl()
             : base
             (
                 new Uri("https://cdn.discordapp.com/guild-events/0/1"),
@@ -1071,7 +1071,7 @@ public class CDNTests
 
             var scheduledEvent = mockedEvent.Object;
 
-            var getActual = CDN.GetGuildScheduledEventBannerUrl(scheduledEvent, CDNImageFormat.PNG);
+            var getActual = CDN.GetGuildScheduledEventCoverUrl(scheduledEvent, CDNImageFormat.PNG);
 
             Assert.False(getActual.IsSuccess);
             Assert.IsType<ImageNotFoundError>(getActual.Error);
@@ -1091,8 +1091,40 @@ public class CDNTests
             mockedEvent.SetupGet(g => g.Image).Returns(imageHash);
 
             var scheduledEvent = mockedEvent.Object;
-            yield return CDN.GetGuildScheduledEventBannerUrl(scheduledEvent, imageFormat, imageSize);
-            yield return CDN.GetGuildScheduledEventBannerUrl(scheduledEvent.ID, imageHash, imageFormat, imageSize);
+            yield return CDN.GetGuildScheduledEventCoverUrl(scheduledEvent, imageFormat, imageSize);
+            yield return CDN.GetGuildScheduledEventCoverUrl(scheduledEvent.ID, imageHash, imageFormat, imageSize);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="CDN.GetGuildMemberBannerUrl"/> method and its overloads.
+    /// </summary>
+    public class GetGuildMemberBannerUrl : CDNTestBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildMemberBannerUrl"/> class.
+        /// </summary>
+        public GetGuildMemberBannerUrl()
+            : base
+            (
+                new Uri("https://cdn.discordapp.com/guilds/0/users/1/banners/2"),
+                new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP, CDNImageFormat.GIF }
+            )
+        {
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<Result<Uri>> GetImageUris
+        (
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var guild = new Snowflake(0);
+            var user = new Snowflake(1);
+            var imageHash = new ImageHash("2");
+
+            yield return CDN.GetGuildMemberBannerUrl(guild, user, imageHash, imageFormat, imageSize);
         }
     }
 }

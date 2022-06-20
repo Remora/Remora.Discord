@@ -77,6 +77,11 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         CancellationToken ct = default
     )
     {
+        if (name.Length is < 2 or > 100)
+        {
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 100 characters.");
+        }
+
         var packIcon = await ImagePacker.PackImageAsync(icon!, ct);
         if (!packIcon.IsDefined(out var iconData))
         {
@@ -115,7 +120,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<ITemplate>> CreateGuildTemplateAsync
+    public virtual async Task<Result<ITemplate>> CreateGuildTemplateAsync
     (
         Snowflake guildID,
         string name,
@@ -123,7 +128,17 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.PostAsync<ITemplate>
+        if (name.Length is < 1 or > 100)
+        {
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
+        }
+
+        if (description.IsDefined(out var descriptionValue) && descriptionValue.Length > 120)
+        {
+            return new ArgumentOutOfRangeError(nameof(description), "The description must be between 0 and 120 characters.");
+        }
+
+        return await this.RestHttpClient.PostAsync<ITemplate>
         (
             $"guilds/{guildID}/templates",
             b => b.WithJson
@@ -156,23 +171,33 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<ITemplate>> ModifyGuildTemplateAsync
+    public virtual async Task<Result<ITemplate>> ModifyGuildTemplateAsync
     (
         Snowflake guildID,
         string templateCode,
-        string name,
-        Optional<string> description,
+        Optional<string> name,
+        Optional<string?> description,
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.PatchAsync<ITemplate>
+        if (name.IsDefined(out var nameValue) && nameValue.Length is < 1 or > 100)
+        {
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
+        }
+
+        if (description.IsDefined(out var descriptionValue) && descriptionValue.Length > 120)
+        {
+            return new ArgumentOutOfRangeError(nameof(description), "The description must be between 0 and 120 characters.");
+        }
+
+        return await this.RestHttpClient.PatchAsync<ITemplate>
         (
             $"guilds/{guildID}/templates/{templateCode}",
             b => b.WithJson
                 (
                     j =>
                     {
-                        j.WriteString("name", name);
+                        j.Write("name", name, this.JsonOptions);
                         j.Write("description", description, this.JsonOptions);
                     }
                 )

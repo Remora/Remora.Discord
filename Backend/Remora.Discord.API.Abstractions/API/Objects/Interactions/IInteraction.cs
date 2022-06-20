@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -47,9 +48,9 @@ public interface IInteraction
     InteractionType Type { get; }
 
     /// <summary>
-    /// Gets the command data payload.
+    /// Gets the data payload.
     /// </summary>
-    Optional<IInteractionData> Data { get; }
+    Optional<OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>> Data { get; }
 
     /// <summary>
     /// Gets the ID of the guild the interaction was sent from.
@@ -94,4 +95,9 @@ public interface IInteraction
     /// This is sent for all interaction types, except <see cref="InteractionType.Ping"/>.
     /// </remarks>
     Optional<string> Locale { get; }
+
+    /// <summary>
+    /// Gets the locale of the guild the interaction was sent from.
+    /// </summary>
+    Optional<string> GuildLocale { get; }
 }

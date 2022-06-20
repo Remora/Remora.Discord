@@ -84,32 +84,34 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
+        if (!gatewayEvent.Data.IsDefined(out var data))
+        {
+            return new InvalidOperationError("Component or modal interaction without data received. Bug?");
+        }
+
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
-            return Result.FromError(createContext);
+            return (Result)createContext;
         }
 
         var context = createContext.Entity;
         _contextInjectionService.Context = context;
 
-        return context.Data.Components.HasValue
-            ? await HandleModalInteractionAsync(context, ct)
-            : await HandleComponentInteractionAsync(context, ct);
+        return data.TryPickT1(out var componentData, out var remainder)
+            ? await HandleComponentInteractionAsync(context, componentData, ct)
+            : remainder.TryPickT1(out var modalSubmitData, out _)
+                ? await HandleModalInteractionAsync(context, modalSubmitData, ct)
+                : Result.FromSuccess();
     }
 
-    private async Task<Result> HandleModalInteractionAsync(InteractionContext context, CancellationToken ct)
+    private async Task<Result> HandleModalInteractionAsync
+    (
+        InteractionContext context,
+        IModalSubmitData data,
+        CancellationToken ct = default
+    )
     {
-        if (!context.Data.Components.IsDefined(out var components))
-        {
-            return new InvalidOperationError("The interaction did not contain a custom ID.");
-        }
-
-        if (!context.Data.CustomID.IsDefined(out var customID))
-        {
-            return new InvalidOperationError("The interaction did not contain a custom ID.");
-        }
-
         if (!_options.SuppressAutomaticResponses)
         {
             var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
@@ -130,8 +132,8 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var interactionResults = await RunEntityHandlersAsync<IModalInteractiveEntity>
         (
             null,
-            customID,
-            (entity, c) => entity.HandleInteractionAsync(context.User, customID, components, c),
+            data.CustomID,
+            (entity, c) => entity.HandleInteractionAsync(context.User, data.CustomID, data.Components, c),
             ct
         );
 
@@ -140,7 +142,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return new NotFoundError
             (
                 "No interested interactive entities were found. Did you forget to add any entities interested " +
-                $"in modal submissions (with the ID {customID}) to the service collection?"
+                $"in modal submissions (with the ID {data.CustomID}) to the service collection?"
             );
         }
 
@@ -149,21 +151,16 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             : new AggregateError(interactionResults.Where(r => !r.IsSuccess).Cast<IResult>().ToArray());
     }
 
-    private async Task<Result> HandleComponentInteractionAsync(InteractionContext context, CancellationToken ct)
+    private async Task<Result> HandleComponentInteractionAsync
+    (
+        InteractionContext context,
+        IMessageComponentData data,
+        CancellationToken ct = default
+    )
     {
-        if (!context.Data.ComponentType.IsDefined(out var componentType))
+        if (data.ComponentType is ComponentType.SelectMenu)
         {
-            return new InvalidOperationError("The interaction did not contain a component type.");
-        }
-
-        if (!context.Data.CustomID.IsDefined(out var customID))
-        {
-            return new InvalidOperationError("The interaction did not contain a custom ID.");
-        }
-
-        if (componentType is ComponentType.SelectMenu)
-        {
-            if (!context.Data.Values.HasValue)
+            if (!data.Values.HasValue)
             {
                 return new InvalidOperationError("The interaction did not contain any selected values.");
             }
@@ -187,15 +184,15 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         }
 
         IReadOnlyList<Result> interactionResults;
-        switch (componentType)
+        switch (data.ComponentType)
         {
             case ComponentType.Button:
             {
                 interactionResults = await RunEntityHandlersAsync<IButtonInteractiveEntity>
                 (
-                    componentType,
-                    customID,
-                    (entity, c) => entity.HandleInteractionAsync(context.User, customID, c),
+                    data.ComponentType,
+                    data.CustomID,
+                    (entity, c) => entity.HandleInteractionAsync(context.User, data.CustomID, c),
                     ct
                 );
 
@@ -205,9 +202,9 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             {
                 interactionResults = await RunEntityHandlersAsync<ISelectMenuInteractiveEntity>
                 (
-                    componentType,
-                    customID,
-                    (entity, c) => entity.HandleInteractionAsync(context.User, customID, context.Data.Values.Value, c),
+                    data.ComponentType,
+                    data.CustomID,
+                    (entity, c) => entity.HandleInteractionAsync(context.User, data.CustomID, data.Values.Value, c),
                     ct
                 );
 
@@ -225,8 +222,8 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return new NotFoundError
             (
                 "No interested interactive entities were found. Did you forget to add any entities interested " +
-                $"in {componentType.Humanize().ToLowerInvariant()} components (with the ID {customID}) to the " +
-                "service collection?"
+                $"in {data.ComponentType.Humanize().ToLowerInvariant()} components (with the ID {data.CustomID}) to " +
+                "the service collection?"
             );
         }
 
@@ -267,7 +264,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
                 var determineInterest = await entity.IsInterestedAsync(componentType, customID, ct);
                 if (!determineInterest.IsSuccess)
                 {
-                    return Result.FromError(determineInterest);
+                    return (Result)determineInterest;
                 }
 
                 if (determineInterest.IsDefined(out var isInterested) && !isInterested)
@@ -325,7 +322,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var determineInterest = await entity.IsInterestedAsync(componentType, customID, ct);
         if (!determineInterest.IsSuccess)
         {
-            return Result.FromError(determineInterest);
+            return (Result)determineInterest;
         }
 
         if (determineInterest.IsDefined(out var isInterested) && !isInterested)

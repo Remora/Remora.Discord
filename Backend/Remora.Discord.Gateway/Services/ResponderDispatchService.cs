@@ -24,12 +24,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
@@ -44,11 +46,12 @@ namespace Remora.Discord.Gateway.Services;
 public class ResponderDispatchService : IAsyncDisposable
 {
     private readonly IServiceProvider _services;
+    private readonly ResponderDispatchOptions _options;
     private readonly ILogger<ResponderDispatchService> _log;
     private readonly IResponderTypeRepository _responderTypeRepository;
 
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
-    private readonly Dictionary<Type, MethodInfo> _cachedDispatchMethods;
+    private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchDelegates;
 
     private CancellationTokenSource? _dispatchCancellationSource;
     private Task? _dispatcher;
@@ -67,19 +70,22 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <param name="services">The available services.</param>
     /// <param name="responderTypeRepository">The responder type repository.</param>
     /// <param name="log">The logging instance for this type.</param>
+    /// <param name="options">Options for dispatch.</param>
     public ResponderDispatchService
     (
         IServiceProvider services,
         IResponderTypeRepository responderTypeRepository,
-        ILogger<ResponderDispatchService> log
+        ILogger<ResponderDispatchService> log,
+        IOptions<ResponderDispatchOptions> options
     )
     {
         _services = services;
         _responderTypeRepository = responderTypeRepository;
         _log = log;
+        _options = options.Value;
 
         _cachedInterfaceTypeArguments = new();
-        _cachedDispatchMethods = new();
+        _cachedDispatchDelegates = new();
     }
 
     /// <summary>
@@ -135,7 +141,7 @@ public class ResponderDispatchService : IAsyncDisposable
         _dispatchCancellationSource = new();
         _payloadsToDispatch = Channel.CreateBounded<IPayload>
         (
-            new BoundedChannelOptions(100) { FullMode = BoundedChannelFullMode.Wait }
+            new BoundedChannelOptions((int)_options.MaxItems) { FullMode = BoundedChannelFullMode.Wait }
         );
 
         _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
@@ -312,9 +318,10 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <param name="ct">The cancellation token for the dispatched event.</param>
     private Result<Task<IReadOnlyList<Result>>> UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
     {
-        if (!_cachedInterfaceTypeArguments.TryGetValue(payload.GetType(), out var interfaceArgument))
+        var payloadType = payload.GetType();
+
+        if (!_cachedInterfaceTypeArguments.TryGetValue(payloadType, out var interfaceArgument))
         {
-            var payloadType = payload.GetType();
             if (!payloadType.IsGenericType)
             {
                 _log.LogWarning
@@ -343,10 +350,10 @@ public class ResponderDispatchService : IAsyncDisposable
             }
 
             interfaceArgument = payloadInterfaceType.GetGenericArguments()[0];
-            _cachedInterfaceTypeArguments.Add(payload.GetType(), interfaceArgument);
+            _cachedInterfaceTypeArguments.Add(payloadType, interfaceArgument);
         }
 
-        if (!_cachedDispatchMethods.TryGetValue(interfaceArgument, out var boundDispatchMethod))
+        if (!_cachedDispatchDelegates.TryGetValue(interfaceArgument, out var dispatchDelegate))
         {
             var dispatchMethod = GetType().GetMethod
             (
@@ -359,21 +366,25 @@ public class ResponderDispatchService : IAsyncDisposable
                 throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEventAsync));
             }
 
-            boundDispatchMethod = dispatchMethod.MakeGenericMethod(interfaceArgument);
-            _cachedDispatchMethods.Add(interfaceArgument, boundDispatchMethod);
+            var delegateType = typeof(Func<,,>).MakeGenericType
+            (
+                typeof(IPayload<>).MakeGenericType(interfaceArgument),
+                typeof(CancellationToken),
+                typeof(Task<IReadOnlyList<Result>>)
+            );
+
+            // Naughty unsafe cast, because we know we're calling it with compatible types in this method
+            dispatchDelegate = Unsafe.As<Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>>
+            (
+                dispatchMethod
+                .MakeGenericMethod(interfaceArgument)
+                .CreateDelegate(delegateType, this)
+            );
+
+            _cachedDispatchDelegates.Add(interfaceArgument, dispatchDelegate);
         }
 
-        var responderTask = Task.Run
-        (
-            () =>
-            {
-                var task = boundDispatchMethod.Invoke(this, new object?[] { payload, ct })
-                           ?? throw new InvalidOperationException();
-
-                return (Task<IReadOnlyList<Result>>)task;
-            },
-            ct
-        );
+        var responderTask = Task.Run(() => dispatchDelegate(payload, ct), ct);
 
         return responderTask;
     }
@@ -501,6 +512,8 @@ public class ResponderDispatchService : IAsyncDisposable
         {
             return;
         }
+
+        GC.SuppressFinalize(this);
 
         await StopAsync();
     }

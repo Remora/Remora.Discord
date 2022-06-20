@@ -5,16 +5,15 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.0.2</Version>
+        <Version>4.2.6</Version>
         <Description>Utilities and components which extened upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
-            Use # to separate username and discriminator.
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Results" Version="7.1.3" />
+        <PackageReference Include="Remora.Results" Version="7.2.0" />
     </ItemGroup>
 
     <ItemGroup>

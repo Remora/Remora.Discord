@@ -1,5 +1,5 @@
 //
-//  DiscordDefaultPermissionAttribute.cs
+//  DiscordDefaultDMPermissionAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,25 +25,22 @@ using System;
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
-/// Marks a group with a default permission, that is, whether commands in the group will be visible to all users by
-/// default.
+/// Marks a command or group as being either accessible or inaccessible in a DM.
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)]
-public class DiscordDefaultPermissionAttribute : Attribute
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class DiscordDefaultDMPermissionAttribute : Attribute
 {
     /// <summary>
-    /// Gets a value indicating whether commands in the group will be visible to all users by default.
+    /// Gets a value indicating whether the command group is executable in a DM.
     /// </summary>
-    public bool DefaultPermission { get; }
+    public bool IsExecutableInDMs { get; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DiscordDefaultPermissionAttribute"/> class.
+    /// Initializes a new instance of the <see cref="DiscordDefaultDMPermissionAttribute"/> class.
     /// </summary>
-    /// <param name="defaultPermission">
-    /// true if commands in the group should be visible to all users by default; otherwise, false.
-    /// </param>
-    public DiscordDefaultPermissionAttribute(bool defaultPermission)
+    /// <param name="isExecutableInDMs">Whether this command group is executable in a DM.</param>
+    public DiscordDefaultDMPermissionAttribute(bool isExecutableInDMs = true)
     {
-        this.DefaultPermission = defaultPermission;
+        this.IsExecutableInDMs = isExecutableInDMs;
     }
 }

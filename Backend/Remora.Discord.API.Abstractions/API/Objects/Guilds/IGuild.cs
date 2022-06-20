@@ -150,51 +150,6 @@ public interface IGuild : IPartialGuild
     new Snowflake? RulesChannelID { get; }
 
     /// <summary>
-    /// Gets the time when the current user joined the guild.
-    /// </summary>
-    new Optional<DateTimeOffset> JoinedAt { get; }
-
-    /// <summary>
-    /// Gets a value indicating whether this is considered a large guild.
-    /// </summary>
-    new Optional<bool> IsLarge { get; }
-
-    /// <summary>
-    /// Gets a value indicating whether the guild is unavailable due to an outage.
-    /// </summary>
-    new Optional<bool> IsUnavailable { get; }
-
-    /// <summary>
-    /// Gets the number of members in the guild.
-    /// </summary>
-    new Optional<int> MemberCount { get; }
-
-    /// <summary>
-    /// Gets the states of members currently in voice channels.
-    /// </summary>
-    new Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates { get; }
-
-    /// <summary>
-    /// Gets the members in the guild.
-    /// </summary>
-    new Optional<IReadOnlyList<IGuildMember>> Members { get; }
-
-    /// <summary>
-    /// Gets the channels in the guild.
-    /// </summary>
-    new Optional<IReadOnlyList<IChannel>> Channels { get; }
-
-    /// <summary>
-    /// Gets the threads in the guild.
-    /// </summary>
-    new Optional<IReadOnlyList<IChannel>> Threads { get; }
-
-    /// <summary>
-    /// Gets the presences of the members in the guild.
-    /// </summary>
-    new Optional<IReadOnlyList<IPartialPresence>> Presences { get; }
-
-    /// <summary>
     /// Gets the maximum number of presences for the guild. This is null for all but the largest of guilds.
     /// </summary>
     new Optional<int?> MaxPresences { get; }
@@ -266,19 +221,9 @@ public interface IGuild : IPartialGuild
     new GuildNSFWLevel NSFWLevel { get; }
 
     /// <summary>
-    /// Gets the stage instances in the guild.
-    /// </summary>
-    new Optional<IReadOnlyList<IStageInstance>> StageInstances { get; }
-
-    /// <summary>
     /// Gets the stickers in the guild.
     /// </summary>
     new Optional<IReadOnlyList<ISticker>> Stickers { get; }
-
-    /// <summary>
-    /// Gets the scheduled events in the guild.
-    /// </summary>
-    new Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents { get; }
 
     /// <summary>
     /// Gets a value indicating whether the guild has the boost progress bar enabled.
@@ -355,33 +300,6 @@ public interface IGuild : IPartialGuild
     Optional<Snowflake?> IPartialGuild.RulesChannelID => this.RulesChannelID;
 
     /// <inheritdoc/>
-    Optional<DateTimeOffset> IPartialGuild.JoinedAt => this.JoinedAt;
-
-    /// <inheritdoc/>
-    Optional<bool> IPartialGuild.IsLarge => this.IsLarge;
-
-    /// <inheritdoc/>
-    Optional<bool> IPartialGuild.IsUnavailable => this.IsUnavailable;
-
-    /// <inheritdoc/>
-    Optional<int> IPartialGuild.MemberCount => this.MemberCount;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IPartialVoiceState>> IPartialGuild.VoiceStates => this.VoiceStates;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IGuildMember>> IPartialGuild.Members => this.Members;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IChannel>> IPartialGuild.Channels => this.Channels;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IChannel>> IPartialGuild.Threads => this.Threads;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IPartialPresence>> IPartialGuild.Presences => this.Presences;
-
-    /// <inheritdoc/>
     Optional<int?> IPartialGuild.MaxPresences => this.MaxPresences;
 
     /// <inheritdoc/>
@@ -424,13 +342,7 @@ public interface IGuild : IPartialGuild
     Optional<GuildNSFWLevel> IPartialGuild.NSFWLevel => this.NSFWLevel;
 
     /// <inheritdoc/>
-    Optional<IReadOnlyList<IStageInstance>> IPartialGuild.StageInstances => this.StageInstances;
-
-    /// <inheritdoc/>
     Optional<IReadOnlyList<ISticker>> IPartialGuild.Stickers => this.Stickers;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IGuildScheduledEvent>> IPartialGuild.GuildScheduledEvents => this.GuildScheduledEvents;
 
     /// <inheritdoc/>
     Optional<bool> IPartialGuild.IsPremiumProgressBarEnabled => this.IsPremiumProgressBarEnabled;

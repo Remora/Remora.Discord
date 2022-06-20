@@ -146,9 +146,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IIdentify, Identify>();
 
         options.AddDataObjectConverter<IConnectionProperties, ConnectionProperties>()
-            .WithPropertyName(p => p.OperatingSystem, "$os")
-            .WithPropertyName(p => p.Browser, "$browser")
-            .WithPropertyName(p => p.Device, "$device");
+            .WithPropertyName(p => p.OperatingSystem, "os")
+            .WithPropertyName(p => p.Browser, "browser")
+            .WithPropertyName(p => p.Device, "device");
 
         options.AddConverter<ShardIdentificationConverter>();
 
@@ -265,8 +265,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
             .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
-            .WithPropertyName(g => g.IsLarge, "large")
-            .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
@@ -387,6 +385,9 @@ public static class ServiceCollectionExtensions
 
         // Stickers
         options.AddDataObjectConverter<IGuildStickersUpdate, GuildStickersUpdate>();
+
+        // Application commands
+        options.AddDataObjectConverter<IApplicationCommandPermissionsUpdate, ApplicationCommandPermissionsUpdate>();
 
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -531,6 +532,8 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 
+        options.AddDataObjectConverter<IChannelThreadQueryResponse, ChannelThreadQueryResponse>();
+
         return options;
     }
 
@@ -579,8 +582,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
             .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
-            .WithPropertyName(g => g.IsLarge, "large")
-            .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
@@ -589,8 +590,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
             .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
-            .WithPropertyName(g => g.IsLarge, "large")
-            .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
@@ -936,7 +935,9 @@ public static class ServiceCollectionExtensions
     /// <returns>The options, with the converters added.</returns>
     private static JsonSerializerOptions AddInteractionObjectConverters(this JsonSerializerOptions options)
     {
-        options.AddDataObjectConverter<IInteractionData, InteractionData>();
+        options.AddDataObjectConverter<IApplicationCommandData, ApplicationCommandData>();
+        options.AddDataObjectConverter<IMessageComponentData, MessageComponentData>();
+        options.AddDataObjectConverter<IModalSubmitData, ModalSubmitData>();
         options.AddDataObjectConverter
             <
                 IApplicationCommandInteractionDataOption, ApplicationCommandInteractionDataOption

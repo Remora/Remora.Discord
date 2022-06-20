@@ -64,10 +64,11 @@ public interface IDiscordRestApplicationAPI
     /// <param name="name">The name of the command. 3-32 characters.</param>
     /// <param name="description">The description of the command. 1-100 characters.</param>
     /// <param name="options">The parameters for the command.</param>
-    /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
     /// <param name="type">The type of the application command.</param>
     /// <param name="nameLocalizations">The localized names of the command.</param>
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
+    /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
+    /// <param name="dmPermission">Whether this command is executable in DMs.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
@@ -76,10 +77,11 @@ public interface IDiscordRestApplicationAPI
         string name,
         string description,
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
-        Optional<bool> defaultPermission = default,
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool?> dmPermission = default,
         CancellationToken ct = default
     );
 
@@ -119,9 +121,10 @@ public interface IDiscordRestApplicationAPI
     /// <param name="name">The name of the command. 3-32 characters.</param>
     /// <param name="description">The description of the command. 1-100 characters.</param>
     /// <param name="options">The parameters for the command.</param>
-    /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
     /// <param name="nameLocalizations">The localized names of the command.</param>
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
+    /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
+    /// <param name="dmPermission">Whether this command is executable in DMs.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
@@ -131,9 +134,10 @@ public interface IDiscordRestApplicationAPI
         Optional<string> name = default,
         Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
-        Optional<bool> defaultPermission = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool?> dmPermission = default,
         CancellationToken ct = default
     );
 
@@ -182,10 +186,10 @@ public interface IDiscordRestApplicationAPI
     /// <param name="name">The name of the command. 3-32 characters.</param>
     /// <param name="description">The description of the command. 1-100 characters.</param>
     /// <param name="options">The parameters for the command.</param>
-    /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
     /// <param name="type">The type of the application command.</param>
     /// <param name="nameLocalizations">The localized names of the command.</param>
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
+    /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
@@ -195,10 +199,10 @@ public interface IDiscordRestApplicationAPI
         string name,
         string description,
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
-        Optional<bool> defaultPermission = default,
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         CancellationToken ct = default
     );
 
@@ -243,11 +247,12 @@ public interface IDiscordRestApplicationAPI
     /// <param name="name">The name of the command. 3-32 characters.</param>
     /// <param name="description">The description of the command. 1-100 characters.</param>
     /// <param name="options">The parameters for the command.</param>
-    /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
     /// <param name="nameLocalizations">The localized names of the command.</param>
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
+    /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
+    /// <remarks>This method requires a bearer token authorized with the applications.commands.permissions.update scope.</remarks>
     Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
     (
         Snowflake applicationID,
@@ -256,9 +261,9 @@ public interface IDiscordRestApplicationAPI
         Optional<string> name = default,
         Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
-        Optional<bool> defaultPermission = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         CancellationToken ct = default
     );
 
@@ -317,28 +322,13 @@ public interface IDiscordRestApplicationAPI
     /// <param name="permissions">The permissions to overwrite the existing ones with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>An edit result which may or may not have succeeded.</returns>
+    /// <remarks>This method requires a bearer token authorized with the applications.commands.permissions.update scope.</remarks>
     Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
     (
         Snowflake applicationID,
         Snowflake guildID,
         Snowflake commandID,
         IReadOnlyList<IApplicationCommandPermissions> permissions,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
-    /// Overwrites the entire permission set in the given guild.
-    /// </summary>
-    /// <param name="applicationID">The ID of the application.</param>
-    /// <param name="guildID">The ID of the guild.</param>
-    /// <param name="permissions">The permission set to overwrite the existing one with.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>An edit result which may or may not have succeeded.</returns>
-    Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>> BatchEditApplicationCommandPermissionsAsync
-    (
-        Snowflake applicationID,
-        Snowflake guildID,
-        IReadOnlyList<IPartialGuildApplicationCommandPermissions> permissions,
         CancellationToken ct = default
     );
 }

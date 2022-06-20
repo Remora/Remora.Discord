@@ -20,8 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events;
 
@@ -31,4 +33,20 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 [PublicAPI]
 public interface IMessageCreate : IGatewayEvent, IMessage
 {
+    /// <summary>
+    /// Gets the ID of the guild the message was sent in.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
+
+    /// <summary>
+    /// Gets the member properties for the author. The member object exists in MESSAGE_CREATE and
+    /// MESSAGE_UPDATE events from text-based guild channels. This allows bots to obtain real-time member data
+    /// without requiring bots to keep member state in memory.
+    /// </summary>
+    Optional<IPartialGuildMember> Member { get; }
+
+    /// <summary>
+    /// Gets a list of users mentioned in the message.
+    /// </summary>
+    IReadOnlyList<IUserMention> Mentions { get; }
 }

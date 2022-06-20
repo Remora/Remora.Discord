@@ -651,6 +651,8 @@ public class DiscordRestGuildAPITests
             var permissionOverwrites = new List<IPermissionOverwrite>();
             var parentId = DiscordSnowflake.New(1);
             var nsfw = true;
+            var rtcRegion = "abcd";
+            var videoQualityMode = VideoQualityMode.Full;
             var reason = "test";
 
             var api = CreateAPI
@@ -658,6 +660,24 @@ public class DiscordRestGuildAPITests
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("topic", p => p.Is(topic))
+                                .WithProperty("bitrate", p => p.Is(bitrate))
+                                .WithProperty("user_limit", p => p.Is(userLimit))
+                                .WithProperty("position", p => p.Is(position))
+                                .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("parent_id", p => p.Is(parentId.ToString()))
+                                .WithProperty("nsfw", p => p.Is(nsfw))
+                                .WithProperty("rtc_region", p => p.Is(rtcRegion))
+                                .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
+                        )
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
             );
 
@@ -673,7 +693,66 @@ public class DiscordRestGuildAPITests
                 permissionOverwrites: permissionOverwrites,
                 parentID: parentId,
                 isNsfw: nsfw,
+                rtcRegion: rtcRegion,
+                videoQualityMode: videoQualityMode,
                 reason: reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNullableRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var name = "dd";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("type", p => p.IsNull())
+                                .WithProperty("topic", p => p.IsNull())
+                                .WithProperty("bitrate", p => p.IsNull())
+                                .WithProperty("user_limit", p => p.IsNull())
+                                .WithProperty("rate_limit_per_user", p => p.IsNull())
+                                .WithProperty("position", p => p.IsNull())
+                                .WithProperty("permission_overwrites", p => p.IsNull())
+                                .WithProperty("parent_id", p => p.IsNull())
+                                .WithProperty("nsfw", p => p.IsNull())
+                                .WithProperty("rtc_region", p => p.IsNull())
+                                .WithProperty("video_quality_mode", p => p.IsNull())
+                                .WithProperty("default_auto_archive_duration", p => p.IsNull())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.CreateGuildChannelAsync
+            (
+                guildId,
+                name,
+                type: null,
+                topic: null,
+                bitrate: null,
+                userLimit: null,
+                rateLimitPerUser: null,
+                position: null,
+                permissionOverwrites: null,
+                parentID: null,
+                isNsfw: null,
+                rtcRegion: null,
+                videoQualityMode: null,
+                defaultAutoArchiveDuration: null
             );
 
             ResultAssert.Successful(result);
@@ -708,13 +787,11 @@ public class DiscordRestGuildAPITests
                 (DiscordSnowflake.New(3), 3, false, DiscordSnowflake.New(0)),
                 (DiscordSnowflake.New(4), 4, false, DiscordSnowflake.New(0))
             };
-            var reason = "test";
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/channels")
-                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
                         j => j.IsArray
@@ -774,7 +851,7 @@ public class DiscordRestGuildAPITests
                     .Respond(HttpStatusCode.NoContent)
             );
 
-            var result = await api.ModifyGuildChannelPositionsAsync(guildId, swaps, reason);
+            var result = await api.ModifyGuildChannelPositionsAsync(guildId, swaps);
 
             ResultAssert.Successful(result);
         }
@@ -1710,6 +1787,46 @@ public class DiscordRestGuildAPITests
     }
 
     /// <summary>
+    /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildMFALevelAsync"/> method.
+    /// </summary>
+    public class ModifyGuildMFALevelAsync : RestAPITestBase<IDiscordRestGuildAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var mfa = MultiFactorAuthenticationLevel.Elevated;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/mfa")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("level", p => p.Is((int)mfa))
+                        )
+                    )
+                    .Respond("application/json", ((int)mfa).ToString())
+            );
+
+            var result = await api.ModifyGuildMFALevelAsync
+            (
+                guildId,
+                mfa
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
     /// Tests the <see cref="DiscordRestGuildAPI.DeleteGuildRoleAsync"/> method.
     /// </summary>
     public class DeleteGuildRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
@@ -1918,14 +2035,12 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/integrations")
-                    .WithQueryString("include_applications", "true")
                     .Respond("application/json", "[ ]")
             );
 
             var result = await api.GetGuildIntegrationsAsync
             (
-                guildId,
-                true
+                guildId
             );
 
             ResultAssert.Successful(result);
@@ -2273,7 +2388,7 @@ public class DiscordRestGuildAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestGuildAPI.ListActiveThreadsAsync"/> method.
+    /// Tests the <see cref="DiscordRestGuildAPI.ListActiveGuildThreadsAsync"/> method.
     /// </summary>
     public class ListActiveThreadsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
@@ -2298,7 +2413,37 @@ public class DiscordRestGuildAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildThreadQueryResponse)])
             );
 
-            var result = await api.ListActiveThreadsAsync(guildID);
+            var result = await api.ListActiveGuildThreadsAsync(guildID);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestGuildAPI.DeleteGuildIntegrationAsync"/> method.
+    /// </summary>
+    public class DeleteGuildIntegrationAsync : RestAPITestBase<IDiscordRestGuildAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildID = DiscordSnowflake.New(0);
+            var integrationID = DiscordSnowflake.New(1);
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildID}/integrations/{integrationID}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .Respond(HttpStatusCode.NoContent)
+            );
+
+            var result = await api.DeleteGuildIntegrationAsync(guildID, integrationID, reason);
+
             ResultAssert.Successful(result);
         }
     }

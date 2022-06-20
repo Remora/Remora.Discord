@@ -301,16 +301,18 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     (
         Snowflake guildID,
         string name,
-        Optional<ChannelType> type = default,
-        Optional<string> topic = default,
-        Optional<int> bitrate = default,
-        Optional<int> userLimit = default,
-        Optional<int> rateLimitPerUser = default,
-        Optional<int> position = default,
-        Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
-        Optional<Snowflake> parentID = default,
-        Optional<bool> isNsfw = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<ChannelType?> type = default,
+        Optional<string?> topic = default,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -334,6 +336,8 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("permission_overwrites", permissionOverwrites, this.JsonOptions);
                         json.Write("parent_id", parentID, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
+                        json.Write("rtc_region", rtcRegion, this.JsonOptions);
+                        json.Write("video_quality_mode", videoQualityMode, this.JsonOptions);
                         json.Write("default_auto_archive_duration", defaultAutoArchiveDuration, this.JsonOptions);
                     }
                 )
@@ -355,7 +359,6 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             Snowflake? ParentID
             )
         > positionModifications,
-        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -363,7 +366,6 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         (
             $"guilds/{guildID}/channels",
             b => b
-                .AddAuditLogReason(reason)
                 .WithJsonArray
                 (
                     json =>
@@ -880,9 +882,33 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<MultiFactorAuthenticationLevel>> ModifyGuildMFALevelAsync
+    (
+        Snowflake guildID,
+        MultiFactorAuthenticationLevel level,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<MultiFactorAuthenticationLevel>
+        (
+            $"guilds/{guildID}/mfa",
+            b => b
+                .WithJson
+                (
+                    json =>
+                    {
+                        json.Write("level", level, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
     public virtual Task<Result> DeleteGuildRoleAsync
     (
-        Snowflake guildId,
+        Snowflake guildID,
         Snowflake roleID,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -890,7 +916,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     {
         return this.RestHttpClient.DeleteAsync
         (
-            $"guilds/{guildId}/roles/{roleID}",
+            $"guilds/{guildID}/roles/{roleID}",
             b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
@@ -1012,7 +1038,6 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     public virtual Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
     (
         Snowflake guildID,
-        Optional<bool> includeApplications = default,
         CancellationToken ct = default
     )
     {
@@ -1022,19 +1047,25 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             b =>
             {
                 b.WithRateLimitContext(this.RateLimitCache);
-
-                if (!includeApplications.HasValue)
-                {
-                    return;
-                }
-
-                b.AddQueryParameter
-                (
-                    "include_applications",
-                    includeApplications.Value.ToString().ToLowerInvariant()
-                );
             },
             ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteGuildIntegrationAsync
+    (
+        Snowflake guildID,
+        Snowflake integrationID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"guilds/{guildID}/integrations/{integrationID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
+            ct
         );
     }
 
@@ -1230,7 +1261,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public Task<Result<IGuildThreadQueryResponse>> ListActiveThreadsAsync
+    public Task<Result<IGuildThreadQueryResponse>> ListActiveGuildThreadsAsync
     (
         Snowflake guildID,
         CancellationToken ct = default

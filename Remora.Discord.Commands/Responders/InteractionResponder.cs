@@ -111,10 +111,15 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
+        if (!gatewayEvent.Data.IsDefined(out var data) || !data.TryPickT0(out var commandData, out _))
+        {
+            return Result.FromSuccess();
+        }
+
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
-            return Result.FromError(createContext);
+            return (Result)createContext;
         }
 
         var context = createContext.Entity;
@@ -122,7 +127,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         // Provide the created context to any services inside this scope
         _contextInjection.Context = context;
 
-        context.Data.UnpackInteraction(out var commandPath, out var parameters);
+        commandData.UnpackInteraction(out var commandPath, out var parameters);
 
         // Run any user-provided pre-execution events
         var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
@@ -138,7 +143,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             var getTreeName = await _treeNameResolver.GetTreeNameAsync(context, ct);
             if (!getTreeName.IsSuccess)
             {
-                return Result.FromError(getTreeName);
+                return (Result)getTreeName;
             }
 
             (treeName, allowDefaultTree) = getTreeName.Entity;
@@ -198,7 +203,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
 
         if (!prepareCommand.IsSuccess)
         {
-            return Result.FromError(prepareCommand);
+            return (Result)prepareCommand;
         }
 
         var preparedCommand = prepareCommand.Entity;

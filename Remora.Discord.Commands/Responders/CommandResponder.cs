@@ -101,7 +101,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
-            return Result.FromError(createContext);
+            return (Result)createContext;
         }
 
         var context = createContext.Entity;
@@ -135,7 +135,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
-            return Result.FromError(createContext);
+            return (Result)createContext;
         }
 
         var context = createContext.Entity;
@@ -191,7 +191,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         var checkPrefix = await prefixMatcher.MatchesPrefixAsync(content, ct);
         if (!checkPrefix.IsDefined(out var check))
         {
-            return Result.FromError(checkPrefix);
+            return (Result)checkPrefix;
         }
 
         if (!check.Matches)
@@ -216,7 +216,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             var getTreeName = await _treeNameResolver.GetTreeNameAsync(commandContext, ct);
             if (!getTreeName.IsSuccess)
             {
-                return Result.FromError(getTreeName);
+                return (Result)getTreeName;
             }
 
             (treeName, allowDefaultTree) = getTreeName.Entity;

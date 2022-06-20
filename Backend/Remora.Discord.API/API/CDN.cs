@@ -1001,13 +1001,13 @@ public static class CDN
     /// <summary>
     /// Gets the CDN URI of the given sticker pack's banner.
     /// </summary>
-    /// <param name="bannerAssetId">The asset ID of the sticker pack.</param>
+    /// <param name="bannerAssetID">The asset ID of the sticker pack.</param>
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     public static Result<Uri> GetStickerPackBannerUrl
     (
-        Snowflake bannerAssetId,
+        Snowflake bannerAssetID,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
     )
@@ -1036,7 +1036,7 @@ public static class CDN
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
             // Yes, all stickers are stored under this hardcoded application. This is intentional.
-            Path = $"app-assets/710982414301790216/store/{bannerAssetId}.{format.ToFileExtension()}"
+            Path = $"app-assets/710982414301790216/store/{bannerAssetID}.{format.ToFileExtension()}"
         };
 
         if (imageSize.HasValue)
@@ -1133,13 +1133,13 @@ public static class CDN
     /// <summary>
     /// Gets the CDN URI of the given sticker.
     /// </summary>
-    /// <param name="stickerId">The ID of the sticker.</param>
+    /// <param name="stickerID">The ID of the sticker.</param>
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     public static Result<Uri> GetStickerUrl
     (
-        Snowflake stickerId,
+        Snowflake stickerID,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
     )
@@ -1166,7 +1166,7 @@ public static class CDN
 
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
-            Path = $"stickers/{stickerId}.{format.ToFileExtension()}"
+            Path = $"stickers/{stickerID}.{format.ToFileExtension()}"
         };
 
         if (imageSize.HasValue)
@@ -1253,7 +1253,7 @@ public static class CDN
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    public static Result<Uri> GetGuildScheduledEventBannerUrl
+    public static Result<Uri> GetGuildScheduledEventCoverUrl
     (
         IGuildScheduledEvent scheduledEvent,
         Optional<CDNImageFormat> imageFormat = default,
@@ -1262,7 +1262,7 @@ public static class CDN
     {
         return scheduledEvent.Image is null
             ? new ImageNotFoundError()
-            : GetGuildScheduledEventBannerUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
+            : GetGuildScheduledEventCoverUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -1273,7 +1273,7 @@ public static class CDN
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    public static Result<Uri> GetGuildScheduledEventBannerUrl
+    public static Result<Uri> GetGuildScheduledEventCoverUrl
     (
         Snowflake eventID,
         IImageHash bannerHash,
@@ -1305,6 +1305,59 @@ public static class CDN
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
             Path = $"guild-events/{eventID}/{bannerHash.Value}.{format.ToFileExtension()}"
+        };
+
+        if (imageSize.HasValue)
+        {
+            ub.Query = $"size={imageSize.Value}";
+        }
+
+        return ub.Uri;
+    }
+
+    /// <summary>
+    /// Gets the CDN URI of the given guild member's banner.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="userID">The ID of the user.</param>
+    /// <param name="bannerHash">The banner hash.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetGuildMemberBannerUrl
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        IImageHash bannerHash,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        var formatValidation = ValidateOrDefaultImageFormat
+        (
+            imageFormat,
+            CDNImageFormat.PNG,
+            CDNImageFormat.JPEG,
+            CDNImageFormat.WebP,
+            CDNImageFormat.GIF
+        );
+
+        if (!formatValidation.IsSuccess)
+        {
+            return Result<Uri>.FromError(formatValidation);
+        }
+
+        var format = formatValidation.Entity;
+
+        var checkImageSize = CheckImageSize(imageSize);
+        if (!checkImageSize.IsSuccess)
+        {
+            return Result<Uri>.FromError(checkImageSize);
+        }
+
+        var ub = new UriBuilder(Constants.CDNBaseURL)
+        {
+            Path = $"guilds/{guildID}/users/{userID}/banners/{bannerHash.Value}.{format.ToFileExtension()}"
         };
 
         if (imageSize.HasValue)

@@ -39,10 +39,10 @@ public interface IDiscordRestStickerAPI
     /// <summary>
     /// Gets the sticker for the given ID.
     /// </summary>
-    /// <param name="id">The ID of the sticker.</param>
+    /// <param name="stickerID">The ID of the sticker.</param>
     /// <param name="ct">The cancellation token for the operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<ISticker>> GetStickerAsync(Snowflake id, CancellationToken ct = default);
+    Task<Result<ISticker>> GetStickerAsync(Snowflake stickerID, CancellationToken ct = default);
 
     /// <summary>
     /// Gets a list of sticker packs available to Nitro subscribers.
@@ -54,22 +54,22 @@ public interface IDiscordRestStickerAPI
     /// <summary>
     /// Gets a list of stickers belonging to the given guild.
     /// </summary>
-    /// <param name="guildId">The ID of the guild.</param>
+    /// <param name="guildID">The ID of the guild.</param>
     /// <param name="ct">The cancellation token for the operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IReadOnlyList<ISticker>>> ListGuildStickersAsync(Snowflake guildId, CancellationToken ct = default);
+    Task<Result<IReadOnlyList<ISticker>>> ListGuildStickersAsync(Snowflake guildID, CancellationToken ct = default);
 
     /// <summary>
     /// Gets a specific sticker from a guild.
     /// </summary>
-    /// <param name="guildId">The ID of the guild.</param>
-    /// <param name="stickerId">The ID of the sticker.</param>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="stickerID">The ID of the sticker.</param>
     /// <param name="ct">The cancellation token for the operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<ISticker>> GetGuildStickerAsync
     (
-        Snowflake guildId,
-        Snowflake stickerId,
+        Snowflake guildID,
+        Snowflake stickerID,
         CancellationToken ct = default
     );
 
@@ -80,7 +80,7 @@ public interface IDiscordRestStickerAPI
     /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
     /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
-    /// <param name="guildId">The ID of the guild.</param>
+    /// <param name="guildID">The ID of the guild.</param>
     /// <param name="name">The name of the new sticker.</param>
     /// <param name="description">The description of the new sticker.</param>
     /// <param name="tags">
@@ -92,7 +92,7 @@ public interface IDiscordRestStickerAPI
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<ISticker>> CreateGuildStickerAsync
     (
-        Snowflake guildId,
+        Snowflake guildID,
         string name,
         string description,
         string tags,
@@ -104,8 +104,8 @@ public interface IDiscordRestStickerAPI
     /// <summary>
     /// Modifies the given sticker in the given guild.
     /// </summary>
-    /// <param name="guildId">The ID of the guild.</param>
-    /// <param name="stickerId">The ID of the sticker.</param>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="stickerID">The ID of the sticker.</param>
     /// <param name="name">The new name, if any.</param>
     /// <param name="description">The new description, if any.</param>
     /// <param name="tags">The new tags, if any.</param>
@@ -114,8 +114,8 @@ public interface IDiscordRestStickerAPI
     /// <returns>A modification result which may or may not have succeeded.</returns>
     Task<Result<ISticker>> ModifyGuildStickerAsync
     (
-        Snowflake guildId,
-        Snowflake stickerId,
+        Snowflake guildID,
+        Snowflake stickerID,
         Optional<string> name = default,
         Optional<string?> description = default,
         Optional<string> tags = default,
@@ -126,15 +126,15 @@ public interface IDiscordRestStickerAPI
     /// <summary>
     /// Deletes the given sticker in the given guild.
     /// </summary>
-    /// <param name="guildId">The ID of the guild.</param>
-    /// <param name="stickerId">The ID of the sticker.</param>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="stickerID">The ID of the sticker.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for the operation.</param>
     /// <returns>A deletion result which may or may not have succeeded.</returns>
     Task<Result> DeleteGuildStickerAsync
     (
-        Snowflake guildId,
-        Snowflake stickerId,
+        Snowflake guildID,
+        Snowflake stickerID,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

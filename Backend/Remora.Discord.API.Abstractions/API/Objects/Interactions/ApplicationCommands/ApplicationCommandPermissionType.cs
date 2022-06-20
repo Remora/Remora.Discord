@@ -38,5 +38,10 @@ public enum ApplicationCommandPermissionType
     /// <summary>
     /// The permission applies to a user.
     /// </summary>
-    User = 2
+    User = 2,
+
+    /// <summary>
+    /// The permission applies to a channel.
+    /// </summary>
+    Channel = 3
 }

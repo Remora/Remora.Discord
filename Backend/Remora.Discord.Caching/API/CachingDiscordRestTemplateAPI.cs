@@ -22,41 +22,44 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Caching.Abstractions.Services;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
-/// <inheritdoc />
+/// <summary>
+/// Decorates the registered template API with caching functionality.
+/// </summary>
 [PublicAPI]
-public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
+public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IRestCustomizable
 {
+    private readonly IDiscordRestTemplateAPI _actual;
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestTemplateAPI(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CachingDiscordRestTemplateAPI"/> class.
+    /// </summary>
+    /// <param name="actual">The decorated instance.</param>
+    /// <param name="cacheService">The cache service.</param>
     public CachingDiscordRestTemplateAPI
     (
-        IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions,
-        ICacheProvider rateLimitCache,
+        IDiscordRestTemplateAPI actual,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _actual = actual;
         _cacheService = cacheService;
     }
 
     /// <inheritdoc />
-    public override async Task<Result<ITemplate>> GetTemplateAsync
+    public async Task<Result<ITemplate>> GetTemplateAsync
     (
         string templateCode,
         CancellationToken ct = default
@@ -67,10 +70,10 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
 
         if (cacheResult.IsSuccess)
         {
-            return Result<ITemplate>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
-        var getTemplate = await base.GetTemplateAsync(templateCode, ct);
+        var getTemplate = await _actual.GetTemplateAsync(templateCode, ct);
         if (!getTemplate.IsSuccess)
         {
             return getTemplate;
@@ -83,7 +86,7 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<ITemplate>> CreateGuildTemplateAsync
+    public async Task<Result<ITemplate>> CreateGuildTemplateAsync
     (
         Snowflake guildID,
         string name,
@@ -91,7 +94,7 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
         CancellationToken ct = default
     )
     {
-        var createTemplate = await base.CreateGuildTemplateAsync(guildID, name, description, ct);
+        var createTemplate = await _actual.CreateGuildTemplateAsync(guildID, name, description, ct);
         if (!createTemplate.IsSuccess)
         {
             return createTemplate;
@@ -106,14 +109,14 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<ITemplate>> DeleteGuildTemplateAsync
+    public async Task<Result<ITemplate>> DeleteGuildTemplateAsync
     (
         Snowflake guildID,
         string templateCode,
         CancellationToken ct = default
     )
     {
-        var deleteTemplate = await base.DeleteGuildTemplateAsync(guildID, templateCode, ct);
+        var deleteTemplate = await _actual.DeleteGuildTemplateAsync(guildID, templateCode, ct);
         if (!deleteTemplate.IsSuccess)
         {
             return deleteTemplate;
@@ -126,7 +129,7 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
+    public async Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -137,10 +140,10 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<ITemplate>>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
-        var getTemplates = await base.GetGuildTemplatesAsync(guildID, ct);
+        var getTemplates = await _actual.GetGuildTemplatesAsync(guildID, ct);
         if (!getTemplates.IsSuccess)
         {
             return getTemplates;
@@ -159,16 +162,16 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<ITemplate>> ModifyGuildTemplateAsync
+    public async Task<Result<ITemplate>> ModifyGuildTemplateAsync
     (
         Snowflake guildID,
         string templateCode,
-        string name,
-        Optional<string> description,
+        Optional<string> name,
+        Optional<string?> description,
         CancellationToken ct = default
     )
     {
-        var modifyTemplate = await base.ModifyGuildTemplateAsync(guildID, templateCode, name, description, ct);
+        var modifyTemplate = await _actual.ModifyGuildTemplateAsync(guildID, templateCode, name, description, ct);
         if (!modifyTemplate.IsSuccess)
         {
             return modifyTemplate;
@@ -183,14 +186,14 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<ITemplate>> SyncGuildTemplateAsync
+    public async Task<Result<ITemplate>> SyncGuildTemplateAsync
     (
         Snowflake guildID,
         string templateCode,
         CancellationToken ct = default
     )
     {
-        var syncTemplate = await base.SyncGuildTemplateAsync(guildID, templateCode, ct);
+        var syncTemplate = await _actual.SyncGuildTemplateAsync(guildID, templateCode, ct);
         if (!syncTemplate.IsSuccess)
         {
             return syncTemplate;
@@ -205,7 +208,7 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuild>> CreateGuildFromTemplateAsync
+    public async Task<Result<IGuild>> CreateGuildFromTemplateAsync
     (
         string templateCode,
         string name,
@@ -213,7 +216,7 @@ public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
         CancellationToken ct = default
     )
     {
-        var createGuild = await base.CreateGuildFromTemplateAsync(templateCode, name, icon, ct);
+        var createGuild = await _actual.CreateGuildFromTemplateAsync(templateCode, name, icon, ct);
         if (!createGuild.IsSuccess)
         {
             return createGuild;

@@ -56,7 +56,7 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
         var getApplication = await _oauth2API.GetCurrentBotApplicationInformationAsync(ct);
         if (!getApplication.IsSuccess)
         {
-            return Result.FromError(getApplication);
+            return (Result)getApplication;
         }
 
         var application = getApplication.Entity;

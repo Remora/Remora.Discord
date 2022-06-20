@@ -194,6 +194,8 @@ public interface IDiscordRestGuildAPI
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
     /// <param name="isNsfw">Whether the new channel is NSFW.</param>
+    /// <param name="rtcRegion">The ID of the voice region of the voice or stage channel.</param>
+    /// <param name="videoQualityMode">The video quality mode of the voice channel.</param>
     /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
@@ -202,16 +204,18 @@ public interface IDiscordRestGuildAPI
     (
         Snowflake guildID,
         string name,
-        Optional<ChannelType> type = default,
-        Optional<string> topic = default,
-        Optional<int> bitrate = default,
-        Optional<int> userLimit = default,
-        Optional<int> rateLimitPerUser = default,
-        Optional<int> position = default,
-        Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
-        Optional<Snowflake> parentID = default,
-        Optional<bool> isNsfw = default,
-        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<ChannelType?> type = default,
+        Optional<string?> topic = default,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -221,7 +225,6 @@ public interface IDiscordRestGuildAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="positionModifications">The new positions of the modified channels.</param>
-    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     Task<Result> ModifyGuildChannelPositionsAsync
@@ -236,7 +239,6 @@ public interface IDiscordRestGuildAPI
             Snowflake? ParentID
             )
         > positionModifications,
-        Optional<string> reason = default,
         CancellationToken ct = default
     );
 
@@ -246,7 +248,11 @@ public interface IDiscordRestGuildAPI
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result<IGuildThreadQueryResponse>> ListActiveThreadsAsync(Snowflake guildID, CancellationToken ct = default);
+    Task<Result<IGuildThreadQueryResponse>> ListActiveGuildThreadsAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    );
 
     /// <summary>
     /// Gets member information about the given user.
@@ -584,23 +590,37 @@ public interface IDiscordRestGuildAPI
     );
 
     /// <summary>
+    /// Modifies a guild's multi-factor authentication level. Requires guild ownership.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild to modify.</param>
+    /// <param name="level">The new MFA level.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<MultiFactorAuthenticationLevel>> ModifyGuildMFALevelAsync
+    (
+        Snowflake guildID,
+        MultiFactorAuthenticationLevel level,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Deletes the given role.
     /// </summary>
-    /// <param name="guildId">The ID of the guild.</param>
+    /// <param name="guildID">The ID of the guild.</param>
     /// <param name="roleID">The ID of the role.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A deletion result which may or may not have succeeded.</returns>
     Task<Result> DeleteGuildRoleAsync
     (
-        Snowflake guildId,
+        Snowflake guildID,
         Snowflake roleID,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
 
     /// <summary>
-    /// Gets the number of users that would br pruned in a prune operation.
+    /// Gets the number of users that would be pruned in a prune operation.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="days">The days a user needs to have been inactive for them to be pruned.</param>
@@ -663,13 +683,27 @@ public interface IDiscordRestGuildAPI
     /// Gets the integrations for the guild.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
-    /// <param name="includeApplications">Whether bot and OAuth2 webhook integrations should be included.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
     (
         Snowflake guildID,
-        Optional<bool> includeApplications = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Deletes the integration with the given ID for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="integrationID">The ID of the integration.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A deletion result which may or may not have succeeded.</returns>
+    Task<Result> DeleteGuildIntegrationAsync
+    (
+        Snowflake guildID,
+        Snowflake integrationID,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 

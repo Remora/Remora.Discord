@@ -30,4 +30,4 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IAuditLogChange" />
 [PublicAPI]
-public record AuditLogChange(Optional<object?> NewValue, Optional<object?> OldValue, string Key) : IAuditLogChange;
+public record AuditLogChange(Optional<string> NewValue, Optional<string> OldValue, string Key) : IAuditLogChange;

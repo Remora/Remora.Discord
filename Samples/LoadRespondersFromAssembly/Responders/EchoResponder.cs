@@ -55,15 +55,11 @@ public class EchoResponder : IResponder<IMessageCreate>
             return Result.FromSuccess();
         }
 
-        var replyResult = await _channelAPI.CreateMessageAsync
+        return (Result)await _channelAPI.CreateMessageAsync
         (
             gatewayEvent.ChannelID,
             gatewayEvent.Content,
             ct: ct
         );
-
-        return replyResult.IsSuccess
-            ? Result.FromSuccess()
-            : Result.FromError(replyResult);
     }
 }

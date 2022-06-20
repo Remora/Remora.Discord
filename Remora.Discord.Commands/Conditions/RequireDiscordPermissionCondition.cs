@@ -89,7 +89,7 @@ public class RequireDiscordPermissionCondition :
         var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
         if (!getGuild.IsSuccess)
         {
-            return Result.FromError(getGuild);
+            return (Result)getGuild;
         }
 
         var guild = getGuild.Entity;
@@ -103,7 +103,7 @@ public class RequireDiscordPermissionCondition :
         var getMember = await _guildAPI.GetGuildMemberAsync(guildID, _context.User.ID, ct);
         if (!getMember.IsSuccess)
         {
-            return Result.FromError(getMember);
+            return (Result)getMember;
         }
 
         var member = getMember.Entity;
@@ -134,7 +134,7 @@ public class RequireDiscordPermissionCondition :
         var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
         if (!getMember.IsSuccess)
         {
-            return Result.FromError(getMember);
+            return (Result)getMember;
         }
 
         var member = getMember.Entity;
@@ -164,13 +164,13 @@ public class RequireDiscordPermissionCondition :
         var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
-            return Result.FromError(getRoles);
+            return (Result)getRoles;
         }
 
         var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
         if (!getChannel.IsSuccess)
         {
-            return Result.FromError(getChannel);
+            return (Result)getChannel;
         }
 
         var guildRoles = getRoles.Entity;
@@ -247,13 +247,13 @@ public class RequireDiscordPermissionCondition :
         var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
-            return Result.FromError(getRoles);
+            return (Result)getRoles;
         }
 
         var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
         if (!getChannel.IsSuccess)
         {
-            return Result.FromError(getChannel);
+            return (Result)getChannel;
         }
 
         var guildRoles = getRoles.Entity;

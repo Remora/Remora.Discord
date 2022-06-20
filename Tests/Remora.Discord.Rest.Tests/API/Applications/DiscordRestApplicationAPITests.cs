@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Numerics;
 using System.Threading.Tasks;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
@@ -97,6 +98,7 @@ public class DiscordRestApplicationAPITests
             var name = "aaa";
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
+            var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
 
             var api = CreateAPI
             (
@@ -111,6 +113,8 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
+                                .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
+                                .WithProperty("dm_permission", p => p.Is(false))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -122,6 +126,8 @@ public class DiscordRestApplicationAPITests
                 name,
                 description,
                 options,
+                defaultMemberPermissions: permissions,
+                dmPermission: false,
                 type: type
             );
 
@@ -398,14 +404,14 @@ public class DiscordRestApplicationAPITests
                     "aaa",
                     "bbbb",
                     new List<ApplicationCommandOption>(),
-                    true,
-                    ApplicationCommandType.ChatInput
+                    DefaultMemberPermissions: new DiscordPermissionSet(default(BigInteger)),
+                    Type: ApplicationCommandType.ChatInput
                 ),
                 new BulkApplicationCommandData
                 (
                     "ccc",
                     Options: new List<ApplicationCommandOption>(),
-                    DefaultPermission: true,
+                    DefaultMemberPermissions: new DiscordPermissionSet(DiscordPermission.Administrator),
                     Type: ApplicationCommandType.Message
                 ),
                 new BulkApplicationCommandData
@@ -435,7 +441,7 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("description", p => p.Is(commands[0].Description.Value))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
-                                            .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
+                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
                                     )
                                 )
                                 .WithElement
@@ -448,7 +454,7 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
-                                            .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
+                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString()))
                                     )
                                 )
                                 .WithElement
@@ -461,7 +467,7 @@ public class DiscordRestApplicationAPITests
                                             .WithoutProperty("type")
                                             .WithProperty("description", p => p.Is(commands[2].Description.Value))
                                             .WithoutProperty("options")
-                                            .WithoutProperty("default_permission")
+                                            .WithProperty("default_member_permissions", p => p.IsNull())
                                     )
                                 )
                         )
@@ -958,6 +964,7 @@ public class DiscordRestApplicationAPITests
             var name = "aaa";
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
+            var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
 
             var api = CreateAPI
             (
@@ -976,6 +983,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
+                                .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -988,6 +996,7 @@ public class DiscordRestApplicationAPITests
                 name,
                 description,
                 options,
+                defaultMemberPermissions: permissions,
                 type: type
             );
 
@@ -1304,14 +1313,14 @@ public class DiscordRestApplicationAPITests
                     "aaa",
                     "bbbb",
                     new List<ApplicationCommandOption>(),
-                    true,
-                    ApplicationCommandType.ChatInput
+                    DefaultMemberPermissions: new DiscordPermissionSet(default(BigInteger)),
+                    Type: ApplicationCommandType.ChatInput
                 ),
                 new BulkApplicationCommandData
                 (
                     "ccc",
                     Options: new List<ApplicationCommandOption>(),
-                    DefaultPermission: false,
+                    DefaultMemberPermissions: new DiscordPermissionSet(DiscordPermission.Administrator),
                     Type: ApplicationCommandType.Message
                 ),
                 new BulkApplicationCommandData
@@ -1341,7 +1350,7 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("description", p => p.Is(commands[0].Description.Value))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
-                                            .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
+                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
                                     )
                                 )
                                 .WithElement
@@ -1354,7 +1363,7 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
-                                            .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
+                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString()))
                                     )
                                 )
                                 .WithElement
@@ -1367,7 +1376,7 @@ public class DiscordRestApplicationAPITests
                                             .WithoutProperty("type")
                                             .WithProperty("description", p => p.Is(commands[2].Description.Value))
                                             .WithoutProperty("options")
-                                            .WithoutProperty("default_permission")
+                                            .WithProperty("default_member_permissions", p => p.IsNull())
                                     )
                                 )
                         )
@@ -1955,46 +1964,6 @@ public class DiscordRestApplicationAPITests
             );
 
             var result = await api.EditApplicationCommandPermissionsAsync(applicationID, guildID, commandID, permissions);
-            ResultAssert.Successful(result);
-        }
-    }
-
-    /// <summary>
-    /// Tests the <see cref="DiscordRestApplicationAPI.BatchEditApplicationCommandPermissionsAsync"/> method.
-    /// </summary>
-    public class BatchEditApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
-    {
-        /// <summary>
-        /// Tests whether the API method performs its request correctly.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [Fact]
-        public async Task PerformsRequestCorrectly()
-        {
-            var applicationID = DiscordSnowflake.New(0);
-            var guildID = DiscordSnowflake.New(1);
-
-            var permissions = Array.Empty<IPartialGuildApplicationCommandPermissions>();
-
-            var api = CreateAPI
-            (
-                b => b
-                    .Expect
-                    (
-                        HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
-                    )
-                    .WithJson
-                    (
-                        json => json.IsArray
-                        (
-                            a => a.WithCount(0)
-                        )
-                    )
-                    .Respond("application/json", "[]")
-            );
-
-            var result = await api.BatchEditApplicationCommandPermissionsAsync(applicationID, guildID, permissions);
             ResultAssert.Successful(result);
         }
     }

@@ -1,0 +1,11 @@
+{
+  "t": "APPLICATION_COMMAND_PERMISSIONS_UPDATE",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "application_id": "999999999999999999",
+    "guild_id": "999999999999999999",
+    "permissions": []
+  }
+}

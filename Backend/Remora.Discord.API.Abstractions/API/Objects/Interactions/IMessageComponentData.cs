@@ -1,5 +1,5 @@
 //
-//  InteractionData.cs
+//  IMessageComponentData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,25 +22,28 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IInteractionData" />
+/// <summary>
+/// Represents interaction data received when a message component is used.
+/// </summary>
 [PublicAPI]
-public record InteractionData
-(
-    Optional<Snowflake> ID,
-    Optional<string> Name,
-    Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
-    Optional<Snowflake> GuildID = default,
-    Optional<string> CustomID = default,
-    Optional<ComponentType> ComponentType = default,
-    Optional<IReadOnlyList<string>> Values = default,
-    Optional<Snowflake> TargetID = default,
-    Optional<IReadOnlyList<IPartialMessageComponent>> Components = default
-) : IInteractionData;
+public interface IMessageComponentData
+{
+    /// <summary>
+    /// Gets the custom ID associated with this interaction.
+    /// </summary>
+    string CustomID { get; }
+
+    /// <summary>
+    /// Gets the type of component that the data originated from.
+    /// </summary>
+    ComponentType ComponentType { get; }
+
+    /// <summary>
+    /// Gets the values selected by the user.
+    /// </summary>
+    Optional<IReadOnlyList<string>> Values { get; }
+}

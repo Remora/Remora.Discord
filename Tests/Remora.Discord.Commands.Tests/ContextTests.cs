@@ -31,8 +31,8 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Contexts;
+using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Xunit;
 
 namespace Remora.Discord.Commands.Tests;
@@ -52,6 +52,7 @@ public class ContextTests
     public ContextTests()
     {
         _services = new ServiceCollection()
+            .AddDiscordRest(_ => "dummy")
             .AddDiscordCommands()
             .AddCommandTree()
                 .WithCommandGroup<GroupWithContext>()
@@ -87,9 +88,8 @@ public class ContextTests
     public async Task CanExecuteCommandFromGroupThatWantsMessageContext()
     {
         var dummyMessage = new Mock<IPartialMessage>();
-        dummyMessage.Setup(m => m.GuildID).Returns(default(Snowflake));
 
-        var dummyContext = new MessageContext(default, null!, default, dummyMessage.Object);
+        var dummyContext = new MessageContext(default, default, null!, default, dummyMessage.Object);
         _contextInjection.Context = dummyContext;
 
         var result = await _commands.TryExecuteAsync("message command", _services);
@@ -103,7 +103,20 @@ public class ContextTests
     [Fact]
     public async Task CanExecuteCommandFromGroupThatWantsInteractionContext()
     {
-        var dummyContext = new InteractionContext(default, default, null!, default, null!, default, default, null!, default, default);
+        var dummyContext = new InteractionContext
+        (
+            default,
+            default,
+            null!,
+            default,
+            null!,
+            default,
+            default,
+            default,
+            default,
+            default
+        );
+
         _contextInjection.Context = dummyContext;
 
         var result = await _commands.TryExecuteAsync("interaction command", _services);

@@ -242,6 +242,23 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
+            public void ReturnsUnsuccessfulIfMultipleNamedGroupsWithTheSameNameHaveADefaultDMPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<AtMostOneDMPermissionAttributeAllowed.Named.GroupOne>();
+                builder.RegisterModule<AtMostOneDMPermissionAttributeAllowed.Named.GroupTwo>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
             public void ReturnsUnsuccessfulIfContextMenuHasDescription()
             {
                 var builder = new CommandTreeBuilder();
@@ -423,7 +440,7 @@ public class CommandTreeExtensionTests
                 Assert.NotNull(commands);
 
                 var command = commands.SingleOrDefault();
-                Assert.True(command!.DefaultPermission.Value);
+                Assert.Equal(8, command!.DefaultMemberPermissions?.Value);
             }
 
             /// <summary>
@@ -444,7 +461,7 @@ public class CommandTreeExtensionTests
                 Assert.NotNull(commands);
 
                 var command = commands.SingleOrDefault();
-                Assert.True(command!.DefaultPermission.Value);
+                Assert.Equal(8, command!.DefaultMemberPermissions?.Value);
             }
 
             /// <summary>
@@ -468,8 +485,38 @@ public class CommandTreeExtensionTests
                 var a = commands[0];
                 var b = commands[1];
 
-                Assert.True(a.DefaultPermission.Value);
-                Assert.False(b.DefaultPermission.Value);
+                Assert.Equal(8, a.DefaultMemberPermissions?.Value);
+                Assert.Equal(4, b.DefaultMemberPermissions?.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesUngroupedTopLevelCommandsWithDefaultDMPermissionCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<MultipleCommandsWithDMPermission.GroupOne>();
+                builder.RegisterModule<MultipleCommandsWithDMPermission.GroupTwo>();
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMultipartGroupWithDefaultDMPermissionCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<MultipartNamedGroupWithDMPermission>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
             }
 
             /// <summary>
@@ -1095,7 +1142,6 @@ public class CommandTreeExtensionTests
                     commandNode.Key,
                     string.Empty,
                     default,
-                    default,
                     default
                 )
             };
@@ -1136,7 +1182,6 @@ public class CommandTreeExtensionTests
                     commandNodeA.Key,
                     string.Empty,
                     default,
-                    default,
                     default
                 ),
                 new ApplicationCommand
@@ -1147,7 +1192,6 @@ public class CommandTreeExtensionTests
                     default,
                     commandNodeB.Key,
                     string.Empty,
-                    default,
                     default,
                     default
                 )
@@ -1195,7 +1239,6 @@ public class CommandTreeExtensionTests
                     {
                         new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty)
                     },
-                    default,
                     default
                 )
             };
@@ -1246,7 +1289,6 @@ public class CommandTreeExtensionTests
                         new ApplicationCommandOption(SubCommand, commandNodeB.Key, string.Empty),
                         new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty)
                     },
-                    default,
                     default
                 )
             };
@@ -1304,7 +1346,6 @@ public class CommandTreeExtensionTests
                             new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty)
                         })
                     },
-                    default,
                     default
                 )
             };
@@ -1367,7 +1408,6 @@ public class CommandTreeExtensionTests
                         new ApplicationCommandOption(SubCommand, commandNodeE.Key, string.Empty),
                         new ApplicationCommandOption(SubCommand, commandNodeF.Key, string.Empty)
                     },
-                    default,
                     default
                 ),
                 new ApplicationCommand
@@ -1378,7 +1418,6 @@ public class CommandTreeExtensionTests
                     default,
                     commandNodeG.Key,
                     string.Empty,
-                    default,
                     default,
                     default
                 )

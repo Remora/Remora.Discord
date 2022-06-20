@@ -60,7 +60,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TEntity">The entity type.</typeparam>
     /// <returns>The collection, with the entity added.</returns>
-    public static IServiceCollection AddInteractiveEntity<TEntity>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddInteractiveEntity
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEntity
+        >(this IServiceCollection serviceCollection)
         where TEntity : class, IInteractiveEntity => serviceCollection.AddInteractiveEntity(typeof(TEntity));
 
     /// <summary>

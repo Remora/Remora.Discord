@@ -1,5 +1,5 @@
 //
-//  CachingDiscordRestOAuth2API.cs
+//  CachingDiscordRestRestOAuth2API.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,40 +20,43 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Caching.Abstractions.Services;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
-/// <inheritdoc />
+/// <summary>
+/// Decorates the registered OAuth2 API with caching functionality.
+/// </summary>
 [PublicAPI]
-public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
+public partial class CachingDiscordRestOAuth2API : IDiscordRestOAuth2API, IRestCustomizable
 {
+    private readonly IDiscordRestOAuth2API _actual;
     private readonly CacheService _cacheService;
 
-    /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, JsonSerializerOptions, ICacheProvider)" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CachingDiscordRestOAuth2API"/> class.
+    /// </summary>
+    /// <param name="actual">The decorated instance.</param>
+    /// <param name="cacheService">The cache service.</param>
     public CachingDiscordRestOAuth2API
     (
-        IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions,
-        ICacheProvider rateLimitCache,
+        IDiscordRestOAuth2API actual,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _actual = actual;
         _cacheService = cacheService;
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
+    public async Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
     (
         CancellationToken ct = default
     )
@@ -63,10 +66,10 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IApplication>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
-        var getCurrent = await base.GetCurrentBotApplicationInformationAsync(ct);
+        var getCurrent = await _actual.GetCurrentBotApplicationInformationAsync(ct);
         if (!getCurrent.IsSuccess)
         {
             return getCurrent;
@@ -79,7 +82,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+    public async Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
     (
         CancellationToken ct = default
     )
@@ -89,10 +92,10 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
 
         if (cacheResult.IsSuccess)
         {
-            return Result<IAuthorizationInformation>.FromSuccess(cacheResult.Entity);
+            return cacheResult;
         }
 
-        var result = await base.GetCurrentAuthorizationInformationAsync(ct);
+        var result = await _actual.GetCurrentAuthorizationInformationAsync(ct);
         if (!result.IsSuccess)
         {
             return result;

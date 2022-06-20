@@ -1,5 +1,5 @@
 {
-    "$os": "linux",
-    "$browser": "disco",
-    "$device": "disco"
+    "os": "linux",
+    "browser": "disco",
+    "device": "disco"
 }

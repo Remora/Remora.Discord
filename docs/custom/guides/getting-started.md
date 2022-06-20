@@ -284,16 +284,12 @@ if (gatewayEvent.Content != "!ping")
 }
 
 var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
-var replyResult = await _channelAPI.CreateMessageAsync
+return (Result)await _channelAPI.CreateMessageAsync
 (
     gatewayEvent.ChannelID,
     embeds: new[] { embed },
     ct: ct
 );
-
-return !replyResult.IsSuccess
-    ? Result.FromError(replyResult)
-    : Result.FromSuccess();
 ```
 
 The `CreateMessageAsync` method takes a lot of various parameters, but we're
@@ -418,16 +414,12 @@ public class PingPongResponder : IResponder<IMessageCreate>
         }
 
         var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
-        var replyResult = await _channelAPI.CreateMessageAsync
+        return (Result)await _channelAPI.CreateMessageAsync
         (
             gatewayEvent.ChannelID,
             embeds: new[] { embed },
             ct: ct
         );
-
-        return !replyResult.IsSuccess 
-            ? Result.FromError(replyResult) 
-            : Result.FromSuccess();
     }
 }
 

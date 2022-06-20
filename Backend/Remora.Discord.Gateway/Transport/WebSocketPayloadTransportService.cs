@@ -22,16 +22,24 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Net.WebSockets;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Contrib.WaitAndRetry;
+using Polly.Retry;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Gateway.Results;
 using Remora.Results;
+using WebSocketError = System.Net.WebSockets.WebSocketError;
 
 namespace Remora.Discord.Gateway.Transport;
 
@@ -43,6 +51,10 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 {
     private readonly IServiceProvider _services;
     private readonly JsonSerializerOptions _jsonOptions;
+    private readonly AsyncRetryPolicy _retryPolicy;
+    private readonly AsyncRetryPolicy<ClientWebSocket> _connectRetryPolicy;
+    private readonly AsyncRetryPolicy<WebSocketReceiveResult> _receiveRetryPolicy;
+    private readonly ILogger<WebSocketPayloadTransportService> _log;
 
     /// <summary>
     /// Holds the currently available websocket client.
@@ -57,14 +69,31 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     /// </summary>
     /// <param name="services">The services available to the application.</param>
     /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="log">The logging instance for this class.</param>
     public WebSocketPayloadTransportService
     (
         IServiceProvider services,
-        JsonSerializerOptions jsonOptions
+        JsonSerializerOptions jsonOptions,
+        ILogger<WebSocketPayloadTransportService> log
     )
     {
+        IEnumerable<TimeSpan> RetryDelayFactory() => Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
+
         _services = services;
         _jsonOptions = jsonOptions;
+        _log = log;
+
+        _retryPolicy = Policy
+            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
+            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
+
+        _connectRetryPolicy = Policy<ClientWebSocket>
+            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
+            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
+
+        _receiveRetryPolicy = Policy<WebSocketReceiveResult>
+            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
+            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
     }
 
     /// <inheritdoc />
@@ -75,11 +104,28 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The transport service is already connected.");
         }
 
-        var socket = _services.GetRequiredService<ClientWebSocket>();
-
         try
         {
-            await socket.ConnectAsync(endpoint, ct);
+            var socket = await _connectRetryPolicy.ExecuteAsync
+            (
+                async c =>
+                {
+                    var socket = _services.GetRequiredService<ClientWebSocket>();
+                    try
+                    {
+                        await socket.ConnectAsync(endpoint, c);
+                    }
+                    catch
+                    {
+                        socket.Dispose();
+                        throw;
+                    }
+
+                    return socket;
+                },
+                ct
+            );
+
             switch (socket.State)
             {
                 case WebSocketState.Open:
@@ -97,14 +143,13 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
                     );
                 }
             }
+
+            _clientWebSocket = socket;
         }
         catch (Exception e)
         {
-            socket.Dispose();
             return e;
         }
-
-        _clientWebSocket = socket;
 
         this.IsConnected = true;
         return Result.FromSuccess();
@@ -151,7 +196,12 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
             // Send the whole payload as one chunk
             var segment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
-            await _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
+
+            await _retryPolicy.ExecuteAsync
+            (
+                c => _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, c),
+                ct
+            );
 
             if (_clientWebSocket.CloseStatus.HasValue)
             {
@@ -197,7 +247,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
             do
             {
-                result = await _clientWebSocket.ReceiveAsync(buffer, ct);
+                result = await _receiveRetryPolicy.ExecuteAsync(c => _clientWebSocket.ReceiveAsync(buffer, c), ct);
 
                 if (result.CloseStatus.HasValue)
                 {
@@ -286,6 +336,73 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         return Result.FromSuccess();
     }
 
+    private bool IsWebSocketErrorRetryEligible(WebSocketException wex)
+    {
+        if (wex.InnerException is HttpRequestException)
+        {
+            // assume transient failure
+            return true;
+        }
+
+        return wex.WebSocketErrorCode switch
+        {
+            WebSocketError.ConnectionClosedPrematurely => true, // maybe a network blip?
+            WebSocketError.Faulted => true, // maybe a server error or cosmic radiation?
+            WebSocketError.HeaderError => true, // maybe a transient server error?
+            WebSocketError.InvalidMessageType => false,
+            WebSocketError.InvalidState => false,
+            WebSocketError.NativeError => true, // maybe a transient server error?
+            WebSocketError.NotAWebSocket => Regex.IsMatch(wex.Message, "\\b(5\\d\\d|408)\\b"), // 5xx errors + timeouts
+            WebSocketError.Success => true, // should never happen, but try again
+            WebSocketError.UnsupportedProtocol => false,
+            WebSocketError.UnsupportedVersion => false,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
+    private void LogRetry(Exception result, TimeSpan delay, int count, Context context)
+    {
+        _log.LogDebug
+        (
+            result,
+            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
+            delay,
+            count
+        );
+    }
+
+    private void LogRetry(DelegateResult<ClientWebSocket> result, TimeSpan delay, int count, Context context)
+    {
+        if (result.Result is not null)
+        {
+            return;
+        }
+
+        _log.LogDebug
+        (
+            result.Exception,
+            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
+            delay,
+            count
+        );
+    }
+
+    private void LogRetry(DelegateResult<WebSocketReceiveResult> result, TimeSpan delay, int count, Context context)
+    {
+        if (result.Result is not null)
+        {
+            return;
+        }
+
+        _log.LogDebug
+        (
+            result.Exception,
+            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
+            delay,
+            count
+        );
+    }
+
     /// <inheritdoc />
     public async ValueTask DisposeAsync()
     {
@@ -293,6 +410,8 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         {
             return;
         }
+
+        GC.SuppressFinalize(this);
 
         await DisconnectAsync(false);
     }

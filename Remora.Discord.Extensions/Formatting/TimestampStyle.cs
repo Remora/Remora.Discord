@@ -20,46 +20,45 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.Extensions.Formatting
+namespace Remora.Discord.Extensions.Formatting;
+
+/// <summary>
+/// Represents the possible display formats for Timestamp Markdown.
+/// </summary>
+public enum TimestampStyle
 {
     /// <summary>
-    /// Represents the possible display formats for Timestamp Markdown.
+    /// 16:20.
     /// </summary>
-    public enum TimestampStyle
-    {
-        /// <summary>
-        /// 16:20.
-        /// </summary>
-        ShortTime,
+    ShortTime,
 
-        /// <summary>
-        /// 16:20:30.
-        /// </summary>
-        LongTime,
+    /// <summary>
+    /// 16:20:30.
+    /// </summary>
+    LongTime,
 
-        /// <summary>
-        /// 20/04/2021.
-        /// </summary>
-        ShortDate,
+    /// <summary>
+    /// 20/04/2021.
+    /// </summary>
+    ShortDate,
 
-        /// <summary>
-        /// 20 April 2021.
-        /// </summary>
-        LongDate,
+    /// <summary>
+    /// 20 April 2021.
+    /// </summary>
+    LongDate,
 
-        /// <summary>
-        /// 20 April 2021 16:20.
-        /// </summary>
-        ShortDateTime,
+    /// <summary>
+    /// 20 April 2021 16:20.
+    /// </summary>
+    ShortDateTime,
 
-        /// <summary>
-        /// Tuesday, 20 April 2021 16:20.
-        /// </summary>
-        LongDateTime,
+    /// <summary>
+    /// Tuesday, 20 April 2021 16:20.
+    /// </summary>
+    LongDateTime,
 
-        /// <summary>
-        /// 2 months ago.
-        /// </summary>
-        RelativeTime
-    }
+    /// <summary>
+    /// 2 months ago.
+    /// </summary>
+    RelativeTime
 }

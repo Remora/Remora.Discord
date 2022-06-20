@@ -266,6 +266,11 @@ public enum AuditLogEvent
     ThreadDelete = 112,
 
     /// <summary>
+    /// The permissions for an application command were updated.
+    /// </summary>
+    ApplicationCommandPermissionUpdate = 121,
+
+    /// <summary>
     /// An Auto Moderation rule was created.
     /// </summary>
     AutoModerationRuleCreate = 140,

@@ -224,6 +224,7 @@ public interface IDiscordRestWebhookAPI
     /// mentioned in this parameter will be deleted.
     /// </param>
     /// <param name="flags">The message flags.</param>
+    /// <param name="threadName">The name of the forum thread to create.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>
     /// A result which may or may not have succeeded. The returned message is null if <paramref name="shouldWait"/>
@@ -244,6 +245,7 @@ public interface IDiscordRestWebhookAPI
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<string> threadName = default,
         CancellationToken ct = default
     );
 
@@ -302,8 +304,8 @@ public interface IDiscordRestWebhookAPI
         Optional<string?> content = default,
         Optional<IReadOnlyList<IEmbed>?> embeds = default,
         Optional<IAllowedMentions?> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<IReadOnlyList<IMessageComponent>?> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
         Optional<Snowflake> threadID = default,
         CancellationToken ct = default
     );

@@ -44,23 +44,11 @@ public interface IMessage : IPartialMessage
     new Snowflake ChannelID { get; }
 
     /// <summary>
-    /// Gets the ID of the guild the message was sent in.
-    /// </summary>
-    new Optional<Snowflake> GuildID { get; }
-
-    /// <summary>
     /// Gets the author of the message. This author is not guaranteed to be a valid user; in the case of a webhook
     /// message, the object corresponds to the webhook's ID, username, and avatar - this is the case when
     /// <see cref="WebhookID"/> contains a valid value.
     /// </summary>
     new IUser Author { get; }
-
-    /// <summary>
-    /// Gets the member properties for the author. The member object exists in MESSAGE_CREATE and
-    /// MESSAGE_UPDATE events from text-based guild channels. This allows bots to obtain real-time member data
-    /// without requiring bots to keep member state in memory.
-    /// </summary>
-    new Optional<IPartialGuildMember> Member { get; }
 
     /// <summary>
     /// Gets the contents of the message.
@@ -86,11 +74,6 @@ public interface IMessage : IPartialMessage
     /// Gets a value indicating whether this message mentions everyone.
     /// </summary>
     new bool MentionsEveryone { get; }
-
-    /// <summary>
-    /// Gets a list of users mentioned in the message.
-    /// </summary>
-    new IReadOnlyList<IUserMention> Mentions { get; }
 
     /// <summary>
     /// Gets a list of mentioned roles.
@@ -202,13 +185,7 @@ public interface IMessage : IPartialMessage
     Optional<Snowflake> IPartialMessage.ChannelID => this.ChannelID;
 
     /// <inheritdoc/>
-    Optional<Snowflake> IPartialMessage.GuildID => this.GuildID;
-
-    /// <inheritdoc/>
     Optional<IUser> IPartialMessage.Author => new(this.Author);
-
-    /// <inheritdoc/>
-    Optional<IPartialGuildMember> IPartialMessage.Member => this.Member;
 
     /// <inheritdoc/>
     Optional<string> IPartialMessage.Content => this.Content;
@@ -224,9 +201,6 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<bool> IPartialMessage.MentionsEveryone => this.MentionsEveryone;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IUserMention>> IPartialMessage.Mentions => new(this.Mentions);
 
     /// <inheritdoc/>
     Optional<IReadOnlyList<Snowflake>> IPartialMessage.MentionedRoles => new(this.MentionedRoles);

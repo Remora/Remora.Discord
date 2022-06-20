@@ -5,16 +5,49 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>25.0.0</Version>
+        <Version>30.0.1</Version>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            Implement application command localization.
+            Merge pull request #201 from MazeXP/rest-corrections
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.Caching.Abstractions\Remora.Discord.Caching.Abstractions.csproj" />
       <ProjectReference Include="..\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="API\CachingDiscordRestChannelAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestChannelAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestGuildAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestGuildAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestInteractionAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestInteractionAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestUserAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestUserAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestEmojiAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestEmojiAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestInviteAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestInviteAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestOAuth2API.Delegations.cs">
+        <DependentUpon>CachingDiscordRestRestOAuth2API.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestTemplateAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestTemplateAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestVoiceAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestVoiceAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\CachingDiscordRestWebhookAPI.Delegations.cs">
+        <DependentUpon>CachingDiscordRestWebhookAPI.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

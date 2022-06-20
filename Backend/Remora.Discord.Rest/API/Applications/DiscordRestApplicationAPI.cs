@@ -89,10 +89,11 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         string name,
         string description,
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
-        Optional<bool> defaultPermission = default,
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool?> dmPermission = default,
         CancellationToken ct = default
     )
     {
@@ -132,9 +133,10 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("type", type, this.JsonOptions);
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
-                        json.Write("default_permission", defaultPermission, this.JsonOptions);
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
+                        json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
+                        json.Write("dm_permission", dmPermission, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -209,9 +211,10 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<string> name = default,
         Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
-        Optional<bool> defaultPermission = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool?> dmPermission = default,
         CancellationToken ct = default
     )
     {
@@ -244,9 +247,10 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("name", name, this.JsonOptions);
                         json.Write("description", description, this.JsonOptions);
                         json.Write("options", options, this.JsonOptions);
-                        json.Write("default_permission", defaultPermission, this.JsonOptions);
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
+                        json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
+                        json.Write("dm_permission", dmPermission, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -259,7 +263,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     (
         Snowflake applicationID,
         Snowflake commandID,
-        CancellationToken ct
+        CancellationToken ct = default
     )
     {
         return this.RestHttpClient.DeleteAsync
@@ -354,10 +358,10 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         string name,
         string description,
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
-        Optional<bool> defaultPermission = default,
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         CancellationToken ct = default
     )
     {
@@ -397,9 +401,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("type", type, this.JsonOptions);
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
-                        json.Write("default_permission", defaultPermission, this.JsonOptions);
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
+                        json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -433,9 +437,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<string> name = default,
         Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
-        Optional<bool> defaultPermission = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         CancellationToken ct = default
     )
     {
@@ -467,9 +471,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("name", name, this.JsonOptions);
                         json.Write("description", description, this.JsonOptions);
                         json.Write("options", options, this.JsonOptions);
-                        json.Write("default_permission", defaultPermission, this.JsonOptions);
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
+                        json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -483,7 +487,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake applicationID,
         Snowflake guildID,
         Snowflake commandID,
-        CancellationToken ct
+        CancellationToken ct = default
     )
     {
         return this.RestHttpClient.DeleteAsync
@@ -547,34 +551,6 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                     {
                         json.WritePropertyName("permissions");
                         JsonSerializer.Serialize(json, permissions, this.JsonOptions);
-                    }
-                )
-                .WithRateLimitContext(this.RateLimitCache),
-            ct: ct
-        );
-    }
-
-    /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
-        BatchEditApplicationCommandPermissionsAsync
-        (
-            Snowflake applicationID,
-            Snowflake guildID,
-            IReadOnlyList<IPartialGuildApplicationCommandPermissions> permissions,
-            CancellationToken ct = default
-        )
-    {
-        return this.RestHttpClient.PutAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
-        (
-            $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
-            b => b.WithJsonArray
-                (
-                    json =>
-                    {
-                        foreach (var permission in permissions)
-                        {
-                            JsonSerializer.Serialize(json, permission, this.JsonOptions);
-                        }
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),

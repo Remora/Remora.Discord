@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -39,7 +40,16 @@ public record InteractionContext
     string Token,
     Snowflake ID,
     Snowflake ApplicationID,
-    IInteractionData Data,
+    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData> Data,
     Optional<IMessage> Message,
     Optional<string> Locale
-) : CommandContext(GuildID, ChannelID, User);
+) : CommandContext(GuildID, ChannelID, User)
+{
+    /// <summary>
+    /// Gets a value indicating whether the interaction has been responded to.
+    /// </summary>
+    /// <remarks>
+    /// Note that this value is only updated if the response is created after the context is instantiated.
+    /// </remarks>
+    public bool HasRespondedToInteraction { get; internal set; }
+}

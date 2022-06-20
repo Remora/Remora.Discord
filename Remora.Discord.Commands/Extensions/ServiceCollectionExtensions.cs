@@ -32,6 +32,8 @@ using NGettext;
 using Remora.Commands.Extensions;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
+using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Commands.API;
 using Remora.Discord.Commands.Autocomplete;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
@@ -41,6 +43,7 @@ using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Rest.Extensions;
 using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Commands.Extensions;
@@ -126,6 +129,8 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .TryAddScoped<ContextInjectionService>();
 
+        serviceCollection.Decorate<IDiscordRestInteractionAPI, ResponseTrackingInteractionAPI>();
+
         // Set up context injection
         serviceCollection
             .TryAddTransient
@@ -203,6 +208,9 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSingleton(FeedbackTheme.DiscordLight);
         serviceCollection.AddSingleton(FeedbackTheme.DiscordDark);
 
+        // Add the null localization provider if the end user hasn't already registered one
+        serviceCollection.TryAddSingleton<ILocalizationProvider, NullLocalizationProvider>();
+
         if (!enableSlash)
         {
             return serviceCollection;
@@ -261,7 +269,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TEvent">The event type.</typeparam>
     /// <returns>The collection, with the event.</returns>
-    public static IServiceCollection AddPreExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddPreExecutionEvent
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEvent
+        >(this IServiceCollection serviceCollection)
         where TEvent : class, IPreExecutionEvent
     {
         serviceCollection.AddScoped<IPreExecutionEvent, TEvent>();
@@ -274,7 +286,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TEvent">The event type.</typeparam>
     /// <returns>The collection, with the event.</returns>
-    public static IServiceCollection AddPostExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddPostExecutionEvent
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEvent
+        >(this IServiceCollection serviceCollection)
         where TEvent : class, IPostExecutionEvent
     {
         serviceCollection.AddScoped<IPostExecutionEvent, TEvent>();
@@ -287,7 +303,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TEvent">The event type.</typeparam>
     /// <returns>The collection, with the event.</returns>
-    public static IServiceCollection AddExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddExecutionEvent
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEvent
+        >(this IServiceCollection serviceCollection)
         where TEvent : class, IPreExecutionEvent, IPostExecutionEvent
     {
         serviceCollection
@@ -303,7 +323,11 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <typeparam name="TProvider">The autocomplete provider.</typeparam>
     /// <returns>The collection, with the provider.</returns>
-    public static IServiceCollection AddAutocompleteProvider<TProvider>(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddAutocompleteProvider
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TProvider
+        >(this IServiceCollection serviceCollection)
         where TProvider : class, IAutocompleteProvider
     {
         return serviceCollection.AddAutocompleteProvider(typeof(TProvider));

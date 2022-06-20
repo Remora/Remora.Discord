@@ -239,7 +239,7 @@ public class MarkdownTests
     /// <param name="url">The input uri to format.</param>
     [Theory]
     [InlineData("GitHub: Remora.Discord", "https://github.com/Nihlus/Remora.Discord")]
-    [InlineData("Leji Matsumoto's Personal Page", "https://leijisha.jp/")]
+    [InlineData("Leiji Matsumoto's Personal Page", "https://leijisha.jp/")]
     public void HyperlinkWithTextAndUrlSuccess(string text, string url)
     {
         var expected = $"[{text}]({url})";

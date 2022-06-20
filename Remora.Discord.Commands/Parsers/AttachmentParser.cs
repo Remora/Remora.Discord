@@ -60,7 +60,12 @@ public class AttachmentParser : AbstractTypeParser<IAttachment>
             return new(new ParsingError<IAttachment>(token, "Invalid attachment ID."));
         }
 
-        if (!interactionContext.Data.Resolved.IsDefined(out var resolvedData))
+        if (!interactionContext.Data.TryPickT0(out var commandData, out _))
+        {
+            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without command data."));
+        }
+
+        if (!commandData.Resolved.IsDefined(out var resolvedData))
         {
             return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved data."));
         }

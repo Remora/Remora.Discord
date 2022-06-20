@@ -39,14 +39,8 @@ public interface IPartialMessage
     /// <inheritdoc cref="IMessage.ChannelID" />
     Optional<Snowflake> ChannelID { get; }
 
-    /// <inheritdoc cref="IMessage.GuildID" />
-    Optional<Snowflake> GuildID { get; }
-
     /// <inheritdoc cref="IMessage.Author" />
     Optional<IUser> Author { get; }
-
-    /// <inheritdoc cref="IMessage.Member" />
-    Optional<IPartialGuildMember> Member { get; }
 
     /// <inheritdoc cref="IMessage.Content" />
     Optional<string> Content { get; }
@@ -62,9 +56,6 @@ public interface IPartialMessage
 
     /// <inheritdoc cref="IMessage.MentionsEveryone" />
     Optional<bool> MentionsEveryone { get; }
-
-    /// <inheritdoc cref="IMessage.Mentions" />
-    Optional<IReadOnlyList<IUserMention>> Mentions { get; }
 
     /// <inheritdoc cref="IMessage.MentionedRoles" />
     Optional<IReadOnlyList<Snowflake>> MentionedRoles { get; }

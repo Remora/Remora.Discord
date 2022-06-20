@@ -5,19 +5,19 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>56.0.0</Version>
+        <Version>62.0.0</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Fix property optionality.
-            Implement application command localization.
+            Merge pull request #206 from VelvetThePanda/feat/dispatch-customization
+            Merge pull request #201 from MazeXP/rest-corrections
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-        <PackageReference Include="System.Text.Json" Version="6.0.3" />
-        <PackageReference Include="Remora.Rest" Version="1.2.3" />
+        <PackageReference Include="System.Text.Json" Version="6.0.5" />
+        <PackageReference Include="Remora.Rest" Version="2.0.4" />
     </ItemGroup>
 
     <ItemGroup>

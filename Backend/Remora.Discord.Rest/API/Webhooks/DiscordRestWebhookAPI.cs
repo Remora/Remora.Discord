@@ -287,6 +287,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<string> threadName = default,
         CancellationToken ct = default
     )
     {
@@ -341,6 +342,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
+                            json.Write("thread_name", threadName, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);
@@ -385,8 +387,8 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<string?> content = default,
         Optional<IReadOnlyList<IEmbed>?> embeds = default,
         Optional<IAllowedMentions?> allowedMentions = default,
-        Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<IReadOnlyList<IMessageComponent>?> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
         Optional<Snowflake> threadID = default,
         CancellationToken ct = default
     )
@@ -406,8 +408,12 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
             $"webhooks/{webhookID}/{token}/messages/{messageID}",
             b =>
             {
-                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                if (attachments.HasValue)
+                Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = default;
+                if (attachments.HasValue && attachments.Value is null)
+                {
+                    attachmentList = null;
+                }
+                else if (attachments.HasValue && attachments.Value is not null)
                 {
                     // build attachment list
                     attachmentList = attachments.Value.Select
@@ -439,17 +445,17 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                 }
 
                 b.WithJson
-                    (
-                        json =>
-                        {
-                            json.Write("content", content, this.JsonOptions);
-                            json.Write("embeds", embeds, this.JsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("components", components, this.JsonOptions);
-                            json.Write("attachments", attachmentList, this.JsonOptions);
-                        }
-                    )
-                    .WithRateLimitContext(this.RateLimitCache);
+                (
+                    json =>
+                    {
+                        json.Write("content", content, this.JsonOptions);
+                        json.Write("embeds", embeds, this.JsonOptions);
+                        json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                        json.Write("components", components, this.JsonOptions);
+                        json.Write("attachments", attachmentList, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );

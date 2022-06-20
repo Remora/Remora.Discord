@@ -153,9 +153,7 @@ internal sealed class PaginatedMessageEntity :
                     ct
                 );
 
-                return sendHelp.IsSuccess
-                    ? Result.FromSuccess()
-                    : Result.FromError(sendHelp);
+                return (Result)sendHelp;
             }
             default:
             {
@@ -171,7 +169,7 @@ internal sealed class PaginatedMessageEntity :
             message.ChannelID,
             message.ID,
             embeds: new[] { newPage },
-            components: new Optional<IReadOnlyList<IMessageComponent>>
+            components: new Optional<IReadOnlyList<IMessageComponent>?>
             (
                 message.Components.IsDefined(out var existingComponents)
                      ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
@@ -180,8 +178,6 @@ internal sealed class PaginatedMessageEntity :
             ct: ct
         );
 
-        return editOriginal.IsSuccess
-            ? Result.FromSuccess()
-            : Result.FromError(editOriginal);
+        return (Result)editOriginal;
     }
 }
