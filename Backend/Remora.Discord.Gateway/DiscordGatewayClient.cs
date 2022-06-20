@@ -1047,16 +1047,6 @@ public class DiscordGatewayClient : IDisposable
 
                 var receivedAt = DateTime.UtcNow;
 
-                if (receivedPayload.Error is Results.WebSocketError { State: WebSocketState.Aborted })
-                {
-                    // request reconnect.
-                    _shouldReconnect = true;
-
-                    // idk if connection is resumable.
-                    _isSessionResumable = false;
-                    return Result.FromSuccess();
-                }
-
                 if (!receivedPayload.IsSuccess)
                 {
                     // Normal closures are okay

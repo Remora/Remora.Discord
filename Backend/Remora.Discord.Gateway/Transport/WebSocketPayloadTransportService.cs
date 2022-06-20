@@ -60,6 +60,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     /// Holds the currently available websocket client.
     /// </summary>
     private ClientWebSocket? _clientWebSocket;
+    private Uri? _endpoint;
 
     /// <inheritdoc />
     public bool IsConnected { get; private set; }
@@ -145,6 +146,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             }
 
             _clientWebSocket = socket;
+            _endpoint = endpoint;
         }
         catch (Exception e)
         {
@@ -259,7 +261,12 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
                         catch
                         {
                             await DisconnectAsync(true, c);
-                            throw;
+
+                            // reconnect.
+                            await ConnectAsync(_endpoint!, c);
+
+                            // retry.
+                            result1 = await _clientWebSocket.ReceiveAsync(buffer, c);
                         }
 
                         return result1;
@@ -292,11 +299,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             }
 
             return Result<IPayload>.FromSuccess(payload);
-        }
-        catch
-        {
-            // this is most likely reached when the WebSocketState is aborted.
-            return new Results.WebSocketError(WebSocketState.Aborted);
         }
         finally
         {
