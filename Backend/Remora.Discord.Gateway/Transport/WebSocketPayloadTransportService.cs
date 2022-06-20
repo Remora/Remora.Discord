@@ -247,8 +247,25 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
             do
             {
-                result = await _receiveRetryPolicy.ExecuteAsync(c => _clientWebSocket.ReceiveAsync(buffer, c), ct);
+                result = await _receiveRetryPolicy.ExecuteAsync
+                (
+                    async c =>
+                    {
+                        WebSocketReceiveResult result1;
+                        try
+                        {
+                            result1 = await _clientWebSocket.ReceiveAsync(buffer, c);
+                        }
+                        catch
+                        {
+                            await DisconnectAsync(true, c);
+                            throw;
+                        }
 
+                        return result1;
+                    },
+                    ct
+                );
                 if (result.CloseStatus.HasValue)
                 {
                     if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)result.CloseStatus))
@@ -275,6 +292,11 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             }
 
             return Result<IPayload>.FromSuccess(payload);
+        }
+        catch
+        {
+            // this is most likely reached when the WebSocketState is aborted.
+            return new Results.WebSocketError(WebSocketState.Aborted);
         }
         finally
         {
