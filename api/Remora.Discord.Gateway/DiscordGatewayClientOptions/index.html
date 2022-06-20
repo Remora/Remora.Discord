@@ -59,10 +59,10 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
@@ -270,6 +270,24 @@ public class DiscordGatewayClientOptions</code></pre>
     this is the information about Remora.Discord itself. You may, optionally, override this to present your
     own information.
     </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/854D1883">HeartbeatHeadroom</a></td>
+								<td>byte</td>
+								<td>
+									<div>
+     Gets or sets the number of extra rate limit slots that should be taken up by the heartbeat function (beyond the
+     ones strictly required based on the heartbeat interval and rate limit window).
+    
+     For example, if the rate limit window is 60 seconds, and the heartbeat interval is 2 seconds, the number of
+     strictly required slots would be 30. Adding a headroom of 2 to this would result in 32 reserved slots within the
+     rate limit window for heartbeats, leaving 88 slots for user-submitted events.
+    
+     This value is primarily used to take up the slack of any rounding errors in the calculations, as well as
+     potential timing issues since few if any bots run on hard realtime systems. The default value of 2 has been
+     arbitrarily picked, but should suffice for most use cases.
+     </div>
 								</td>
 							</tr>
 							<tr>
