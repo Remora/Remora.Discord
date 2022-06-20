@@ -5,11 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>10.0.0</Version>
+        <Version>10.1.0</Version>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Rework alive checking a little bit more.
-            Merge pull request #206 from VelvetThePanda/feat/dispatch-customization
+            Break when we successfully send a payload.
+            Make sure we don't oversleep re: heartbeats
+            Implement heartbeat headroom and receive timeouts.
         </PackageReleaseNotes>
     </PropertyGroup>
 

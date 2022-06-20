@@ -5,12 +5,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.36</Version>
+        <Version>2022.37</Version>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Rework alive checking a little bit more.
-            Merge pull request #206 from VelvetThePanda/feat/dispatch-customization
-            Merge pull request #201 from MazeXP/rest-corrections
+            Break when we successfully send a payload.
+            Make sure we don't oversleep re: heartbeats
+            Implement heartbeat headroom and receive timeouts.
+            Remove some redundancies.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
