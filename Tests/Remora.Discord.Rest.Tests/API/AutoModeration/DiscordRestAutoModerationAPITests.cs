@@ -44,7 +44,7 @@ namespace Remora.Discord.Rest.Tests.API.AutoModeration;
 public class DiscordRestAutoModerationAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestAutoModerationAPI.ListGuildAutoModerationRulesAsync"/> method.
+    /// Tests the <see cref="DiscordRestAutoModerationAPI.ListAutoModerationRulesAsync"/> method.
     /// </summary>
     public class ListGuildAutoModerationRulesAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
@@ -64,13 +64,13 @@ public class DiscordRestAutoModerationAPITests
                     .Respond("application/json", "[ ]")
             );
 
-            var result = await api.ListGuildAutoModerationRulesAsync(guildID);
+            var result = await api.ListAutoModerationRulesAsync(guildID);
             ResultAssert.Successful(result);
         }
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestAutoModerationAPI.GetGuildAutoModerationRuleAsync"/> method.
+    /// Tests the <see cref="DiscordRestAutoModerationAPI.GetAutoModerationRuleAsync"/> method.
     /// </summary>
     public class GetGuildAutoModerationRuleAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
@@ -91,13 +91,13 @@ public class DiscordRestAutoModerationAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
             );
 
-            var result = await api.GetGuildAutoModerationRuleAsync(guildID, ruleID);
+            var result = await api.GetAutoModerationRuleAsync(guildID, ruleID);
             ResultAssert.Successful(result);
         }
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestAutoModerationAPI.CreateGuildAutoModerationRuleAsync"/> method.
+    /// Tests the <see cref="DiscordRestAutoModerationAPI.CreateAutoModerationRuleAsync"/> method.
     /// </summary>
     public class CreateGuildAutoModerationRuleAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
@@ -149,7 +149,7 @@ public class DiscordRestAutoModerationAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
             );
 
-            var result = await api.CreateGuildAutoModerationRuleAsync
+            var result = await api.CreateAutoModerationRuleAsync
             (
                 guildID,
                 name,
@@ -167,7 +167,7 @@ public class DiscordRestAutoModerationAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestAutoModerationAPI.ModifyGuildAutoModerationRuleAsync"/> method.
+    /// Tests the <see cref="DiscordRestAutoModerationAPI.ModifyAutoModerationRuleAsync"/> method.
     /// </summary>
     public class ModifyGuildAutoModerationRuleAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
@@ -220,7 +220,7 @@ public class DiscordRestAutoModerationAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
             );
 
-            var result = await api.ModifyGuildAutoModerationRuleAsync
+            var result = await api.ModifyAutoModerationRuleAsync
             (
                 guildID,
                 ruleID,
@@ -239,7 +239,7 @@ public class DiscordRestAutoModerationAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestAutoModerationAPI.DeleteGuildAutoModerationRuleAsync"/> method.
+    /// Tests the <see cref="DiscordRestAutoModerationAPI.DeleteAutoModerationRuleAsync"/> method.
     /// </summary>
     public class DeleteGuildAutoModerationRuleAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
@@ -260,7 +260,7 @@ public class DiscordRestAutoModerationAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
             );
 
-            var result = await api.DeleteGuildAutoModerationRuleAsync
+            var result = await api.DeleteAutoModerationRuleAsync
             (
                 guildID,
                 ruleID
