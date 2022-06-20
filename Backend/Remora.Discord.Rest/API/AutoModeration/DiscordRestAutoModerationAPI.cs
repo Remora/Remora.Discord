@@ -55,7 +55,7 @@ public class DiscordRestAutoModerationAPI : AbstractDiscordRestAPI, IDiscordRest
     }
 
     /// <inheritdoc/>
-    public Task<Result<IReadOnlyList<IAutoModerationRule>>> ListGuildAutoModerationRulesAsync
+    public Task<Result<IReadOnlyList<IAutoModerationRule>>> ListAutoModerationRulesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -70,7 +70,7 @@ public class DiscordRestAutoModerationAPI : AbstractDiscordRestAPI, IDiscordRest
     }
 
     /// <inheritdoc/>
-    public Task<Result<IAutoModerationRule>> GetGuildAutoModerationRuleAsync
+    public Task<Result<IAutoModerationRule>> GetAutoModerationRuleAsync
     (
         Snowflake guildID,
         Snowflake ruleID,
@@ -86,7 +86,7 @@ public class DiscordRestAutoModerationAPI : AbstractDiscordRestAPI, IDiscordRest
     }
 
     /// <inheritdoc/>
-    public Task<Result<IAutoModerationRule>> CreateGuildAutoModerationRuleAsync
+    public Task<Result<IAutoModerationRule>> CreateAutoModerationRuleAsync
     (
         Snowflake guildID,
         string name,
@@ -126,7 +126,7 @@ public class DiscordRestAutoModerationAPI : AbstractDiscordRestAPI, IDiscordRest
     }
 
     /// <inheritdoc/>
-    public Task<Result<IAutoModerationRule>> ModifyGuildAutoModerationRuleAsync
+    public Task<Result<IAutoModerationRule>> ModifyAutoModerationRuleAsync
     (
         Snowflake guildID,
         Snowflake ruleID,
@@ -167,7 +167,7 @@ public class DiscordRestAutoModerationAPI : AbstractDiscordRestAPI, IDiscordRest
     }
 
     /// <inheritdoc/>
-    public Task<Result> DeleteGuildAutoModerationRuleAsync
+    public Task<Result> DeleteAutoModerationRuleAsync
     (
         Snowflake guildID,
         Snowflake ruleID,
