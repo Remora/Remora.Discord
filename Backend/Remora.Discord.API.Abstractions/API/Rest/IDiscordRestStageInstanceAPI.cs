@@ -30,7 +30,7 @@ using Remora.Results;
 namespace Remora.Discord.API.Abstractions.Rest;
 
 /// <summary>
-/// Represents the Discord Stage Instance REST API.
+/// Represents the Discord Stage Instance API.
 /// </summary>
 [PublicAPI]
 public interface IDiscordRestStageInstanceAPI

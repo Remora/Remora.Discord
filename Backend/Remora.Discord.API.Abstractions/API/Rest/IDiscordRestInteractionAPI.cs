@@ -32,7 +32,7 @@ using Remora.Results;
 namespace Remora.Discord.API.Abstractions.Rest;
 
 /// <summary>
-/// Represents the Discord interaction API.
+/// Represents the Discord Interaction API.
 /// </summary>
 [PublicAPI]
 public interface IDiscordRestInteractionAPI

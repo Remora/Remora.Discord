@@ -32,7 +32,7 @@ using Remora.Results;
 namespace Remora.Discord.API.Abstractions.Rest;
 
 /// <summary>
-/// Represents the Discord REST template API.
+/// Represents the Discord Template API.
 /// </summary>
 [PublicAPI]
 public interface IDiscordRestTemplateAPI

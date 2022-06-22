@@ -29,7 +29,7 @@ using Remora.Results;
 namespace Remora.Discord.API.Abstractions.Rest;
 
 /// <summary>
-/// Represents the Discord Emoji API.
+/// Represents the Discord OAuth2 API.
 /// </summary>
 [PublicAPI]
 public interface IDiscordRestOAuth2API
