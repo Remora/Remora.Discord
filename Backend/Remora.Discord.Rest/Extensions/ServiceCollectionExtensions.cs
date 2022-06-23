@@ -222,7 +222,6 @@ public static class ServiceCollectionExtensions
             (
                 b => b
                     .WaitAndRetryAsync(retryDelay)
-                    .WrapAsync(rateLimitPolicy)
             )
             .AddPolicyHandler
             (
@@ -242,6 +241,7 @@ public static class ServiceCollectionExtensions
                         },
                         (_, _, _, _) => Task.CompletedTask
                     )
+                    .WrapAsync(rateLimitPolicy)
             );
 
         // Run extra user-provided client building operations.
