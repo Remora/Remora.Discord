@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Results" Version="7.2.0" />
+        <PackageReference Include="Remora.Results" Version="7.2.1" />
     </ItemGroup>
 
     <ItemGroup>
