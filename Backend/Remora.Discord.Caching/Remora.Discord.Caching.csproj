@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>30.0.1</Version>
+        <Version>30.0.2</Version>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            Merge pull request #201 from MazeXP/rest-corrections
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

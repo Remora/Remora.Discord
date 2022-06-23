@@ -5,12 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>66.0.0</Version>
+        <Version>66.0.1</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Rework alive checking a little bit more.
-            Merge pull request #206 from VelvetThePanda/feat/dispatch-customization
-            Merge pull request #201 from MazeXP/rest-corrections
+            Update Remora.Results.
         </PackageReleaseNotes>
     </PropertyGroup>
 

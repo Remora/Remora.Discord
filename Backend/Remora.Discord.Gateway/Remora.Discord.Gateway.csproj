@@ -5,12 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>10.1.0</Version>
+        <Version>10.1.1</Version>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Break when we successfully send a payload.
-            Make sure we don't oversleep re: heartbeats
-            Implement heartbeat headroom and receive timeouts.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

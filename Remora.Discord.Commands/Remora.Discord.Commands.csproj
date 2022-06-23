@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>25.0.2</Version>
+        <Version>25.0.3</Version>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.

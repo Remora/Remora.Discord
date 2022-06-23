@@ -5,11 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>62.0.0</Version>
+        <Version>62.0.1</Version>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Merge pull request #206 from VelvetThePanda/feat/dispatch-customization
-            Merge pull request #201 from MazeXP/rest-corrections
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
