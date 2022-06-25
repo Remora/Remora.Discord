@@ -1,5 +1,5 @@
 //
-//  ColourDropdownEntity.cs
+//  ColourDropdownInteractions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,58 +25,44 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Results;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
-using Remora.Discord.Interactivity;
+using Remora.Discord.Interactivity.Attributes;
+using Remora.Discord.Interactivity.Bases;
 using Remora.Results;
 
-namespace Remora.Discord.Samples.Interactivity.Entities;
+namespace Remora.Discord.Samples.Interactivity.Interactions;
 
 /// <summary>
-/// Defines an interactive entity that changes the embed colour of its attached message based on a dropdown.
+/// Handles colour dropdown interactions.
 /// </summary>
-public class ColourDropdownEntity : ISelectMenuInteractiveEntity
+public class ColourDropdownInteractions : InteractionGroup
 {
     private readonly InteractionContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ColourDropdownEntity"/> class.
+    /// Initializes a new instance of the <see cref="ColourDropdownInteractions"/> class.
     /// </summary>
     /// <param name="context">The interaction context.</param>
     /// <param name="channelAPI">The channel API.</param>
-    public ColourDropdownEntity(InteractionContext context, IDiscordRestChannelAPI channelAPI)
+    public ColourDropdownInteractions(InteractionContext context, IDiscordRestChannelAPI channelAPI)
     {
         _context = context;
         _channelAPI = channelAPI;
     }
 
-    /// <inheritdoc />
-    public Task<Result<bool>> IsInterestedAsync
-    (
-        ComponentType? componentType,
-        string customID,
-        CancellationToken ct = default
-    )
-    {
-        return componentType is not ComponentType.SelectMenu
-            ? Task.FromResult<Result<bool>>(false)
-            : Task.FromResult<Result<bool>>(customID is "colour-dropdown");
-    }
-
-    /// <inheritdoc />
-    public async Task<Result> HandleInteractionAsync
-    (
-        IUser user,
-        string customID,
-        IReadOnlyList<string> values,
-        CancellationToken ct = default
-    )
+    /// <summary>
+    /// Sets the colour of the associated embed.
+    /// </summary>
+    /// <param name="values">The selected values.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    [SelectMenu("colour-dropdown")]
+    public async Task<Result> SetEmbedColourAsync(IReadOnlyList<string> values)
     {
         if (!_context.Message.IsDefined(out var message))
         {
@@ -133,7 +119,7 @@ public class ColourDropdownEntity : ISelectMenuInteractiveEntity
             message.ID,
             embeds: new[] { embed },
             components: newComponents,
-            ct: ct
+            ct: this.CancellationToken
         );
     }
 }

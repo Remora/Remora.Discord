@@ -1,5 +1,5 @@
 //
-//  InteractiveMessageServiceExtensions.cs
+//  FeedbackServiceExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -28,6 +29,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Feedback.Messages;
+using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity.Services;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -35,15 +37,15 @@ using Remora.Results;
 namespace Remora.Discord.Pagination.Extensions;
 
 /// <summary>
-/// Defines extension methods to the <see cref="InteractiveMessageService"/> class.
+/// Defines extension methods to the <see cref="FeedbackService"/> class.
 /// </summary>
 [PublicAPI]
-public static class InteractiveMessageServiceExtensions
+public static class FeedbackServiceExtensions
 {
     /// <summary>
     /// Sends a paginated message to the given channel.
     /// </summary>
-    /// <param name="interactiveMessages">The interactive message service.</param>
+    /// <param name="feedback">The feedback service.</param>
     /// <param name="channel">The channel.</param>
     /// <param name="sourceUser">
     /// The ID of the user that requested the paginated message. Only this user will be able to change page.
@@ -58,7 +60,7 @@ public static class InteractiveMessageServiceExtensions
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public static async Task<Result<IMessage>> SendPaginatedMessageAsync
     (
-        this InteractiveMessageService interactiveMessages,
+        this FeedbackService feedback,
         Snowflake channel,
         Snowflake sourceUser,
         IReadOnlyList<Embed> pages,
@@ -88,21 +90,32 @@ public static class InteractiveMessageServiceExtensions
             )
         };
 
-        return await interactiveMessages.SendInteractiveEmbedWithPersistentDataAsync
+        var send = await feedback.SendEmbedAsync
         (
             channel,
             pages[0] with { Footer = new EmbedFooter($"Page 1/{pages.Count}") },
-            m => m.ID.ToString(),
-            _ => data,
             options,
             ct
         );
+
+        if (!send.IsSuccess)
+        {
+            return send;
+        }
+
+        var messageID = send.Entity.ID;
+        if (!InMemoryDataService<Snowflake, PaginatedMessageData>.Instance.TryAddData(messageID, data))
+        {
+            throw new InvalidOperationException("Failed to insert data for a newly created message. Bug?");
+        }
+
+        return send;
     }
 
     /// <summary>
     /// Sends a paginated message to the current context.
     /// </summary>
-    /// <param name="interactiveMessages">The interactive message service.</param>
+    /// <param name="feedback">The feedback service.</param>
     /// <param name="sourceUser">
     /// The ID of the user that requested the paginated message. Only this user will be able to change page.
     /// </param>
@@ -116,7 +129,7 @@ public static class InteractiveMessageServiceExtensions
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public static async Task<Result<IMessage>> SendContextualPaginatedMessageAsync
     (
-        this InteractiveMessageService interactiveMessages,
+        this FeedbackService feedback,
         Snowflake sourceUser,
         IReadOnlyList<Embed> pages,
         PaginatedAppearanceOptions? appearance = null,
@@ -145,20 +158,31 @@ public static class InteractiveMessageServiceExtensions
             )
         };
 
-        return await interactiveMessages.SendInteractiveContextualEmbedWithPersistentDataAsync
+        var send = await feedback.SendContextualEmbedAsync
         (
             pages[0] with { Footer = new EmbedFooter($"Page 1/{pages.Count}") },
-            m => m.ID.ToString(),
-            _ => data,
             options,
             ct
         );
+
+        if (!send.IsSuccess)
+        {
+            return send;
+        }
+
+        var messageID = send.Entity.ID;
+        if (!InMemoryDataService<Snowflake, PaginatedMessageData>.Instance.TryAddData(messageID, data))
+        {
+            throw new InvalidOperationException("Failed to insert data for a newly created message. Bug?");
+        }
+
+        return send;
     }
 
     /// <summary>
     /// Sends a paginated message to the given user in their private DN channel.
     /// </summary>
-    /// <param name="interactiveMessages">The interactive message service.</param>
+    /// <param name="feedback">The feedback service.</param>
     /// <param name="user">The ID of the user to send the embed to.</param>
     /// <param name="pages">The pages in the message.</param>
     /// <param name="appearance">The appearance options for the paginated message.</param>
@@ -170,7 +194,7 @@ public static class InteractiveMessageServiceExtensions
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public static async Task<Result<IMessage>> SendPrivatePaginatedMessageAsync
     (
-        this InteractiveMessageService interactiveMessages,
+        this FeedbackService feedback,
         Snowflake user,
         IReadOnlyList<Embed> pages,
         PaginatedAppearanceOptions? appearance = null,
@@ -199,13 +223,25 @@ public static class InteractiveMessageServiceExtensions
             )
         };
 
-        return await interactiveMessages.SendInteractiveContextualEmbedWithPersistentDataAsync
+        var send = await feedback.SendPrivateEmbedAsync
         (
+            user,
             pages[0] with { Footer = new EmbedFooter($"Page 1/{pages.Count}") },
-            m => m.ID.ToString(),
-            _ => data,
             options,
             ct
         );
+
+        if (!send.IsSuccess)
+        {
+            return send;
+        }
+
+        var messageID = send.Entity.ID;
+        if (!InMemoryDataService<Snowflake, PaginatedMessageData>.Instance.TryAddData(messageID, data))
+        {
+            throw new InvalidOperationException("Failed to insert data for a newly created message. Bug?");
+        }
+
+        return send;
     }
 }
