@@ -31,7 +31,7 @@ using Remora.Results;
 namespace Remora.Discord.API.Abstractions.Rest;
 
 /// <summary>
-/// Represents the Discord application API.
+/// Represents the Discord Application API.
 /// </summary>
 [PublicAPI]
 public interface IDiscordRestApplicationAPI
