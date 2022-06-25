@@ -1,5 +1,5 @@
 //
-//  InMemoryPersistenceHelpers.cs
+//  ButtonAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Linq;
 using JetBrains.Annotations;
+using Remora.Commands.Attributes;
 
-namespace Remora.Discord.Interactivity;
+namespace Remora.Discord.Interactivity.Attributes;
 
 /// <summary>
-/// Defines various helper methods for working with in-memory persistence.
+/// Marks a method in an interaction group as a handler for button interactions.
 /// </summary>
 [PublicAPI]
-public static class InMemoryPersistenceHelpers
+public class ButtonAttribute : CommandAttribute
 {
     /// <summary>
-    /// Creates a cache key for the specified nonce.
+    /// Initializes a new instance of the <see cref="ButtonAttribute"/> class.
     /// </summary>
-    /// <param name="nonce">The nonce.</param>
-    /// <returns>The cache key.</returns>
-    public static object CreateNonceKey(string nonce)
+    /// <param name="name">The button's custom ID, excluding Remora's prefixed metadata.</param>
+    /// <param name="aliases">The button's custom ID aliases, excluding Remora's prefixed metadata.</param>
+    public ButtonAttribute(string name, params string[] aliases)
+        : base($"{Constants.ButtonPrefix}::{name}", aliases.Select(a => $"{Constants.ButtonPrefix}::{a}").ToArray())
     {
-        return ("nonce", nonce);
     }
 }

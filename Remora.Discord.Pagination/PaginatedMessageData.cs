@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Interactivity;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.Pagination;
@@ -145,19 +146,21 @@ internal sealed class PaginatedMessageData
     /// <returns>The buttons.</returns>
     public IReadOnlyList<IMessageComponent> GetCurrentComponents()
     {
+        string ToButtonInteractionID(string customID) => $"{Constants.InteractionTree}::{Constants.ButtonPrefix}::{customID}".ToLowerInvariant();
+
         return new[]
         {
             new ActionRowComponent(new[]
             {
-                this.Appearance.First with { IsDisabled = _currentPage == 0 },
-                this.Appearance.Previous with { IsDisabled = _currentPage == 0 },
-                this.Appearance.Next with { IsDisabled = _currentPage == _pages.Count - 1 },
-                this.Appearance.Last with { IsDisabled = _currentPage == _pages.Count - 1 }
+                this.Appearance.First with { CustomID = ToButtonInteractionID("first"), IsDisabled = _currentPage == 0 },
+                this.Appearance.Previous with { CustomID = ToButtonInteractionID("previous"), IsDisabled = _currentPage == 0 },
+                this.Appearance.Next with { CustomID = ToButtonInteractionID("next"), IsDisabled = _currentPage == _pages.Count - 1 },
+                this.Appearance.Last with { CustomID = ToButtonInteractionID("last"), IsDisabled = _currentPage == _pages.Count - 1 }
             }),
             new ActionRowComponent(new[]
             {
-                this.Appearance.Close,
-                this.Appearance.Help
+                this.Appearance.Close with { CustomID = ToButtonInteractionID("close") },
+                this.Appearance.Help with { CustomID = ToButtonInteractionID("help") }
             })
         };
     }

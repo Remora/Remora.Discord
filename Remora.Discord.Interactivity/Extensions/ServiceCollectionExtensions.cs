@@ -21,13 +21,12 @@
 //
 
 using System;
-using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Remora.Commands.Extensions;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Interactivity.Bases;
 using Remora.Discord.Interactivity.Responders;
-using Remora.Discord.Interactivity.Services;
 using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Interactivity.Extensions;
@@ -47,7 +46,6 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddMemoryCache();
         serviceCollection.AddResponder<InteractivityResponder>();
-        serviceCollection.TryAddScoped<InteractiveMessageService>();
 
         serviceCollection.Configure(() => new InteractivityResponderOptions());
 
@@ -55,17 +53,20 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Adds an interactive entity to the service collection.
+    /// Adds an interactive command group to the service collection.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
+    /// <typeparam name="TInteractionGroup">The entity type.</typeparam>
     /// <returns>The collection, with the entity added.</returns>
-    public static IServiceCollection AddInteractiveEntity
-        <
-            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-            TEntity
-        >(this IServiceCollection serviceCollection)
-        where TEntity : class, IInteractiveEntity => serviceCollection.AddInteractiveEntity(typeof(TEntity));
+    public static IServiceCollection AddInteractionGroup
+    <
+        [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)] TInteractionGroup
+    >
+    (
+        this IServiceCollection serviceCollection
+    )
+        where TInteractionGroup : InteractionGroup
+            => serviceCollection.AddInteractiveEntity(typeof(TInteractionGroup));
 
     /// <summary>
     /// Adds an interactive entity to the service collection.
@@ -79,19 +80,8 @@ public static class ServiceCollectionExtensions
         Type entityType
     )
     {
-        if (serviceCollection.Any(s => s.ServiceType == entityType))
-        {
-            // Already registered
-            return serviceCollection;
-        }
-
-        serviceCollection.AddTransient(entityType);
-
-        var entityInterfaces = entityType.GetInterfaces().Where(i => typeof(IInteractiveEntity).IsAssignableFrom(i));
-        foreach (var entityInterface in entityInterfaces)
-        {
-            serviceCollection.AddTransient(entityInterface, entityType);
-        }
+        serviceCollection.AddCommandTree(Constants.InteractionTree)
+            .WithCommandGroup(entityType);
 
         return serviceCollection;
     }

@@ -20,16 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Services;
-using Remora.Discord.Interactivity.Services;
+using Remora.Discord.Interactivity;
 using Remora.Discord.Pagination.Extensions;
 using Remora.Results;
 
@@ -43,24 +46,24 @@ public class InteractiveCommands : CommandGroup
 {
     private readonly ICommandContext _context;
     private readonly FeedbackService _feedback;
-    private readonly InteractiveMessageService _interactiveMessages;
+    private readonly IDiscordRestInteractionAPI _interactionAPI;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InteractiveCommands"/> class.
     /// </summary>
     /// <param name="context">The command context.</param>
-    /// <param name="interactiveMessages">The interactive message service.</param>
     /// <param name="feedback">The feedback service.</param>
+    /// <param name="interactionAPI">The interaction API.</param>
     public InteractiveCommands
     (
         ICommandContext context,
-        InteractiveMessageService interactiveMessages,
-        FeedbackService feedback
+        FeedbackService feedback,
+        IDiscordRestInteractionAPI interactionAPI
     )
     {
         _context = context;
-        _interactiveMessages = interactiveMessages;
         _feedback = feedback;
+        _interactionAPI = interactionAPI;
     }
 
     /// <summary>
@@ -93,7 +96,7 @@ public class InteractiveCommands : CommandGroup
             (c, i) => new Embed(Image: new EmbedImage(i), Description: c)
         ).ToList();
 
-        return await _interactiveMessages.SendContextualPaginatedMessageAsync
+        return await _feedback.SendContextualPaginatedMessageAsync
         (
             _context.User.ID,
             pages,
@@ -115,7 +118,7 @@ public class InteractiveCommands : CommandGroup
             {
                 new SelectMenuComponent
                 (
-                    "colour-dropdown",
+                    $"{Constants.InteractionTree}::{Constants.SelectMenuPrefix}::colour-dropdown",
                     new ISelectOption[]
                     {
                         new SelectOption("Red", "#FF0000"),
@@ -135,5 +138,66 @@ public class InteractiveCommands : CommandGroup
         });
 
         return await _feedback.SendContextualEmbedAsync(embed, options, this.CancellationToken);
+    }
+
+    /// <summary>
+    /// Shows a modal.
+    /// </summary>
+    /// <returns>A result, indicating if the modal was sent successfully.</returns>
+    [Command("modal")]
+    [SuppressInteractionResponse(true)]
+    public async Task<Result> ShowModalAsync()
+    {
+        if (_context is not InteractionContext interactionContext)
+        {
+            return (Result)await _feedback.SendContextualWarningAsync
+            (
+                "This command can only be used with slash commands.",
+                _context.User.ID,
+                new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral)
+            );
+        }
+
+        var response = new InteractionResponse
+        (
+            InteractionCallbackType.Modal,
+            new
+            (
+                new InteractionModalCallbackData
+                (
+                    $"{Constants.InteractionTree}::{Constants.ModalPrefix}::modal",
+                    "Test Modal",
+                    new[]
+                    {
+                        new ActionRowComponent
+                        (
+                            new[]
+                            {
+                                new TextInputComponent
+                                (
+                                    "modal-text-input",
+                                    TextInputStyle.Short,
+                                    "Short Text",
+                                    1,
+                                    32,
+                                    true,
+                                    string.Empty,
+                                    "Short Text here"
+                                )
+                            }
+                        )
+                    }
+                )
+            )
+        );
+
+        var result = await _interactionAPI.CreateInteractionResponseAsync
+        (
+            interactionContext.ID,
+            interactionContext.Token,
+            response,
+            ct: this.CancellationToken
+        );
+        return result;
     }
 }

@@ -22,10 +22,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Interactivity;
+using Remora.Discord.Interactivity.Services;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Pagination.Responders;
@@ -35,23 +35,21 @@ namespace Remora.Discord.Pagination.Responders;
 /// </summary>
 internal sealed class MessageDeletedResponder : IResponder<IMessageDelete>, IResponder<IMessageDeleteBulk>
 {
-    private readonly IMemoryCache _cache;
+    private readonly InMemoryDataService<Snowflake, PaginatedMessageData> _paginationData;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MessageDeletedResponder"/> class.
     /// </summary>
-    /// <param name="cache">The memory cache.</param>
-    public MessageDeletedResponder(IMemoryCache cache)
+    /// <param name="paginationData">The pagination data service.</param>
+    public MessageDeletedResponder(InMemoryDataService<Snowflake, PaginatedMessageData> paginationData)
     {
-        _cache = cache;
+        _paginationData = paginationData;
     }
 
     /// <inheritdoc />
     public Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
     {
-        var cacheKey = InMemoryPersistenceHelpers.CreateNonceKey(gatewayEvent.ID.ToString());
-        _cache.Remove(cacheKey);
-
+        _paginationData.RemoveData(gatewayEvent.ID);
         return Task.FromResult(Result.FromSuccess());
     }
 
@@ -60,8 +58,7 @@ internal sealed class MessageDeletedResponder : IResponder<IMessageDelete>, IRes
     {
         foreach (var id in gatewayEvent.IDs)
         {
-            var cacheKey = InMemoryPersistenceHelpers.CreateNonceKey(id.ToString());
-            _cache.Remove(cacheKey);
+            _paginationData.RemoveData(id);
         }
 
         return Task.FromResult(Result.FromSuccess());
