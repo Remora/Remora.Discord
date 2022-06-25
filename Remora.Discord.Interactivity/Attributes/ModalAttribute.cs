@@ -30,6 +30,7 @@ namespace Remora.Discord.Interactivity.Attributes;
 /// Marks a method in an interaction group as a handler for modal interactions.
 /// </summary>
 [PublicAPI]
+[MeansImplicitUse(ImplicitUseKindFlags.Access)]
 public class ModalAttribute : CommandAttribute
 {
     /// <summary>
