@@ -22,8 +22,6 @@
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Remora.Discord.API.Objects;
-using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Interactivity.Attributes;
 using Remora.Discord.Interactivity.Bases;
 using Remora.Results;
@@ -36,35 +34,26 @@ namespace Remora.Discord.Samples.Interactivity.Interactions;
 public class ModalInteractions : InteractionGroup
 {
     private readonly ILogger<ModalInteractions> _log;
-    private readonly InteractionContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ModalInteractions"/> class.
     /// </summary>
     /// <param name="log">The logging instance for this type.</param>
-    /// <param name="context">The interaction context.</param>
-    public ModalInteractions(ILogger<ModalInteractions> log, InteractionContext context)
+    public ModalInteractions(ILogger<ModalInteractions> log)
     {
         _log = log;
-        _context = context;
     }
 
     /// <summary>
     /// Logs submitted modal data.
     /// </summary>
+    /// <param name="modalTextInput">The value of the modal text input component.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     [Modal("modal")]
-    public Task<Result> OnModalSubmitAsync()
+    public Task<Result> OnModalSubmitAsync(string modalTextInput)
     {
-        if (!_context.Data.TryPickT2(out var data, out _))
-        {
-            return Task.FromResult<Result>(new InvalidOperationError("The interaction data was not modal data."));
-        }
-
         _log.LogInformation("Received modal response");
-        var actionRow = (PartialActionRowComponent)data.Components[0];
-        var textInput = (PartialTextInputComponent)actionRow.Components.Value[0];
-        _log.LogInformation("Received input: {Input}", textInput.Value);
+        _log.LogInformation("Received input: {Input}", modalTextInput);
 
         return Task.FromResult(Result.FromSuccess());
     }

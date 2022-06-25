@@ -22,8 +22,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Humanizer;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
@@ -178,13 +180,79 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var commandPath = data.CustomID[Constants.InteractionTree.Length..][2..]
             .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+        var parameters = ExtractParameters(data.Components);
+
         return await TryExecuteInteractionCommandAsync
         (
             context,
             commandPath,
-            new Dictionary<string, IReadOnlyList<string>>(),
+            parameters,
             ct
         );
+    }
+
+    private static IReadOnlyDictionary<string, IReadOnlyList<string>> ExtractParameters
+    (
+        IEnumerable<IPartialMessageComponent> components
+    )
+    {
+        var parameters = new Dictionary<string, IReadOnlyList<string>>();
+        foreach (var component in components)
+        {
+            if (component is IPartialActionRowComponent actionRow)
+            {
+                if (!actionRow.Components.IsDefined(out var rowComponents))
+                {
+                    continue;
+                }
+
+                var nestedComponents = ExtractParameters(rowComponents);
+                foreach (var nestedComponent in nestedComponents)
+                {
+                    parameters.Add(nestedComponent.Key, nestedComponent.Value);
+                }
+
+                continue;
+            }
+
+            switch (component)
+            {
+                case IPartialTextInputComponent textInput:
+                {
+                    if (!textInput.CustomID.IsDefined(out var id))
+                    {
+                        continue;
+                    }
+
+                    if (!textInput.Value.IsDefined(out var value))
+                    {
+                        continue;
+                    }
+
+                    parameters.Add(id.Replace('-', '_').Camelize(), new[] { value });
+                    break;
+                }
+                case IPartialSelectMenuComponent selectMenu:
+                {
+                    if (!selectMenu.CustomID.IsDefined(out var id))
+                    {
+                        continue;
+                    }
+
+                    if (!selectMenu.Options.IsDefined(out var options))
+                    {
+                        continue;
+                    }
+
+                    var values = options.Where(op => op.Value.HasValue).Select(op => op.Value.Value).ToList();
+
+                    parameters.Add(id.Replace('-', '_').Camelize(), values);
+                    break;
+                }
+            }
+        }
+
+        return parameters;
     }
 
     private async Task<Result> TryExecuteInteractionCommandAsync
