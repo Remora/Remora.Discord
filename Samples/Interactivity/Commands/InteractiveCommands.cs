@@ -198,6 +198,7 @@ public class InteractiveCommands : CommandGroup
             response,
             ct: this.CancellationToken
         );
+
         return result;
     }
 }
