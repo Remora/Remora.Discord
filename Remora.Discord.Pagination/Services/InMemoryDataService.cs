@@ -23,18 +23,16 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.Interactivity.Services;
+namespace Remora.Discord.Pagination.Services;
 
 /// <summary>
 /// Manages synchronized access to data.
 /// </summary>
 /// <typeparam name="TKey">The key type for the stored data.</typeparam>
 /// <typeparam name="TData">The data type stored by the service.</typeparam>
-[PublicAPI]
-public class InMemoryDataService<TKey, TData> where TKey : notnull
+internal class InMemoryDataService<TKey, TData> where TKey : notnull
 {
     /// <summary>
     /// Gets the singleton instance of this service.
@@ -61,6 +59,10 @@ public class InMemoryDataService<TKey, TData> where TKey : notnull
     /// <summary>
     /// Rents the data associated with the given message ID, blocking until a lock can be taken on the data object.
     /// </summary>
+    /// <remarks>
+    /// The semaphore returned by this method has the lock held on it and must be released once the caller is done with
+    /// the object.
+    /// </remarks>
     /// <param name="key">The key the data object is associated with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The data and semaphore associated with the message or a <see cref="NotFoundError"/>.</returns>
