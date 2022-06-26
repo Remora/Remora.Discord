@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
@@ -118,7 +117,7 @@ public class InteractiveCommands : CommandGroup
             {
                 new SelectMenuComponent
                 (
-                    $"{Constants.InteractionTree}::{Constants.SelectMenuPrefix}::colour-dropdown",
+                    CustomIDHelpers.CreateSelectMenuID("colour-dropdown"),
                     new ISelectOption[]
                     {
                         new SelectOption("Red", "#FF0000"),
@@ -165,7 +164,7 @@ public class InteractiveCommands : CommandGroup
             (
                 new InteractionModalCallbackData
                 (
-                    $"{Constants.InteractionTree}::{Constants.ModalPrefix}::modal",
+                    CustomIDHelpers.CreateModalID("modal"),
                     "Test Modal",
                     new[]
                     {

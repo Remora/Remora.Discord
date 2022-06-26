@@ -146,22 +146,42 @@ internal sealed class PaginatedMessageData
     /// <returns>The buttons.</returns>
     public IReadOnlyList<IMessageComponent> GetCurrentComponents()
     {
-        string ToButtonInteractionID(string customID) => $"{Constants.InteractionTree}::{Constants.ButtonPrefix}::{customID}".ToLowerInvariant();
-
         return new[]
         {
-            new ActionRowComponent(new[]
-            {
-                this.Appearance.First with { CustomID = ToButtonInteractionID("first"), IsDisabled = _currentPage == 0 },
-                this.Appearance.Previous with { CustomID = ToButtonInteractionID("previous"), IsDisabled = _currentPage == 0 },
-                this.Appearance.Next with { CustomID = ToButtonInteractionID("next"), IsDisabled = _currentPage == _pages.Count - 1 },
-                this.Appearance.Last with { CustomID = ToButtonInteractionID("last"), IsDisabled = _currentPage == _pages.Count - 1 }
-            }),
-            new ActionRowComponent(new[]
-            {
-                this.Appearance.Close with { CustomID = ToButtonInteractionID("close") },
-                this.Appearance.Help with { CustomID = ToButtonInteractionID("help") }
-            })
+            new ActionRowComponent
+            (
+                new[]
+                {
+                    this.Appearance.First with
+                    {
+                        CustomID = CustomIDHelpers.CreateButtonID("first"),
+                        IsDisabled = _currentPage == 0
+                    },
+                    this.Appearance.Previous with
+                    {
+                        CustomID = CustomIDHelpers.CreateButtonID("previous"),
+                        IsDisabled = _currentPage == 0
+                    },
+                    this.Appearance.Next with
+                    {
+                        CustomID = CustomIDHelpers.CreateButtonID("next"),
+                        IsDisabled = _currentPage == _pages.Count - 1
+                    },
+                    this.Appearance.Last with
+                    {
+                        CustomID = CustomIDHelpers.CreateButtonID("last"),
+                        IsDisabled = _currentPage == _pages.Count - 1
+                    }
+                }
+            ),
+            new ActionRowComponent
+            (
+                new[]
+                {
+                    this.Appearance.Close with { CustomID = CustomIDHelpers.CreateButtonID("close") },
+                    this.Appearance.Help with { CustomID = CustomIDHelpers.CreateButtonID("help") }
+                }
+            )
         };
     }
 }
