@@ -34,19 +34,4 @@ public static class Constants
     /// Gets the name of the interaction command tree.
     /// </summary>
     public const string InteractionTree = "remora::interactivity";
-
-    /// <summary>
-    /// Gets the prefix used for button command names.
-    /// </summary>
-    public const string ButtonPrefix = "button";
-
-    /// <summary>
-    /// Gets the prefix used for select menu command names.
-    /// </summary>
-    public const string SelectMenuPrefix = "select-menu";
-
-    /// <summary>
-    /// Gets the prefix used for modal command names.
-    /// </summary>
-    public const string ModalPrefix = "modal";
 }

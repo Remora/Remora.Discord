@@ -39,7 +39,7 @@ public class ButtonAttribute : CommandAttribute
     /// <param name="name">The button's custom ID, excluding Remora's prefixed metadata.</param>
     /// <param name="aliases">The button's custom ID aliases, excluding Remora's prefixed metadata.</param>
     public ButtonAttribute(string name, params string[] aliases)
-        : base($"{Constants.ButtonPrefix}::{name}", aliases.Select(a => $"{Constants.ButtonPrefix}::{a}").ToArray())
+        : base($"button::{name}", aliases.Select(a => $"button::{a}").ToArray())
     {
     }
 }

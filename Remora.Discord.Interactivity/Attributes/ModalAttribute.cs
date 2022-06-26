@@ -39,7 +39,7 @@ public class ModalAttribute : CommandAttribute
     /// <param name="name">The modal's custom ID, excluding Remora's prefixed metadata.</param>
     /// <param name="aliases">The modal's custom ID aliases, excluding Remora's prefixed metadata.</param>
     public ModalAttribute(string name, params string[] aliases)
-        : base($"{Constants.ModalPrefix}::{name}", aliases.Select(a => $"{Constants.ModalPrefix}::{a}").ToArray())
+        : base($"modal::{name}", aliases.Select(a => $"modal::{a}").ToArray())
     {
     }
 }

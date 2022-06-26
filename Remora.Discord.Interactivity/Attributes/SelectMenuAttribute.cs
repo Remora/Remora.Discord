@@ -39,11 +39,7 @@ public class SelectMenuAttribute : CommandAttribute
     /// <param name="name">The menu's custom ID, excluding Remora's prefixed metadata.</param>
     /// <param name="aliases">The menu's custom ID aliases, excluding Remora's prefixed metadata.</param>
     public SelectMenuAttribute(string name, params string[] aliases)
-        : base
-        (
-            $"{Constants.SelectMenuPrefix}::{name}",
-            aliases.Select(a => $"{Constants.SelectMenuPrefix}::{a}").ToArray()
-        )
+        : base($"select-menu::{name}", aliases.Select(a => $"select-menu::{a}").ToArray())
     {
     }
 }
