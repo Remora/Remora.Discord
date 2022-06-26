@@ -45,6 +45,7 @@ internal class PaginationInteractions : InteractionGroup
 {
     private readonly FeedbackService _feedback;
     private readonly IDiscordRestChannelAPI _channelAPI;
+    private readonly IDiscordRestInteractionAPI _interactionAPI;
     private readonly InMemoryDataService<Snowflake, PaginatedMessageData> _paginationData;
     private readonly InteractionContext _context;
 
@@ -53,18 +54,21 @@ internal class PaginationInteractions : InteractionGroup
     /// </summary>
     /// <param name="feedback">The feedback service.</param>
     /// <param name="channelAPI">The channel API.</param>
+    /// <param name="interactionAPI">The interaction API.</param>
     /// <param name="paginationData">The pagination data service.</param>
     /// <param name="context">The interaction context.</param>
     public PaginationInteractions
     (
         FeedbackService feedback,
         IDiscordRestChannelAPI channelAPI,
+        IDiscordRestInteractionAPI interactionAPI,
         InMemoryDataService<Snowflake, PaginatedMessageData> paginationData,
         InteractionContext context
     )
     {
         _feedback = feedback;
         _channelAPI = channelAPI;
+        _interactionAPI = interactionAPI;
         _paginationData = paginationData;
         _context = context;
     }
@@ -115,13 +119,25 @@ internal class PaginationInteractions : InteractionGroup
             return (Result)rentData;
         }
 
-        var (semaphore, _) = rentData.Entity;
+        var (semaphore, data) = rentData.Entity;
 
         try
         {
             _paginationData.RemoveData(message.ID);
 
-            return await _channelAPI.DeleteMessageAsync(message.ChannelID, message.ID, ct: this.CancellationToken);
+            if (data.IsInteractionDriven)
+            {
+                return await _interactionAPI.DeleteOriginalInteractionResponseAsync
+                (
+                    _context.ApplicationID,
+                    _context.Token,
+                    this.CancellationToken
+                );
+            }
+            else
+            {
+                return await _channelAPI.DeleteMessageAsync(message.ChannelID, message.ID, ct: this.CancellationToken);
+            }
         }
         finally
         {
@@ -187,19 +203,38 @@ internal class PaginationInteractions : InteractionGroup
             var newPage = data.GetCurrentPage();
             var newComponents = data.GetCurrentComponents();
 
-            return (Result)await _channelAPI.EditMessageAsync
-            (
-                message.ChannelID,
-                message.ID,
-                embeds: new[] { newPage },
-                components: new Optional<IReadOnlyList<IMessageComponent>?>
+            if (data.IsInteractionDriven)
+            {
+                return (Result)await _interactionAPI.EditOriginalInteractionResponseAsync
                 (
-                    message.Components.IsDefined(out var existingComponents)
-                        ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
-                        : newComponents
-                ),
-                ct: ct
-            );
+                    _context.ApplicationID,
+                    _context.Token,
+                    embeds: new[] { newPage },
+                    components: new Optional<IReadOnlyList<IMessageComponent>?>
+                    (
+                        message.Components.IsDefined(out var existingComponents)
+                            ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
+                            : newComponents
+                    ),
+                    ct: ct
+                );
+            }
+            else
+            {
+                return (Result)await _channelAPI.EditMessageAsync
+                (
+                    message.ChannelID,
+                    message.ID,
+                    embeds: new[] { newPage },
+                    components: new Optional<IReadOnlyList<IMessageComponent>?>
+                    (
+                        message.Components.IsDefined(out var existingComponents)
+                            ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
+                            : newComponents
+                    ),
+                    ct: ct
+                );
+            }
         }
         finally
         {

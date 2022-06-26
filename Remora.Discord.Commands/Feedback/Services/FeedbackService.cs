@@ -686,6 +686,12 @@ public class FeedbackService
     }
 
     /// <summary>
+    /// Determines whether the feedback service has access to an interaction context.
+    /// </summary>
+    /// <returns>true if the feedback service has access to an interaction context; otherwise, false.</returns>
+    public bool HasInteractionContext() => _contextInjection.Context is InteractionContext;
+
+    /// <summary>
     /// Sends an interaction response.
     /// </summary>
     /// <param name="content">The contents of the message to send.</param>
