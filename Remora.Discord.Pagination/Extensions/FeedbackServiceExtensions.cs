@@ -77,7 +77,7 @@ public static class FeedbackServiceExtensions
         options ??= new FeedbackMessageOptions();
         appearance ??= PaginatedAppearanceOptions.Default;
 
-        var data = new PaginatedMessageData(sourceUser, pages, appearance);
+        var data = new PaginatedMessageData(false, sourceUser, pages, appearance);
         var components = data.GetCurrentComponents();
 
         options = options with
@@ -145,7 +145,7 @@ public static class FeedbackServiceExtensions
         options ??= new FeedbackMessageOptions();
         appearance ??= PaginatedAppearanceOptions.Default;
 
-        var data = new PaginatedMessageData(sourceUser, pages, appearance);
+        var data = new PaginatedMessageData(feedback.HasInteractionContext(), sourceUser, pages, appearance);
         var components = data.GetCurrentComponents();
 
         options = options with
@@ -210,7 +210,7 @@ public static class FeedbackServiceExtensions
         options ??= new FeedbackMessageOptions();
         appearance ??= PaginatedAppearanceOptions.Default;
 
-        var data = new PaginatedMessageData(user, pages, appearance);
+        var data = new PaginatedMessageData(false, user, pages, appearance);
         var components = data.GetCurrentComponents();
 
         options = options with

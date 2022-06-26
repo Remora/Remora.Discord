@@ -37,6 +37,11 @@ internal sealed class PaginatedMessageData
     private int _currentPage;
 
     /// <summary>
+    /// Gets a value indicating whether the paginated message was created as part of an interaction.
+    /// </summary>
+    public bool IsInteractionDriven { get; }
+
+    /// <summary>
     /// Gets the appearance options for the message.
     /// </summary>
     public PaginatedAppearanceOptions Appearance { get; }
@@ -49,11 +54,15 @@ internal sealed class PaginatedMessageData
     /// <summary>
     /// Initializes a new instance of the <see cref="PaginatedMessageData"/> class.
     /// </summary>
+    /// <param name="isInteractionDriven">
+    /// Indicates whether the paginated message was created as part of an interaction.
+    /// </param>
     /// <param name="sourceUserID">The ID of the source user.</param>
     /// <param name="pages">The pages in the paginated message.</param>
     /// <param name="appearance">The appearance options.</param>
     public PaginatedMessageData
     (
+        bool isInteractionDriven,
         Snowflake sourceUserID,
         IReadOnlyList<Embed> pages,
         PaginatedAppearanceOptions? appearance = null
@@ -62,6 +71,7 @@ internal sealed class PaginatedMessageData
         appearance ??= PaginatedAppearanceOptions.Default;
 
         _pages = pages;
+        this.IsInteractionDriven = isInteractionDriven;
         _currentPage = 0;
 
         this.SourceUserID = sourceUserID;
