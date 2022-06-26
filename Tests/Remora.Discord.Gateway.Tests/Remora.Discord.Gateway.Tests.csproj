@@ -11,7 +11,7 @@
 
     <ItemGroup>
       <PackageReference Include="Moq" Version="4.18.1" />
-      <PackageReference Include="OneOf" Version="3.0.216" />
+      <PackageReference Include="OneOf" Version="3.0.223" />
       <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.3" />
     </ItemGroup>
 
