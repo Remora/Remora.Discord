@@ -84,8 +84,9 @@ internal class InMemoryDataService<TKey, TData> where TKey : notnull
     /// the given message ID.
     /// </summary>
     /// <param name="key">The key the data object is associated with.</param>
-    public void RemoveData(TKey key)
+    /// <returns>true if the data was successfully removed; otherwise, false.</returns>
+    public bool TryRemoveData(TKey key)
     {
-        _paginationData.TryRemove(key, out _);
+        return _paginationData.TryRemove(key, out _);
     }
 }
