@@ -24,9 +24,9 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Interactivity.Extensions;
+using Remora.Discord.Interactivity.Services;
 using Remora.Discord.Pagination.Interactions;
 using Remora.Discord.Pagination.Responders;
-using Remora.Discord.Pagination.Services;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.Pagination.Extensions;
