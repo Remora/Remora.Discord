@@ -1,0 +1,44 @@
+# Based on an issue template from the Discord API documentation.
+name: Bug Report
+description: A bug has been found in the library
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Before opening a new issue, please search existing issues:  https://github.com/Nihlus/Remora.Discord/issues"
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Provide a clear and concise description of what the problem is.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide specific, clear, and concise steps for us to reliably reproduce this issue.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What is the behavior you expect to occur that is not?
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current Behavior
+      description: What is the behavior you are currently seeing instead?
+    validations:
+      required: true
+  - type: textarea
+    id: information
+    attributes:
+      label: Library / Runtime Information
+      description: Which version of the library is this happening on? Which version of the C# runtime?
+    validations:
+      required: true

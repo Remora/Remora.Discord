@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -322,7 +322,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/CFBC4ADB">Channels</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the channels in the guild.
@@ -331,7 +331,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/D8CE335D">GuildScheduledEvents</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a>&gt;<wbr>&gt;<wbr></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the scheduled events in the guild.
@@ -340,7 +340,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/B8BF9A0C">IsLarge</a></td>
-								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
+								<td>bool</td>
 								<td>
 									<div>
     Gets a value indicating whether this is considered a large guild.
@@ -349,7 +349,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/8167E8B4">IsUnavailable</a></td>
-								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
+								<td>bool</td>
 								<td>
 									<div>
     Gets a value indicating whether the guild is unavailable due to an outage.
@@ -358,7 +358,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/7D397C85">JoinedAt</a></td>
-								<td>Optional<wbr>&lt;DateTimeOffset&gt;<wbr></td>
+								<td>DateTimeOffset</td>
 								<td>
 									<div>
     Gets the time when the current user joined the guild.
@@ -367,7 +367,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/FF687E16">MemberCount</a></td>
-								<td>Optional<wbr>&lt;int&gt;<wbr></td>
+								<td>int</td>
 								<td>
 									<div>
     Gets the number of members in the guild.
@@ -376,7 +376,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/C7354619">Members</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the members in the guild.
@@ -385,7 +385,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/6D782A94">Presences</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPresence">IPartialPresence</a>&gt;<wbr>&gt;<wbr></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPresence">IPartialPresence</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the presences of the members in the guild.
@@ -394,7 +394,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/AD417368">StageInstances</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a>&gt;<wbr>&gt;<wbr></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the stage instances in the guild.
@@ -403,7 +403,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/E5DA6833">Threads</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the threads in the guild.
@@ -412,7 +412,7 @@ public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPar
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate/4209B15E">VoiceStates</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState">IPartialVoiceState</a>&gt;<wbr>&gt;<wbr></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState">IPartialVoiceState</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the states of members currently in voice channels.
