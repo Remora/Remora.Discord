@@ -41,6 +41,11 @@ public enum GuildFeature
     AnimatedIcon,
 
     /// <summary>
+    /// The guild has set up Auto Moderation rules.
+    /// </summary>
+    AutoModeration,
+
+    /// <summary>
     /// The guild has access to set a guild banner image.
     /// </summary>
     Banner,
