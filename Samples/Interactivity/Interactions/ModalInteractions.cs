@@ -22,8 +22,7 @@
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Remora.Discord.Interactivity.Attributes;
-using Remora.Discord.Interactivity.Bases;
+using Remora.Discord.Interactivity;
 using Remora.Results;
 
 namespace Remora.Discord.Samples.Interactivity.Interactions;

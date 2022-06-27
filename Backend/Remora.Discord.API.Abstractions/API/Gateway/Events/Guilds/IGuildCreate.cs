@@ -24,7 +24,6 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events;
 
@@ -41,55 +40,55 @@ public interface IGuildCreate : IGatewayEvent, IGuild
     /// <summary>
     /// Gets the time when the current user joined the guild.
     /// </summary>
-    Optional<DateTimeOffset> JoinedAt { get; }
+    DateTimeOffset JoinedAt { get; }
 
     /// <summary>
     /// Gets a value indicating whether this is considered a large guild.
     /// </summary>
-    Optional<bool> IsLarge { get; }
+    bool IsLarge { get; }
 
     /// <summary>
     /// Gets a value indicating whether the guild is unavailable due to an outage.
     /// </summary>
-    Optional<bool> IsUnavailable { get; }
+    bool IsUnavailable { get; }
 
     /// <summary>
     /// Gets the number of members in the guild.
     /// </summary>
-    Optional<int> MemberCount { get; }
+    int MemberCount { get; }
 
     /// <summary>
     /// Gets the states of members currently in voice channels.
     /// </summary>
-    Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates { get; }
+    IReadOnlyList<IPartialVoiceState> VoiceStates { get; }
 
     /// <summary>
     /// Gets the members in the guild.
     /// </summary>
-    Optional<IReadOnlyList<IGuildMember>> Members { get; }
+    IReadOnlyList<IGuildMember> Members { get; }
 
     /// <summary>
     /// Gets the channels in the guild.
     /// </summary>
-    Optional<IReadOnlyList<IChannel>> Channels { get; }
+    IReadOnlyList<IChannel> Channels { get; }
 
     /// <summary>
     /// Gets the threads in the guild.
     /// </summary>
-    Optional<IReadOnlyList<IChannel>> Threads { get; }
+    IReadOnlyList<IChannel> Threads { get; }
 
     /// <summary>
     /// Gets the presences of the members in the guild.
     /// </summary>
-    Optional<IReadOnlyList<IPartialPresence>> Presences { get; }
+    IReadOnlyList<IPartialPresence> Presences { get; }
 
     /// <summary>
     /// Gets the stage instances in the guild.
     /// </summary>
-    Optional<IReadOnlyList<IStageInstance>> StageInstances { get; }
+    IReadOnlyList<IStageInstance> StageInstances { get; }
 
     /// <summary>
     /// Gets the scheduled events in the guild.
     /// </summary>
-    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents { get; }
+    IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents { get; }
 }
