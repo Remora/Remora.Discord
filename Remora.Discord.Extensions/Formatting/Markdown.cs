@@ -36,7 +36,7 @@ public static partial class Markdown
     /// <summary>
     /// A collection of sensitive characters.
     /// </summary>
-    private static readonly string[] SensitiveCharacters = { "\\", "*", "_", "~", "`", "|", ">" };
+    private static readonly string[] _sensitiveCharacters = { "\\", "*", "_", "~", "`", "|", ">" };
 
     /// <summary>
     /// Formats a string to use Markdown Bold formatting.
@@ -195,5 +195,5 @@ public static partial class Markdown
     /// <returns>
     /// A sanitized string.
     /// </returns>
-    public static string Sanitize(string text) => SensitiveCharacters.Aggregate(text, (current, unsafeChar) => current.Replace(unsafeChar, $@"\{unsafeChar}"));
+    public static string Sanitize(string text) => _sensitiveCharacters.Aggregate(text, (current, unsafeChar) => current.Replace(unsafeChar, $@"\{unsafeChar}"));
 }

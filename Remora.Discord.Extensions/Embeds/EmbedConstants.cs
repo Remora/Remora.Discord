@@ -72,7 +72,7 @@ public static class EmbedConstants
     public const int MaxEmbedLength = 6000;
 
     /// <summary>
-    /// The default embed color.
+    /// Gets the default embed color.
     /// </summary>
-    public static readonly Color DefaultColour = Color.FromArgb(95, 186, 125);
+    public static Color DefaultColour { get; } = Color.FromArgb(95, 186, 125);
 }

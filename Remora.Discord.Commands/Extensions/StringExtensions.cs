@@ -31,7 +31,7 @@ namespace Remora.Discord.Commands.Extensions;
 [PublicAPI]
 public static class StringExtensions
 {
-    private static readonly Regex UnmentionRegex = new("(\\d+)>$", RegexOptions.Compiled);
+    private static readonly Regex _unmentionRegex = new("(\\d+)>$", RegexOptions.Compiled);
 
     /// <summary>
     /// Removes Discord mention markdown from a string.
@@ -50,7 +50,7 @@ public static class StringExtensions
             return value;
         }
 
-        var regexMatches = UnmentionRegex.Match(value);
+        var regexMatches = _unmentionRegex.Match(value);
         return !regexMatches.Success
             ? value
             : regexMatches.Groups[1].Value;

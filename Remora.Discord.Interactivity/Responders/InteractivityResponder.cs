@@ -285,6 +285,8 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             .FindCustomAttributeOnLocalTree<SuppressInteractionResponseAttribute>();
 
         var shouldSendResponse = !(suppressResponseAttribute?.Suppress ?? _options.SuppressAutomaticResponses);
+
+        // ReSharper disable once InvertIf
         if (shouldSendResponse)
         {
             var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);

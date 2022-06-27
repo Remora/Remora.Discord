@@ -37,7 +37,7 @@ public static class ChannelContextExtensions
     /// <summary>
     /// Holds a mapping of channel contexts to their constituent channel types.
     /// </summary>
-    private static readonly IReadOnlyDictionary<ChannelContext, IReadOnlyList<ChannelType>> ChannelTypesMap =
+    private static readonly IReadOnlyDictionary<ChannelContext, IReadOnlyList<ChannelType>> _channelTypesMap =
         new Dictionary<ChannelContext, IReadOnlyList<ChannelType>>
         {
             {
@@ -77,6 +77,6 @@ public static class ChannelContextExtensions
     /// <returns>The channel context's channels types.</returns>
     public static IReadOnlyList<ChannelType> ToChannelTypes(this ChannelContext channelContext)
     {
-        return ChannelTypesMap[channelContext];
+        return _channelTypesMap[channelContext];
     }
 }
