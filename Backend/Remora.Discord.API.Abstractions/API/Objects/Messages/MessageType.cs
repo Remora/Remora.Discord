@@ -143,5 +143,10 @@ public enum MessageType
     /// <summary>
     /// A context menu command.
     /// </summary>
-    ContextMenuCommand = 23
+    ContextMenuCommand = 23,
+
+    /// <summary>
+    /// An executed action of an Auto Moderation rule.
+    /// </summary>
+    AutoModerationAction = 24
 }
