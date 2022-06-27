@@ -41,7 +41,7 @@ using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
-namespace Remora.Discord.Interactivity.Responders;
+namespace Remora.Discord.Interactivity;
 
 /// <summary>
 /// Handles dispatch of interaction events to interested entities.

@@ -73,17 +73,17 @@ public record GuildCreate
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<ISticker>> Stickers,
     bool IsPremiumProgressBarEnabled,
-    Optional<DateTimeOffset> JoinedAt,
-    Optional<bool> IsLarge,
-    Optional<bool> IsUnavailable,
-    Optional<int> MemberCount,
-    Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates,
-    Optional<IReadOnlyList<IGuildMember>> Members,
-    Optional<IReadOnlyList<IChannel>> Channels,
-    Optional<IReadOnlyList<IChannel>> Threads,
-    Optional<IReadOnlyList<IPartialPresence>> Presences,
-    Optional<IReadOnlyList<IStageInstance>> StageInstances,
-    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents
+    DateTimeOffset JoinedAt,
+    bool IsLarge,
+    bool IsUnavailable,
+    int MemberCount,
+    IReadOnlyList<IPartialVoiceState> VoiceStates,
+    IReadOnlyList<IGuildMember> Members,
+    IReadOnlyList<IChannel> Channels,
+    IReadOnlyList<IChannel> Threads,
+    IReadOnlyList<IPartialPresence> Presences,
+    IReadOnlyList<IStageInstance> StageInstances,
+    IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents
 ) : Guild
 (
     ID,

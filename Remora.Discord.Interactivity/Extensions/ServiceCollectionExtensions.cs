@@ -25,8 +25,6 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Commands.Extensions;
 using Remora.Discord.Gateway.Extensions;
-using Remora.Discord.Interactivity.Bases;
-using Remora.Discord.Interactivity.Responders;
 using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Interactivity.Extensions;

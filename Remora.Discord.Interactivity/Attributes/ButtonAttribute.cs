@@ -24,7 +24,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Remora.Commands.Attributes;
 
-namespace Remora.Discord.Interactivity.Attributes;
+namespace Remora.Discord.Interactivity;
 
 /// <summary>
 /// Marks a method in an interaction group as a handler for button interactions.

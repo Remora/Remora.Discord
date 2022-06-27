@@ -22,7 +22,7 @@
 
 using Remora.Commands.Groups;
 
-namespace Remora.Discord.Interactivity.Bases;
+namespace Remora.Discord.Interactivity;
 
 /// <summary>
 /// Represents the base type for command groups that handle Discord's message component interactions.
