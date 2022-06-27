@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.0.27</Version>
+        <Version>3.0.0</Version>
         <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Experimental rework of the interactivity system.
         </PackageReleaseNotes>
     </PropertyGroup>
 

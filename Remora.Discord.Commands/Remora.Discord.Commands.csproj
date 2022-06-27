@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>25.0.3</Version>
+        <Version>25.1.0</Version>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Make the paginated messages interaction-aware.
         </PackageReleaseNotes>
     </PropertyGroup>
 

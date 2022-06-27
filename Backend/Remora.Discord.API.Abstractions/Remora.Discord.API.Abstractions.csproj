@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>66.0.1</Version>
+        <Version>67.0.0</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Update Remora.Results.
+            Fix optionality of GuildCreate properties.
         </PackageReleaseNotes>
     </PropertyGroup>
 

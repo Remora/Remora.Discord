@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>40.0.2</Version>
+        <Version>40.0.3</Version>
         <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
-            Fix incorrect wrapping location of the rate limit policy.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

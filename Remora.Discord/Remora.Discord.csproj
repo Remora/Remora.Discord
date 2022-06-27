@@ -5,11 +5,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.39</Version>
+        <Version>2022.40</Version>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Update Remora.Results.
-            Fix incorrect wrapping location of the rate limit policy.
+            Fix optionality of GuildCreate properties.
+            Make the paginated messages interaction-aware.
+            Experimental rework of the interactivity system.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
