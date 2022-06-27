@@ -37,6 +37,11 @@ public interface IAuditLog
     IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
 
     /// <summary>
+    /// Gets a list of auto moderation rules referenced in the audit log.
+    /// </summary>
+    IReadOnlyList<IAutoModerationRule> AutoModerationRules { get; }
+
+    /// <summary>
     /// Gets a list of scheduled events found in the audit log.
     /// </summary>
     IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents { get; }
