@@ -31,7 +31,7 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity;
-using Remora.Discord.Pagination.Services;
+using Remora.Discord.Interactivity.Services;
 using Remora.Rest.Core;
 using Remora.Results;
 

@@ -23,16 +23,18 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.Pagination.Services;
+namespace Remora.Discord.Interactivity.Services;
 
 /// <summary>
 /// Manages synchronized access to data.
 /// </summary>
 /// <typeparam name="TKey">The key type for the stored data.</typeparam>
 /// <typeparam name="TData">The data type stored by the service.</typeparam>
-internal class InMemoryDataService<TKey, TData> where TKey : notnull
+[PublicAPI]
+public class InMemoryDataService<TKey, TData> where TKey : notnull
 {
     /// <summary>
     /// Gets the singleton instance of this service.
@@ -48,6 +50,7 @@ internal class InMemoryDataService<TKey, TData> where TKey : notnull
     /// <summary>
     /// Inserts a new data object into the service.
     /// </summary>
+    ///
     /// <param name="key">The key the data object is associated with.</param>
     /// <param name="data">The data object.</param>
     /// <returns>true if the data was successfully added; otherwise, false.</returns>

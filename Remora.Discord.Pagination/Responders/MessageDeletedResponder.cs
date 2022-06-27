@@ -24,7 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Pagination.Services;
+using Remora.Discord.Interactivity.Services;
 using Remora.Rest.Core;
 using Remora.Results;
 
