@@ -122,7 +122,10 @@ internal class PaginationInteractions : InteractionGroup
 
         try
         {
-            _paginationData.RemoveData(message.ID);
+            if (!_paginationData.TryRemoveData(message.ID))
+            {
+                return new NotFoundError("No associated data to remove found.");
+            }
 
             if (data.IsInteractionDriven)
             {
