@@ -44,6 +44,7 @@ public record Interaction
     string Token,
     int Version,
     Optional<IMessage> Message = default,
+    Optional<IDiscordPermissionSet> AppPermissions = default,
     Optional<string> Locale = default,
     Optional<string> GuildLocale = default
 ) : IInteraction;

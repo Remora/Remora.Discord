@@ -89,6 +89,11 @@ public interface IInteraction
     Optional<IMessage> Message { get; }
 
     /// <summary>
+    /// Gets the computed permissions for the application in the context of the interaction's execution.
+    /// </summary>
+    Optional<IDiscordPermissionSet> AppPermissions { get; }
+
+    /// <summary>
     /// Gets the locale of the invoking user.
     /// </summary>
     /// <remarks>
