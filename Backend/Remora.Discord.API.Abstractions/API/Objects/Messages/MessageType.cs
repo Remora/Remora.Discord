@@ -66,29 +66,29 @@ public enum MessageType
     ChannelPinnedMessage = 6,
 
     /// <summary>
-    /// A guild member joined.
+    /// A user joined.
     /// </summary>
-    GuildMemberJoin = 7,
+    UserJoin = 7,
 
     /// <summary>
     /// A user boosted the server.
     /// </summary>
-    UserPremiumGuildSubscription = 8,
+    GuildBoost = 8,
 
     /// <summary>
     /// A user boosted the server to tier 1.
     /// </summary>
-    UserPremiumGuildSubscriptionTier1 = 9,
+    GuildBoostTier1 = 9,
 
     /// <summary>
     /// A user boosted the server to tier 2.
     /// </summary>
-    UserPremiumGuildSubscriptionTier2 = 10,
+    GuildBoostTier2 = 10,
 
     /// <summary>
     /// A user boosted the server to tier 3.
     /// </summary>
-    UserPremiumGuildSubscriptionTier3 = 11,
+    GuildBoostTier3 = 11,
 
     /// <summary>
     /// Someone followed the channel.
