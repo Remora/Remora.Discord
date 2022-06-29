@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -519,6 +519,46 @@ public enum MessageType</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/1AA6369A">GuildBoost</a></td>
+								<td>8</td>
+								<td>
+									<div>
+    A user boosted the server.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/52064CA6">GuildBoostTier1</a></td>
+								<td>9</td>
+								<td>
+									<div>
+    A user boosted the server to tier 1.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/E857453F">GuildBoostTier2</a></td>
+								<td>10</td>
+								<td>
+									<div>
+    A user boosted the server to tier 2.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/7E674248">GuildBoostTier3</a></td>
+								<td>11</td>
+								<td>
+									<div>
+    A user boosted the server to tier 3.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/9DD0536A">Guild<wbr>Discovery<wbr>Disqualified</a></td>
 								<td>14</td>
 								<td>
@@ -564,16 +604,6 @@ public enum MessageType</code></pre>
 								<td>
 									<div>
     A reminder message about a guild invite.
-    </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/254E1C2A">GuildMemberJoin</a></td>
-								<td>7</td>
-								<td>
-									<div>
-    A guild member joined.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -629,41 +659,11 @@ public enum MessageType</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/68361FCB">User<wbr>Premium<wbr>Guild<wbr>Subscription</a></td>
-								<td>8</td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/DF071D07">UserJoin</a></td>
+								<td>7</td>
 								<td>
 									<div>
-    A user boosted the server.
-    </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/2345220C">User<wbr>Premium<wbr>Guild<wbr>Subscription<wbr>Tier1</a></td>
-								<td>9</td>
-								<td>
-									<div>
-    A user boosted the server to tier 1.
-    </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/99142B95">User<wbr>Premium<wbr>Guild<wbr>Subscription<wbr>Tier2</a></td>
-								<td>10</td>
-								<td>
-									<div>
-    A user boosted the server to tier 2.
-    </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageType/0F242CE2">User<wbr>Premium<wbr>Guild<wbr>Subscription<wbr>Tier3</a></td>
-								<td>11</td>
-								<td>
-									<div>
-    A user boosted the server to tier 3.
+    A user joined.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
