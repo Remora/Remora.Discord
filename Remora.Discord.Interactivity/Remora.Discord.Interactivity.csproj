@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.0.0</Version>
+        <Version>4.1.0</Version>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
-            Experimental rework of the interactivity system.
+            Improve safety of InMemoryDataService.
         </PackageReleaseNotes>
     </PropertyGroup>
 

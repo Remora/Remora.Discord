@@ -5,10 +5,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>67.0.0</Version>
+        <Version>68.0.0</Version>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Fix optionality of GuildCreate properties.
+            Preemptive fix of IsUnavailable's optionality.
+            Implement AppPermissions.
+            Rename some enum members.
+            Add new error.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>5.0.0</Version>
+        <Version>5.0.1</Version>
         <Description>Utilities and components which extened upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
-            Change public fields into properties.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
