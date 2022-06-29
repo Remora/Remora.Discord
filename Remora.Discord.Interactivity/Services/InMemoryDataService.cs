@@ -298,5 +298,7 @@ public class InMemoryDataService<TKey, TData> : IAsyncDisposable where TKey : no
         {
             await DeleteDataAsync(key);
         }
+
+        _isDisposed = true;
     }
 }
