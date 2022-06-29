@@ -47,20 +47,20 @@ internal sealed class MessageDeletedResponder : IResponder<IMessageDelete>, IRes
     }
 
     /// <inheritdoc />
-    public Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
     {
-        _ = _paginationData.TryRemoveData(gatewayEvent.ID);
-        return Task.FromResult(Result.FromSuccess());
+        _ = await _paginationData.TryRemoveDataAsync(gatewayEvent.ID);
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc />
-    public Task<Result> RespondAsync(IMessageDeleteBulk gatewayEvent, CancellationToken ct = default)
+    public async Task<Result> RespondAsync(IMessageDeleteBulk gatewayEvent, CancellationToken ct = default)
     {
         foreach (var id in gatewayEvent.IDs)
         {
-            _ = _paginationData.TryRemoveData(id);
+            _ = await _paginationData.TryRemoveDataAsync(id);
         }
 
-        return Task.FromResult(Result.FromSuccess());
+        return Result.FromSuccess();
     }
 }

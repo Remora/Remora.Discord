@@ -112,39 +112,26 @@ internal class PaginationInteractions : InteractionGroup
             return new InvalidOperationError("No message available for the interaction.");
         }
 
-        var rentData = await _paginationData.RentData(message.ID, this.CancellationToken);
-        if (!rentData.IsSuccess)
+        var leaseData = await _paginationData.LeaseDataAsync(message.ID, this.CancellationToken);
+        if (!leaseData.IsSuccess)
         {
-            return (Result)rentData;
+            return (Result)leaseData;
         }
 
-        var (semaphore, data) = rentData.Entity;
+        await using var lease = leaseData.Entity;
+        lease.Delete();
 
-        try
+        if (lease.Data.IsInteractionDriven)
         {
-            if (!_paginationData.TryRemoveData(message.ID))
-            {
-                return new NotFoundError("No associated data to remove found.");
-            }
+            return await _interactionAPI.DeleteOriginalInteractionResponseAsync
+            (
+                _context.ApplicationID,
+                _context.Token,
+                this.CancellationToken
+            );
+        }
 
-            if (data.IsInteractionDriven)
-            {
-                return await _interactionAPI.DeleteOriginalInteractionResponseAsync
-                (
-                    _context.ApplicationID,
-                    _context.Token,
-                    this.CancellationToken
-                );
-            }
-            else
-            {
-                return await _channelAPI.DeleteMessageAsync(message.ChannelID, message.ID, ct: this.CancellationToken);
-            }
-        }
-        finally
-        {
-            semaphore.Release();
-        }
+        return await _channelAPI.DeleteMessageAsync(message.ChannelID, message.ID, ct: this.CancellationToken);
     }
 
     /// <summary>
@@ -159,28 +146,21 @@ internal class PaginationInteractions : InteractionGroup
             return new InvalidOperationError("No message available for the interaction.");
         }
 
-        var rentData = await _paginationData.RentData(message.ID, this.CancellationToken);
-        if (!rentData.IsSuccess)
+        var leaseData = await _paginationData.LeaseDataAsync(message.ID, this.CancellationToken);
+        if (!leaseData.IsSuccess)
         {
-            return (Result)rentData;
+            return (Result)leaseData;
         }
 
-        var (semaphore, data) = rentData.Entity;
+        await using var lease = leaseData.Entity;
 
-        try
-        {
-            return (Result)await _feedback.SendContextualInfoAsync
-            (
-                data.Appearance.HelpText,
-                data.SourceUserID,
-                new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
-                this.CancellationToken
-            );
-        }
-        finally
-        {
-            semaphore.Release();
-        }
+        return (Result)await _feedback.SendContextualInfoAsync
+        (
+            lease.Data.Appearance.HelpText,
+            lease.Data.SourceUserID,
+            new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
+            this.CancellationToken
+        );
     }
 
     private async Task<Result> UpdateAsync(Action<PaginatedMessageData> action, CancellationToken ct)
@@ -190,57 +170,50 @@ internal class PaginationInteractions : InteractionGroup
             return new InvalidOperationError("No message available for the interaction.");
         }
 
-        var rentData = await _paginationData.RentData(message.ID, this.CancellationToken);
-        if (!rentData.IsSuccess)
+        var leaseData = await _paginationData.LeaseDataAsync(message.ID, this.CancellationToken);
+        if (!leaseData.IsSuccess)
         {
-            return (Result)rentData;
+            return (Result)leaseData;
         }
 
-        var (semaphore, data) = rentData.Entity;
+        await using var lease = leaseData.Entity;
 
-        try
+        action(lease.Data);
+
+        var newPage = lease.Data.GetCurrentPage();
+        var newComponents = lease.Data.GetCurrentComponents();
+
+        if (lease.Data.IsInteractionDriven)
         {
-            action(data);
-
-            var newPage = data.GetCurrentPage();
-            var newComponents = data.GetCurrentComponents();
-
-            if (data.IsInteractionDriven)
-            {
-                return (Result)await _interactionAPI.EditOriginalInteractionResponseAsync
+            return (Result)await _interactionAPI.EditOriginalInteractionResponseAsync
+            (
+                _context.ApplicationID,
+                _context.Token,
+                embeds: new[] { newPage },
+                components: new Optional<IReadOnlyList<IMessageComponent>?>
                 (
-                    _context.ApplicationID,
-                    _context.Token,
-                    embeds: new[] { newPage },
-                    components: new Optional<IReadOnlyList<IMessageComponent>?>
-                    (
-                        message.Components.IsDefined(out var existingComponents)
-                            ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
-                            : newComponents
-                    ),
-                    ct: ct
-                );
-            }
-            else
-            {
-                return (Result)await _channelAPI.EditMessageAsync
-                (
-                    message.ChannelID,
-                    message.ID,
-                    embeds: new[] { newPage },
-                    components: new Optional<IReadOnlyList<IMessageComponent>?>
-                    (
-                        message.Components.IsDefined(out var existingComponents)
-                            ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
-                            : newComponents
-                    ),
-                    ct: ct
-                );
-            }
+                    message.Components.IsDefined(out var existingComponents)
+                        ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
+                        : newComponents
+                ),
+                ct: ct
+            );
         }
-        finally
+        else
         {
-            semaphore.Release();
+            return (Result)await _channelAPI.EditMessageAsync
+            (
+                message.ChannelID,
+                message.ID,
+                embeds: new[] { newPage },
+                components: new Optional<IReadOnlyList<IMessageComponent>?>
+                (
+                    message.Components.IsDefined(out var existingComponents)
+                        ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
+                        : newComponents
+                ),
+                ct: ct
+            );
         }
     }
 }
