@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description">
+        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
+        <title>Remora.Discord Documentation - API - KeyHelpers.CreateGuildRoleCacheKey(Snowflake, Snowflake) Method</title>
+        <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
+        <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
+        <link href="/Remora.Discord/assets/css/theme/theme.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,400i,700,700i" rel="stylesheet">
+        <link href="/Remora.Discord/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/Remora.Discord/assets/css/override.css" rel="stylesheet">
+        <script src="/Remora.Discord/assets/js/jquery-2.2.3.min.js"></script>
+        <script src="/Remora.Discord/assets/js/bootstrap.min.js"></script>        
+        <script src="/Remora.Discord/assets/js/app.min.js"></script>         
+        <script src="/Remora.Discord/assets/js/highlight.pack.js"></script>   
+        <script src="/Remora.Discord/assets/js/jquery.slimscroll.min.js"></script>
+        <script src="/Remora.Discord/assets/js/jquery.sticky-kit.min.js"></script>
+        <script src="/Remora.Discord/assets/js/mermaid.min.js"></script>
+        <script src="/Remora.Discord/assets/js/svg-pan-zoom.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="/Remora.Discord/assets/js/html5shiv.min.js"></script>
+        <script src="/Remora.Discord/assets/js/respond.min.js"></script>
+        <![endif]-->  
+
+        
+    </head>
+    <body class="hold-transition wyam layout-boxed  ">    
+        <div class="top-banner"></div>
+        <div class="wrapper with-container">
+            <!-- Header -->
+            <header class="main-header">   
+                     
+                <a href="/Remora.Discord/" class="logo">
+                            <span>Remora.Discord Documentation</span>
+                </a>   
+                         
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                                        
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-down"></i>
+                        </button>
+                    </div>
+            
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav">                            
+                                    <li><a href="/Remora.Discord/guides">Guides</a></li>
+        <li><a href="/Remora.Discord/info">Info</a></li>
+        <li class="active"><a href="/Remora.Discord/api">API</a></li>
+ 
+                        </ul>       
+                    </div>
+                    <!-- /.navbar-collapse -->
+                
+                    <!-- Navbar Right Menu -->
+                </nav>
+            </header>
+            
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar ">
+                <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
+                    	
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
+<p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Parameters">Parameters</a></p>
+<p><a href="#ReturnValue">Return Value</a></p>
+<hr class="infobar-hidden">
+</div>
+
+                </section>
+                <section class="sidebar">    
+                                     
+                    	
+	    <script src="/Remora.Discord/assets/js/lunr.min.js"></script>
+    <script src="/Remora.Discord/assets/js/searchIndex.js"></script>
+    <div class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
+            <span class="input-group-btn">
+                <button class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </div>
+    <div id="search-results">
+    </div>
+    <script>
+        function runSearch(query){
+            $("#search-results").empty();			
+            if( query.length < 2 ){
+                return;
+            }			
+            var results = searchModule.search("*" + query + "*");
+            var listHtml = "<ul class='sidebar-menu'>";	
+            listHtml += "<li class='header'>Type Results</li>";	
+            if(results.length == 0 ){
+                listHtml += "<li>No results found</li>";
+            } else {					
+                for(var i = 0; i < results.length; ++i){
+                    var res = results[i];
+                    listHtml += "<li><a href='" + res.url + "'>" + htmlEscape(res.title) + "</a></li>";
+                }				
+            }
+            listHtml += "</ul>";				
+            $("#search-results").append(listHtml);
+        }
+
+        $(document).ready(function(){
+            $("#search").on('input propertychange paste', function() {
+                runSearch($("#search").val());
+            });
+        });
+
+        function htmlEscape(html) {
+            return document.createElement('div')
+                .appendChild(document.createTextNode(html))
+                .parentNode
+                .innerHTML;
+        }
+    </script>
+	
+    <hr>
+
+                    <ul class="sidebar-menu">
+                        
+			<li class="header">Namespace</li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Caching">Remora<wbr>.Discord<wbr>.Caching</a></li>
+		<li class="header">Type</li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers">KeyHelpers</a></li>
+		<li role="separator" class="divider"></li>
+			<li class="header">Method Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/94D40E78">Create<wbr>Channel<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/D6D0F908">Create<wbr>Channel<wbr>Invites<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/5C87C73E">Create<wbr>Channel<wbr>Permission<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/2119B7AA">Create<wbr>Channel<wbr>Webhooks<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/DC9BD94E">Create<wbr>Connection<wbr>Cache<wbr>Key<wbr>(string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/5053452D">Create<wbr>Current<wbr>Application<wbr>Cache<wbr>Key<wbr>()<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/1ED1451A">Create<wbr>Current<wbr>Authorization<wbr>Information<wbr>Cache<wbr>Key<wbr>()<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/9E9AD94A">Create<wbr>Current<wbr>User<wbr>Cache<wbr>Key<wbr>()<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/8B2F99DC">Create<wbr>Current<wbr>User<wbr>Connections<wbr>Cache<wbr>Key<wbr>()<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/6B3598B8">Create<wbr>Current<wbr>User<wbr>D<wbr>Ms<wbr>Cache<wbr>Key<wbr>()<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/D7DDF0DA">CreateEmojiCacheKey<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/46F8C2D6">Create<wbr>Followup<wbr>Message<wbr>Cache<wbr>Key<wbr>(string, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/39BBF4AB">Create<wbr>Guild<wbr>Ban<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/06E6CDA1">Create<wbr>Guild<wbr>Bans<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/8B60DE07">CreateGuildCacheKey<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/1494D61C">Create<wbr>Guild<wbr>Channels<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/59046239">Create<wbr>Guild<wbr>Emojis<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/B8C7BEF2">Create<wbr>Guild<wbr>Integration<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/449EEBFF">Create<wbr>Guild<wbr>Integrations<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/01A29DA2">Create<wbr>Guild<wbr>Invites<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/029A60C2">CreateGuildMemberKey<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/A9801E33">Create<wbr>Guild<wbr>Members<wbr>Key<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/C2D03416">Create<wbr>Guild<wbr>Preview<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/088FAF3B">Create<wbr>Guild<wbr>Role<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/95F7E2F2">Create<wbr>Guild<wbr>Roles<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/8786F0F5">Create<wbr>Guild<wbr>Templates<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/4EB80DA9">Create<wbr>Guild<wbr>Voice<wbr>Region<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/C3609382">Create<wbr>Guild<wbr>Voice<wbr>Regions<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/243AAAB2">Create<wbr>Guild<wbr>Webhooks<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/FC450693">Create<wbr>Guild<wbr>Welcome<wbr>Screen<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/3110A33C">Create<wbr>Guild<wbr>Widget<wbr>Settings<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/21F016EA">CreateInviteCacheKey<wbr>(string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/0777A279">Create<wbr>Message<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/141028B8">Create<wbr>Original<wbr>Interaction<wbr>Message<wbr>Cache<wbr>Key<wbr>(string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/8222427E">Create<wbr>Pinned<wbr>Messages<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/A4089727">Create<wbr>Presence<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/48308FB7">Create<wbr>Template<wbr>Cache<wbr>Key<wbr>(string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/BB939776">Create<wbr>Thread<wbr>Member<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/EE71CD91">Create<wbr>Thread<wbr>Members<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/9DCAEECF">Create<wbr>Thread<wbr>Query<wbr>Response<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/7A2C8CC9">CreateUserCacheKey<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/67D3E556">Create<wbr>Voice<wbr>Region<wbr>Cache<wbr>Key<wbr>(string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/ECB88522">Create<wbr>Voice<wbr>Regions<wbr>Cache<wbr>Key<wbr>()<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/7CAECAD5">Create<wbr>Webhook<wbr>Cache<wbr>Key<wbr>(Snowflake)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers/5644570A">Create<wbr>Webhook<wbr>Message<wbr>Cache<wbr>Key<wbr>(string, <wbr>Snowflake)<wbr></a></li>
+
+
+                    </ul>
+                            
+                </section>                
+            </aside>
+            
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                
+
+
+
+<section class="content-header">
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers">KeyHelpers</a>.</h3>
+	<h1>Create<wbr>Guild<wbr>Role<wbr>Cache<wbr>Key<wbr>(Snowflake, <wbr>Snowflake)<wbr> <small>Method</small></h1>
+</section>
+<section class="content">
+	
+	
+		<h1 id="Summary">Summary</h1>
+	<div class="lead">
+    Creates a cache key for an <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole">IRole</a></code> instance.
+    </div>
+
+		<div class="panel panel-default">
+  			<div class="panel-body">	
+				<dl class="dl-horizontal">	
+						
+						<dt>Namespace</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Caching">Remora<wbr>.Discord<wbr>.Caching</a></dd>
+					
+						<dt>Containing Type</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers">KeyHelpers</a></dd>		
+					
+				</dl>
+  			</div>
+		</div>
+
+	<h1 id="Syntax">Syntax</h1>
+	<pre><code>public static object CreateGuildRoleCacheKey(in Snowflake guildID, in Snowflake roleID)</code></pre>
+
+
+
+
+
+	<h1 id="Parameters">Parameters</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover three-cols">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>guildID</td>
+						<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+						<td>The ID of the guild the role is in.</td>
+					</tr>
+					<tr>
+						<td>roleID</td>
+						<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+						<td>The ID of the role.</td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
+
+	<h1 id="ReturnValue">Return Value</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody><tr>
+					<td>object</td>
+					<td>The cache key.</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>	
+
+
+	
+</section>
+                
+            </div>           
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+            </footer>
+            
+        </div>
+        <div class="wrapper bottom-wrapper">
+            <footer class="bottom-footer">
+                Generated by <a href="https://wyam.io">Wyam</a>
+            </footer>
+        </div>
+        <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <script>           
+            // Close the sidebar if we select an anchor link
+            $(".main-sidebar a[href^='#']:not('.expand')").click(function(){
+                $(document.body).removeClass('sidebar-open');
+            });
+            
+            $(document).ready(function() {
+                mermaid.initialize(
+                {
+                    flowchart:
+                    {
+                        useMaxWidth: false
+                    },
+					startOnLoad: false,
+					cloneCssStyles: false
+                });     
+                mermaid.init(undefined, ".mermaid");
+
+                // Remove the max-width setting that Mermaid sets
+                var mermaidSvg = $('.mermaid svg');
+                mermaidSvg.addClass('img-responsive');
+                mermaidSvg.css('max-width', '');
+
+                // Make it scrollable
+				var target = document.querySelector(".mermaid svg");
+				if(target !== null)
+				{
+					var panZoom = window.panZoom = svgPanZoom(target, {
+						zoomEnabled: true,
+						controlIconsEnabled: true,
+						fit: true,
+						center: true,
+                        maxZoom: 20,
+                        zoomScaleSensitivity: 0.6
+					});			                          
+
+                    // Do the reset once right away to fit the diagram
+                    panZoom.resize();
+                    panZoom.fit();
+                    panZoom.center();
+                    
+                    $(window).resize(function(){
+                        panZoom.resize();
+                        panZoom.fit();
+                        panZoom.center();
+                    });
+				}
+                
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });  
+            });
+
+            hljs.initHighlightingOnLoad();
+
+            // Back to top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 200) {        // If page is scrolled more than 50px
+                    $('#return-to-top').fadeIn(1000);    // Fade in the arrow
+                } else {
+                    $('#return-to-top').fadeOut(1000);   // Else fade out the arrow
+                }
+            });
+            $('#return-to-top').click(function() {      // When arrow is clicked
+                $('body,html').animate({
+                    scrollTop : 0                       // Scroll to top of body
+                }, 500);
+            });
+        </script>
+    
+</body></html>

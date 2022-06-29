@@ -58,15 +58,6 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
-        <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -156,7 +147,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI">DiscordRestEmojiAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI">Discord<wbr>Rest<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI">Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>
@@ -166,6 +156,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></li>
 
 
                     </ul>
@@ -280,7 +271,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/70C308FC">DiscordRestGuildAPI<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options, <wbr>ICacheProvider)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/A6F9F643">DiscordRestGuildAPI<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></code> class.
     </td>
@@ -304,31 +295,21 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/D335E8AD">DiscordHttpClient</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
+								<td>
+									<div>
+    Gets the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> available to the API instance.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></td>
 								<td>Json<wbr>Serializer<wbr>Options</td>
 								<td>
 									<div>
     Gets the <code class="cs">System.Text.Json.JsonSerializerOptions</code> available to the API instance.
-    </div>
-											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/17E00C50">RateLimitCache</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Abstractions.Services/ICacheProvider">ICacheProvider</a></td>
-								<td>
-									<div>
-    Gets the rate limit memory cache.
-    </div>
-											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/ADD2BEE9">RestHttpClient</a></td>
-								<td>IRestHttpClient</td>
-								<td>
-									<div>
-    Gets the <code class="cs">RestHttpClient&lt;TError&gt;</code> available to the API instance.
     </div>
 											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
@@ -350,7 +331,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/CA49C468">AddGuildMemberAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/163717BD">AddGuildMemberAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember?</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -359,7 +340,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/060D44A0">Add<wbr>Guild<wbr>Member<wbr>Role<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/DCD214F5">Add<wbr>Guild<wbr>Member<wbr>Role<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -368,7 +349,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/3199D83C">BeginGuildPruneAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/DF910A9D">BeginGuildPruneAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPruneCount">IPruneCount</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -377,7 +358,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/0D9E4907">CreateGuildAsync<wbr>(string, <wbr>Optional<wbr>&lt;Stream&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Verification<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Message<wbr>Notification<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Explicit<wbr>Content<wbr>Filter<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IRole&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Channel&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;TimeSpan&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>System<wbr>Channel<wbr>Flags&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/54DED697">CreateGuildAsync<wbr>(string, <wbr>Optional<wbr>&lt;Stream&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Verification<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Message<wbr>Notification<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Explicit<wbr>Content<wbr>Filter<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IRole&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Channel&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;TimeSpan&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>System<wbr>Channel<wbr>Flags&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild">IGuild</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -386,7 +367,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/8EDB5217">CreateGuildBanAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/49A69EB5">CreateGuildBanAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -395,7 +376,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/94D392A8">Create<wbr>Guild<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;ChannelType&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Auto<wbr>Archive<wbr>Duration&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/5EFDA975">Create<wbr>Guild<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;ChannelType&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Permission<wbr>Overwrite&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -404,7 +385,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/7E677369">CreateGuildRoleAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>Optional<wbr>&lt;Color&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/060FC339">CreateGuildRoleAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>Optional<wbr>&lt;Color&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole">IRole</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -413,7 +394,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/DC00A077">DeleteGuildAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/889CDB18">DeleteGuildAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -422,7 +403,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/0AE380B5">DeleteGuildRoleAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/D1FCA527">DeleteGuildRoleAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -431,7 +412,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/54DEDAD8">GetGuildAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/C734549D">GetGuildAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild">IGuild</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -440,7 +421,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/501AF6E0">GetGuildBanAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/21CCC4B6">GetGuildBanAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBan">IBan</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -449,7 +430,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/F215CD80">GetGuildBansAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/16EDA5A0">GetGuildBansAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBan">IBan</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -458,7 +439,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/1657AB21">Get<wbr>Guild<wbr>Channels<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/0AB84715">Get<wbr>Guild<wbr>Channels<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -467,7 +448,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/D25EFBBB">Get<wbr>Guild<wbr>Integrations<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/04C210B4">Get<wbr>Guild<wbr>Integrations<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -476,7 +457,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/60D0E7BB">GetGuildInvitesAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/5AA90CB7">GetGuildInvitesAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -485,7 +466,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/A79878AE">GetGuildMemberAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/E4846044">GetGuildMemberAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -494,7 +475,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/5E23AB6B">GetGuildPreviewAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/D7D8A843">GetGuildPreviewAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview">IGuildPreview</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -506,7 +487,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/25AFC124">Get<wbr>Guild<wbr>Prune<wbr>Count<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/1253E701">Get<wbr>Guild<wbr>Prune<wbr>Count<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPruneCount">IPruneCount</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -515,7 +496,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/1BFE85D2">GetGuildRolesAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/98790908">GetGuildRolesAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole">IRole</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -524,7 +505,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/C81F6A2D">Get<wbr>Guild<wbr>Vanity<wbr>Url<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/8E017598">Get<wbr>Guild<wbr>Vanity<wbr>Url<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialInvite">IPartialInvite</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -533,7 +514,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/75C0D7D1">Get<wbr>Guild<wbr>Voice<wbr>Regions<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/15852E5D">Get<wbr>Guild<wbr>Voice<wbr>Regions<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceRegion">IVoiceRegion</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -542,7 +523,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/19924726">Get<wbr>Guild<wbr>Welcome<wbr>Screen<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/795A80F5">Get<wbr>Guild<wbr>Welcome<wbr>Screen<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWelcomeScreen">IWelcomeScreen</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -551,16 +532,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/77C7FC22">GetGuildWidgetAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Gets the status and invite widget for the guild.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/B46FBAAC">Get<wbr>Guild<wbr>Widget<wbr>Image<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;<wbr>Widget<wbr>Image<wbr>Style&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/21309E89">Get<wbr>Guild<wbr>Widget<wbr>Image<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;<wbr>Widget<wbr>Image<wbr>Style&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;Stream&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -569,8 +541,8 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/BFAEA587">Get<wbr>Guild<wbr>Widget<wbr>Settings<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidgetSettings">IGuildWidgetSettings</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/F1FD5C8A">Get<wbr>Guild<wbr>Widget<wbr>Settings<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the guild widget.
@@ -578,7 +550,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/F52A2F0B">List<wbr>Active<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/DCA8B208">List<wbr>Active<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -587,7 +559,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/B5725419">List<wbr>Guild<wbr>Members<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/CBE90945">List<wbr>Guild<wbr>Members<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -596,7 +568,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/BE489278">Modify<wbr>Current<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/2D74FE97">Modify<wbr>Current<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -605,8 +577,17 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/70B0BDD6">Modify<wbr>Current<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/6B7E6C0E">Modify<wbr>Current<wbr>User<wbr>Nick<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;string&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Modifies the nickname of the current user.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/9AC9D767">Modify<wbr>Current<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState">IVoiceState</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Modifies the voice state of the current user.
@@ -614,7 +595,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/13713B1E">ModifyGuildAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Verification<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Message<wbr>Notification<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Explicit<wbr>Content<wbr>Filter<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;TimeSpan&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>System<wbr>Channel<wbr>Flags&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;GuildFeature&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/2807BD3C">ModifyGuildAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Verification<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Message<wbr>Notification<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Explicit<wbr>Content<wbr>Filter<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;TimeSpan&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>System<wbr>Channel<wbr>Flags&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;GuildFeature&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild">IGuild</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -623,7 +604,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/DE6A3097">Modify<wbr>Guild<wbr>Channel<wbr>Positions<wbr>Async<wbr>(Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>(<wbr>Snowflake <wbr>Channel<wbr>I<wbr>D, <wbr>int? Position, <wbr>bool? <wbr>Lock<wbr>Permissions, <wbr>Snowflake? ParentID)<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/F66939DE">Modify<wbr>Guild<wbr>Channel<wbr>Positions<wbr>Async<wbr>(Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>(<wbr>Snowflake <wbr>Channel<wbr>I<wbr>D, <wbr>int? Position, <wbr>bool? <wbr>Lock<wbr>Permissions, <wbr>Snowflake? ParentID)<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -632,7 +613,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/09FF372D">Modify<wbr>Guild<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/533CDF73">Modify<wbr>Guild<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -641,7 +622,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/C1CD86D4">ModifyGuildRoleAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set?&gt;<wbr>, <wbr>Optional<wbr>&lt;Color?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/05323F11">ModifyGuildRoleAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set?&gt;<wbr>, <wbr>Optional<wbr>&lt;Color?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole">IRole</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -650,7 +631,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/EAF9947B">Modify<wbr>Guild<wbr>Role<wbr>Positions<wbr>Async<wbr>(Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>(Snowflake RoleID, <wbr>Optional<wbr>&lt;int?&gt;<wbr> Position)<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/817C8815">Modify<wbr>Guild<wbr>Role<wbr>Positions<wbr>Async<wbr>(Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>(Snowflake RoleID, <wbr>Optional<wbr>&lt;int?&gt;<wbr> Position)<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole">IRole</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -659,7 +640,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/40B57003">Modify<wbr>Guild<wbr>Welcome<wbr>Screen<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Welcome<wbr>Screen<wbr>Channel&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/43891569">Modify<wbr>Guild<wbr>Welcome<wbr>Screen<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Welcome<wbr>Screen<wbr>Channel&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWelcomeScreen">IWelcomeScreen</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -668,8 +649,8 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/BA63C388">Modify<wbr>Guild<wbr>Widget<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidgetSettings">IGuildWidgetSettings</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/29884981">Modify<wbr>Guild<wbr>Widget<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Modifies the guild widget for the guild.
@@ -677,7 +658,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/35BE9694">Modify<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/FDF27815">Modify<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState">IVoiceState</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -686,7 +667,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/208E7549">RemoveGuildBanAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/9773699A">RemoveGuildBanAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -695,7 +676,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/FF549C2F">Remove<wbr>Guild<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/DB91C379">Remove<wbr>Guild<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -704,7 +685,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/7A3E588A">Remove<wbr>Guild<wbr>Member<wbr>Role<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/4ABEE32B">Remove<wbr>Guild<wbr>Member<wbr>Role<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -713,7 +694,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/6686BFD4">Search<wbr>Guild<wbr>Members<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/F225ECF7">Search<wbr>Guild<wbr>Members<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -722,10 +703,13 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI<
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/EAED83A5">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
-								<td>Rest<wbr>Request<wbr>Customization</td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/A015CCC3">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></td>
 								<td>
-									<div></div>
+									<div>
+    Creates a customization that will be applied to all requests made by the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code>.
+    The customization is removed when it is disposed.
+    </div>
 											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
 							</tr>

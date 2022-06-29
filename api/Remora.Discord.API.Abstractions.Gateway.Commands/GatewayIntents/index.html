@@ -58,15 +58,6 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
-        <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -427,21 +418,6 @@ public enum GatewayIntents</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents/C7215282">GuildScheduledEvents</a></td>
-								<td>65536</td>
-								<td>
-									<div>
-    Subscribes to the following events:
-        - GUILD_SCHEDULED_EVENT_CREATE
-        - GUILD_SCHEDULED_EVENT_UPDATE
-        - GUILD_SCHEDULED_EVENT_DELETE
-        - GUILD_SCHEDULED_EVENT_USER_ADD **
-        - GUILD_SCHEDULED_EVENT_USER_REMOVE **
-    </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents/500CB7C8">GuildVoiceStates</a></td>
 								<td>128</td>
 								<td>
@@ -488,23 +464,6 @@ public enum GatewayIntents</code></pre>
         - STAGE_INSTANCE_UPDATE
         - STAGE_INSTANCE_DELETE
     </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents/1D490B5C">MessageContents</a></td>
-								<td>32768</td>
-								<td>
-									<div>
-     Does not subscribe to any particular events, but requests that message contents be sent along with the following
-     events:
-         - MESSAGE_CREATE
-         - MESSAGE_UPDATE
-         - MESSAGE_DELETE
-    
-     If this intent is not specified, all raw message content strings will be empty. You may still receive user input
-     using interactions, such as slash commands or modals.
-     </div>
 											<div><small><em>static</em></small></div>
 								</td>
 							</tr>

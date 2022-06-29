@@ -58,15 +58,6 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
-        <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -156,7 +147,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI">DiscordRestEmojiAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI">Discord<wbr>Rest<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI">Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>
@@ -166,6 +156,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></li>
 
 
                     </ul>
@@ -272,7 +263,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/13F4F08F">Discord<wbr>Rest<wbr>Sticker<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options, <wbr>ICacheProvider)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/47A0F657">Discord<wbr>Rest<wbr>Sticker<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI">DiscordRestStickerAPI</a></code> class.
     </td>
@@ -296,31 +287,21 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/D335E8AD">DiscordHttpClient</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
+								<td>
+									<div>
+    Gets the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> available to the API instance.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></td>
 								<td>Json<wbr>Serializer<wbr>Options</td>
 								<td>
 									<div>
     Gets the <code class="cs">System.Text.Json.JsonSerializerOptions</code> available to the API instance.
-    </div>
-											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/17E00C50">RateLimitCache</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Abstractions.Services/ICacheProvider">ICacheProvider</a></td>
-								<td>
-									<div>
-    Gets the rate limit memory cache.
-    </div>
-											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/ADD2BEE9">RestHttpClient</a></td>
-								<td>IRestHttpClient</td>
-								<td>
-									<div>
-    Gets the <code class="cs">RestHttpClient&lt;TError&gt;</code> available to the API instance.
     </div>
 											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
@@ -342,7 +323,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/B34E692E">Create<wbr>Guild<wbr>Sticker<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>string, <wbr>string, <wbr>FileData, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/5ADB8E6D">Create<wbr>Guild<wbr>Sticker<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>string, <wbr>string, <wbr>FileData, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker">ISticker</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -351,7 +332,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/FF8C347F">Delete<wbr>Guild<wbr>Sticker<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/7897B4F2">Delete<wbr>Guild<wbr>Sticker<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -360,7 +341,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/F8B5A0D4">GetGuildStickerAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/738E6563">GetGuildStickerAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker">ISticker</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -369,7 +350,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/1498EEB5">GetStickerAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/ED08ADCB">GetStickerAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker">ISticker</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -378,7 +359,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/F510F0DB">List<wbr>Guild<wbr>Stickers<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/46A7C07C">List<wbr>Guild<wbr>Stickers<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker">ISticker</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -396,7 +377,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/9A153055">Modify<wbr>Guild<wbr>Sticker<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI/EB6FFE5A">Modify<wbr>Guild<wbr>Sticker<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker">ISticker</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -405,10 +386,13 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/EAED83A5">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
-								<td>Rest<wbr>Request<wbr>Customization</td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/A015CCC3">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></td>
 								<td>
-									<div></div>
+									<div>
+    Creates a customization that will be applied to all requests made by the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code>.
+    The customization is removed when it is disposed.
+    </div>
 											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
 							</tr>

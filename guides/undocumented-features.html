@@ -58,15 +58,6 @@
                         <ul class="nav navbar-nav">                            
                                     <li class="active"><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
-        <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -188,16 +179,16 @@ public record SomeUndocumentedEvent(int SomeName) : ISomeUndocumentedEvent;
 </code></pre>
 <h2 id="rest">REST</h2>
 <p>Features that relate to the REST API is customized through one of two methods.</p>
-<p>The first is the <code>RestHttpClient</code> type, which can be accessed and used
+<p>The first is the <code><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> type, which can be accessed and used
 through DI. It's a named, transient <code>HttpClient</code>, which takes care of minutia
 like authorization headers and respecting rate limits for you. You would mainly
 use this type when you want to make requests to completely undocumented
 endpoints, or to take complete control over a call to a known endpoint.</p>
 <pre><code class="language-cs">public class Somewhere
 {
-    private readonly RestHttpClient _client;
+    private readonly <a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a> _client;
 
-    public Somewhere(RestHttpClient client)
+    public Somewhere(DiscordHttpClient client)
     {
         _client = client;
     }
@@ -207,7 +198,7 @@ endpoints, or to take complete control over a call to a known endpoint.</p>
 allow you to perform smaller tweaks or changes to existing API methods, such as
 adding headers or JSON payload fields.</p>
 <h3 id="undocumented-endpoints">Undocumented Endpoints</h3>
-<p>To access an undocumented endpoint, you may use the <code>RestHttpClient</code> directly
+<p>To access an undocumented endpoint, you may use the <code><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> directly
 to make any kind of HTTP request, similar to how you might use a normal
 <code>HttpClient</code>. All requests made by this client are prepended with the most
 recently versioned Discord API base endpoint, which typically looks like this:

@@ -58,15 +58,6 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
-        <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -268,7 +259,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI, IDiscordRestUserAPI
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/A5799362">Caching<wbr>Discord<wbr>Rest<wbr>User<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options, <wbr>ICacheProvider, <wbr>CacheService)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/386D0654">Caching<wbr>Discord<wbr>Rest<wbr>User<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>, <wbr>CacheService)<wbr></a></td>
 									<td></td>
 							</tr>
 					</tbody></table>
@@ -290,31 +281,21 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI, IDiscordRestUserAPI
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/D335E8AD">DiscordHttpClient</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
+								<td>
+									<div>
+    Gets the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> available to the API instance.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></td>
 								<td>Json<wbr>Serializer<wbr>Options</td>
 								<td>
 									<div>
     Gets the <code class="cs">System.Text.Json.JsonSerializerOptions</code> available to the API instance.
-    </div>
-											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/17E00C50">RateLimitCache</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Abstractions.Services/ICacheProvider">ICacheProvider</a></td>
-								<td>
-									<div>
-    Gets the rate limit memory cache.
-    </div>
-											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/ADD2BEE9">RestHttpClient</a></td>
-								<td>IRestHttpClient</td>
-								<td>
-									<div>
-    Gets the <code class="cs">RestHttpClient&lt;TError&gt;</code> available to the API instance.
     </div>
 											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
@@ -336,7 +317,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI, IDiscordRestUserAPI
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/F5CF4FF4">CreateDMAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/1499D438">CreateDMAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -354,16 +335,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI, IDiscordRestUserAPI
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/F6EB250A">Get<wbr>Current<wbr>User<wbr>Guild<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Gets a guild member object for the current user.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI/E674533E">Get<wbr>Current<wbr>User<wbr>Guilds<wbr>Async<wbr>(Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI/69906CC3">Get<wbr>Current<wbr>User<wbr>Guilds<wbr>Async<wbr>(Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -373,7 +345,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI, IDiscordRestUserAPI
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/DA513108">GetUserAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/F9A7FCD8">GetUserAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -400,7 +372,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI, IDiscordRestUserAPI
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI/2A89478E">LeaveGuildAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI/37FA996B">LeaveGuildAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -410,7 +382,7 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI, IDiscordRestUserAPI
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/CB6054F6">Modify<wbr>Current<wbr>User<wbr>Async<wbr>(Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI/6BED5FC7">Modify<wbr>Current<wbr>User<wbr>Async<wbr>(Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -419,10 +391,13 @@ public class CachingDiscordRestUserAPI : DiscordRestUserAPI, IDiscordRestUserAPI
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/EAED83A5">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
-								<td>Rest<wbr>Request<wbr>Customization</td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/A015CCC3">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></td>
 								<td>
-									<div></div>
+									<div>
+    Creates a customization that will be applied to all requests made by the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code>.
+    The customization is removed when it is disposed.
+    </div>
 											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
 							</tr>

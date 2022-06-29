@@ -58,15 +58,6 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
-        <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -83,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Remarks">Remarks</a></p>
 <p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -154,7 +146,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent/7BA95C27">MinValues</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent/61A15EB3">Options</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent/39C2A934">Placeholder</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent/AD7B6F82">Type</a></li>
 
 
                     </ul>
@@ -177,7 +168,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets the placeholder text for the menu. Max 150 characters.
+    Gets the placeholder text for a component.
     </div>
 
 		<div class="panel panel-default">
@@ -198,6 +189,10 @@
 	<pre><code>Optional&lt;string&gt; Placeholder { get; }</code></pre>
 
 
+	<h1 id="Remarks">Remarks</h1>
+	<div>
+    Valid for <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent">ISelectMenuComponent</a></code>s.
+    </div>
 
 
 
@@ -212,7 +207,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Optional<wbr>&lt;string&gt;<wbr></td>
+					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>
