@@ -58,6 +58,15 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
+        <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -258,11 +267,87 @@ public class CacheSettings</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/366A4355">Get<wbr>Distributed<wbr>Entry<wbr>Options<wbr>&lt;T&gt;<wbr><wbr>()<wbr></a></td>
+								<td>Distributed<wbr>Cache<wbr>Entry<wbr>Options</td>
+								<td>
+									<div>
+    Gets a set of distributed cache options, with expirations relative to now.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/C9A1C7A6">GetEntryOptions<wbr>&lt;T&gt;<wbr><wbr>()<wbr></a></td>
 								<td>Memory<wbr>Cache<wbr>Entry<wbr>Options</td>
 								<td>
 									<div>
     Gets a set of cache options, with expirations relative to now.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/05F7F1B6">Get<wbr>Eviction<wbr>Absolute<wbr>Expiration<wbr>Or<wbr>Default<wbr>(Type, <wbr>TimeSpan?)<wbr></a></td>
+								<td>TimeSpan?</td>
+								<td>
+									<div>
+    Gets the absolute expiration time in the cache for the given type when it has been evicted from the primary
+    cache, or a default value if one does not exist.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/AACEED3F">Get<wbr>Eviction<wbr>Absolute<wbr>Expiration<wbr>Or<wbr>Default<wbr>&lt;T&gt;<wbr><wbr>(TimeSpan?)<wbr></a></td>
+								<td>TimeSpan?</td>
+								<td>
+									<div>
+    Gets the absolute expiration time in the cache for the given type when it has been evicted from the primary
+    cache, or a default value if one does not exist.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/4528EBC6">Get<wbr>Eviction<wbr>Distributed<wbr>Entry<wbr>Options<wbr>&lt;T&gt;<wbr><wbr>()<wbr></a></td>
+								<td>Distributed<wbr>Cache<wbr>Entry<wbr>Options</td>
+								<td>
+									<div>
+    Gets a set of distributed cache options for an evicted value, with expirations relative to now.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/60C7C7C8">Get<wbr>Eviction<wbr>Entry<wbr>Options<wbr>&lt;T&gt;<wbr><wbr>()<wbr></a></td>
+								<td>Memory<wbr>Cache<wbr>Entry<wbr>Options</td>
+								<td>
+									<div>
+    Gets a set of cache options for an evicted value, with expirations relative to now.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/7EEE83EE">Get<wbr>Eviction<wbr>Sliding<wbr>Expiration<wbr>Or<wbr>Default<wbr>(Type, <wbr>TimeSpan?)<wbr></a></td>
+								<td>TimeSpan?</td>
+								<td>
+									<div>
+    Gets the sliding expiration time in the cache for the given type when it has been evicted from the primary
+    cache, or a default value if one does not exist.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/C95A959A">Get<wbr>Eviction<wbr>Sliding<wbr>Expiration<wbr>Or<wbr>Default<wbr>&lt;T&gt;<wbr><wbr>(TimeSpan?)<wbr></a></td>
+								<td>TimeSpan?</td>
+								<td>
+									<div>
+    Gets the sliding expiration time in the cache for the given type when it has been evicted from the primary
+    cache, or a default value if one does not exist.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/79179F78">GetRedisEntryOptions<wbr>&lt;T&gt;<wbr><wbr>()<wbr></a></td>
+								<td>Distributed<wbr>Cache<wbr>Entry<wbr>Options</td>
+								<td>
+									<div>
+    Gets a set of distributed cache options, with expirations relative to now.
     </div>
 								</td>
 							</tr>
@@ -303,11 +388,47 @@ public class CacheSettings</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/B89C4635">Set<wbr>Default<wbr>Eviction<wbr>Absolute<wbr>Expiration<wbr>(TimeSpan?)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings">CacheSettings</a></td>
+								<td>
+									<div>
+    Sets the default absolute expiration value for types when they have been evicted from the primary cache.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/E2B5046C">Set<wbr>Default<wbr>Eviction<wbr>Sliding<wbr>Expiration<wbr>(TimeSpan?)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings">CacheSettings</a></td>
+								<td>
+									<div>
+    Sets the default sliding expiration value for types when they have been evicted from the primary cache.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/4811CEC6">Set<wbr>Default<wbr>Sliding<wbr>Expiration<wbr>(TimeSpan?)<wbr></a></td>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings">CacheSettings</a></td>
 								<td>
 									<div>
     Sets the default sliding expiration value for types.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/79DAA40A">Set<wbr>Eviction<wbr>Absolute<wbr>Expiration<wbr>&lt;TCachedType&gt;<wbr><wbr>(TimeSpan?)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings">CacheSettings</a></td>
+								<td>
+									<div>
+    Sets the absolute cache expiration for the given type when it has been evicted from the primary cache.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/2BA69CA9">Set<wbr>Eviction<wbr>Sliding<wbr>Expiration<wbr>&lt;TCachedType&gt;<wbr><wbr>(TimeSpan?)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings">CacheSettings</a></td>
+								<td>
+									<div>
+    Sets the sliding cache expiration for the given type when it has been evicted from the primary cache.
     </div>
 								</td>
 							</tr>

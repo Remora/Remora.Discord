@@ -60,6 +60,15 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
+        <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -85,15 +94,6 @@
                         
 
                 <li><a href="/Remora.Discord/github-info/CONTRIBUTING">CONTRIBUTING</a></li>
-                <li class="treeview">
-                    <a href="/Remora.Discord/github-info/ISSUE_TEMPLATE">ISSUE TEMPLATE</a> <a href="#" class="expand"></a>
-                    <ul class="treeview-menu">
-                        
-                <li><a href="/Remora.Discord/github-info/ISSUE_TEMPLATE/bug-report">Bug Report</a></li>
-                <li><a href="/Remora.Discord/github-info/ISSUE_TEMPLATE/feature-request">Feature Request</a></li>
-
-                    </ul>
-                </li>
 
                     </ul>
                             

@@ -58,6 +58,15 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
+        <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -242,6 +251,17 @@ public class DiscordGatewayClientOptions</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/60C01EB5">CommandBurstRate</a></td>
+								<td>byte</td>
+								<td>
+									<div>
+    Gets or sets the number of commands that may be sent as a burst within the gateway's rate limit window. A burst
+    of 60, for example, would allow 60 commands to be sent within the first time slot in the window while the
+    remaining commands allowed within the window would be evenly spaced across the remaining slots.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/6617E465">ConnectionProperties</a></td>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IConnectionProperties">I<wbr>Connection<wbr>Properties</a></td>
 								<td>
@@ -250,6 +270,24 @@ public class DiscordGatewayClientOptions</code></pre>
     this is the information about Remora.Discord itself. You may, optionally, override this to present your
     own information.
     </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/854D1883">HeartbeatHeadroom</a></td>
+								<td>byte</td>
+								<td>
+									<div>
+     Gets or sets the number of extra rate limit slots that should be taken up by the heartbeat function (beyond the
+     ones strictly required based on the heartbeat interval and rate limit window).
+    
+     For example, if the rate limit window is 60 seconds, and the heartbeat interval is 2 seconds, the number of
+     strictly required slots would be 30. Adding a headroom of 2 to this would result in 32 reserved slots within the
+     rate limit window for heartbeats, leaving 88 slots for user-submitted events.
+    
+     This value is primarily used to take up the slack of any rounding errors in the calculations, as well as
+     potential timing issues since few if any bots run on hard realtime systems. The default value of 2 has been
+     arbitrarily picked, but should suffice for most use cases.
+     </div>
 								</td>
 							</tr>
 							<tr>
@@ -270,6 +308,16 @@ public class DiscordGatewayClientOptions</code></pre>
 									<div>
     Gets or sets the gateway intents to subscribe to. By default, this is a limited set of intents (guilds and
     their messages).
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/DEB54DEE">LargeThreshold</a></td>
+								<td>byte</td>
+								<td>
+									<div>
+    Gets or sets the large threshold for the gateway.
+    For guilds with members that exceed the threshold, offline members will be omitted.
     </div>
 								</td>
 							</tr>

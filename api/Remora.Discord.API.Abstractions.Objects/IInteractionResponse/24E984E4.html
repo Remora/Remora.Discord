@@ -58,6 +58,15 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
+        <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -181,7 +190,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Optional&lt;IInteractionCallbackData&gt; Data { get; }</code></pre>
+	<pre><code>Optional&lt;OneOf&lt;IInteractionMessageCallbackData, IInteractionAutocompleteCallbackData, IInteractionModalCallbackData&gt;&gt; Data { get; }</code></pre>
 
 
 
@@ -198,7 +207,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionCallbackData">I<wbr>Interaction<wbr>Callback<wbr>Data</a>&gt;<wbr></td>
+					<td>Optional<wbr>&lt;OneOf<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionMessageCallbackData">I<wbr>Interaction<wbr>Message<wbr>Callback<wbr>Data</a>, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionAutocompleteCallbackData">I<wbr>Interaction<wbr>Autocomplete<wbr>Callback<wbr>Data</a>, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionModalCallbackData">I<wbr>Interaction<wbr>Modal<wbr>Callback<wbr>Data</a>&gt;<wbr>&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>

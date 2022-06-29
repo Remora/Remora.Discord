@@ -58,6 +58,15 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
+        <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -75,6 +84,7 @@
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
 <p><a href="#Attributes">Attributes</a></p>
+<p><a href="#Properties">Properties</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -137,6 +147,7 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Events</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Interface Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandPermissionsUpdate">I<wbr>Application<wbr>Command<wbr>Permissions<wbr>Update</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelCreate">IChannelCreate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelDelete">IChannelDelete</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelPinsUpdate">IChannelPinsUpdate</a></li>
@@ -155,6 +166,11 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleCreate">IGuildRoleCreate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleDelete">IGuildRoleDelete</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleUpdate">IGuildRoleUpdate</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventCreate">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Create</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventDelete">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Delete</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUpdate">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Update</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUserAdd">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User<wbr>Add</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUserRemove">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User<wbr>Remove</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildStickersUpdate">IGuildStickersUpdate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate">IGuildUpdate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IHello">IHello</a></li>
@@ -289,6 +305,30 @@ public interface IThreadCreate : IGatewayEvent, IGatewayPayloadData, IChannel, I
 
 
 
+			<h1 id="Properties">Properties</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadCreate/FD1AF544">IsNewlyCreated</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Gets a value indicating whether the thread was newly created.
+    </div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
 
 
 

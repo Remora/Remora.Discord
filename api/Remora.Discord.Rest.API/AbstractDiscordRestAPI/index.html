@@ -58,6 +58,15 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
+        <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -147,6 +156,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI">DiscordRestEmojiAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI">Discord<wbr>Rest<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI">Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>
@@ -156,7 +166,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></li>
 
 
                     </ul>
@@ -194,28 +203,29 @@
 								<dt>Base Types</dt>
 								<dd>
 									<ul class="list-unstyled">										
-											<li>object</li>								
+											<li>IRestCustomizable</li>								
 									</ul>
 								</dd>				
 							
 								<dt>Derived Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI">Discord<wbr>Rest<wbr>Sticker<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI">Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI">Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI">Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI">Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestAuditLogAPI">Discord<wbr>Rest<wbr>Audit<wbr>Log<wbr>A<wbr>P<wbr>I</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI">Discord<wbr>Rest<wbr>Application<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI">Discord<wbr>Rest<wbr>Sticker<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI">DiscordRestEmojiAPI</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI">Discord<wbr>Rest<wbr>Application<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestAuditLogAPI">Discord<wbr>Rest<wbr>Audit<wbr>Log<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI">Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI">Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI">Discord<wbr>Rest<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>								
 									</ul>
 								</dd>			
 							
@@ -224,39 +234,41 @@
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
-	Type--&gt;Base0["object"]
+	Type--&gt;Base0["IRestCustomizable"]
 	Type["AbstractDiscordRestAPI"]
 class Type type-node
-	Derived0["DiscordRestGuildAPI"]--&gt;Type
-	click Derived0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
-	Derived1["DiscordRestStickerAPI"]--&gt;Type
-	click Derived1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI"
-	Derived2["DiscordRestTemplateAPI"]--&gt;Type
-	click Derived2 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI"
-	Derived3["DiscordRestInteractionAPI"]--&gt;Type
-	click Derived3 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI"
-	Derived4["DiscordRestWebhookAPI"]--&gt;Type
-	click Derived4 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI"
-	Derived5["DiscordRestOAuth2API"]--&gt;Type
-	click Derived5 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API"
-	Derived6["DiscordRestStageInstanceAPI"]--&gt;Type
-	click Derived6 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI"
-	Derived7["DiscordRestChannelAPI"]--&gt;Type
-	click Derived7 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI"
-	Derived8["DiscordRestInviteAPI"]--&gt;Type
-	click Derived8 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI"
-	Derived9["DiscordRestAuditLogAPI"]--&gt;Type
-	click Derived9 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestAuditLogAPI"
-	Derived10["DiscordRestApplicationAPI"]--&gt;Type
-	click Derived10 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI"
-	Derived11["DiscordRestEmojiAPI"]--&gt;Type
-	click Derived11 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI"
-	Derived12["DiscordRestUserAPI"]--&gt;Type
-	click Derived12 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI"
-	Derived13["DiscordRestGatewayAPI"]--&gt;Type
-	click Derived13 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI"
-	Derived14["DiscordRestVoiceAPI"]--&gt;Type
-	click Derived14 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI"
+	Derived0["DiscordRestTemplateAPI"]--&gt;Type
+	click Derived0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI"
+	Derived1["DiscordRestChannelAPI"]--&gt;Type
+	click Derived1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI"
+	Derived2["DiscordRestStickerAPI"]--&gt;Type
+	click Derived2 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI"
+	Derived3["DiscordRestWebhookAPI"]--&gt;Type
+	click Derived3 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI"
+	Derived4["DiscordRestEmojiAPI"]--&gt;Type
+	click Derived4 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI"
+	Derived5["DiscordRestApplicationAPI"]--&gt;Type
+	click Derived5 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI"
+	Derived6["DiscordRestAuditLogAPI"]--&gt;Type
+	click Derived6 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestAuditLogAPI"
+	Derived7["DiscordRestOAuth2API"]--&gt;Type
+	click Derived7 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API"
+	Derived8["DiscordRestGatewayAPI"]--&gt;Type
+	click Derived8 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI"
+	Derived9["DiscordRestUserAPI"]--&gt;Type
+	click Derived9 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI"
+	Derived10["DiscordRestInviteAPI"]--&gt;Type
+	click Derived10 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI"
+	Derived11["DiscordRestStageInstanceAPI"]--&gt;Type
+	click Derived11 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI"
+	Derived12["DiscordRestVoiceAPI"]--&gt;Type
+	click Derived12 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI"
+	Derived13["DiscordRestInteractionAPI"]--&gt;Type
+	click Derived13 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI"
+	Derived14["DiscordRestGuildScheduledEventAPI"]--&gt;Type
+	click Derived14 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI"
+	Derived15["DiscordRestGuildAPI"]--&gt;Type
+	click Derived15 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
 
 						</div>
 					</div>
@@ -266,7 +278,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public abstract class AbstractDiscordRestAPI</code></pre>
+public abstract class AbstractDiscordRestAPI : IRestCustomizable</code></pre>
 
 
 
@@ -302,7 +314,7 @@ public abstract class AbstractDiscordRestAPI</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/128A336E">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/2E28EE67">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options, <wbr>ICacheProvider)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">AbstractDiscordRestAPI</a></code> class.
     </td>
@@ -326,20 +338,29 @@ public abstract class AbstractDiscordRestAPI</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/D335E8AD">DiscordHttpClient</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
-								<td>
-									<div>
-    Gets the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> available to the API instance.
-    </div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></td>
 								<td>Json<wbr>Serializer<wbr>Options</td>
 								<td>
 									<div>
     Gets the <code class="cs">System.Text.Json.JsonSerializerOptions</code> available to the API instance.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/17E00C50">RateLimitCache</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Abstractions.Services/ICacheProvider">ICacheProvider</a></td>
+								<td>
+									<div>
+    Gets the rate limit memory cache.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/ADD2BEE9">RestHttpClient</a></td>
+								<td>IRestHttpClient</td>
+								<td>
+									<div>
+    Gets the <code class="cs">RestHttpClient&lt;TError&gt;</code> available to the API instance.
     </div>
 								</td>
 							</tr>
@@ -360,13 +381,10 @@ public abstract class AbstractDiscordRestAPI</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/A015CCC3">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/EAED83A5">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
+								<td>Rest<wbr>Request<wbr>Customization</td>
 								<td>
-									<div>
-    Creates a customization that will be applied to all requests made by the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code>.
-    The customization is removed when it is disposed.
-    </div>
+									<div></div>
 								</td>
 							</tr>
 					</tbody></table>

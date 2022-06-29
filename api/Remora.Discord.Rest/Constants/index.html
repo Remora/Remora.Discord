@@ -58,6 +58,15 @@
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
+        <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -137,10 +146,11 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.Rest">Remora<wbr>.Discord<wbr>.Rest</a></li>
 		<li role="separator" class="divider"></li>
+			<li class="header">Interface Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/ITokenStore">ITokenStore</a></li>
 			<li class="header">Class Types</li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest/Constants">Constants</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/TokenStore">TokenStore</a></li>
 
 
                     </ul>
@@ -260,21 +270,21 @@ public static class Constants</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/Constants/999B1170">Rate<wbr>Limit<wbr>Bucket<wbr>Header<wbr>Name</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/Constants/51D91AD3">LocaleHeaderName</a></td>
 								<td>string</td>
 								<td>
 									<div>
-    Gets the name of the rate limit bucket header.
+    Gets the name of the locale header, used when requesting localized objects.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/Constants/9B4B0B82">Rate<wbr>Limit<wbr>Global<wbr>Header<wbr>Name</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/Constants/999B1170">Rate<wbr>Limit<wbr>Bucket<wbr>Header<wbr>Name</a></td>
 								<td>string</td>
 								<td>
 									<div>
-    Gets the name of the global rate limit header.
+    Gets the name of the rate limit bucket header.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
