@@ -406,6 +406,9 @@
       }
     ],
     "nsfw_level": 0,
-    "premium_progress_bar_enabled": true
+    "premium_progress_bar_enabled": true,
+    "threads": [],
+    "stage_instances": [],
+    "guild_scheduled_events": []
   }
 }
