@@ -10,17 +10,14 @@ This library uses the in-memory model to persist pagination data (such as the
 available pages, the current page, and the message owner) and allow the user to
 flip through one or more "pages" of content via interaction buttons.
 
-`PaginatedMessageEntity` serves as the controller, while `PaginatedMessageData`
-serves as the model.
-
 ## Usage
 You may create paginated messages by calling one of the following extension
-methods on `InteractiveMessageService`.
+methods on `FeedbackService`.
 
 ```c#
-interactiveMessages.SendPaginatedMessageAsync(channelID, sourceUserID, pages);
-interactiveMessages.SendContextualPaginatedMessageAsync(sourceUserID, pages);
-interactiveMessages.SendPrivatePaginatedMessageAsync(user, pages);
+FeedbackService.SendPaginatedMessageAsync(channelID, sourceUserID, pages);
+FeedbackService.SendContextualPaginatedMessageAsync(sourceUserID, pages);
+FeedbackService.SendPrivatePaginatedMessageAsync(user, pages);
 ```
 
 The pages are provided as a list of embed objects, which can be created either 
