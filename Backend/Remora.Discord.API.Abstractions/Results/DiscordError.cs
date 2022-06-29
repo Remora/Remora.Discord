@@ -282,6 +282,11 @@ public enum DiscordError
     EditingNotAllowedDueToAnnouncementRateLimits = 20022,
 
     /// <summary>
+    /// The user is below the minimum required age for the attempted operation.
+    /// </summary>
+    UnderMinimumAge = 20024,
+
+    /// <summary>
     /// The channel you are writing to has hit the write rate limit.
     /// </summary>
     WriteRateLimitHit = 20028,
