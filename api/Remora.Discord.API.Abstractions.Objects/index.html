@@ -59,13 +59,13 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
@@ -334,12 +334,6 @@
     </td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandData">I<wbr>Application<wbr>Command<wbr>Data</a></td>
-									<td>
-    Represents interaction data received when a slash command is invoked or autocomplete data is requested.
-    </td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandInteractionDataOption">I<wbr>Application<wbr>Command<wbr>Interaction<wbr>Data<wbr>Option</a></td>
 									<td>
     Represents a named option and its value.
@@ -439,12 +433,6 @@
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelTemplate">IChannelTemplate</a></td>
 									<td>
     Represents a channel.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelThreadQueryResponse">I<wbr>Channel<wbr>Thread<wbr>Query<wbr>Response</a></td>
-									<td>
-    Represents a response object from the Channel REST API regarding a channel thread query.
     </td>
 							</tr>
 							<tr>
@@ -588,7 +576,7 @@
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></td>
 									<td>
-    Represents a response object from the Guild REST API regarding a thread query.
+    Represents a response object from the REST API regarding a thread query.
     </td>
 							</tr>
 							<tr>
@@ -634,6 +622,12 @@
     </td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionData">IInteractionData</a></td>
+									<td>
+    Represents payload data for a command.
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionMessageCallbackData">I<wbr>Interaction<wbr>Message<wbr>Callback<wbr>Data</a></td>
 									<td>
     Represents return payload data for an interaction response.
@@ -676,12 +670,6 @@
     </td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponentData">I<wbr>Message<wbr>Component<wbr>Data</a></td>
-									<td>
-    Represents interaction data received when a message component is used.
-    </td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageInteraction">IMessageInteraction</a></td>
 									<td>
     Represents additional data sent on a message that is a response to an interaction.
@@ -691,12 +679,6 @@
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageReference">IMessageReference</a></td>
 									<td>
     Represents a message reference.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IModalSubmitData">IModalSubmitData</a></td>
-									<td>
-    Represents interaction data received when a modal is submitted.
     </td>
 							</tr>
 							<tr>
@@ -1096,12 +1078,6 @@
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ButtonComponentStyle">ButtonComponentStyle</a></td>
 									<td>
     Enumerates various button styles.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ChannelFlags">ChannelFlags</a></td>
-									<td>
-    Enumerates various channel flags.
     </td>
 							</tr>
 							<tr>

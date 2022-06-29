@@ -59,13 +59,13 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
@@ -187,7 +187,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Represents the Discord Template API.
+    Represents the Discord REST template API.
     </div>
 
 		<div class="panel panel-default">
@@ -209,11 +209,17 @@
 								<dt>Base Types</dt>
 								<dd>
 									<ul class="list-unstyled">										
-											<li>IRestCustomizable</li>								
+											<li>object</li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 							
+								<dt>Derived Types</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestTemplateAPI">Caching<wbr>Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>								
+									</ul>
+								</dd>			
 							
 						</dl>
 					</div>		
@@ -222,11 +228,13 @@
 							graph BT
 	Type--&gt;Base0["AbstractDiscordRestAPI"]
 	click Base0 "/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI"
-	Base0--&gt;Base1["IRestCustomizable"]
+	Base0--&gt;Base1["object"]
 	Type-.-&gt;Interface0["IDiscordRestTemplateAPI"]
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestTemplateAPI"
 	Type["DiscordRestTemplateAPI"]
 class Type type-node
+	Derived0["CachingDiscordRestTemplateAPI"]--&gt;Type
+	click Derived0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestTemplateAPI"
 
 						</div>
 					</div>
@@ -387,7 +395,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI/F01E751C">Modify<wbr>Guild<wbr>Template<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI/B4727857">Modify<wbr>Guild<wbr>Template<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITemplate">ITemplate</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>

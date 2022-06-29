@@ -59,13 +59,13 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
@@ -85,6 +85,7 @@
 <p><a href="#Syntax">Syntax</a></p>
 <p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Constructors">Constructors</a></p>
+<p><a href="#Properties">Properties</a></p>
 <p><a href="#Methods">Methods</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -179,7 +180,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Decorates the registered voice API with caching functionality.
+    Acts as an abstract base for REST API instances.
     </div>
 
 		<div class="panel panel-default">
@@ -195,7 +196,6 @@
 								<dd>
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestVoiceAPI">IDiscordRestVoiceAPI</a></li>								
-											<li>IRestCustomizable</li>								
 									</ul>
 								</dd>
 							
@@ -203,6 +203,8 @@
 								<dd>
 									<ul class="list-unstyled">										
 											<li>object</li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>								
 									</ul>
 								</dd>				
 							
@@ -212,10 +214,13 @@
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
-	Type--&gt;Base0["object"]
+	Type--&gt;Base0["DiscordRestVoiceAPI"]
+	click Base0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI"
+	Base0--&gt;Base1["AbstractDiscordRestAPI"]
+	click Base1 "/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI"
+	Base1--&gt;Base2["object"]
 	Type-.-&gt;Interface0["IDiscordRestVoiceAPI"]
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestVoiceAPI"
-	Type-.-&gt;Interface1["IRestCustomizable"]
 	Type["CachingDiscordRestVoiceAPI"]
 class Type type-node
 
@@ -227,7 +232,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCustomizable</code></pre>
+public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI, IDiscordRestVoiceAPI</code></pre>
 
 
 
@@ -263,10 +268,8 @@ public class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCustomizabl
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestVoiceAPI/A75D2493">Caching<wbr>Discord<wbr>Rest<wbr>Voice<wbr>A<wbr>P<wbr>I<wbr>(<wbr>I<wbr>Discord<wbr>Rest<wbr>Voice<wbr>A<wbr>P<wbr>I, <wbr>CacheService)<wbr></a></td>
-									<td>
-    Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestVoiceAPI">CachingDiscordRestVoiceAPI</a></code> class.
-    </td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestVoiceAPI/B625D515">Caching<wbr>Discord<wbr>Rest<wbr>Voice<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options, <wbr>ICacheProvider, <wbr>CacheService)<wbr></a></td>
+									<td></td>
 							</tr>
 					</tbody></table>
 				</div>
@@ -275,6 +278,51 @@ public class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCustomizabl
 
 
 
+			<h1 id="Properties">Properties</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></td>
+								<td>Json<wbr>Serializer<wbr>Options</td>
+								<td>
+									<div>
+    Gets the <code class="cs">System.Text.Json.JsonSerializerOptions</code> available to the API instance.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/17E00C50">RateLimitCache</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Abstractions.Services/ICacheProvider">ICacheProvider</a></td>
+								<td>
+									<div>
+    Gets the rate limit memory cache.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/ADD2BEE9">RestHttpClient</a></td>
+								<td>IRestHttpClient</td>
+								<td>
+									<div>
+    Gets the <code class="cs">RestHttpClient&lt;TError&gt;</code> available to the API instance.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
 
 			<h1 id="Methods">Methods</h1>
 			<div class="box">
@@ -297,10 +345,11 @@ public class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCustomizabl
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestVoiceAPI/6029A673">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/EAED83A5">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
 								<td>Rest<wbr>Request<wbr>Customization</td>
 								<td>
 									<div></div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
 							</tr>
 					</tbody></table>

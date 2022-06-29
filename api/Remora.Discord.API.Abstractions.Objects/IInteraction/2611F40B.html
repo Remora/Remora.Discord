@@ -59,13 +59,13 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
@@ -148,12 +148,10 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction">IInteraction</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Property Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/7892CCDC">AppPermissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/2E274264">ApplicationID</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/46E59CB5">ChannelID</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/2611F40B">Data</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/9935E9F6">GuildID</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/E58E046A">GuildLocale</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/2DE1323A">ID</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/8B588A82">Locale</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction/6B64EEB3">Member</a></li>
@@ -184,7 +182,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets the data payload.
+    Gets the command data payload.
     </div>
 
 		<div class="panel panel-default">
@@ -202,7 +200,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Optional&lt;OneOf&lt;IApplicationCommandData, IMessageComponentData, IModalSubmitData&gt;&gt; Data { get; }</code></pre>
+	<pre><code>Optional&lt;IInteractionData&gt; Data { get; }</code></pre>
 
 
 
@@ -219,7 +217,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Optional<wbr>&lt;OneOf<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandData">I<wbr>Application<wbr>Command<wbr>Data</a>, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponentData">I<wbr>Message<wbr>Component<wbr>Data</a>, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IModalSubmitData">IModalSubmitData</a>&gt;<wbr>&gt;<wbr></td>
+					<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionData">IInteractionData</a>&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>
