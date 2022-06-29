@@ -140,6 +140,37 @@ public class InteractiveCommands : CommandGroup
     }
 
     /// <summary>
+    /// Sends an embed with a dropdown.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    [Command("typed-dropdown")]
+    public async Task<IResult> SendTypedDropdownAsync()
+    {
+        var embed = new Embed(Description: "Select an emoji below.");
+        var options = new FeedbackMessageOptions(MessageComponents: new IMessageComponent[]
+        {
+            new ActionRowComponent(new[]
+            {
+                new SelectMenuComponent
+                (
+                    CustomIDHelpers.CreateSelectMenuID("typed-dropdown"),
+                    new ISelectOption[]
+                    {
+                        new SelectOption("Sweden", "🇸🇪", Emoji: new PartialEmoji(Name: "🇸🇪")),
+                        new SelectOption("Robot", "🤖", Emoji: new PartialEmoji(Name: "🤖")),
+                        new SelectOption("Shark", "🦈", Emoji: new PartialEmoji(Name: "🦈"))
+                    },
+                    "Emojis...",
+                    1,
+                    1
+                )
+            })
+        });
+
+        return await _feedback.SendContextualEmbedAsync(embed, options, this.CancellationToken);
+    }
+
+    /// <summary>
     /// Shows a modal.
     /// </summary>
     /// <returns>A result, indicating if the modal was sent successfully.</returns>

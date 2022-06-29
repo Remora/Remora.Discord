@@ -31,6 +31,8 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Feedback.Messages;
+using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity;
 using Remora.Results;
 
@@ -43,16 +45,24 @@ public class ColourDropdownInteractions : InteractionGroup
 {
     private readonly InteractionContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
+    private readonly FeedbackService _feedback;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ColourDropdownInteractions"/> class.
     /// </summary>
     /// <param name="context">The interaction context.</param>
     /// <param name="channelAPI">The channel API.</param>
-    public ColourDropdownInteractions(InteractionContext context, IDiscordRestChannelAPI channelAPI)
+    /// <param name="feedback">The feedback service.</param>
+    public ColourDropdownInteractions
+    (
+        InteractionContext context,
+        IDiscordRestChannelAPI channelAPI,
+        FeedbackService feedback
+    )
     {
         _context = context;
         _channelAPI = channelAPI;
+        _feedback = feedback;
     }
 
     /// <summary>
@@ -118,6 +128,36 @@ public class ColourDropdownInteractions : InteractionGroup
             message.ID,
             embeds: new[] { embed },
             components: newComponents,
+            ct: this.CancellationToken
+        );
+    }
+
+    /// <summary>
+    /// Explains a selected emoji.
+    /// </summary>
+    /// <param name="values">The selected values.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    [SelectMenu("typed-dropdown")]
+    public async Task<Result> ExplainEmojiAsync(IReadOnlyList<IEmoji> values)
+    {
+        if (values.Count != 1)
+        {
+            return new InvalidOperationError("Only one element may be selected at any one time.");
+        }
+
+        var message = values.Single().Name switch
+        {
+            "🇸🇪" => "Someplace that gets cold in the winters.",
+            "🤖" => "A machine that wants a heart.",
+            "🦈" => "A misunderstood fish.",
+            _ => "No clue."
+        };
+
+        return (Result)await _feedback.SendContextualNeutralAsync
+        (
+            message,
+            _context.User.ID,
+            options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
             ct: this.CancellationToken
         );
     }
