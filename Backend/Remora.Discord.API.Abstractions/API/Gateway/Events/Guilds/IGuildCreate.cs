@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events;
 
@@ -50,7 +51,7 @@ public interface IGuildCreate : IGatewayEvent, IGuild
     /// <summary>
     /// Gets a value indicating whether the guild is unavailable due to an outage.
     /// </summary>
-    bool IsUnavailable { get; }
+    Optional<bool> IsUnavailable { get; }
 
     /// <summary>
     /// Gets the number of members in the guild.

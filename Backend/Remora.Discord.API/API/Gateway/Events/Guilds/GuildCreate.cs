@@ -75,7 +75,7 @@ public record GuildCreate
     bool IsPremiumProgressBarEnabled,
     DateTimeOffset JoinedAt,
     bool IsLarge,
-    bool IsUnavailable,
+    Optional<bool> IsUnavailable,
     int MemberCount,
     IReadOnlyList<IPartialVoiceState> VoiceStates,
     IReadOnlyList<IGuildMember> Members,
