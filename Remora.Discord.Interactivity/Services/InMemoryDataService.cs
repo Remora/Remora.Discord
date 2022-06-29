@@ -34,8 +34,8 @@ namespace Remora.Discord.Interactivity.Services;
 /// Manages synchronized access to data.
 /// </summary>
 /// <remarks>
-/// While <typeparamref name="TKey"/> should be a simple dictionary key, <seealso cref="TData"/> may be any complex type
-/// such as classes, structures, or records. If the data type implements <see cref="IDisposable"/> or
+/// While <typeparamref name="TKey"/> should be a simple dictionary key, <typeparamref name="TData"/> may be any complex
+/// type such as classes, structures, or records. If the data type implements <see cref="IDisposable"/> or
 /// <see cref="IAsyncDisposable"/>, the instance will also be disposed upon removal.
 /// </remarks>
 /// <typeparam name="TKey">The key type for the stored data.</typeparam>
