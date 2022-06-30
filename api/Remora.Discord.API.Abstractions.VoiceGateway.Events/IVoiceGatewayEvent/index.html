@@ -61,12 +61,12 @@
         <li><a href="/Remora.Discord/README">README</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -199,13 +199,13 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceResumed">IVoiceResumed</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHello">IVoiceHello</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceClientDisconnect">I<wbr>Voice<wbr>Client<wbr>Disconnect</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription">I<wbr>Voice<wbr>Session<wbr>Description</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHeartbeatAcknowledge">I<wbr>Voice<wbr>Heartbeat<wbr>Acknowledge</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceReady">IVoiceReady</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHello">IVoiceHello</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceResumed">IVoiceResumed</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSpeakingEvent">IVoiceSpeakingEvent</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceReady">IVoiceReady</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHeartbeatAcknowledge">I<wbr>Voice<wbr>Heartbeat<wbr>Acknowledge</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription">I<wbr>Voice<wbr>Session<wbr>Description</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -217,20 +217,20 @@
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/IVoiceGatewayPayloadData"
 	Type["IVoiceGatewayEvent"]
 class Type type-node
-	Implementing0["IVoiceResumed"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceResumed"
+	Implementing0["IVoiceClientDisconnect"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceClientDisconnect"
 	Implementing1["IVoiceHello"]-.-&gt;Type
 	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHello"
-	Implementing2["IVoiceClientDisconnect"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceClientDisconnect"
-	Implementing3["IVoiceSessionDescription"]-.-&gt;Type
-	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription"
-	Implementing4["IVoiceHeartbeatAcknowledge"]-.-&gt;Type
-	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHeartbeatAcknowledge"
-	Implementing5["IVoiceReady"]-.-&gt;Type
-	click Implementing5 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceReady"
-	Implementing6["IVoiceSpeakingEvent"]-.-&gt;Type
-	click Implementing6 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSpeakingEvent"
+	Implementing2["IVoiceResumed"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceResumed"
+	Implementing3["IVoiceSpeakingEvent"]-.-&gt;Type
+	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSpeakingEvent"
+	Implementing4["IVoiceReady"]-.-&gt;Type
+	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceReady"
+	Implementing5["IVoiceHeartbeatAcknowledge"]-.-&gt;Type
+	click Implementing5 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHeartbeatAcknowledge"
+	Implementing6["IVoiceSessionDescription"]-.-&gt;Type
+	click Implementing6 "/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription"
 
 						</div>
 					</div>

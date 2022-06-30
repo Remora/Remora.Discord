@@ -61,12 +61,12 @@
         <li><a href="/Remora.Discord/README">README</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -145,8 +145,6 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Commands</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Enum Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents">GatewayIntents</a></li>
 			<li class="header">Interface Types</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IConnectionProperties">I<wbr>Connection<wbr>Properties</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IGatewayCommand">IGatewayCommand</a></li>
@@ -156,6 +154,8 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IShardIdentification">IShardIdentification</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence">IUpdatePresence</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState">IUpdateVoiceState</a></li>
+			<li class="header">Enum Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents">GatewayIntents</a></li>
 
 
                     </ul>
@@ -201,13 +201,13 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState">IUpdateVoiceState</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence">IUpdatePresence</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IIdentify">IIdentify</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeatAcknowledge">I<wbr>Heartbeat<wbr>Acknowledge</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence">IUpdatePresence</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers">IRequestGuildMembers</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState">IUpdateVoiceState</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeat">IHeartbeat</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IResume">IResume</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeatAcknowledge">I<wbr>Heartbeat<wbr>Acknowledge</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers">IRequestGuildMembers</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -219,20 +219,20 @@
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
 	Type["IGatewayCommand"]
 class Type type-node
-	Implementing0["IUpdateVoiceState"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState"
-	Implementing1["IUpdatePresence"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence"
-	Implementing2["IIdentify"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IIdentify"
-	Implementing3["IHeartbeat"]-.-&gt;Type
-	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeat"
-	Implementing4["IResume"]-.-&gt;Type
-	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IResume"
-	Implementing5["IHeartbeatAcknowledge"]-.-&gt;Type
-	click Implementing5 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeatAcknowledge"
-	Implementing6["IRequestGuildMembers"]-.-&gt;Type
-	click Implementing6 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers"
+	Implementing0["IIdentify"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IIdentify"
+	Implementing1["IHeartbeatAcknowledge"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeatAcknowledge"
+	Implementing2["IUpdatePresence"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence"
+	Implementing3["IRequestGuildMembers"]-.-&gt;Type
+	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers"
+	Implementing4["IUpdateVoiceState"]-.-&gt;Type
+	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState"
+	Implementing5["IHeartbeat"]-.-&gt;Type
+	click Implementing5 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeat"
+	Implementing6["IResume"]-.-&gt;Type
+	click Implementing6 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IResume"
 
 						</div>
 					</div>
