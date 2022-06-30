@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -189,9 +189,9 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Responders/LateCacheResponder">LateCacheResponder</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Responders/EarlyCacheResponder">EarlyCacheResponder</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Responders/IResponder_1">IResponder</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Gateway.Responders/IResponder_1#typeparam-TGatewayEvent">TGatewayEvent</a>&gt;<wbr></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Responders/LateCacheResponder">LateCacheResponder</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -201,12 +201,12 @@
 							graph BT
 	Type["IResponder"]
 class Type type-node
-	Implementing0["EarlyCacheResponder"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.Responders/EarlyCacheResponder"
-	Implementing1["IResponder&lt;TGatewayEvent&gt;"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Gateway.Responders/IResponder_1"
-	Implementing2["LateCacheResponder"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.Caching.Responders/LateCacheResponder"
+	Implementing0["LateCacheResponder"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.Responders/LateCacheResponder"
+	Implementing1["EarlyCacheResponder"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.Responders/EarlyCacheResponder"
+	Implementing2["IResponder&lt;TGatewayEvent&gt;"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.Gateway.Responders/IResponder_1"
 
 						</div>
 					</div>
