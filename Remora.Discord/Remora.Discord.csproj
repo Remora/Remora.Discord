@@ -5,9 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.42</Version>
+        <Version>2022.43</Version>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
+            Fix early return.
             Improve CustomIDHelpers.
             Preemptive fix of IsUnavailable's optionality.
             Implement AppPermissions.

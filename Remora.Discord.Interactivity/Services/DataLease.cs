@@ -115,8 +115,9 @@ public class DataLease<TKey, TData> : IAsyncDisposable where TKey : notnull
                 }
 
                 _semaphore.Dispose();
-                return;
             }
+
+            return;
         }
 
         _dataService.UpdateData(_key, _data);

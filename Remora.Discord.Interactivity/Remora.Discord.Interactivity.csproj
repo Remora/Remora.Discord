@@ -5,9 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.2.0</Version>
+        <Version>4.2.1</Version>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
+            Fix early return.
             Improve CustomIDHelpers.
         </PackageReleaseNotes>
     </PropertyGroup>
