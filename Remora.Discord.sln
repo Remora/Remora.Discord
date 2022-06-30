@@ -95,6 +95,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Caching.Redi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Caching.Abstractions", "Backend\Remora.Discord.Caching.Abstractions\Remora.Discord.Caching.Abstractions.csproj", "{5DA36554-2D99-43B4-AFE7-AA15E1236C0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Interactivity.Tests", "Tests\Remora.Discord.Interactivity.Tests\Remora.Discord.Interactivity.Tests.csproj", "{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -217,6 +219,10 @@ Global
 		{5DA36554-2D99-43B4-AFE7-AA15E1236C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DA36554-2D99-43B4-AFE7-AA15E1236C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DA36554-2D99-43B4-AFE7-AA15E1236C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -246,6 +252,7 @@ Global
 		{ED733DB7-DD2C-4997-B065-F3AF6CF1B824} = {D1A34922-E02F-492B-AEF5-9B34E81CE293}
 		{A6767938-4845-4B1A-B6D2-71C8AB5028F9} = {26E93608-29BA-45C7-993A-AA24A49D6013}
 		{5DA36554-2D99-43B4-AFE7-AA15E1236C0E} = {26E93608-29BA-45C7-993A-AA24A49D6013}
+		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236} = {6E2D59EB-648D-4968-8A63-8D8E3813EC86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02545F40-E06C-4956-A77D-02EB2D41A964}
