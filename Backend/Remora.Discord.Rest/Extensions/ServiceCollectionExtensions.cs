@@ -40,6 +40,7 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Caching;
+using Remora.Discord.Rest.Handlers;
 using Remora.Discord.Rest.Polly;
 using Remora.Rest;
 using Remora.Rest.Extensions;
@@ -74,7 +75,8 @@ public static class ServiceCollectionExtensions
         serviceCollection.ConfigureDiscordJsonConverters();
 
         serviceCollection
-            .AddSingleton<ITokenStore>(serviceProvider => new TokenStore(tokenFactory(serviceProvider)));
+            .AddSingleton<ITokenStore>(serviceProvider => new TokenStore(tokenFactory(serviceProvider)))
+            .AddSingleton<AuthorizationHandler>();
 
         serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
         (
@@ -198,26 +200,13 @@ public static class ServiceCollectionExtensions
                 var name = assemblyName.Name ?? "Remora.Discord";
                 var version = assemblyName.Version ?? new Version(1, 0, 0);
 
-                var tokenStore = services.GetRequiredService<ITokenStore>();
-
                 client.BaseAddress = Constants.BaseURL;
                 client.DefaultRequestHeaders.UserAgent.Add
                 (
                     new ProductInfoHeaderValue(name, version.ToString())
                 );
-
-                var token = tokenStore.Token;
-                if (string.IsNullOrWhiteSpace(token))
-                {
-                    throw new InvalidOperationException("The authentication token has to contain something.");
-                }
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue
-                (
-                    "Bot",
-                    token
-                );
             })
+            .AddHttpMessageHandler<AuthorizationHandler>()
             .AddTransientHttpErrorPolicy
             (
                 b => b

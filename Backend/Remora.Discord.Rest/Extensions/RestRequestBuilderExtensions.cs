@@ -73,4 +73,18 @@ public static class RestRequestBuilderExtensions
 
         return builder;
     }
+
+    /// <summary>
+    /// Adds an property to the request, used for skipping the addition of the Authorization header.
+    /// </summary>
+    /// <param name="builder">The request builder.</param>
+    /// <returns>The builder, with the property.</returns>
+    public static RestRequestBuilder SkipAuthorization(
+        this RestRequestBuilder builder
+    )
+    {
+        builder.With(r => r.Properties.Add(Constants.SkipAuthorizationPropertyName, true));
+
+        return builder;
+    }
 }
