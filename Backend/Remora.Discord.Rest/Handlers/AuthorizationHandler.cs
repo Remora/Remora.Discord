@@ -25,6 +25,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using Polly;
+using Remora.Discord.Rest.Extensions;
 
 namespace Remora.Discord.Rest.Handlers;
 
@@ -47,26 +49,41 @@ internal class AuthorizationHandler : DelegatingHandler
     /// <inheritdoc />
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        if (!request.Properties.ContainsKey(Constants.SkipAuthorizationPropertyName))
-        {
-            AddAuthorizationHeader(request);
-        }
-
-        return base.SendAsync(request, cancellationToken);
-    }
-
-    private void AddAuthorizationHeader(HttpRequestMessage request)
-    {
         var token = _tokenStore.Token;
         if (string.IsNullOrWhiteSpace(token))
         {
             throw new InvalidOperationException("The authentication token has to contain something.");
         }
 
+#if NET5_0_OR_GREATER
+        if (!request.Options.TryGetValue(Constants.SkipAuthorizationOption, out _))
+#else
+        if (!request.Properties.ContainsKey(Constants.SkipAuthorizationPropertyName))
+#endif
+        {
+            AddTokenToPollyContext(request, token);
+            AddAuthorizationHeader(request, token);
+        }
+
+        return base.SendAsync(request, cancellationToken);
+    }
+
+    private void AddAuthorizationHeader(HttpRequestMessage request, string token)
+    {
         request.Headers.Authorization = new AuthenticationHeaderValue
         (
             "Bot",
             token
         );
+    }
+
+    private void AddTokenToPollyContext(HttpRequestMessage request, string token)
+    {
+        void ModifyContext(Context context)
+        {
+            context.Add("token", token);
+        }
+
+        request.ModifyPolicyExecutionContext(ModifyContext);
     }
 }

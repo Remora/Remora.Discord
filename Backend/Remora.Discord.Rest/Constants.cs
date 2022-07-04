@@ -71,4 +71,11 @@ public static class Constants
     /// Gets the name of the property, used when adding of Authorization should be skipped.
     /// </summary>
     internal static string SkipAuthorizationPropertyName { get; } = "remora::skip-authorization";
+
+#if NET5_0_OR_GREATER
+    /// <summary>
+    /// Gets the HTTP request option, used when adding of Authorization should be skipped.
+    /// </summary>
+    internal static System.Net.Http.HttpRequestOptionsKey<bool> SkipAuthorizationOption { get; } = new(SkipAuthorizationPropertyName);
+#endif
 }
