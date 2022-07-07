@@ -47,22 +47,21 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
     /// </remarks>
     private readonly ConcurrentDictionary<string, string> _endpointBuckets;
 
-    private readonly RateLimitBucket _globalRateLimitBucket;
+    /// <summary>
+    /// Maps tokens to their corresponding bucket.
+    /// </summary>
+    /// <remarks>
+    /// If a token is not in this dictionary, it is the first request for this token.
+    /// </remarks>
+    private readonly ConcurrentDictionary<string, RateLimitBucket> _globalRateLimitBuckets;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordRateLimitPolicy"/> class.
     /// </summary>
     private DiscordRateLimitPolicy()
     {
-        _globalRateLimitBucket = new RateLimitBucket
-        (
-            50,
-            50,
-            DateTimeOffset.UtcNow + TimeSpan.FromSeconds(1),
-            "global"
-        );
-
         _endpointBuckets = new ConcurrentDictionary<string, string>();
+        _globalRateLimitBuckets = new ConcurrentDictionary<string, RateLimitBucket>();
     }
 
     /// <inheritdoc />
@@ -96,17 +95,36 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
         // First, take a token from the global limits
         if (!isExemptFromGlobalRateLimits)
         {
-            // Check if we need to reset the global limits
-            if (_globalRateLimitBucket.ResetsAt < now)
+            if (!context.TryGetValue("token", out var rawToken) || rawToken is not string token)
             {
-                await _globalRateLimitBucket.ResetAsync(now + TimeSpan.FromSeconds(1));
+                token = "unauthorized";
             }
 
-            if (!await _globalRateLimitBucket.TryTakeAsync())
+            var globalBucketIdentifier = $"global:{token}";
+
+            if (!_globalRateLimitBuckets.TryGetValue(globalBucketIdentifier, out var globalRateLimitBucket))
+            {
+                globalRateLimitBucket = new RateLimitBucket
+                (
+                    Constants.GlobalRateLimit,
+                    Constants.GlobalRateLimit,
+                    DateTimeOffset.UtcNow + TimeSpan.FromSeconds(1),
+                    globalBucketIdentifier
+                );
+                _globalRateLimitBuckets.TryAdd(globalBucketIdentifier, globalRateLimitBucket);
+            }
+
+            // Check if we need to reset the global limits
+            if (globalRateLimitBucket.ResetsAt < now)
+            {
+                await globalRateLimitBucket.ResetAsync(now + TimeSpan.FromSeconds(1));
+            }
+
+            if (!await globalRateLimitBucket.TryTakeAsync())
             {
                 var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
 
-                var delay = _globalRateLimitBucket.ResetsAt - now;
+                var delay = globalRateLimitBucket.ResetsAt - now;
                 rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
 
                 return rateLimitedResponse;
