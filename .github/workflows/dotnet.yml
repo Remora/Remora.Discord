@@ -29,9 +29,9 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal --filter 'FullyQualifiedName!~Remora.Discord.Gateway.Tests'
+      run: dotnet test -c Release --no-build --verbosity normal --filter 'FullyQualifiedName!~Remora.Discord.Gateway.Tests'
     - name: Test (Gateway)
-      run: dotnet test --no-build --verbosity normal --filter 'FullyQualifiedName~Remora.Discord.Gateway.Tests'
+      run: dotnet test -c Release --no-build --verbosity normal --filter 'FullyQualifiedName~Remora.Discord.Gateway.Tests'
     - name: Pack
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "-github$GITHUB_RUN_ID"
     - name: Upload artifacts
