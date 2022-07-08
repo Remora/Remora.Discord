@@ -1,5 +1,10 @@
 name: .NET
 
+env:
+  GITHUB_USER: Nihlus
+  GITHUB_FEED: https://nuget.pkg.github.com/$GITHUB_USER
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 on:
   - push
   - pull_request
@@ -27,3 +32,24 @@ jobs:
       run: dotnet test --no-build --verbosity normal --filter 'FullyQualifiedName!~Remora.Discord.Gateway.Tests'
     - name: Test (Gateway)
       run: dotnet test --no-build --verbosity normal --filter 'FullyQualifiedName~Remora.Discord.Gateway.Tests'
+    - name: Pack
+      run: dotnet pack -c Release --no-restore --no-build --version-suffix "-github$GITHUB_RUN_ID"
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: nupkg
+        path: nuget/*
+  prerelease:
+    needs: build
+    if: github.ref == 'ref/heads/master' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download package artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: nupkg
+      - name: Push to GitHub Feed
+        run: |
+          for f in ./nuget/*; do
+            curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
+          done
