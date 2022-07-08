@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Threading;
 using JetBrains.Annotations;
 using Remora.Discord.Gateway.Transport;
+using Xunit.Abstractions;
 
 namespace Remora.Discord.Gateway.Tests.Transport;
 
@@ -34,12 +35,22 @@ namespace Remora.Discord.Gateway.Tests.Transport;
 [PublicAPI]
 public class MockedTransportServiceBuilder
 {
+    private readonly ITestOutputHelper _testOutput;
     private readonly MockedTransportServiceOptions _serviceOptions = new();
     private readonly List<MockedTransportSequence> _sequences = new();
 
     private readonly List<MockedTransportSequence> _continuousSequences = new();
 
     private CancellationTokenSource _finisher = new();
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MockedTransportServiceBuilder"/> class.
+    /// </summary>
+    /// <param name="testOutput">The test output helper.</param>
+    public MockedTransportServiceBuilder(ITestOutputHelper testOutput)
+    {
+        _testOutput = testOutput;
+    }
 
     /// <summary>
     /// Sets a timeout for the service. If no sequences have advanced within this timeout, the service will
@@ -115,6 +126,7 @@ public class MockedTransportServiceBuilder
     /// <returns>The transport service.</returns>
     public IPayloadTransportService Build() => new MockedTransportService
     (
+        _testOutput,
         _sequences,
         _continuousSequences,
         _serviceOptions,

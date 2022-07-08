@@ -44,6 +44,7 @@ using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Tests;
 using Remora.Results;
 using Xunit;
+using Xunit.Abstractions;
 
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
 namespace Remora.Discord.Gateway.Tests.Tests;
@@ -53,6 +54,17 @@ namespace Remora.Discord.Gateway.Tests.Tests;
 /// </summary>
 public class DiscordGatewayClientTests
 {
+    private readonly ITestOutputHelper _testOutput;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordGatewayClientTests"/> class.
+    /// </summary>
+    /// <param name="testOutput">The output helper.</param>
+    public DiscordGatewayClientTests(ITestOutputHelper testOutput)
+    {
+        _testOutput = testOutput;
+    }
+
     /// <summary>
     /// Tests whether the client can send the correct sequence of events in order to connect normally.
     /// </summary>
@@ -61,7 +73,7 @@ public class DiscordGatewayClientTests
     public async Task CanConnectAsync()
     {
         var tokenSource = new CancellationTokenSource();
-        var transportMock = new MockedTransportServiceBuilder()
+        var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
             .IgnoreUnexpected()
             .Sequence
@@ -122,7 +134,7 @@ public class DiscordGatewayClientTests
     public async Task CanReconnectAndResumeAsync()
     {
         var tokenSource = new CancellationTokenSource();
-        var transportMock = new MockedTransportServiceBuilder()
+        var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
             .IgnoreUnexpected()
             .Sequence
@@ -196,7 +208,7 @@ public class DiscordGatewayClientTests
     public async Task CanReconnectAndCreateNewSessionAsync()
     {
         var tokenSource = new CancellationTokenSource();
-        var transportMock = new MockedTransportServiceBuilder()
+        var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
             .IgnoreUnexpected()
             .Sequence
@@ -290,7 +302,7 @@ public class DiscordGatewayClientTests
     public async Task CanRetrySessionCreationIfInvalidatedAsync()
     {
         var tokenSource = new CancellationTokenSource();
-        var transportMock = new MockedTransportServiceBuilder()
+        var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
             .IgnoreUnexpected()
             .Sequence
@@ -366,7 +378,7 @@ public class DiscordGatewayClientTests
     public async Task CanRetrySessionCreationIfReconnectRequestedAsync()
     {
         var tokenSource = new CancellationTokenSource();
-        var transportMock = new MockedTransportServiceBuilder()
+        var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
             .IgnoreUnexpected()
             .Sequence
@@ -442,7 +454,7 @@ public class DiscordGatewayClientTests
     public async Task CanReconnectAfterExceptionAsync()
     {
         var tokenSource = new CancellationTokenSource();
-        var transportMock = new MockedTransportServiceBuilder()
+        var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
             .IgnoreUnexpected()
             .Sequence

@@ -26,10 +26,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Humanizer;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Gateway.Tests.Transport.Events;
 using Remora.Discord.Gateway.Transport;
 using Remora.Results;
+using Xunit.Abstractions;
 using Xunit.Sdk;
 
 namespace Remora.Discord.Gateway.Tests.Transport;
@@ -39,6 +41,7 @@ namespace Remora.Discord.Gateway.Tests.Transport;
 /// </summary>
 public class MockedTransportService : IPayloadTransportService
 {
+    private readonly ITestOutputHelper _testOutput;
     private readonly IReadOnlyList<MockedTransportSequence> _sequences;
     private readonly IReadOnlyList<MockedTransportSequence> _continuousSequences;
     private readonly MockedTransportServiceOptions _serviceOptions;
@@ -56,18 +59,21 @@ public class MockedTransportService : IPayloadTransportService
     /// <summary>
     /// Initializes a new instance of the <see cref="MockedTransportService"/> class.
     /// </summary>
+    /// <param name="testOutput">The test output helper.</param>
     /// <param name="sequences">The sequences in use.</param>
     /// <param name="continuousSequences">The continuous sequences in use.</param>
     /// <param name="serviceOptions">The service options.</param>
     /// <param name="finisher">The token source to cancel when all sequences are finished.</param>
     public MockedTransportService
     (
+        ITestOutputHelper testOutput,
         IReadOnlyList<MockedTransportSequence> sequences,
         IReadOnlyList<MockedTransportSequence> continuousSequences,
         MockedTransportServiceOptions serviceOptions,
         CancellationTokenSource finisher
     )
     {
+        _testOutput = testOutput;
         _sequences = sequences;
         _continuousSequences = continuousSequences;
         _serviceOptions = serviceOptions;
@@ -82,6 +88,7 @@ public class MockedTransportService : IPayloadTransportService
         try
         {
             await _semaphore.WaitAsync(ct);
+            var sequenceAdvanced = false;
 
             foreach (var sequence in _sequences.Except(_finishedSequences))
             {
@@ -100,6 +107,7 @@ public class MockedTransportService : IPayloadTransportService
                         }
 
                         _lastAdvance = DateTimeOffset.UtcNow;
+                        sequenceAdvanced = true;
 
                         break;
                     }
@@ -118,35 +126,38 @@ public class MockedTransportService : IPayloadTransportService
                 }
             }
 
-            foreach (var continuousSequence in _continuousSequences)
+            if (!sequenceAdvanced)
             {
-                if (continuousSequence.Current is not ConnectEvent c)
+                foreach (var continuousSequence in _continuousSequences)
                 {
-                    continue;
-                }
-
-                switch (c.Matches(endpoint))
-                {
-                    case EventMatch.Pass:
+                    if (continuousSequence.Current is not ConnectEvent c)
                     {
-                        if (!continuousSequence.MoveNext())
+                        continue;
+                    }
+
+                    switch (c.Matches(endpoint))
+                    {
+                        case EventMatch.Pass:
                         {
-                            continuousSequence.Reset();
-                        }
+                            if (!continuousSequence.MoveNext())
+                            {
+                                continuousSequence.Reset();
+                            }
 
-                        break;
-                    }
-                    case EventMatch.Fail:
-                    {
-                        throw new TrueException("An event in a continuous sequence failed.", null);
-                    }
-                    case EventMatch.Ignore:
-                    {
-                        break;
-                    }
-                    default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(endpoint));
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a continuous sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(endpoint));
+                        }
                     }
                 }
             }
@@ -157,7 +168,10 @@ public class MockedTransportService : IPayloadTransportService
                 _finisher.Cancel();
             }
 
-            CheckTimeout();
+            if (!sequenceAdvanced)
+            {
+                CheckTimeout();
+            }
 
             this.IsConnected = true;
             return Result.FromSuccess();
@@ -174,6 +188,7 @@ public class MockedTransportService : IPayloadTransportService
         try
         {
             await _semaphore.WaitAsync(ct);
+            var sequenceAdvanced = false;
 
             foreach (var sequence in _sequences.Except(_finishedSequences))
             {
@@ -192,6 +207,7 @@ public class MockedTransportService : IPayloadTransportService
                         }
 
                         _lastAdvance = DateTimeOffset.UtcNow;
+                        sequenceAdvanced = true;
 
                         break;
                     }
@@ -210,35 +226,38 @@ public class MockedTransportService : IPayloadTransportService
                 }
             }
 
-            foreach (var continuousSequence in _continuousSequences)
+            if (!sequenceAdvanced)
             {
-                if (continuousSequence.Current is not ReceiveEvent r)
+                foreach (var continuousSequence in _continuousSequences)
                 {
-                    continue;
-                }
-
-                switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
-                {
-                    case EventMatch.Pass:
+                    if (continuousSequence.Current is not ReceiveEvent r)
                     {
-                        if (!continuousSequence.MoveNext())
+                        continue;
+                    }
+
+                    switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
+                    {
+                        case EventMatch.Pass:
                         {
-                            continuousSequence.Reset();
-                        }
+                            if (!continuousSequence.MoveNext())
+                            {
+                                continuousSequence.Reset();
+                            }
 
-                        break;
-                    }
-                    case EventMatch.Fail:
-                    {
-                        throw new TrueException("An event in a continuous sequence failed.", null);
-                    }
-                    case EventMatch.Ignore:
-                    {
-                        break;
-                    }
-                    default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(payload));
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a continuous sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(payload));
+                        }
                     }
                 }
             }
@@ -249,7 +268,10 @@ public class MockedTransportService : IPayloadTransportService
                 _finisher.Cancel();
             }
 
-            CheckTimeout();
+            if (!sequenceAdvanced)
+            {
+                CheckTimeout();
+            }
 
             return Result.FromSuccess();
         }
@@ -267,6 +289,9 @@ public class MockedTransportService : IPayloadTransportService
             try
             {
                 await _semaphore.WaitAsync(ct);
+                var sequenceAdvanced = false;
+
+                IPayload? payload = null;
 
                 foreach (var sequence in _sequences.Except(_finishedSequences))
                 {
@@ -274,17 +299,16 @@ public class MockedTransportService : IPayloadTransportService
                     {
                         case SendEvent s:
                         {
-                            var payload = s.CreatePayload();
+                            payload = s.CreatePayload();
                             if (!sequence.MoveNext())
                             {
                                 _finishedSequences.Add(sequence);
                             }
 
                             _lastAdvance = DateTimeOffset.UtcNow;
-
-                            return Result<IPayload>.FromSuccess(payload);
+                            sequenceAdvanced = true;
+                            break;
                         }
-
                         case SendExceptionEvent se:
                         {
                             if (!sequence.MoveNext())
@@ -296,22 +320,30 @@ public class MockedTransportService : IPayloadTransportService
                             throw se.CreateException();
                         }
                     }
+
+                    if (payload is not null)
+                    {
+                        break;
+                    }
                 }
 
-                foreach (var continuousSequence in _continuousSequences)
+                if (!sequenceAdvanced)
                 {
-                    if (continuousSequence.Current is not SendEvent s)
+                    foreach (var continuousSequence in _continuousSequences)
                     {
-                        continue;
-                    }
+                        if (continuousSequence.Current is not SendEvent s)
+                        {
+                            continue;
+                        }
 
-                    var payload = s.CreatePayload();
-                    if (!continuousSequence.MoveNext())
-                    {
-                        continuousSequence.Reset();
-                    }
+                        payload = s.CreatePayload();
+                        if (!continuousSequence.MoveNext())
+                        {
+                            continuousSequence.Reset();
+                        }
 
-                    return Result<IPayload>.FromSuccess(payload);
+                        break;
+                    }
                 }
 
                 var remainingSequences = _sequences.Except(_finishedSequences).ToList();
@@ -320,7 +352,15 @@ public class MockedTransportService : IPayloadTransportService
                     _finisher.Cancel();
                 }
 
-                CheckTimeout();
+                if (!sequenceAdvanced)
+                {
+                    CheckTimeout();
+                }
+
+                if (payload is not null)
+                {
+                    return Result<IPayload>.FromSuccess(payload);
+                }
 
                 await Task.Delay(TimeSpan.FromMilliseconds(10), ct);
             }
@@ -343,6 +383,7 @@ public class MockedTransportService : IPayloadTransportService
         try
         {
             await _semaphore.WaitAsync(ct);
+            var sequenceAdvanced = false;
 
             foreach (var sequence in _sequences.Except(_finishedSequences))
             {
@@ -361,6 +402,7 @@ public class MockedTransportService : IPayloadTransportService
                         }
 
                         _lastAdvance = DateTimeOffset.UtcNow;
+                        sequenceAdvanced = true;
 
                         break;
                     }
@@ -379,35 +421,38 @@ public class MockedTransportService : IPayloadTransportService
                 }
             }
 
-            foreach (var continuousSequence in _continuousSequences)
+            if (!sequenceAdvanced)
             {
-                if (continuousSequence.Current is not DisconnectEvent d)
+                foreach (var continuousSequence in _continuousSequences)
                 {
-                    continue;
-                }
-
-                switch (d.Matches())
-                {
-                    case EventMatch.Pass:
+                    if (continuousSequence.Current is not DisconnectEvent d)
                     {
-                        if (!continuousSequence.MoveNext())
+                        continue;
+                    }
+
+                    switch (d.Matches())
+                    {
+                        case EventMatch.Pass:
                         {
-                            continuousSequence.Reset();
-                        }
+                            if (!continuousSequence.MoveNext())
+                            {
+                                continuousSequence.Reset();
+                            }
 
-                        break;
-                    }
-                    case EventMatch.Fail:
-                    {
-                        throw new TrueException("An event in a continuous sequence failed.", null);
-                    }
-                    case EventMatch.Ignore:
-                    {
-                        break;
-                    }
-                    default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(d));
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a continuous sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(d));
+                        }
                     }
                 }
             }
@@ -418,7 +463,10 @@ public class MockedTransportService : IPayloadTransportService
                 _finisher.Cancel();
             }
 
-            CheckTimeout();
+            if (!sequenceAdvanced)
+            {
+                CheckTimeout();
+            }
 
             this.IsConnected = false;
             return Result.FromSuccess();
@@ -447,9 +495,14 @@ public class MockedTransportService : IPayloadTransportService
             timeout += TimeSpan.FromMinutes(10);
         }
 
-        if (DateTimeOffset.UtcNow - _lastAdvance > timeout)
+        if (DateTimeOffset.UtcNow - _lastAdvance <= timeout)
         {
-            throw new TestTimeoutException((int)_serviceOptions.Timeout.TotalMilliseconds);
+            return;
         }
+
+        var pendingEvents = _sequences.Select(s => s.Current.ToString()).Humanize();
+        _testOutput.WriteLine($"Timed out waiting for {pendingEvents}");
+
+        throw new TestTimeoutException((int)_serviceOptions.Timeout.TotalMilliseconds);
     }
 }
