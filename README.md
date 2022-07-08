@@ -158,7 +158,6 @@ Whenever a new push to `master` is made, a new set of packages based on the late
 The URL of the NuGet source is `https://nuget.pkg.github.com/Nihlus/index.json`.  
 As the NuGet source requires authentication, follow GitHub's instructions: [here][9]
 
-
 ## 6. Contributing
 See [Contributing][2].
 
