@@ -31,7 +31,7 @@ jobs:
     - name: Test
       run: dotnet test -c Release --no-restore --no-build --verbosity minimal
     - name: Pack
-      run: dotnet pack -c Release --no-restore --no-build --version-suffix "-github$GITHUB_RUN_ID"
+      run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
