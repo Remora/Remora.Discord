@@ -2,7 +2,7 @@ name: .NET
 
 env:
   GITHUB_USER: Nihlus
-  GITHUB_FEED: https://nuget.pkg.github.com/${{ env.GITHUB_USER }}
+  GITHUB_FEED: https://nuget.pkg.github.com/Nihlus
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
