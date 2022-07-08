@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>64.0.0</Version>
+        <VersionPrefix>64.0.0</VersionPrefix>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
             Preemptive fix of IsUnavailable's optionality.

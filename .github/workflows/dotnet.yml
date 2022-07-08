@@ -46,6 +46,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: nupkg
+          path: nuget
       - name: Push to GitHub Feed
         run: |
           for f in ./nuget/*; do

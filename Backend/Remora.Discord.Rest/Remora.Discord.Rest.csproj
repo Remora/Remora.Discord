@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>40.0.4</Version>
+        <VersionPrefix>40.0.4</VersionPrefix>
         <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
             Update dependencies.
