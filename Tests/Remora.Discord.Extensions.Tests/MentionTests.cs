@@ -38,12 +38,12 @@ public class MentionTests
     /// </summary>
     /// <param name="userID">The user ID.</param>
     [Theory]
-    [InlineData(330746772378877954)]
-    [InlineData(197291773133979648)]
-    [InlineData(135347310845624320)]
-    [InlineData(201799098137968640)]
-    [InlineData(209279906280898562)]
-    [InlineData(203709726322720768)]
+    [InlineData(330746772378877954UL)]
+    [InlineData(197291773133979648UL)]
+    [InlineData(135347310845624320UL)]
+    [InlineData(201799098137968640UL)]
+    [InlineData(209279906280898562UL)]
+    [InlineData(203709726322720768UL)]
     public void UserSuccess(ulong userID)
     {
         var user = new Mock<IUser>();
@@ -63,12 +63,12 @@ public class MentionTests
     /// </summary>
     /// <param name="userID">The user ID.</param>
     [Theory]
-    [InlineData(330746772378877954)]
-    [InlineData(197291773133979648)]
-    [InlineData(135347310845624320)]
-    [InlineData(201799098137968640)]
-    [InlineData(209279906280898562)]
-    [InlineData(203709726322720768)]
+    [InlineData(330746772378877954UL)]
+    [InlineData(197291773133979648UL)]
+    [InlineData(135347310845624320UL)]
+    [InlineData(201799098137968640UL)]
+    [InlineData(209279906280898562UL)]
+    [InlineData(203709726322720768UL)]
     public void UserWithIDSuccess(ulong userID)
     {
         var snowflake = new Snowflake(userID);
@@ -83,12 +83,12 @@ public class MentionTests
     /// </summary>
     /// <param name="channelID">The channel ID.</param>
     [Theory]
-    [InlineData(789912892899459104)]
-    [InlineData(789922911116984320)]
-    [InlineData(789913136273948692)]
-    [InlineData(789913038920744960)]
-    [InlineData(789913059116187658)]
-    [InlineData(858350463259115550)]
+    [InlineData(789912892899459104UL)]
+    [InlineData(789922911116984320UL)]
+    [InlineData(789913136273948692UL)]
+    [InlineData(789913038920744960UL)]
+    [InlineData(789913059116187658UL)]
+    [InlineData(858350463259115550UL)]
     public void ChannelSuccess(ulong channelID)
     {
         var channel = new Mock<IChannel>();
@@ -108,12 +108,12 @@ public class MentionTests
     /// </summary>
     /// <param name="channelID">The channel ID.</param>
     [Theory]
-    [InlineData(789912892899459104)]
-    [InlineData(789922911116984320)]
-    [InlineData(789913136273948692)]
-    [InlineData(789913038920744960)]
-    [InlineData(789913059116187658)]
-    [InlineData(858350463259115550)]
+    [InlineData(789912892899459104UL)]
+    [InlineData(789922911116984320UL)]
+    [InlineData(789913136273948692UL)]
+    [InlineData(789913038920744960UL)]
+    [InlineData(789913059116187658UL)]
+    [InlineData(858350463259115550UL)]
     public void ChannelWithIDSuccess(ulong channelID)
     {
         var snowflake = new Snowflake(channelID);
@@ -128,12 +128,12 @@ public class MentionTests
     /// </summary>
     /// <param name="roleID">The channel ID.</param>
     [Theory]
-    [InlineData(871102387362869288)]
-    [InlineData(301125242749714442)]
-    [InlineData(302310311074070531)]
-    [InlineData(460285613040730112)]
-    [InlineData(402648568197939201)]
-    [InlineData(372178027926519810)]
+    [InlineData(871102387362869288UL)]
+    [InlineData(301125242749714442UL)]
+    [InlineData(302310311074070531UL)]
+    [InlineData(460285613040730112UL)]
+    [InlineData(402648568197939201UL)]
+    [InlineData(372178027926519810UL)]
     public void RoleSuccess(ulong roleID)
     {
         var role = new Mock<IRole>();
@@ -153,12 +153,12 @@ public class MentionTests
     /// </summary>
     /// <param name="roleID">The role ID.</param>
     [Theory]
-    [InlineData(789912892899459104)]
-    [InlineData(789922911116984320)]
-    [InlineData(789913136273948692)]
-    [InlineData(789913038920744960)]
-    [InlineData(789913059116187658)]
-    [InlineData(858350463259115550)]
+    [InlineData(789912892899459104UL)]
+    [InlineData(789922911116984320UL)]
+    [InlineData(789913136273948692UL)]
+    [InlineData(789913038920744960UL)]
+    [InlineData(789913059116187658UL)]
+    [InlineData(858350463259115550UL)]
     public void RoleWithIDSuccess(ulong roleID)
     {
         var snowflake = new Snowflake(roleID);
