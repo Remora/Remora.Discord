@@ -189,6 +189,7 @@ public class MockedTransportService : IPayloadTransportService
         {
             await _semaphore.WaitAsync(ct);
             var sequenceAdvanced = false;
+            var hadExpectedEvent = false;
 
             foreach (var sequence in _sequences.Except(_finishedSequences))
             {
@@ -197,7 +198,7 @@ public class MockedTransportService : IPayloadTransportService
                     continue;
                 }
 
-                switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
+                switch (r.Matches(payload, true))
                 {
                     case EventMatch.Pass:
                     {
@@ -208,6 +209,7 @@ public class MockedTransportService : IPayloadTransportService
 
                         _lastAdvance = DateTimeOffset.UtcNow;
                         sequenceAdvanced = true;
+                        hadExpectedEvent = true;
 
                         break;
                     }
@@ -217,6 +219,7 @@ public class MockedTransportService : IPayloadTransportService
                     }
                     case EventMatch.Ignore:
                     {
+                        hadExpectedEvent = false;
                         break;
                     }
                     default:
@@ -232,10 +235,12 @@ public class MockedTransportService : IPayloadTransportService
                 {
                     if (continuousSequence.Current is not ReceiveEvent r)
                     {
+                        // TODO: not sure about this one... more testing required.
+                        hadExpectedEvent = true;
                         continue;
                     }
 
-                    switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
+                    switch (r.Matches(payload, true))
                     {
                         case EventMatch.Pass:
                         {
@@ -243,6 +248,8 @@ public class MockedTransportService : IPayloadTransportService
                             {
                                 continuousSequence.Reset();
                             }
+
+                            hadExpectedEvent = true;
 
                             break;
                         }
@@ -252,6 +259,7 @@ public class MockedTransportService : IPayloadTransportService
                         }
                         case EventMatch.Ignore:
                         {
+                            hadExpectedEvent = false;
                             break;
                         }
                         default:
@@ -260,6 +268,11 @@ public class MockedTransportService : IPayloadTransportService
                         }
                     }
                 }
+            }
+
+            if (!hadExpectedEvent && !_serviceOptions.IgnoreUnexpected)
+            {
+                throw new IsTypeException("[sequence]", payload.GetType().ToString());
             }
 
             var remainingSequences = _sequences.Except(_finishedSequences).ToList();
@@ -492,7 +505,7 @@ public class MockedTransportService : IPayloadTransportService
         if (Debugger.IsAttached)
         {
             // Extend the timeout
-            timeout += TimeSpan.FromMinutes(10);
+            // timeout += TimeSpan.FromMinutes(10);
         }
 
         if (DateTimeOffset.UtcNow - _lastAdvance <= timeout)

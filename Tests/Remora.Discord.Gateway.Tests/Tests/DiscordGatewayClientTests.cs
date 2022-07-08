@@ -75,7 +75,6 @@ public class DiscordGatewayClientTests
         var tokenSource = new CancellationTokenSource();
         var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
-            .IgnoreUnexpected()
             .Sequence
             (
                 s => s
@@ -136,7 +135,6 @@ public class DiscordGatewayClientTests
         var tokenSource = new CancellationTokenSource();
         var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
-            .IgnoreUnexpected()
             .Sequence
             (
                 s => s
@@ -210,7 +208,6 @@ public class DiscordGatewayClientTests
         var tokenSource = new CancellationTokenSource();
         var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
-            .IgnoreUnexpected()
             .Sequence
             (
                 s => s
@@ -304,7 +301,6 @@ public class DiscordGatewayClientTests
         var tokenSource = new CancellationTokenSource();
         var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
-            .IgnoreUnexpected()
             .Sequence
             (
                 s => s
@@ -380,7 +376,6 @@ public class DiscordGatewayClientTests
         var tokenSource = new CancellationTokenSource();
         var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
-            .IgnoreUnexpected()
             .Sequence
             (
                 s => s
@@ -456,7 +451,6 @@ public class DiscordGatewayClientTests
         var tokenSource = new CancellationTokenSource();
         var transportMock = new MockedTransportServiceBuilder(_testOutput)
             .WithTimeout(TimeSpan.FromSeconds(30))
-            .IgnoreUnexpected()
             .Sequence
             (
                 s => s
