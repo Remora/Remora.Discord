@@ -47,6 +47,26 @@ jobs:
         with:
           name: nupkg
           path: nuget
+      # To ensure that the current version being pushed does not get pruned we prune first.
+      - name: Prune packages older than 4 versions (new version is the 5th)
+        uses: smartsquaregmbh/delete-old-packages@v0.4.0
+        with:
+          keep: 4
+          names: |
+            Remora.Discord
+            Remora.Discord.API
+            Remora.Discord.API.Abstractions
+            Remora.Discord.Caching
+            Remora.Discord.Caching.Abstractions
+            Remora.Discord.Caching.Redis
+            Remora.Discord.Gateway
+            Remora.Discord.Extensions
+            Remora.Discord.Hosting
+            Remora.Discord.Pagination
+            Remora.Discord.Interactivity
+            Remora.Discord.Commands
+            Remora.Discord.Unstable
+            Remora.Discord.Rest
       - name: Push to GitHub Feed
         run: |
           for f in ./nuget/*; do
