@@ -135,7 +135,7 @@ public class DiscordGatewayClient : IDisposable
 
     /// <summary>
     /// Gets the time taken for the gateway to respond to the last heartbeat, providing an estimate of round-trip latency.
-    /// Will return zero until the first heartbeat has occured.
+    /// Will return zero until the first heartbeat has occurred.
     /// </summary>
     public TimeSpan Latency { get; private set; }
 
