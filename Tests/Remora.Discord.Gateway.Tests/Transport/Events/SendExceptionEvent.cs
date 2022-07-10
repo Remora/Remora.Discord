@@ -25,7 +25,7 @@ using System;
 namespace Remora.Discord.Gateway.Tests.Transport.Events;
 
 /// <summary>
-/// Represents an exception occuring in server-to-client stream of the transport layer.
+/// Represents an exception occurring in server-to-client stream of the transport layer.
 /// </summary>
 public class SendExceptionEvent : IEvent
 {

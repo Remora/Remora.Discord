@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 public interface IInviteDelete : IGatewayEvent
 {
     /// <summary>
-    /// Gets the ID fo the channel the invite is for.
+    /// Gets the ID for the channel the invite is for.
     /// </summary>
     Snowflake ChannelID { get; }
 
