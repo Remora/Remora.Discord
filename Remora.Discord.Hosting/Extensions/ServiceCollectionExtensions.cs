@@ -44,6 +44,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
+    /// <remarks>Only use this when the service collection is owned by an host builder.</remarks>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordService
     (
