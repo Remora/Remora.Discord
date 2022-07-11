@@ -23,12 +23,7 @@
 using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Remora.Discord.Gateway.Extensions;
-using Remora.Discord.Hosting.Options;
-using Remora.Discord.Hosting.Services;
-using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Hosting.Extensions;
 
@@ -43,23 +38,11 @@ public static class HostBuilderExtensions
     /// </summary>
     /// <param name="hostBuilder">The host builder.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
-    /// <returns>The service collection, with the services added.</returns>
+    /// <returns>The host builder, with the services added.</returns>
     public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<IServiceProvider, string> tokenFactory)
     {
         hostBuilder.ConfigureServices((_, serviceCollection) =>
-        {
-            serviceCollection.Configure(() => new DiscordServiceOptions());
-
-            serviceCollection
-                .AddDiscordGateway(tokenFactory);
-
-            serviceCollection
-                .TryAddSingleton<DiscordService>();
-
-            serviceCollection
-                .AddSingleton<IHostedService, DiscordService>(serviceProvider =>
-                    serviceProvider.GetRequiredService<DiscordService>());
-        });
+            serviceCollection.AddDiscordService(tokenFactory));
 
         return hostBuilder;
     }
