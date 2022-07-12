@@ -198,6 +198,7 @@ public static class ServiceCollectionExtensions
             .AddParser<GuildMemberParser>()
             .AddParser<RoleParser>()
             .AddParser<UserParser>()
+            .AddParser<MessageParser>()
             .AddParser<SnowflakeParser>()
             .AddParser<EmojiParser>()
             .AddParser<OneOfParser>();
