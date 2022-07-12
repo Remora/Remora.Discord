@@ -50,6 +50,32 @@ public static class ApplicationCommandDataExtensions
         out IReadOnlyDictionary<string, IReadOnlyList<string>> parameters
     )
     {
+        if (commandData.Type is ApplicationCommandType.User or ApplicationCommandType.Message)
+        {
+            var parameterName = commandData.Type switch
+            {
+                ApplicationCommandType.Message => "message",
+                ApplicationCommandType.User => "user",
+                _ => throw new InvalidOperationException()
+            };
+
+            commandPath = new[] { commandData.Name };
+
+            if (commandData.TargetID.IsDefined(out var targetId))
+            {
+                parameters = new Dictionary<string, IReadOnlyList<string>>
+                {
+                    { parameterName, new[] { targetId.ToString() } }
+                };
+            }
+            else
+            {
+                parameters = new Dictionary<string, IReadOnlyList<string>>();
+            }
+
+            return;
+        }
+
         if (!commandData.Options.IsDefined(out var options))
         {
             commandPath = new[] { commandData.Name };

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Humanizer;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Commands;
@@ -479,13 +480,33 @@ public static class CommandTreeExtensions
                 );
             }
 
-            if (command.CommandMethod.GetParameters().Length > 0)
+            var parameters = command.CommandMethod.GetParameters();
+            if (parameters.Length > 0)
             {
-                return new UnsupportedFeatureError
-                (
-                    "Context menu commands may not have parameters.",
-                    command
-                );
+                var expectedParameter = commandType switch
+                {
+                    ApplicationCommandType.Message => "message",
+                    ApplicationCommandType.User => "user",
+                    _ => null
+                };
+
+                if (expectedParameter == null)
+                {
+                    return new UnsupportedFeatureError
+                    (
+                        $"Command type {commandType} is not supported.",
+                        command
+                    );
+                }
+
+                if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
+                {
+                    return new UnsupportedFeatureError
+                    (
+                        $"{commandType.Humanize()} context menu commands may only have a parameter named {expectedParameter}.",
+                        command
+                    );
+                }
             }
         }
 
@@ -537,6 +558,12 @@ public static class CommandTreeExtensions
         ILocalizationProvider localizationProvider
     )
     {
+        // Parameters options are only supported by slash commands
+        if (command.GetCommandType() is not ApplicationCommandType.ChatInput)
+        {
+            return Result<IReadOnlyList<IApplicationCommandOption>>.FromSuccess(Array.Empty<IApplicationCommandOption>());
+        }
+
         var parameterOptions = new List<IApplicationCommandOption>();
         foreach (var parameter in command.Shape.Parameters)
         {

@@ -289,10 +289,10 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
-            public void ReturnsUnsuccessfulIfContextMenuHasParameters()
+            public void ReturnsUnsuccessfulIfContextMenuHasInvalidParameters()
             {
                 var builder = new CommandTreeBuilder();
-                builder.RegisterModule<ContextMenusWithParametersAreNotSupported>();
+                builder.RegisterModule<ContextMenusWithInvalidParametersAreNotSupported>();
 
                 var tree = builder.Build();
 
@@ -535,13 +535,17 @@ public class CommandTreeExtensionTests
 
                 var commands = result.Entity;
 
-                Assert.Equal(2, commands.Count);
+                Assert.Equal(4, commands.Count);
 
                 var user = commands[0];
                 var message = commands[1];
+                var userParameter = commands[2];
+                var messageParameter = commands[3];
 
                 Assert.Equal(ApplicationCommandType.User, user.Type.Value);
                 Assert.Equal(ApplicationCommandType.Message, message.Type.Value);
+                Assert.Equal(ApplicationCommandType.User, userParameter.Type.Value);
+                Assert.Equal(ApplicationCommandType.Message, messageParameter.Type.Value);
             }
 
             /// <summary>
