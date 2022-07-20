@@ -1,5 +1,5 @@
 //
-//  AuthorizationHandler.cs
+//  TokenAuthorizationHandler.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -33,15 +33,15 @@ namespace Remora.Discord.Rest.Handlers;
 /// <summary>
 /// Represents a delegating handler for adding the Authorization header.
 /// </summary>
-internal class AuthorizationHandler : DelegatingHandler
+internal class TokenAuthorizationHandler : DelegatingHandler
 {
     private readonly ITokenStore _tokenStore;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AuthorizationHandler"/> class.
+    /// Initializes a new instance of the <see cref="TokenAuthorizationHandler"/> class.
     /// </summary>
     /// <param name="tokenStore">The token store.</param>
-    public AuthorizationHandler(ITokenStore tokenStore)
+    public TokenAuthorizationHandler(ITokenStore tokenStore)
     {
         _tokenStore = tokenStore;
     }
@@ -50,6 +50,8 @@ internal class AuthorizationHandler : DelegatingHandler
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         var token = _tokenStore.Token;
+        var tokenType = _tokenStore.TokenType;
+
         if (string.IsNullOrWhiteSpace(token))
         {
             throw new InvalidOperationException("The authentication token has to contain something.");
@@ -62,17 +64,22 @@ internal class AuthorizationHandler : DelegatingHandler
 #endif
         {
             AddTokenToPollyContext(request, token);
-            AddAuthorizationHeader(request, token);
+            AddAuthorizationHeader(request, token, tokenType);
         }
 
         return base.SendAsync(request, cancellationToken);
     }
 
-    private void AddAuthorizationHeader(HttpRequestMessage request, string token)
+    private void AddAuthorizationHeader
+    (
+        HttpRequestMessage request,
+        string token,
+        DiscordTokenType tokenType
+    )
     {
         request.Headers.Authorization = new AuthenticationHeaderValue
         (
-            "Bot",
+            tokenType.ToString(),
             token
         );
     }

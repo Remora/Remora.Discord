@@ -24,6 +24,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Responders;
+using Remora.Discord.Rest;
 using Remora.Discord.Rest.Extensions;
 
 namespace Remora.Discord.Commands.Tests.TestBases;
@@ -46,7 +47,7 @@ public abstract class CommandResponderTestBase : IDisposable
     protected CommandResponderTestBase()
     {
         var serviceCollection = new ServiceCollection()
-            .AddDiscordRest(_ => "dummy")
+            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bearer))
             .AddDiscordCommands();
 
         // ReSharper disable once VirtualMemberCallInConstructor

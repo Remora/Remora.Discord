@@ -50,11 +50,13 @@ public class DiscordRateLimitPolicyTests
         return DiscordRateLimitPolicy.Create();
     }
 
-    private static Context CreateContext(
+    private static Context CreateContext
+    (
         string endpoint,
         ICacheProvider cache,
         bool isExemptFromGlobalLimits,
-        string? token = default)
+        string? token = default
+    )
     {
         var context = new Context
         {
