@@ -503,7 +503,7 @@ public static class CommandTreeExtensions
                 {
                     return new UnsupportedFeatureError
                     (
-                        $"{commandType.Humanize()} context menu commands may only have a parameter named {expectedParameter}.",
+                        $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
                         command
                     );
                 }
