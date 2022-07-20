@@ -510,10 +510,17 @@ public static class CommandTreeExtensions
             }
         }
 
-        var buildOptionsResult = TryCreateCommandParameterOptions(command, localizationProvider);
-        if (!buildOptionsResult.IsSuccess)
+        var options = default(Optional<IReadOnlyList<IApplicationCommandOption>>);
+
+        // Options are only supported by slash commands (ChatInput)
+        if (command.GetCommandType() is ApplicationCommandType.ChatInput)
         {
-            return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
+            var buildOptionsResult = TryCreateCommandParameterOptions(command, localizationProvider);
+            if (!buildOptionsResult.IsSuccess)
+            {
+                return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
+            }
+            options = new(buildOptionsResult.Entity);
         }
 
         var name = commandType is not ApplicationCommandType.ChatInput
@@ -546,7 +553,7 @@ public static class CommandTreeExtensions
             SubCommand,
             name,
             description,
-            Options: new(buildOptionsResult.Entity),
+            Options: options,
             NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
             DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
         );
@@ -558,12 +565,6 @@ public static class CommandTreeExtensions
         ILocalizationProvider localizationProvider
     )
     {
-        // Parameters options are only supported by slash commands
-        if (command.GetCommandType() is not ApplicationCommandType.ChatInput)
-        {
-            return Result<IReadOnlyList<IApplicationCommandOption>>.FromSuccess(Array.Empty<IApplicationCommandOption>());
-        }
-
         var parameterOptions = new List<IApplicationCommandOption>();
         foreach (var parameter in command.Shape.Parameters)
         {
