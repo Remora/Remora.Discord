@@ -52,12 +52,7 @@ public static class ApplicationCommandDataExtensions
     {
         if (commandData.Type is ApplicationCommandType.User or ApplicationCommandType.Message)
         {
-            var parameterName = commandData.Type switch
-            {
-                ApplicationCommandType.Message => "message",
-                ApplicationCommandType.User => "user",
-                _ => throw new InvalidOperationException()
-            };
+            var parameterName = commandData.Type.AsParameterName();
 
             commandPath = new[] { commandData.Name };
 

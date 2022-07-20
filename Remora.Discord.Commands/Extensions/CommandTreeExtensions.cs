@@ -483,26 +483,10 @@ public static class CommandTreeExtensions
             var parameters = command.CommandMethod.GetParameters();
             if (parameters.Length > 0)
             {
-                var expectedParameter = commandType switch
-                {
-                    ApplicationCommandType.Message => "message",
-                    ApplicationCommandType.User => "user",
-                    _ => null
-                };
-
-                if (expectedParameter == null)
-                {
-                    return new UnsupportedFeatureError
-                    (
-                        $"Command type {commandType} is not supported.",
-                        command
-                    );
-                }
-
+                var expectedParameter = commandType.AsParameterName();
                 if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
                 {
-                    return new UnsupportedFeatureError
-                    (
+                    return new InvalidParameterError(
                         $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
                         command
                     );
