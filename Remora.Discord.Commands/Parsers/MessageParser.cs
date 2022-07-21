@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -40,6 +41,12 @@ namespace Remora.Discord.Commands.Parsers;
 [PublicAPI]
 public class MessageParser : AbstractTypeParser<IMessage>
 {
+    private static readonly Regex MessageLinkRegex = new Regex
+    (
+        @"^https://(canary\.|ptb\.)?discord\.com/channels/(?<guild_id>@me|[0-9]*)/(?<channel_id>[0-9]*)/(?<message_id>[0-9]*)/?$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant
+    );
+
     private readonly ICommandContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
 
@@ -61,11 +68,29 @@ public class MessageParser : AbstractTypeParser<IMessage>
         CancellationToken ct = default
     )
     {
-        if (!DiscordSnowflake.TryParse(value.Unmention(), out var messageID))
+        if (DiscordSnowflake.TryParse(value.Unmention(), out var messageID))
+        {
+            return await _channelAPI.GetChannelMessageAsync(_context.ChannelID, messageID.Value, ct);
+        }
+
+        var messageLinkMatch = MessageLinkRegex.Match(value);
+        if (!messageLinkMatch.Success)
         {
             return new ParsingError<IMessage>(value);
         }
 
-        return await _channelAPI.GetChannelMessageAsync(_context.ChannelID, messageID.Value, ct);
+        var channelIdRaw = messageLinkMatch.Groups["channel_id"].Value;
+        if (!DiscordSnowflake.TryParse(channelIdRaw, out var channelId))
+        {
+            return new ParsingError<IMessage>(value);
+        }
+
+        var messageIdRaw = messageLinkMatch.Groups["message_id"].Value;
+        if (!DiscordSnowflake.TryParse(messageIdRaw, out var messageId))
+        {
+            return new ParsingError<IMessage>(value);
+        }
+
+        return await _channelAPI.GetChannelMessageAsync(channelId.Value, messageId.Value, ct);
     }
 }
