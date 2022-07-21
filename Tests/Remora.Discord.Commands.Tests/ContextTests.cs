@@ -53,7 +53,7 @@ public class ContextTests
     public ContextTests()
     {
         _services = new ServiceCollection()
-            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bearer))
+            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
             .AddDiscordCommands()
             .AddCommandTree()
                 .WithCommandGroup<GroupWithContext>()

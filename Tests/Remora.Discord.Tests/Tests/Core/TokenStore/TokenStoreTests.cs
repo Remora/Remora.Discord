@@ -53,7 +53,15 @@ public class TokenStoreTests
     public class TokenType
     {
         [Fact]
-        public void ReturnsCorrectValue()
+        public void ReturnsCorrectValueForBotTokenType()
+        {
+            var tokenStore = new TokenStore("Hello world!", DiscordTokenType.Bot);
+
+            Assert.Equal(DiscordTokenType.Bot, tokenStore.TokenType);
+        }
+
+        [Fact]
+        public void ReturnsCorrectValueForBearerTokenType()
         {
             var tokenStore = new TokenStore("Hello world!", DiscordTokenType.Bearer);
 

@@ -47,7 +47,7 @@ public abstract class CommandResponderTestBase : IDisposable
     protected CommandResponderTestBase()
     {
         var serviceCollection = new ServiceCollection()
-            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bearer))
+            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
             .AddDiscordCommands();
 
         // ReSharper disable once VirtualMemberCallInConstructor
