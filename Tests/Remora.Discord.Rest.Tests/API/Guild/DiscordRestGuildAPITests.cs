@@ -1463,7 +1463,7 @@ public class DiscordRestGuildAPITests
         {
             var guildId = DiscordSnowflake.New(0);
             var userId = DiscordSnowflake.New(1);
-            var deleteMessageDays = 10;
+            var deleteMessageSeconds = 864000;
             var reason = "ddd";
 
             var api = CreateAPI
@@ -1476,7 +1476,7 @@ public class DiscordRestGuildAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("delete_message_days", p => p.Is(deleteMessageDays))
+                                .WithProperty("delete_message_seconds", p => p.Is(deleteMessageSeconds))
                         )
                     )
                     .Respond(HttpStatusCode.NoContent)
@@ -1486,7 +1486,7 @@ public class DiscordRestGuildAPITests
             (
                 guildId,
                 userId,
-                deleteMessageDays,
+                deleteMessageSeconds,
                 reason
             );
 

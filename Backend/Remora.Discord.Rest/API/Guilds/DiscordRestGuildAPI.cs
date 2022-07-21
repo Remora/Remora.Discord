@@ -694,7 +694,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Optional<int> deleteMessageDays = default,
+        Optional<int> deleteMessageSeconds = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -708,7 +708,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        json.Write("delete_message_days", deleteMessageDays, this.JsonOptions);
+                        json.Write("delete_message_seconds", deleteMessageSeconds, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
