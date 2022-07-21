@@ -289,15 +289,14 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
-            public void ReturnsUnsuccessfulIfContextMenuHasInvalidParameters()
+            public void ThrowsIfContextMenuHasInvalidParameters()
             {
                 var builder = new CommandTreeBuilder();
                 builder.RegisterModule<ContextMenusWithInvalidParametersAreNotSupported>();
 
                 var tree = builder.Build();
 
-                var result = tree.CreateApplicationCommands();
-                ResultAssert.Unsuccessful(result);
+                Assert.Throws<InvalidOperationException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
