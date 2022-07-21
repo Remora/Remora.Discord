@@ -486,9 +486,9 @@ public static class CommandTreeExtensions
                 var expectedParameter = commandType.AsParameterName();
                 if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
                 {
-                    return new InvalidParameterError(
-                        $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
-                        command
+                    throw new InvalidOperationException
+                    (
+                        $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}."
                     );
                 }
             }
