@@ -315,6 +315,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
+                    .With(m => m.Headers.Authorization == null)
                     .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
             );
 
@@ -483,6 +484,7 @@ public class DiscordRestWebhookAPITests
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .With(m => m.Headers.Authorization == null)
                     .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
             );
 
@@ -621,6 +623,7 @@ public class DiscordRestWebhookAPITests
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .With(m => m.Headers.Authorization == null)
                     .Respond(HttpStatusCode.NoContent)
             );
 
