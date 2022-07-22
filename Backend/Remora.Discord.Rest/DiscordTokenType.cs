@@ -1,5 +1,5 @@
 //
-//  TokenStore.cs
+//  DiscordTokenType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,25 +25,18 @@ using JetBrains.Annotations;
 namespace Remora.Discord.Rest;
 
 /// <summary>
-/// Represents a storage class for a single token.
+/// Enumerates various token types.
 /// </summary>
 [PublicAPI]
-public class TokenStore : ITokenStore
+public enum DiscordTokenType
 {
-    /// <inheritdoc />
-    public string Token { get; }
-
-    /// <inheritdoc />
-    public DiscordTokenType TokenType { get; }
+    /// <summary>
+    /// The token gained by registering a bot.
+    /// </summary>
+    Bot,
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="TokenStore"/> class.
+    /// The token gained through OAuth2 API.
     /// </summary>
-    /// <param name="token">The token to store.</param>
-    /// <param name="tokenType">The type of token to store.</param>
-    public TokenStore(string token, DiscordTokenType tokenType)
-    {
-        this.Token = token;
-        this.TokenType = tokenType;
-    }
+    Bearer
 }

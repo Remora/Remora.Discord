@@ -55,7 +55,7 @@ public abstract class RestAPITestBase<TAPI> where TAPI : notnull
         var serviceContainer = new ServiceCollection()
             .AddDiscordRest
             (
-                _ => "TEST_TOKEN",
+                _ => ("TEST_TOKEN", DiscordTokenType.Bot),
                 b => b.ConfigurePrimaryHttpMessageHandler
                 (
                     _ =>

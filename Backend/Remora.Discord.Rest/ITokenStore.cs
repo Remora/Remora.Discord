@@ -34,4 +34,9 @@ public interface ITokenStore
     /// Gets the token.
     /// </summary>
     string Token { get; }
+
+    /// <summary>
+    /// Gets the type of the token.
+    /// </summary>
+    DiscordTokenType TokenType { get; }
 }

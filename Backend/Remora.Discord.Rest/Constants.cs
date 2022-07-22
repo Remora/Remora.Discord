@@ -21,8 +21,11 @@
 //
 
 using System;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions;
+
+[assembly: InternalsVisibleTo("Remora.Discord.Rest.Tests")]
 
 namespace Remora.Discord.Rest;
 
@@ -66,4 +69,21 @@ public static class Constants
     /// Gets the name of the locale header, used when requesting localized objects.
     /// </summary>
     public static string LocaleHeaderName { get; } = "X-Discord-Locale";
+
+    /// <summary>
+    /// Gets the global rate limit count.
+    /// </summary>
+    internal static int GlobalRateLimit { get; } = 50;
+
+    /// <summary>
+    /// Gets the name of the property, used when adding of Authorization should be skipped.
+    /// </summary>
+    internal static string SkipAuthorizationPropertyName { get; } = "remora::skip-authorization";
+
+#if NET5_0_OR_GREATER
+    /// <summary>
+    /// Gets the HTTP request option, used when adding of Authorization should be skipped.
+    /// </summary>
+    internal static System.Net.Http.HttpRequestOptionsKey<bool> SkipAuthorizationOption { get; } = new(SkipAuthorizationPropertyName);
+#endif
 }

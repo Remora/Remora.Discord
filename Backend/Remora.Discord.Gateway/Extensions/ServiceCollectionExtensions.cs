@@ -32,6 +32,7 @@ using Microsoft.Extensions.Options;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
+using Remora.Discord.Rest;
 using Remora.Discord.Rest.Extensions;
 using Remora.Extensions.Options.Immutable;
 
@@ -58,7 +59,11 @@ public static class ServiceCollectionExtensions
     )
     {
         serviceCollection
-            .AddDiscordRest(tokenFactory, buildClient);
+            .AddDiscordRest
+            (
+                s => (tokenFactory(s), DiscordTokenType.Bot),
+                buildClient
+            );
 
         serviceCollection.TryAddSingleton<Random>();
         serviceCollection.TryAddSingleton<ResponderDispatchService>();

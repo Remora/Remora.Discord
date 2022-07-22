@@ -31,6 +31,7 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Contexts;
+using Remora.Discord.Rest;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Tests;
 using Xunit;
@@ -52,7 +53,7 @@ public class ContextTests
     public ContextTests()
     {
         _services = new ServiceCollection()
-            .AddDiscordRest(_ => "dummy")
+            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
             .AddDiscordCommands()
             .AddCommandTree()
                 .WithCommandGroup<GroupWithContext>()
