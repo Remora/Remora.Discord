@@ -26,6 +26,7 @@ using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
+using Remora.Rest.Core;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
@@ -41,4 +42,12 @@ public class GroupWithContextMenus : CommandGroup
     [Command("Do message thing")]
     [CommandType(ApplicationCommandType.Message)]
     public Task<IResult> MessageCommand() => throw new NotImplementedException();
+
+    [Command("Do user thing with parameter")]
+    [CommandType(ApplicationCommandType.User)]
+    public Task<IResult> UserCommandParameter(Snowflake user) => throw new NotImplementedException();
+
+    [Command("Do message thing with parameter")]
+    [CommandType(ApplicationCommandType.Message)]
+    public Task<IResult> MessageCommandParameter(Snowflake message) => throw new NotImplementedException();
 }

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Humanizer;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Commands;
@@ -479,20 +480,31 @@ public static class CommandTreeExtensions
                 );
             }
 
-            if (command.CommandMethod.GetParameters().Length > 0)
+            var parameters = command.CommandMethod.GetParameters();
+            if (parameters.Length > 0)
             {
-                return new UnsupportedFeatureError
-                (
-                    "Context menu commands may not have parameters.",
-                    command
-                );
+                var expectedParameter = commandType.AsParameterName();
+                if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
+                {
+                    throw new InvalidOperationException
+                    (
+                        $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}."
+                    );
+                }
             }
         }
 
-        var buildOptionsResult = TryCreateCommandParameterOptions(command, localizationProvider);
-        if (!buildOptionsResult.IsSuccess)
+        var options = default(Optional<IReadOnlyList<IApplicationCommandOption>>);
+
+        // Options are only supported by slash commands (ChatInput)
+        if (command.GetCommandType() is ApplicationCommandType.ChatInput)
         {
-            return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
+            var buildOptionsResult = TryCreateCommandParameterOptions(command, localizationProvider);
+            if (!buildOptionsResult.IsSuccess)
+            {
+                return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
+            }
+            options = new(buildOptionsResult.Entity);
         }
 
         var name = commandType is not ApplicationCommandType.ChatInput
@@ -525,7 +537,7 @@ public static class CommandTreeExtensions
             SubCommand,
             name,
             description,
-            Options: new(buildOptionsResult.Entity),
+            Options: options,
             NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
             DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
         );

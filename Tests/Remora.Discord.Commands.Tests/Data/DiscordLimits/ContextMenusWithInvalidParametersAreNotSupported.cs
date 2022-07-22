@@ -1,5 +1,5 @@
 //
-//  ContextMenusWithParametersAreNotSupported.cs
+//  ContextMenusWithInvalidParametersAreNotSupported.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,15 +26,16 @@ using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
+using Remora.Rest.Core;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
 namespace Remora.Discord.Commands.Tests.Data.DiscordLimits;
 
-public class ContextMenusWithParametersAreNotSupported : CommandGroup
+public class ContextMenusWithInvalidParametersAreNotSupported : CommandGroup
 {
     [Command("Do thing")]
     [CommandType(ApplicationCommandType.User)]
-    public Task<IResult> ContextCommand(int nope) => throw new NotImplementedException();
+    public Task<IResult> ContextCommand(Snowflake user, int nope) => throw new NotImplementedException();
 }
