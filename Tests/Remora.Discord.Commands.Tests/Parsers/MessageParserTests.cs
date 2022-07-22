@@ -66,7 +66,8 @@ public class MessageParserTests
         var channelAPIMock = new Mock<IDiscordRestChannelAPI>();
         channelAPIMock
             .Setup(api =>
-                api.GetChannelMessageAsync(
+                api.GetChannelMessageAsync
+                (
                     It.IsAny<Snowflake>(),
                     It.IsAny<Snowflake>(),
                     It.IsAny<CancellationToken>()
