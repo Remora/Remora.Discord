@@ -60,5 +60,6 @@ public record Message
     Optional<IMessageInteraction> Interaction = default,
     Optional<IChannel> Thread = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
-    Optional<IReadOnlyList<IStickerItem>> StickerItems = default
+    Optional<IReadOnlyList<IStickerItem>> StickerItems = default,
+    Optional<int> Position = default
 ) : IMessage;

@@ -110,4 +110,10 @@ public interface IPartialChannel
 
     /// <inheritdoc cref="IChannel.Permissions" />
     Optional<IDiscordPermissionSet> Permissions { get; }
+
+    /// <inheritdoc cref="IChannel.Flags" />
+    Optional<ChannelFlags> Flags { get; }
+
+    /// <inheritdoc cref="IChannel.TotalMessageSent" />
+    Optional<int> TotalMessageSent { get; }
 }

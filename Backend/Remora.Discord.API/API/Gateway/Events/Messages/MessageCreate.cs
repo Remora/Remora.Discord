@@ -63,7 +63,8 @@ public record MessageCreate
     Optional<IMessageInteraction> Interaction = default,
     Optional<IChannel> Thread = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
-    Optional<IReadOnlyList<IStickerItem>> StickerItems = default
+    Optional<IReadOnlyList<IStickerItem>> StickerItems = default,
+    Optional<int> Position = default
 ) : Message
 (
     ID,
@@ -92,5 +93,6 @@ public record MessageCreate
     Interaction,
     Thread,
     Components,
-    StickerItems
+    StickerItems,
+    Position
 ), IMessageCreate;

@@ -178,6 +178,11 @@ public interface IMessage : IPartialMessage
     /// </summary>
     new Optional<IReadOnlyList<IStickerItem>> StickerItems { get; }
 
+    /// <summary>
+    /// Gets the approximate position of the message within the thread. Duplicates and gaps are possible.
+    /// </summary>
+    new Optional<int> Position { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
 
@@ -258,4 +263,7 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<IReadOnlyList<IStickerItem>> IPartialMessage.StickerItems => this.StickerItems;
+
+    /// <inheritdoc/>
+    Optional<int> IPartialMessage.Position => this.Position;
 }

@@ -59,5 +59,7 @@ public record Channel
     Optional<IThreadMetadata> ThreadMetadata = default,
     Optional<IThreadMember> Member = default,
     Optional<AutoArchiveDuration> DefaultAutoArchiveDuration = default,
-    Optional<IDiscordPermissionSet> Permissions = default
+    Optional<IDiscordPermissionSet> Permissions = default,
+    Optional<ChannelFlags> Flags = default,
+    Optional<int> TotalMessageSent = default
 ) : IChannel;

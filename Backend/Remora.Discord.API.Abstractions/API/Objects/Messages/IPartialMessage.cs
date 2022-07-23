@@ -113,4 +113,7 @@ public interface IPartialMessage
 
     /// <inheritdoc cref="IMessage.StickerItems" />
     Optional<IReadOnlyList<IStickerItem>> StickerItems { get; }
+
+    /// <inheritdoc cref="IMessage.Position" />
+    Optional<int> Position { get; }
 }
