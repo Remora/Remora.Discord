@@ -160,7 +160,9 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         return this.RestHttpClient.GetAsync<IWebhook>
         (
             $"webhooks/{webhookID}/{token}",
-            b => b.WithRateLimitContext(this.RateLimitCache),
+            b => b
+                .WithRateLimitContext(this.RateLimitCache)
+                .SkipAuthorization(),
             ct: ct
         );
     }
@@ -233,7 +235,8 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                     }
                 )
                 .AddAuditLogReason(reason)
-                .WithRateLimitContext(this.RateLimitCache),
+                .WithRateLimitContext(this.RateLimitCache)
+                .SkipAuthorization(),
             ct: ct
         );
     }
@@ -266,7 +269,10 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{webhookID}/{token}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
+            b => b
+                .AddAuditLogReason(reason)
+                .WithRateLimitContext(this.RateLimitCache)
+                .SkipAuthorization(),
             ct
         );
     }
