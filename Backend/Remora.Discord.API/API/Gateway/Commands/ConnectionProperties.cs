@@ -54,7 +54,7 @@ public record ConnectionProperties(string OperatingSystem, string Browser, strin
             return "linux";
         }
 
-        #if NET5_0
+        #if NET5_0_OR_GREATER
         if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
         {
             return "freebsd";
