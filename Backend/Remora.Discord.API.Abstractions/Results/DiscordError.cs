@@ -392,6 +392,11 @@ public enum DiscordError
     MaxNumberOfThreadParticipantsReached = 30033,
 
     /// <summary>
+    /// The maximum number of application command create calls has been reached (200).
+    /// </summary>
+    MaxNumberOfDailyApplicationCommandCreationsReached = 30034,
+
+    /// <summary>
     /// The maximum number of bans for non-guild members has been exceeded.
     /// </summary>
     MaxNumberOfNonMemberBansReached = 30035,
@@ -475,6 +480,11 @@ public enum DiscordError
     /// The user is banned from this guild.
     /// </summary>
     UserBanned = 40007,
+
+    /// <summary>
+    /// The connection has been revoked.
+    /// </summary>
+    ConnectionRevoked = 40012,
 
     /// <summary>
     /// The target user is not connected to voice.
@@ -739,6 +749,21 @@ public enum DiscordError
     InvalidJSONInRequestBody = 50109,
 
     /// <summary>
+    /// The ownership of the object cannot be transferred to a bot user.
+    /// </summary>
+    OwnershipCannotBeTransferredToBotUser = 50132,
+
+    /// <summary>
+    /// Failed to resize the uploaded asset below the maximum size (262144 bytes).
+    /// </summary>
+    FailedToResizeAsset = 50138,
+
+    /// <summary>
+    /// The uploaded file was not found.
+    /// </summary>
+    UploadedFileNotFound = 50146,
+
+    /// <summary>
     /// You do not have permission to send this sticker.
     /// </summary>
     MissingPermissionToSendSticker = 50600,
@@ -757,6 +782,11 @@ public enum DiscordError
     /// Reaction was blocked.
     /// </summary>
     ReactionBlocked = 90001,
+
+    /// <summary>
+    /// The application isn't available yet. Try again later.
+    /// </summary>
+    ApplicationNotYetAvailable = 110001,
 
     /// <summary>
     /// API resource temporarily overloaded. Try again a little later.
@@ -837,6 +867,16 @@ public enum DiscordError
     /// For whatever reason, the system failed to create a stage for the stage event.
     /// </summary>
     FailedToCreatedStageForEvent = 180002,
+
+    /// <summary>
+    /// The posted message was blocked by an automatic moderation rule.
+    /// </summary>
+    MessageBlockedByAutomaticModeration = 200000,
+
+    /// <summary>
+    /// The title of the thread was blocked by an automatic moderation rule.
+    /// </summary>
+    TitleBlockedByAutomaticModeration = 200001,
 
     /// <summary>
     /// Webhooks can only create threads in forum channels, not in other channels.
