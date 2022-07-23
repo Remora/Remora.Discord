@@ -71,13 +71,12 @@ public class Program
 
         var slashService = services.GetRequiredService<SlashService>();
 
-        var checkSlashSupport = slashService.SupportsSlashCommands();
-        if (!checkSlashSupport.IsSuccess)
+        if (!slashService.SupportsSlashCommands(out var reason))
         {
             log.LogWarning
             (
                 "The registered commands of the bot don't support slash commands: {Reason}",
-                checkSlashSupport.Error.Message
+                reason
             );
         }
         else

@@ -1,5 +1,5 @@
 //
-//  UnsupportedFeatureError.cs
+//  UnsupportedFeatureException.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,16 +20,37 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Commands.Trees.Nodes;
-using Remora.Results;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.Commands.Results;
+namespace Remora.Discord.Commands;
 
 /// <summary>
 /// Represents a failure to create a slash command based on an unsupported feature.
 /// </summary>
 [PublicAPI]
-public record UnsupportedFeatureError(string Message, IChildNode? Node = default) : ResultError(Message);
+public class UnsupportedFeatureException : Exception
+{
+    /// <summary>
+    /// Gets the node that caused the exception, if any.
+    /// </summary>
+    public IChildNode? Node { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UnsupportedFeatureException"/> class.
+    /// </summary>
+    /// <param name="message">The user-facing message, if any.</param>
+    /// <param name="node">The node that caused the exception, if any.</param>
+    /// <param name="innerException">The exception that caused this exception, if any.</param>
+    public UnsupportedFeatureException
+    (
+        string message,
+        IChildNode? node = default,
+        Exception? innerException = default
+    )
+        : base(message, innerException)
+    {
+        this.Node = node;
+    }
+}

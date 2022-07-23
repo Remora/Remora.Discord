@@ -31,9 +31,7 @@ using Humanizer;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
-using Remora.Discord.Commands.Results;
 using Remora.Discord.Commands.Services;
-using Remora.Results;
 
 namespace Remora.Discord.Commands.Extensions;
 
@@ -45,7 +43,7 @@ internal static class EnumExtensions
     private const int _maxChoiceNameLength = 100;
     private const int _maxChoiceValueLength = 100;
 
-    private static readonly ConcurrentDictionary<Type, Result<IReadOnlyList<IApplicationCommandOptionChoice>>> _choiceCache
+    private static readonly ConcurrentDictionary<Type, IReadOnlyList<IApplicationCommandOptionChoice>> _choiceCache
         = new();
 
     /// <summary>
@@ -58,11 +56,11 @@ internal static class EnumExtensions
     /// <param name="localizationProvider">The localization provider.</param>
     /// <typeparam name="TEnum">The enumeration type.</typeparam>
     /// <returns>The choices.</returns>
-    public static Result<IReadOnlyList<IApplicationCommandOptionChoice>> GetEnumChoices<TEnum>
+    public static IReadOnlyList<IApplicationCommandOptionChoice> GetEnumChoices<TEnum>
     (
         ILocalizationProvider localizationProvider
     )
-        where TEnum : struct, Enum
+    where TEnum : struct, Enum
         => GetEnumChoices(typeof(TEnum), localizationProvider);
 
     /// <summary>
@@ -75,7 +73,7 @@ internal static class EnumExtensions
     /// <param name="enumType">The enumeration type.</param>
     /// <param name="localizationProvider">The localization provider.</param>
     /// <returns>The choices.</returns>
-    public static Result<IReadOnlyList<IApplicationCommandOptionChoice>> GetEnumChoices
+    public static IReadOnlyList<IApplicationCommandOptionChoice> GetEnumChoices
     (
         Type enumType,
         ILocalizationProvider localizationProvider
@@ -105,7 +103,7 @@ internal static class EnumExtensions
                     {
                         if (localizedDisplayName.Length > _maxChoiceNameLength)
                         {
-                            return new UnsupportedFeatureError
+                            throw new UnsupportedFeatureException
                             (
                                 $"The localized display name for the locale {locale} of the enumeration member " +
                                 $"{type.Name}::{enumName} is too long (max {_maxChoiceNameLength})."
@@ -133,7 +131,7 @@ internal static class EnumExtensions
                     valueString = value.ToString() ?? throw new InvalidOperationException();
                     if (valueString.Length > _maxChoiceValueLength)
                     {
-                        return new UnsupportedFeatureError
+                        throw new UnsupportedFeatureException
                         (
                             $"The length of the enumeration member {type.Name}::{enumName} value is too long " +
                             $"(max {_maxChoiceValueLength})."

@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -90,19 +92,31 @@ public class SlashService
     /// <summary>
     /// Determines whether the application's commands support being bound to Discord slash commands.
     /// </summary>
+    /// <param name="reason">The reason the given tree does not support slash commands.</param>
     /// <param name="treeName">The name of the tree to check.</param>
     /// <returns>true if slash commands are supported; otherwise, false.</returns>
-    public Result SupportsSlashCommands(string? treeName = null)
+    public bool SupportsSlashCommands([NotNullWhen(false)] out string? reason, string? treeName = null)
     {
         if (!_commandTreeAccessor.TryGetNamedTree(treeName, out var tree))
         {
-            return new TreeNotFoundError(treeName);
+            throw new KeyNotFoundException("No tree with that name has been registered.");
         }
 
-        // TODO: Improve
-        // Yes, this is inefficient. Generally, this method is only expected to be called a limited number of times on
-        // startup.
-        return (Result)tree.CreateApplicationCommands(_localizationProvider);
+        try
+        {
+            // TODO: Improve
+            // Yes, this is inefficient. Generally, this method is only expected to be called a limited number of times on
+            // startup.
+            _ = tree.CreateApplicationCommands(_localizationProvider);
+        }
+        catch (Exception ex)
+        {
+            reason = ex.Message;
+            return false;
+        }
+
+        reason = null;
+        return true;
     }
 
     /// <summary>
@@ -134,11 +148,7 @@ public class SlashService
         }
 
         var application = getApplication.Entity;
-        var createCommands = tree.CreateApplicationCommands(_localizationProvider);
-        if (!createCommands.IsSuccess)
-        {
-            return (Result)createCommands;
-        }
+        var applicationCommands = tree.CreateApplicationCommands(_localizationProvider);
 
         // Upsert the current valid command set
         var updateResult = await
@@ -147,14 +157,14 @@ public class SlashService
                 ? _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
                 (
                     application.ID,
-                    createCommands.Entity,
+                    applicationCommands,
                     ct
                 )
                 : _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
                 (
                     application.ID,
                     guildID.Value,
-                    createCommands.Entity,
+                    applicationCommands,
                     ct
                 )
         );

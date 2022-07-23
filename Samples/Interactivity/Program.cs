@@ -76,13 +76,12 @@ public class Program
 
         var slashService = services.GetRequiredService<SlashService>();
 
-        var checkSlashSupport = slashService.SupportsSlashCommands();
-        if (!checkSlashSupport.IsSuccess)
+        if (!slashService.SupportsSlashCommands(out var reason))
         {
             log.LogWarning
             (
                 "The registered commands of the bot don't support slash commands: {Reason}",
-                checkSlashSupport.Error?.Message
+                reason
             );
         }
         else
@@ -90,7 +89,7 @@ public class Program
             var updateSlash = await slashService.UpdateSlashCommandsAsync(debugServer);
             if (!updateSlash.IsSuccess)
             {
-                log.LogWarning("Failed to update slash commands: {Reason}", updateSlash.Error?.Message);
+                log.LogWarning("Failed to update slash commands: {Reason}", updateSlash.Error.Message);
             }
         }
 
