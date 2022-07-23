@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Humanizer;
@@ -616,6 +617,39 @@ public static class CommandTreeExtensions
                 );
             }
 
+            var minLength = parameter.Parameter.GetCustomAttribute<MinLengthAttribute>();
+            var maxLength = parameter.Parameter.GetCustomAttribute<MaxLengthAttribute>();
+
+            if (discordType is not ApplicationCommandOptionType.String && (minLength is not null || maxLength is not null))
+            {
+                return new UnsupportedParameterFeatureError
+                (
+                    "A non-string parameter may not specify a minimum or maximum length.",
+                    command,
+                    parameter
+                );
+            }
+
+            if (minLength?.Length is < 0)
+            {
+                return new UnsupportedParameterFeatureError
+                (
+                    "The minimum length must be more than 0.",
+                    command,
+                    parameter
+                );
+            }
+
+            if (maxLength?.Length is < 1)
+            {
+                return new UnsupportedParameterFeatureError
+                (
+                    "The maximum length must be more than 1.",
+                    command,
+                    parameter
+                );
+            }
+
             var name = parameter.HintName.ToLowerInvariant();
             var description = parameter.Description;
 
@@ -635,7 +669,9 @@ public static class CommandTreeExtensions
                 MinValue: minValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
                 MaxValue: maxValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
                 NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
-                DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
+                DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
+                MinLength: (uint?)minLength?.Length ?? default(Optional<uint>),
+                MaxLength: (uint?)maxLength?.Length ?? default(Optional<uint>)
             );
 
             parameterOptions.Add(parameterOption);

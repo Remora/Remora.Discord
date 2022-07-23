@@ -328,6 +328,96 @@ public class CommandTreeExtensionTests
                 var result = tree.CreateApplicationCommands();
                 ResultAssert.Unsuccessful(result);
             }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulIfMinLengthConstraintIsInvalid()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<InvalidLengthConstraints.InvalidMinLengthConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulIfMaxLengthConstraintIsInvalid()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<InvalidLengthConstraints.InvalidMaxLengthConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulIfMinLengthConstraintIsInvalidButMaxIsValid()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<InvalidLengthConstraints.InvalidMinAndValidMaxLengthConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulIfMaxLengthConstraintIsInvalidButMinIsValid()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<InvalidLengthConstraints.ValidMinAndInvalidMaxLengthConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulIfMinLengthConstraintIsAppliedToAnIncompatibleType()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<InvalidLengthConstraints.MinConstraintOnIncompatibleParameterType>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulIfMaxLengthConstraintIsAppliedToAnIncompatibleType()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<InvalidLengthConstraints.MaxConstraintOnIncompatibleParameterType>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Unsuccessful(result);
+            }
         }
 
         /// <summary>
@@ -570,6 +660,75 @@ public class CommandTreeExtensionTests
 
                 Assert.Equal(ApplicationCommandType.ChatInput, normal.Type.Value);
                 Assert.Equal(ApplicationCommandType.Message, message.Type.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinLengthConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<StringParameterWithLengthConstraints.MinLengthConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0u, parameter.MinLength.Value);
+                Assert.False(parameter.MaxLength.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMaxLengthConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<StringParameterWithLengthConstraints.MaxLengthConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(1u, parameter.MaxLength.Value);
+                Assert.False(parameter.MinLength.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinAndMaxLengthConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<StringParameterWithLengthConstraints.MinAndMaxLengthConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0u, parameter.MinLength.Value);
+                Assert.Equal(1u, parameter.MaxLength.Value);
             }
         }
 

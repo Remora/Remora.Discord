@@ -48,5 +48,7 @@ public record ApplicationCommandOption
     Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
     Optional<string> NameLocalized = default,
     Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default,
-    Optional<string> DescriptionLocalized = default
+    Optional<string> DescriptionLocalized = default,
+    Optional<uint> MinLength = default,
+    Optional<uint> MaxLength = default
 ) : IApplicationCommandOption;

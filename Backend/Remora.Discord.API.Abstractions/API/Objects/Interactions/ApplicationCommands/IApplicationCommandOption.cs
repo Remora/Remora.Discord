@@ -120,4 +120,16 @@ public interface IApplicationCommandOption
     /// This field is only supplied by Discord as a response, and is not used to set the actual localized string.
     /// </remarks>
     Optional<string> DescriptionLocalized { get; }
+
+    /// <summary>
+    /// Gets the minimum length of the value supplied to the parameter.
+    /// </summary>
+    /// <remarks>Only valid for <see cref="ApplicationCommandOptionType.String"/>.</remarks>
+    Optional<uint> MinLength { get; }
+
+    /// <summary>
+    /// Gets the maximum length of the value supplied to the parameter.
+    /// </summary>
+    /// <remarks>Only valid for <see cref="ApplicationCommandOptionType.String"/>. Minimum 1.</remarks>
+    Optional<uint> MaxLength { get; }
 }
