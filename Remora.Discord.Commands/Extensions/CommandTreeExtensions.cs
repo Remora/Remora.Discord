@@ -67,14 +67,14 @@ public static class CommandTreeExtensions
     /// <param name="discordTree">The Discord commands.</param>
     /// <returns>The node mapping.</returns>
     public static Dictionary
-        <
-            (Optional<Snowflake> GuildID, Snowflake CommandID),
-            OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
-        > MapDiscordCommands
-        (
-            this CommandTree commandTree,
-            IReadOnlyList<IApplicationCommand> discordTree
-        )
+    <
+        (Optional<Snowflake> GuildID, Snowflake CommandID),
+        OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
+    > MapDiscordCommands
+    (
+        this CommandTree commandTree,
+        IReadOnlyList<IApplicationCommand> discordTree
+    )
     {
         var map = new Dictionary
         <
