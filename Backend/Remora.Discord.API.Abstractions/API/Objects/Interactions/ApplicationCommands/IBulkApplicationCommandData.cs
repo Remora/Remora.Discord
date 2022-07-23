@@ -36,7 +36,10 @@ public interface IBulkApplicationCommandData
     string Name { get; }
 
     /// <inheritdoc cref="IApplicationCommand.Description"/>
-    Optional<string> Description { get; }
+    string Description { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.ID"/>
+    Optional<Snowflake> ID { get; }
 
     /// <inheritdoc cref="IApplicationCommand.Options"/>
     Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }

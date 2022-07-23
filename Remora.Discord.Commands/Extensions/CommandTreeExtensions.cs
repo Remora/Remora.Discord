@@ -222,7 +222,8 @@ public static class CommandTreeExtensions
                 new BulkApplicationCommandData
                 (
                     option.Name,
-                    string.IsNullOrWhiteSpace(option.Description) ? default(Optional<string>) : option.Description,
+                    option.Description,
+                    default,
                     option.Options,
                     commandType,
                     localizedNames.Count > 0 ? new(localizedNames) : default,

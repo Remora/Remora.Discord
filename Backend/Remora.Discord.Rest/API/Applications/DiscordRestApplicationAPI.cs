@@ -166,7 +166,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             (
                 c =>
                     (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
-                    c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
+                    c.Description.Length is < 1 or > 100
             )
         )
         {
@@ -329,7 +329,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             (
                 c =>
                     (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
-                    c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
+                    c.Description.Length is < 1 or > 100
             )
         )
         {

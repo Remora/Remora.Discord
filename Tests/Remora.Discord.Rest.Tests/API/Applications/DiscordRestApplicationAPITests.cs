@@ -403,13 +403,14 @@ public class DiscordRestApplicationAPITests
                 (
                     "aaa",
                     "bbbb",
-                    new List<ApplicationCommandOption>(),
+                    Options: new List<ApplicationCommandOption>(),
                     DefaultMemberPermissions: new DiscordPermissionSet(default(BigInteger)),
                     Type: ApplicationCommandType.ChatInput
                 ),
                 new BulkApplicationCommandData
                 (
                     "ccc",
+                    "dddd",
                     Options: new List<ApplicationCommandOption>(),
                     DefaultMemberPermissions: new DiscordPermissionSet(DiscordPermission.Administrator),
                     Type: ApplicationCommandType.Message
@@ -438,7 +439,7 @@ public class DiscordRestApplicationAPITests
                                         o => o
                                             .WithProperty("name", p => p.Is(commands[0].Name))
                                             .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
-                                            .WithProperty("description", p => p.Is(commands[0].Description.Value))
+                                            .WithProperty("description", p => p.Is(commands[0].Description))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
                                             .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
@@ -465,7 +466,7 @@ public class DiscordRestApplicationAPITests
                                         o => o
                                             .WithProperty("name", p => p.Is(commands[2].Name))
                                             .WithoutProperty("type")
-                                            .WithProperty("description", p => p.Is(commands[2].Description.Value))
+                                            .WithProperty("description", p => p.Is(commands[2].Description))
                                             .WithoutProperty("options")
                                             .WithProperty("default_member_permissions", p => p.IsNull())
                                     )
@@ -1312,13 +1313,14 @@ public class DiscordRestApplicationAPITests
                 (
                     "aaa",
                     "bbbb",
-                    new List<ApplicationCommandOption>(),
+                    Options: new List<ApplicationCommandOption>(),
                     DefaultMemberPermissions: new DiscordPermissionSet(default(BigInteger)),
                     Type: ApplicationCommandType.ChatInput
                 ),
                 new BulkApplicationCommandData
                 (
                     "ccc",
+                    "dddd",
                     Options: new List<ApplicationCommandOption>(),
                     DefaultMemberPermissions: new DiscordPermissionSet(DiscordPermission.Administrator),
                     Type: ApplicationCommandType.Message
@@ -1347,7 +1349,7 @@ public class DiscordRestApplicationAPITests
                                         o => o
                                             .WithProperty("name", p => p.Is(commands[0].Name))
                                             .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
-                                            .WithProperty("description", p => p.Is(commands[0].Description.Value))
+                                            .WithProperty("description", p => p.Is(commands[0].Description))
                                             .WithProperty("options", p => p.IsArray(
                                                 ar => ar.WithCount(0)))
                                             .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
@@ -1374,7 +1376,7 @@ public class DiscordRestApplicationAPITests
                                         o => o
                                             .WithProperty("name", p => p.Is(commands[2].Name))
                                             .WithoutProperty("type")
-                                            .WithProperty("description", p => p.Is(commands[2].Description.Value))
+                                            .WithProperty("description", p => p.Is(commands[2].Description))
                                             .WithoutProperty("options")
                                             .WithProperty("default_member_permissions", p => p.IsNull())
                                     )

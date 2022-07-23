@@ -32,7 +32,8 @@ namespace Remora.Discord.API.Objects;
 public record BulkApplicationCommandData
 (
     string Name,
-    Optional<string> Description = default,
+    string Description,
+    Optional<Snowflake> ID = default,
     Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
     Optional<ApplicationCommandType> Type = default,
     Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
