@@ -41,7 +41,7 @@ namespace Remora.Discord.Commands.Parsers;
 [PublicAPI]
 public class MessageParser : AbstractTypeParser<IMessage>
 {
-    private static readonly Regex MessageLinkRegex = new Regex
+    private static readonly Regex _messageLinkRegex = new
     (
         @"^https://(canary\.|ptb\.)?discord\.com/channels/(?<guild_id>@me|[0-9]*)/(?<channel_id>[0-9]*)/(?<message_id>[0-9]*)/?$",
         RegexOptions.Compiled | RegexOptions.CultureInvariant
@@ -73,7 +73,7 @@ public class MessageParser : AbstractTypeParser<IMessage>
             return await _channelAPI.GetChannelMessageAsync(_context.ChannelID, messageID.Value, ct);
         }
 
-        var messageLinkMatch = MessageLinkRegex.Match(value);
+        var messageLinkMatch = _messageLinkRegex.Match(value);
         if (!messageLinkMatch.Success)
         {
             return new ParsingError<IMessage>(value);

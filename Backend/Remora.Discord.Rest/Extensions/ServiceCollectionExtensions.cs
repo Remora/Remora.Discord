@@ -198,7 +198,7 @@ public static class ServiceCollectionExtensions
         var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
         var clientBuilder = serviceCollection
             .AddRestHttpClient<RestError>("Discord")
-            .ConfigureHttpClient((services, client) =>
+            .ConfigureHttpClient((_, client) =>
             {
                 var assemblyName = Assembly.GetExecutingAssembly().GetName();
                 var name = assemblyName.Name ?? "Remora.Discord";

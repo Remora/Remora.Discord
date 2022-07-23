@@ -101,22 +101,23 @@ public class DataLease<TKey, TData> : IAsyncDisposable where TKey : notnull
         if (_shouldDelete)
         {
             var couldDelete = await _dataService.DeleteDataAsync(_key);
-            if (!couldDelete)
+            if (couldDelete)
             {
-                // manual cleanup, someone must have deleted the data while we were using it
-                if (_data is IAsyncDisposable asyncDisposableData)
-                {
-                    await asyncDisposableData.DisposeAsync();
-                }
-
-                if (_data is IDisposable disposableData)
-                {
-                    disposableData.Dispose();
-                }
-
-                _semaphore.Dispose();
+                return;
             }
 
+            // manual cleanup, someone must have deleted the data while we were using it
+            if (_data is IAsyncDisposable asyncDisposableData)
+            {
+                await asyncDisposableData.DisposeAsync();
+            }
+
+            if (_data is IDisposable disposableData)
+            {
+                disposableData.Dispose();
+            }
+
+            _semaphore.Dispose();
             return;
         }
 
