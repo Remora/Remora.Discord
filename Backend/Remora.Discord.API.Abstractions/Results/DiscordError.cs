@@ -382,6 +382,11 @@ public enum DiscordError
     GuildAlreadyHasATemplate = 30031,
 
     /// <summary>
+    /// The maximum number of registered application commands has been reached.
+    /// </summary>
+    MaximumNumberOfApplicationCommandsReached = 30032,
+
+    /// <summary>
     /// The maximum number of participants in a thread has been reached (1000).
     /// </summary>
     MaxNumberOfThreadParticipantsReached = 30033,
