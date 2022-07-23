@@ -37,5 +37,4 @@ public record ApplicationCommandPermissionsUpdate
     Snowflake ApplicationID,
     Snowflake GuildID,
     IReadOnlyList<IApplicationCommandPermissions> Permissions
-) : GuildApplicationCommandPermissions(ID, ApplicationID, GuildID, Permissions),
-    IApplicationCommandPermissionsUpdate;
+) : IApplicationCommandPermissionsUpdate;

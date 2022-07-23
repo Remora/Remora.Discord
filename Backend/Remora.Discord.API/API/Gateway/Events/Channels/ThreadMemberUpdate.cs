@@ -40,4 +40,4 @@ public record ThreadMemberUpdate
     Optional<IGuildMember> Member,
     Optional<IPartialPresence?> Presence,
     Snowflake GuildID
-) : ThreadMember(ID, UserID, JoinTimestamp, Flags, Member, Presence), IThreadMemberUpdate;
+) : IThreadMemberUpdate;

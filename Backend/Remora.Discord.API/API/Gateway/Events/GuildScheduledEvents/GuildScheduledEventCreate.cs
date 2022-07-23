@@ -49,22 +49,4 @@ public record GuildScheduledEventCreate
     Optional<IUser> Creator,
     Optional<int> UserCount,
     IImageHash? Image
-) : GuildScheduledEvent
-(
-    ID,
-    GuildID,
-    ChannelID,
-    CreatorID,
-    Name,
-    Description,
-    ScheduledStartTime,
-    ScheduledEndTime,
-    PrivacyLevel,
-    Status,
-    EntityType,
-    EntityID,
-    EntityMetadata,
-    Creator,
-    UserCount,
-    Image
-), IGuildScheduledEventCreate;
+) : IGuildScheduledEventCreate;

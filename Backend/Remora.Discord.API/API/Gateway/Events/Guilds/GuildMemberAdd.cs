@@ -46,17 +46,4 @@ public record GuildMemberAdd
     Optional<bool?> IsPending,
     Optional<IDiscordPermissionSet> Permissions = default,
     Optional<DateTimeOffset?> CommunicationDisabledUntil = default
-) : GuildMember
-(
-    User,
-    Nickname,
-    Avatar,
-    Roles,
-    JoinedAt,
-    PremiumSince,
-    IsDeafened,
-    IsMuted,
-    IsPending,
-    Permissions,
-    CommunicationDisabledUntil
-), IGuildMemberAdd;
+) : IGuildMemberAdd;

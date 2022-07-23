@@ -38,4 +38,4 @@ public record PresenceUpdate
     ClientStatus Status,
     IReadOnlyList<IActivity>? Activities,
     IClientStatuses ClientStatus
-) : Presence(User, GuildID, Status, Activities, ClientStatus), IPresenceUpdate;
+) : IPresenceUpdate;

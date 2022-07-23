@@ -46,19 +46,4 @@ public record VoiceStateUpdate
     bool IsVideoEnabled,
     bool IsSuppressed,
     DateTimeOffset? RequestToSpeakTimestamp
-) : VoiceState
-(
-    GuildID,
-    ChannelID,
-    UserID,
-    Member,
-    SessionID,
-    IsDeafened,
-    IsMuted,
-    IsSelfDeafened,
-    IsSelfMuted,
-    IsStreaming,
-    IsVideoEnabled,
-    IsSuppressed,
-    RequestToSpeakTimestamp
-), IVoiceStateUpdate;
+) : IVoiceStateUpdate;

@@ -48,21 +48,4 @@ public record UserUpdate
     Optional<UserFlags> Flags = default,
     Optional<PremiumType> PremiumType = default,
     Optional<UserFlags> PublicFlags = default
-) : User
-(
-    ID,
-    Username,
-    Discriminator,
-    Avatar,
-    IsBot,
-    IsSystem,
-    IsMFAEnabled,
-    Banner,
-    AccentColour,
-    Locale,
-    IsVerified,
-    Email,
-    Flags,
-    PremiumType,
-    PublicFlags
-), IUserUpdate;
+) : IUserUpdate;

@@ -65,34 +65,4 @@ public record MessageUpdate
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
     Optional<IReadOnlyList<IStickerItem>> StickerItems = default,
     Optional<int> Position = default
-) : PartialMessage
-(
-    ID,
-    ChannelID,
-    Author,
-    Content,
-    Timestamp,
-    EditedTimestamp,
-    IsTTS,
-    MentionsEveryone,
-    MentionedRoles,
-    MentionedChannels,
-    Attachments,
-    Embeds,
-    Reactions,
-    Nonce,
-    IsPinned,
-    WebhookID,
-    Type,
-    Activity,
-    Application,
-    ApplicationID,
-    MessageReference,
-    Flags,
-    ReferencedMessage,
-    Interaction,
-    Thread,
-    Components,
-    StickerItems,
-    Position
-), IMessageUpdate;
+) : IMessageUpdate;

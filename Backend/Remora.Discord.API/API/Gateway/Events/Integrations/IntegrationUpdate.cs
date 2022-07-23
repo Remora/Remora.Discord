@@ -49,21 +49,4 @@ public record IntegrationUpdate
     bool IsRevoked,
     Optional<IIntegrationApplication> Application,
     Snowflake GuildID
-) : Integration
-(
-    ID,
-    Name,
-    Type,
-    IsEnabled,
-    IsSyncing,
-    RoleID,
-    EnableEmoticons,
-    ExpireBehaviour,
-    ExpireGracePeriod,
-    User,
-    Account,
-    SyncedAt,
-    SubscriberCount,
-    IsRevoked,
-    Application
-), IIntegrationUpdate;
+) : IIntegrationUpdate;

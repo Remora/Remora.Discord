@@ -28,5 +28,5 @@ namespace Remora.Discord.API.Gateway.Events;
 
 /// <inheritdoc cref="IGuildScheduledEventUserAdd"/>
 [PublicAPI]
-public record GuildScheduledEventUserAdd(Snowflake GuildScheduledEventID, Snowflake UserID, Snowflake GuildID) :
-    IGuildScheduledEventUserAdd;
+public record GuildScheduledEventUserAdd(Snowflake GuildScheduledEventID, Snowflake UserID, Snowflake GuildID)
+    : IGuildScheduledEventUserAdd;

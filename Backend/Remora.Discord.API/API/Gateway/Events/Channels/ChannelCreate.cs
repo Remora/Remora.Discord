@@ -62,34 +62,4 @@ public record ChannelCreate
     Optional<IDiscordPermissionSet> Permissions = default,
     Optional<ChannelFlags> Flags = default,
     Optional<int> TotalMessageSent = default
-) : Channel
-(
-    ID,
-    Type,
-    GuildID,
-    Position,
-    PermissionOverwrites,
-    Name,
-    Topic,
-    IsNsfw,
-    LastMessageID,
-    Bitrate,
-    UserLimit,
-    RateLimitPerUser,
-    Recipients,
-    Icon,
-    OwnerID,
-    ApplicationID,
-    ParentID,
-    LastPinTimestamp,
-    RTCRegion,
-    VideoQualityMode,
-    MessageCount,
-    MemberCount,
-    ThreadMetadata,
-    Member,
-    DefaultAutoArchiveDuration,
-    Permissions,
-    Flags,
-    TotalMessageSent
-), IChannelCreate;
+) : IChannelCreate;
