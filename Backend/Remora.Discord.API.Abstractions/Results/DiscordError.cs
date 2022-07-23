@@ -487,6 +487,11 @@ public enum DiscordError
     ApplicationCommandWithNameExists = 40041,
 
     /// <summary>
+    /// An application interaction failed to send for some reason.
+    /// </summary>
+    ApplicationInteractionFailedToSend = 40034,
+
+    /// <summary>
     /// The interaction has already been acknowledged by the application.
     /// </summary>
     InteractionHasAlreadyBeenAcknowledged = 40060,
