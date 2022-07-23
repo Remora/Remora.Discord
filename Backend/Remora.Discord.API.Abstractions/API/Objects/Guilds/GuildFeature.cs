@@ -46,11 +46,6 @@ public enum GuildFeature
     Banner,
 
     /// <summary>
-    /// The guild has access to use commerce features (i.e, create store channels).
-    /// </summary>
-    Commerce,
-
-    /// <summary>
     /// The guild has community features enabled.
     /// </summary>
     Community,
