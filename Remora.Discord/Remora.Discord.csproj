@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2022.44</VersionPrefix>
+        <VersionPrefix>2022.45</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
             Allow skipping the addition of authorization headers in REST calls.
@@ -16,6 +16,7 @@
             Remove the commerce feature.
             Drop .NET 5.0 as a target framework.
             Upgrade nuget packages.
+            Hotfix: Message handlers must be transient and may not be reused.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
