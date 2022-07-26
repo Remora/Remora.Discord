@@ -1,10 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
-    </PropertyGroup>
-
-    <PropertyGroup>
         <VersionPrefix>30.0.4</VersionPrefix>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>

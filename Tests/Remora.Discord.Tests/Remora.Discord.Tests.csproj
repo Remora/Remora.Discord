@@ -1,8 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-    </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
         <ProjectReference Include="..\..\Backend\Remora.Discord.Unstable\Remora.Discord.Unstable.csproj" />

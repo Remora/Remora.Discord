@@ -1,10 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
-    </PropertyGroup>
-
-    <PropertyGroup>
         <VersionPrefix>25.1.1</VersionPrefix>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>

@@ -3,6 +3,10 @@
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
     <PropertyGroup>
+        <TargetFrameworks>$([System.Text.RegularExpressions.Regex]::Replace($(LibraryFrameworks), 'netstandard.+?;', ''))</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 

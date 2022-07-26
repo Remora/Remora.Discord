@@ -11,29 +11,26 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+    - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 5.0.x
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
+        dotnet-version: '6.0.x'
+
     - name: Build
-      run: dotnet build -c Release --no-restore
+      run: |
+        dotnet restore
+        dotnet build -c Release --no-restore
+
     - name: Test
       run: dotnet test -c Release --no-restore --no-build --verbosity minimal
-    - name: Pack
+
+    - name: Package
+      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: nupkg
         path: nuget/*
@@ -41,12 +38,14 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     runs-on: ubuntu-latest
+
     steps:
       - name: Download package artifacts
         uses: actions/download-artifact@v3
         with:
           name: nupkg
           path: nuget
+
       # To ensure that the current version being pushed does not get pruned we prune first.
       - name: Prune packages older than 4 versions (new version is the 5th)
         uses: smartsquaregmbh/delete-old-packages@v0.4.0
@@ -67,6 +66,7 @@ jobs:
             Remora.Discord.Commands
             Remora.Discord.Unstable
             Remora.Discord.Rest
+
       - name: Push to GitHub Feed
         run: |
           for f in ./nuget/*; do
