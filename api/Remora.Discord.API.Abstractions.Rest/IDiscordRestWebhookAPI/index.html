@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -202,8 +202,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI">Caching<wbr>Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -213,10 +213,10 @@
 							graph BT
 	Type["IDiscordRestWebhookAPI"]
 class Type type-node
-	Implementing0["DiscordRestWebhookAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI"
-	Implementing1["CachingDiscordRestWebhookAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI"
+	Implementing0["CachingDiscordRestWebhookAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI"
+	Implementing1["DiscordRestWebhookAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI"
 
 						</div>
 					</div>

@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -281,6 +281,26 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/85CA032A">Application<wbr>Interaction<wbr>Failed<wbr>To<wbr>Send</a></td>
+								<td>40034</td>
+								<td>
+									<div>
+    An application interaction failed to send for some reason.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/CDFEBBC0">Application<wbr>Not<wbr>Yet<wbr>Available</a></td>
+								<td>110001</td>
+								<td>
+									<div>
+    The application isn't available yet. Try again later.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F4468511">Before<wbr>Is<wbr>Earlier<wbr>Than<wbr>Thread<wbr>Creation</a></td>
 								<td>50085</td>
 								<td>
@@ -451,6 +471,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/99B457CD">ConnectionRevoked</a></td>
+								<td>40012</td>
+								<td>
+									<div>
+    The connection has been revoked.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/264537C8">DisallowedWords</a></td>
 								<td>20031</td>
 								<td>
@@ -486,6 +516,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     For whatever reason, the system failed to create a stage for the stage event.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/258CC583">FailedToResizeAsset</a></td>
+								<td>50138</td>
+								<td>
+									<div>
+    Failed to resize the uploaded asset below the maximum size (262144 bytes).
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -872,6 +912,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/5436A30D">Max<wbr>Number<wbr>Of<wbr>Daily<wbr>Application<wbr>Command<wbr>Creations<wbr>Reached</a></td>
+								<td>30034</td>
+								<td>
+									<div>
+    The maximum number of application command create calls has been reached (200).
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/B10EADB6">Max<wbr>Number<wbr>Of<wbr>Edits<wbr>To<wbr>Messages<wbr>Older<wbr>Than<wbr>One<wbr>Hour<wbr>Reached</a></td>
 								<td>30046</td>
 								<td>
@@ -1032,11 +1082,31 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3A126D76">Maximum<wbr>Number<wbr>Of<wbr>Application<wbr>Commands<wbr>Reached</a></td>
+								<td>30032</td>
+								<td>
+									<div>
+    The maximum number of registered application commands has been reached.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/31B5EE59">Message<wbr>Already<wbr>Crossposted</a></td>
 								<td>40033</td>
 								<td>
 									<div>
     This message has already been crossposted.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/23C2F4E0">Message<wbr>Blocked<wbr>By<wbr>Automatic<wbr>Moderation</a></td>
+								<td>200000</td>
+								<td>
+									<div>
+    The posted message was blocked by an automatic moderation rule.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -1167,6 +1237,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     Only the owner of this account can perform that action.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F36A3758">Ownership<wbr>Cannot<wbr>Be<wbr>Transferred<wbr>To<wbr>Bot<wbr>User</a></td>
+								<td>50132</td>
+								<td>
+									<div>
+    The ownership of the object cannot be transferred to a bot user.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -1337,6 +1417,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     The thread has been locked.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/93284B04">Title<wbr>Blocked<wbr>By<wbr>Automatic<wbr>Moderation</a></td>
+								<td>200001</td>
+								<td>
+									<div>
+    The title of the thread was blocked by an automatic moderation rule.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -1808,6 +1898,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     You need to verify your account in order to perform this action.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/A71504F1">UploadedFileNotFound</a></td>
+								<td>50146</td>
+								<td>
+									<div>
+    The uploaded file was not found.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>

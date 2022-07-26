@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - ServiceCollectionExtensions.AddDiscordRest(IServiceCollection, Func&lt;IServiceProvider, string&gt;, Action&lt;IHttpClientBuilder&gt;?) Method</title>
+        <title>Remora.Discord Documentation - API - RestRequestBuilderExtensions.SkipAuthorization(RestRequestBuilder) Method</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -146,10 +146,12 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/ServiceCollectionExtensions">Service<wbr>Collection<wbr>Extensions</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Method Members</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/ServiceCollectionExtensions/37D9B8D4">AddDiscordRest<wbr>(<wbr>I<wbr>Service<wbr>Collection, <wbr>Func<wbr>&lt;<wbr>I<wbr>Service<wbr>Provider, <wbr>string&gt;<wbr>, <wbr>Action<wbr>&lt;<wbr>I<wbr>Http<wbr>Client<wbr>Builder&gt;<wbr>?)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/3FE58F61">AddAuditLogReason<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>Optional<wbr>&lt;string&gt;<wbr>)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/AFBF6AA5">SkipAuthorization<wbr>(RestRequestBuilder)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/CD8E4EE5">WithRateLimitContext<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>ICacheProvider, <wbr>bool)<wbr></a></li>
 
 
                     </ul>
@@ -164,15 +166,15 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/ServiceCollectionExtensions">Service<wbr>Collection<wbr>Extensions</a>.</h3>
-	<h1>AddDiscordRest<wbr>(<wbr>I<wbr>Service<wbr>Collection, <wbr>Func<wbr>&lt;<wbr>I<wbr>Service<wbr>Provider, <wbr>string&gt;<wbr>, <wbr>Action<wbr>&lt;<wbr>I<wbr>Http<wbr>Client<wbr>Builder&gt;<wbr>?)<wbr> <small>Method</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a>.</h3>
+	<h1>SkipAuthorization<wbr>(RestRequestBuilder)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Adds the services required for Discord's REST API.
+    Adds an property to the request, used for skipping the addition of the Authorization header.
     </div>
 
 		<div class="panel panel-default">
@@ -183,14 +185,14 @@
 						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/ServiceCollectionExtensions">Service<wbr>Collection<wbr>Extensions</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public static IServiceCollection AddDiscordRest(this IServiceCollection serviceCollection, Func&lt;IServiceProvider, string&gt; tokenFactory, Action&lt;IHttpClientBuilder&gt;? buildClient = null)</code></pre>
+	<pre><code>public static RestRequestBuilder SkipAuthorization(this RestRequestBuilder builder)</code></pre>
 
 
 
@@ -208,19 +210,9 @@
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>serviceCollection</td>
-						<td>IServiceCollection</td>
-						<td>The service collection.</td>
-					</tr>
-					<tr>
-						<td>tokenFactory</td>
-						<td>Func<wbr>&lt;IServiceProvider, <wbr>string&gt;<wbr></td>
-						<td>A function that creates or retrieves the authorization token.</td>
-					</tr>
-					<tr>
-						<td>buildClient</td>
-						<td>Action<wbr>&lt;IHttpClientBuilder&gt;<wbr>?</td>
-						<td>Extra client building operations.</td>
+						<td>builder</td>
+						<td>RestRequestBuilder</td>
+						<td>The request builder.</td>
 					</tr>
 			</tbody></table>
 		</div>
@@ -237,8 +229,8 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>IServiceCollection</td>
-					<td>The service collection, with the services added.</td>
+					<td>RestRequestBuilder</td>
+					<td>The builder, with the property.</td>
 				</tr>
 			</tbody></table>
 		</div>
