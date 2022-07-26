@@ -21,11 +21,8 @@
 //
 
 using System;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions;
-
-[assembly: InternalsVisibleTo("Remora.Discord.Rest.Tests")]
 
 namespace Remora.Discord.Rest;
 
