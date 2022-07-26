@@ -1,9 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-    </PropertyGroup>
-
     <ItemGroup>
       <ProjectReference Include="..\..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />
     </ItemGroup>

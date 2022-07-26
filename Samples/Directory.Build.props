@@ -3,6 +3,11 @@
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
     <PropertyGroup>
+        <!--suppress MsbuildTargetFrameworkTagInspection -->
+        <TargetFrameworks>$(ExecutableFrameworks)</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 </Project>

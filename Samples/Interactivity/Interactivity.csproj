@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
         <RootNamespace>Remora.Discord.Samples.Interactivity</RootNamespace>
     </PropertyGroup>
 
