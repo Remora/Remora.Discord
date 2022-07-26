@@ -297,20 +297,6 @@ public class CommandTreeExtensionTests
             }
 
             /// <summary>
-            /// Tests whether method responds appropriately to a failure case.
-            /// </summary>
-            [Fact]
-            public void ThrowsIfChannelTypesAttributeHasZeroValues()
-            {
-                var builder = new CommandTreeBuilder();
-                builder.RegisterModule<ChannelTypesAttributeRequiresAtLeastOneValue>();
-
-                var tree = builder.Build();
-
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
-            }
-
-            /// <summary>
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
