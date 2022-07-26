@@ -79,15 +79,16 @@ public static class RestRequestBuilderExtensions
     /// </summary>
     /// <param name="builder">The request builder.</param>
     /// <returns>The builder, with the property.</returns>
-    public static RestRequestBuilder SkipAuthorization(
+    public static RestRequestBuilder SkipAuthorization
+    (
         this RestRequestBuilder builder
     )
     {
-#if NET5_0_OR_GREATER
+        #if NET5_0_OR_GREATER
         builder.With(r => r.Options.Set(Constants.SkipAuthorizationOption, true));
-#else
+        #else
         builder.With(r => r.Properties.Add(Constants.SkipAuthorizationPropertyName, true));
-#endif
+        #endif
 
         return builder;
     }

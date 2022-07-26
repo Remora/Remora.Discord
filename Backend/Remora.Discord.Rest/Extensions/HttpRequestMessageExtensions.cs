@@ -40,7 +40,11 @@ internal static class HttpRequestMessageExtensions
     /// <param name="request">The HTTP request.</param>
     /// <param name="modifyContext">The action that modifies the context.</param>
     /// <returns>The HTTP request that policy execution context was modified.</returns>
-    public static HttpRequestMessage ModifyPolicyExecutionContext(this HttpRequestMessage request, Action<Context> modifyContext)
+    public static HttpRequestMessage ModifyPolicyExecutionContext
+    (
+        this HttpRequestMessage request,
+        Action<Context> modifyContext
+    )
     {
         var context = request.GetPolicyExecutionContext();
         if (context is null)
