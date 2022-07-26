@@ -222,7 +222,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -237,7 +237,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -279,7 +279,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<InvalidOperationException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -293,7 +293,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidCommandParameterException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -307,7 +307,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidCommandParameterException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -321,7 +321,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidCommandParameterException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -335,7 +335,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidCommandParameterException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -349,7 +349,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidCommandParameterException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -363,7 +363,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidCommandParameterException>(() => tree.CreateApplicationCommands());
             }
 
             /// <summary>
@@ -377,7 +377,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
+                Assert.Throws<InvalidCommandParameterException>(() => tree.CreateApplicationCommands());
             }
         }
 

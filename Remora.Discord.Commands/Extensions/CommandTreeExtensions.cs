@@ -266,7 +266,7 @@ public static class CommandTreeExtensions
 
                 if (memberPermissionAttributes.Length > 1)
                 {
-                    throw new UnsupportedFeatureException
+                    throw new InvalidNodeException
                     (
                         "In a set of groups with the same name, only one may be marked with a default " +
                         $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
@@ -286,7 +286,7 @@ public static class CommandTreeExtensions
 
                 if (directMessagePermissionAttributes.Length > 1)
                 {
-                    throw new UnsupportedFeatureException
+                    throw new InvalidNodeException
                     (
                         "In a set of groups with the same name, only one may be marked with a default " +
                         $"DM permissions attribute, but {memberPermissionAttributes.Length} were found.",
@@ -463,7 +463,7 @@ public static class CommandTreeExtensions
                 var expectedParameter = commandType.AsParameterName();
                 if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
                 {
-                    throw new UnsupportedFeatureException
+                    throw new InvalidNodeException
                     (
                         $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
                         command
@@ -529,7 +529,7 @@ public static class CommandTreeExtensions
                 {
                     throw new UnsupportedParameterFeatureException
                     (
-                        "Switch parameters are not supported.",
+                        "Switch parameters are not supported in slash commands.",
                         command,
                         parameter
                     );
@@ -538,7 +538,7 @@ public static class CommandTreeExtensions
                 {
                     throw new UnsupportedParameterFeatureException
                     (
-                        "Collection parameters are not supported.",
+                        "Collection parameters are not supported in slash commands.",
                         command,
                         parameter
                     );
@@ -562,7 +562,7 @@ public static class CommandTreeExtensions
 
             if (discordType is not Integer or Number && (minValue is not null || maxValue is not null))
             {
-                throw new UnsupportedParameterFeatureException
+                throw new InvalidCommandParameterException
                 (
                     "A non-numerical parameter may not specify a minimum or maximum value.",
                     command,
@@ -575,7 +575,7 @@ public static class CommandTreeExtensions
 
             if (discordType is not ApplicationCommandOptionType.String && (minLength is not null || maxLength is not null))
             {
-                throw new UnsupportedParameterFeatureException
+                throw new InvalidCommandParameterException
                 (
                     "A non-string parameter may not specify a minimum or maximum length.",
                     command,
@@ -585,7 +585,7 @@ public static class CommandTreeExtensions
 
             if (minLength?.Length is < 0)
             {
-                throw new UnsupportedParameterFeatureException
+                throw new InvalidCommandParameterException
                 (
                     "The minimum length must be more than 0.",
                     command,
@@ -595,7 +595,7 @@ public static class CommandTreeExtensions
 
             if (maxLength?.Length is < 1)
             {
-                throw new UnsupportedParameterFeatureException
+                throw new InvalidCommandParameterException
                 (
                     "The maximum length must be more than 1.",
                     command,
@@ -687,7 +687,7 @@ public static class CommandTreeExtensions
         var channelTypesAttribute = parameter.Parameter.GetCustomAttribute<ChannelTypesAttribute>();
         if (channelTypesAttribute is not null && parameterType is not ApplicationCommandOptionType.Channel)
         {
-            throw new UnsupportedParameterFeatureException
+            throw new InvalidCommandParameterException
             (
                 $"The {nameof(ChannelTypesAttribute)} can only be used on a parameter of type {nameof(IChannel)}.",
                 command,
@@ -698,16 +698,6 @@ public static class CommandTreeExtensions
         var channelTypes = channelTypesAttribute is null
             ? default
             : new Optional<IReadOnlyList<ChannelType>>(channelTypesAttribute.Types);
-
-        if (channelTypes.HasValue && channelTypes.Value.Count == 0)
-        {
-            throw new UnsupportedParameterFeatureException
-            (
-                $"Using {nameof(ChannelTypesAttribute)} requires at least one {nameof(ChannelType)} to be provided.",
-                command,
-                parameter
-            );
-        }
 
         return channelTypes;
     }
