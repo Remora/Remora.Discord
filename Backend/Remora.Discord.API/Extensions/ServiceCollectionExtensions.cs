@@ -906,14 +906,16 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IModalSubmitData, ModalSubmitData>();
         options.AddDataObjectConverter
             <
-                IApplicationCommandInteractionDataOption, ApplicationCommandInteractionDataOption
+                IApplicationCommandInteractionDataOption,
+                ApplicationCommandInteractionDataOption
             >()
             .WithPropertyName(o => o.IsFocused, "focused");
 
         options.AddDataObjectConverter<IInteraction, Interaction>();
         options.AddDataObjectConverter
             <
-                IInteractionMessageCallbackData, InteractionMessageCallbackData
+                IInteractionMessageCallbackData,
+                InteractionMessageCallbackData
             >()
             .WithPropertyName(d => d.IsTTS, "tts");
 
