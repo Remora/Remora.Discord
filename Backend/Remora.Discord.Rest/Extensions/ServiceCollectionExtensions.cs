@@ -80,7 +80,7 @@ public static class ServiceCollectionExtensions
                 var (token, tokenType) = tokenFactory(serviceProvider);
                 return new TokenStore(token, tokenType);
             })
-            .AddSingleton<TokenAuthorizationHandler>();
+            .AddTransient<TokenAuthorizationHandler>();
 
         serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
         (
