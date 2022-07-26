@@ -1,5 +1,5 @@
 //
-//  UnsupportedParameterFeatureException.cs
+//  InvalidCommandParameterException.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,27 +28,27 @@ using Remora.Commands.Trees.Nodes;
 namespace Remora.Discord.Commands;
 
 /// <summary>
-/// Represents a failure to create a slash command related to some feature supported in code but not by Discord,
+/// Represents a fault related to a command node that was considered invalid for some reason in some context,
 /// specifically related to a parameter of a command.
 /// </summary>
 [PublicAPI]
-public class UnsupportedParameterFeatureException : InvalidCommandParameterException
+public class InvalidCommandParameterException : InvalidNodeException
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="UnsupportedParameterFeatureException"/> class.
+    /// Initializes a new instance of the <see cref="InvalidCommandParameterException"/> class.
     /// </summary>
     /// <param name="message">The user-facing message, if any.</param>
     /// <param name="command">The command node that caused the exception.</param>
     /// <param name="parameter">The parameter that caused the exception.</param>
     /// <param name="innerException">The exception that caused this exception, if any.</param>
-    public UnsupportedParameterFeatureException
+    public InvalidCommandParameterException
     (
         string message,
         CommandNode command,
         IParameterShape parameter,
         Exception? innerException = default
     )
-        : base(message, command, parameter, innerException)
+        : base(message, command, innerException)
     {
     }
 }
