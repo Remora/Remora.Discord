@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>68.0.0</VersionPrefix>
+        <VersionPrefix>69.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Preemptive fix of IsUnavailable's optionality.
-            Implement AppPermissions.
-            Rename some enum members.
-            Add new error.
+            Implement support for specifying the minimum and maximum length of string parameters.
+            Implement more error codes.
+            Fix optionality of bulk descriptions and add the ID parameter.
+            Simplify inheritance chains for gateway events.
+            Add missing fields to channels and messages.
+            Remove the commerce feature.
         </PackageReleaseNotes>
     </PropertyGroup>
 
