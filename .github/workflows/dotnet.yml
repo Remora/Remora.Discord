@@ -30,7 +30,7 @@ jobs:
     - name: Package
       if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: nupkg
         path: nuget/*
