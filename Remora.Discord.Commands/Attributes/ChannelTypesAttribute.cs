@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
@@ -42,9 +43,10 @@ public class ChannelTypesAttribute : Attribute
     /// <summary>
     /// Initializes a new instance of the <see cref="ChannelTypesAttribute"/> class.
     /// </summary>
-    /// <param name="types">The types of channel that are allowed to be presented as an autocomplete option.</param>
-    public ChannelTypesAttribute(params ChannelType[] types)
+    /// <param name="type">The type of channel that is allowed to be presented as an autocomplete option.</param>
+    /// <param name="types">Additional values beyond the first.</param>
+    public ChannelTypesAttribute(ChannelType type, params ChannelType[] types)
     {
-        this.Types = types;
+        this.Types = types.Prepend(type).ToList();
     }
 }
