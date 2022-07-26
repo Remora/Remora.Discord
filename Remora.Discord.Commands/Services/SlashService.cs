@@ -90,36 +90,6 @@ public class SlashService
     }
 
     /// <summary>
-    /// Determines whether the application's commands support being bound to Discord slash commands.
-    /// </summary>
-    /// <param name="reason">The reason the given tree does not support slash commands.</param>
-    /// <param name="treeName">The name of the tree to check.</param>
-    /// <returns>true if slash commands are supported; otherwise, false.</returns>
-    public bool SupportsSlashCommands([NotNullWhen(false)] out string? reason, string? treeName = null)
-    {
-        if (!_commandTreeAccessor.TryGetNamedTree(treeName, out var tree))
-        {
-            throw new KeyNotFoundException("No tree with that name has been registered.");
-        }
-
-        try
-        {
-            // TODO: Improve
-            // Yes, this is inefficient. Generally, this method is only expected to be called a limited number of times on
-            // startup.
-            _ = tree.CreateApplicationCommands(_localizationProvider);
-        }
-        catch (Exception ex)
-        {
-            reason = ex.Message;
-            return false;
-        }
-
-        reason = null;
-        return true;
-    }
-
-    /// <summary>
     /// Updates the application's slash commands.
     /// </summary>
     /// <param name="guildID">The ID of the guild to update slash commands in, if any.</param>
