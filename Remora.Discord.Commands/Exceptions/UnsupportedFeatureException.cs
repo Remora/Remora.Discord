@@ -27,15 +27,26 @@ using Remora.Commands.Trees.Nodes;
 namespace Remora.Discord.Commands;
 
 /// <summary>
-/// Represents a failure to create a slash command based on an unsupported feature.
+/// Represents a failure to create a slash command related to some feature supported in code but not by Discord.
 /// </summary>
 [PublicAPI]
-public class UnsupportedFeatureException : Exception
+public class UnsupportedFeatureException : InvalidNodeException
 {
     /// <summary>
-    /// Gets the node that caused the exception, if any.
+    /// Initializes a new instance of the <see cref="UnsupportedFeatureException"/> class.
     /// </summary>
-    public IChildNode? Node { get; }
+    /// <param name="message">The user-facing message, if any.</param>
+    /// <param name="node">The node that caused the exception, if any.</param>
+    /// <param name="innerException">The exception that caused this exception, if any.</param>
+    public UnsupportedFeatureException
+    (
+        string message,
+        IChildNode node,
+        Exception? innerException = default
+    )
+        : base(message, node, innerException)
+    {
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UnsupportedFeatureException"/> class.
@@ -46,11 +57,10 @@ public class UnsupportedFeatureException : Exception
     public UnsupportedFeatureException
     (
         string message,
-        IChildNode? node = default,
+        RootNode node,
         Exception? innerException = default
     )
-        : base(message, innerException)
+        : base(message, node, innerException)
     {
-        this.Node = node;
     }
 }

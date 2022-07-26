@@ -1,5 +1,5 @@
 //
-//  UnsupportedParameterFeatureException.cs
+//  InvalidNodeException.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,33 +22,53 @@
 
 using System;
 using JetBrains.Annotations;
-using Remora.Commands.Signatures;
+using OneOf;
 using Remora.Commands.Trees.Nodes;
 
 namespace Remora.Discord.Commands;
 
 /// <summary>
-/// Represents a failure to create a slash command related to some feature supported in code but not by Discord,
-/// specifically related to a parameter of a command.
+/// Represents a fault related to a command tree node that was considered invalid for some reason in some context.
 /// </summary>
 [PublicAPI]
-public class UnsupportedParameterFeatureException : UnsupportedFeatureException
+public class InvalidNodeException : Exception
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="UnsupportedParameterFeatureException"/> class.
+    /// Gets the node that caused the exception.
+    /// </summary>
+    public OneOf<RootNode, IChildNode> Node { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InvalidNodeException"/> class.
     /// </summary>
     /// <param name="message">The user-facing message, if any.</param>
-    /// <param name="command">The command node that caused the exception.</param>
-    /// <param name="parameter">The parameter that caused the exception.</param>
+    /// <param name="node">The node that caused the exception, if any.</param>
     /// <param name="innerException">The exception that caused this exception, if any.</param>
-    public UnsupportedParameterFeatureException
+    public InvalidNodeException
     (
         string message,
-        CommandNode command,
-        IParameterShape parameter,
+        IChildNode node,
         Exception? innerException = default
     )
-        : base(message, command, innerException)
+        : base(message, innerException)
     {
+        this.Node = OneOf<RootNode, IChildNode>.FromT1(node);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InvalidNodeException"/> class.
+    /// </summary>
+    /// <param name="message">The user-facing message, if any.</param>
+    /// <param name="node">The node that caused the exception, if any.</param>
+    /// <param name="innerException">The exception that caused this exception, if any.</param>
+    public InvalidNodeException
+    (
+        string message,
+        RootNode node,
+        Exception? innerException = default
+    )
+        : base(message, innerException)
+    {
+        this.Node = node;
     }
 }

@@ -185,7 +185,7 @@ public static class CommandTreeExtensions
 
             if (!names.Add(option.Name))
             {
-                throw new UnsupportedFeatureException("Overloads are not supported.");
+                throw new UnsupportedFeatureException("Overloads are not supported.", node);
             }
 
             if (GetCommandStringifiedLength(option) > _maxCommandStringifiedLength)
@@ -226,7 +226,8 @@ public static class CommandTreeExtensions
         {
             throw new UnsupportedFeatureException
             (
-                $"Too many root-level commands or groups (had {commands.Count}, max {_maxRootCommandsOrGroups})."
+                $"Too many root-level commands or groups (had {commands.Count}, max {_maxRootCommandsOrGroups}).",
+                tree.Root
             );
         }
 

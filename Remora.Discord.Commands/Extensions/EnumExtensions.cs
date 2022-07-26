@@ -33,6 +33,9 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Services;
 
+// long strings
+#pragma warning disable SA1118
+
 namespace Remora.Discord.Commands.Extensions;
 
 /// <summary>
@@ -70,6 +73,10 @@ internal static class EnumExtensions
     /// This method is relatively expensive on the first call, after which the results will be cached. This method is
     /// thread-safe.
     /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown if the enum has more than 25 members, or if any of its members translated names or values exceeds one of
+    /// <see cref="_maxChoiceNameLength"/> or <see cref="_maxChoiceValueLength"/>.
+    /// </exception>
     /// <param name="enumType">The enumeration type.</param>
     /// <param name="localizationProvider">The localization provider.</param>
     /// <returns>The choices.</returns>
@@ -82,7 +89,7 @@ internal static class EnumExtensions
         return _choiceCache.GetOrAdd
         (
             enumType,
-            type =>
+            static (type, provider) =>
             {
                 var values = Enum.GetValues(type);
                 var choices = new List<IApplicationCommandOptionChoice>();
@@ -98,15 +105,16 @@ internal static class EnumExtensions
                     }
 
                     var displayString = GetDisplayString(type, value);
-                    var localizedDisplayNames = localizationProvider.GetStrings(displayString);
+                    var localizedDisplayNames = provider.GetStrings(displayString);
                     foreach (var (locale, localizedDisplayName) in localizedDisplayNames)
                     {
                         if (localizedDisplayName.Length > _maxChoiceNameLength)
                         {
-                            throw new UnsupportedFeatureException
+                            throw new ArgumentOutOfRangeException
                             (
-                                $"The localized display name for the locale {locale} of the enumeration member " +
-                                $"{type.Name}::{enumName} is too long (max {_maxChoiceNameLength})."
+                                nameof(enumType),
+                                $"The localized display name for the locale {locale} of the enumeration member "
+                                + $"{type.Name}::{enumName} is too long (max {_maxChoiceNameLength})."
                             );
                         }
                     }
@@ -131,8 +139,9 @@ internal static class EnumExtensions
                     valueString = value.ToString() ?? throw new InvalidOperationException();
                     if (valueString.Length > _maxChoiceValueLength)
                     {
-                        throw new UnsupportedFeatureException
+                        throw new ArgumentOutOfRangeException
                         (
+                            nameof(enumType),
                             $"The length of the enumeration member {type.Name}::{enumName} value is too long " +
                             $"(max {_maxChoiceValueLength})."
                         );
@@ -150,7 +159,8 @@ internal static class EnumExtensions
                 }
 
                 return choices;
-            }
+            },
+            localizationProvider
         );
     }
 
