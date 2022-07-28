@@ -84,6 +84,32 @@ gateway client. It takes a single parameter, which is a function that returns
 your bot token. In our case, that just references our local variable where we've
 stored the token.
 
+Since this guide will use the contents of a normal message in order to create a
+an example command (typically referred to as a traditional command), we also 
+need to enable the "Message Content" intent (as in, intent to receive) on both 
+Discord's end and in our bot's code.
+
+Discord's preference is to avoid using the contents of messages where possible,
+and you should try to stick to these in real applications. For now, though,
+we're just familiarizing ourselves with the basics of the library, and using it
+is fine.
+
+First, go to your bot's application page, select the "Bot" side panel, and
+scroll down. You should see an option named "Message content intent" with a
+switch - enable it.
+
+Then, head back to your source code, and modify your service registration like 
+this.
+
+```
+var services = new ServiceCollection()
+    .AddDiscordGateway(_ => botToken)
+    .Configure<DiscordGatewayClientOptions>(g => g.Intents |= GatewayIntents.MessageContents);
+    .BuildServiceProvider();
+```
+
+Once that's done, we can continue.
+
 To get a gateway client instance, we can then request it from the service
 provider we've created.
 
