@@ -59,14 +59,14 @@
                                     <li class="active"><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -174,6 +174,25 @@ services from Remora.Discord via a convenience extension method called
 gateway client. It takes a single parameter, which is a function that returns
 your bot token. In our case, that just references our local variable where we've
 stored the token.</p>
+<p>Since this guide will use the contents of a normal message in order to create a
+an example command (typically referred to as a traditional command), we also
+need to enable the "Message Content" intent (as in, intent to receive) on both
+Discord's end and in our bot's code.</p>
+<p>Discord's preference is to avoid using the contents of messages where possible,
+and you should try to stick to these in real applications. For now, though,
+we're just familiarizing ourselves with the basics of the library, and using it
+is fine.</p>
+<p>First, go to your bot's application page, select the "Bot" side panel, and
+scroll down. You should see an option named "Message content intent" with a
+switch - enable it.</p>
+<p>Then, head back to your source code, and modify your service registration like
+this.</p>
+<pre><code>var services = new ServiceCollection()
+    .AddDiscordGateway(_ =&gt; botToken)
+    .Configure&lt;<a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions">DiscordGatewayClientOptions</a>&gt;(g =&gt; g.Intents |= GatewayIntents.MessageContents);
+    .BuildServiceProvider();
+</code></pre>
+<p>Once that's done, we can continue.</p>
 <p>To get a gateway client instance, we can then request it from the service
 provider we've created.</p>
 <pre><code class="language-csharp">var gatewayClient = services.GetRequiredService&lt;<a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient">DiscordGatewayClient</a>&gt;();
