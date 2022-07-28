@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>10.1.5</VersionPrefix>
+        <VersionPrefix>10.1.6</VersionPrefix>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Fix TimeoutRejectedExceptions being treated as fatal errors.
         </PackageReleaseNotes>
     </PropertyGroup>
 
