@@ -31,6 +31,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Polly;
+using Polly.Timeout;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway;
@@ -405,7 +406,7 @@ public class DiscordGatewayClient : IDisposable
             {
                 switch (exe.Exception)
                 {
-                    case HttpRequestException or WebSocketException:
+                    case HttpRequestException or WebSocketException or TimeoutRejectedException:
                     {
                         _log.LogWarning
                         (
