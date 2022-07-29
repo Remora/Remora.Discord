@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -80,10 +82,134 @@ public class DiscordRestOAuth2APITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/@me")
                     .WithNoContent()
-                    .Respond("Authorization/json", SampleRepository.Samples[typeof(IAuthorizationInformation)])
+                    .Respond("application/json", SampleRepository.Samples[typeof(IAuthorizationInformation)])
             );
 
             var result = await api.GetCurrentAuthorizationInformationAsync();
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestOAuth2API.GetTokenByAuthorizationCodeAsync"/> method.
+    /// </summary>
+    public class GetTokenByAuthorizationCodeAsync : RestAPITestBase<IDiscordRestOAuth2API>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var clientID = "123456789";
+            var clientSecret = "abcdefg";
+            var code = "hijklmno";
+            var redirecUri = "https://localhost/receive-token";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}oauth2/token")
+                    .With(m => !m.Headers.Contains("Authorization"))
+                    .WithFormData("grant_type", "authorization_code")
+                    .WithFormData("client_id", clientID)
+                    .WithFormData("client_secret", clientSecret)
+                    .WithFormData("code", code)
+                    .WithFormData("redirect_uri", redirecUri)
+                    .Respond("application/json", SampleRepository.Samples[typeof(IAccessTokenInformation)])
+            );
+
+            var result = await api.GetTokenByAuthorizationCodeAsync
+            (
+                clientID,
+                clientSecret,
+                code,
+                redirecUri
+            );
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestOAuth2API.GetTokenByRefreshTokenAsync"/> method.
+    /// </summary>
+    public class GetTokenByRefreshTokenAsync : RestAPITestBase<IDiscordRestOAuth2API>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var clientID = "123456789";
+            var clientSecret = "abcdefg";
+            var refreshToken = "hijklmno";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}oauth2/token")
+                    .With(m => !m.Headers.Contains("Authorization"))
+                    .WithFormData("grant_type", "refresh_token")
+                    .WithFormData("client_id", clientID)
+                    .WithFormData("client_secret", clientSecret)
+                    .WithFormData("refresh_token", refreshToken)
+                    .Respond("application/json", SampleRepository.Samples[typeof(IAccessTokenInformation)])
+            );
+
+            var result = await api.GetTokenByRefreshTokenAsync
+            (
+                clientID,
+                clientSecret,
+                refreshToken
+            );
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestOAuth2API.GetTokenByRefreshTokenAsync"/> method.
+    /// </summary>
+    public class GetTokenByClientCredentialsAsync : RestAPITestBase<IDiscordRestOAuth2API>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var clientID = "123456789";
+            var clientSecret = "abcdefg";
+            var scopes = new[]
+            {
+                "identify",
+                "email"
+            };
+
+            var encodedAuthorizationValue = Convert.ToBase64String
+            (
+                Encoding.UTF8.GetBytes($"{clientID}:{clientSecret}")
+            );
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}oauth2/token")
+                    .With(m => m.Headers.Authorization?.Parameter == encodedAuthorizationValue)
+                    .WithFormData("grant_type", "client_credentials")
+                    .WithFormData("scope", string.Join(" ", scopes))
+                    .Respond("application/json", SampleRepository.Samples[typeof(IAccessTokenInformation)])
+            );
+
+            var result = await api.GetTokenByClientCredentialsAsync
+            (
+                clientID,
+                clientSecret,
+                scopes
+            );
             ResultAssert.Successful(result);
         }
     }

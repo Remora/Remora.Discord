@@ -20,6 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +33,8 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Json.Policies;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API;
@@ -37,15 +43,25 @@ namespace Remora.Discord.Rest.API;
 [PublicAPI]
 public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2API
 {
+    private readonly SnakeCaseNamingPolicy _snakeCase;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordRestOAuth2API"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestOAuth2API(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    /// <param name="snakeCase">The snake case naming policy.</param>
+    public DiscordRestOAuth2API
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache,
+        SnakeCaseNamingPolicy snakeCase
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
+        _snakeCase = snakeCase;
     }
 
     /// <inheritdoc />
@@ -72,6 +88,125 @@ public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2AP
         (
             "oauth2/@me",
             b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IAccessTokenInformation>> GetTokenByAuthorizationCodeAsync
+    (
+        string clientID,
+        string clientSecret,
+        string code,
+        string redirectUri,
+        CancellationToken ct = default
+    )
+    {
+        return await GetTokenAsync
+        (
+            GrantType.AuthorizationCode,
+            clientID,
+            clientSecret,
+            code,
+            redirectUri,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IAccessTokenInformation>> GetTokenByRefreshTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string refreshToken,
+        CancellationToken ct = default
+    )
+    {
+        return await GetTokenAsync
+        (
+            GrantType.RefreshToken,
+            clientID,
+            clientSecret,
+            refreshToken: refreshToken,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IAccessTokenInformation>> GetTokenByClientCredentialsAsync
+    (
+        string clientID,
+        string clientSecret,
+        IReadOnlyList<string> scopes,
+        CancellationToken ct = default
+    )
+    {
+        return await GetTokenAsync
+        (
+            GrantType.ClientCredentials,
+            clientID,
+            clientSecret,
+            scopes: new Optional<IReadOnlyList<string>>(scopes),
+            ct: ct
+        );
+    }
+
+    private Task<Result<IAccessTokenInformation>> GetTokenAsync
+    (
+        GrantType grantType,
+        string clientID,
+        string clientSecret,
+        Optional<string> code = default,
+        Optional<string> redirectUri = default,
+        Optional<string> refreshToken = default,
+        Optional<IReadOnlyList<string>> scopes = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IAccessTokenInformation>
+        (
+            "oauth2/token",
+            b =>
+            {
+                var requestData = new Dictionary<string, string>();
+                requestData["grant_type"] = _snakeCase.ConvertName(grantType.ToString());
+
+                if (grantType == GrantType.ClientCredentials)
+                {
+                    var encodedCredentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{clientID}:{clientSecret}"));
+                    b.AddHeader("Authorization", $"Basic {encodedCredentials}");
+                }
+                else
+                {
+                    requestData["client_id"] = clientID;
+                    requestData["client_secret"] = clientSecret;
+                }
+
+                if (code.IsDefined(out var _))
+                {
+                    requestData["code"] = code.Value;
+                }
+
+                if (redirectUri.IsDefined(out var _))
+                {
+                    requestData["redirect_uri"] = redirectUri.Value;
+                }
+
+                if (refreshToken.IsDefined(out var _))
+                {
+                    requestData["refresh_token"] = refreshToken.Value;
+                }
+
+                if (scopes.IsDefined(out var s) && s.Count > 0)
+                {
+                    requestData["scope"] = string.Join(" ", s);
+                }
+
+                b.With(b => b.Content = new FormUrlEncodedContent(requestData));
+
+                b.WithRateLimitContext(this.RateLimitCache, true);
+                b.SkipAuthorization();
+            },
             ct: ct
         );
     }

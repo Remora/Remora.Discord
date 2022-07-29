@@ -1011,6 +1011,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>();
 
+        options.AddDataObjectConverter<IAccessTokenInformation, AccessTokenInformation>()
+            .WithPropertyConverter(i => i.ExpiresIn, new UnitTimeSpanConverter(TimeUnit.Seconds));
+
         return options;
     }
 

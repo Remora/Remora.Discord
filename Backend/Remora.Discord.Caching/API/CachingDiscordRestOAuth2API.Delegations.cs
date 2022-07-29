@@ -21,7 +21,12 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API;
 
@@ -48,5 +53,61 @@ public partial class CachingDiscordRestOAuth2API
         }
 
         customizable.RemoveCustomization(customization);
+    }
+
+    /// <inheritdoc/>
+    public Task<Result<IAccessTokenInformation>> GetTokenByAuthorizationCodeAsync
+    (
+        string clientID,
+        string clientSecret,
+        string code,
+        string redirectUri,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.GetTokenByAuthorizationCodeAsync
+        (
+            clientID,
+            clientSecret,
+            code,
+            redirectUri,
+            ct
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<Result<IAccessTokenInformation>> GetTokenByRefreshTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string refreshToken,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.GetTokenByRefreshTokenAsync
+        (
+            clientID,
+            clientSecret,
+            refreshToken,
+            ct
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<Result<IAccessTokenInformation>> GetTokenByClientCredentialsAsync
+    (
+        string clientID,
+        string clientSecret,
+        IReadOnlyList<string> scopes,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.GetTokenByClientCredentialsAsync
+        (
+            clientID,
+            clientSecret,
+            scopes,
+            ct
+        );
     }
 }

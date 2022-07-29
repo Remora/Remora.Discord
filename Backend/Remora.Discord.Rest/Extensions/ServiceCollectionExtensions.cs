@@ -44,6 +44,7 @@ using Remora.Discord.Rest.Handlers;
 using Remora.Discord.Rest.Polly;
 using Remora.Rest;
 using Remora.Rest.Extensions;
+using Remora.Rest.Json.Policies;
 
 namespace Remora.Discord.Rest.Extensions;
 
@@ -177,7 +178,8 @@ public static class ServiceCollectionExtensions
         (
             s.GetRequiredService<IRestHttpClient>(),
             s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
-            s.GetRequiredService<ICacheProvider>()
+            s.GetRequiredService<ICacheProvider>(),
+            s.GetRequiredService<SnakeCaseNamingPolicy>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestStageInstanceAPI>(s => new DiscordRestStageInstanceAPI
