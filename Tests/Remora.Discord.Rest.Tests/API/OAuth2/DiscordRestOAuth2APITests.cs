@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -209,6 +210,82 @@ public class DiscordRestOAuth2APITests
                 clientID,
                 clientSecret,
                 scopes
+            );
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestOAuth2API.RevokeAccessTokenAsync"/> method.
+    /// </summary>
+    public class RevokeAccessTokenAsync : RestAPITestBase<IDiscordRestOAuth2API>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var clientID = "123456789";
+            var clientSecret = "abcdefg";
+            var accessToken = "a1b2c3d4e5";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}oauth2/token/revoke")
+                    .With(m => !m.Headers.Contains("Authorization"))
+                    .WithFormData("client_id", clientID)
+                    .WithFormData("client_secret", clientSecret)
+                    .WithFormData("token", accessToken)
+                    .WithFormData("token_type_hint", "access_token")
+                    .Respond(HttpStatusCode.OK)
+            );
+
+            var result = await api.RevokeAccessTokenAsync
+            (
+                clientID,
+                clientSecret,
+                accessToken
+            );
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestOAuth2API.RevokeRefreshTokenAsync"/> method.
+    /// </summary>
+    public class RevokeRefreshTokenAsync : RestAPITestBase<IDiscordRestOAuth2API>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var clientID = "123456789";
+            var clientSecret = "abcdefg";
+            var refreshToken = "a1b2c3d4e5";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}oauth2/token/revoke")
+                    .With(m => !m.Headers.Contains("Authorization"))
+                    .WithFormData("client_id", clientID)
+                    .WithFormData("client_secret", clientSecret)
+                    .WithFormData("token", refreshToken)
+                    .WithFormData("token_type_hint", "refresh_token")
+                    .Respond(HttpStatusCode.OK)
+            );
+
+            var result = await api.RevokeRefreshTokenAsync
+            (
+                clientID,
+                clientSecret,
+                refreshToken
             );
             ResultAssert.Successful(result);
         }

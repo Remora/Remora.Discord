@@ -110,4 +110,40 @@ public partial class CachingDiscordRestOAuth2API
             ct
         );
     }
+
+    /// <inheritdoc/>
+    public Task<Result> RevokeAccessTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string accessToken,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.RevokeAccessTokenAsync
+        (
+            clientID,
+            clientSecret,
+            accessToken,
+            ct
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<Result> RevokeRefreshTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string refreshToken,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.RevokeRefreshTokenAsync
+        (
+            clientID,
+            clientSecret,
+            refreshToken,
+            ct
+        );
+    }
 }

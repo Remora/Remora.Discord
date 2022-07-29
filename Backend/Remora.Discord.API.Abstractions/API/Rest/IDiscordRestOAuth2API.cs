@@ -25,7 +25,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest;
@@ -64,7 +63,7 @@ public interface IDiscordRestOAuth2API
     /// <param name="code">The code received from the code grant.</param>
     /// <param name="redirectUri">The application redirect URI.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A creation result which may or may not have succeeded.</returns>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IAccessTokenInformation>> GetTokenByAuthorizationCodeAsync
     (
         string clientID,
@@ -81,7 +80,7 @@ public interface IDiscordRestOAuth2API
     /// <param name="clientSecret">The application client secret.</param>
     /// <param name="refreshToken">The refresh token received from authorization code grant.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A creation result which may or may not have succeeded.</returns>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IAccessTokenInformation>> GetTokenByRefreshTokenAsync
     (
         string clientID,
@@ -97,12 +96,44 @@ public interface IDiscordRestOAuth2API
     /// <param name="clientSecret">The application client secret.</param>
     /// <param name="scopes">The scopes to request.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A creation result which may or may not have succeeded.</returns>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IAccessTokenInformation>> GetTokenByClientCredentialsAsync
     (
         string clientID,
         string clientSecret,
         IReadOnlyList<string> scopes,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Revokes the OAuth2 access token.
+    /// </summary>
+    /// <param name="clientID">The application client ID.</param>
+    /// <param name="clientSecret">The application client secret.</param>
+    /// <param name="accessToken">The OAuth2 access token.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A revocation result which may or may not have succeeded.</returns>
+    Task<Result> RevokeAccessTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string accessToken,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Revokes the OAuth2 refresh token.
+    /// </summary>
+    /// <param name="clientID">The application client ID.</param>
+    /// <param name="clientSecret">The application client secret.</param>
+    /// <param name="refreshToken">The OAuth2 refresh token.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A revocation result which may or may not have succeeded.</returns>
+    Task<Result> RevokeRefreshTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string refreshToken,
         CancellationToken ct = default
     );
 }

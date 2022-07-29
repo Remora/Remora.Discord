@@ -151,6 +151,44 @@ public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2AP
         );
     }
 
+    /// <inheritdoc />
+    public Task<Result> RevokeAccessTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string accessToken,
+        CancellationToken ct = default
+    )
+    {
+        return RevokeTokenAsync
+        (
+            clientID,
+            clientSecret,
+            accessToken,
+            "access_token",
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public Task<Result> RevokeRefreshTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string refreshToken,
+        CancellationToken ct = default
+    )
+    {
+        return RevokeTokenAsync
+        (
+            clientID,
+            clientSecret,
+            refreshToken,
+            "refresh_token",
+            ct
+        );
+    }
+
     private Task<Result<IAccessTokenInformation>> GetTokenAsync
     (
         GrantType grantType,
@@ -168,8 +206,10 @@ public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2AP
             "oauth2/token",
             b =>
             {
-                var requestData = new Dictionary<string, string>();
-                requestData["grant_type"] = _snakeCase.ConvertName(grantType.ToString());
+                var requestData = new Dictionary<string, string>
+                {
+                    { "grant_type", _snakeCase.ConvertName(grantType.ToString()) }
+                };
 
                 if (grantType == GrantType.ClientCredentials)
                 {
@@ -202,7 +242,38 @@ public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2AP
                     requestData["scope"] = string.Join(" ", s);
                 }
 
-                b.With(b => b.Content = new FormUrlEncodedContent(requestData));
+                b.With(m => m.Content = new FormUrlEncodedContent(requestData));
+
+                b.WithRateLimitContext(this.RateLimitCache, true);
+                b.SkipAuthorization();
+            },
+            ct: ct
+        );
+    }
+
+    private Task<Result> RevokeTokenAsync
+    (
+        string clientID,
+        string clientSecret,
+        string token,
+        string tokenTypeHint,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync
+        (
+            "oauth2/token/revoke",
+            b =>
+            {
+                var requestData = new Dictionary<string, string>
+                {
+                    { "client_id", clientID },
+                    { "client_secret", clientSecret },
+                    { "token", token },
+                    { "token_type_hint", tokenTypeHint }
+                };
+
+                b.With(m => m.Content = new FormUrlEncodedContent(requestData));
 
                 b.WithRateLimitContext(this.RateLimitCache, true);
                 b.SkipAuthorization();
