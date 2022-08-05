@@ -51,4 +51,9 @@ public static class Constants
     /// Gets the default mocked session ID.
     /// </summary>
     public static string MockSessionID => "mock-session";
+
+    /// <summary>
+    /// Gets the default mocked resume gateway URL.
+    /// </summary>
+    public static string MockResumeGatewayUrl => "wss://resume-gateway.discord.gg/";
 }

@@ -96,6 +96,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             "mock-session",
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -156,6 +157,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -229,6 +231,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -262,6 +265,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -337,6 +341,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -412,6 +417,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -472,6 +478,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             Array.Empty<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -495,6 +502,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             Array.Empty<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -518,6 +526,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             Array.Empty<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
