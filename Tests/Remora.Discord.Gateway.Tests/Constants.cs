@@ -55,5 +55,5 @@ public static class Constants
     /// <summary>
     /// Gets the default mocked resume gateway URL.
     /// </summary>
-    public static string MockResumeGatewayUrl => "wss://resume-gateway.discord.gg/";
+    public static string MockResumeGatewayUrl => "wss://us-east1-b.gateway.discord.gg";
 }
