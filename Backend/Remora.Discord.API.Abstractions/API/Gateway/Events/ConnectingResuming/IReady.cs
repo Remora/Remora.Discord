@@ -55,6 +55,11 @@ public interface IReady : IGatewayEvent
     string SessionID { get; }
 
     /// <summary>
+    /// Gets the resume gateway URL.
+    /// </summary>
+    string ResumeGatewayUrl { get; }
+
+    /// <summary>
     /// Gets the shard information associated with this session.
     /// </summary>
     Optional<IShardIdentification> Shard { get; }

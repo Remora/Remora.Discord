@@ -110,6 +110,11 @@ public class DiscordGatewayClient : IDisposable
     private string? _sessionID;
 
     /// <summary>
+    /// Holds the resume gateway URL.
+    /// </summary>
+    private string? _resumeGatewayUrl;
+
+    /// <summary>
     /// Holds the cancellation token source for internal operations.
     /// </summary>
     private CancellationTokenSource _disconnectRequestedSource;
@@ -258,6 +263,7 @@ public class DiscordGatewayClient : IDisposable
                     if (withNewSession)
                     {
                         _sessionID = null;
+                        _resumeGatewayUrl = null;
                         _connectionStatus = GatewayConnectionStatus.Disconnected;
                     }
                     else
@@ -295,11 +301,13 @@ public class DiscordGatewayClient : IDisposable
         finally
         {
             _sessionID = null;
+            _resumeGatewayUrl = null;
             _connectionStatus = GatewayConnectionStatus.Offline;
         }
 
         // Reconnection is not allowed at this point.
         _sessionID = null;
+        _resumeGatewayUrl = null;
         _connectionStatus = GatewayConnectionStatus.Offline;
 
         return Result.FromSuccess();
@@ -516,7 +524,11 @@ public class DiscordGatewayClient : IDisposable
                     );
                 }
 
-                var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v={(int)DiscordAPIVersion.V10}&encoding=json";
+                var gatewayEndpointUrl = _resumeGatewayUrl is not null && _isSessionResumable
+                    ? _resumeGatewayUrl
+                    : getGatewayEndpoint.Entity.Url;
+
+                var gatewayEndpoint = $"{gatewayEndpointUrl}?v={(int)DiscordAPIVersion.V10}&encoding=json";
                 if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
                 {
                     return new GatewayError
@@ -756,6 +768,7 @@ public class DiscordGatewayClient : IDisposable
                         }
 
                         _sessionID = ready.Data.SessionID;
+                        _resumeGatewayUrl = ready.Data.ResumeGatewayUrl;
 
                         return Result.FromSuccess();
                     }
