@@ -22,7 +22,7 @@ own.
 
 [1]: guides/getting-started
 [2]: github-info/CONTRIBUTING
-[3]: https://www.github.com/Nihlus/Remora.Discord/issues
+[3]: https://www.github.com/Remora/Remora.Discord/issues
 [4]: api
 [5]: info/README
 [6]: guides/undocumented-features

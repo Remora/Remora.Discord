@@ -39,10 +39,10 @@
         <EmbedAllSources>true</EmbedAllSources>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-        <RepositoryUrl>https://github.com/Nihlus/Remora.Discord</RepositoryUrl>
-        <RepositoryBranch>master</RepositoryBranch>
+        <RepositoryUrl>https://github.com/Remora/Remora.Discord</RepositoryUrl>
+        <RepositoryBranch>main</RepositoryBranch>
         <PackageOutputPath>$(MSBuildThisFileDirectory)nuget</PackageOutputPath>
-        <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/Remora/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
         <PackageIcon>shark.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
