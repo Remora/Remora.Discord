@@ -1,149 +1,20 @@
-<!--
-    This file contains common properties for all projects. It is divided into multiple sections, depending on the use
-    case for the properties.
--->
-
 <Project>
-    <!-- Common properties for all projects -->
     <PropertyGroup>
-        <LangVersion>latest</LangVersion>
-        <Deterministic>true</Deterministic>
-        <DebugSymbols>true</DebugSymbols>
-
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    </PropertyGroup>
-
-    <!-- Targeting helpers -->
-    <PropertyGroup>
-        <LibraryFrameworks>netstandard2.1;net6.0</LibraryFrameworks>
-        <ExecutableFrameworks>net6.0</ExecutableFrameworks>
-
-        <!-- Default for all projects -->
-        <!--suppress MsbuildTargetFrameworkTagInspection -->
-        <TargetFrameworks>$(LibraryFrameworks)</TargetFrameworks>
+        <LegalAuthor>Jarl Gullberg</LegalAuthor>
+        <LegalEmail>jarl.gullberg@gmail.com</LegalEmail>
     </PropertyGroup>
 
     <!-- NuGet-related properties -->
     <PropertyGroup>
-        <Title>$(AssemblyName)</Title>
-        <Authors>Jarl Gullberg</Authors>
-        <Copyright>Jarl Gullberg 2020</Copyright>
-        <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
-        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-
-        <IncludeSymbols>true</IncludeSymbols>
-        <IncludeSource>true</IncludeSource>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <EmbedAllSources>true</EmbedAllSources>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
         <RepositoryUrl>https://github.com/Remora/Remora.Discord</RepositoryUrl>
         <RepositoryBranch>main</RepositoryBranch>
+
         <PackageOutputPath>$(MSBuildThisFileDirectory)nuget</PackageOutputPath>
         <PackageProjectUrl>https://github.com/Remora/Remora.Discord</PackageProjectUrl>
-        <PackageTags>discord;bot;api;</PackageTags>
-        <PackageIcon>shark.png</PackageIcon>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-    </PropertyGroup>
-
-    <!-- Code inspection properties -->
-    <PropertyGroup>
-        <StyleCopRuleset>$(MSBuildThisFileDirectory)stylecop.ruleset</StyleCopRuleset>
-        <StyleCopConfiguration>$(MSBuildThisFileDirectory)stylecop.json</StyleCopConfiguration>
-
-        <Nullable>enable</Nullable>
-
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-
-        <AnalysisLevel>7</AnalysisLevel>
-        <CodeAnalysisRuleSet>$(StyleCopRuleset)</CodeAnalysisRuleSet>
-        <WarningsAsErrors>
-            CS8600;
-            CS8601;
-            CS8602;
-            CS8603;
-            CS8604;
-            CS8608;
-            CS8609;
-            CS8610;
-            CS8611;
-            CS8612;
-            CS8613;
-            CS8614;
-            CS8615;
-            CS8616;
-            CS8617;
-            CS8618;
-            CS8619;
-            CS8620;
-            CS8621;
-            CS8622;
-            CS8625;
-            CS8626;
-            CS8629;
-            CS8631;
-            CS8633;
-            CS8634;
-            CS8638;
-            CS8639;
-            CS8643;
-            CS8644;
-            CS8645;
-            CS8762;
-            CS8765;
-        </WarningsAsErrors>
-        <NoWarn>
-            CS8632;
-            AD0001;
-        </NoWarn>
+        <PackageTags>remora;discord;bot;api;</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="$(StyleCopConfiguration)">
-            <Link>stylecop.json</Link>
-            <InProject>false</InProject>
-        </AdditionalFiles>
-        <AdditionalFiles Include="$(StyleCopRuleset)">
-            <Link>stylecop.ruleset</Link>
-            <InProject>false</InProject>
-        </AdditionalFiles>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.406" PrivateAssets="all" />
         <PackageReference Include="Remora.Results.Analyzers" Version="1.0.0-preview2" PrivateAssets="all" />
-    </ItemGroup>
-
-    <!-- Language support packages -->
-    <ItemGroup>
-        <PackageReference Include="Nullable" Version="1.3.1" PrivateAssets="all" />
-        <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" />
-    </ItemGroup>
-
-    <!-- JetBrains Annotations -->
-    <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" PrivateAssets="all" />
-    </ItemGroup>
-
-    <!-- SourceLink -->
-    <ItemGroup Condition="$(IsPackable)">
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
-    </ItemGroup>
-
-    <!-- NuGet Icon -->
-    <ItemGroup Condition="$(IsPackable)">
-        <None Include="$(MSBuildThisFileDirectory)/images/shark.png" Pack="true" PackagePath="/">
-            <Link>shark.png</Link>
-            <InProject>false</InProject>
-        </None>
-    </ItemGroup>
-
-    <!-- NuGet README -->
-    <ItemGroup Condition="$(IsPackable)">
-        <None Include="$(MSBuildProjectDirectory)/README.md" Pack="true" PackagePath="/">
-            <Link>README.md</Link>
-        </None>
     </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Remora.Tests.Sdk/1.0.0-preview6">
 
     <ItemGroup>
         <PackageReference Include="Humanizer.Core" Version="2.14.1" />
