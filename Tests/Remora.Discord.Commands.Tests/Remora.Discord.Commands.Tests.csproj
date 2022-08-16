@@ -1,4 +1,4 @@
-<Project Sdk="Remora.Tests.Sdk/1.0.0-preview6">
+<Project Sdk="Remora.Tests.Sdk/1.0.0-preview8">
 
     <ItemGroup>
       <ProjectReference Include="..\..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />

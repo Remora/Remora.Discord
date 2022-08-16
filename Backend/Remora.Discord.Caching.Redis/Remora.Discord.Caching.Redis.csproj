@@ -1,4 +1,4 @@
-<Project Sdk="Remora.Sdk/1.0.0-preview6">
+<Project Sdk="Remora.Sdk/1.0.0-preview8">
 
     <PropertyGroup>
         <VersionPrefix>1.0.20</VersionPrefix>
