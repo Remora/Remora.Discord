@@ -1,4 +1,4 @@
-<Project Sdk="Remora.Tests.Sdk/1.0.0-preview8">
+<Project Sdk="Remora.Tests.Sdk/1.0.0">
 
     <ItemGroup>
         <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
