@@ -813,7 +813,7 @@ public class CommandTreeExtensionTests
                     typeof(SpecialTypedCommands),
                     "typed-channel-value",
                     ApplicationCommandOptionType.Channel,
-                    new Action<ChannelType>[] { c => Assert.Equal(c, ChannelType.GuildText) }
+                    new Action<ChannelType>[] { c => Assert.Equal(ChannelType.GuildText, c) }
                 },
                 new object[]
                 {
