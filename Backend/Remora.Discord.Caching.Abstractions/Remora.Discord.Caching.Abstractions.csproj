@@ -1,9 +1,10 @@
 <Project Sdk="Remora.Sdk/1.0.0">
 
     <PropertyGroup>
-        <VersionPrefix>1.0.1</VersionPrefix>
+        <VersionPrefix>1.0.2</VersionPrefix>
         <Description>Cache provider abstractions for Remora.Discord</Description>
         <PackageReleaseNotes>
+            Use Remora.Sdk and friends.
             Update Remora.Results.
         </PackageReleaseNotes>
     </PropertyGroup>

@@ -1,15 +1,12 @@
 <Project Sdk="Remora.Sdk/1.0.0">
 
     <PropertyGroup>
-        <VersionPrefix>69.0.0</VersionPrefix>
+        <VersionPrefix>70.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Implement support for specifying the minimum and maximum length of string parameters.
-            Implement more error codes.
-            Fix optionality of bulk descriptions and add the ID parameter.
-            Simplify inheritance chains for gateway events.
-            Add missing fields to channels and messages.
-            Remove the commerce feature.
+            Update documentation.
+            Implement support for audit log reason when modifying the MFA level.
+            Use Remora.Sdk and friends.
         </PackageReleaseNotes>
     </PropertyGroup>
 

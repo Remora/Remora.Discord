@@ -1,30 +1,17 @@
 <Project Sdk="Remora.Sdk/1.0.0">
 
     <PropertyGroup>
-        <VersionPrefix>2022.46</VersionPrefix>
+        <VersionPrefix>2022.47</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Allow skipping the addition of authorization headers in REST calls.
-            Add IMessage parser.
-            Allow passing of IUser and IMessage to USER and MESSAGE commands.
-            Skip authorization for Webhook endpoints that use a token.
-            Implement support for specifying the minimum and maximum length of string parameters.
-            Implement more error codes.
-            Fix optionality of bulk descriptions and add the ID parameter.
-            Simplify inheritance chains for gateway events.
-            Add missing fields to channels and messages.
-            Remove the commerce feature.
-            Drop .NET 5.0 as a target framework.
-            Upgrade nuget packages.
-            Hotfix: Message handlers must be transient and may not be reused.
-            Hotfix: Fix TimeoutRejectedExceptions being treated as fatal errors.
+            Update documentation.
+            Update channel type names.
+            Implement support for audit log reason when modifying the MFA level.
+            Use Remora.Sdk and friends.
+            Add support for resuming the gateway via the resume URL.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
-        <IncludeSymbols>false</IncludeSymbols>
-        <IncludeSource>false</IncludeSource>
-        <EmbedUntrackedSources>false</EmbedUntrackedSources>
-        <EmbedAllSources>false</EmbedAllSources>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <NoPackageAnalysis>true</NoPackageAnalysis>
     </PropertyGroup>

@@ -1,10 +1,11 @@
 <Project Sdk="Remora.Sdk/1.0.0">
 
     <PropertyGroup>
-        <VersionPrefix>10.1.6</VersionPrefix>
+        <VersionPrefix>10.1.7</VersionPrefix>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Fix TimeoutRejectedExceptions being treated as fatal errors.
+            Use Remora.Sdk and friends.
+            Add support for resuming the gateway via the resume URL.
         </PackageReleaseNotes>
     </PropertyGroup>
 
