@@ -106,7 +106,7 @@ public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSample
         Assert.NotNull(payload);
 
         await using var stream = new MemoryStream();
-        await JsonSerializer.SerializeAsync(stream, payload!, this.Options);
+        await JsonSerializer.SerializeAsync(stream, payload, this.Options);
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSample
         Assert.NotNull(deserialized);
 
         await using var stream = new MemoryStream();
-        await JsonSerializer.SerializeAsync(stream, deserialized!, this.Options);
+        await JsonSerializer.SerializeAsync(stream, deserialized, this.Options);
 
         await stream.FlushAsync();
 

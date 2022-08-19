@@ -465,7 +465,7 @@ public class CommandTreeExtensionTests
                 var topLevelGroup = commands.FirstOrDefault(c => c.Name == "top-level-group");
                 Assert.NotNull(topLevelGroup);
 
-                Assert.True(topLevelGroup!.Options.HasValue);
+                Assert.True(topLevelGroup.Options.HasValue);
                 Assert.Equal(2, topLevelGroup.Options.Value.Count);
 
                 var firstNestedCommand = topLevelGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommand);
@@ -474,7 +474,7 @@ public class CommandTreeExtensionTests
                 var nestedGroup = topLevelGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommandGroup);
                 Assert.NotNull(nestedGroup);
 
-                Assert.True(nestedGroup!.Options.HasValue);
+                Assert.True(nestedGroup.Options.HasValue);
                 Assert.Single(nestedGroup.Options.Value);
 
                 var secondNestedCommand = nestedGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommand);
@@ -918,7 +918,7 @@ public class CommandTreeExtensionTests
                 var command = commands.FirstOrDefault(c => c.Name == commandName);
                 Assert.NotNull(command);
 
-                var parameter = command!.Options.Value[0];
+                var parameter = command.Options.Value[0];
                 Assert.Equal(type, parameter.Type);
 
                 if (choiceAsserter is not null)
@@ -970,7 +970,7 @@ public class CommandTreeExtensionTests
                     var command = commands.FirstOrDefault(c => c.Name == commandName);
                     Assert.NotNull(command);
 
-                    var parameter = command!.Options.Value[0];
+                    var parameter = command.Options.Value[0];
                     Assert.Equal(type, parameter.Type);
                 }
 
@@ -1021,7 +1021,7 @@ public class CommandTreeExtensionTests
                     var command = commands.FirstOrDefault(c => c.Name == commandName);
                     Assert.NotNull(command);
 
-                    var parameter = command!.Options.Value[0];
+                    var parameter = command.Options.Value[0];
                     Assert.Equal(type, parameter.Type);
                 }
 
@@ -1090,7 +1090,7 @@ public class CommandTreeExtensionTests
                     var command = commands.FirstOrDefault(c => c.Name == commandName);
                     Assert.NotNull(command);
 
-                    var parameter = command!.Options.Value[0];
+                    var parameter = command.Options.Value[0];
                     Assert.Equal(type, parameter.Type);
                 }
 
