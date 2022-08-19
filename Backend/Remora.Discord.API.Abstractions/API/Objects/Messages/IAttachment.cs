@@ -42,7 +42,7 @@ public interface IAttachment : IPartialAttachment
     new string Filename { get; }
 
     /// <summary>
-    /// Gets the description of the attachment.
+    /// Gets the description of the attachment (max 1024 characters).
     /// </summary>
     new Optional<string> Description { get; }
 
