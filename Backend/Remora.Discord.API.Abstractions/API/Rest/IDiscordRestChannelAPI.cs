@@ -59,7 +59,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="icon">The new icon.</param>
     /// <param name="type">
     /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
-    /// <see cref="ChannelType.GuildNews"/> are supported.
+    /// <see cref="ChannelType.GuildAnnouncement"/> are supported.
     /// </param>
     /// <param name="position">The new position of the channel in the listing.</param>
     /// <param name="topic">The new topic of the channel.</param>
@@ -135,7 +135,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="name">The new name of the channel.</param>
     /// <param name="type">
     /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
-    /// <see cref="ChannelType.GuildNews"/> are supported.
+    /// <see cref="ChannelType.GuildAnnouncement"/> are supported.
     /// </param>
     /// <param name="position">The new position of the channel in the listing.</param>
     /// <param name="topic">The new topic of the channel.</param>
@@ -228,7 +228,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="name">The new name of the channel.</param>
     /// <param name="type">
     /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
-    /// <see cref="ChannelType.GuildNews"/> are supported.
+    /// <see cref="ChannelType.GuildAnnouncement"/> are supported.
     /// </param>
     /// <param name="position">The new position of the channel in the listing.</param>
     /// <param name="topic">The new topic of the channel.</param>
@@ -785,7 +785,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="channelID">The channel to start the thread in.</param>
     /// <param name="name">The name of the thread.</param>
     /// <param name="type">
-    /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
+    /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.PrivateThread"/>,
     /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
     /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
     /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>

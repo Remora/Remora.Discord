@@ -47,10 +47,10 @@ public static class ChannelContextExtensions
                     GuildText,
                     GuildVoice,
                     GuildCategory,
-                    GuildNews,
-                    GuildPrivateThread,
-                    GuildPublicThread,
-                    GuildNewsThread,
+                    GuildAnnouncement,
+                    PrivateThread,
+                    PublicThread,
+                    AnnouncementThread,
                     GuildStageVoice
                 }
             },

@@ -130,7 +130,7 @@ public class DiscordRestChannelAPITests
         {
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
-            var type = ChannelType.GuildNews;
+            var type = ChannelType.GuildAnnouncement;
             var position = 1;
             var topic = "aa";
             var nsfw = true;
@@ -192,7 +192,7 @@ public class DiscordRestChannelAPITests
         {
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
-            var type = ChannelType.GuildNews;
+            var type = ChannelType.GuildAnnouncement;
             var position = 1;
             var topic = "aa";
             var nsfw = true;
@@ -2520,7 +2520,7 @@ public class DiscordRestChannelAPITests
             var channelId = DiscordSnowflake.New(0);
             var name = "abba";
             var duration = AutoArchiveDuration.Hour;
-            var type = ChannelType.GuildPrivateThread;
+            var type = ChannelType.PrivateThread;
             var isInvitable = true;
             var rateLimit = 1;
             var reason = "test";

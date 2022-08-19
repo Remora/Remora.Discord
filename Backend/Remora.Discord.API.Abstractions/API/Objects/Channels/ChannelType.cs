@@ -58,23 +58,23 @@ public enum ChannelType
     /// <summary>
     /// A channel that users can follow and crosspost into their own servers.
     /// </summary>
-    GuildNews = 5,
+    GuildAnnouncement = 5,
 
     /// <summary>
-    /// A temporary sub-channel within a <see cref="GuildNews"/> channel.
+    /// A temporary sub-channel within a <see cref="GuildAnnouncement"/> channel.
     /// </summary>
-    GuildNewsThread = 10,
+    AnnouncementThread = 10,
 
     /// <summary>
     /// A temporary sub-channel within a <see cref="GuildText"/> channel.
     /// </summary>
-    GuildPublicThread = 11,
+    PublicThread = 11,
 
     /// <summary>
     /// A temporary sub-channel within a <see cref="GuildText"/> channel that is only viewable by those invited, and
     /// those with the <see cref="DiscordTextPermission.ManageThreads"/> permission.
     /// </summary>
-    GuildPrivateThread = 12,
+    PrivateThread = 12,
 
     /// <summary>
     /// A voice channel for hosting events with an audience.
