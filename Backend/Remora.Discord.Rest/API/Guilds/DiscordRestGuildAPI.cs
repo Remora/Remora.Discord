@@ -886,6 +886,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     (
         Snowflake guildID,
         MultiFactorAuthenticationLevel level,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -893,6 +894,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         (
             $"guilds/{guildID}/mfa",
             b => b
+                .AddAuditLogReason(reason)
                 .WithJson
                 (
                     json =>

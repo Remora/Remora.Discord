@@ -594,12 +594,14 @@ public interface IDiscordRestGuildAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild to modify.</param>
     /// <param name="level">The new MFA level.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
     Task<Result<MultiFactorAuthenticationLevel>> ModifyGuildMFALevelAsync
     (
         Snowflake guildID,
         MultiFactorAuthenticationLevel level,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 

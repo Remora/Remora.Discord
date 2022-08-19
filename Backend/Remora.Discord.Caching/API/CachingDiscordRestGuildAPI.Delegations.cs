@@ -129,10 +129,11 @@ public partial class CachingDiscordRestGuildAPI
     (
         Snowflake guildID,
         MultiFactorAuthenticationLevel level,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        return _actual.ModifyGuildMFALevelAsync(guildID, level, ct);
+        return _actual.ModifyGuildMFALevelAsync(guildID, level, reason, ct);
     }
 
     /// <inheritdoc />
