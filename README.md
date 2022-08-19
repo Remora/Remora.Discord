@@ -165,7 +165,7 @@ See [Contributing][2].
 ## Thanks
 Icon by [Twemoji][6], licensed under CC-BY 4.0.
 
-[1]: https://nihlus.github.io/Remora.Discord/
+[1]: https://remora.github.io/Remora.Discord/
 [2]: .github/CONTRIBUTING.md
 [3]: https://www.nuget.org/packages/Remora.Discord/
 [4]: https://discord.gg/tRJbg8HNdt
