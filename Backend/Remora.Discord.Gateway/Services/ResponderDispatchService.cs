@@ -53,16 +53,12 @@ public class ResponderDispatchService : IAsyncDisposable
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
     private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchDelegates;
 
-    private CancellationTokenSource? _dispatchCancellationSource;
-    private Task? _dispatcher;
-    private Task? _finalizer;
-    private Channel<IPayload>? _payloadsToDispatch;
-    private Channel<Task<IReadOnlyList<Result>>>? _respondersToFinalize;
-
-    /// <summary>
-    /// Gets a value indicating whether the dispatch service is currently running.
-    /// </summary>
-    public bool IsRunning { get; private set; }
+    private bool _isDisposed;
+    private CancellationTokenSource _dispatchCancellationSource;
+    private Task _dispatcher;
+    private Task _finalizer;
+    private Channel<IPayload> _payloadsToDispatch;
+    private Channel<Task<IReadOnlyList<Result>>> _respondersToFinalize;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponderDispatchService"/> class.
@@ -86,6 +82,17 @@ public class ResponderDispatchService : IAsyncDisposable
 
         _cachedInterfaceTypeArguments = new();
         _cachedDispatchDelegates = new();
+
+        _dispatchCancellationSource = new();
+        _payloadsToDispatch = Channel.CreateBounded<IPayload>
+        (
+            new BoundedChannelOptions((int)_options.MaxItems) { FullMode = BoundedChannelFullMode.Wait }
+        );
+
+        _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
+
+        _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
+        _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
     }
 
     /// <summary>
@@ -101,19 +108,9 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <returns>A result which may or may not have succeeded.</returns>
     public async Task<Result> DispatchAsync(IPayload payload, CancellationToken ct = default)
     {
-        if (!this.IsRunning)
+        if (_isDisposed)
         {
-            throw new InvalidOperationException();
-        }
-
-        if (_dispatchCancellationSource is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (_payloadsToDispatch is null)
-        {
-            throw new InvalidOperationException();
+            throw new ObjectDisposedException(nameof(ResponderDispatchService));
         }
 
         try
@@ -129,112 +126,10 @@ public class ResponderDispatchService : IAsyncDisposable
     }
 
     /// <summary>
-    /// Starts the dispatch service, beginning acceptance of payloads for dispatch.
-    /// </summary>
-    public void Start()
-    {
-        if (this.IsRunning)
-        {
-            throw new InvalidOperationException("The dispatch service is already running.");
-        }
-
-        _dispatchCancellationSource = new();
-        _payloadsToDispatch = Channel.CreateBounded<IPayload>
-        (
-            new BoundedChannelOptions((int)_options.MaxItems) { FullMode = BoundedChannelFullMode.Wait }
-        );
-
-        _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
-
-        _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
-        _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
-
-        this.IsRunning = true;
-    }
-
-    /// <summary>
-    /// Stops the dispatch service, finishing any pending payloads.
-    /// </summary>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    public async Task StopAsync()
-    {
-        if (!this.IsRunning)
-        {
-            throw new InvalidOperationException("The dispatch service is not running.");
-        }
-
-        if (_dispatcher is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (_finalizer is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (_dispatchCancellationSource is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (_payloadsToDispatch is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (_respondersToFinalize is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        // Stop!
-        _dispatchCancellationSource.Cancel();
-        _payloadsToDispatch.Writer.Complete();
-
-        try
-        {
-            // Wait for everything to actually stop...
-            await _dispatcher;
-            await _finalizer;
-        }
-        catch (OperationCanceledException)
-        {
-            // OCE is always thrown when cancellation is requested.
-        }
-
-        // Reset state so we can start again
-        _dispatchCancellationSource = null;
-
-        _dispatcher = null;
-        _finalizer = null;
-
-        _payloadsToDispatch = null;
-        _respondersToFinalize = null;
-
-        this.IsRunning = false;
-    }
-
-    /// <summary>
     /// Runs the main loop of the dispatcher task.
     /// </summary>
     private async Task DispatcherTaskAsync()
     {
-        if (_dispatchCancellationSource is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (_payloadsToDispatch is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        if (_respondersToFinalize is null)
-        {
-            throw new InvalidOperationException();
-        }
-
         while (!_dispatchCancellationSource.Token.IsCancellationRequested)
         {
             var payload = await _payloadsToDispatch.Reader.ReadAsync(_dispatchCancellationSource.Token);
@@ -461,6 +356,11 @@ public class ResponderDispatchService : IAsyncDisposable
                 {
                     case ExceptionError exe:
                     {
+                        if (exe.Exception is OperationCanceledException)
+                        {
+                            continue;
+                        }
+
                         _log.LogWarning
                         (
                             exe.Exception,
@@ -508,13 +408,34 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <inheritdoc />
     public async ValueTask DisposeAsync()
     {
-        if (!this.IsRunning)
+        if (_isDisposed)
         {
             return;
         }
 
         GC.SuppressFinalize(this);
 
-        await StopAsync();
+        // Stop!
+        _dispatchCancellationSource.Cancel();
+        _payloadsToDispatch.Writer.Complete();
+
+        // Wait for everything to actually stop...
+        try
+        {
+            await _dispatcher;
+        }
+        catch (OperationCanceledException)
+        {
+        }
+
+        try
+        {
+            await _finalizer;
+        }
+        catch (OperationCanceledException)
+        {
+        }
+
+        _isDisposed = true;
     }
 }
