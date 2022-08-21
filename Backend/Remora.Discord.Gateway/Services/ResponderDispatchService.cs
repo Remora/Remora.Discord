@@ -52,13 +52,13 @@ public class ResponderDispatchService : IAsyncDisposable
 
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
     private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchDelegates;
+    private readonly CancellationTokenSource _dispatchCancellationSource;
+    private readonly Task _dispatcher;
+    private readonly Task _finalizer;
+    private readonly Channel<IPayload> _payloadsToDispatch;
+    private readonly Channel<Task<IReadOnlyList<Result>>> _respondersToFinalize;
 
     private bool _isDisposed;
-    private CancellationTokenSource _dispatchCancellationSource;
-    private Task _dispatcher;
-    private Task _finalizer;
-    private Channel<IPayload> _payloadsToDispatch;
-    private Channel<Task<IReadOnlyList<Result>>> _respondersToFinalize;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponderDispatchService"/> class.
