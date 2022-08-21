@@ -86,10 +86,20 @@ public class ResponderDispatchService : IAsyncDisposable
         _dispatchCancellationSource = new();
         _payloadsToDispatch = Channel.CreateBounded<IPayload>
         (
-            new BoundedChannelOptions((int)_options.MaxItems) { FullMode = BoundedChannelFullMode.Wait }
+            new BoundedChannelOptions((int)_options.MaxItems)
+            {
+                FullMode = BoundedChannelFullMode.Wait,
+                SingleReader = true
+            }
         );
 
-        _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
+        _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>
+        (
+            new UnboundedChannelOptions
+            {
+                SingleReader = true
+            }
+        );
 
         _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
         _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
