@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -221,7 +223,7 @@ public class EarlyCacheResponder :
         var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.Role.ID);
         await _cacheService.CacheAsync(key, gatewayEvent.Role, ct);
 
-        return Result.FromSuccess();
+        return await UpdateRolesList(gatewayEvent.GuildID, gatewayEvent.Role, ct);
     }
 
     /// <inheritdoc/>
@@ -230,7 +232,7 @@ public class EarlyCacheResponder :
         var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.Role.ID);
         await _cacheService.CacheAsync(key, gatewayEvent.Role, ct);
 
-        return Result.FromSuccess();
+        return await UpdateRolesList(gatewayEvent.GuildID, gatewayEvent.Role, ct);
     }
 
     /// <inheritdoc/>
@@ -311,6 +313,46 @@ public class EarlyCacheResponder :
         {
             var cacheKey = KeyHelpers.CreateGuildRoleCacheKey(guildID, key);
             await _cacheService.CacheAsync(cacheKey, value, ct);
+        }
+
+        return Result.FromSuccess();
+    }
+
+    /// <summary>
+    /// Updates the cached role list when a role is created or updated.
+    /// </summary>
+    /// <remarks>This is a workaround for the fact that Discord lacks an endpoint to get single roles.</remarks>
+    /// <param name="guildID">The ID of the guild the role belongs to.</param>
+    /// <param name="role">The role.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>Success if the list has been updated or one did not exist; otherwise, error.</returns>
+    private async Task<Result> UpdateRolesList(Snowflake guildID, IRole role, CancellationToken ct = default)
+    {
+        var collectionKey = KeyHelpers.CreateGuildRolesCacheKey(guildID);
+        var getCachedList = await _cacheService.TryGetValueAsync<IReadOnlyList<IRole>>(collectionKey, ct);
+        if (getCachedList.IsSuccess)
+        {
+            var oldList = getCachedList.Entity;
+
+            var newList = oldList.ToList();
+            var existingRoleIndex = newList.FindIndex(r => r.ID == role.ID);
+            if (existingRoleIndex > -1)
+            {
+                // It's already in the list; update it
+                newList[existingRoleIndex] = role;
+            }
+            else
+            {
+                // new role, add it
+                newList.Add(role);
+            }
+
+            await _cacheService.CacheAsync(collectionKey, newList, ct);
+        }
+        else if (getCachedList.Error is not NotFoundError)
+        {
+            // Some other problem; NotFound is fine
+            return (Result)getCachedList;
         }
 
         return Result.FromSuccess();
