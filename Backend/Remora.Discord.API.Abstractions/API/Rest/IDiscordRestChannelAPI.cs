@@ -222,7 +222,7 @@ public interface IDiscordRestChannelAPI
     );
 
     /// <summary>
-    /// Modifies the given guild news channel.
+    /// Modifies the given guild announcement channel.
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>
     /// <param name="name">The new name of the channel.</param>
@@ -241,7 +241,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+    Task<Result<IChannel>> ModifyGuildAnnouncementChannelAsync
     (
         Snowflake channelID,
         Optional<string> name = default,
@@ -654,13 +654,13 @@ public interface IDiscordRestChannelAPI
     );
 
     /// <summary>
-    /// Follows a news channel to send messages to a target channel.
+    /// Follows a announcement channel to send messages to a target channel.
     /// </summary>
-    /// <param name="channelID">The ID of the news channel.</param>
-    /// <param name="webhookChannelID">The ID of the channel to send news to.</param>
+    /// <param name="channelID">The ID of the announcement channel.</param>
+    /// <param name="webhookChannelID">The ID of the channel to send announcement to.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
-    Task<Result<IFollowedChannel>> FollowNewsChannelAsync
+    Task<Result<IFollowedChannel>> FollowAnnouncementChannelAsync
     (
         Snowflake channelID,
         Snowflake webhookChannelID,

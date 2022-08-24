@@ -81,7 +81,7 @@ public enum GuildFeature
     MoreStickers,
 
     /// <summary>
-    /// The guild has access to creating news channels.
+    /// The guild has access to creating announcement channels.
     /// </summary>
     News,
 

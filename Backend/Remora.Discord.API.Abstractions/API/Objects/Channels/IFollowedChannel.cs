@@ -26,7 +26,7 @@ using Remora.Rest.Core;
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a followed news channel.
+/// Represents a followed announcement channel.
 /// </summary>
 [PublicAPI]
 public interface IFollowedChannel

@@ -188,7 +188,7 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task PerformsNewsChannelRequestCorrectly()
+        public async Task PerformsAnnouncementChannelRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
@@ -225,7 +225,7 @@ public class DiscordRestChannelAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
             );
 
-            var result = await api.ModifyGuildNewsChannelAsync
+            var result = await api.ModifyGuildAnnouncementChannelAsync
             (
                 channelId,
                 name,
@@ -2223,9 +2223,9 @@ public class DiscordRestChannelAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestChannelAPI.FollowNewsChannelAsync"/> method.
+    /// Tests the <see cref="DiscordRestChannelAPI.FollowAnnouncementChannelAsync"/> method.
     /// </summary>
-    public class FollowNewsChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
+    public class FollowAnnouncementChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
         /// Tests whether the API method performs its request correctly.
@@ -2255,7 +2255,7 @@ public class DiscordRestChannelAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IFollowedChannel)])
             );
 
-            var result = await api.FollowNewsChannelAsync(channelId, webhookChannelId);
+            var result = await api.FollowAnnouncementChannelAsync(channelId, webhookChannelId);
             ResultAssert.Successful(result);
         }
     }

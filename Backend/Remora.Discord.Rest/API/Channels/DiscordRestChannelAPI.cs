@@ -272,7 +272,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+    public virtual Task<Result<IChannel>> ModifyGuildAnnouncementChannelAsync
     (
         Snowflake channelID,
         Optional<string> name = default,
@@ -902,7 +902,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IFollowedChannel>> FollowNewsChannelAsync
+    public virtual Task<Result<IFollowedChannel>> FollowAnnouncementChannelAsync
     (
         Snowflake channelID,
         Snowflake webhookChannelID,
