@@ -85,4 +85,19 @@ public static class Mention
     /// A role mention string.
     /// </returns>
     public static string Role(Snowflake snowflake) => $"<@&{snowflake.Value}>";
+
+    /// <summary>
+    /// Creates a mention string for a slash command.
+    /// </summary>
+    /// <param name="command">The slash command.</param>
+    /// <returns></returns>
+    public static string SlashCommand(IApplicationCommand command) => $"</{command.Name}:{command.ID}>";
+
+    /// <summary>
+    /// Creates a mention string for a slash command.
+    /// </summary>
+    /// <param name="name">The name of the slash command.</param>
+    /// <param name="id">The ID of the slash command.</param>
+    /// <returns></returns>
+    public static string SlashCommand(string name, Snowflake id) => $"</{name}:{id}>";
 }
