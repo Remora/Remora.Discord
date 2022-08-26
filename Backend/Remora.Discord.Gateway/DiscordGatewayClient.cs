@@ -402,6 +402,11 @@ public class DiscordGatewayClient : IDisposable
                     message
                 );
 
+                if (iterationResult.Inner is { IsSuccess: false })
+                {
+                    _log.LogError("{Error}", iterationResult.Inner.Error);
+                }
+
                 shouldTerminate = true;
                 return false;
             }
