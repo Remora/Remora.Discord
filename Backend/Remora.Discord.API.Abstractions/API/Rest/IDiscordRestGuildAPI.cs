@@ -466,7 +466,7 @@ public interface IDiscordRestGuildAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="userID">The ID of the user.</param>
-    /// <param name="deleteMessageDays">The number of days to delete messages for (0-7). Defaults to 0.</param>
+    /// <param name="deleteMessageSeconds">The number of seconds to delete messages for (0-604800). Defaults to 0.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
@@ -474,7 +474,7 @@ public interface IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Optional<int> deleteMessageDays = default,
+        Optional<int> deleteMessageSeconds = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
