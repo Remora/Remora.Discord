@@ -1226,7 +1226,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        json.WriteString("channel_id", channelID.ToString());
+                        json.Write("channel_id", channelID, this.JsonOptions);
                         json.Write("suppress", suppress, this.JsonOptions);
                         json.Write("request_to_speak_timestamp", requestToSpeakTimestamp, this.JsonOptions);
                     }
