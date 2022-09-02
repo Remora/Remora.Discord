@@ -217,7 +217,7 @@ public partial class CachingDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Snowflake channelID,
+        Snowflake? channelID = default,
         Optional<bool> suppress = default,
         CancellationToken ct = default
     )

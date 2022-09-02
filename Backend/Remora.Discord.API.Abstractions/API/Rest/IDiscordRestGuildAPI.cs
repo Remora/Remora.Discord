@@ -840,7 +840,7 @@ public interface IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Snowflake channelID,
+        Snowflake? channelID = default,
         Optional<bool> suppress = default,
         CancellationToken ct = default
     );

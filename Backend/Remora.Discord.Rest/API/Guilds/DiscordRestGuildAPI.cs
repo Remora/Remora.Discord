@@ -1241,7 +1241,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Snowflake channelID,
+        Snowflake? channelID = default,
         Optional<bool> suppress = default,
         CancellationToken ct = default
     )
@@ -1253,7 +1253,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        json.WriteString("channel_id", channelID.ToString());
+                        json.Write("channel_id", channelID, this.JsonOptions);
                         json.Write("suppress", suppress, this.JsonOptions);
                     }
                 )
