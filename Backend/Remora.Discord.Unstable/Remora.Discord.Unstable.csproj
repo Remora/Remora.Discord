@@ -6,10 +6,9 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <VersionPrefix>6.0.20</VersionPrefix>
+        <VersionPrefix>6.0.21</VersionPrefix>
         <Description>Unstable or experimental features of Remora.Discord</Description>
         <PackageReleaseNotes>
-            Use Remora.Sdk and friends.
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
