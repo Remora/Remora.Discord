@@ -772,14 +772,47 @@ public static class CommandTreeExtensions
     private static int GetCommandStringifiedLength(IApplicationCommandOption option)
     {
         var length = 0;
-        length += option.Name.Length;
-        length += option.Description.Length;
+
+        if (option.NameLocalizations.IsDefined(out var nameLocalizations))
+        {
+            var longestLocalizedName = nameLocalizations.Values.Max(n => n.Length);
+            length += longestLocalizedName > option.Name.Length
+                ? longestLocalizedName
+                : option.Name.Length;
+        }
+        else
+        {
+            length += option.Name.Length;
+        }
+
+        if (option.DescriptionLocalizations.IsDefined(out var descriptionLocalizations))
+        {
+            var longestLocalizedDescription = descriptionLocalizations.Values.Max(n => n.Length);
+            length += longestLocalizedDescription > option.Description.Length
+                ? longestLocalizedDescription
+                : option.Description.Length;
+        }
+        else
+        {
+            length += option.Description.Length;
+        }
 
         if (option.Choices.IsDefined(out var choices))
         {
             foreach (var choice in choices)
             {
-                length += choice.Name.Length;
+                if (choice.NameLocalizations.IsDefined(out var choiceNameLocalizations))
+                {
+                    var longestLocalizedName = choiceNameLocalizations.Values.Max(n => n.Length);
+                    length += longestLocalizedName > choice.Name.Length
+                        ? longestLocalizedName
+                        : choice.Name.Length;
+                }
+                else
+                {
+                    length += choice.Name.Length;
+                }
+
                 if (choice.Value.TryPickT0(out var choiceValue, out _))
                 {
                     length += choiceValue.Length;
