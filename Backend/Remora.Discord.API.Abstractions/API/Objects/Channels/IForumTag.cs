@@ -1,5 +1,5 @@
 //
-//  ChannelFlags.cs
+//  IForumTag.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,40 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Enumerates various channel flags.
+/// Represents a tag that can be attached to posts in a forum.
 /// </summary>
-[PublicAPI, Flags]
-public enum ChannelFlags
+[PublicAPI]
+public interface IForumTag
 {
     /// <summary>
-    /// The thread is pinned to the top of its parent forum channel.
+    /// Gets the ID of the tag.
     /// </summary>
-    Pinned = 1 << 1,
+    Snowflake ID { get; }
 
     /// <summary>
-    /// The forum requires a tag to be specified when creating a thread.
+    /// Gets the name of the tag.
     /// </summary>
-    RequireTag = 1 << 4
+    string Name { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the tag can only be added or removed by someone with the
+    /// <see cref="DiscordPermission.ManageThreads"/> permission.
+    /// </summary>
+    bool IsModerated { get; }
+
+    /// <summary>
+    /// Gets the ID of the custom guild emoji to use.
+    /// </summary>
+    Optional<Snowflake> EmojiID { get; }
+
+    /// <summary>
+    /// Gets the unicode string of the emoji to use.
+    /// </summary>
+    Optional<string?> EmojiName { get; }
 }

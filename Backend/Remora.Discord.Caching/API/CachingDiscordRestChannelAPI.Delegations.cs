@@ -184,6 +184,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -198,6 +199,45 @@ public partial class CachingDiscordRestChannelAPI
             isInvitable,
             rateLimitPerUser,
             flags,
+            appliedTags,
+            reason,
+            ct
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<Result<IChannel>> ModifyForumChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ModifyForumChannelAsync
+        (
+            channelID,
+            name,
+            position,
+            topic,
+            isNsfw,
+            rateLimitPerUser,
+            permissionOverwrites,
+            parentID,
+            defaultAutoArchiveDuration,
+            availableTags,
+            defaultReactionEmoji,
+            defaultThreadRateLimitPerUser,
             reason,
             ct
         );

@@ -62,7 +62,7 @@ public interface IDiscordRestChannelAPI
     /// <see cref="ChannelType.GuildAnnouncement"/> are supported.
     /// </param>
     /// <param name="position">The new position of the channel in the listing.</param>
-    /// <param name="topic">The new topic of the channel.</param>
+    /// <param name="topic">The new topic of the channel. Max 1024 characters (4096 for forums).</param>
     /// <param name="isNsfw">The new NSFW status of the channel.</param>
     /// <param name="rateLimitPerUser">The new rate limit per user.</param>
     /// <param name="bitrate">The new bitrate.</param>
@@ -79,6 +79,10 @@ public interface IDiscordRestChannelAPI
     /// </param>
     /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
     /// <param name="flags">The channel flags to use.</param>
+    /// <param name="availableTags">The set of tags that can be used in a forum channel.</param>
+    /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
+    /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
+    /// <param name="appliedTags">The tags applied to the thread.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -104,6 +108,10 @@ public interface IDiscordRestChannelAPI
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -267,6 +275,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>
     /// <param name="rateLimitPerUser">The new rate limit per user.</param>
     /// <param name="flags">The channel flags to use.</param>
+    /// <param name="appliedTags">The tags applied to the thread.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -280,6 +289,45 @@ public interface IDiscordRestChannelAPI
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Modifies the given forum channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the channel.</param>
+    /// <param name="name">The new name of the channel.</param>
+    /// <param name="position">The new position of the channel in the listing.</param>
+    /// <param name="topic">The new topic of the channel. Max 1024 characters (4096 for forums).</param>
+    /// <param name="isNsfw">The new NSFW status of the channel.</param>
+    /// <param name="rateLimitPerUser">The new rate limit per user.</param>
+    /// <param name="permissionOverwrites">The new permission overwrites.</param>
+    /// <param name="parentID">The new parent category ID.</param>
+    /// <param name="defaultAutoArchiveDuration">
+    /// The default time of inactivity after which threads in the channel are archived.
+    /// </param>
+    /// <param name="availableTags">The set of tags that can be used in a forum channel.</param>
+    /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
+    /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> ModifyForumChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

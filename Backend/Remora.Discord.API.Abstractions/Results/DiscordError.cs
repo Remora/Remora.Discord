@@ -512,6 +512,11 @@ public enum DiscordError
     ApplicationInteractionFailedToSend = 40034,
 
     /// <summary>
+    /// Messages cannot be sent in a forum channel.
+    /// </summary>
+    CannotSendMessageInForumChannel = 40058,
+
+    /// <summary>
     /// The interaction has already been acknowledged by the application.
     /// </summary>
     InteractionHasAlreadyBeenAcknowledged = 40060,
@@ -520,6 +525,16 @@ public enum DiscordError
     /// Tag names in a forum channel must be unique.
     /// </summary>
     TagNamesMustBeUnique = 40061,
+
+    /// <summary>
+    /// There are no tags available that can be set by non-moderators.
+    /// </summary>
+    NoUnmoderatedTagsAvailable = 40066,
+
+    /// <summary>
+    /// A tag is required to create a forum post in this channel.
+    /// </summary>
+    TagRequired = 40067,
 
     /// <summary>
     /// Missing access.
@@ -889,7 +904,22 @@ public enum DiscordError
     TitleBlockedByAutomaticModeration = 200001,
 
     /// <summary>
+    /// Webhook messages sent in forums must have either a thread name or an ID.
+    /// </summary>
+    WebhooksMustHaveThreadNameOrID = 220001,
+
+    /// <summary>
+    /// Webhook messages sent in forums cannot have both a thread name and an ID.
+    /// </summary>
+    WebhooksCannotHaveBothThreadNameAndID = 220002,
+
+    /// <summary>
     /// Webhooks can only create threads in forum channels, not in other channels.
     /// </summary>
-    WebhooksCanOnlyCreateThreadsInForumChannels = 220003
+    WebhooksCanOnlyCreateThreadsInForumChannels = 220003,
+
+    /// <summary>
+    /// Webhook services cannot be used in forum channels.
+    /// </summary>
+    WebhookServicesCannotBeUsedInForumChannels = 220004
 }

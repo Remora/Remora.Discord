@@ -103,6 +103,10 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -112,9 +116,22 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
         }
 
-        if (topic.HasValue && topic.Value?.Length is > 1024 or < 0)
+        if (topic.HasValue)
         {
-            return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
+            if (type.IsDefined(out var channelType) && channelType == ChannelType.GuildForum)
+            {
+                if (topic.Value?.Length is > 4096 or < 0)
+                {
+                    return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
+                }
+            }
+            else
+            {
+                if (topic.Value?.Length is > 1024 or < 0)
+                {
+                    return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 4096 characters.");
+                }
+            }
         }
 
         if (userLimit.HasValue && userLimit.Value is > 99 or < 0)
@@ -158,6 +175,10 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("default_auto_archive_duration", defaultAutoArchiveDuration);
                         json.Write("rtc_region", rtcRegion, this.JsonOptions);
                         json.Write("flags", flags, this.JsonOptions);
+                        json.Write("available_tags", availableTags, this.JsonOptions);
+                        json.Write("default_reaction_emoji", defaultReactionEmoji, this.JsonOptions);
+                        json.Write("default_thread_rate_limit_per_user", defaultThreadRateLimitPerUser, this.JsonOptions);
+                        json.Write("applied_tags", appliedTags, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -314,6 +335,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -328,6 +350,45 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             isInvitable: isInvitable,
             rateLimitPerUser: rateLimitPerUser,
             flags: flags,
+            appliedTags: appliedTags,
+            reason: reason,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<Result<IChannel>> ModifyForumChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            position: position,
+            topic: topic,
+            isNsfw: isNsfw,
+            rateLimitPerUser: rateLimitPerUser,
+            permissionOverwrites: permissionOverwrites,
+            parentID: parentID,
+            defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+            availableTags: availableTags,
+            defaultReactionEmoji: defaultReactionEmoji,
+            defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
             reason: reason,
             ct: ct
         );

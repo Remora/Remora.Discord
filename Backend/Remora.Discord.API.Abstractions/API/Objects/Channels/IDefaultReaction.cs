@@ -1,5 +1,5 @@
 //
-//  ChannelFlags.cs
+//  IDefaultReaction.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Enumerates various channel flags.
+/// Represents the default emoji available to react to a forum post.
 /// </summary>
-[PublicAPI, Flags]
-public enum ChannelFlags
+[PublicAPI]
+public interface IDefaultReaction
 {
     /// <summary>
-    /// The thread is pinned to the top of its parent forum channel.
+    /// Gets the ID of the custom guild emoji to use.
     /// </summary>
-    Pinned = 1 << 1,
+    Optional<Snowflake> EmojiID { get; }
 
     /// <summary>
-    /// The forum requires a tag to be specified when creating a thread.
+    /// Gets the unicode string of the emoji to use.
     /// </summary>
-    RequireTag = 1 << 4
+    Optional<string?> EmojiName { get; }
 }
