@@ -32,6 +32,11 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IAuditLog
 {
     /// <summary>
+    /// Gets the application commands found in the audit log.
+    /// </summary>
+    IReadOnlyList<IApplicationCommand> ApplicationCommands { get; }
+
+    /// <summary>
     /// Gets a list of audit log entries.
     /// </summary>
     IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
