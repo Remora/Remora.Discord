@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -76,4 +77,7 @@ public interface IPartialIntegration
 
     /// <inheritdoc cref="IIntegration.Application" />
     Optional<IIntegrationApplication> Application { get; }
+
+    /// <inheritdoc cref="IIntegration.Scopes" />
+    Optional<IReadOnlyList<string>> Scopes { get; }
 }

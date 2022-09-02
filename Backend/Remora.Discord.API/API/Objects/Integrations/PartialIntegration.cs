@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -47,5 +48,6 @@ public record PartialIntegration
     Optional<DateTimeOffset> SyncedAt = default,
     Optional<int> SubscriberCount = default,
     Optional<bool> IsRevoked = default,
-    Optional<IIntegrationApplication> Application = default
+    Optional<IIntegrationApplication> Application = default,
+    Optional<IReadOnlyList<string>> Scopes = default
 ) : IPartialIntegration;

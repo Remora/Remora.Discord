@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -47,5 +48,6 @@ public record Integration
     DateTimeOffset SyncedAt,
     int SubscriberCount,
     bool IsRevoked,
-    Optional<IIntegrationApplication> Application = default
+    Optional<IIntegrationApplication> Application = default,
+    Optional<IReadOnlyList<string>> Scopes = default
 ) : IIntegration;

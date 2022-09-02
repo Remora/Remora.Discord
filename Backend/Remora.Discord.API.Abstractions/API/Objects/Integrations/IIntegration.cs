@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -107,6 +108,11 @@ public interface IIntegration : IPartialIntegration
     /// </summary>
     new Optional<IIntegrationApplication> Application { get; }
 
+    /// <summary>
+    /// Gets the OAuth2 scopes the integration has been authorized for.
+    /// </summary>
+    new Optional<IReadOnlyList<string>> Scopes { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialIntegration.ID => this.ID;
 
@@ -151,4 +157,7 @@ public interface IIntegration : IPartialIntegration
 
     /// <inheritdoc/>
     Optional<IIntegrationApplication> IPartialIntegration.Application => this.Application;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<string>> IPartialIntegration.Scopes => this.Scopes;
 }

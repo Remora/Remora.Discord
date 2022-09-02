@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -47,5 +48,6 @@ public record IntegrationCreate
     int SubscriberCount,
     bool IsRevoked,
     Optional<IIntegrationApplication> Application,
+    Optional<IReadOnlyList<string>> Scopes,
     Snowflake GuildID
 ) : IIntegrationCreate;
