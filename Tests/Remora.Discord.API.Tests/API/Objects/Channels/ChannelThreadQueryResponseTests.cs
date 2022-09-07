@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class ChannelThreadQueryResponseTests : ObjectTestBase<IChannelThreadQueryResponse>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ChannelThreadQueryResponseTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ChannelThreadQueryResponseTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

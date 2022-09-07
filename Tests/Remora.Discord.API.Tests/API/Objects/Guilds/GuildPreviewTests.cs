@@ -30,6 +30,15 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class GuildPreviewTests : ObjectTestBase<IGuildPreview>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GuildPreviewTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public GuildPreviewTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
     /// <inheritdoc />
     protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {

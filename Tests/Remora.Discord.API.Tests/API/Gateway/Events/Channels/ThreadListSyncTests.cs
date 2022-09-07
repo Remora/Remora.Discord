@@ -30,4 +30,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// </summary>
 public class ThreadListSyncTests : GatewayEventTestBase<IThreadListSync>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ThreadListSyncTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ThreadListSyncTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

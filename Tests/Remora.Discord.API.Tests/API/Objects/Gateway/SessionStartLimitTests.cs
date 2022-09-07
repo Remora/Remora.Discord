@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class SessionStartLimitTests : ObjectTestBase<ISessionStartLimit>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SessionStartLimitTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public SessionStartLimitTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

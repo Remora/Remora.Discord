@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.VoiceGateway.Commands;
 /// </summary>
 public class VoiceResumeTests : VoiceGatewayCommandTestBase<IVoiceResume>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VoiceResumeTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public VoiceResumeTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

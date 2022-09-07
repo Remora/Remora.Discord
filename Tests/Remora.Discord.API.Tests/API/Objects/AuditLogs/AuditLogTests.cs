@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// </summary>
 public class AuditLogTests : ObjectTestBase<IAuditLog>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AuditLogTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public AuditLogTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

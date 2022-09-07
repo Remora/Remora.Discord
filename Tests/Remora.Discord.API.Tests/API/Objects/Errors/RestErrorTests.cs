@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class RestErrorTests : ObjectTestBase<IRestError>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RestErrorTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public RestErrorTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

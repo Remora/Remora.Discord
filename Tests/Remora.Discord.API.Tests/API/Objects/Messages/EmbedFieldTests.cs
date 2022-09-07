@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class EmbedFieldTests : ObjectTestBase<IEmbedField>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmbedFieldTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public EmbedFieldTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

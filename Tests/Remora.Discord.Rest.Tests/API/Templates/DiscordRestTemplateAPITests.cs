@@ -46,6 +46,15 @@ public class DiscordRestTemplateAPITests
     public class GetTemplateAsync : RestAPITestBase<IDiscordRestTemplateAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetTemplateAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetTemplateAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -70,6 +79,15 @@ public class DiscordRestTemplateAPITests
     /// </summary>
     public class CreateGuildFromTemplateAsync : RestAPITestBase<IDiscordRestTemplateAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildFromTemplateAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildFromTemplateAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -113,6 +131,15 @@ public class DiscordRestTemplateAPITests
     public class GetGuildTemplatesAsync : RestAPITestBase<IDiscordRestTemplateAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildTemplatesAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildTemplatesAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -137,6 +164,15 @@ public class DiscordRestTemplateAPITests
     /// </summary>
     public class CreateGuildTemplateAsync : RestAPITestBase<IDiscordRestTemplateAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildTemplateAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildTemplateAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -175,6 +211,15 @@ public class DiscordRestTemplateAPITests
     public class SyncGuildTemplateAsync : RestAPITestBase<IDiscordRestTemplateAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SyncGuildTemplateAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public SyncGuildTemplateAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -200,6 +245,15 @@ public class DiscordRestTemplateAPITests
     /// </summary>
     public class ModifyGuildTemplateAsync : RestAPITestBase<IDiscordRestTemplateAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildTemplateAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildTemplateAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -238,6 +292,15 @@ public class DiscordRestTemplateAPITests
     /// </summary>
     public class DeleteGuildTemplateAsync : RestAPITestBase<IDiscordRestTemplateAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildTemplateAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildTemplateAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

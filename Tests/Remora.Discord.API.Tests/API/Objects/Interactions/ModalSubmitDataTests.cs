@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class ModalSubmitDataTests : ObjectTestBase<IModalSubmitData>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ModalSubmitDataTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ModalSubmitDataTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

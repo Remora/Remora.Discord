@@ -30,4 +30,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// </summary>
 public class GuildScheduledEventCreateTests : GatewayEventTestBase<IGuildScheduledEventCreate>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GuildScheduledEventCreateTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public GuildScheduledEventCreateTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

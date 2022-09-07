@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class MessageInteractionTests : ObjectTestBase<IMessageInteraction>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MessageInteractionTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public MessageInteractionTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

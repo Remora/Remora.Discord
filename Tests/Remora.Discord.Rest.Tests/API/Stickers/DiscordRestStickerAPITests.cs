@@ -47,6 +47,15 @@ public class DiscordRestStickerAPITests
     public class GetStickerAsync : RestAPITestBase<IDiscordRestStickerAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetStickerAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetStickerAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -74,6 +83,15 @@ public class DiscordRestStickerAPITests
     public class ListNitroStickerPacksAsync : RestAPITestBase<IDiscordRestStickerAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListNitroStickerPacksAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListNitroStickerPacksAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -98,6 +116,15 @@ public class DiscordRestStickerAPITests
     /// </summary>
     public class ListGuildStickersAsync : RestAPITestBase<IDiscordRestStickerAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListGuildStickersAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListGuildStickersAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -126,6 +153,15 @@ public class DiscordRestStickerAPITests
     public class GetGuildStickerAsync : RestAPITestBase<IDiscordRestStickerAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildStickerAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildStickerAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -153,6 +189,15 @@ public class DiscordRestStickerAPITests
     /// </summary>
     public class CreateGuildStickerAsync : RestAPITestBase<IDiscordRestStickerAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildStickerAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildStickerAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -191,6 +236,15 @@ public class DiscordRestStickerAPITests
     /// </summary>
     public class ModifyGuildStickerAsync : RestAPITestBase<IDiscordRestStickerAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildStickerAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildStickerAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -233,6 +287,15 @@ public class DiscordRestStickerAPITests
     /// </summary>
     public class DeleteGuildStickerAsync : RestAPITestBase<IDiscordRestStickerAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildStickerAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildStickerAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

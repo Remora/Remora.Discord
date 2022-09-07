@@ -29,4 +29,12 @@ namespace Remora.Discord.API.Tests.Objects;
 public class InteractionModalCallbackDataTests
     : ObjectTestBase<IInteractionModalCallbackData>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InteractionModalCallbackDataTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public InteractionModalCallbackDataTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

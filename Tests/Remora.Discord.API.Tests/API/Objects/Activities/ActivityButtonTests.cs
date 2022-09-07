@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// </summary>
 public class ActivityButtonTests : ObjectTestBase<IActivityButton>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ActivityButtonTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ActivityButtonTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class WebhookTests : ObjectTestBase<IWebhook>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WebhookTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public WebhookTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

@@ -30,4 +30,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// </summary>
 public class ApplicationCommandPermissionsUpdateTests : GatewayEventTestBase<IApplicationCommandPermissionsUpdate>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApplicationCommandPermissionsUpdateTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ApplicationCommandPermissionsUpdateTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

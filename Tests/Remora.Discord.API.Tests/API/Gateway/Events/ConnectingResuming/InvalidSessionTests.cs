@@ -1,5 +1,5 @@
 //
-//  InvalidSession.cs
+//  InvalidSessionTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,6 +26,14 @@ using Remora.Discord.API.Tests.TestBases;
 namespace Remora.Discord.API.Tests.Gateway.Events;
 
 /// <inheritdoc />
-public class InvalidSession : GatewayEventTestBase<IInvalidSession>
+public class InvalidSessionTests : GatewayEventTestBase<IInvalidSession>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InvalidSessionTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public InvalidSessionTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

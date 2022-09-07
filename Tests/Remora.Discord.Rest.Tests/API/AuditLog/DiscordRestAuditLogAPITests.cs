@@ -49,6 +49,15 @@ public class DiscordRestAuditLogAPITests
     public class GetAuditLogAsync : RestAPITestBase<IDiscordRestAuditLogAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetAuditLogAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetAuditLogAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>

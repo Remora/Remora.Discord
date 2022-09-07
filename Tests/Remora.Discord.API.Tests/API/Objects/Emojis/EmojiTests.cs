@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class EmojiTests : ObjectTestBase<IEmoji>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmojiTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public EmojiTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

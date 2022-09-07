@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.Gateway.Bidirectional;
 /// </summary>
 public class HeartbeatAcknowledgeTests : GatewayBidirectionalTestBase<IHeartbeatAcknowledge>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="HeartbeatAcknowledgeTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public HeartbeatAcknowledgeTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

@@ -32,6 +32,15 @@ namespace Remora.Discord.API.Tests.Gateway.Commands;
 /// </summary>
 public class IdentifyTests : GatewayCommandTestBase<IIdentify>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IdentifyTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public IdentifyTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
     /// <inheritdoc />
     protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {

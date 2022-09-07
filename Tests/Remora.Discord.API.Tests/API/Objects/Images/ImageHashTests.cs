@@ -33,6 +33,15 @@ namespace Remora.Discord.API.Tests.Objects;
 public class ImageHashTests : ObjectTestBase<IImageHash>
 {
     /// <summary>
+    /// Initializes a new instance of the <see cref="ImageHashTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ImageHashTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
+    /// <summary>
     /// Tests the <see cref="IImageHash.HasGif"/> method.
     /// </summary>
     public class HasGif

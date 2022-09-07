@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class StageInstanceTests : ObjectTestBase<IStageInstance>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StageInstanceTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public StageInstanceTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

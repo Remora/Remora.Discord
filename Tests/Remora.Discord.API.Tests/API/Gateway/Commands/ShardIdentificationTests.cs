@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.Gateway.Commands;
 /// </summary>
 public class ShardIdentificationTests : ObjectTestBase<IShardIdentification>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ShardIdentificationTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ShardIdentificationTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

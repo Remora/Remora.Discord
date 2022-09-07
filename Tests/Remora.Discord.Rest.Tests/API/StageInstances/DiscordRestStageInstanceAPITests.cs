@@ -46,6 +46,15 @@ public class DiscordRestStageInstanceAPITests
     public class CreateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="CreateStageInstanceAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateStageInstanceAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -87,6 +96,15 @@ public class DiscordRestStageInstanceAPITests
     public class GetStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetStageInstanceAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetStageInstanceAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -113,6 +131,15 @@ public class DiscordRestStageInstanceAPITests
     /// </summary>
     public class UpdateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateStageInstanceAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public UpdateStageInstanceAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -152,6 +179,15 @@ public class DiscordRestStageInstanceAPITests
     /// </summary>
     public class DeleteStageInstance : RestAPITestBase<IDiscordRestStageInstanceAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteStageInstance"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteStageInstance(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

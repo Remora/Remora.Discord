@@ -32,6 +32,15 @@ namespace Remora.Discord.API.Tests.Gateway.Commands;
 /// </summary>
 public class UpdatePresenceTests : GatewayCommandTestBase<IUpdatePresence>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdatePresenceTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public UpdatePresenceTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
     /// <inheritdoc />
     protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
