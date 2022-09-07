@@ -1,4 +1,4 @@
-<Project Sdk="Remora.Tests.Sdk/1.0.1">
+<Project Sdk="Remora.Tests.Sdk/1.0.3">
 
     <ItemGroup>
       <ProjectReference Include="..\..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
