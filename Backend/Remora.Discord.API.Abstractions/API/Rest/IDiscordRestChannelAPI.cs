@@ -344,8 +344,8 @@ public interface IDiscordRestChannelAPI
     /// <summary>
     /// Posts a message to the given channel.
     /// <remarks>
-    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
-    /// present.
+    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, <paramref name="stickerIDs"/>,
+    /// <paramref name="components"/> or <paramref name="attachments"/> must be present.
     /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
     /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
@@ -502,9 +502,8 @@ public interface IDiscordRestChannelAPI
     /// Edits a previously sent message.
     /// </summary>
     /// <remarks>
-    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
-    /// present.
-    ///
+    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, <paramref name="components"/> or
+    /// <paramref name="attachments"/> must be present.
     /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
     /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
