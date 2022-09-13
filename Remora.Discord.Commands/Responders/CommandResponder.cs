@@ -223,7 +223,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         }
 
         // Run the actual command
-        var executeResult = await _commandService.TryExecuteAsync
+        var executeResult = await _commandService.TryPrepareAndExecuteCommandAsync
         (
             content,
             _services,
@@ -246,7 +246,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         }
 
         var oldResult = executeResult;
-        executeResult = await _commandService.TryExecuteAsync
+        executeResult = await _commandService.TryPrepareAndExecuteCommandAsync
         (
             content,
             _services,

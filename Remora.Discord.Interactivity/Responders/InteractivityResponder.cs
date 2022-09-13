@@ -53,6 +53,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     private readonly IServiceProvider _services;
     private readonly InteractivityResponderOptions _options;
     private readonly CommandService _commandService;
+    private readonly CommandNodeInjectionService _nodeInjectionService;
 
     private readonly TokenizerOptions _tokenizerOptions;
     private readonly TreeSearchOptions _treeSearchOptions;
@@ -65,6 +66,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     /// <param name="interactionAPI">The interaction API.</param>
     /// <param name="services">The available services.</param>
     /// <param name="contextInjectionService">The context injection service.</param>
+    /// <param name="nodeInjectionService">The node injection service.</param>
     /// <param name="tokenizerOptions">The tokenizer options.</param>
     /// <param name="treeSearchOptions">The tree search options.</param>
     public InteractivityResponder
@@ -74,6 +76,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         IDiscordRestInteractionAPI interactionAPI,
         IServiceProvider services,
         ContextInjectionService contextInjectionService,
+        CommandNodeInjectionService nodeInjectionService,
         IOptions<TokenizerOptions> tokenizerOptions,
         IOptions<TreeSearchOptions> treeSearchOptions
     )
@@ -82,6 +85,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         _contextInjectionService = contextInjectionService;
         _interactionAPI = interactionAPI;
         _commandService = commandService;
+        _nodeInjectionService = nodeInjectionService;
         _options = options.Value;
 
         _tokenizerOptions = tokenizerOptions.Value;
@@ -280,6 +284,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         }
 
         var preparedCommand = prepareCommand.Entity;
+        _nodeInjectionService.Node = preparedCommand.Command.Node;
 
         var suppressResponseAttribute = preparedCommand.Command.Node
             .FindCustomAttributeOnLocalTree<SuppressInteractionResponseAttribute>();

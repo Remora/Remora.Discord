@@ -55,6 +55,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
     private readonly ExecutionEventCollectorService _eventCollector;
     private readonly IServiceProvider _services;
     private readonly ContextInjectionService _contextInjection;
+    private readonly CommandNodeInjectionService _nodeInjection;
 
     private readonly TokenizerOptions _tokenizerOptions;
     private readonly TreeSearchOptions _treeSearchOptions;
@@ -70,6 +71,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
     /// <param name="eventCollector">The event collector.</param>
     /// <param name="services">The available services.</param>
     /// <param name="contextInjection">The context injection service.</param>
+    /// <param name="nodeInjection">The command node injection service.</param>
     /// <param name="tokenizerOptions">The tokenizer options.</param>
     /// <param name="treeSearchOptions">The tree search options.</param>
     /// <param name="treeNameResolver">The tree name resolver, if available.</param>
@@ -81,6 +83,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         ExecutionEventCollectorService eventCollector,
         IServiceProvider services,
         ContextInjectionService contextInjection,
+        CommandNodeInjectionService nodeInjection,
         IOptions<TokenizerOptions> tokenizerOptions,
         IOptions<TreeSearchOptions> treeSearchOptions,
         ITreeNameResolver? treeNameResolver = null
@@ -91,6 +94,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         _eventCollector = eventCollector;
         _services = services;
         _contextInjection = contextInjection;
+        _nodeInjection = nodeInjection;
         _interactionAPI = interactionAPI;
 
         _tokenizerOptions = tokenizerOptions.Value;
@@ -126,6 +130,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
 
         // Provide the created context to any services inside this scope
         _contextInjection.Context = context;
+        _nodeInjection.Node = null;
 
         commandData.UnpackInteraction(out var commandPath, out var parameters);
 
@@ -207,6 +212,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         }
 
         var preparedCommand = prepareCommand.Entity;
+        _nodeInjection.Node = preparedCommand.Command.Node;
 
         var suppressResponseAttribute = preparedCommand.Command.Node
             .FindCustomAttributeOnLocalTree<SuppressInteractionResponseAttribute>();

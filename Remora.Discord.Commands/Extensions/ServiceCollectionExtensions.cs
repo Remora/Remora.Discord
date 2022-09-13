@@ -129,6 +129,9 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .TryAddScoped<ContextInjectionService>();
 
+        serviceCollection
+            .TryAddScoped<CommandNodeInjectionService>();
+
         serviceCollection.Decorate<IDiscordRestInteractionAPI, ResponseTrackingInteractionAPI>();
 
         // Set up context injection
@@ -167,6 +170,19 @@ public static class ServiceCollectionExtensions
                     return injectionService.Context as InteractionContext ?? throw new InvalidOperationException
                     (
                         "No interaction context has been set for this scope."
+                    );
+                }
+            );
+
+        serviceCollection
+            .TryAddTransient
+            (
+                s =>
+                {
+                    var injectionService = s.GetRequiredService<CommandNodeInjectionService>();
+                    return injectionService.Node.IsDefined(out var node) ? node : throw new InvalidOperationException
+                    (
+                        "No command node has been set for this scope."
                     );
                 }
             );
