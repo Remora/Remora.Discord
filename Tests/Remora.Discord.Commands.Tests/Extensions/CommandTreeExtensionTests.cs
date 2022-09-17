@@ -819,7 +819,7 @@ public class CommandTreeExtensionTests
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
 
-                Assert.Equal(0f, parameter.MinValue.Value);
+                Assert.Equal(0l, parameter.MinValue.Value);
                 Assert.False(parameter.MaxValue.HasValue);
             }
 
@@ -842,7 +842,7 @@ public class CommandTreeExtensionTests
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
 
-                Assert.Equal(1f, parameter.MaxValue.Value);
+                Assert.Equal(1l, parameter.MaxValue.Value);
                 Assert.False(parameter.MinValue.HasValue);
             }
 
@@ -865,8 +865,8 @@ public class CommandTreeExtensionTests
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
 
-                Assert.Equal(0f, parameter.MinValue.Value);
-                Assert.Equal(1f, parameter.MaxValue.Value);
+                Assert.Equal(0l, parameter.MinValue.Value);
+                Assert.Equal(1l, parameter.MaxValue.Value);
             }
         }
 
