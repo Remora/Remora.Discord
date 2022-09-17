@@ -608,7 +608,7 @@ public static class CommandTreeExtensions
             var minValue = parameter.Parameter.GetCustomAttribute<MinValueAttribute>();
             var maxValue = parameter.Parameter.GetCustomAttribute<MaxValueAttribute>();
 
-            if (discordType is not Integer or Number && (minValue is not null || maxValue is not null))
+            if ((discordType is not Integer && discordType is not Number) && (minValue is not null || maxValue is not null))
             {
                 return new UnsupportedParameterFeatureError
                 (
