@@ -730,6 +730,144 @@ public class CommandTreeExtensionTests
                 Assert.Equal(0u, parameter.MinLength.Value);
                 Assert.Equal(1u, parameter.MaxLength.Value);
             }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinValueConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MinValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0l, parameter.MinValue.Value);
+                Assert.False(parameter.MaxValue.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMaxValueConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MaxValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(1l, parameter.MaxValue.Value);
+                Assert.False(parameter.MinValue.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinAndMaxValueConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MinAndMaxValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0l, parameter.MinValue.Value);
+                Assert.Equal(1l, parameter.MaxValue.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinValueFloatConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MinFloatValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0f, parameter.MinValue.Value);
+                Assert.False(parameter.MaxValue.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMaxValueFloatConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MaxFloatValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(1f, parameter.MaxValue.Value);
+                Assert.False(parameter.MinValue.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinAndMaxFloatValueConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MinAndMaxFloatValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0f, parameter.MinValue.Value);
+                Assert.Equal(1f, parameter.MaxValue.Value);
+            }
         }
 
         /// <summary>
