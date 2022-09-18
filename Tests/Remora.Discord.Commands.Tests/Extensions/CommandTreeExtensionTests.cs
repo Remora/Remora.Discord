@@ -750,7 +750,7 @@ public class CommandTreeExtensionTests
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
 
-                Assert.Equal(0l, parameter.MinValue.Value);
+                Assert.Equal(0L, parameter.MinValue.Value);
                 Assert.False(parameter.MaxValue.HasValue);
             }
 
