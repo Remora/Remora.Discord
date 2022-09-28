@@ -30,6 +30,7 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Contexts;
+using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Tests;
 using Remora.Results;
 using Xunit;
@@ -54,6 +55,7 @@ public class CommandServiceExtensionTests
         public async Task ReturnsPreperationErrorIfPreperationFails()
         {
             var services = new ServiceCollection()
+                               .AddDiscordGateway(_ => "dummy")
                                .AddDiscordCommands()
                                .AddCommandTree()
                                .WithCommandGroup<GroupWithNodeContext>()
@@ -85,6 +87,7 @@ public class CommandServiceExtensionTests
     public async Task ReturnsSuccessWhenCommandIsSuccessful()
     {
         var services = new ServiceCollection()
+                           .AddDiscordGateway(_ => "dummy")
                            .AddDiscordCommands()
                            .AddCommandTree()
                            .WithCommandGroup<GroupWithNodeContext>()
@@ -113,6 +116,7 @@ public class CommandServiceExtensionTests
     public async Task ReturnsCommandErrorWhenCommandFails()
     {
         var services = new ServiceCollection()
+                           .AddDiscordGateway(_ => "dummy")
                            .AddDiscordCommands()
                            .AddCommandTree()
                            .WithCommandGroup<GroupWithNodeContext>()
@@ -143,6 +147,7 @@ public class CommandServiceExtensionTests
     public async Task ReturnsCommandErrorWhenCommandThrows()
     {
         var services = new ServiceCollection()
+                           .AddDiscordGateway(_ => "dummy")
                            .AddDiscordCommands()
                            .AddCommandTree()
                            .WithCommandGroup<GroupWithNodeContext>()
