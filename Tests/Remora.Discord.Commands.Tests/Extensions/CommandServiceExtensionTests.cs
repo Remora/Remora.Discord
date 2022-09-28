@@ -50,6 +50,7 @@ public class CommandServiceExtensionTests
         /// Tests that the returned result is unsuccessful if the command cannot be preparred (unknown/bad parameters).
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
         public async Task ReturnsPreperationErrorIfPreperationFails()
         {
             var services = new ServiceCollection()
@@ -80,6 +81,7 @@ public class CommandServiceExtensionTests
     /// Tests that the returned result is successful if the command is executed successfully.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
     public async Task ReturnsSuccessWhenCommandIsSuccessful()
     {
         var services = new ServiceCollection()
@@ -107,6 +109,7 @@ public class CommandServiceExtensionTests
     /// not wrapped in an unexpected manner.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
     public async Task ReturnsCommandErrorWhenCommandFails()
     {
         var services = new ServiceCollection()
@@ -136,6 +139,7 @@ public class CommandServiceExtensionTests
     /// not wrapped in an unexpected manner.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
     public async Task ReturnsCommandErrorWhenCommandThrows()
     {
         var services = new ServiceCollection()
