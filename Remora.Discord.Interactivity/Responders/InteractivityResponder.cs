@@ -218,37 +218,37 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             switch (component)
             {
                 case IPartialTextInputComponent textInput:
-                {
-                    if (!textInput.CustomID.IsDefined(out var id))
                     {
-                        continue;
-                    }
+                        if (!textInput.CustomID.IsDefined(out var id))
+                        {
+                            continue;
+                        }
 
-                    if (!textInput.Value.IsDefined(out var value))
-                    {
-                        continue;
-                    }
+                        if (!textInput.Value.IsDefined(out var value))
+                        {
+                            continue;
+                        }
 
-                    parameters.Add(id.Replace('-', '_').Camelize(), new[] { value });
-                    break;
-                }
+                        parameters.Add(id.Replace('-', '_').Camelize(), new[] { value });
+                        break;
+                    }
                 case IPartialSelectMenuComponent selectMenu:
-                {
-                    if (!selectMenu.CustomID.IsDefined(out var id))
                     {
-                        continue;
+                        if (!selectMenu.CustomID.IsDefined(out var id))
+                        {
+                            continue;
+                        }
+
+                        if (!selectMenu.Options.IsDefined(out var options))
+                        {
+                            continue;
+                        }
+
+                        var values = options.Where(op => op.Value.HasValue).Select(op => op.Value.Value).ToList();
+
+                        parameters.Add(id.Replace('-', '_').Camelize(), values);
+                        break;
                     }
-
-                    if (!selectMenu.Options.IsDefined(out var options))
-                    {
-                        continue;
-                    }
-
-                    var values = options.Where(op => op.Value.HasValue).Select(op => op.Value.Value).ToList();
-
-                    parameters.Add(id.Replace('-', '_').Camelize(), values);
-                    break;
-                }
             }
         }
 

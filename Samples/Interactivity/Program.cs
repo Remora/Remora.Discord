@@ -47,7 +47,7 @@ public class Program
 
         Snowflake? debugServer = null;
 
-        #if DEBUG
+#if DEBUG
         var debugServerString = configuration.GetValue<string?>("REMORA_DEBUG_SERVER");
         if (debugServerString is not null)
         {
@@ -56,7 +56,7 @@ public class Program
                 log.LogWarning("Failed to parse debug server from environment");
             }
         }
-        #endif
+#endif
 
         var slashService = services.GetRequiredService<SlashService>();
 

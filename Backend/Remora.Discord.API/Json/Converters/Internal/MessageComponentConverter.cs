@@ -82,29 +82,29 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
         switch (value)
         {
             case IActionRowComponent actionRow:
-            {
-                JsonSerializer.Serialize(writer, actionRow, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, actionRow, options);
+                    break;
+                }
             case IButtonComponent button:
-            {
-                JsonSerializer.Serialize(writer, button, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, button, options);
+                    break;
+                }
             case ISelectMenuComponent selectMenu:
-            {
-                JsonSerializer.Serialize(writer, selectMenu, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, selectMenu, options);
+                    break;
+                }
             case ITextInputComponent textInput:
-            {
-                JsonSerializer.Serialize(writer, textInput, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, textInput, options);
+                    break;
+                }
             default:
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
         }
     }
 }

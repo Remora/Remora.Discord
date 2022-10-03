@@ -57,11 +57,11 @@ internal class TokenAuthorizationHandler : DelegatingHandler
             throw new InvalidOperationException("The authentication token has to contain something.");
         }
 
-        #if NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER
         if (request.Options.TryGetValue(Constants.SkipAuthorizationOption, out _))
-        #else
+#else
         if (request.Properties.ContainsKey(Constants.SkipAuthorizationPropertyName))
-        #endif
+#endif
         {
             return base.SendAsync(request, cancellationToken);
         }

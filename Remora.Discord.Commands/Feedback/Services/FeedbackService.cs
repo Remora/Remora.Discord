@@ -632,27 +632,27 @@ public class FeedbackService
         switch (_contextInjection.Context)
         {
             case MessageContext messageContext:
-            {
-                return await SendAsync(messageContext.ChannelID, content, embeds, options, ct);
-            }
-            case InteractionContext interactionContext:
-            {
-                var messageFlags = options?.MessageFlags ?? default;
-                if (this.HasEditedOriginalMessage && _isOriginalEphemeral)
                 {
-                    messageFlags = messageFlags.HasValue
-                        ? messageFlags.Value | MessageFlags.Ephemeral
-                        : MessageFlags.Ephemeral;
+                    return await SendAsync(messageContext.ChannelID, content, embeds, options, ct);
                 }
+            case InteractionContext interactionContext:
+                {
+                    var messageFlags = options?.MessageFlags ?? default;
+                    if (this.HasEditedOriginalMessage && _isOriginalEphemeral)
+                    {
+                        messageFlags = messageFlags.HasValue
+                            ? messageFlags.Value | MessageFlags.Ephemeral
+                            : MessageFlags.Ephemeral;
+                    }
 
-                return interactionContext.HasRespondedToInteraction
-                    ? await SendFollowupAsync(content, embeds, options, messageFlags, interactionContext, ct)
-                    : await SendInteractionResponseAsync(content, embeds, options, messageFlags, interactionContext, ct);
-            }
+                    return interactionContext.HasRespondedToInteraction
+                        ? await SendFollowupAsync(content, embeds, options, messageFlags, interactionContext, ct)
+                        : await SendInteractionResponseAsync(content, embeds, options, messageFlags, interactionContext, ct);
+                }
             default:
-            {
-                throw new InvalidOperationException();
-            }
+                {
+                    throw new InvalidOperationException();
+                }
         }
     }
 

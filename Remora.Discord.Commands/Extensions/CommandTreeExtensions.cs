@@ -260,88 +260,88 @@ public static class CommandTreeExtensions
         switch (node)
         {
             case GroupNode groupNode:
-            {
-                var memberPermissionAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
-
-                var directMessagePermissionAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
-
-                if (memberPermissionAttributes.Length > 1)
                 {
-                    return new UnsupportedFeatureError
+                    var memberPermissionAttributes = groupNode.GroupTypes.Select
                     (
-                        "In a set of groups with the same name, only one may be marked with a default " +
-                        $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
-                        node
-                    );
-                }
+                        t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
+                    )
+                    .Where(attribute => attribute is not null)
+                    .ToArray();
 
-                var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
-
-                if (defaultMemberPermissionsAttribute is not null)
-                {
-                    defaultMemberPermissions = new DiscordPermissionSet
+                    var directMessagePermissionAttributes = groupNode.GroupTypes.Select
                     (
-                        defaultMemberPermissionsAttribute.Permissions.ToArray()
-                    );
+                        t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
+                    )
+                    .Where(attribute => attribute is not null)
+                    .ToArray();
+
+                    if (memberPermissionAttributes.Length > 1)
+                    {
+                        return new UnsupportedFeatureError
+                        (
+                            "In a set of groups with the same name, only one may be marked with a default " +
+                            $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                            node
+                        );
+                    }
+
+                    var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
+
+                    if (defaultMemberPermissionsAttribute is not null)
+                    {
+                        defaultMemberPermissions = new DiscordPermissionSet
+                        (
+                            defaultMemberPermissionsAttribute.Permissions.ToArray()
+                        );
+                    }
+
+                    if (directMessagePermissionAttributes.Length > 1)
+                    {
+                        return new UnsupportedFeatureError
+                        (
+                            "In a set of groups with the same name, only one may be marked with a default " +
+                            $"DM permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                            node
+                        );
+                    }
+
+                    var directMessagePermissionAttribute = directMessagePermissionAttributes.SingleOrDefault();
+
+                    if (directMessagePermissionAttribute is not null)
+                    {
+                        directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+                    }
+
+                    break;
                 }
-
-                if (directMessagePermissionAttributes.Length > 1)
-                {
-                    return new UnsupportedFeatureError
-                    (
-                        "In a set of groups with the same name, only one may be marked with a default " +
-                        $"DM permissions attribute, but {memberPermissionAttributes.Length} were found.",
-                        node
-                    );
-                }
-
-                var directMessagePermissionAttribute = directMessagePermissionAttributes.SingleOrDefault();
-
-                if (directMessagePermissionAttribute is not null)
-                {
-                    directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
-                }
-
-                break;
-            }
             case CommandNode commandNode:
-            {
-                commandType = commandNode.GetCommandType();
-
-                // Top-level command outside of a group
-                var memberPermissionsAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
-
-                var directMessagePermissionAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
-
-                if (memberPermissionsAttribute is not null)
                 {
-                    defaultMemberPermissions = new DiscordPermissionSet
-                    (
-                        memberPermissionsAttribute.Permissions.ToArray()
-                    );
-                }
+                    commandType = commandNode.GetCommandType();
 
-                if (directMessagePermissionAttribute is not null)
-                {
-                    directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
-                }
+                    // Top-level command outside of a group
+                    var memberPermissionsAttribute =
+                        commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
+                        commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
 
-                break;
-            }
+                    var directMessagePermissionAttribute =
+                        commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
+                        commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
+
+                    if (memberPermissionsAttribute is not null)
+                    {
+                        defaultMemberPermissions = new DiscordPermissionSet
+                        (
+                            memberPermissionsAttribute.Permissions.ToArray()
+                        );
+                    }
+
+                    if (directMessagePermissionAttribute is not null)
+                    {
+                        directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+                    }
+
+                    break;
+                }
         }
 
         return (commandType, directMessagePermission, defaultMemberPermissions);
@@ -563,23 +563,23 @@ public static class CommandTreeExtensions
             switch (parameter)
             {
                 case SwitchParameterShape:
-                {
-                    return new UnsupportedParameterFeatureError
-                    (
-                        "Switch parameters are not supported.",
-                        command,
-                        parameter
-                    );
-                }
+                    {
+                        return new UnsupportedParameterFeatureError
+                        (
+                            "Switch parameters are not supported.",
+                            command,
+                            parameter
+                        );
+                    }
                 case NamedCollectionParameterShape or PositionalCollectionParameterShape:
-                {
-                    return new UnsupportedParameterFeatureError
-                    (
-                        "Collection parameters are not supported.",
-                        command,
-                        parameter
-                    );
-                }
+                    {
+                        return new UnsupportedParameterFeatureError
+                        (
+                            "Collection parameters are not supported.",
+                            command,
+                            parameter
+                        );
+                    }
             }
 
             var actualParameterType = parameter.GetActualParameterType();
@@ -833,36 +833,36 @@ public static class CommandTreeExtensions
         switch (node)
         {
             case CommandNode command:
-            {
-                var type = command.GetCommandType();
-                if (type is ApplicationCommandType.ChatInput)
                 {
+                    var type = command.GetCommandType();
+                    if (type is ApplicationCommandType.ChatInput)
+                    {
+                        return description.Length <= _maxCommandDescriptionLength
+                            ? Result.FromSuccess()
+                            : new UnsupportedFeatureError
+                            (
+                                $"A command description was too long (length {description.Length}, " +
+                                $"max {_maxCommandDescriptionLength}).",
+                                node
+                            );
+                    }
+
+                    return description == string.Empty
+                        ? Result.FromSuccess()
+                        : new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
+                }
+            default:
+                {
+                    // Assume it uses the default limits
                     return description.Length <= _maxCommandDescriptionLength
                         ? Result.FromSuccess()
                         : new UnsupportedFeatureError
                         (
-                            $"A command description was too long (length {description.Length}, " +
+                            $"A group or parameter description was too long (length {description.Length}, " +
                             $"max {_maxCommandDescriptionLength}).",
                             node
                         );
                 }
-
-                return description == string.Empty
-                    ? Result.FromSuccess()
-                    : new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
-            }
-            default:
-            {
-                // Assume it uses the default limits
-                return description.Length <= _maxCommandDescriptionLength
-                    ? Result.FromSuccess()
-                    : new UnsupportedFeatureError
-                    (
-                        $"A group or parameter description was too long (length {description.Length}, " +
-                        $"max {_maxCommandDescriptionLength}).",
-                        node
-                    );
-            }
         }
     }
 

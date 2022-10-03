@@ -272,8 +272,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The collection, with the event.</returns>
     public static IServiceCollection AddPreExecutionEvent
         <
-            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-            TEvent
+    [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    TEvent
         >(this IServiceCollection serviceCollection)
         where TEvent : class, IPreExecutionEvent
     {
@@ -289,8 +289,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The collection, with the event.</returns>
     public static IServiceCollection AddPostExecutionEvent
         <
-            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-            TEvent
+    [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    TEvent
         >(this IServiceCollection serviceCollection)
         where TEvent : class, IPostExecutionEvent
     {
@@ -306,8 +306,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The collection, with the event.</returns>
     public static IServiceCollection AddExecutionEvent
         <
-            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-            TEvent
+    [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    TEvent
         >(this IServiceCollection serviceCollection)
         where TEvent : class, IPreExecutionEvent, IPostExecutionEvent
     {
@@ -326,8 +326,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The collection, with the provider.</returns>
     public static IServiceCollection AddAutocompleteProvider
         <
-            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-            TProvider
+    [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    TProvider
         >(this IServiceCollection serviceCollection)
         where TProvider : class, IAutocompleteProvider
     {

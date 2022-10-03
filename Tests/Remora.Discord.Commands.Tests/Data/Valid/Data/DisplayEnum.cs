@@ -37,7 +37,7 @@ public enum DisplayEnum
     [Display(Name = "A name")]
     B,
 
-    [Display(Name="A name, but prefers description", Description = "A preferred description")]
+    [Display(Name = "A name, but prefers description", Description = "A preferred description")]
     C,
 
     // Neither

@@ -70,21 +70,21 @@ public class StringEnumListConverter<TEnum> : JsonConverter<IReadOnlyList<TEnum>
             switch (reader.TokenType)
             {
                 case JsonTokenType.String:
-                {
-                    if (_enumValuesByJsonValue.TryGetValue(reader.GetString()!, out var enumValue))
                     {
-                        enumValues.Add(enumValue);
+                        if (_enumValuesByJsonValue.TryGetValue(reader.GetString()!, out var enumValue))
+                        {
+                            enumValues.Add(enumValue);
+                        }
+                        break;
                     }
-                    break;
-                }
                 case JsonTokenType.EndArray:
-                {
-                    return enumValues;
-                }
+                    {
+                        return enumValues;
+                    }
                 default:
-                {
-                    throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.String)} or {nameof(JsonTokenType.EndArray)}");
-                }
+                    {
+                        throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.String)} or {nameof(JsonTokenType.EndArray)}");
+                    }
             }
         }
 

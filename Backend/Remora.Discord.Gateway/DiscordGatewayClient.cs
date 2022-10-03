@@ -323,110 +323,110 @@ public class DiscordGatewayClient : IDisposable
         switch (iterationResult.Error)
         {
             case GatewayDiscordError gde:
-            {
-                _log.LogWarning
-                (
-                    "Remote transient gateway error: {Error}",
-                    gde.Message
-                );
-
-                switch (gde.CloseStatus)
-                {
-                    case GatewayCloseStatus.UnknownError:
-                    case GatewayCloseStatus.UnknownOpcode:
-                    case GatewayCloseStatus.DecodeError:
-                    case GatewayCloseStatus.AlreadyAuthenticated:
-                    case GatewayCloseStatus.RateLimited:
-                    {
-                        return true;
-                    }
-                    case GatewayCloseStatus.NotAuthenticated:
-                    case GatewayCloseStatus.InvalidSequence:
-                    case GatewayCloseStatus.SessionTimedOut:
-                    {
-                        withNewSession = true;
-                        return true;
-                    }
-                    case GatewayCloseStatus.AuthenticationFailed:
-                    case GatewayCloseStatus.InvalidShard:
-                    case GatewayCloseStatus.ShardingRequired:
-                    case GatewayCloseStatus.InvalidAPIVersion:
-                    case GatewayCloseStatus.InvalidIntents:
-                    case GatewayCloseStatus.DisallowedIntent:
-                    {
-                        shouldTerminate = true;
-                        return false;
-                    }
-                }
-
-                break;
-            }
-            case GatewayWebSocketError gwe:
-            {
-                _log.LogWarning
-                (
-                    "Transient gateway transport layer error: {Error}",
-                    gwe.Message
-                );
-
-                switch (gwe.CloseStatus)
-                {
-                    case InternalServerError:
-                    case EndpointUnavailable:
-                    {
-                        withNewSession = true;
-                        return true;
-                    }
-                }
-
-                break;
-            }
-            case GatewayError(var message, var isSessionResumable, var isCritical):
-            {
-                // We'll try reconnecting on non-critical internal errors
-                if (!isCritical)
                 {
                     _log.LogWarning
                     (
-                        "Local transient gateway error: {Error}",
-                        message
+                        "Remote transient gateway error: {Error}",
+                        gde.Message
                     );
 
-                    withNewSession = !isSessionResumable;
-                    return true;
+                    switch (gde.CloseStatus)
+                    {
+                        case GatewayCloseStatus.UnknownError:
+                        case GatewayCloseStatus.UnknownOpcode:
+                        case GatewayCloseStatus.DecodeError:
+                        case GatewayCloseStatus.AlreadyAuthenticated:
+                        case GatewayCloseStatus.RateLimited:
+                            {
+                                return true;
+                            }
+                        case GatewayCloseStatus.NotAuthenticated:
+                        case GatewayCloseStatus.InvalidSequence:
+                        case GatewayCloseStatus.SessionTimedOut:
+                            {
+                                withNewSession = true;
+                                return true;
+                            }
+                        case GatewayCloseStatus.AuthenticationFailed:
+                        case GatewayCloseStatus.InvalidShard:
+                        case GatewayCloseStatus.ShardingRequired:
+                        case GatewayCloseStatus.InvalidAPIVersion:
+                        case GatewayCloseStatus.InvalidIntents:
+                        case GatewayCloseStatus.DisallowedIntent:
+                            {
+                                shouldTerminate = true;
+                                return false;
+                            }
+                    }
+
+                    break;
                 }
-
-                _log.LogError
-                (
-                    "Local unrecoverable gateway error: {Error}",
-                    message
-                );
-
-                shouldTerminate = true;
-                return false;
-            }
-            case ExceptionError exe:
-            {
-                switch (exe.Exception)
+            case GatewayWebSocketError gwe:
                 {
-                    case HttpRequestException or WebSocketException or TimeoutRejectedException:
+                    _log.LogWarning
+                    (
+                        "Transient gateway transport layer error: {Error}",
+                        gwe.Message
+                    );
+
+                    switch (gwe.CloseStatus)
+                    {
+                        case InternalServerError:
+                        case EndpointUnavailable:
+                            {
+                                withNewSession = true;
+                                return true;
+                            }
+                    }
+
+                    break;
+                }
+            case GatewayError(var message, var isSessionResumable, var isCritical):
+                {
+                    // We'll try reconnecting on non-critical internal errors
+                    if (!isCritical)
                     {
                         _log.LogWarning
                         (
-                            exe.Exception,
-                            "Transient error in gateway client: {Exception}",
-                            exe.Message
+                            "Local transient gateway error: {Error}",
+                            message
                         );
 
+                        withNewSession = !isSessionResumable;
                         return true;
                     }
-                    default:
+
+                    _log.LogError
+                    (
+                        "Local unrecoverable gateway error: {Error}",
+                        message
+                    );
+
+                    shouldTerminate = true;
+                    return false;
+                }
+            case ExceptionError exe:
+                {
+                    switch (exe.Exception)
                     {
-                        shouldTerminate = true;
-                        return false;
+                        case HttpRequestException or WebSocketException or TimeoutRejectedException:
+                            {
+                                _log.LogWarning
+                                (
+                                    exe.Exception,
+                                    "Transient error in gateway client: {Exception}",
+                                    exe.Message
+                                );
+
+                                return true;
+                            }
+                        default:
+                            {
+                                shouldTerminate = true;
+                                return false;
+                            }
                     }
                 }
-            }
         }
 
         // We don't know what happened... try reconnecting?
@@ -444,194 +444,194 @@ public class DiscordGatewayClient : IDisposable
         {
             case GatewayConnectionStatus.Offline:
             case GatewayConnectionStatus.Disconnected:
-            {
-                _log.LogInformation("Retrieving gateway endpoint...");
-
-                // Start connecting
-                var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(stopRequested);
-                if (!getGatewayEndpoint.IsSuccess)
                 {
-                    return Result.FromError
-                    (
-                        new GatewayError("Failed to get the gateway endpoint.", false, true),
-                        getGatewayEndpoint
-                    );
-                }
+                    _log.LogInformation("Retrieving gateway endpoint...");
 
-                var endpointInformation = getGatewayEndpoint.Entity;
-                if (endpointInformation.Shards.IsDefined(out var shards))
-                {
-                    if (shards > 1 && _gatewayOptions.ShardIdentification?.ShardCount != shards)
+                    // Start connecting
+                    var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(stopRequested);
+                    if (!getGatewayEndpoint.IsSuccess)
                     {
-                        _log.LogInformation
+                        return Result.FromError
                         (
-                            "Discord suggests {Shards} shards for this bot, but your sharding configuration does " +
-                            "not match this. Consider switching to a sharded topology of at least that many shards",
-                            shards
+                            new GatewayError("Failed to get the gateway endpoint.", false, true),
+                            getGatewayEndpoint
                         );
                     }
-                }
 
-                if (endpointInformation.SessionStartLimit.IsDefined(out var startLimit))
-                {
-                    if (_sessionID is null)
+                    var endpointInformation = getGatewayEndpoint.Entity;
+                    if (endpointInformation.Shards.IsDefined(out var shards))
                     {
-                        if (startLimit.Remaining <= 0)
+                        if (shards > 1 && _gatewayOptions.ShardIdentification?.ShardCount != shards)
                         {
-                            _log.LogWarning
+                            _log.LogInformation
                             (
-                                "No further sessions may be started right now for this bot. Waiting {Time} for " +
-                                "the limits to reset...",
+                                "Discord suggests {Shards} shards for this bot, but your sharding configuration does " +
+                                "not match this. Consider switching to a sharded topology of at least that many shards",
+                                shards
+                            );
+                        }
+                    }
+
+                    if (endpointInformation.SessionStartLimit.IsDefined(out var startLimit))
+                    {
+                        if (_sessionID is null)
+                        {
+                            if (startLimit.Remaining <= 0)
+                            {
+                                _log.LogWarning
+                                (
+                                    "No further sessions may be started right now for this bot. Waiting {Time} for " +
+                                    "the limits to reset...",
+                                    startLimit.ResetAfter
+                                );
+
+                                await Task.Delay(startLimit.ResetAfter, stopRequested);
+                                return new GatewayError("Session start limits reached; retrying...", false, false);
+                            }
+
+                            _log.LogInformation
+                            (
+                                "Starting a new session ({Remaining} session starts remaining of {Total}; limits " +
+                                "reset in {Time})",
+                                startLimit.Remaining,
+                                startLimit.Total,
                                 startLimit.ResetAfter
                             );
-
-                            await Task.Delay(startLimit.ResetAfter, stopRequested);
-                            return new GatewayError("Session start limits reached; retrying...", false, false);
                         }
-
-                        _log.LogInformation
-                        (
-                            "Starting a new session ({Remaining} session starts remaining of {Total}; limits " +
-                            "reset in {Time})",
-                            startLimit.Remaining,
-                            startLimit.Total,
-                            startLimit.ResetAfter
-                        );
+                        else
+                        {
+                            _log.LogInformation
+                            (
+                                "Resuming an existing session ({Remaining} new session starts remaining of {Total}; " +
+                                "limits reset in {Time})",
+                                startLimit.Remaining,
+                                startLimit.Total,
+                                startLimit.ResetAfter
+                            );
+                        }
                     }
                     else
                     {
-                        _log.LogInformation
+                        _log.LogWarning
                         (
-                            "Resuming an existing session ({Remaining} new session starts remaining of {Total}; " +
-                            "limits reset in {Time})",
-                            startLimit.Remaining,
-                            startLimit.Total,
-                            startLimit.ResetAfter
+                            "There are no session start limits available for this connection. Rate limits may be " +
+                            "unexpectedly hit"
                         );
                     }
-                }
-                else
-                {
-                    _log.LogWarning
+
+                    var gatewayEndpointUrl = _resumeGatewayUrl is not null && _isSessionResumable
+                        ? _resumeGatewayUrl
+                        : getGatewayEndpoint.Entity.Url;
+
+                    var gatewayEndpoint = $"{gatewayEndpointUrl}?v={(int)DiscordAPIVersion.V10}&encoding=json";
+                    if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
+                    {
+                        return new GatewayError
+                        (
+                            "Failed to parse the received gateway endpoint.",
+                            false,
+                            true
+                        );
+                    }
+
+                    _log.LogInformation("Connecting to the gateway...");
+
+                    var transportConnectResult = await _transportService.ConnectAsync(gatewayUri, stopRequested);
+                    if (!transportConnectResult.IsSuccess)
+                    {
+                        return transportConnectResult;
+                    }
+
+                    var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(TimeSpan.FromSeconds(5));
+
+                    var receiveHello = await timeoutPolicy.ExecuteAsync
                     (
-                        "There are no session start limits available for this connection. Rate limits may be " +
-                        "unexpectedly hit"
+                        c => _transportService.ReceivePayloadAsync(c),
+                        stopRequested
                     );
-                }
 
-                var gatewayEndpointUrl = _resumeGatewayUrl is not null && _isSessionResumable
-                    ? _resumeGatewayUrl
-                    : getGatewayEndpoint.Entity.Url;
+                    if (!receiveHello.IsSuccess)
+                    {
+                        return Result.FromError
+                        (
+                            new GatewayError("Failed to receive the Hello payload.", false, true),
+                            receiveHello
+                        );
+                    }
 
-                var gatewayEndpoint = $"{gatewayEndpointUrl}?v={(int)DiscordAPIVersion.V10}&encoding=json";
-                if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
-                {
-                    return new GatewayError
+                    if (receiveHello.Entity is not IPayload<IHello> hello)
+                    {
+                        // Not receiving a hello is a non-recoverable error
+                        return new GatewayError
+                        (
+                            "The first payload from the gateway was not a hello. Rude!",
+                            false,
+                            true
+                        );
+                    }
+
+                    var dispatch = await _responderDispatch.DispatchAsync
                     (
-                        "Failed to parse the received gateway endpoint.",
-                        false,
-                        true
+                        receiveHello.Entity,
+                        _disconnectRequestedSource.Token
                     );
+
+                    if (!dispatch.IsSuccess)
+                    {
+                        return dispatch;
+                    }
+
+                    // Set up the send task
+                    var heartbeatInterval = hello.Data.HeartbeatInterval;
+
+                    _sendTask = GatewaySenderAsync(heartbeatInterval, _disconnectRequestedSource.Token);
+
+                    // Attempt to connect or resume
+                    var connectResult = await AttemptConnectionAsync(stopRequested);
+                    if (!connectResult.IsSuccess)
+                    {
+                        return connectResult;
+                    }
+
+                    // Now, set up the receive task and start receiving events normally
+                    _receiveTask = GatewayReceiverAsync(heartbeatInterval, _disconnectRequestedSource.Token);
+
+                    _log.LogInformation("Connected");
+
+                    _shouldReconnect = false;
+                    _isSessionResumable = false;
+                    _lastReceivedHeartbeatAck = 0;
+                    _lastReceivedEvent = 0;
+
+                    _connectionStatus = GatewayConnectionStatus.Connected;
+
+                    break;
                 }
-
-                _log.LogInformation("Connecting to the gateway...");
-
-                var transportConnectResult = await _transportService.ConnectAsync(gatewayUri, stopRequested);
-                if (!transportConnectResult.IsSuccess)
-                {
-                    return transportConnectResult;
-                }
-
-                var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(TimeSpan.FromSeconds(5));
-
-                var receiveHello = await timeoutPolicy.ExecuteAsync
-                (
-                    c => _transportService.ReceivePayloadAsync(c),
-                    stopRequested
-                );
-
-                if (!receiveHello.IsSuccess)
-                {
-                    return Result.FromError
-                    (
-                        new GatewayError("Failed to receive the Hello payload.", false, true),
-                        receiveHello
-                    );
-                }
-
-                if (receiveHello.Entity is not IPayload<IHello> hello)
-                {
-                    // Not receiving a hello is a non-recoverable error
-                    return new GatewayError
-                    (
-                        "The first payload from the gateway was not a hello. Rude!",
-                        false,
-                        true
-                    );
-                }
-
-                var dispatch = await _responderDispatch.DispatchAsync
-                (
-                    receiveHello.Entity,
-                    _disconnectRequestedSource.Token
-                );
-
-                if (!dispatch.IsSuccess)
-                {
-                    return dispatch;
-                }
-
-                // Set up the send task
-                var heartbeatInterval = hello.Data.HeartbeatInterval;
-
-                _sendTask = GatewaySenderAsync(heartbeatInterval, _disconnectRequestedSource.Token);
-
-                // Attempt to connect or resume
-                var connectResult = await AttemptConnectionAsync(stopRequested);
-                if (!connectResult.IsSuccess)
-                {
-                    return connectResult;
-                }
-
-                // Now, set up the receive task and start receiving events normally
-                _receiveTask = GatewayReceiverAsync(heartbeatInterval, _disconnectRequestedSource.Token);
-
-                _log.LogInformation("Connected");
-
-                _shouldReconnect = false;
-                _isSessionResumable = false;
-                _lastReceivedHeartbeatAck = 0;
-                _lastReceivedEvent = 0;
-
-                _connectionStatus = GatewayConnectionStatus.Connected;
-
-                break;
-            }
             case GatewayConnectionStatus.Connected:
-            {
-                // Check the send and receive tasks for errors
-                if (_sendTask.IsCompleted)
                 {
-                    var sendResult = await _sendTask;
-                    if (!sendResult.IsSuccess)
+                    // Check the send and receive tasks for errors
+                    if (_sendTask.IsCompleted)
                     {
-                        return sendResult;
+                        var sendResult = await _sendTask;
+                        if (!sendResult.IsSuccess)
+                        {
+                            return sendResult;
+                        }
                     }
-                }
 
-                if (_receiveTask.IsCompleted)
-                {
-                    var receiveResult = await _receiveTask;
-                    if (!receiveResult.IsSuccess)
+                    if (_receiveTask.IsCompleted)
                     {
-                        return receiveResult;
+                        var receiveResult = await _receiveTask;
+                        if (!receiveResult.IsSuccess)
+                        {
+                            return receiveResult;
+                        }
                     }
-                }
 
-                // No need to check for errors like crazy
-                await Task.Delay(TimeSpan.FromMilliseconds(100), stopRequested);
-                break;
-            }
+                    // No need to check for errors like crazy
+                    await Task.Delay(TimeSpan.FromMilliseconds(100), stopRequested);
+                    break;
+                }
         }
 
         if (!stopRequested.IsCancellationRequested)
@@ -728,58 +728,58 @@ public class DiscordGatewayClient : IDisposable
                 switch (receiveReady.Entity)
                 {
                     case IPayload<IHeartbeatAcknowledge>:
-                    {
-                        continue;
-                    }
-                    case IPayload<IReconnect>:
-                    {
-                        return new GatewayError
-                        (
-                            "The newly created session was invalidated by Discord.",
-                            false,
-                            false
-                        );
-                    }
-                    case IPayload<IInvalidSession> invalidSession:
-                    {
-                        return new GatewayError
-                        (
-                            "The newly created session was invalidated by Discord.",
-                            invalidSession.Data.IsResumable,
-                            false
-                        );
-                    }
-                    case IPayload<IReady> ready:
-                    {
-                        var dispatch = await _responderDispatch.DispatchAsync
-                        (
-                            ready,
-                            _disconnectRequestedSource.Token
-                        );
-
-                        if (!dispatch.IsSuccess)
                         {
-                            return dispatch;
+                            continue;
                         }
+                    case IPayload<IReconnect>:
+                        {
+                            return new GatewayError
+                            (
+                                "The newly created session was invalidated by Discord.",
+                                false,
+                                false
+                            );
+                        }
+                    case IPayload<IInvalidSession> invalidSession:
+                        {
+                            return new GatewayError
+                            (
+                                "The newly created session was invalidated by Discord.",
+                                invalidSession.Data.IsResumable,
+                                false
+                            );
+                        }
+                    case IPayload<IReady> ready:
+                        {
+                            var dispatch = await _responderDispatch.DispatchAsync
+                            (
+                                ready,
+                                _disconnectRequestedSource.Token
+                            );
 
-                        _sessionID = ready.Data.SessionID;
-                        _resumeGatewayUrl = ready.Data.ResumeGatewayUrl;
+                            if (!dispatch.IsSuccess)
+                            {
+                                return dispatch;
+                            }
 
-                        return Result.FromSuccess();
-                    }
+                            _sessionID = ready.Data.SessionID;
+                            _resumeGatewayUrl = ready.Data.ResumeGatewayUrl;
+
+                            return Result.FromSuccess();
+                        }
                     default:
-                    {
-                        _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
+                        {
+                            _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
 
-                        return new GatewayError
-                        (
-                            $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
-                            $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
-                            $"\tActual: {receiveReady.Entity.GetType().FullName}",
-                            false,
-                            true
-                        );
-                    }
+                            return new GatewayError
+                            (
+                                $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
+                                $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
+                                $"\tActual: {receiveReady.Entity.GetType().FullName}",
+                                false,
+                                true
+                            );
+                        }
                 }
             }
         }
@@ -835,21 +835,21 @@ public class DiscordGatewayClient : IDisposable
                 switch (receiveEvent.Entity)
                 {
                     case IPayload<IHeartbeatAcknowledge>:
-                    {
-                        continue;
-                    }
+                        {
+                            continue;
+                        }
                     case IPayload<IInvalidSession>:
-                    {
-                        _log.LogInformation("Resume rejected by the gateway");
+                        {
+                            _log.LogInformation("Resume rejected by the gateway");
 
-                        await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
-                        return await CreateNewSessionAsync(ct);
-                    }
+                            await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
+                            return await CreateNewSessionAsync(ct);
+                        }
                     case IPayload<IResumed>:
-                    {
-                        resuming = false;
-                        break;
-                    }
+                        {
+                            resuming = false;
+                            break;
+                        }
                 }
 
                 var dispatch = await _responderDispatch.DispatchAsync
@@ -1100,36 +1100,36 @@ public class DiscordGatewayClient : IDisposable
                 switch (receivedPayload.Entity)
                 {
                     case IPayload<IReconnect>:
-                    {
-                        _shouldReconnect = true;
-                        _isSessionResumable = true;
+                        {
+                            _shouldReconnect = true;
+                            _isSessionResumable = true;
 
-                        break;
-                    }
+                            break;
+                        }
                     case IPayload<IInvalidSession> invalidSession:
-                    {
-                        _shouldReconnect = true;
-                        _isSessionResumable = invalidSession.Data.IsResumable;
+                        {
+                            _shouldReconnect = true;
+                            _isSessionResumable = invalidSession.Data.IsResumable;
 
-                        break;
-                    }
+                            break;
+                        }
                     case IPayload<IHeartbeat>:
-                    {
-                        // 32-bit reads are atomic, so this is fine
-                        var lastSequenceNumber = _lastSequenceNumber;
+                        {
+                            // 32-bit reads are atomic, so this is fine
+                            var lastSequenceNumber = _lastSequenceNumber;
 
-                        var heartbeat = new Heartbeat
-                        (
-                            lastSequenceNumber == 0 ? null : lastSequenceNumber
-                        );
+                            var heartbeat = new Heartbeat
+                            (
+                                lastSequenceNumber == 0 ? null : lastSequenceNumber
+                            );
 
-                        SubmitCommand(heartbeat);
-                        continue;
-                    }
+                            SubmitCommand(heartbeat);
+                            continue;
+                        }
                     default:
-                    {
-                        continue;
-                    }
+                        {
+                            continue;
+                        }
                 }
 
                 break;

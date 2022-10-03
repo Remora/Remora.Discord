@@ -185,23 +185,23 @@ internal class PayloadConverter : JsonConverter<IPayload?>
         switch (payloadData)
         {
             case Reconnect or HeartbeatAcknowledge:
-            {
-                writer.WriteNullValue();
-                break;
-            }
+                {
+                    writer.WriteNullValue();
+                    break;
+                }
             case UnknownEvent unknownEvent:
-            {
-                using var eventData = JsonDocument.Parse(unknownEvent.Data);
-                var innerData = eventData.RootElement.GetProperty("d");
+                {
+                    using var eventData = JsonDocument.Parse(unknownEvent.Data);
+                    var innerData = eventData.RootElement.GetProperty("d");
 
-                innerData.WriteTo(writer);
-                break;
-            }
+                    innerData.WriteTo(writer);
+                    break;
+                }
             default:
-            {
-                JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
+                    break;
+                }
         }
 
         writer.WriteEndObject();

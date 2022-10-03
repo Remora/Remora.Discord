@@ -100,29 +100,29 @@ public class MockedTransportService : IPayloadTransportService
                 switch (c.Matches(endpoint))
                 {
                     case EventMatch.Pass:
-                    {
-                        if (!sequence.MoveNext())
                         {
-                            _finishedSequences.Add(sequence);
+                            if (!sequence.MoveNext())
+                            {
+                                _finishedSequences.Add(sequence);
+                            }
+
+                            _lastAdvance = DateTimeOffset.UtcNow;
+                            sequenceAdvanced = true;
+
+                            break;
                         }
-
-                        _lastAdvance = DateTimeOffset.UtcNow;
-                        sequenceAdvanced = true;
-
-                        break;
-                    }
                     case EventMatch.Fail:
-                    {
-                        throw new TrueException("An event in a sequence failed.", null);
-                    }
+                        {
+                            throw new TrueException("An event in a sequence failed.", null);
+                        }
                     case EventMatch.Ignore:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                     default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(endpoint));
-                    }
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(endpoint));
+                        }
                 }
             }
 
@@ -138,26 +138,26 @@ public class MockedTransportService : IPayloadTransportService
                     switch (c.Matches(endpoint))
                     {
                         case EventMatch.Pass:
-                        {
-                            if (!continuousSequence.MoveNext())
                             {
-                                continuousSequence.Reset();
-                            }
+                                if (!continuousSequence.MoveNext())
+                                {
+                                    continuousSequence.Reset();
+                                }
 
-                            break;
-                        }
+                                break;
+                            }
                         case EventMatch.Fail:
-                        {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
-                        }
+                            {
+                                throw new TrueException("An event in a continuous sequence failed.", null);
+                            }
                         case EventMatch.Ignore:
-                        {
-                            break;
-                        }
+                            {
+                                break;
+                            }
                         default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(endpoint));
-                        }
+                            {
+                                throw new ArgumentOutOfRangeException(nameof(endpoint));
+                            }
                     }
                 }
             }
@@ -201,31 +201,31 @@ public class MockedTransportService : IPayloadTransportService
                 switch (r.Matches(payload, true))
                 {
                     case EventMatch.Pass:
-                    {
-                        if (!sequence.MoveNext())
                         {
-                            _finishedSequences.Add(sequence);
+                            if (!sequence.MoveNext())
+                            {
+                                _finishedSequences.Add(sequence);
+                            }
+
+                            _lastAdvance = DateTimeOffset.UtcNow;
+                            sequenceAdvanced = true;
+                            hadExpectedEvent = true;
+
+                            break;
                         }
-
-                        _lastAdvance = DateTimeOffset.UtcNow;
-                        sequenceAdvanced = true;
-                        hadExpectedEvent = true;
-
-                        break;
-                    }
                     case EventMatch.Fail:
-                    {
-                        throw new TrueException("An event in a sequence failed.", null);
-                    }
+                        {
+                            throw new TrueException("An event in a sequence failed.", null);
+                        }
                     case EventMatch.Ignore:
-                    {
-                        hadExpectedEvent = false;
-                        break;
-                    }
+                        {
+                            hadExpectedEvent = false;
+                            break;
+                        }
                     default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(payload));
-                    }
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(payload));
+                        }
                 }
             }
 
@@ -243,29 +243,29 @@ public class MockedTransportService : IPayloadTransportService
                     switch (r.Matches(payload, true))
                     {
                         case EventMatch.Pass:
-                        {
-                            if (!continuousSequence.MoveNext())
                             {
-                                continuousSequence.Reset();
+                                if (!continuousSequence.MoveNext())
+                                {
+                                    continuousSequence.Reset();
+                                }
+
+                                hadExpectedEvent = true;
+
+                                break;
                             }
-
-                            hadExpectedEvent = true;
-
-                            break;
-                        }
                         case EventMatch.Fail:
-                        {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
-                        }
+                            {
+                                throw new TrueException("An event in a continuous sequence failed.", null);
+                            }
                         case EventMatch.Ignore:
-                        {
-                            hadExpectedEvent = false;
-                            break;
-                        }
+                            {
+                                hadExpectedEvent = false;
+                                break;
+                            }
                         default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(payload));
-                        }
+                            {
+                                throw new ArgumentOutOfRangeException(nameof(payload));
+                            }
                     }
                 }
             }
@@ -311,27 +311,27 @@ public class MockedTransportService : IPayloadTransportService
                     switch (sequence.Current)
                     {
                         case SendEvent s:
-                        {
-                            payload = s.CreatePayload();
-                            if (!sequence.MoveNext())
                             {
-                                _finishedSequences.Add(sequence);
-                            }
+                                payload = s.CreatePayload();
+                                if (!sequence.MoveNext())
+                                {
+                                    _finishedSequences.Add(sequence);
+                                }
 
-                            _lastAdvance = DateTimeOffset.UtcNow;
-                            sequenceAdvanced = true;
-                            break;
-                        }
+                                _lastAdvance = DateTimeOffset.UtcNow;
+                                sequenceAdvanced = true;
+                                break;
+                            }
                         case SendExceptionEvent se:
-                        {
-                            if (!sequence.MoveNext())
                             {
-                                _finishedSequences.Add(sequence);
-                            }
+                                if (!sequence.MoveNext())
+                                {
+                                    _finishedSequences.Add(sequence);
+                                }
 
-                            this.IsConnected = false;
-                            throw se.CreateException();
-                        }
+                                this.IsConnected = false;
+                                throw se.CreateException();
+                            }
                     }
 
                     if (payload is not null)
@@ -408,29 +408,29 @@ public class MockedTransportService : IPayloadTransportService
                 switch (d.Matches())
                 {
                     case EventMatch.Pass:
-                    {
-                        if (!sequence.MoveNext())
                         {
-                            _finishedSequences.Add(sequence);
+                            if (!sequence.MoveNext())
+                            {
+                                _finishedSequences.Add(sequence);
+                            }
+
+                            _lastAdvance = DateTimeOffset.UtcNow;
+                            sequenceAdvanced = true;
+
+                            break;
                         }
-
-                        _lastAdvance = DateTimeOffset.UtcNow;
-                        sequenceAdvanced = true;
-
-                        break;
-                    }
                     case EventMatch.Fail:
-                    {
-                        throw new TrueException("An event in a sequence failed.", null);
-                    }
+                        {
+                            throw new TrueException("An event in a sequence failed.", null);
+                        }
                     case EventMatch.Ignore:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                     default:
-                    {
-                        throw new ArgumentOutOfRangeException(nameof(d));
-                    }
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(d));
+                        }
                 }
             }
 
@@ -446,26 +446,26 @@ public class MockedTransportService : IPayloadTransportService
                     switch (d.Matches())
                     {
                         case EventMatch.Pass:
-                        {
-                            if (!continuousSequence.MoveNext())
                             {
-                                continuousSequence.Reset();
-                            }
+                                if (!continuousSequence.MoveNext())
+                                {
+                                    continuousSequence.Reset();
+                                }
 
-                            break;
-                        }
+                                break;
+                            }
                         case EventMatch.Fail:
-                        {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
-                        }
+                            {
+                                throw new TrueException("An event in a continuous sequence failed.", null);
+                            }
                         case EventMatch.Ignore:
-                        {
-                            break;
-                        }
+                            {
+                                break;
+                            }
                         default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(d));
-                        }
+                            {
+                                throw new ArgumentOutOfRangeException(nameof(d));
+                            }
                     }
                 }
             }

@@ -93,8 +93,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The service collection, with the responder added.</returns>
     public static IServiceCollection AddResponder
         <
-            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-            TResponder
+    [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    TResponder
         >
     (
         this IServiceCollection serviceCollection,

@@ -82,29 +82,29 @@ internal class PartialMessageComponentConverter : JsonConverter<IPartialMessageC
         switch (value)
         {
             case IPartialActionRowComponent actionRow:
-            {
-                JsonSerializer.Serialize(writer, actionRow, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, actionRow, options);
+                    break;
+                }
             case IPartialButtonComponent button:
-            {
-                JsonSerializer.Serialize(writer, button, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, button, options);
+                    break;
+                }
             case IPartialSelectMenuComponent selectMenu:
-            {
-                JsonSerializer.Serialize(writer, selectMenu, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, selectMenu, options);
+                    break;
+                }
             case IPartialTextInputComponent textInput:
-            {
-                JsonSerializer.Serialize(writer, textInput, options);
-                break;
-            }
+                {
+                    JsonSerializer.Serialize(writer, textInput, options);
+                    break;
+                }
             default:
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
         }
     }
 }

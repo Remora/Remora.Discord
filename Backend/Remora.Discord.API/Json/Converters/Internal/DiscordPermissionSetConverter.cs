@@ -45,24 +45,24 @@ internal class DiscordPermissionSetConverter : JsonConverter<IDiscordPermissionS
         switch (reader.TokenType)
         {
             case JsonTokenType.String:
-            {
-                var rawString = reader.GetString();
-                if (rawString is null)
                 {
-                    throw new JsonException();
-                }
+                    var rawString = reader.GetString();
+                    if (rawString is null)
+                    {
+                        throw new JsonException();
+                    }
 
-                if (!BigInteger.TryParse(rawString, out var value))
-                {
-                    throw new JsonException();
-                }
+                    if (!BigInteger.TryParse(rawString, out var value))
+                    {
+                        throw new JsonException();
+                    }
 
-                return new DiscordPermissionSet(value);
-            }
+                    return new DiscordPermissionSet(value);
+                }
             default:
-            {
-                throw new JsonException();
-            }
+                {
+                    throw new JsonException();
+                }
         }
     }
 

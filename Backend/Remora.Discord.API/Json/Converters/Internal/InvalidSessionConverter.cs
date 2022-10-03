@@ -38,13 +38,13 @@ internal class InvalidSessionConverter : JsonConverter<IInvalidSession?>
         {
             case JsonTokenType.True:
             case JsonTokenType.False:
-            {
-                return new InvalidSession(reader.GetBoolean());
-            }
+                {
+                    return new InvalidSession(reader.GetBoolean());
+                }
             default:
-            {
-                throw new JsonException();
-            }
+                {
+                    throw new JsonException();
+                }
         }
     }
 

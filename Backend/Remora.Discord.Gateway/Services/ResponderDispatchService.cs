@@ -365,31 +365,31 @@ public class ResponderDispatchService : IAsyncDisposable
                 switch (responderResult.Error)
                 {
                     case ExceptionError exe:
-                    {
-                        if (exe.Exception is OperationCanceledException)
                         {
-                            continue;
+                            if (exe.Exception is OperationCanceledException)
+                            {
+                                continue;
+                            }
+
+                            _log.LogWarning
+                            (
+                                exe.Exception,
+                                "Error in gateway event responder: {Exception}",
+                                exe.Message
+                            );
+
+                            break;
                         }
-
-                        _log.LogWarning
-                        (
-                            exe.Exception,
-                            "Error in gateway event responder: {Exception}",
-                            exe.Message
-                        );
-
-                        break;
-                    }
                     default:
-                    {
-                        _log.LogWarning
-                        (
-                            "Error in gateway event responder.\n{Reason}",
-                            responderResult.Error!.Message
-                        );
+                        {
+                            _log.LogWarning
+                            (
+                                "Error in gateway event responder.\n{Reason}",
+                                responderResult.Error!.Message
+                            );
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
         }

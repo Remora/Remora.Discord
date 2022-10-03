@@ -58,7 +58,8 @@ public class SlashService
     <
         (Optional<Snowflake> GuildID, Snowflake CommandID),
         OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
-    > CommandMap { get; private set; }
+    > CommandMap
+    { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SlashService"/> class.

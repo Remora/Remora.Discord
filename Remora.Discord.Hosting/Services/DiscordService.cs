@@ -76,34 +76,34 @@ public class DiscordService : BackgroundService
             switch (runResult.Error)
             {
                 case ExceptionError exe:
-                {
-                    if (exe.Exception is OperationCanceledException)
                     {
-                        // No need for further cleanup
-                        return;
+                        if (exe.Exception is OperationCanceledException)
+                        {
+                            // No need for further cleanup
+                            return;
+                        }
+
+                        _logger.LogError
+                        (
+                            exe.Exception,
+                            "Exception during gateway connection: {ExceptionMessage}",
+                            exe.Message
+                        );
+
+                        break;
                     }
-
-                    _logger.LogError
-                    (
-                        exe.Exception,
-                        "Exception during gateway connection: {ExceptionMessage}",
-                        exe.Message
-                    );
-
-                    break;
-                }
                 case GatewayWebSocketError:
                 case GatewayDiscordError:
                 case GatewayError:
-                {
-                    _logger.LogError("Gateway error: {Message}", runResult.Error.Message);
-                    break;
-                }
+                    {
+                        _logger.LogError("Gateway error: {Message}", runResult.Error.Message);
+                        break;
+                    }
                 default:
-                {
-                    _logger.LogError("Unknown error: {Message}", runResult.Error?.Message);
-                    break;
-                }
+                    {
+                        _logger.LogError("Unknown error: {Message}", runResult.Error?.Message);
+                        break;
+                    }
             }
 
             if (_options.TerminateApplicationOnCriticalGatewayErrors)

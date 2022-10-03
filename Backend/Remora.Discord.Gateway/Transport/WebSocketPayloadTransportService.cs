@@ -130,18 +130,18 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             {
                 case WebSocketState.Open:
                 case WebSocketState.Connecting:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
                 default:
-                {
-                    socket.Dispose();
-                    return new Results.WebSocketError
-                    (
-                        socket.State,
-                        "Failed to connect to the endpoint."
-                    );
-                }
+                    {
+                        socket.Dispose();
+                        return new Results.WebSocketError
+                        (
+                            socket.State,
+                            "Failed to connect to the endpoint."
+                        );
+                    }
             }
 
             _clientWebSocket = socket;
@@ -299,34 +299,34 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             case WebSocketState.Open:
             case WebSocketState.CloseReceived:
             case WebSocketState.CloseSent:
-            {
-                try
                 {
-                    // 1012 is used here instead of normal closure, because close codes 1000 and 1001 don't
-                    // allow for reconnection. 1012 is referenced in the websocket protocol as "Service restart",
-                    // which makes sense for our use case.
-                    var closeCode = reconnectionIntended
-                        ? (WebSocketCloseStatus)1012
-                        : WebSocketCloseStatus.NormalClosure;
+                    try
+                    {
+                        // 1012 is used here instead of normal closure, because close codes 1000 and 1001 don't
+                        // allow for reconnection. 1012 is referenced in the websocket protocol as "Service restart",
+                        // which makes sense for our use case.
+                        var closeCode = reconnectionIntended
+                            ? (WebSocketCloseStatus)1012
+                            : WebSocketCloseStatus.NormalClosure;
 
-                    await _clientWebSocket.CloseAsync
-                    (
-                        closeCode,
-                        "Terminating connection by user request.",
-                        ct
-                    );
-                }
-                catch (WebSocketException)
-                {
-                    // Most likely due to some kind of premature or forced disconnection; we'll live with it
-                }
-                catch (OperationCanceledException)
-                {
-                    // We still need to cleanup the socket
-                }
+                        await _clientWebSocket.CloseAsync
+                        (
+                            closeCode,
+                            "Terminating connection by user request.",
+                            ct
+                        );
+                    }
+                    catch (WebSocketException)
+                    {
+                        // Most likely due to some kind of premature or forced disconnection; we'll live with it
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // We still need to cleanup the socket
+                    }
 
-                break;
-            }
+                    break;
+                }
         }
 
         _clientWebSocket.Dispose();

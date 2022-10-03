@@ -554,7 +554,7 @@ public class InteractionResponderTests
                 .AddCommandTree()
                     .WithCommandGroup<EphemeralCommand>()
                 .Finish()
-                .Configure<InteractionResponderOptions>(o => o.UseEphemeralResponses = true );
+                .Configure<InteractionResponderOptions>(o => o.UseEphemeralResponses = true);
         }
     }
 }

@@ -181,99 +181,99 @@ internal class Program
         switch (node)
         {
             case JsonObject jsonObject:
-            {
-                var replacements = new Dictionary<string, string>();
-                foreach (var (name, value) in jsonObject)
                 {
-                    switch (value)
+                    var replacements = new Dictionary<string, string>();
+                    foreach (var (name, value) in jsonObject)
                     {
-                        case null:
+                        switch (value)
                         {
-                            continue;
+                            case null:
+                                {
+                                    continue;
+                                }
+                            case JsonObject or JsonArray:
+                                {
+                                    modifiedJson |= ScrubJson(patterns, jsonOptions, value);
+                                    continue;
+                                }
                         }
-                        case JsonObject or JsonArray:
+
+                        foreach (var key in patterns.Keys)
                         {
-                            modifiedJson |= ScrubJson(patterns, jsonOptions, value);
-                            continue;
+                            if (!key.IsMatch(name))
+                            {
+                                continue;
+                            }
+
+                            var (valuePattern, replacement) = patterns[key];
+                            var valueString = value.ToJsonString(jsonOptions);
+
+                            if (!valuePattern.IsMatch(valueString))
+                            {
+                                continue;
+                            }
+
+                            replacements.Add(name, replacement);
+                            break;
                         }
                     }
 
-                    foreach (var key in patterns.Keys)
+                    foreach (var (name, replacement) in replacements)
                     {
-                        if (!key.IsMatch(name))
-                        {
-                            continue;
-                        }
-
-                        var (valuePattern, replacement) = patterns[key];
-                        var valueString = value.ToJsonString(jsonOptions);
-
-                        if (!valuePattern.IsMatch(valueString))
-                        {
-                            continue;
-                        }
-
-                        replacements.Add(name, replacement);
-                        break;
+                        jsonObject[name] = JsonNode.Parse(replacement);
+                        modifiedJson = true;
                     }
-                }
 
-                foreach (var (name, replacement) in replacements)
-                {
-                    jsonObject[name] = JsonNode.Parse(replacement);
-                    modifiedJson = true;
+                    break;
                 }
-
-                break;
-            }
             case JsonArray jsonArray:
-            {
-                var replacements = new Dictionary<int, string>();
-                for (var i = 0; i < jsonArray.Count; i++)
                 {
-                    var jsonObject = jsonArray[(Index)i];
-                    switch (jsonObject)
+                    var replacements = new Dictionary<int, string>();
+                    for (var i = 0; i < jsonArray.Count; i++)
                     {
-                        case null:
+                        var jsonObject = jsonArray[(Index)i];
+                        switch (jsonObject)
                         {
-                            continue;
+                            case null:
+                                {
+                                    continue;
+                                }
+                            case JsonObject or JsonArray:
+                                {
+                                    modifiedJson |= ScrubJson(patterns, jsonOptions, jsonObject);
+                                    continue;
+                                }
                         }
-                        case JsonObject or JsonArray:
+
+                        var name = jsonArray.GetPath().Split('.')[^1];
+                        foreach (var key in patterns.Keys)
                         {
-                            modifiedJson |= ScrubJson(patterns, jsonOptions, jsonObject);
-                            continue;
+                            if (!key.IsMatch(name))
+                            {
+                                continue;
+                            }
+
+                            var (valuePattern, replacement) = patterns[key];
+                            var valueString = jsonObject.ToJsonString(jsonOptions);
+
+                            if (!valuePattern.IsMatch(valueString))
+                            {
+                                continue;
+                            }
+
+                            replacements.Add(i, replacement);
+                            break;
                         }
                     }
 
-                    var name = jsonArray.GetPath().Split('.')[^1];
-                    foreach (var key in patterns.Keys)
+                    foreach (var (index, replacement) in replacements)
                     {
-                        if (!key.IsMatch(name))
-                        {
-                            continue;
-                        }
-
-                        var (valuePattern, replacement) = patterns[key];
-                        var valueString = jsonObject.ToJsonString(jsonOptions);
-
-                        if (!valuePattern.IsMatch(valueString))
-                        {
-                            continue;
-                        }
-
-                        replacements.Add(i, replacement);
-                        break;
+                        jsonArray[index] = JsonNode.Parse(replacement);
+                        modifiedJson = true;
                     }
-                }
 
-                foreach (var (index, replacement) in replacements)
-                {
-                    jsonArray[index] = JsonNode.Parse(replacement);
-                    modifiedJson = true;
+                    break;
                 }
-
-                break;
-            }
         }
 
         return modifiedJson;

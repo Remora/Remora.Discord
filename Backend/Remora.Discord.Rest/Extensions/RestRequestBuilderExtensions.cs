@@ -84,11 +84,11 @@ public static class RestRequestBuilderExtensions
         this RestRequestBuilder builder
     )
     {
-        #if NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER
         builder.With(r => r.Options.Set(Constants.SkipAuthorizationOption, true));
-        #else
+#else
         builder.With(r => r.Properties.Add(Constants.SkipAuthorizationPropertyName, true));
-        #endif
+#endif
 
         return builder;
     }
