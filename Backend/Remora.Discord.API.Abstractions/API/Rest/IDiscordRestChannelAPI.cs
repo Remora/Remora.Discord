@@ -310,6 +310,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="defaultAutoArchiveDuration">
     /// The default time of inactivity after which threads in the channel are archived.
     /// </param>
+    /// <param name="flags">The new channel flags.</param>
     /// <param name="availableTags">The set of tags that can be used in a forum channel.</param>
     /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
     /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
@@ -328,6 +329,7 @@ public interface IDiscordRestChannelAPI
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<ChannelFlags> flags = default,
         Optional<IReadOnlyList<IForumTag>> availableTags = default,
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,

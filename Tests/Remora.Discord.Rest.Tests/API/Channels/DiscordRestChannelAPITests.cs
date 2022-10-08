@@ -451,6 +451,7 @@ public class DiscordRestChannelAPITests
             var permissionOverwrites = new List<PermissionOverwrite>();
             var parentID = new Snowflake(1);
             var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var flags = ChannelFlags.RequireTag;
             var availableTags = new List<IForumTag>();
             var defaultReactionEmoji = new DefaultReaction(new Snowflake(1));
             var defaultThreadRateLimitPerUser = 2;
@@ -476,6 +477,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("parent_id", p => p.Is(parentID.ToString()))
                                     .WithProperty("default_auto_archive_duration", p => p.Is((int)defaultAutoArchiveDuration))
+                                    .WithProperty("flags", p => p.Is((int)flags))
                                     .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("default_reaction_emoji", p => p.IsObject())
                                     .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
@@ -496,6 +498,7 @@ public class DiscordRestChannelAPITests
                 permissionOverwrites,
                 parentID,
                 defaultAutoArchiveDuration,
+                flags,
                 availableTags,
                 defaultReactionEmoji,
                 defaultThreadRateLimitPerUser,
