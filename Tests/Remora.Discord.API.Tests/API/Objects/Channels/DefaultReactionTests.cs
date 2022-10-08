@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class DefaultReactionTests : ObjectTestBase<IDefaultReaction>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DefaultReactionTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public DefaultReactionTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }
