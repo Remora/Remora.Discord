@@ -130,5 +130,5 @@ public interface IPartialChannel
     Optional<TimeSpan> DefaultThreadRateLimitPerUser { get; }
 
     /// <inheritdoc cref="IChannel.DefaultSortOrder" />
-    Optional<SortOrder> DefaultSortOrder { get; }
+    Optional<SortOrder?> DefaultSortOrder { get; }
 }

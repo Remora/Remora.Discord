@@ -200,7 +200,7 @@ public interface IChannel : IPartialChannel
     /// <summary>
     /// Gets the sorting order of the forum channel.
     /// </summary>
-    new Optional<SortOrder> DefaultSortOrder { get; }
+    new Optional<SortOrder?> DefaultSortOrder { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialChannel.ID => this.ID;
@@ -299,5 +299,5 @@ public interface IChannel : IPartialChannel
     Optional<TimeSpan> IPartialChannel.DefaultThreadRateLimitPerUser => this.DefaultThreadRateLimitPerUser;
 
     /// <inheritdoc/>
-    Optional<SortOrder> IPartialChannel.DefaultSortOrder => this.DefaultSortOrder;
+    Optional<SortOrder?> IPartialChannel.DefaultSortOrder => this.DefaultSortOrder;
 }

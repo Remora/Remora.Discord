@@ -65,5 +65,5 @@ public record ThreadDelete
     Optional<IReadOnlyList<Snowflake>> AppliedTags = default,
     Optional<IDefaultReaction?> DefaultReactionEmoji = default,
     Optional<TimeSpan> DefaultThreadRateLimitPerUser = default,
-    Optional<SortOrder> DefaultSortOrder = default
+    Optional<SortOrder?> DefaultSortOrder = default
 ) : IThreadDelete;
