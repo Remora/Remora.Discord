@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -48,6 +48,15 @@ public class DiscordRestAuditLogAPITests
     /// </summary>
     public class GetAuditLogAsync : RestAPITestBase<IDiscordRestAuditLogAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetAuditLogAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetAuditLogAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

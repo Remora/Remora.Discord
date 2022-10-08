@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.VoiceGateway.Events;
 /// </summary>
 public class VoiceSessionDescriptionTests : VoiceGatewayEventTestBase<IVoiceSessionDescription>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VoiceSessionDescriptionTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public VoiceSessionDescriptionTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

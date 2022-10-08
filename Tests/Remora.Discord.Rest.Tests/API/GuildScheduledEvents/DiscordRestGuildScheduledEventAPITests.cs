@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,15 @@ public class DiscordRestGuildScheduledEventAPITests
     public class ListScheduledEventsForGuildAsync : RestAPITestBase<IDiscordRestGuildScheduledEventAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListScheduledEventsForGuildAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListScheduledEventsForGuildAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -77,6 +86,15 @@ public class DiscordRestGuildScheduledEventAPITests
     /// </summary>
     public class CreateGuildScheduledEventAsync : RestAPITestBase<IDiscordRestGuildScheduledEventAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildScheduledEventAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildScheduledEventAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -153,6 +171,15 @@ public class DiscordRestGuildScheduledEventAPITests
     public class GetGuildScheduledEventAsync : RestAPITestBase<IDiscordRestGuildScheduledEventAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildScheduledEventAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildScheduledEventAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -182,6 +209,15 @@ public class DiscordRestGuildScheduledEventAPITests
     /// </summary>
     public class ModifyGuildScheduledEventAsync : RestAPITestBase<IDiscordRestGuildScheduledEventAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildScheduledEventAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildScheduledEventAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -263,6 +299,15 @@ public class DiscordRestGuildScheduledEventAPITests
     public class DeleteGuildScheduledEventAsync : RestAPITestBase<IDiscordRestGuildScheduledEventAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildScheduledEventAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildScheduledEventAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -290,6 +335,15 @@ public class DiscordRestGuildScheduledEventAPITests
     /// </summary>
     public class GetGuildScheduledEventUsersAsync : RestAPITestBase<IDiscordRestGuildScheduledEventAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildScheduledEventUsersAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildScheduledEventUsersAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

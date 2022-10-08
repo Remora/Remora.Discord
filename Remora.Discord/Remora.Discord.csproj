@@ -1,26 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Remora.Sdk/1.1.1">
 
     <PropertyGroup>
-        <VersionPrefix>2022.43</VersionPrefix>
+        <VersionPrefix>2022.48</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Fix early return.
-            Improve CustomIDHelpers.
-            Preemptive fix of IsUnavailable's optionality.
-            Implement AppPermissions.
-            Rename some enum members.
-            Add new error.
-            Update README.md's to reflect the new API.
-            Update samples to showcase typed values.
-            Update usage of InMemoryDataService.
-            Improve safety of InMemoryDataService.
+            Fix optionality of `channel_id`.
+            Add `application_commands` field.
+            Add `scopes` field.
+            Update command length calculation.
+            Add new flag.
+            Fix more naming.
+            Implement support for slash command mentions.
+            Update the role caching routines.
+            Remove explicit start/stop routines.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
-        <IncludeSymbols>false</IncludeSymbols>
-        <IncludeSource>false</IncludeSource>
-        <EmbedUntrackedSources>false</EmbedUntrackedSources>
-        <EmbedAllSources>false</EmbedAllSources>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <NoPackageAnalysis>true</NoPackageAnalysis>
     </PropertyGroup>

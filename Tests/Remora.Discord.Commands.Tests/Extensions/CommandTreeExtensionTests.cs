@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -422,7 +422,7 @@ public class CommandTreeExtensionTests
                 var topLevelGroup = commands.FirstOrDefault(c => c.Name == "top-level-group");
                 Assert.NotNull(topLevelGroup);
 
-                Assert.True(topLevelGroup!.Options.HasValue);
+                Assert.True(topLevelGroup.Options.HasValue);
                 Assert.Equal(2, topLevelGroup.Options.Value.Count);
 
                 var firstNestedCommand = topLevelGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommand);
@@ -431,7 +431,7 @@ public class CommandTreeExtensionTests
                 var nestedGroup = topLevelGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommandGroup);
                 Assert.NotNull(nestedGroup);
 
-                Assert.True(nestedGroup!.Options.HasValue);
+                Assert.True(nestedGroup.Options.HasValue);
                 Assert.Single(nestedGroup.Options.Value);
 
                 var secondNestedCommand = nestedGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommand);
@@ -655,6 +655,144 @@ public class CommandTreeExtensionTests
                 Assert.Equal(0u, parameter.MinLength.Value);
                 Assert.Equal(1u, parameter.MaxLength.Value);
             }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinValueConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MinValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0L, parameter.MinValue.Value);
+                Assert.False(parameter.MaxValue.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMaxValueConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MaxValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(1L, parameter.MaxValue.Value);
+                Assert.False(parameter.MinValue.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinAndMaxValueConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MinAndMaxValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0L, parameter.MinValue.Value);
+                Assert.Equal(1L, parameter.MaxValue.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinValueFloatConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MinFloatValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0L, parameter.MinValue.Value);
+                Assert.False(parameter.MaxValue.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMaxValueFloatConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MaxFloatValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(1L, parameter.MaxValue.Value);
+                Assert.False(parameter.MinValue.HasValue);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMinAndMaxFloatValueConstrainedParametersCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<NumericalParameterWithValueConstraints.MinAndMaxFloatValueConstraint>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                ResultAssert.Successful(result);
+
+                var commands = result.Entity;
+
+                var command = commands.Single();
+                var parameter = command.Options.Value.Single();
+
+                Assert.Equal(0L, parameter.MinValue.Value);
+                Assert.Equal(1L, parameter.MaxValue.Value);
+            }
         }
 
         /// <summary>
@@ -738,7 +876,7 @@ public class CommandTreeExtensionTests
                     typeof(SpecialTypedCommands),
                     "typed-channel-value",
                     ApplicationCommandOptionType.Channel,
-                    new Action<ChannelType>[] { c => Assert.Equal(c, ChannelType.GuildText) }
+                    new Action<ChannelType>[] { c => Assert.Equal(ChannelType.GuildText, c) }
                 },
                 new object[]
                 {
@@ -839,7 +977,7 @@ public class CommandTreeExtensionTests
                 var command = commands.FirstOrDefault(c => c.Name == commandName);
                 Assert.NotNull(command);
 
-                var parameter = command!.Options.Value[0];
+                var parameter = command.Options.Value[0];
                 Assert.Equal(type, parameter.Type);
 
                 if (choiceAsserter is not null)
@@ -887,7 +1025,7 @@ public class CommandTreeExtensionTests
                     var command = commands.FirstOrDefault(c => c.Name == commandName);
                     Assert.NotNull(command);
 
-                    var parameter = command!.Options.Value[0];
+                    var parameter = command.Options.Value[0];
                     Assert.Equal(type, parameter.Type);
                 }
 
@@ -934,7 +1072,7 @@ public class CommandTreeExtensionTests
                     var command = commands.FirstOrDefault(c => c.Name == commandName);
                     Assert.NotNull(command);
 
-                    var parameter = command!.Options.Value[0];
+                    var parameter = command.Options.Value[0];
                     Assert.Equal(type, parameter.Type);
                 }
 
@@ -999,7 +1137,7 @@ public class CommandTreeExtensionTests
                     var command = commands.FirstOrDefault(c => c.Name == commandName);
                     Assert.NotNull(command);
 
-                    var parameter = command!.Options.Value[0];
+                    var parameter = command.Options.Value[0];
                     Assert.Equal(type, parameter.Type);
                 }
 

@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -30,9 +30,18 @@ using Xunit;
 namespace Remora.Discord.API.Tests.TestBases;
 
 /// <inheritdoc />
-public abstract class VoiceGatewayTestBase<TType, TEventDataSource>
-    : JsonBackedTypeTestBase<IVoicePayload, TEventDataSource> where TType : IVoiceGatewayPayloadData where TEventDataSource : TheoryData, new()
+public abstract class VoiceGatewayTestBase<TType, TEventDataSource> : JsonBackedTypeTestBase<IVoicePayload, TEventDataSource>
+    where TType : IVoiceGatewayPayloadData where TEventDataSource : TheoryData, new()
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VoiceGatewayTestBase{TType, TEventDataSource}"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    protected VoiceGatewayTestBase(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
     /// <summary>
     /// Tests whether the type can be deserialized from a JSON object.
     /// </summary>

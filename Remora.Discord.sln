@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "metadata", "metadata", "{F1
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
 		README.md = README.md
-		stylecop.json = stylecop.json
-		stylecop.ruleset = stylecop.ruleset
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Remora.Discord", "Remora.Discord\Remora.Discord.csproj", "{B8FA3A48-AE81-4B84-97C6-2527CA5C4205}"
@@ -19,9 +17,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Remora.Discord.Gateway", "Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj", "{DBCF23B4-9375-4ECF-AFCF-6E5AFCEF0748}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6E2D59EB-648D-4968-8A63-8D8E3813EC86}"
-	ProjectSection(SolutionItems) = preProject
-		Tests\Directory.Build.props = Tests\Directory.Build.props
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Remora.Discord.API.Tests", "Tests\Remora.Discord.API.Tests\Remora.Discord.API.Tests.csproj", "{6BE67D97-794D-4E32-B58A-18755F5C4E38}"
 EndProject
@@ -36,6 +31,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D1A34922-E02F-492B-AEF5-9B34E81CE293}"
 	ProjectSection(SolutionItems) = preProject
 		Samples\Directory.Build.props = Samples\Directory.Build.props
+		Samples\LICENSE = Samples\LICENSE
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnknownEventLogger", "Samples\UnknownEventLogger\UnknownEventLogger.csproj", "{ED960998-F9BD-4250-A40F-9B968DD499C0}"

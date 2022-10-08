@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -272,7 +272,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+    public virtual Task<Result<IChannel>> ModifyGuildAnnouncementChannelAsync
     (
         Snowflake channelID,
         Optional<string> name = default,
@@ -448,12 +448,12 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             return new ArgumentOutOfRangeError(nameof(nonce), "The nonce length must be less than 25 characters.");
         }
 
-        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !stickerIDs.HasValue)
+        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !stickerIDs.HasValue && !components.HasValue)
         {
             return new InvalidOperationError
             (
-                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(embeds)}, or " +
-                $"{nameof(stickerIDs)} is required."
+                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(embeds)}, {nameof(components)}, "
+                + $"or {nameof(stickerIDs)} is required."
             );
         }
 
@@ -663,11 +663,12 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         CancellationToken ct = default
     )
     {
-        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue)
+        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !components.HasValue)
         {
             return new InvalidOperationError
             (
-                $"At least one of {nameof(content)}, {nameof(attachments)}, or {nameof(embeds)} is required."
+                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(components)}, or {nameof(embeds)} "
+                + $"is required."
             );
         }
 
@@ -902,7 +903,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IFollowedChannel>> FollowNewsChannelAsync
+    public virtual Task<Result<IFollowedChannel>> FollowAnnouncementChannelAsync
     (
         Snowflake channelID,
         Snowflake webhookChannelID,

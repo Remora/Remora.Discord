@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -43,15 +43,16 @@ public static class HostBuilderExtensions
     /// </summary>
     /// <param name="hostBuilder">The host builder.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
+    /// <param name="buildClient">Extra options to configure the rest client.</param>
     /// <returns>The service collection, with the services added.</returns>
-    public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<IServiceProvider, string> tokenFactory)
+    public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<IServiceProvider, string> tokenFactory, Action<IHttpClientBuilder>? buildClient = null)
     {
         hostBuilder.ConfigureServices((_, serviceCollection) =>
         {
             serviceCollection.Configure(() => new DiscordServiceOptions());
 
             serviceCollection
-                .AddDiscordGateway(tokenFactory);
+                .AddDiscordGateway(tokenFactory, buildClient);
 
             serviceCollection
                 .TryAddSingleton<DiscordService>();

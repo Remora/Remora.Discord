@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -906,14 +906,16 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IModalSubmitData, ModalSubmitData>();
         options.AddDataObjectConverter
             <
-                IApplicationCommandInteractionDataOption, ApplicationCommandInteractionDataOption
+                IApplicationCommandInteractionDataOption,
+                ApplicationCommandInteractionDataOption
             >()
             .WithPropertyName(o => o.IsFocused, "focused");
 
         options.AddDataObjectConverter<IInteraction, Interaction>();
         options.AddDataObjectConverter
             <
-                IInteractionMessageCallbackData, InteractionMessageCallbackData
+                IInteractionMessageCallbackData,
+                InteractionMessageCallbackData
             >()
             .WithPropertyName(d => d.IsTTS, "tts");
 

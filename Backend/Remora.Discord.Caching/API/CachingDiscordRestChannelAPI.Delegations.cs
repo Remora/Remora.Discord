@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -141,7 +141,7 @@ public partial class CachingDiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+    public Task<Result<IChannel>> ModifyGuildAnnouncementChannelAsync
     (
         Snowflake channelID,
         Optional<string> name = default,
@@ -156,7 +156,7 @@ public partial class CachingDiscordRestChannelAPI
         CancellationToken ct = default
     )
     {
-        return _actual.ModifyGuildNewsChannelAsync
+        return _actual.ModifyGuildAnnouncementChannelAsync
         (
             channelID,
             name,
@@ -292,14 +292,14 @@ public partial class CachingDiscordRestChannelAPI
     }
 
     /// <inheritdoc />
-    public Task<Result<IFollowedChannel>> FollowNewsChannelAsync
+    public Task<Result<IFollowedChannel>> FollowAnnouncementChannelAsync
     (
         Snowflake channelID,
         Snowflake webhookChannelID,
         CancellationToken ct = default
     )
     {
-        return _actual.FollowNewsChannelAsync(channelID, webhookChannelID, ct);
+        return _actual.FollowAnnouncementChannelAsync(channelID, webhookChannelID, ct);
     }
 
     /// <inheritdoc />

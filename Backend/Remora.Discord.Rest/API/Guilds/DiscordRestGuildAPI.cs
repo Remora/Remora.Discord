@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -694,7 +694,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Optional<int> deleteMessageDays = default,
+        Optional<int> deleteMessageSeconds = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -708,7 +708,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        json.Write("delete_message_days", deleteMessageDays, this.JsonOptions);
+                        json.Write("delete_message_seconds", deleteMessageSeconds, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -886,6 +886,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     (
         Snowflake guildID,
         MultiFactorAuthenticationLevel level,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -893,6 +894,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         (
             $"guilds/{guildID}/mfa",
             b => b
+                .AddAuditLogReason(reason)
                 .WithJson
                 (
                     json =>
@@ -1224,7 +1226,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        json.WriteString("channel_id", channelID.ToString());
+                        json.Write("channel_id", channelID, this.JsonOptions);
                         json.Write("suppress", suppress, this.JsonOptions);
                         json.Write("request_to_speak_timestamp", requestToSpeakTimestamp, this.JsonOptions);
                     }
@@ -1239,7 +1241,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Snowflake channelID,
+        Snowflake? channelID = default,
         Optional<bool> suppress = default,
         CancellationToken ct = default
     )
@@ -1251,7 +1253,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        json.WriteString("channel_id", channelID.ToString());
+                        json.Write("channel_id", channelID, this.JsonOptions);
                         json.Write("suppress", suppress, this.JsonOptions);
                     }
                 )

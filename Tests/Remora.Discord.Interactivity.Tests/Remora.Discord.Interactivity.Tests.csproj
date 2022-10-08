@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Remora.Tests.Sdk/1.0.3">
 
     <ItemGroup>
       <ProjectReference Include="..\..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />

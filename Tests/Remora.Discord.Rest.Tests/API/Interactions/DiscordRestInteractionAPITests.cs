@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,15 @@ public class DiscordRestInteractionAPITests
     /// </summary>
     public class CreateInteractionResponseAsync : RestAPITestBase<IDiscordRestInteractionAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateInteractionResponseAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateInteractionResponseAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -379,6 +388,15 @@ public class DiscordRestInteractionAPITests
     public class EditOriginalInteractionResponseAsync : RestAPITestBase<IDiscordRestInteractionAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="EditOriginalInteractionResponseAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditOriginalInteractionResponseAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -704,6 +722,15 @@ public class DiscordRestInteractionAPITests
     public class DeleteOriginalInteractionResponseAsync : RestAPITestBase<IDiscordRestInteractionAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteOriginalInteractionResponseAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteOriginalInteractionResponseAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -739,6 +766,15 @@ public class DiscordRestInteractionAPITests
     /// </summary>
     public class CreateFollowupMessageAsync : RestAPITestBase<IDiscordRestInteractionAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateFollowupMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateFollowupMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1085,6 +1121,15 @@ public class DiscordRestInteractionAPITests
     public class GetFollowupMessageAsync : RestAPITestBase<IDiscordRestInteractionAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetFollowupMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetFollowupMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1123,6 +1168,15 @@ public class DiscordRestInteractionAPITests
     /// </summary>
     public class EditFollowupMessageAsync : RestAPITestBase<IDiscordRestInteractionAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditFollowupMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditFollowupMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1448,6 +1502,15 @@ public class DiscordRestInteractionAPITests
     public class DeleteFollowupMessageAsync : RestAPITestBase<IDiscordRestInteractionAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteFollowupMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteFollowupMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1485,6 +1548,15 @@ public class DiscordRestInteractionAPITests
     /// </summary>
     public class GetOriginalInteractionResponseAsync : RestAPITestBase<IDiscordRestInteractionAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetOriginalInteractionResponseAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetOriginalInteractionResponseAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

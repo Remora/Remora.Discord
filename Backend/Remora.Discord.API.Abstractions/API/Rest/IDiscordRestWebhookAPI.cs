@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -192,8 +192,8 @@ public interface IDiscordRestWebhookAPI
     /// Executes the given webhook.
     /// </summary>
     /// <remarks>
-    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
-    /// present.
+    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, <paramref name="components"/> or
+    /// <paramref name="attachments"/> must be present.
     ///
     /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
     /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
@@ -271,8 +271,8 @@ public interface IDiscordRestWebhookAPI
     /// Edits a message posted by a webhook.
     /// </summary>
     /// <remarks>
-    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
-    /// present.
+    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, <paramref name="components"/> or
+    /// <paramref name="attachments"/> must be present.
     ///
     /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
     /// afterwards, ensure that what you pass is a copy that the method can take ownership of.

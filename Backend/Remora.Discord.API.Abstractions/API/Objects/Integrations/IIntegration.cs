@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -107,6 +108,11 @@ public interface IIntegration : IPartialIntegration
     /// </summary>
     new Optional<IIntegrationApplication> Application { get; }
 
+    /// <summary>
+    /// Gets the OAuth2 scopes the integration has been authorized for.
+    /// </summary>
+    new Optional<IReadOnlyList<string>> Scopes { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialIntegration.ID => this.ID;
 
@@ -151,4 +157,7 @@ public interface IIntegration : IPartialIntegration
 
     /// <inheritdoc/>
     Optional<IIntegrationApplication> IPartialIntegration.Application => this.Application;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<string>> IPartialIntegration.Scopes => this.Scopes;
 }

@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -85,4 +85,19 @@ public static class Mention
     /// A role mention string.
     /// </returns>
     public static string Role(Snowflake snowflake) => $"<@&{snowflake.Value}>";
+
+    /// <summary>
+    /// Creates a mention string for a slash command.
+    /// </summary>
+    /// <param name="command">The slash command.</param>
+    /// <returns>A command mention string.</returns>
+    public static string SlashCommand(IApplicationCommand command) => $"</{command.Name}:{command.ID}>";
+
+    /// <summary>
+    /// Creates a mention string for a slash command.
+    /// </summary>
+    /// <param name="name">The name of the slash command.</param>
+    /// <param name="id">The ID of the slash command.</param>
+    /// <returns>A command mention string.</returns>
+    public static string SlashCommand(string name, Snowflake id) => $"</{name}:{id}>";
 }

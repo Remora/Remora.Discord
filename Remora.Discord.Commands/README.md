@@ -123,4 +123,4 @@ error in a post-execution event, this is treated as if the command itself had
 failed, which may be useful for things like scrubbing database transactions.
 
 
-[1]: https://github.com/Nihlus/Remora.Commands
+[1]: https://github.com/Remora/Remora.Commands

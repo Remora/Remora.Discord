@@ -3,8 +3,8 @@
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
     <PropertyGroup>
-        <!--suppress MsbuildTargetFrameworkTagInspection -->
-        <TargetFrameworks>$(ExecutableFrameworks)</TargetFrameworks>
+        <LegalLicense>MIT</LegalLicense>
+        <UseSPDXFileHeaders>true</UseSPDXFileHeaders>
     </PropertyGroup>
 
     <PropertyGroup>

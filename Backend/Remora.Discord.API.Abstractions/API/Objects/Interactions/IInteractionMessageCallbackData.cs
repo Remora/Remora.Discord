@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -71,6 +71,9 @@ public interface IInteractionMessageCallbackData
     /// <summary>
     /// Gets the attachments attached to the message.
     /// </summary>
-    /// <remarks>Only relevant for message interactions.</remarks>
+    /// <remarks>This is only relevant for message interactions, and acts as a mapping
+    /// for uploaded and pre-existing files when creating an interaction response,
+    /// or updating an existing interaction message.
+    /// See https://discord.dev/reference#uploading-files for more information.</remarks>
     Optional<IReadOnlyList<IPartialAttachment>> Attachments { get; }
 }

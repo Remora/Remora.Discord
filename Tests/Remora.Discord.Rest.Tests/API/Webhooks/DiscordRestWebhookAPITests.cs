@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -49,6 +49,15 @@ public class DiscordRestWebhookAPITests
     /// </summary>
     public class CreateWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateWebhookAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateWebhookAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -215,6 +224,15 @@ public class DiscordRestWebhookAPITests
     public class GetChannelWebhooksAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetChannelWebhooksAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetChannelWebhooksAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -243,6 +261,15 @@ public class DiscordRestWebhookAPITests
     /// </summary>
     public class GetGuildWebhooksAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildWebhooksAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildWebhooksAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -273,6 +300,15 @@ public class DiscordRestWebhookAPITests
     public class GetWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetWebhookAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetWebhookAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -301,6 +337,15 @@ public class DiscordRestWebhookAPITests
     /// </summary>
     public class GetWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetWebhookWithTokenAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetWebhookWithTokenAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -334,6 +379,15 @@ public class DiscordRestWebhookAPITests
     /// </summary>
     public class ModifyWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyWebhookAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyWebhookAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -462,6 +516,15 @@ public class DiscordRestWebhookAPITests
     public class ModifyWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyWebhookWithTokenAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyWebhookWithTokenAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -575,6 +638,15 @@ public class DiscordRestWebhookAPITests
     public class DeleteWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteWebhookAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteWebhookAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -607,6 +679,15 @@ public class DiscordRestWebhookAPITests
     /// </summary>
     public class DeleteWebhookWithTokenAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteWebhookWithTokenAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteWebhookWithTokenAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -643,6 +724,15 @@ public class DiscordRestWebhookAPITests
     /// </summary>
     public class ExecuteWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExecuteWebhookAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ExecuteWebhookAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1165,6 +1255,15 @@ public class DiscordRestWebhookAPITests
     public class EditWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="EditWebhookMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditWebhookMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1535,6 +1634,15 @@ public class DiscordRestWebhookAPITests
     public class DeleteWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteWebhookMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteWebhookMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1571,6 +1679,15 @@ public class DiscordRestWebhookAPITests
     /// </summary>
     public class GetWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetWebhookMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetWebhookMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

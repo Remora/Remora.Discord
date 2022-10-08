@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,15 @@ public class DiscordRestEmojiAPITests
     public class ListGuildEmojisAsync : RestAPITestBase<IDiscordRestEmojiAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListGuildEmojisAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListGuildEmojisAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -76,6 +85,15 @@ public class DiscordRestEmojiAPITests
     /// </summary>
     public class GetGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildEmojiAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildEmojiAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -104,6 +122,15 @@ public class DiscordRestEmojiAPITests
     /// </summary>
     public class CreateGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildEmojiAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildEmojiAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -230,6 +257,15 @@ public class DiscordRestEmojiAPITests
     public class ModifyGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildEmojiAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildEmojiAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -300,6 +336,15 @@ public class DiscordRestEmojiAPITests
     /// </summary>
     public class DeleteGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildEmojiAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildEmojiAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

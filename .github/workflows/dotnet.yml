@@ -2,7 +2,7 @@ name: .NET
 
 env:
   GITHUB_USER: Nihlus
-  GITHUB_FEED: https://nuget.pkg.github.com/Nihlus
+  GITHUB_FEED: https://nuget.pkg.github.com/Remora
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
@@ -28,7 +28,7 @@ jobs:
       run: dotnet test -c Release --no-restore --no-build --verbosity minimal
 
     - name: Package
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
     - uses: actions/upload-artifact@v3
       with:
@@ -36,7 +36,7 @@ jobs:
         path: nuget/*
   prerelease:
     needs: build
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:

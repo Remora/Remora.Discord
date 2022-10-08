@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -35,6 +35,15 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class DiscordPermissionSetTests : ObjectTestBase<IDiscordPermissionSet>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordPermissionSetTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public DiscordPermissionSetTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
     [Fact]
     public void HasPermissionReturnsTrueForExistingPermission()
     {

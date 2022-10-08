@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -55,6 +55,15 @@ public class DiscordRestChannelAPITests
     public class GetChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetChannelAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetChannelAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -80,6 +89,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class ModifyChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyChannelAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyChannelAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -130,7 +148,7 @@ public class DiscordRestChannelAPITests
         {
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
-            var type = ChannelType.GuildNews;
+            var type = ChannelType.GuildAnnouncement;
             var position = 1;
             var topic = "aa";
             var nsfw = true;
@@ -188,11 +206,11 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
-        public async Task PerformsNewsChannelRequestCorrectly()
+        public async Task PerformsAnnouncementChannelRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
-            var type = ChannelType.GuildNews;
+            var type = ChannelType.GuildAnnouncement;
             var position = 1;
             var topic = "aa";
             var nsfw = true;
@@ -225,7 +243,7 @@ public class DiscordRestChannelAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
             );
 
-            var result = await api.ModifyGuildNewsChannelAsync
+            var result = await api.ModifyGuildAnnouncementChannelAsync
             (
                 channelId,
                 name,
@@ -575,6 +593,15 @@ public class DiscordRestChannelAPITests
     public class DeleteChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteChannelAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteChannelAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -602,6 +629,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class GetChannelMessagesAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetChannelMessagesAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetChannelMessagesAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -812,6 +848,15 @@ public class DiscordRestChannelAPITests
     public class GetChannelMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetChannelMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetChannelMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -838,6 +883,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class CreateMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1245,6 +1299,15 @@ public class DiscordRestChannelAPITests
     public class CrosspostMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="CrosspostMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CrosspostMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1275,6 +1338,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class CreateReactionAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateReactionAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateReactionAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1308,6 +1380,15 @@ public class DiscordRestChannelAPITests
     public class DeleteOwnReactionAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteOwnReactionAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteOwnReactionAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1339,6 +1420,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class DeleteUserReactionAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteUserReactionAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteUserReactionAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1373,6 +1463,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class GetReactionsAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetReactionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetReactionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1470,6 +1569,15 @@ public class DiscordRestChannelAPITests
     public class DeleteAllReactionsAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteAllReactionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteAllReactionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1500,6 +1608,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class DeleteAllReactionsForEmojiAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteAllReactionsForEmojiAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteAllReactionsForEmojiAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1533,6 +1650,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class EditMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1889,6 +2015,15 @@ public class DiscordRestChannelAPITests
     public class DeleteMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1919,6 +2054,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class BulkDeleteMessagesAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BulkDeleteMessagesAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public BulkDeleteMessagesAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2019,6 +2163,15 @@ public class DiscordRestChannelAPITests
     public class EditChannelPermissionsAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="EditChannelPermissionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditChannelPermissionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2100,6 +2253,15 @@ public class DiscordRestChannelAPITests
     public class GetChannelInvitesAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetChannelInvitesAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetChannelInvitesAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2129,6 +2291,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class CreateChannelInviteAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateChannelInviteAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateChannelInviteAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2195,6 +2366,15 @@ public class DiscordRestChannelAPITests
     public class DeleteChannelPermissionAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteChannelPermissionAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteChannelPermissionAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2223,10 +2403,19 @@ public class DiscordRestChannelAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestChannelAPI.FollowNewsChannelAsync"/> method.
+    /// Tests the <see cref="DiscordRestChannelAPI.FollowAnnouncementChannelAsync"/> method.
     /// </summary>
-    public class FollowNewsChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
+    public class FollowAnnouncementChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FollowAnnouncementChannelAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public FollowAnnouncementChannelAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2255,7 +2444,7 @@ public class DiscordRestChannelAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IFollowedChannel)])
             );
 
-            var result = await api.FollowNewsChannelAsync(channelId, webhookChannelId);
+            var result = await api.FollowAnnouncementChannelAsync(channelId, webhookChannelId);
             ResultAssert.Successful(result);
         }
     }
@@ -2265,6 +2454,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class TriggerTypingIndicatorAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TriggerTypingIndicatorAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public TriggerTypingIndicatorAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2296,6 +2494,15 @@ public class DiscordRestChannelAPITests
     public class GetPinnedMessagesAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetPinnedMessagesAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetPinnedMessagesAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2325,6 +2532,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class PinMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PinMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public PinMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2359,6 +2575,15 @@ public class DiscordRestChannelAPITests
     public class UnpinMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="UnpinMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public UnpinMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2391,6 +2616,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class GroupDMAddRecipientAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupDMAddRecipientAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GroupDMAddRecipientAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2434,6 +2668,15 @@ public class DiscordRestChannelAPITests
     public class GroupDMRemoveRecipientAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GroupDMRemoveRecipientAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GroupDMRemoveRecipientAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2464,6 +2707,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class StartThreadWithMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StartThreadWithMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public StartThreadWithMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2511,6 +2763,15 @@ public class DiscordRestChannelAPITests
     public class StartThreadWithoutMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="StartThreadWithoutMessageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public StartThreadWithoutMessageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2520,7 +2781,7 @@ public class DiscordRestChannelAPITests
             var channelId = DiscordSnowflake.New(0);
             var name = "abba";
             var duration = AutoArchiveDuration.Hour;
-            var type = ChannelType.GuildPrivateThread;
+            var type = ChannelType.PrivateThread;
             var isInvitable = true;
             var rateLimit = 1;
             var reason = "test";
@@ -2570,6 +2831,15 @@ public class DiscordRestChannelAPITests
     public class JoinThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="JoinThreadAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public JoinThreadAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2600,6 +2870,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class AddThreadMemberAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddThreadMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public AddThreadMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2633,6 +2912,15 @@ public class DiscordRestChannelAPITests
     public class LeaveThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="LeaveThreadAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public LeaveThreadAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2663,6 +2951,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class RemoveThreadMemberAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoveThreadMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public RemoveThreadMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2696,6 +2993,15 @@ public class DiscordRestChannelAPITests
     public class GetThreadMemberAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetThreadMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetThreadMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2728,6 +3034,15 @@ public class DiscordRestChannelAPITests
     public class ListThreadMembersAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListThreadMembersAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListThreadMembersAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2758,6 +3073,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class ListPublicArchivedThreadsAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListPublicArchivedThreadsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListPublicArchivedThreadsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2800,6 +3124,15 @@ public class DiscordRestChannelAPITests
     public class ListPrivateArchivedThreadsAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListPrivateArchivedThreadsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListPrivateArchivedThreadsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2840,6 +3173,15 @@ public class DiscordRestChannelAPITests
     /// </summary>
     public class ListJoinedPrivateArchivedThreadsAsync : RestAPITestBase<IDiscordRestChannelAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListJoinedPrivateArchivedThreadsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListJoinedPrivateArchivedThreadsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

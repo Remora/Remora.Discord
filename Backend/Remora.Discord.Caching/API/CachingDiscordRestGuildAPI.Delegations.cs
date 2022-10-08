@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -129,10 +129,11 @@ public partial class CachingDiscordRestGuildAPI
     (
         Snowflake guildID,
         MultiFactorAuthenticationLevel level,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        return _actual.ModifyGuildMFALevelAsync(guildID, level, ct);
+        return _actual.ModifyGuildMFALevelAsync(guildID, level, reason, ct);
     }
 
     /// <inheritdoc />
@@ -216,7 +217,7 @@ public partial class CachingDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Snowflake channelID,
+        Snowflake? channelID = default,
         Optional<bool> suppress = default,
         CancellationToken ct = default
     )

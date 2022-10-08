@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -80,7 +80,7 @@ public static class ServiceCollectionExtensions
                 var (token, tokenType) = tokenFactory(serviceProvider);
                 return new TokenStore(token, tokenType);
             })
-            .AddSingleton<TokenAuthorizationHandler>();
+            .AddTransient<TokenAuthorizationHandler>();
 
         serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
         (

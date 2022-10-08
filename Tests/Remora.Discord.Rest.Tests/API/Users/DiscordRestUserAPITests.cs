@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -48,6 +48,15 @@ public class DiscordRestUserAPITests
     public class GetCurrentUserAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetCurrentUserAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetCurrentUserAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -71,6 +80,15 @@ public class DiscordRestUserAPITests
     /// </summary>
     public class GetUserAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetUserAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetUserAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -97,6 +115,15 @@ public class DiscordRestUserAPITests
     /// </summary>
     public class ModifyCurrentUserAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyCurrentUserAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyCurrentUserAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -194,6 +221,15 @@ public class DiscordRestUserAPITests
     public class GetCurrentUserGuildsAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetCurrentUserGuildsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetCurrentUserGuildsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -271,6 +307,15 @@ public class DiscordRestUserAPITests
     public class GetCurrentUserGuildMemberAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetCurrentUserGuildMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetCurrentUserGuildMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -296,6 +341,15 @@ public class DiscordRestUserAPITests
     /// </summary>
     public class LeaveGuildAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LeaveGuildAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public LeaveGuildAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -323,6 +377,15 @@ public class DiscordRestUserAPITests
     public class GetUserDMsAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetUserDMsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetUserDMsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -346,6 +409,15 @@ public class DiscordRestUserAPITests
     /// </summary>
     public class CreateDMAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateDMAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateDMAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -380,6 +452,15 @@ public class DiscordRestUserAPITests
     /// </summary>
     public class GetUserConnectionsAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetUserConnectionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetUserConnectionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -96,6 +96,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             "mock-session",
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -156,13 +157,14 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
                     )
                     .Send<Reconnect>()
                     .ExpectDisconnect()
-                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .ExpectConnection(new Uri($"{Constants.MockResumeGatewayUrl}?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Resume>
                     (
@@ -229,13 +231,14 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
                     )
                     .Send<Reconnect>()
                     .ExpectDisconnect()
-                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .ExpectConnection(new Uri($"{Constants.MockResumeGatewayUrl}?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Resume>
                     (
@@ -262,6 +265,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -337,6 +341,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -412,6 +417,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             new List<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -472,6 +478,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             Array.Empty<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -495,6 +502,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             Array.Empty<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )
@@ -518,6 +526,7 @@ public class DiscordGatewayClientTests
                             Constants.BotUser,
                             Array.Empty<IUnavailableGuild>(),
                             Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
                             default,
                             new PartialApplication()
                         )

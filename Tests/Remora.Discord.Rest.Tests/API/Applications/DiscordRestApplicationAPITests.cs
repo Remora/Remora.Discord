@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,15 @@ public class DiscordRestApplicationAPITests
     public class GetGlobalApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGlobalApplicationCommandsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGlobalApplicationCommandsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -86,6 +95,15 @@ public class DiscordRestApplicationAPITests
     /// </summary>
     public class CreateGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGlobalApplicationCommandAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGlobalApplicationCommandAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly for chat command.
         /// </summary>
@@ -390,6 +408,15 @@ public class DiscordRestApplicationAPITests
     public class BulkOverwriteGlobalApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BulkOverwriteGlobalApplicationCommandsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public BulkOverwriteGlobalApplicationCommandsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -624,6 +651,15 @@ public class DiscordRestApplicationAPITests
     public class GetGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGlobalApplicationCommandAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGlobalApplicationCommandAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -656,6 +692,15 @@ public class DiscordRestApplicationAPITests
     /// </summary>
     public class EditGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditGlobalApplicationCommandAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditGlobalApplicationCommandAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -878,6 +923,15 @@ public class DiscordRestApplicationAPITests
     public class DeleteGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGlobalApplicationCommandAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGlobalApplicationCommandAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -908,6 +962,15 @@ public class DiscordRestApplicationAPITests
     /// </summary>
     public class GetGuildApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildApplicationCommandsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildApplicationCommandsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -951,6 +1014,15 @@ public class DiscordRestApplicationAPITests
     /// </summary>
     public class CreateGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildApplicationCommandAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildApplicationCommandAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly for chat commands.
         /// </summary>
@@ -1299,6 +1371,15 @@ public class DiscordRestApplicationAPITests
     public class BulkOverwriteGuildApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BulkOverwriteGuildApplicationCommandsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public BulkOverwriteGuildApplicationCommandsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1543,6 +1624,15 @@ public class DiscordRestApplicationAPITests
     public class GetGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildApplicationCommandAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildApplicationCommandAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1581,6 +1671,15 @@ public class DiscordRestApplicationAPITests
     /// </summary>
     public class EditGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditGuildApplicationCommandAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditGuildApplicationCommandAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1833,6 +1932,15 @@ public class DiscordRestApplicationAPITests
     public class DeleteGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildApplicationCommandAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildApplicationCommandAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1866,6 +1974,15 @@ public class DiscordRestApplicationAPITests
     public class GetGuildApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildApplicationCommandPermissionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildApplicationCommandPermissionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1897,6 +2014,15 @@ public class DiscordRestApplicationAPITests
     /// </summary>
     public class GetApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetApplicationCommandPermissionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetApplicationCommandPermissionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1934,6 +2060,15 @@ public class DiscordRestApplicationAPITests
     /// </summary>
     public class EditApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditApplicationCommandPermissionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditApplicationCommandPermissionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

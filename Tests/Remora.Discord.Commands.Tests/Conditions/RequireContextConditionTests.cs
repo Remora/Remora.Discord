@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -53,10 +53,10 @@ public class RequireContextConditionTests
     [InlineData(ChannelContext.Guild, ChannelType.GuildVoice, true)]
     [InlineData(ChannelContext.Guild, ChannelType.GroupDM, false)]
     [InlineData(ChannelContext.Guild, ChannelType.GuildCategory, true)]
-    [InlineData(ChannelContext.Guild, ChannelType.GuildNews, true)]
-    [InlineData(ChannelContext.Guild, ChannelType.GuildNewsThread, true)]
-    [InlineData(ChannelContext.Guild, ChannelType.GuildPublicThread, true)]
-    [InlineData(ChannelContext.Guild, ChannelType.GuildPrivateThread, true)]
+    [InlineData(ChannelContext.Guild, ChannelType.GuildAnnouncement, true)]
+    [InlineData(ChannelContext.Guild, ChannelType.AnnouncementThread, true)]
+    [InlineData(ChannelContext.Guild, ChannelType.PublicThread, true)]
+    [InlineData(ChannelContext.Guild, ChannelType.PrivateThread, true)]
     [InlineData(ChannelContext.Guild, ChannelType.GuildStageVoice, true)]
     [InlineData(ChannelContext.DM, ChannelType.DM, true)]
     [InlineData(ChannelContext.GroupDM, ChannelType.GroupDM, true)]

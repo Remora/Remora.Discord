@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -69,5 +69,10 @@ public enum ApplicationFlags
     /// <summary>
     /// The application's access to message contents over the gateway is limited.
     /// </summary>
-    GatewayMessageContentLimited = 1 << 19
+    GatewayMessageContentLimited = 1 << 19,
+
+    /// <summary>
+    /// The application has registered global commands.
+    /// </summary>
+    ApplicationCommandBadge = 1 << 23
 }

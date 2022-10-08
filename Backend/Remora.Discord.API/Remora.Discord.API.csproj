@@ -1,13 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Remora.Sdk/1.1.1">
 
     <PropertyGroup>
-        <VersionPrefix>64.0.0</VersionPrefix>
+        <VersionPrefix>67.0.0</VersionPrefix>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Preemptive fix of IsUnavailable's optionality.
-            Implement AppPermissions.
-            Rename some enum members.
-            Add new error.
+            Fix optionality of `channel_id`.
+            Add `application_commands` field.
+            Add `scopes` field.
+            Add new flag.
+            Fix more naming.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -15,7 +16,7 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
         <PackageReference Include="System.Text.Json" Version="6.0.5" />
-        <PackageReference Include="Remora.Rest" Version="2.0.4" />
+        <PackageReference Include="Remora.Rest" Version="3.0.1" />
     </ItemGroup>
 
     <ItemGroup>

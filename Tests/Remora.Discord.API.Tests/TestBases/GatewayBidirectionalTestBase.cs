@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -30,8 +30,15 @@ namespace Remora.Discord.API.Tests.TestBases;
 /// Acts as a base class for command API types.
 /// </summary>
 /// <typeparam name="TType">The type under test.</typeparam>
-public abstract class GatewayBidirectionalTestBase<TType>
-    : GatewayTestBase<TType, SampleBidirectionalDataSource<TType>>
+public abstract class GatewayBidirectionalTestBase<TType> : GatewayTestBase<TType, SampleBidirectionalDataSource<TType>>
     where TType : IGatewayEvent, IGatewayCommand
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GatewayBidirectionalTestBase{TType}"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    protected GatewayBidirectionalTestBase(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

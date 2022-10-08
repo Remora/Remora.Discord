@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -31,6 +31,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Polly;
+using Polly.Timeout;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway;
@@ -107,6 +108,11 @@ public class DiscordGatewayClient : IDisposable
     /// Holds the session ID.
     /// </summary>
     private string? _sessionID;
+
+    /// <summary>
+    /// Holds the resume gateway URL.
+    /// </summary>
+    private string? _resumeGatewayUrl;
 
     /// <summary>
     /// Holds the cancellation token source for internal operations.
@@ -216,9 +222,6 @@ public class DiscordGatewayClient : IDisposable
             _disconnectRequestedSource.Dispose();
             _disconnectRequestedSource = new CancellationTokenSource();
 
-            _log.LogInformation("Starting dispatch service...");
-            _responderDispatch.Start();
-
             while (!stopRequested.IsCancellationRequested)
             {
                 var iterationResult = await RunConnectionIterationAsync(stopRequested);
@@ -257,6 +260,7 @@ public class DiscordGatewayClient : IDisposable
                     if (withNewSession)
                     {
                         _sessionID = null;
+                        _resumeGatewayUrl = null;
                         _connectionStatus = GatewayConnectionStatus.Disconnected;
                     }
                     else
@@ -273,8 +277,6 @@ public class DiscordGatewayClient : IDisposable
                 _disconnectRequestedSource.Dispose();
                 _disconnectRequestedSource = new CancellationTokenSource();
             }
-
-            await _responderDispatch.StopAsync();
 
             var userRequestedDisconnect = await _transportService.DisconnectAsync(false, stopRequested);
             if (!userRequestedDisconnect.IsSuccess)
@@ -294,11 +296,13 @@ public class DiscordGatewayClient : IDisposable
         finally
         {
             _sessionID = null;
+            _resumeGatewayUrl = null;
             _connectionStatus = GatewayConnectionStatus.Offline;
         }
 
         // Reconnection is not allowed at this point.
         _sessionID = null;
+        _resumeGatewayUrl = null;
         _connectionStatus = GatewayConnectionStatus.Offline;
 
         return Result.FromSuccess();
@@ -405,7 +409,7 @@ public class DiscordGatewayClient : IDisposable
             {
                 switch (exe.Exception)
                 {
-                    case HttpRequestException or WebSocketException:
+                    case HttpRequestException or WebSocketException or TimeoutRejectedException:
                     {
                         _log.LogWarning
                         (
@@ -515,7 +519,11 @@ public class DiscordGatewayClient : IDisposable
                     );
                 }
 
-                var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v={(int)DiscordAPIVersion.V10}&encoding=json";
+                var gatewayEndpointUrl = _resumeGatewayUrl is not null && _isSessionResumable
+                    ? _resumeGatewayUrl
+                    : getGatewayEndpoint.Entity.Url;
+
+                var gatewayEndpoint = $"{gatewayEndpointUrl}?v={(int)DiscordAPIVersion.V10}&encoding=json";
                 if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
                 {
                     return new GatewayError
@@ -755,6 +763,7 @@ public class DiscordGatewayClient : IDisposable
                         }
 
                         _sessionID = ready.Data.SessionID;
+                        _resumeGatewayUrl = ready.Data.ResumeGatewayUrl;
 
                         return Result.FromSuccess();
                     }

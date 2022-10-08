@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -47,5 +48,6 @@ public record IntegrationCreate
     int SubscriberCount,
     bool IsRevoked,
     Optional<IIntegrationApplication> Application,
+    Optional<IReadOnlyList<string>> Scopes,
     Snowflake GuildID
 ) : IIntegrationCreate;

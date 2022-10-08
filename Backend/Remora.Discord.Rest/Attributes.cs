@@ -1,10 +1,10 @@
 //
-//  InvalidSession.cs
+//  Attributes.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -20,12 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Tests.TestBases;
+using System.Runtime.CompilerServices;
 
-namespace Remora.Discord.API.Tests.Gateway.Events;
-
-/// <inheritdoc />
-public class InvalidSession : GatewayEventTestBase<IInvalidSession>
-{
-}
+[assembly: InternalsVisibleTo("Remora.Discord.Rest.Tests")]

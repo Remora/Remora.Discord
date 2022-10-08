@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -51,6 +51,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class CreateGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -209,6 +218,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -238,6 +256,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildPreviewAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildPreviewAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildPreviewAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -264,6 +291,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class ModifyGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -520,6 +556,15 @@ public class DiscordRestGuildAPITests
     public class DeleteGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -547,6 +592,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildChannelsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildChannelsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildChannelsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -573,6 +627,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class CreateGuildChannelAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildChannelAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildChannelAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -765,6 +828,15 @@ public class DiscordRestGuildAPITests
     public class ModifyGuildChannelPositionsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildChannelPositionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildChannelPositionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -955,6 +1027,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -982,6 +1063,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class ListGuildMembersAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListGuildMembersAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListGuildMembersAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1020,6 +1110,15 @@ public class DiscordRestGuildAPITests
     public class SearchGuildMembersAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SearchGuildMembersAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public SearchGuildMembersAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1056,6 +1155,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class AddGuildMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddGuildMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public AddGuildMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1161,6 +1269,15 @@ public class DiscordRestGuildAPITests
     public class ModifyGuildMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1222,6 +1339,15 @@ public class DiscordRestGuildAPITests
     public class ModifyCurrentMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyCurrentMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyCurrentMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1265,6 +1391,15 @@ public class DiscordRestGuildAPITests
     public class AddGuildMemberRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="AddGuildMemberRoleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public AddGuildMemberRoleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1301,6 +1436,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class RemoveGuildMemberRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoveGuildMemberRoleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public RemoveGuildMemberRoleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1343,6 +1487,15 @@ public class DiscordRestGuildAPITests
     public class RemoveGuildMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="RemoveGuildMemberAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public RemoveGuildMemberAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1377,6 +1530,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class GetGuildBansAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildBansAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildBansAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1423,6 +1585,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildBanAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildBanAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildBanAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1455,6 +1626,15 @@ public class DiscordRestGuildAPITests
     public class CreateGuildBanAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildBanAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildBanAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1463,7 +1643,7 @@ public class DiscordRestGuildAPITests
         {
             var guildId = DiscordSnowflake.New(0);
             var userId = DiscordSnowflake.New(1);
-            var deleteMessageDays = 10;
+            var deleteMessageSeconds = 864000;
             var reason = "ddd";
 
             var api = CreateAPI
@@ -1476,7 +1656,7 @@ public class DiscordRestGuildAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("delete_message_days", p => p.Is(deleteMessageDays))
+                                .WithProperty("delete_message_seconds", p => p.Is(deleteMessageSeconds))
                         )
                     )
                     .Respond(HttpStatusCode.NoContent)
@@ -1486,7 +1666,7 @@ public class DiscordRestGuildAPITests
             (
                 guildId,
                 userId,
-                deleteMessageDays,
+                deleteMessageSeconds,
                 reason
             );
 
@@ -1499,6 +1679,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class RemoveGuildBanAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoveGuildBanAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public RemoveGuildBanAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1535,6 +1724,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildRolesAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildRolesAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildRolesAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1564,6 +1762,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class CreateGuildRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildRoleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildRoleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1632,6 +1839,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class ModifyGuildRolePositionsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildRolePositionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildRolePositionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1722,6 +1938,15 @@ public class DiscordRestGuildAPITests
     public class ModifyGuildRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildRoleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildRoleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1792,6 +2017,15 @@ public class DiscordRestGuildAPITests
     public class ModifyGuildMFALevelAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildMFALevelAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildMFALevelAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1832,6 +2066,15 @@ public class DiscordRestGuildAPITests
     public class DeleteGuildRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildRoleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildRoleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1866,6 +2109,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class GetGuildPruneCountAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildPruneCountAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildPruneCountAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1913,6 +2165,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class BeginGuildPruneAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BeginGuildPruneAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public BeginGuildPruneAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -1963,6 +2224,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildVoiceRegionsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildVoiceRegionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildVoiceRegionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -1992,6 +2262,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class GetGuildInvitesAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildInvitesAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildInvitesAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2023,6 +2302,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildIntegrationsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildIntegrationsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildIntegrationsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2053,6 +2341,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildWidgetSettingsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildWidgetSettingsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildWidgetSettingsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2082,6 +2379,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class ModifyGuildWidgetAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildWidgetAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildWidgetAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2129,6 +2435,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildWidgetAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildWidgetAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildWidgetAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2160,6 +2475,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildVanityUrlAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildVanityUrlAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildVanityUrlAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2189,6 +2513,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class GetGuildWidgetImageAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildWidgetImageAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildWidgetImageAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2223,6 +2556,15 @@ public class DiscordRestGuildAPITests
     public class GetGuildWelcomeScreenAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildWelcomeScreenAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildWelcomeScreenAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2252,6 +2594,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class ModifyGuildWelcomeScreenAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildWelcomeScreenAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildWelcomeScreenAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -2302,6 +2653,15 @@ public class DiscordRestGuildAPITests
     public class UpdateCurrentUserVoiceStateAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateCurrentUserVoiceStateAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public UpdateCurrentUserVoiceStateAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2348,6 +2708,15 @@ public class DiscordRestGuildAPITests
     public class UpdateUserVoiceStateAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateUserVoiceStateAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public UpdateUserVoiceStateAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2393,6 +2762,15 @@ public class DiscordRestGuildAPITests
     public class ListActiveThreadsAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListActiveThreadsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListActiveThreadsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -2423,6 +2801,15 @@ public class DiscordRestGuildAPITests
     /// </summary>
     public class DeleteGuildIntegrationAsync : RestAPITestBase<IDiscordRestGuildAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildIntegrationAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildIntegrationAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

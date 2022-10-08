@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -97,6 +99,33 @@ public class LateCacheResponder :
     {
         var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.RoleID);
         await _cacheService.EvictAsync<IRole>(key, ct);
+
+        var collectionKey = KeyHelpers.CreateGuildRolesCacheKey(gatewayEvent.GuildID);
+        var getCachedList = await _cacheService.TryGetValueAsync<IReadOnlyList<IRole>>(collectionKey, ct);
+        if (getCachedList.IsSuccess)
+        {
+            var oldList = getCachedList.Entity;
+
+            var newList = oldList.ToList();
+            var existingRoleIndex = newList.FindIndex(r => r.ID == gatewayEvent.RoleID);
+            if (existingRoleIndex > -1)
+            {
+                // It's in the list; remove it
+                newList.RemoveAt(existingRoleIndex);
+            }
+            else
+            {
+                // already gone
+                return Result.FromSuccess();
+            }
+
+            await _cacheService.CacheAsync(collectionKey, newList, ct);
+        }
+        else if (getCachedList.Error is not NotFoundError)
+        {
+            // Some other problem; NotFound is fine
+            return (Result)getCachedList;
+        }
 
         return Result.FromSuccess();
     }

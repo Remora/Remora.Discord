@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -59,7 +59,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="icon">The new icon.</param>
     /// <param name="type">
     /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
-    /// <see cref="ChannelType.GuildNews"/> are supported.
+    /// <see cref="ChannelType.GuildAnnouncement"/> are supported.
     /// </param>
     /// <param name="position">The new position of the channel in the listing.</param>
     /// <param name="topic">The new topic of the channel.</param>
@@ -135,7 +135,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="name">The new name of the channel.</param>
     /// <param name="type">
     /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
-    /// <see cref="ChannelType.GuildNews"/> are supported.
+    /// <see cref="ChannelType.GuildAnnouncement"/> are supported.
     /// </param>
     /// <param name="position">The new position of the channel in the listing.</param>
     /// <param name="topic">The new topic of the channel.</param>
@@ -222,13 +222,13 @@ public interface IDiscordRestChannelAPI
     );
 
     /// <summary>
-    /// Modifies the given guild news channel.
+    /// Modifies the given guild announcement channel.
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>
     /// <param name="name">The new name of the channel.</param>
     /// <param name="type">
     /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
-    /// <see cref="ChannelType.GuildNews"/> are supported.
+    /// <see cref="ChannelType.GuildAnnouncement"/> are supported.
     /// </param>
     /// <param name="position">The new position of the channel in the listing.</param>
     /// <param name="topic">The new topic of the channel.</param>
@@ -241,7 +241,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+    Task<Result<IChannel>> ModifyGuildAnnouncementChannelAsync
     (
         Snowflake channelID,
         Optional<string> name = default,
@@ -344,8 +344,8 @@ public interface IDiscordRestChannelAPI
     /// <summary>
     /// Posts a message to the given channel.
     /// <remarks>
-    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
-    /// present.
+    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, <paramref name="stickerIDs"/>,
+    /// <paramref name="components"/> or <paramref name="attachments"/> must be present.
     /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
     /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
@@ -502,9 +502,8 @@ public interface IDiscordRestChannelAPI
     /// Edits a previously sent message.
     /// </summary>
     /// <remarks>
-    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
-    /// present.
-    ///
+    /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, <paramref name="components"/> or
+    /// <paramref name="attachments"/> must be present.
     /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
     /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
@@ -654,13 +653,13 @@ public interface IDiscordRestChannelAPI
     );
 
     /// <summary>
-    /// Follows a news channel to send messages to a target channel.
+    /// Follows a announcement channel to send messages to a target channel.
     /// </summary>
-    /// <param name="channelID">The ID of the news channel.</param>
-    /// <param name="webhookChannelID">The ID of the channel to send news to.</param>
+    /// <param name="channelID">The ID of the announcement channel.</param>
+    /// <param name="webhookChannelID">The ID of the channel to send announcement to.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
-    Task<Result<IFollowedChannel>> FollowNewsChannelAsync
+    Task<Result<IFollowedChannel>> FollowAnnouncementChannelAsync
     (
         Snowflake channelID,
         Snowflake webhookChannelID,
@@ -785,7 +784,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="channelID">The channel to start the thread in.</param>
     /// <param name="name">The name of the thread.</param>
     /// <param name="type">
-    /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
+    /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.PrivateThread"/>,
     /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
     /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
     /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>

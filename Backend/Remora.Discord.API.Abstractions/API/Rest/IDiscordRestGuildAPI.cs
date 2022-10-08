@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -466,7 +466,7 @@ public interface IDiscordRestGuildAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="userID">The ID of the user.</param>
-    /// <param name="deleteMessageDays">The number of days to delete messages for (0-7). Defaults to 0.</param>
+    /// <param name="deleteMessageSeconds">The number of seconds to delete messages for (0-604800). Defaults to 0.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
@@ -474,7 +474,7 @@ public interface IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Optional<int> deleteMessageDays = default,
+        Optional<int> deleteMessageSeconds = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -594,12 +594,14 @@ public interface IDiscordRestGuildAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild to modify.</param>
     /// <param name="level">The new MFA level.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
     Task<Result<MultiFactorAuthenticationLevel>> ModifyGuildMFALevelAsync
     (
         Snowflake guildID,
         MultiFactorAuthenticationLevel level,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 
@@ -838,7 +840,7 @@ public interface IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
-        Snowflake channelID,
+        Snowflake? channelID = default,
         Optional<bool> suppress = default,
         CancellationToken ct = default
     );

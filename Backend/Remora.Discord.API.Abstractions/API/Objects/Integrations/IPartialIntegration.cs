@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -76,4 +77,7 @@ public interface IPartialIntegration
 
     /// <inheritdoc cref="IIntegration.Application" />
     Optional<IIntegrationApplication> Application { get; }
+
+    /// <inheritdoc cref="IIntegration.Scopes" />
+    Optional<IReadOnlyList<string>> Scopes { get; }
 }

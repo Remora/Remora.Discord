@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -164,6 +164,49 @@ public class MentionTests
         var snowflake = new Snowflake(roleID);
         var expected = $"<@&{roleID}>";
         var actual = Mention.Role(snowflake);
+
+        Assert.Equal(expected, actual);
+    }
+
+    /// <summary>
+    /// Tests to see if the <see cref="Mention.SlashCommand(IApplicationCommand)"/> method formats a role mention based
+    /// on Discord's specifications.
+    /// </summary>
+    /// <param name="name">The name of the command.</param>
+    /// <param name="commandID">The ID of the command.</param>
+    [Theory]
+    [InlineData("wooga", 871102387362869288UL)]
+    public void SlashCommandSuccess(string name, ulong commandID)
+    {
+        var command = new Mock<IApplicationCommand>();
+
+        command
+            .SetupGet(x => x.ID)
+            .Returns(new Snowflake(commandID));
+
+        command
+            .SetupGet(x => x.Name)
+            .Returns(name);
+
+        var expected = $"</{name}:{commandID}>";
+        var actual = Mention.SlashCommand(command.Object);
+
+        Assert.Equal(expected, actual);
+    }
+
+    /// <summary>
+    /// Tests to see if the <see cref="Mention.SlashCommand(IApplicationCommand)"/> method formats a role mention based
+    /// on Discord's specifications.
+    /// </summary>
+    /// <param name="name">The name of the command.</param>
+    /// <param name="commandID">The ID of the command.</param>
+    [Theory]
+    [InlineData("wooga", 871102387362869288UL)]
+    public void SlashCommandWithNameAndIDSuccess(string name, ulong commandID)
+    {
+        var snowflake = new Snowflake(commandID);
+        var expected = $"</{name}:{commandID}>";
+        var actual = Mention.SlashCommand(name, snowflake);
 
         Assert.Equal(expected, actual);
     }

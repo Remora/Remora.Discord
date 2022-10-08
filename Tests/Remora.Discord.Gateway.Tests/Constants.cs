@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -51,4 +51,9 @@ public static class Constants
     /// Gets the default mocked session ID.
     /// </summary>
     public static string MockSessionID => "mock-session";
+
+    /// <summary>
+    /// Gets the default mocked resume gateway URL.
+    /// </summary>
+    public static string MockResumeGatewayUrl => "wss://us-east1-b.gateway.discord.gg";
 }
