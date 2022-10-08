@@ -667,10 +667,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                var result = tree.CreateApplicationCommands();
-                ResultAssert.Successful(result);
-
-                var commands = result.Entity;
+                var commands = tree.CreateApplicationCommands();
 
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
@@ -690,10 +687,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                var result = tree.CreateApplicationCommands();
-                ResultAssert.Successful(result);
-
-                var commands = result.Entity;
+                var commands = tree.CreateApplicationCommands();
 
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
@@ -713,10 +707,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                var result = tree.CreateApplicationCommands();
-                ResultAssert.Successful(result);
-
-                var commands = result.Entity;
+                var commands = tree.CreateApplicationCommands();
 
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
@@ -736,10 +727,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                var result = tree.CreateApplicationCommands();
-                ResultAssert.Successful(result);
-
-                var commands = result.Entity;
+                var commands = tree.CreateApplicationCommands();
 
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
@@ -759,10 +747,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                var result = tree.CreateApplicationCommands();
-                ResultAssert.Successful(result);
-
-                var commands = result.Entity;
+                var commands = tree.CreateApplicationCommands();
 
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();
@@ -782,10 +767,7 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                var result = tree.CreateApplicationCommands();
-                ResultAssert.Successful(result);
-
-                var commands = result.Entity;
+                var commands = tree.CreateApplicationCommands();
 
                 var command = commands.Single();
                 var parameter = command.Options.Value.Single();

@@ -226,7 +226,7 @@ public static class CommandTreeExtensions
         {
             throw new UnsupportedFeatureException
             (
-                $"Too many root-level commands or groups (had {commands.Count}, max {_maxRootCommandsOrGroups}).",
+                $"Too many root-level commands or groups (max {_maxRootCommandsOrGroups}, found {commands.Count}).",
                 tree.Root
             );
         }
