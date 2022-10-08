@@ -33,6 +33,15 @@ namespace Remora.Discord.API.Tests.Gateway.Commands;
 public class ConnectionPropertiesTests : ObjectTestBase<IConnectionProperties>
 {
     /// <summary>
+    /// Initializes a new instance of the <see cref="ConnectionPropertiesTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ConnectionPropertiesTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
+    /// <summary>
     /// Tests whether a valid object is created by using the library name only.
     /// </summary>
     [Fact]

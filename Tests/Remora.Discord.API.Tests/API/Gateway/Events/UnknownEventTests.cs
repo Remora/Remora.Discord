@@ -30,6 +30,15 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// </summary>
 public class UnknownEventTests : GatewayEventTestBase<IUnknownEvent>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UnknownEventTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public UnknownEventTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
     /// <inheritdoc />
     protected override bool AllowUnknownEvents => true;
 }

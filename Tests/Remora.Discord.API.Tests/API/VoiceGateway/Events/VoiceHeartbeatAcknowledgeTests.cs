@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.VoiceGateway.Events;
 /// </summary>
 public class VoiceHeartbeatAcknowledgeTests : VoiceGatewayEventTestBase<IVoiceHeartbeatAcknowledge>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VoiceHeartbeatAcknowledgeTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public VoiceHeartbeatAcknowledgeTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

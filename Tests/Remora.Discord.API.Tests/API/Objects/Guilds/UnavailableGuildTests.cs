@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class UnavailableGuildTests : ObjectTestBase<IUnavailableGuild>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UnavailableGuildTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public UnavailableGuildTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

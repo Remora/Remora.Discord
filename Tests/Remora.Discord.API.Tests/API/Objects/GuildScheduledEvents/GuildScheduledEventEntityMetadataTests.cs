@@ -30,4 +30,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// </summary>
 public class GuildScheduledEventEntityMetadataTests : ObjectTestBase<IGuildScheduledEventEntityMetadata>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GuildScheduledEventEntityMetadataTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public GuildScheduledEventEntityMetadataTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

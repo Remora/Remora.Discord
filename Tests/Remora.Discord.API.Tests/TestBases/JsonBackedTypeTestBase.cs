@@ -23,6 +23,7 @@
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Extensions;
@@ -32,6 +33,8 @@ using Remora.Rest.Xunit;
 using Xunit;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
+#pragma warning disable SA1402
+
 namespace Remora.Discord.API.Tests.TestBases;
 
 /// <summary>
@@ -40,7 +43,10 @@ namespace Remora.Discord.API.Tests.TestBases;
 /// </summary>
 /// <typeparam name="TType">The type under test.</typeparam>
 /// <typeparam name="TSampleSource">The theory data source.</typeparam>
-public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSampleSource : TheoryData, new()
+[Collection("JSON-backed type tests")]
+[UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
+public abstract class JsonBackedTypeTestBase<TType, TSampleSource>
+    where TSampleSource : TheoryData, new()
 {
     /// <summary>
     /// Gets the data sample source.
@@ -48,7 +54,7 @@ public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSample
     public static TheoryData SampleSource => new TSampleSource();
 
     /// <summary>
-    /// Gets the configured JSON serializer options.
+    /// Gets the JSON serializer options in use.
     /// </summary>
     protected JsonSerializerOptions Options { get; }
 
@@ -63,18 +69,15 @@ public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSample
     protected virtual bool AllowUnknownEvents => false;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="JsonBackedTypeTestBase{TType,TSampleSource}"/> class.
+    /// Initializes a new instance of the <see cref="JsonBackedTypeTestBase{TType, TSampleSource}"/> class.
     /// </summary>
-    protected JsonBackedTypeTestBase()
+    /// <param name="fixture">The test fixture.</param>
+    protected JsonBackedTypeTestBase(JsonBackedTypeTestFixture fixture)
     {
         // ReSharper disable once VirtualMemberCallInConstructor
-        var services = new ServiceCollection()
-            .ConfigureDiscordJsonConverters(allowUnknownEvents: this.AllowUnknownEvents)
-            .AddExperimentalDiscordApi()
-            .BuildServiceProvider(true);
-
-        this.Options = services.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>()
-            .Get("Discord");
+        this.Options = this.AllowUnknownEvents
+            ? fixture.UnknownEventOptions
+            : fixture.Options;
     }
 
     /// <summary>
@@ -137,4 +140,50 @@ public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSample
 
         JsonAssert.Equivalent(original, serialized, this.AssertOptions);
     }
+}
+
+/// <summary>
+/// Acts as a test fixture for JSON-backed type tests.
+/// </summary>
+public class JsonBackedTypeTestFixture
+{
+    /// <summary>
+    /// Gets a set of JSON serializer options.
+    /// </summary>
+    public JsonSerializerOptions Options { get; }
+
+    /// <summary>
+    /// Gets a set of JSON serializer options that allow unknown events.
+    /// </summary>
+    public JsonSerializerOptions UnknownEventOptions { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JsonBackedTypeTestFixture"/> class.
+    /// </summary>
+    public JsonBackedTypeTestFixture()
+    {
+        var services = new ServiceCollection()
+            .ConfigureDiscordJsonConverters()
+            .AddExperimentalDiscordApi()
+            .BuildServiceProvider(true);
+
+        var unknownEventsServices = new ServiceCollection()
+            .ConfigureDiscordJsonConverters(allowUnknownEvents: true)
+            .AddExperimentalDiscordApi()
+            .BuildServiceProvider(true);
+
+        this.Options = services.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>()
+            .Get("Discord");
+
+        this.UnknownEventOptions = unknownEventsServices.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>()
+            .Get("Discord");
+    }
+}
+
+/// <summary>
+/// Defines a test collection for JSON-backed type tests.
+/// </summary>
+[CollectionDefinition("JSON-backed type tests")]
+public class JsonBackedTypeTestCollection : ICollectionFixture<JsonBackedTypeTestFixture>
+{
 }

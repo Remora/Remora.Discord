@@ -45,6 +45,15 @@ public class DiscordRestInviteAPITests
     public class GetInviteAsync : RestAPITestBase<IDiscordRestInviteAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetInviteAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetInviteAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -82,6 +91,15 @@ public class DiscordRestInviteAPITests
     /// </summary>
     public class DeleteInviteAsync : RestAPITestBase<IDiscordRestInviteAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteInviteAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteInviteAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

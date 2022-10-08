@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class WelcomeScreenChannelTests : ObjectTestBase<IWelcomeScreenChannel>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WelcomeScreenChannelTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public WelcomeScreenChannelTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

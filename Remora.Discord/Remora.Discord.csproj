@@ -1,14 +1,18 @@
-<Project Sdk="Remora.Sdk/1.0.0">
+<Project Sdk="Remora.Sdk/1.1.1">
 
     <PropertyGroup>
-        <VersionPrefix>2022.47</VersionPrefix>
+        <VersionPrefix>2022.48</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Update documentation.
-            Update channel type names.
-            Implement support for audit log reason when modifying the MFA level.
-            Use Remora.Sdk and friends.
-            Add support for resuming the gateway via the resume URL.
+            Fix optionality of `channel_id`.
+            Add `application_commands` field.
+            Add `scopes` field.
+            Update command length calculation.
+            Add new flag.
+            Fix more naming.
+            Implement support for slash command mentions.
+            Update the role caching routines.
+            Remove explicit start/stop routines.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

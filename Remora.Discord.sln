@@ -31,6 +31,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D1A34922-E02F-492B-AEF5-9B34E81CE293}"
 	ProjectSection(SolutionItems) = preProject
 		Samples\Directory.Build.props = Samples\Directory.Build.props
+		Samples\LICENSE = Samples\LICENSE
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnknownEventLogger", "Samples\UnknownEventLogger\UnknownEventLogger.csproj", "{ED960998-F9BD-4250-A40F-9B968DD499C0}"

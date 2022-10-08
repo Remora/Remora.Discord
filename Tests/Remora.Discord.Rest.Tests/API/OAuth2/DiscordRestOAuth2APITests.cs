@@ -44,6 +44,15 @@ public class DiscordRestOAuth2APITests
     public class GetCurrentApplicationInformationAsync : RestAPITestBase<IDiscordRestOAuth2API>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetCurrentApplicationInformationAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetCurrentApplicationInformationAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -68,6 +77,15 @@ public class DiscordRestOAuth2APITests
     /// </summary>
     public class GetCurrentAuthorizationInformationAsync : RestAPITestBase<IDiscordRestOAuth2API>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCurrentAuthorizationInformationAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetCurrentAuthorizationInformationAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

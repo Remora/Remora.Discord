@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class GuildApplicationCommandPermissionsTests : ObjectTestBase<IGuildApplicationCommandPermissions>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GuildApplicationCommandPermissionsTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public GuildApplicationCommandPermissionsTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

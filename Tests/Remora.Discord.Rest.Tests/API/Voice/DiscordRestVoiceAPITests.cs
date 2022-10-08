@@ -42,6 +42,15 @@ public class DiscordRestVoiceAPITests
     public class ListVoiceRegionsAsync : RestAPITestBase<IDiscordRestVoiceAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListVoiceRegionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListVoiceRegionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>

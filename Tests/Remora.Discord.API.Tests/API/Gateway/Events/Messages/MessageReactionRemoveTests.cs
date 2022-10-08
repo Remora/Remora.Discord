@@ -32,6 +32,15 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// </summary>
 public class MessageReactionRemoveTests : GatewayEventTestBase<IMessageReactionRemove>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MessageReactionRemoveTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public MessageReactionRemoveTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
     /// <inheritdoc />
     protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {

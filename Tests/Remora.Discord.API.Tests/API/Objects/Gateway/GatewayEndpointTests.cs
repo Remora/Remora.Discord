@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class GatewayEndpointTests : ObjectTestBase<IGatewayEndpoint>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GatewayEndpointTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public GatewayEndpointTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

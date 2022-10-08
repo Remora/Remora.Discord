@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// <inheritdoc />
 public class VoiceStateUpdateTests : GatewayEventTestBase<IVoiceStateUpdate>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VoiceStateUpdateTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public VoiceStateUpdateTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

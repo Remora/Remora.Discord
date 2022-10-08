@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// <inheritdoc />
 public class TypingStartTests : GatewayEventTestBase<ITypingStart>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TypingStartTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public TypingStartTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

@@ -30,7 +30,14 @@ namespace Remora.Discord.API.Tests.TestBases;
 /// </summary>
 /// <typeparam name="TType">The type under test.</typeparam>
 [UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
-public abstract class ObjectTestBase<TType>
-    : JsonBackedTypeTestBase<TType, SampleObjectDataSource<TType>>
+public abstract class ObjectTestBase<TType> : JsonBackedTypeTestBase<TType, SampleObjectDataSource<TType>>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ObjectTestBase{TType}"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    protected ObjectTestBase(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

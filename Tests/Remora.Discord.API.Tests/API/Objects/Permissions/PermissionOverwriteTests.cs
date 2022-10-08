@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class PermissionOverwriteTests : ObjectTestBase<IPermissionOverwrite>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PermissionOverwriteTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public PermissionOverwriteTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

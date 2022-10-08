@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.VoiceGateway.Events;
 /// </summary>
 public class VoiceResumedTests : VoiceGatewayEventTestBase<IVoiceResumed>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VoiceResumedTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public VoiceResumedTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

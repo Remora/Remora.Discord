@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class StickerTests : ObjectTestBase<ISticker>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StickerTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public StickerTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

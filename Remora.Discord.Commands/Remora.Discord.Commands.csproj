@@ -1,11 +1,10 @@
-<Project Sdk="Remora.Sdk/1.0.0">
+<Project Sdk="Remora.Sdk/1.1.1">
 
     <PropertyGroup>
-        <VersionPrefix>25.2.3</VersionPrefix>
+        <VersionPrefix>25.2.4</VersionPrefix>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
-            Use Remora.Sdk and friends.
-            Update dependencies.
+            Update command length calculation.
         </PackageReleaseNotes>
     </PropertyGroup>
 

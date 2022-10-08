@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class ThreadMetadataTests : ObjectTestBase<IThreadMetadata>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ThreadMetadataTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ThreadMetadataTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

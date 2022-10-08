@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class RoleTemplateTests : ObjectTestBase<IRoleTemplate>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RoleTemplateTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public RoleTemplateTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

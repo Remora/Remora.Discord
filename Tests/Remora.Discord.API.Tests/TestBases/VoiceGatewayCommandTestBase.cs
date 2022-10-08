@@ -34,4 +34,12 @@ namespace Remora.Discord.API.Tests.TestBases;
 public abstract class VoiceGatewayCommandTestBase<TType> : VoiceGatewayTestBase<TType, SampleVoiceCommandDataSource<TType>>
     where TType : IVoiceGatewayCommand
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VoiceGatewayCommandTestBase{TType}"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    protected VoiceGatewayCommandTestBase(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

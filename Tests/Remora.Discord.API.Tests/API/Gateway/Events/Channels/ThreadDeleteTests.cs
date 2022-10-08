@@ -30,4 +30,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// </summary>
 public class ThreadDeleteTests : GatewayEventTestBase<IThreadDelete>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ThreadDeleteTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ThreadDeleteTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

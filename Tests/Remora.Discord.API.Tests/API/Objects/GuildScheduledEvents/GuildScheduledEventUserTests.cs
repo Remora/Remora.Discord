@@ -1,5 +1,5 @@
 //
-//  GuildScheduledEventSubscribedUserTests.cs
+//  GuildScheduledEventUserTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,6 +28,14 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <summary>
 /// Tests the Hello event.
 /// </summary>
-public class GuildScheduledEventSubscribedUserTests : ObjectTestBase<IGuildScheduledEventUser>
+public class GuildScheduledEventUserTests : ObjectTestBase<IGuildScheduledEventUser>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GuildScheduledEventUserTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public GuildScheduledEventUserTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

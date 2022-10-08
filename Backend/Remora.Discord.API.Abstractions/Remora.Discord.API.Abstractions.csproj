@@ -1,12 +1,14 @@
-<Project Sdk="Remora.Sdk/1.0.0">
+<Project Sdk="Remora.Sdk/1.1.1">
 
     <PropertyGroup>
-        <VersionPrefix>70.0.0</VersionPrefix>
+        <VersionPrefix>71.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Update documentation.
-            Implement support for audit log reason when modifying the MFA level.
-            Use Remora.Sdk and friends.
+            Fix optionality of `channel_id`.
+            Add `application_commands` field.
+            Add `scopes` field.
+            Add new flag.
+            Fix more naming.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -159,7 +159,15 @@ latest commit will be published to GitHub Packages.
 The URL of the NuGet source is `https://nuget.pkg.github.com/Remora/index.json`.
 As the NuGet source requires authentication, follow GitHub's instructions: [here][9]
 
-## 6. Contributing
+## 7. Licensing
+Remora.Discord is released under the Lesser GNU Public License, version 3.0 or 
+later. 
+
+The code samples (both under the [Samples](Samples) directory and any snippets 
+in documentation, manuals, or other educational material) is licensed under the 
+MIT license.
+
+## 8. Contributing
 See [Contributing][2].
 
 ## Thanks

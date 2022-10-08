@@ -31,4 +31,12 @@ namespace Remora.Discord.API.Tests.Gateway.Commands;
 /// </summary>
 public class RequestGuildMembersTests : GatewayCommandTestBase<IRequestGuildMembers>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequestGuildMembersTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public RequestGuildMembersTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }

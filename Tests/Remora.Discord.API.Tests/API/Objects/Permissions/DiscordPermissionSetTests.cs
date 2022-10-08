@@ -35,6 +35,15 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class DiscordPermissionSetTests : ObjectTestBase<IDiscordPermissionSet>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordPermissionSetTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public DiscordPermissionSetTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+
     [Fact]
     public void HasPermissionReturnsTrueForExistingPermission()
     {

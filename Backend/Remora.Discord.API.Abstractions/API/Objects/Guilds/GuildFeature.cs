@@ -61,6 +61,11 @@ public enum GuildFeature
     Featurable,
 
     /// <summary>
+    /// The guild has paused invites, preventing new users from joining.
+    /// </summary>
+    InvitesDisabled,
+
+    /// <summary>
     /// The guild has access to set an invite splash background.
     /// </summary>
     InviteSplash,

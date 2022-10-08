@@ -30,8 +30,15 @@ namespace Remora.Discord.API.Tests.TestBases;
 /// Acts as a base class for command API types.
 /// </summary>
 /// <typeparam name="TType">The type under test.</typeparam>
-public abstract class GatewayBidirectionalTestBase<TType>
-    : GatewayTestBase<TType, SampleBidirectionalDataSource<TType>>
+public abstract class GatewayBidirectionalTestBase<TType> : GatewayTestBase<TType, SampleBidirectionalDataSource<TType>>
     where TType : IGatewayEvent, IGatewayCommand
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GatewayBidirectionalTestBase{TType}"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    protected GatewayBidirectionalTestBase(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }
