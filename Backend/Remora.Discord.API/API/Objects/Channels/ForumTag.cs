@@ -32,6 +32,6 @@ public record ForumTag
     Snowflake ID,
     string Name,
     bool IsModerated,
-    Optional<Snowflake> EmojiID = default,
+    Optional<Snowflake?> EmojiID = default,
     Optional<string?> EmojiName = default
 ) : IForumTag;

@@ -30,6 +30,6 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record DefaultReaction
 (
-    Optional<Snowflake> EmojiID = default,
+    Optional<Snowflake?> EmojiID = default,
     Optional<string?> EmojiName = default
 ) : IDefaultReaction;
