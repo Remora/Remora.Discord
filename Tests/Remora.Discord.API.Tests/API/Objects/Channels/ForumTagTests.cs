@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <inheritdoc />
 public class ForumTagTests : ObjectTestBase<IForumTag>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ForumTagTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ForumTagTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }
