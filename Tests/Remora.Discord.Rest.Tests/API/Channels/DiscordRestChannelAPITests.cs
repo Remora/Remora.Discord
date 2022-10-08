@@ -454,6 +454,7 @@ public class DiscordRestChannelAPITests
             var availableTags = new List<IForumTag>();
             var defaultReactionEmoji = new DefaultReaction(new Snowflake(1));
             var defaultThreadRateLimitPerUser = 2;
+            var defaultSortOrder = SortOrder.CreationDate;
             var reason = "test";
 
             var api = CreateAPI
@@ -478,6 +479,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("default_reaction_emoji", p => p.IsObject())
                                     .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
+                                    .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -497,6 +499,7 @@ public class DiscordRestChannelAPITests
                 availableTags,
                 defaultReactionEmoji,
                 defaultThreadRateLimitPerUser,
+                defaultSortOrder,
                 reason
             );
 

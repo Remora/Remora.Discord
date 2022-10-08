@@ -107,6 +107,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<SortOrder> defaultSortOrder = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -179,6 +180,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("default_reaction_emoji", defaultReactionEmoji, this.JsonOptions);
                         json.Write("default_thread_rate_limit_per_user", defaultThreadRateLimitPerUser, this.JsonOptions);
                         json.Write("applied_tags", appliedTags, this.JsonOptions);
+                        json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -371,6 +373,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<IReadOnlyList<IForumTag>> availableTags = default,
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<SortOrder> defaultSortOrder = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -389,6 +392,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             availableTags: availableTags,
             defaultReactionEmoji: defaultReactionEmoji,
             defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+            defaultSortOrder: defaultSortOrder,
             reason: reason,
             ct: ct
         );

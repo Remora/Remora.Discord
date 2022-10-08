@@ -220,6 +220,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<IReadOnlyList<IForumTag>> availableTags = default,
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<SortOrder> defaultSortOrder = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -238,6 +239,7 @@ public partial class CachingDiscordRestChannelAPI
             availableTags,
             defaultReactionEmoji,
             defaultThreadRateLimitPerUser,
+            defaultSortOrder,
             reason,
             ct
         );

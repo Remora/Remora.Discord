@@ -197,6 +197,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="rtcRegion">The ID of the voice region of the voice or stage channel.</param>
     /// <param name="videoQualityMode">The video quality mode of the voice channel.</param>
     /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
+    /// <param name="defaultSortOrder">The default sort order of posts.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -216,6 +217,7 @@ public interface IDiscordRestGuildAPI
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<SortOrder?> defaultSortOrder = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

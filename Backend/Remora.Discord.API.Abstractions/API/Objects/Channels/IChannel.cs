@@ -197,6 +197,11 @@ public interface IChannel : IPartialChannel
     /// </summary>
     new Optional<TimeSpan> DefaultThreadRateLimitPerUser { get; }
 
+    /// <summary>
+    /// Gets the sorting order of the forum channel.
+    /// </summary>
+    new Optional<SortOrder> DefaultSortOrder { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialChannel.ID => this.ID;
 
@@ -292,4 +297,7 @@ public interface IChannel : IPartialChannel
 
     /// <inheritdoc/>
     Optional<TimeSpan> IPartialChannel.DefaultThreadRateLimitPerUser => this.DefaultThreadRateLimitPerUser;
+
+    /// <inheritdoc/>
+    Optional<SortOrder> IPartialChannel.DefaultSortOrder => this.DefaultSortOrder;
 }

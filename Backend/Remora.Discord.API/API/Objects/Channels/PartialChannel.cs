@@ -65,5 +65,6 @@ public record PartialChannel
     Optional<IReadOnlyList<IForumTag>> AvailableTags = default,
     Optional<IReadOnlyList<Snowflake>> AppliedTags = default,
     Optional<IDefaultReaction?> DefaultReactionEmoji = default,
-    Optional<TimeSpan> DefaultThreadRateLimitPerUser = default
+    Optional<TimeSpan> DefaultThreadRateLimitPerUser = default,
+    Optional<SortOrder> DefaultSortOrder = default
 ) : IPartialChannel;

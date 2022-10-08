@@ -313,6 +313,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<SortOrder?> defaultSortOrder = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -339,6 +340,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("rtc_region", rtcRegion, this.JsonOptions);
                         json.Write("video_quality_mode", videoQualityMode, this.JsonOptions);
                         json.Write("default_auto_archive_duration", defaultAutoArchiveDuration, this.JsonOptions);
+                        json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
