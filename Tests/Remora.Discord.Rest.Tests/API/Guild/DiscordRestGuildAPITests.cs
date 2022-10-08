@@ -795,6 +795,8 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("rtc_region", p => p.IsNull())
                                 .WithProperty("video_quality_mode", p => p.IsNull())
                                 .WithProperty("default_auto_archive_duration", p => p.IsNull())
+                                .WithProperty("default_reaction_emoji", p => p.IsNull())
+                                .WithProperty("available_tags", p => p.IsNull())
                                 .WithProperty("default_sort_order", p => p.IsNull())
                         )
                     )
@@ -817,6 +819,8 @@ public class DiscordRestGuildAPITests
                 rtcRegion: null,
                 videoQualityMode: null,
                 defaultAutoArchiveDuration: null,
+                defaultReactionEmoji: null,
+                availableTags: null,
                 defaultSortOrder: null
             );
 

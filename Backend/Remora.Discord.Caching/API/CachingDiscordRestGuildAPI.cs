@@ -295,6 +295,8 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -316,6 +318,8 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             rtcRegion,
             videoQualityMode,
             defaultAutoArchiveDuration,
+            defaultReactionEmoji,
+            availableTags,
             defaultSortOrder,
             reason,
             ct
