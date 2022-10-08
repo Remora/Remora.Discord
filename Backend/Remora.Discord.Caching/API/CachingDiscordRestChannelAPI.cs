@@ -111,7 +111,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
-        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,

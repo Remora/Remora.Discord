@@ -503,6 +503,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IForumTag, ForumTag>()
             .WithPropertyName(t => t.IsModerated, "moderated");
 
+        options.AddDataObjectConverter<IPartialForumTag, PartialForumTag>()
+            .WithPropertyName(t => t.IsModerated, "moderated");
+
         return options;
     }
 

@@ -218,7 +218,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<Snowflake?> parentID = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<ChannelFlags> flags = default,
-        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<SortOrder> defaultSortOrder = default,

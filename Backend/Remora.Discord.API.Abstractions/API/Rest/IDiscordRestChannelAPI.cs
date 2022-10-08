@@ -79,7 +79,7 @@ public interface IDiscordRestChannelAPI
     /// </param>
     /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
     /// <param name="flags">The channel flags to use.</param>
-    /// <param name="availableTags">The set of tags that can be used in a forum channel.</param>
+    /// <param name="availableTags">The set of tags that can be used in a forum channel. Only "name" is required to be set.</param>
     /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
     /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
     /// <param name="appliedTags">The tags applied to the thread.</param>
@@ -109,7 +109,7 @@ public interface IDiscordRestChannelAPI
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
-        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
@@ -311,7 +311,7 @@ public interface IDiscordRestChannelAPI
     /// The default time of inactivity after which threads in the channel are archived.
     /// </param>
     /// <param name="flags">The new channel flags.</param>
-    /// <param name="availableTags">The set of tags that can be used in a forum channel.</param>
+    /// <param name="availableTags">The set of tags that can be used in a forum channel. Only "name" is required to be set.</param>
     /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
     /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
     /// <param name="defaultSortOrder">The default sort order of posts.</param>
@@ -330,7 +330,7 @@ public interface IDiscordRestChannelAPI
         Optional<Snowflake?> parentID = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<ChannelFlags> flags = default,
-        Optional<IReadOnlyList<IForumTag>> availableTags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<SortOrder> defaultSortOrder = default,

@@ -29,31 +29,46 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a tag that can be attached to posts in a forum.
 /// </summary>
 [PublicAPI]
-public interface IForumTag
+public interface IForumTag : IPartialForumTag
 {
     /// <summary>
     /// Gets the ID of the tag.
     /// </summary>
-    Snowflake ID { get; }
+    new Snowflake ID { get; }
 
     /// <summary>
     /// Gets the name of the tag.
     /// </summary>
-    string Name { get; }
+    new string Name { get; }
 
     /// <summary>
     /// Gets a value indicating whether the tag can only be added or removed by someone with the
     /// <see cref="DiscordPermission.ManageThreads"/> permission.
     /// </summary>
-    bool IsModerated { get; }
+    new bool IsModerated { get; }
 
     /// <summary>
     /// Gets the ID of the custom guild emoji to use.
     /// </summary>
-    Optional<Snowflake?> EmojiID { get; }
+    new Optional<Snowflake?> EmojiID { get; }
 
     /// <summary>
     /// Gets the unicode string of the emoji to use.
     /// </summary>
-    Optional<string?> EmojiName { get; }
+    new Optional<string?> EmojiName { get; }
+
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialForumTag.ID => this.ID;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialForumTag.Name => this.Name;
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialForumTag.IsModerated => this.IsModerated;
+
+    /// <inheritdoc/>
+    Optional<Snowflake?> IPartialForumTag.EmojiID => this.EmojiID;
+
+    /// <inheritdoc/>
+    Optional<string?> IPartialForumTag.EmojiName => this.EmojiName;
 }
