@@ -130,7 +130,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
-        if (data.ComponentType is ComponentType.SelectMenu)
+        if (data.ComponentType is ComponentType.StringSelect)
         {
             if (!data.Values.HasValue)
             {
@@ -144,13 +144,18 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var buildParameters = data.ComponentType switch
         {
             ComponentType.Button => new Dictionary<string, IReadOnlyList<string>>(),
-            ComponentType.SelectMenu => Result<IReadOnlyDictionary<string, IReadOnlyList<string>>>.FromSuccess
-            (
-                new Dictionary<string, IReadOnlyList<string>>
-                {
-                    { "values", data.Values.Value }
-                }
-            ),
+            ComponentType.StringSelect
+                or ComponentType.UserSelect
+                or ComponentType.RoleSelect
+                or ComponentType.MentionableSelect
+                or ComponentType.ChannelSelect
+                => Result<IReadOnlyDictionary<string, IReadOnlyList<string>>>.FromSuccess
+                (
+                    new Dictionary<string, IReadOnlyList<string>>
+                    {
+                        { "values", data.Values.Value }
+                    }
+                ),
             _ => new InvalidOperationError("An unsupported component type was encountered.")
         };
 
