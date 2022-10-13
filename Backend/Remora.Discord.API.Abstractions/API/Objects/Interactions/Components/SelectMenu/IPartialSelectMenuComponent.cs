@@ -41,6 +41,9 @@ public interface IPartialSelectMenuComponent : IPartialMessageComponent
     /// <inheritdoc cref="ISelectMenuComponent.Options"/>
     Optional<IReadOnlyList<IPartialSelectOption>> Options { get; }
 
+    /// <inheritdoc cref="ISelectMenuComponent.ChannelTypes" />
+    Optional<IReadOnlyList<ChannelType>> ChannelTypes { get; }
+
     /// <inheritdoc cref="ISelectMenuComponent.Placeholder"/>
     Optional<string> Placeholder { get; }
 

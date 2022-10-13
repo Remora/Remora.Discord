@@ -68,7 +68,11 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 => JsonSerializer.Deserialize<IActionRowComponent>(document.RootElement.GetRawText(), options),
             ComponentType.Button
                 => JsonSerializer.Deserialize<IButtonComponent>(document.RootElement.GetRawText(), options),
-            ComponentType.SelectMenu
+            ComponentType.StringSelect
+                or ComponentType.UserSelect
+                or ComponentType.RoleSelect
+                or ComponentType.MentionableSelect
+                or ComponentType.ChannelSelect
                 => JsonSerializer.Deserialize<ISelectMenuComponent>(document.RootElement.GetRawText(), options),
             ComponentType.TextInput
                 => JsonSerializer.Deserialize<ITextInputComponent>(document.RootElement.GetRawText(), options),

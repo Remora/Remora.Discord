@@ -31,14 +31,12 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record SelectMenuComponent
 (
+    ComponentType Type,
     string CustomID,
-    IReadOnlyList<ISelectOption> Options,
+    Optional<IReadOnlyList<ISelectOption>> Options,
+    Optional<IReadOnlyList<ChannelType>> ChannelTypes,
     Optional<string> Placeholder = default,
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default
-) : ISelectMenuComponent
-{
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.SelectMenu;
-}
+) : ISelectMenuComponent;

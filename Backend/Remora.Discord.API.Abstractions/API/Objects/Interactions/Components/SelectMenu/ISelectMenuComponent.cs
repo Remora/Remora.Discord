@@ -45,7 +45,12 @@ public interface ISelectMenuComponent : IMessageComponent, IPartialSelectMenuCom
     /// <summary>
     /// Gets the options in the select menu.
     /// </summary>
-    new IReadOnlyList<ISelectOption> Options { get; }
+    new Optional<IReadOnlyList<ISelectOption>> Options { get; }
+
+    /// <summary>
+    /// Gets the channel types to show on a <see cref="ComponentType.ChannelSelect"/> component.
+    /// </summary>
+    new Optional<IReadOnlyList<ChannelType>> ChannelTypes { get; }
 
     /// <summary>
     /// Gets the placeholder text for the menu. Max 150 characters.
@@ -74,7 +79,12 @@ public interface ISelectMenuComponent : IMessageComponent, IPartialSelectMenuCom
     Optional<string> IPartialSelectMenuComponent.CustomID => this.CustomID;
 
     /// <inheritdoc/>
-    Optional<IReadOnlyList<IPartialSelectOption>> IPartialSelectMenuComponent.Options => new(this.Options);
+    Optional<IReadOnlyList<IPartialSelectOption>> IPartialSelectMenuComponent.Options => this.Options.HasValue
+        ? new Optional<IReadOnlyList<IPartialSelectOption>>(this.Options.Value)
+        : default;
+
+    /// <inheritdoc />
+    Optional<IReadOnlyList<ChannelType>> IPartialSelectMenuComponent.ChannelTypes => this.ChannelTypes;
 
     /// <inheritdoc/>
     Optional<string> IPartialSelectMenuComponent.Placeholder => this.Placeholder;
