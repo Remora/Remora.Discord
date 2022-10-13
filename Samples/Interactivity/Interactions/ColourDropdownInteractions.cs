@@ -89,15 +89,22 @@ public class ColourDropdownInteractions : InteractionGroup
         var components = new List<IMessageComponent>(message.Components.Value);
         var dropdown = (ISelectMenuComponent)((IActionRowComponent)components[0]).Components[0];
 
-        var selected = dropdown.Options.Single(o => o.Value == colourCodeRaw);
+        if (!dropdown.Options.IsDefined(out var selectOptions))
+        {
+            return new InvalidOperationError("No options were present on the text select");
+        }
+
+        var selected = selectOptions.Single(o => o.Value == colourCodeRaw);
         var newComponents = new List<IMessageComponent>
         {
             new ActionRowComponent(new[]
             {
                 new SelectMenuComponent
                 (
+                    ComponentType.StringSelect,
                     dropdown.CustomID,
                     dropdown.Options,
+                    default,
                     selected.Label,
                     dropdown.MinValues,
                     dropdown.MaxValues,
@@ -136,6 +143,44 @@ public class ColourDropdownInteractions : InteractionGroup
             "🦈" => "A misunderstood fish.",
             _ => "No clue."
         };
+
+        return (Result)await _feedback.SendContextualNeutralAsync
+        (
+            message,
+            _context.User.ID,
+            options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
+            ct: this.CancellationToken
+        );
+    }
+
+    /// <summary>
+    /// Shows the channels selected by the user.
+    /// </summary>
+    /// <param name="values">The selected values.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    [SelectMenu("channel-dropdown")]
+    public async Task<Result> ShowSelectedChannelsAsync(IReadOnlyList<string> values)
+    {
+        if (!_context.Data.TryPickT1(out var components, out _))
+        {
+            return new InvalidOperationError("Expected message component data to be present");
+        }
+
+        if (!components.Resolved.IsDefined(out var resolvedData))
+        {
+            return new InvalidOperationError("Expected resolved data to be present");
+        }
+
+        if (!resolvedData.Channels.IsDefined(out var channels))
+        {
+            return new InvalidOperationError("Expected channel data to be present in the resolved payload");
+        }
+
+        var selectedChannels = string.Join(", ", values);
+        var resolvedChannels = string.Join(", ", channels.Keys);
+
+        var message = $"The values of the selected channels were: {selectedChannels}\n\n" +
+            $"The resolved channels were: {resolvedChannels}";
 
         return (Result)await _feedback.SendContextualNeutralAsync
         (

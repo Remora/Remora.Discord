@@ -101,6 +101,7 @@ public class InteractiveCommands : CommandGroup
             {
                 new SelectMenuComponent
                 (
+                    ComponentType.StringSelect,
                     CustomIDHelpers.CreateSelectMenuID("colour-dropdown"),
                     new ISelectOption[]
                     {
@@ -113,6 +114,7 @@ public class InteractiveCommands : CommandGroup
                         new SelectOption("Black", "#000000"),
                         new SelectOption("White", "#FFFFFF")
                     },
+                    default,
                     "Colours...",
                     1,
                     1
@@ -137,6 +139,7 @@ public class InteractiveCommands : CommandGroup
             {
                 new SelectMenuComponent
                 (
+                    ComponentType.StringSelect,
                     CustomIDHelpers.CreateSelectMenuID("typed-dropdown"),
                     new ISelectOption[]
                     {
@@ -144,9 +147,37 @@ public class InteractiveCommands : CommandGroup
                         new SelectOption("Robot", "🤖", Emoji: new PartialEmoji(Name: "🤖")),
                         new SelectOption("Shark", "🦈", Emoji: new PartialEmoji(Name: "🦈"))
                     },
+                    default,
                     "Emojis...",
                     1,
                     1
+                )
+            })
+        });
+
+        return await _feedback.SendContextualEmbedAsync(embed, options, this.CancellationToken);
+    }
+
+    /// <summary>
+    /// Sends an embed with a dropdown allowing the user to select a
+    /// guild text channel.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    [Command("channel-dropdown")]
+    public async Task<IResult> SendChannelDropdownAsync()
+    {
+        var embed = new Embed(Description: "Select a guild text channel below.");
+        var options = new FeedbackMessageOptions(MessageComponents: new IMessageComponent[]
+        {
+            new ActionRowComponent(new[]
+            {
+                new SelectMenuComponent
+                (
+                    ComponentType.ChannelSelect,
+                    CustomIDHelpers.CreateSelectMenuID("channel-dropdown"),
+                    default,
+                    new[] { ChannelType.GuildText },
+                    "Channels..."
                 )
             })
         });

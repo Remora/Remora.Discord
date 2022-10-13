@@ -95,6 +95,31 @@ public Task<Result> OnMenuSelectionAsync(IReadOnlyList<MyArbitraryType> values)
 The raw values in question are taken from the select menu options of the 
 component, and can be any parseable data.
 
+You can take advantage of this when using `user`, `role`, or `channel` select menus, as the values
+returned will be the ID of the selected user, role or channel. However, it is better to instead
+use the resolved data when possible, to prevent possible extra API calls. This is also more reliable
+when using `mentionable` menus, as the values returned do not differentiate between user and role IDs.
+
+```c#
+private readonly InteractionContext _context; // Injected
+
+[SelectMenu("my-mentionable-menu")]
+public Task<Result> OnMenuSelectionAsync(IReadOnlyList<string> values)
+{
+    // `values` will contain the IDs of the selected users/roles
+
+    if (!_context.Data.TryPickT1(out var components, out _))
+        // error, expected message component data to be present
+
+    if (!components.Resolved.IsDefined(out var resolvedData))
+        // error, expected resolved data to be present on non-string select menus
+
+    resolvedData.Users.IsDefined(...);
+    resolvedData.Members.IsDefined(...);
+    resolvedData.Roles.IsDefined(...);
+}
+```
+
 ### Modals
 Modals are functions with zero or more parameters matching the value types of 
 the modal's contained components. This might sound a little complex, but is in
