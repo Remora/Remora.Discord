@@ -1,9 +1,0 @@
-{
-  "t": "GUILD_CREATE",
-  "s": 2,
-  "op": 0,
-  "d": {
-    "id": "999999999999999999",
-    "unavailable": true
-  }
-}
