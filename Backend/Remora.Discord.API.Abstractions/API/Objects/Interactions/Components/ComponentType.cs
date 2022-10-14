@@ -41,7 +41,7 @@ public enum ComponentType
     Button = 2,
 
     /// <summary>
-    /// A menu of selectable options.
+    /// A menu of selectable strings.
     /// </summary>
     StringSelect = 3,
 
