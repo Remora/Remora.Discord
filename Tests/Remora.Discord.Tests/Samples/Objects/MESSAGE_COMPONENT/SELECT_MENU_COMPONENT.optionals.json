@@ -1,15 +1,4 @@
 {
   "type": 3,
-  "custom_id": "class_select_1",
-  "options": [
-    {
-      "label": "none",
-      "value": "priest",
-      "description": "none",
-      "emoji": {
-        "name": "none",
-        "id": "999999999999999999"
-      }
-    }
-  ]
+  "custom_id": "class_select_1"
 }
