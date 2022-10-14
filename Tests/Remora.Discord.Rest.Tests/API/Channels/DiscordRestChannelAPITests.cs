@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -1034,6 +1035,7 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsFileUploadRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
@@ -1049,23 +1051,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1109,6 +1095,7 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsMultiFileUploadRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
@@ -1128,28 +1115,8 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName1))
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[1]", fileName2))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName1, file1)
+                    .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1208,6 +1175,7 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsRetainingFileUploadRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
@@ -1224,23 +1192,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1765,6 +1717,7 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsFileUploadRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
@@ -1778,23 +1731,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1835,6 +1772,7 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsMultiFileUploadRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
@@ -1852,28 +1790,8 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName1))
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[1]", fileName2))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName1, file1)
+                    .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1929,6 +1847,7 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsRetainingFileUploadRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
@@ -1943,23 +1862,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject

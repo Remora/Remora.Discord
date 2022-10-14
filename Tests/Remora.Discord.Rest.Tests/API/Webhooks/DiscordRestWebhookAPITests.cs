@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -970,6 +971,7 @@ public class DiscordRestWebhookAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsFileUploadRequestCorrectly()
         {
             var webhookId = DiscordSnowflake.New(0);
@@ -981,24 +983,9 @@ public class DiscordRestWebhookAPITests
 
             var api = CreateAPI
             (
-                b => b.Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1039,6 +1026,7 @@ public class DiscordRestWebhookAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsMultiFileUploadRequestCorrectly()
         {
             var webhookId = DiscordSnowflake.New(0);
@@ -1056,28 +1044,8 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName1))
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[1]", fileName2))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName1, file1)
+                    .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1133,6 +1101,7 @@ public class DiscordRestWebhookAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsRetainingFileUploadRequestCorrectly()
         {
             var webhookId = DiscordSnowflake.New(0);
@@ -1147,23 +1116,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1366,6 +1319,7 @@ public class DiscordRestWebhookAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsFileUploadRequestCorrectly()
         {
             var webhookID = DiscordSnowflake.New(0);
@@ -1384,23 +1338,7 @@ public class DiscordRestWebhookAPITests
                         HttpMethod.Patch,
                         $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1442,6 +1380,7 @@ public class DiscordRestWebhookAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsMultiFileUploadRequestCorrectly()
         {
             var webhookID = DiscordSnowflake.New(0);
@@ -1464,28 +1403,8 @@ public class DiscordRestWebhookAPITests
                         HttpMethod.Patch,
                         $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName1))
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[1]", fileName2))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName1, file1)
+                    .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
@@ -1542,6 +1461,7 @@ public class DiscordRestWebhookAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "Inconsequential")]
         public async Task PerformsRetainingFileUploadRequestCorrectly()
         {
             var webhookID = DiscordSnowflake.New(0);
@@ -1561,23 +1481,7 @@ public class DiscordRestWebhookAPITests
                         HttpMethod.Patch,
                         $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
-                    .With
-                    (
-                        m =>
-                        {
-                            if (m.Content is not MultipartFormDataContent multipart)
-                            {
-                                return false;
-                            }
-
-                            if (!multipart.ContainsContent("files[0]", fileName))
-                            {
-                                return false;
-                            }
-
-                            return multipart.ContainsContent<StringContent>("payload_json");
-                        }
-                    )
+                    .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
                         j => j.IsObject
