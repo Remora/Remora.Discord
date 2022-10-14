@@ -1,8 +1,8 @@
-<Project Sdk="Remora.Tests.Sdk/1.0.4">
+<Project Sdk="Remora.Tests.Sdk/1.0.5">
 
     <ItemGroup>
         <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
-        <PackageReference Include="Remora.Rest.Xunit" Version="1.2.1" />
+        <PackageReference Include="Remora.Rest.Xunit" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup>

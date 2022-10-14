@@ -1,4 +1,4 @@
-﻿<Project Sdk="Remora.Tests.Sdk/1.0.4">
+﻿<Project Sdk="Remora.Tests.Sdk/1.0.5">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
