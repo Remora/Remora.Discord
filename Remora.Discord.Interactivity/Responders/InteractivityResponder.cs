@@ -144,18 +144,18 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var buildParameters = data.ComponentType switch
         {
             ComponentType.Button => new Dictionary<string, IReadOnlyList<string>>(),
-            ComponentType.StringSelect
-                or ComponentType.UserSelect
+            ComponentType.StringSelect => Result<IReadOnlyDictionary<string, IReadOnlyList<string>>>.FromSuccess
+            (
+                new Dictionary<string, IReadOnlyList<string>>
+                {
+                    { "values", data.Values.Value }
+                }
+            ),
+            ComponentType.UserSelect
                 or ComponentType.RoleSelect
                 or ComponentType.MentionableSelect
                 or ComponentType.ChannelSelect
-                => Result<IReadOnlyDictionary<string, IReadOnlyList<string>>>.FromSuccess
-                (
-                    new Dictionary<string, IReadOnlyList<string>>
-                    {
-                        { "values", data.Values.Value }
-                    }
-                ),
+                => new Dictionary<string, IReadOnlyList<string>>(),
             _ => new InvalidOperationError("An unsupported component type was encountered.")
         };
 

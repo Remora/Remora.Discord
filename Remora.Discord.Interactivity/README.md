@@ -95,10 +95,9 @@ public Task<Result> OnMenuSelectionAsync(IReadOnlyList<MyArbitraryType> values)
 The raw values in question are taken from the select menu options of the 
 component, and can be any parseable data.
 
-You can take advantage of this when using `user`, `role`, or `channel` select menus, as the values
-returned will be the ID of the selected user, role or channel. However, it is better to instead
-use the resolved data when possible, to prevent possible extra API calls. This is also more reliable
-when using `mentionable` menus, as the values returned do not differentiate between user and role IDs.
+When using `user`, `role`, `mentionable` and `channel` select menus, no values are returned.
+Instead, you should use the resolved data to retrieve the user's selections.
+For example, to retrieve data from a `MentionableSelect` interaction response:
 
 ```c#
 private readonly InteractionContext _context; // Injected

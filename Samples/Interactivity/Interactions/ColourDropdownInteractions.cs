@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Remora.Commands.Results;
@@ -156,10 +157,9 @@ public class ColourDropdownInteractions : InteractionGroup
     /// <summary>
     /// Shows the channels selected by the user.
     /// </summary>
-    /// <param name="values">The selected values.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     [SelectMenu("channel-dropdown")]
-    public async Task<Result> ShowSelectedChannelsAsync(IReadOnlyList<string> values)
+    public async Task<Result> ShowSelectedChannelsAsync()
     {
         if (!_context.Data.TryPickT1(out var components, out _))
         {
@@ -176,15 +176,17 @@ public class ColourDropdownInteractions : InteractionGroup
             return new InvalidOperationError("Expected channel data to be present in the resolved payload");
         }
 
-        var selectedChannels = string.Join(", ", values);
-        var resolvedChannels = string.Join(", ", channels.Keys);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("The following channels were selected: ");
 
-        var message = $"The values of the selected channels were: {selectedChannels}\n\n" +
-            $"The resolved channels were: {resolvedChannels}";
+        foreach (var channel in channels.Keys)
+        {
+            stringBuilder.AppendLine($"• <#{channel}>");
+        }
 
         return (Result)await _feedback.SendContextualNeutralAsync
         (
-            message,
+            stringBuilder.ToString(),
             _context.User.ID,
             options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
             ct: this.CancellationToken
