@@ -694,6 +694,11 @@ public enum DiscordError
     PaymentSourceRequiredForRedemption = 50070,
 
     /// <summary>
+    /// A system webhook cannot be modified.
+    /// </summary>
+    CannotModifySystemWebhook = 50073,
+
+    /// <summary>
     /// A channel required for community guilds cannot be deleted.
     /// </summary>
     CannotDeleteCommunityRequiredChannel = 50074,
