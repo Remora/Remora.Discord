@@ -37,7 +37,7 @@ public interface ITreeNameResolver
     /// <summary>
     /// Gets the name of the tree to run commands from, given the provided context.
     /// </summary>
-    /// <param name="context">The command context.</param>
+    /// <param name="context">The operation context.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>
     /// The name of the tree to run commands from, and a boolean indicating whether the command executor may try the
