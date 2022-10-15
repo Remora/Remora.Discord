@@ -194,14 +194,17 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddCondition<RequireBotDiscordPermissionsCondition>();
 
         serviceCollection
+            .AddParser<AttachmentParser>()
             .AddParser<ChannelParser>()
-            .AddParser<GuildMemberParser>()
-            .AddParser<RoleParser>()
-            .AddParser<UserParser>()
-            .AddParser<MessageParser>()
-            .AddParser<SnowflakeParser>()
             .AddParser<EmojiParser>()
-            .AddParser<OneOfParser>();
+            .AddParser<GuildMemberParser>()
+            .AddParser<MessageParser>()
+            .AddParser<RoleParser>()
+            .AddParser<UserParser>();
+
+        serviceCollection
+            .AddParser<OneOfParser>()
+            .AddParser<SnowflakeParser>();
 
         serviceCollection.TryAddSingleton<ExecutionEventCollectorService>();
 
@@ -225,7 +228,6 @@ public static class ServiceCollectionExtensions
         serviceCollection.TryAddSingleton<SlashService>();
         serviceCollection.AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
         serviceCollection.AddResponder<AutocompleteResponder>();
-        serviceCollection.AddParser<AttachmentParser>();
 
         return serviceCollection;
     }

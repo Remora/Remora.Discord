@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -28,26 +29,32 @@ using Remora.Commands.Results;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Services;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
 
 /// <summary>
-/// Parses instances of <see cref="IChannel"/> from command-line inputs.
+/// Parses instances of <see cref="IChannel"/> and <see cref="IPartialChannel"/> from command-line inputs.
 /// </summary>
 [PublicAPI]
-public class ChannelParser : AbstractTypeParser<IChannel>
+public class ChannelParser : AbstractTypeParser<IChannel>, ITypeParser<IPartialChannel>
 {
     private readonly IDiscordRestChannelAPI _channelAPI;
+    private readonly ContextInjectionService _contextInjection;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChannelParser"/> class.
     /// </summary>
     /// <param name="channelAPI">The channel API.</param>
-    public ChannelParser(IDiscordRestChannelAPI channelAPI)
+    /// <param name="contextInjection">The context injection service.</param>
+    public ChannelParser(IDiscordRestChannelAPI channelAPI, ContextInjectionService contextInjection)
     {
         _channelAPI = channelAPI;
+        _contextInjection = contextInjection;
     }
 
     /// <inheritdoc />
@@ -59,5 +66,43 @@ public class ChannelParser : AbstractTypeParser<IChannel>
         }
 
         return await _channelAPI.GetChannelAsync(channelID.Value, ct);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialChannel>> ITypeParser<IPartialChannel>.TryParseAsync(IReadOnlyList<string> tokens, CancellationToken ct)
+    {
+        return (await (this as ITypeParser<IChannel>).TryParseAsync(tokens, ct)).Map(a => a as IPartialChannel);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialChannel>> ITypeParser<IPartialChannel>.TryParseAsync(string token, CancellationToken ct)
+    {
+        _ = DiscordSnowflake.TryParse(token.Unmention(), out var channelID);
+        if (channelID is null)
+        {
+            return new ParsingError<IPartialChannel>(token, "Unrecognized input format.");
+        }
+
+        var resolvedChannel = GetResolvedChannelOrDefault(channelID.Value);
+        return resolvedChannel is null
+            ? (await (this as ITypeParser<IChannel>).TryParseAsync(token, ct)).Map(a => a as IPartialChannel)
+            : Result<IPartialChannel>.FromSuccess(resolvedChannel);
+    }
+
+    private IPartialChannel? GetResolvedChannelOrDefault(Snowflake channelID)
+    {
+        if (_contextInjection.Context is not InteractionContext injectionContext)
+        {
+            return null;
+        }
+
+        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!resolvedData.IsDefined(out var resolved) || !resolved.Channels.IsDefined(out var channels))
+        {
+            return null;
+        }
+
+        _ = channels.TryGetValue(channelID, out var channel);
+        return channel;
     }
 }

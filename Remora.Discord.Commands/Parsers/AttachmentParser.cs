@@ -20,10 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Rest.Core;
@@ -34,7 +36,7 @@ namespace Remora.Discord.Commands.Parsers;
 /// <summary>
 /// Parses instances of <see cref="IAttachment"/> from an interaction.
 /// </summary>
-public class AttachmentParser : AbstractTypeParser<IAttachment>
+public class AttachmentParser : AbstractTypeParser<IAttachment>, ITypeParser<IPartialAttachment>
 {
     private readonly ICommandContext _context;
 
@@ -48,38 +50,53 @@ public class AttachmentParser : AbstractTypeParser<IAttachment>
     }
 
     /// <inheritdoc/>
-    public override ValueTask<Result<IAttachment>> TryParseAsync(string token, CancellationToken ct = default)
+    public override ValueTask<Result<IAttachment>> TryParseAsync(string value, CancellationToken ct = default)
     {
-        if (_context is not InteractionContext interactionContext)
+        if (!DiscordSnowflake.TryParse(value, out var attachmentID))
         {
-            return new(new InvalidOperationError("Cannot parse attachments outside the context of an interaction."));
+            return new(new ParsingError<IAttachment>(value, "Invalid attachment ID."));
         }
 
-        if (!Snowflake.TryParse(token, out var attachmentID))
+        var resolvedAttachment = GetResolvedAttachmentOrDefault(attachmentID.Value);
+        return resolvedAttachment is not null
+            ? new(Result<IAttachment>.FromSuccess(resolvedAttachment))
+            : new(new ParsingError<IAttachment>(value, "No matching attachment found."));
+    }
+
+    private IAttachment? GetResolvedAttachmentOrDefault(Snowflake attachmentID)
+    {
+        if (_context is not InteractionContext injectionContext)
         {
-            return new(new ParsingError<IAttachment>(token, "Invalid attachment ID."));
+            return null;
         }
 
-        if (!interactionContext.Data.TryPickT0(out var commandData, out _))
+        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!resolvedData.IsDefined(out var resolved) || !resolved.Attachments.IsDefined(out var attachments))
         {
-            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without command data."));
+            return null;
         }
 
-        if (!commandData.Resolved.IsDefined(out var resolvedData))
-        {
-            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved data."));
-        }
+        _ = attachments.TryGetValue(attachmentID, out var attachment);
+        return attachment;
+    }
 
-        if (!resolvedData.Attachments.IsDefined(out var resolvedAttachments))
-        {
-            return new(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved attachments."));
-        }
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialAttachment>> ITypeParser<IPartialAttachment>.TryParseAsync
+    (
+        IReadOnlyList<string> tokens,
+        CancellationToken ct
+    )
+    {
+        return (await (this as ITypeParser<IAttachment>).TryParseAsync(tokens, ct)).Map(a => a as IPartialAttachment);
+    }
 
-        if (!resolvedAttachments.TryGetValue(attachmentID.Value, out var resolvedAttachment))
-        {
-            return new(new InvalidOperationError($"Attachment with ID {attachmentID} present in options, but not in resolved attachments."));
-        }
-
-        return new(Result<IAttachment>.FromSuccess(resolvedAttachment));
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialAttachment>> ITypeParser<IPartialAttachment>.TryParseAsync
+    (
+        string token,
+        CancellationToken ct
+    )
+    {
+        return (await (this as ITypeParser<IAttachment>).TryParseAsync(token, ct)).Map(a => a as IPartialAttachment);
     }
 }

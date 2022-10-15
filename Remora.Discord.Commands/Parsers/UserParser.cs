@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -28,7 +29,10 @@ using Remora.Commands.Results;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Services;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
@@ -37,17 +41,20 @@ namespace Remora.Discord.Commands.Parsers;
 /// Parses instances of <see cref="IUser"/> from command-line inputs.
 /// </summary>
 [PublicAPI]
-public class UserParser : AbstractTypeParser<IUser>
+public class UserParser : AbstractTypeParser<IUser>, ITypeParser<IPartialUser>
 {
     private readonly IDiscordRestUserAPI _userAPI;
+    private readonly ContextInjectionService _contextInjection;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserParser"/> class.
     /// </summary>
     /// <param name="userAPI">The user API.</param>
-    public UserParser(IDiscordRestUserAPI userAPI)
+    /// <param name="contextInjection">The context injection service.</param>
+    public UserParser(IDiscordRestUserAPI userAPI, ContextInjectionService contextInjection)
     {
         _userAPI = userAPI;
+        _contextInjection = contextInjection;
     }
 
     /// <inheritdoc />
@@ -58,6 +65,55 @@ public class UserParser : AbstractTypeParser<IUser>
             return new ParsingError<IUser>(value.Unmention());
         }
 
-        return await _userAPI.GetUserAsync(userID.Value, ct);
+        var resolvedUser = GetResolvedUserOrDefault(userID.Value);
+        return resolvedUser is not null
+            ? Result<IUser>.FromSuccess(resolvedUser)
+            : await _userAPI.GetUserAsync(userID.Value, ct);
+    }
+
+    private IUser? GetResolvedUserOrDefault(Snowflake userID)
+    {
+        if (_contextInjection.Context is not InteractionContext injectionContext)
+        {
+            return null;
+        }
+
+        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!resolvedData.IsDefined(out var resolved))
+        {
+            return null;
+        }
+
+        if (resolved.Users.IsDefined(out var users) && users.TryGetValue(userID, out var user))
+        {
+            return user;
+        }
+
+        if (resolved.Members.IsDefined(out var members) && members.TryGetValue(userID, out var member))
+        {
+            _ = member.User.IsDefined(out user);
+        }
+        else
+        {
+            user = default;
+        }
+
+        return user;
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialUser>> ITypeParser<IPartialUser>.TryParseAsync
+    (
+        IReadOnlyList<string> tokens,
+        CancellationToken ct
+    )
+    {
+        return (await (this as ITypeParser<IUser>).TryParseAsync(tokens, ct)).Map(a => a as IPartialUser);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialUser>> ITypeParser<IPartialUser>.TryParseAsync(string token, CancellationToken ct)
+    {
+        return (await (this as ITypeParser<IUser>).TryParseAsync(token, ct)).Map(a => a as IPartialUser);
     }
 }

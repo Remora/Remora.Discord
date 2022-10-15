@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,15 +32,16 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
 
 /// <summary>
-/// Parses instances of <see cref="IMessage"/> from command-line inputs.
+/// Parses instances of <see cref="IMessage"/> and <see cref="IPartialMessage"/> from command-line inputs.
 /// </summary>
 [PublicAPI]
-public class MessageParser : AbstractTypeParser<IMessage>
+public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialMessage>
 {
     private static readonly Regex _messageLinkRegex = new
     (
@@ -76,21 +78,69 @@ public class MessageParser : AbstractTypeParser<IMessage>
         var messageLinkMatch = _messageLinkRegex.Match(value);
         if (!messageLinkMatch.Success)
         {
-            return new ParsingError<IMessage>(value);
+            return new ParsingError<IMessage>(value, "Unrecognized input format.");
         }
 
         var channelIdRaw = messageLinkMatch.Groups["channel_id"].Value;
         if (!DiscordSnowflake.TryParse(channelIdRaw, out var channelId))
         {
-            return new ParsingError<IMessage>(value);
+            return new ParsingError<IMessage>(value, "Unrecognized input format.");
         }
 
         var messageIdRaw = messageLinkMatch.Groups["message_id"].Value;
         if (!DiscordSnowflake.TryParse(messageIdRaw, out var messageId))
         {
-            return new ParsingError<IMessage>(value);
+            return new ParsingError<IMessage>(value, "Unrecognized input format.");
         }
 
         return await _channelAPI.GetChannelMessageAsync(channelId.Value, messageId.Value, ct);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync(IReadOnlyList<string> tokens, CancellationToken ct)
+    {
+        return (await (this as ITypeParser<IMessage>).TryParseAsync(tokens, ct)).Map(a => a as IPartialMessage);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync(string token, CancellationToken ct)
+    {
+        _ = DiscordSnowflake.TryParse(token.Unmention(), out var messageID);
+        if (messageID is null)
+        {
+            var messageLinkMatch = _messageLinkRegex.Match(token);
+            if (!messageLinkMatch.Success)
+            {
+                return new ParsingError<IPartialMessage>(token, "Unrecognized input format.");
+            }
+
+            var messageIdRaw = messageLinkMatch.Groups["message_id"].Value;
+            if (!DiscordSnowflake.TryParse(messageIdRaw, out messageID))
+            {
+                return new ParsingError<IPartialMessage>(token, "Unrecognized input format.");
+            }
+        }
+
+        var resolvedMessage = GetResolvedMessageOrDefault(messageID.Value);
+        return resolvedMessage is null
+            ? (await (this as ITypeParser<IMessage>).TryParseAsync(token, ct)).Map(a => a as IPartialMessage)
+            : Result<IPartialMessage>.FromSuccess(resolvedMessage);
+    }
+
+    private IPartialMessage? GetResolvedMessageOrDefault(Snowflake messageID)
+    {
+        if (_context is not InteractionContext injectionContext)
+        {
+            return null;
+        }
+
+        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!resolvedData.IsDefined(out var resolved) || !resolved.Messages.IsDefined(out var messages))
+        {
+            return null;
+        }
+
+        _ = messages.TryGetValue(messageID, out var message);
+        return message;
     }
 }

@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
@@ -40,7 +42,7 @@ namespace Remora.Discord.Commands.Parsers;
 /// Parses instances of <see cref="IRole"/> from command-line inputs.
 /// </summary>
 [PublicAPI]
-public class RoleParser : AbstractTypeParser<IRole>
+public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
 {
     private readonly ICommandContext _context;
     private readonly IDiscordRestGuildAPI _guildAPI;
@@ -59,9 +61,21 @@ public class RoleParser : AbstractTypeParser<IRole>
     /// <inheritdoc />
     public override async ValueTask<Result<IRole>> TryParseAsync(string value, CancellationToken ct = default)
     {
+        // Check for locally resolved data first
+        _ = DiscordSnowflake.TryParse(value.Unmention(), out var roleID);
+        if (roleID is not null)
+        {
+            var resolvedRole = GetResolvedRoleOrDefault(roleID.Value);
+            if (resolvedRole is not null)
+            {
+                return Result<IRole>.FromSuccess(resolvedRole);
+            }
+        }
+
+        // If there's nothing available, query the system
         if (!_context.GuildID.IsDefined(out var guildID))
         {
-            return new InvalidOperationError("You're not in a guild channel, so I can't get any roles.");
+            return new InvalidOperationError("Roles cannot be parsed outside of guild channels.");
         }
 
         var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
@@ -71,19 +85,46 @@ public class RoleParser : AbstractTypeParser<IRole>
         }
 
         var roles = getRoles.Entity;
-        if (!DiscordSnowflake.TryParse(value.Unmention(), out var roleID))
-        {
-            // Try a name-based lookup
-            var roleByName = roles.FirstOrDefault(r => r.Name.Equals(value, StringComparison.OrdinalIgnoreCase));
-            return roleByName is not null
-                ? Result<IRole>.FromSuccess(roleByName)
-                : new ParsingError<IRole>(value.Unmention());
-        }
 
-        var role = roles.FirstOrDefault(r => r.ID.Equals(roleID));
+        var role = roleID is null
+                ? roles.FirstOrDefault(r => r.Name.Equals(value, StringComparison.OrdinalIgnoreCase))
+                : roles.FirstOrDefault(r => r.ID.Equals(roleID));
 
         return role is not null
             ? Result<IRole>.FromSuccess(role)
-            : new ParsingError<IRole>("No role with that ID could be found.");
+            : new ParsingError<IRole>(value, "No matching role found.");
+    }
+
+    private IRole? GetResolvedRoleOrDefault(Snowflake roleID)
+    {
+        if (_context is not InteractionContext injectionContext)
+        {
+            return null;
+        }
+
+        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!resolvedData.IsDefined(out var resolved) || !resolved.Roles.IsDefined(out var roles))
+        {
+            return null;
+        }
+
+        _ = roles.TryGetValue(roleID, out var role);
+        return role;
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialRole>> ITypeParser<IPartialRole>.TryParseAsync
+    (
+        IReadOnlyList<string> tokens,
+        CancellationToken ct
+    )
+    {
+        return (await (this as ITypeParser<IRole>).TryParseAsync(tokens, ct)).Map(a => a as IPartialRole);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialRole>> ITypeParser<IPartialRole>.TryParseAsync(string token, CancellationToken ct)
+    {
+        return (await (this as ITypeParser<IRole>).TryParseAsync(token, ct)).Map(a => a as IPartialRole);
     }
 }

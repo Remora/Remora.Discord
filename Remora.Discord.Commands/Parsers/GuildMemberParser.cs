@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -30,15 +31,16 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
 
 /// <summary>
-/// Parses instances of <see cref="IGuildMember"/> from command-line inputs.
+/// Parses instances of <see cref="IGuildMember"/> and <see cref="IPartialGuildMember"/> from command-line inputs.
 /// </summary>
 [PublicAPI]
-public class GuildMemberParser : AbstractTypeParser<IGuildMember>
+public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<IPartialGuildMember>
 {
     private readonly ICommandContext _context;
     private readonly IDiscordRestGuildAPI _guildAPI;
@@ -63,14 +65,52 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>
     {
         if (!DiscordSnowflake.TryParse(value.Unmention(), out var guildMemberID))
         {
-            return new ParsingError<IGuildMember>(value);
+            return new ParsingError<IGuildMember>(value, "Unrecognized input format.");
         }
 
         if (!_context.GuildID.IsDefined(out var guildID))
         {
-            return new InvalidOperationError("You're not in a guild channel, so I can't get any guild members.");
+            return new InvalidOperationError("You're not in a guild guildMember, so I can't get any guild members.");
         }
 
         return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync(IReadOnlyList<string> tokens, CancellationToken ct)
+    {
+        return (await (this as ITypeParser<IGuildMember>).TryParseAsync(tokens, ct)).Map(a => a as IPartialGuildMember);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync(string token, CancellationToken ct)
+    {
+        _ = DiscordSnowflake.TryParse(token.Unmention(), out var guildMemberID);
+        if (guildMemberID is null)
+        {
+            return new ParsingError<IPartialGuildMember>(token, "Unrecognized input format.");
+        }
+
+        var resolvedGuildMember = GetResolvedGuildMemberOrDefault(guildMemberID.Value);
+        return resolvedGuildMember is null
+            ? (await (this as ITypeParser<IGuildMember>).TryParseAsync(token, ct)).Map(a => a as IPartialGuildMember)
+            : Result<IPartialGuildMember>.FromSuccess(resolvedGuildMember);
+    }
+
+    private IPartialGuildMember? GetResolvedGuildMemberOrDefault(Snowflake guildMemberID)
+    {
+        if (_context is not InteractionContext injectionContext)
+        {
+            return null;
+        }
+
+        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!resolvedData.IsDefined(out var resolved) || !resolved.Members.IsDefined(out var guildMembers))
+        {
+            return null;
+        }
+
+        _ = guildMembers.TryGetValue(guildMemberID, out var guildMember);
+        return guildMember;
     }
 }

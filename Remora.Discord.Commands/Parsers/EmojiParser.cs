@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -42,7 +43,7 @@ namespace Remora.Discord.Commands.Parsers;
 /// Parses <see cref="IEmoji"/>s.
 /// </summary>
 [PublicAPI]
-public class EmojiParser : AbstractTypeParser<IEmoji>
+public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji>
 {
     /// <summary>
     /// A regex matching all published emojis.
@@ -151,5 +152,21 @@ public class EmojiParser : AbstractTypeParser<IEmoji>
 
         emoji = new Emoji(emojiID, inputParts[^2], IsAnimated: inputParts.Length == 3 && inputParts[0] == "a");
         return true;
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialEmoji>> ITypeParser<IPartialEmoji>.TryParseAsync
+    (
+        IReadOnlyList<string> tokens,
+        CancellationToken ct
+    )
+    {
+        return (await (this as ITypeParser<IEmoji>).TryParseAsync(tokens, ct)).Map(a => a as IPartialEmoji);
+    }
+
+    /// <inheritdoc/>
+    async ValueTask<Result<IPartialEmoji>> ITypeParser<IPartialEmoji>.TryParseAsync(string token, CancellationToken ct)
+    {
+        return (await (this as ITypeParser<IEmoji>).TryParseAsync(token, ct)).Map(a => a as IPartialEmoji);
     }
 }
