@@ -4,12 +4,15 @@
     "title": "Sensitive Pattern Definitions",
     "description": "A set of sensitive data patterns.",
     "type": "object",
+    "propertyNames": {
+        "type": "regex"
+    },
     "additionalProperties": {
         "type": "object",
         "properties": {
             "value_pattern": {
                 "description": "The regex pattern to match against the field value.",
-                "type": "string"
+                "type": "regex"
             },
             "replacement": {
                 "description": "The JSON string to replace the scrubbed data with.",
