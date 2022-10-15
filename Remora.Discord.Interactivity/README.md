@@ -104,10 +104,10 @@ interaction response. Remora will handle this all for you automatically, with th
 expectation that you name your command parameters `users`, `roles` and `channels`
 respectively.
 
-Please note that resolved data only returns _partial_ objects. By using a non-partial
-interface on a command parameter (e.g. `IReadOnlyList<IChannel>` rather than
-`IReadOnlyList<IPartialChannel>`), you may incur additional network calls if the values
-required for that parameter are not already cached.
+Please note that resolved data will contain _partial_ objects for channels, although resolved
+users and roles are concrete. Hence, by using a non-partial interface on a channel command
+parameter (e.g. `IReadOnlyList<IChannel>` rather than `IReadOnlyList<IPartialChannel>`),
+you may incur additional network calls if the concrete channel objects are not already cached.
 
 ```c#
 [SelectMenu("my-channel-select-menu")]
