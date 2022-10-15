@@ -178,34 +178,6 @@ public class CommandResponderTests
                 );
         }
 
-        /// <summary>
-        /// Tests whether post-execution events are executed properly.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task AreExecutedForNotFoundCommands()
-        {
-            var authorMock = new Mock<IUser>();
-            var eventMock = new Mock<IMessageCreate>();
-
-            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
-            eventMock.Setup(e => e.Content).Returns("!notfound");
-
-            var result = await this.Responder.RespondAsync(eventMock.Object);
-            ResultAssert.Successful(result);
-
-            _postExecutionEventMock
-                .Verify
-                (
-                    e => e.AfterExecutionAsync
-                    (
-                        It.IsAny<ICommandContext>(),
-                        It.Is<IResult>(r => r.Error is CommandNotFoundError),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-        }
-
         /// <inheritdoc />
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
