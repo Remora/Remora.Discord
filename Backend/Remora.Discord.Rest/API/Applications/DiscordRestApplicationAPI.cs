@@ -87,7 +87,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     (
         Snowflake applicationID,
         string name,
-        string description,
+        Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
@@ -108,7 +108,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
 
         if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
         {
-            if (description.Length is < 1 or > 100)
+            if (!description.IsDefined(out var value) || value.Length is < 1 or > 100)
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -117,9 +117,13 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                 );
             }
         }
-        else
+        else if (description.HasValue)
         {
-            description = string.Empty;
+            return new ArgumentInvalidError
+            (
+                nameof(description),
+                "Descriptions are not supported for this command type."
+            );
         }
 
         return await this.RestHttpClient.PostAsync<IApplicationCommand>
@@ -129,9 +133,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                 (
                     json =>
                     {
-                        json.WriteString("name", name);
+                        json.Write("name", name, this.JsonOptions);
                         json.Write("type", type, this.JsonOptions);
-                        json.WriteString("description", description);
+                        json.Write("description", description, this.JsonOptions);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
@@ -356,7 +360,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake applicationID,
         Snowflake guildID,
         string name,
-        string description,
+        Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
@@ -376,7 +380,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
 
         if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
         {
-            if (description.Length is < 1 or > 100)
+            if (!description.IsDefined(out var value) || value.Length is < 1 or > 100)
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -385,9 +389,13 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                 );
             }
         }
-        else
+        else if (description.HasValue)
         {
-            description = string.Empty;
+            return new ArgumentInvalidError
+            (
+                nameof(description),
+                "Descriptions are not supported for this command type."
+            );
         }
 
         return await this.RestHttpClient.PostAsync<IApplicationCommand>
@@ -397,9 +405,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                 (
                     json =>
                     {
-                        json.WriteString("name", name);
+                        json.Write("name", name, this.JsonOptions);
                         json.Write("type", type, this.JsonOptions);
-                        json.WriteString("description", description);
+                        json.Write("description", description, this.JsonOptions);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);

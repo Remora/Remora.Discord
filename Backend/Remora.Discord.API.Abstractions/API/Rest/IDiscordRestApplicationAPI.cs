@@ -75,7 +75,7 @@ public interface IDiscordRestApplicationAPI
     (
         Snowflake applicationID,
         string name,
-        string description,
+        Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
@@ -197,7 +197,7 @@ public interface IDiscordRestApplicationAPI
         Snowflake applicationID,
         Snowflake guildID,
         string name,
-        string description,
+        Optional<string> description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
         Optional<ApplicationCommandType> type = default,
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,

@@ -162,7 +162,6 @@ public class DiscordRestApplicationAPITests
             var applicationID = DiscordSnowflake.New(0);
             var type = ApplicationCommandType.User;
             var name = "aaa";
-            var description = "wwww";
             var options = new List<ApplicationCommandOption>();
 
             var api = CreateAPI
@@ -176,7 +175,6 @@ public class DiscordRestApplicationAPITests
                             o => o
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("type", p => p.Is((int)type))
-                                .WithProperty("description", p => p.Is(string.Empty))
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
@@ -187,8 +185,7 @@ public class DiscordRestApplicationAPITests
             (
                 applicationID,
                 name,
-                description,
-                options,
+                options: options,
                 type: type
             );
 
@@ -205,7 +202,6 @@ public class DiscordRestApplicationAPITests
             var applicationID = DiscordSnowflake.New(0);
             var type = ApplicationCommandType.Message;
             var name = "aaa";
-            var description = "wwww";
             var options = new List<ApplicationCommandOption>();
 
             var api = CreateAPI
@@ -219,7 +215,6 @@ public class DiscordRestApplicationAPITests
                             o => o
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("type", p => p.Is((int)type))
-                                .WithProperty("description", p => p.Is(string.Empty))
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
@@ -230,8 +225,7 @@ public class DiscordRestApplicationAPITests
             (
                 applicationID,
                 name,
-                description,
-                options,
+                options: options,
                 type: type
             );
 
@@ -1088,7 +1082,6 @@ public class DiscordRestApplicationAPITests
 
             var type = ApplicationCommandType.User;
             var name = "aaa";
-            var description = "wwww";
             var options = new List<ApplicationCommandOption>();
 
             var api = CreateAPI
@@ -1106,7 +1099,6 @@ public class DiscordRestApplicationAPITests
                             o => o
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("type", p => p.Is((int)type))
-                                .WithProperty("description", p => p.Is(string.Empty))
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
@@ -1118,8 +1110,7 @@ public class DiscordRestApplicationAPITests
                 applicationID,
                 guildID,
                 name,
-                description,
-                options,
+                options: options,
                 type: type
             );
 
@@ -1138,7 +1129,6 @@ public class DiscordRestApplicationAPITests
 
             var type = ApplicationCommandType.Message;
             var name = "aaa";
-            var description = "wwww";
             var options = new List<ApplicationCommandOption>();
 
             var api = CreateAPI
@@ -1156,7 +1146,6 @@ public class DiscordRestApplicationAPITests
                             o => o
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("type", p => p.Is((int)type))
-                                .WithProperty("description", p => p.Is(string.Empty))
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
@@ -1168,8 +1157,7 @@ public class DiscordRestApplicationAPITests
                 applicationID,
                 guildID,
                 name,
-                description,
-                options,
+                options: options,
                 type: type
             );
 
