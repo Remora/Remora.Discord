@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+
+:Message or Interaction Event Received;
+:Prepare Command (A);
+if (IsSuccess) is (true) then
+    :Run Pre-Execution Events (A);
+    :Execute Prepared Command (A);
+    :Run Post-Execution Events (A);
+    if (IsSuccess) is (false) then
+        :Prepare Command From Default Tree (B);
+        if (IsSuccess) is (true) then
+            :Run Pre-Execution Events (B);
+            :Execute Prepared Command From Default Tree (B);
+            :Run Post-Execution Events (B);
+        else (false)
+        endif
+    else (true)
+    endif
+else (false)
+endif
+
+stop
+
+@enduml
