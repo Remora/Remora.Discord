@@ -1,5 +1,5 @@
 //
-//  PartialSelectMenuComponent.cs
+//  PartialRoleSelectComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,16 +27,19 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IPartialSelectMenuComponent" />
+/// <inheritdoc cref="IPartialRoleSelectComponent" />
 [PublicAPI]
-public record PartialSelectMenuComponent
+public record PartialRoleSelectComponent
 (
-    Optional<ComponentType> Type,
     Optional<string> CustomID,
-    Optional<IReadOnlyList<IPartialSelectOption>> Options,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes,
+    Optional<IReadOnlyList<IPartialSelectOption>> Options = default,
+    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
     Optional<string> Placeholder = default,
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default
-) : IPartialSelectMenuComponent;
+) : IPartialRoleSelectComponent
+{
+    /// <inheritdoc />
+    public Optional<ComponentType> Type => ComponentType.RoleSelect;
+}

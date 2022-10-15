@@ -968,10 +968,34 @@ public static class ServiceCollectionExtensions
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
 
-        options.AddDataObjectConverter<ISelectMenuComponent, SelectMenuComponent>()
+        options.AddDataObjectConverter<IStringSelectComponent, StringSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
-        options.AddDataObjectConverter<IPartialSelectMenuComponent, PartialSelectMenuComponent>()
+        options.AddDataObjectConverter<IUserSelectComponent, UserSelectComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IRoleSelectComponent, RoleSelectComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IMentionableSelectComponent, MentionableSelectComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IChannelSelectComponent, ChannelSelectComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialStringSelectComponent, PartialStringSelectComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialUserSelectComponent, PartialUserSelectComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialRoleSelectComponent, PartialRoleSelectComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialMentionableSelectComponent, PartialMentionableSelectComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialChannelSelectComponent, PartialChannelSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
 

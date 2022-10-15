@@ -99,9 +99,8 @@ public class InteractiveCommands : CommandGroup
         {
             new ActionRowComponent(new[]
             {
-                new SelectMenuComponent
+                new StringSelectComponent
                 (
-                    ComponentType.StringSelect,
                     CustomIDHelpers.CreateSelectMenuID("colour-dropdown"),
                     new ISelectOption[]
                     {
@@ -114,7 +113,6 @@ public class InteractiveCommands : CommandGroup
                         new SelectOption("Black", "#000000"),
                         new SelectOption("White", "#FFFFFF")
                     },
-                    default,
                     "Colours...",
                     1,
                     1
@@ -137,9 +135,8 @@ public class InteractiveCommands : CommandGroup
         {
             new ActionRowComponent(new[]
             {
-                new SelectMenuComponent
+                new StringSelectComponent
                 (
-                    ComponentType.StringSelect,
                     CustomIDHelpers.CreateSelectMenuID("typed-dropdown"),
                     new ISelectOption[]
                     {
@@ -147,7 +144,6 @@ public class InteractiveCommands : CommandGroup
                         new SelectOption("Robot", "🤖", Emoji: new PartialEmoji(Name: "🤖")),
                         new SelectOption("Shark", "🦈", Emoji: new PartialEmoji(Name: "🦈"))
                     },
-                    default,
                     "Emojis...",
                     1,
                     1
@@ -171,11 +167,9 @@ public class InteractiveCommands : CommandGroup
         {
             new ActionRowComponent(new[]
             {
-                new SelectMenuComponent
+                new ChannelSelectComponent
                 (
-                    ComponentType.ChannelSelect,
                     CustomIDHelpers.CreateSelectMenuID("channel-dropdown"),
-                    default,
                     new[] { ChannelType.GuildText },
                     "Channels..."
                 )

@@ -1,5 +1,5 @@
 //
-//  SelectMenuComponent.cs
+//  MentionableSelectComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,16 +27,23 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="ISelectMenuComponent" />
+/// <inheritdoc cref="IMentionableSelectComponent" />
 [PublicAPI]
-public record SelectMenuComponent
+public record MentionableSelectComponent
 (
-    ComponentType Type,
     string CustomID,
-    Optional<IReadOnlyList<ISelectOption>> Options,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes,
     Optional<string> Placeholder = default,
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default
-) : ISelectMenuComponent;
+) : IMentionableSelectComponent
+{
+    /// <inheritdoc />
+    public ComponentType Type => ComponentType.MentionableSelect;
+
+    /// <inheritdoc />
+    public Optional<IReadOnlyList<ISelectOption>> Options => default;
+
+    /// <inheritdoc cref="ISelectMenuComponent" />
+    public Optional<IReadOnlyList<ChannelType>> ChannelTypes => default;
+}

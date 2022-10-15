@@ -100,12 +100,10 @@ public class ColourDropdownInteractions : InteractionGroup
         {
             new ActionRowComponent(new[]
             {
-                new SelectMenuComponent
+                new StringSelectComponent
                 (
-                    ComponentType.StringSelect,
                     dropdown.CustomID,
-                    dropdown.Options,
-                    default,
+                    selectOptions,
                     selected.Label,
                     dropdown.MinValues,
                     dropdown.MaxValues,
