@@ -85,35 +85,47 @@ public static class ImagePacker
         CancellationToken ct = default
     )
     {
-        byte[] bytes;
+        ReadOnlyMemory<byte> bytes; // Must be a Memory, as this method is async
         if (stream is MemoryStream ms)
         {
-            bytes = ms.ToArray();
+            bytes = GetBufferOrToArray(ms);
         }
         else
         {
             await using var copy = new MemoryStream();
             await stream.CopyToAsync(copy, ct);
 
-            bytes = copy.ToArray();
+            bytes = GetBufferOrToArray(copy);
         }
 
-        string? mediaType = null;
-        if (bytes.IsPNG())
+        // Async processing is done here, so we call into a sync method so we can use a local variable of type Span<T>
+        return PackImageInternal(bytes.Span);
+
+        static Result<string> PackImageInternal(ReadOnlySpan<byte> bytes)
         {
-            mediaType = "png";
-        }
-        else if (bytes.IsJPG())
-        {
-            mediaType = "jpeg";
-        }
-        else if (bytes.IsGIF())
-        {
-            mediaType = "gif";
+            string? mediaType = null;
+            if (bytes.IsPNG())
+            {
+                mediaType = "png";
+            }
+            else if (bytes.IsJPG())
+            {
+                mediaType = "jpeg";
+            }
+            else if (bytes.IsGIF())
+            {
+                mediaType = "gif";
+            }
+
+            return mediaType is null
+                ? new NotSupportedError("Unknown or unsupported image format.")
+                : $"data:image/{mediaType};base64,{Convert.ToBase64String(bytes)}";
         }
 
-        return mediaType is null
-            ? new NotSupportedError("Unknown or unsupported image format.")
-            : $"data:image/{mediaType};base64,{Convert.ToBase64String(bytes)}";
+        // Gets the underlying buffer of the MemoryStream if possible; otherwise calls ToArray
+        static ArraySegment<byte> GetBufferOrToArray(MemoryStream ms)
+        {
+            return ms.TryGetBuffer(out var buffer) ? buffer : ms.ToArray();
+        }
     }
 }
