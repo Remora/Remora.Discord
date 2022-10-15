@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -74,9 +75,9 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
         {
             var channelID = _context switch
             {
-                InteractionCommandContext ix => ix.Interaction.ChannelID,
-                TextCommandContext tx => tx.Message.ChannelID,
-                _ => default
+                IInteractionCommandContext ix => ix.Interaction.ChannelID,
+                ITextCommandContext tx => tx.Message.ChannelID,
+                _ => throw new NotSupportedException()
             };
 
             if (!channelID.HasValue)
@@ -141,7 +142,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
 
     private IPartialMessage? GetResolvedMessageOrDefault(Snowflake messageID)
     {
-        if (_context is not InteractionContext interactionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return null;
         }

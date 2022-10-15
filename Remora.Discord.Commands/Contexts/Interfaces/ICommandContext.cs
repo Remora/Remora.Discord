@@ -1,5 +1,5 @@
 //
-//  InteractionCommandContext.cs
+//  ICommandContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,16 +22,17 @@
 
 using JetBrains.Annotations;
 using Remora.Commands.Services;
-using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Represents contextual information about a currently executing text-based command.
+/// Represents contextual information about an executing command.
 /// </summary>
-/// <param name="Interaction">The interaction that initiated the command.</param>
-/// <param name="Command">The command associated with the context.</param>
 [PublicAPI]
-public record InteractionCommandContext(IInteraction Interaction, PreparedCommand Command) :
-    InteractionContext(Interaction),
-    IInteractionCommandContext;
+public interface ICommandContext : IOperationContext
+{
+    /// <summary>
+    /// Gets the command associated with the context.
+    /// </summary>
+    public PreparedCommand Command { get; }
+}

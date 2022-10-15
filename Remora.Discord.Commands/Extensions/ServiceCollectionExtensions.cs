@@ -163,7 +163,7 @@ public static class ServiceCollectionExtensions
                 s =>
                 {
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
-                    return injectionService.Context as MessageContext ?? throw new InvalidOperationException
+                    return injectionService.Context as IMessageContext ?? throw new InvalidOperationException
                     (
                         "No message context has been set for this scope."
                     );
@@ -176,7 +176,7 @@ public static class ServiceCollectionExtensions
                 s =>
                 {
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
-                    return injectionService.Context as InteractionContext ?? throw new InvalidOperationException
+                    return injectionService.Context as IInteractionContext ?? throw new InvalidOperationException
                     (
                         "No interaction context has been set for this scope."
                     );
@@ -189,7 +189,7 @@ public static class ServiceCollectionExtensions
                 s =>
                 {
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
-                    return injectionService.Context as TextCommandContext ?? throw new InvalidOperationException
+                    return injectionService.Context as ITextCommandContext ?? throw new InvalidOperationException
                     (
                         "No message context has been set for this scope."
                     );
@@ -202,7 +202,7 @@ public static class ServiceCollectionExtensions
                 s =>
                 {
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
-                    return injectionService.Context as InteractionCommandContext ?? throw new InvalidOperationException
+                    return injectionService.Context as IInteractionCommandContext ?? throw new InvalidOperationException
                     (
                         "No interaction context has been set for this scope."
                     );

@@ -96,9 +96,9 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
 
         var guildID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.GuildID,
-            TextCommandContext tx => tx.GuildID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
         };
 
         if (!guildID.HasValue)

@@ -47,7 +47,7 @@ public class HttpCatCommands : CommandGroup
     [CommandType(ApplicationCommandType.User)]
     public async Task<IResult> PostContextualUserHttpCatAsync()
     {
-        if (_context is not InteractionContext interactionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return Result.FromSuccess();
         }

@@ -82,8 +82,8 @@ public class InteractiveCommands : CommandGroup
 
         var userID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            TextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
             _ => throw new NotSupportedException()
         };
 
@@ -198,12 +198,12 @@ public class InteractiveCommands : CommandGroup
     {
         var userID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            TextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
             _ => throw new NotSupportedException()
         };
 
-        if (_context is not InteractionContext interactionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return (Result)await _feedback.SendContextualWarningAsync
             (

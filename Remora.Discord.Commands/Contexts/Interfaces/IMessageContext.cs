@@ -1,5 +1,5 @@
 //
-//  InteractionCommandContext.cs
+//  IMessageContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,18 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Commands.Services;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Represents contextual information about a currently executing text-based command.
+/// Represents contextual information about an ongoing operation on a message.
 /// </summary>
-/// <param name="Interaction">The interaction that initiated the command.</param>
-/// <param name="Command">The command associated with the context.</param>
-[PublicAPI]
-public record InteractionCommandContext(IInteraction Interaction, PreparedCommand Command) :
-    InteractionContext(Interaction),
-    IInteractionCommandContext;
+public interface IMessageContext : IOperationContext
+{
+    /// <summary>
+    /// Gets the message.
+    /// </summary>
+    IPartialMessage Message { get; }
+
+    /// <summary>
+    /// Gets the ID of the guild the message is in, if any.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
+}

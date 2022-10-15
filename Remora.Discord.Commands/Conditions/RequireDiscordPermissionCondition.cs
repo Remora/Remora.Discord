@@ -80,9 +80,9 @@ public class RequireDiscordPermissionCondition :
     {
         var guildID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.GuildID,
-            TextCommandContext tx => tx.GuildID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
         };
 
         if (!guildID.HasValue)
@@ -101,8 +101,8 @@ public class RequireDiscordPermissionCondition :
 
         var userID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            TextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
             _ => throw new NotSupportedException()
         };
 
@@ -138,9 +138,9 @@ public class RequireDiscordPermissionCondition :
     {
         var guildID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.GuildID,
-            TextCommandContext tx => tx.GuildID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
         };
 
         if (!guildID.HasValue)
@@ -176,9 +176,9 @@ public class RequireDiscordPermissionCondition :
     {
         var guildID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.GuildID,
-            TextCommandContext tx => tx.GuildID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
         };
 
         if (!guildID.HasValue)
@@ -197,9 +197,9 @@ public class RequireDiscordPermissionCondition :
 
         var channelID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.ChannelID,
-            TextCommandContext tx => tx.Message.ChannelID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.ChannelID,
+            ITextCommandContext tx => tx.Message.ChannelID,
+            _ => throw new NotSupportedException()
         };
 
         if (!channelID.HasValue)
@@ -236,8 +236,8 @@ public class RequireDiscordPermissionCondition :
 
         var userID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            TextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
             _ => throw new NotSupportedException()
         };
 
@@ -288,9 +288,9 @@ public class RequireDiscordPermissionCondition :
     {
         var guildID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.GuildID,
-            TextCommandContext tx => tx.GuildID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
         };
 
         if (!guildID.HasValue)
@@ -309,9 +309,9 @@ public class RequireDiscordPermissionCondition :
 
         var channelID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.ChannelID,
-            TextCommandContext tx => tx.Message.ChannelID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.ChannelID,
+            ITextCommandContext tx => tx.Message.ChannelID,
+            _ => throw new NotSupportedException()
         };
 
         if (!channelID.HasValue)

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,9 +62,9 @@ public class RequireContextCondition : ICondition<RequireContextAttribute>
     {
         var channelID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.ChannelID,
-            TextCommandContext tx => tx.Message.ChannelID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.ChannelID,
+            ITextCommandContext tx => tx.Message.ChannelID,
+            _ => throw new NotSupportedException()
         };
 
         if (!channelID.HasValue)

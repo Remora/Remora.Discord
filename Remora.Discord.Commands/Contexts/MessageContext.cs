@@ -30,4 +30,4 @@ namespace Remora.Discord.Commands.Contexts;
 /// </summary>
 /// <param name="Message">The message.</param>
 /// <param name="GuildID">The ID of the guild the message is in, if any.</param>
-public record MessageContext(IPartialMessage Message, Optional<Snowflake> GuildID) : IOperationContext;
+public record MessageContext(IPartialMessage Message, Optional<Snowflake> GuildID) : IMessageContext;

@@ -69,8 +69,8 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 
         var userID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            TextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
             _ => throw new NotSupportedException()
         };
 

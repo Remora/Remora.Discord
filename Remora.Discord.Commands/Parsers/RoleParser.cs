@@ -74,9 +74,9 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
 
         var guildID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.GuildID,
-            TextCommandContext tx => tx.GuildID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
         };
 
         // If there's nothing available, query the system
@@ -104,7 +104,7 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
 
     private IRole? GetResolvedRoleOrDefault(Snowflake roleID)
     {
-        if (_context is not InteractionContext interactionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return null;
         }

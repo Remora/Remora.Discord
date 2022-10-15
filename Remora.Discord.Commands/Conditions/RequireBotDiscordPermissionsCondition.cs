@@ -79,9 +79,9 @@ public class RequireBotDiscordPermissionsCondition :
     {
         var guildID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.GuildID,
-            TextCommandContext tx => tx.GuildID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
         };
 
         if (!guildID.HasValue)
@@ -94,9 +94,9 @@ public class RequireBotDiscordPermissionsCondition :
 
         var channelID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.ChannelID,
-            TextCommandContext tx => tx.Message.ChannelID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.ChannelID,
+            ITextCommandContext tx => tx.Message.ChannelID,
+            _ => throw new NotSupportedException()
         };
 
         if (!channelID.HasValue)
@@ -126,9 +126,9 @@ public class RequireBotDiscordPermissionsCondition :
     {
         var guildID = _context switch
         {
-            InteractionCommandContext ix => ix.Interaction.GuildID,
-            TextCommandContext tx => tx.GuildID,
-            _ => default
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
         };
 
         if (!guildID.HasValue)

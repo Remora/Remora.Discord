@@ -65,7 +65,7 @@ public class AttachmentParser : AbstractTypeParser<IAttachment>, ITypeParser<IPa
 
     private IAttachment? GetResolvedAttachmentOrDefault(Snowflake attachmentID)
     {
-        if (_context is not InteractionContext interactionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return null;
         }

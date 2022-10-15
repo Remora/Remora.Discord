@@ -30,7 +30,7 @@ namespace Remora.Discord.Commands.Contexts;
 /// </summary>
 /// <param name="Interaction">The interaction.</param>
 [PublicAPI]
-public record InteractionContext(IInteraction Interaction) : IOperationContext
+public record InteractionContext(IInteraction Interaction) : IInteractionContext
 {
     /// <summary>
     /// Gets or sets a value indicating whether the interaction has been responded to.

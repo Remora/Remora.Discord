@@ -1,5 +1,5 @@
 //
-//  ICommandContext.cs
+//  ITextCommandContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Commands.Services;
-
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Represents contextual information about an executing command.
+/// Represents contextual information about a currently executing text-based command.
 /// </summary>
-[PublicAPI]
-public interface ICommandContext : IOperationContext
+public interface ITextCommandContext : IMessageContext, ICommandContext
 {
-    /// <summary>
-    /// Gets the command associated with the context.
-    /// </summary>
-    PreparedCommand Command { get; }
 }

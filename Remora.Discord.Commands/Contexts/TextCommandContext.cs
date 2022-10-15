@@ -36,4 +36,4 @@ namespace Remora.Discord.Commands.Contexts;
 [PublicAPI]
 public record TextCommandContext(IPartialMessage Message, Optional<Snowflake> GuildID, PreparedCommand Command) :
     MessageContext(Message, GuildID),
-    ICommandContext;
+    ITextCommandContext;
