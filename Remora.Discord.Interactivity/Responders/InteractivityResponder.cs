@@ -155,7 +155,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
                 or ComponentType.RoleSelect
                 or ComponentType.MentionableSelect
                 or ComponentType.ChannelSelect
-                => new Dictionary<string, IReadOnlyList<string>>(),
+                => BuildParametersFromResolvedData(data),
             _ => new InvalidOperationError("An unsupported component type was encountered.")
         };
 
@@ -167,6 +167,48 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var parameters = buildParameters.Entity;
 
         return await TryExecuteInteractionCommandAsync(context, commandPath, parameters, ct);
+    }
+
+    private static Result<IReadOnlyDictionary<string, IReadOnlyList<string>>> BuildParametersFromResolvedData
+    (
+        IMessageComponentData data
+    )
+    {
+        var parameters = new Dictionary<string, IReadOnlyList<string>>();
+
+        if (!data.Resolved.IsDefined(out var resolved))
+        {
+            return parameters;
+        }
+
+        if (resolved.Users.IsDefined(out var users))
+        {
+            parameters.Add
+            (
+                "users",
+                users.Keys.Select(x => x.ToString()).ToList()
+            );
+        }
+
+        if (resolved.Roles.IsDefined(out var roles))
+        {
+            parameters.Add
+            (
+                "roles",
+                roles.Keys.Select(x => x.ToString()).ToList()
+            );
+        }
+
+        if (resolved.Channels.IsDefined(out var channels))
+        {
+            parameters.Add
+            (
+                "channels",
+                channels.Keys.Select(x => x.ToString()).ToList()
+            );
+        }
+
+        return parameters;
     }
 
     private async Task<Result> HandleModalInteractionAsync

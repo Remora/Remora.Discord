@@ -155,23 +155,24 @@ public class InteractiveCommands : CommandGroup
     }
 
     /// <summary>
-    /// Sends an embed with a dropdown allowing the user to select a
-    /// guild text channel.
+    /// Sends an embed with a dropdown allowing the user to select
+    /// users/roles.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    [Command("channel-dropdown")]
-    public async Task<IResult> SendChannelDropdownAsync()
+    [Command("mentionable-dropdown")]
+    public async Task<IResult> SendMentionableDropdownAsync()
     {
-        var embed = new Embed(Description: "Select a guild text channel below.");
+        var embed = new Embed(Description: "Select users and roles below.");
         var options = new FeedbackMessageOptions(MessageComponents: new IMessageComponent[]
         {
             new ActionRowComponent(new[]
             {
-                new ChannelSelectComponent
+                new MentionableSelectComponent
                 (
-                    CustomIDHelpers.CreateSelectMenuID("channel-dropdown"),
-                    new[] { ChannelType.GuildText },
-                    "Channels..."
+                    CustomIDHelpers.CreateSelectMenuID("mentionable-dropdown"),
+                    "Users/Roles...",
+                    MinValues: 1,
+                    MaxValues: 10
                 )
             })
         });

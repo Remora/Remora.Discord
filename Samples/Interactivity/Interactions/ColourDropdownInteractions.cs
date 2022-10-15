@@ -153,40 +153,38 @@ public class ColourDropdownInteractions : InteractionGroup
     }
 
     /// <summary>
-    /// Shows the channels selected by the user.
+    /// Shows the mentionable objects selected by the user.
     /// </summary>
+    /// <param name="users">The resolved channels.</param>
+    /// <param name="roles">The resolved roles.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    [SelectMenu("channel-dropdown")]
-    public async Task<Result> ShowSelectedChannelsAsync()
+    [SelectMenu("mentionable-dropdown")]
+    public async Task<Result> ShowSelectedChannelsAsync(IReadOnlyList<IUser> users, IReadOnlyList<IRole> roles)
     {
-        if (!_context.Data.TryPickT1(out var components, out _))
-        {
-            return new InvalidOperationError("Expected message component data to be present");
-        }
-
-        if (!components.Resolved.IsDefined(out var resolvedData))
-        {
-            return new InvalidOperationError("Expected resolved data to be present");
-        }
-
-        if (!resolvedData.Channels.IsDefined(out var channels))
-        {
-            return new InvalidOperationError("Expected channel data to be present in the resolved payload");
-        }
-
         var stringBuilder = new StringBuilder();
-        stringBuilder.AppendLine("The following channels were selected: ");
 
-        foreach (var channel in channels.Keys)
+        stringBuilder.AppendLine("The following users were selected: ");
+        foreach (var channel in users)
         {
-            stringBuilder.AppendLine($"• <#{channel}>");
+            stringBuilder.AppendLine($"• <@{channel.ID}>");
+        }
+
+        stringBuilder.AppendLine();
+        stringBuilder.AppendLine("The following roles were selected: ");
+        foreach (var role in roles)
+        {
+            stringBuilder.AppendLine($"• <@&{role.ID}>");
         }
 
         return (Result)await _feedback.SendContextualNeutralAsync
         (
             stringBuilder.ToString(),
             _context.User.ID,
-            options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
+            options: new FeedbackMessageOptions
+            (
+                MessageFlags: MessageFlags.Ephemeral,
+                AllowedMentions: new AllowedMentions()
+            ),
             ct: this.CancellationToken
         );
     }
