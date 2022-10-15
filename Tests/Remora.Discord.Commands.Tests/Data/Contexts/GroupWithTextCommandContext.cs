@@ -1,5 +1,5 @@
 //
-//  GroupWithInteractionContext.cs
+//  GroupWithTextCommandContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,13 +30,13 @@ using Remora.Results;
 
 namespace Remora.Discord.Commands.Tests.Data.Contexts;
 
-[Group("interaction")]
-public class GroupWithInteractionContext : CommandGroup
+[Group("text-command")]
+public class GroupWithTextCommandContext : CommandGroup
 {
     // ReSharper disable once NotAccessedField.Local
-    private readonly IInteractionContext _context;
+    private readonly ITextCommandContext _context;
 
-    public GroupWithInteractionContext(IInteractionContext context)
+    public GroupWithTextCommandContext(ITextCommandContext context)
     {
         _context = context;
     }

@@ -34,6 +34,7 @@ using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Events;
 using Remora.Discord.Commands.Tests.TestBases;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
@@ -73,7 +74,7 @@ public class CommandResponderTests
             var authorMock = new Mock<IUser>();
             var eventMock = new Mock<IMessageCreate>();
 
-            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
             eventMock.Setup(e => e.Content).Returns("!successful");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
@@ -131,7 +132,7 @@ public class CommandResponderTests
             var authorMock = new Mock<IUser>();
             var eventMock = new Mock<IMessageCreate>();
 
-            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
             eventMock.Setup(e => e.Content).Returns("!successful");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
@@ -159,7 +160,7 @@ public class CommandResponderTests
             var authorMock = new Mock<IUser>();
             var eventMock = new Mock<IMessageCreate>();
 
-            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
             eventMock.Setup(e => e.Content).Returns("!unsuccessful");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
@@ -187,7 +188,7 @@ public class CommandResponderTests
             var authorMock = new Mock<IUser>();
             var eventMock = new Mock<IMessageCreate>();
 
-            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
             eventMock.Setup(e => e.Content).Returns("!notfound");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);

@@ -48,7 +48,7 @@ public partial class RequireBotPermissionsConditionTests
     private readonly Mock<IDiscordRestUserAPI> _userAPIMock;
     private readonly Mock<IDiscordRestGuildAPI> _guildAPIMock;
     private readonly Mock<IDiscordRestChannelAPI> _channelAPIMock;
-    private readonly Mock<ICommandContext> _contextMock;
+    private readonly Mock<ITextCommandContext> _contextMock;
     private readonly Mock<IGuildMember> _memberMock;
     private readonly Mock<IRole> _everyoneRoleMock;
     private readonly Mock<IChannel> _channelMock;
@@ -68,7 +68,7 @@ public partial class RequireBotPermissionsConditionTests
         _userAPIMock = new Mock<IDiscordRestUserAPI>();
         _guildAPIMock = new Mock<IDiscordRestGuildAPI>();
         _channelAPIMock = new Mock<IDiscordRestChannelAPI>();
-        _contextMock = new Mock<ICommandContext>();
+        _contextMock = new Mock<ITextCommandContext>();
 
         // Result mocks
         var guildMock = new Mock<IGuild>();
@@ -79,9 +79,14 @@ public partial class RequireBotPermissionsConditionTests
         var userMock = new Mock<IUser>();
 
         // Setup
-        _contextMock.Setup(c => c.User.ID).Returns(_userID);
+        userMock.Setup(u => u.ID).Returns(_userID);
+
+        _memberMock.Setup(m => m.User).Returns(new Optional<IUser>(userMock.Object));
+        _memberMock.Setup(m => m.Roles).Returns(Array.Empty<Snowflake>());
+
+        _contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(userMock.Object));
         _contextMock.Setup(c => c.GuildID).Returns(guildID);
-        _contextMock.Setup(c => c.ChannelID).Returns(channelID);
+        _contextMock.Setup(c => c.Message.ChannelID).Returns(channelID);
 
         guildMock.Setup(g => g.ID).Returns(guildID);
         guildMock.Setup(g => g.OwnerID).Returns(DiscordSnowflake.New(3));
@@ -92,11 +97,6 @@ public partial class RequireBotPermissionsConditionTests
             .Returns(default(Optional<IReadOnlyList<IPermissionOverwrite>>));
 
         _everyoneRoleMock.Setup(r => r.ID).Returns(guildID);
-
-        userMock.Setup(u => u.ID).Returns(_userID);
-
-        _memberMock.Setup(m => m.User).Returns(new Optional<IUser>(userMock.Object));
-        _memberMock.Setup(m => m.Roles).Returns(Array.Empty<Snowflake>());
 
         _guildAPIMock
             .Setup

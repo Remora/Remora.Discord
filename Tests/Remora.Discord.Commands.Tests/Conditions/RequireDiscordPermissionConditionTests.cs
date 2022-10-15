@@ -46,7 +46,7 @@ public partial class RequireDiscordPermissionConditionTests
 {
     private readonly Mock<IDiscordRestGuildAPI> _guildAPIMock;
     private readonly Mock<IDiscordRestChannelAPI> _channelAPIMock;
-    private readonly Mock<ICommandContext> _contextMock;
+    private readonly Mock<ITextCommandContext> _contextMock;
     private readonly Mock<IRole> _everyoneRoleMock;
     private readonly Mock<IUser> _userMock;
     private readonly Mock<IGuildMember> _memberMock;
@@ -67,7 +67,7 @@ public partial class RequireDiscordPermissionConditionTests
         // Dependency mocks
         _guildAPIMock = new Mock<IDiscordRestGuildAPI>();
         _channelAPIMock = new Mock<IDiscordRestChannelAPI>();
-        _contextMock = new Mock<ICommandContext>();
+        _contextMock = new Mock<ITextCommandContext>();
 
         // Result mocks
         var guildMock = new Mock<IGuild>();
@@ -77,9 +77,14 @@ public partial class RequireDiscordPermissionConditionTests
         _channelMock = new Mock<IChannel>();
 
         // Setup
-        _contextMock.Setup(c => c.User.ID).Returns(_userID);
+        _userMock.Setup(u => u.ID).Returns(_userID);
+
+        _memberMock.Setup(m => m.User).Returns(new Optional<IUser>(_userMock.Object));
+        _memberMock.Setup(m => m.Roles).Returns(Array.Empty<Snowflake>());
+
+        _contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(_userMock.Object));
         _contextMock.Setup(c => c.GuildID).Returns(_guildID);
-        _contextMock.Setup(c => c.ChannelID).Returns(channelID);
+        _contextMock.Setup(c => c.Message.ChannelID).Returns(channelID);
 
         guildMock.Setup(g => g.ID).Returns(_guildID);
         guildMock.Setup(g => g.OwnerID).Returns(DiscordSnowflake.New(3));
@@ -90,11 +95,6 @@ public partial class RequireDiscordPermissionConditionTests
             .Returns(default(Optional<IReadOnlyList<IPermissionOverwrite>>));
 
         _everyoneRoleMock.Setup(r => r.ID).Returns(_guildID);
-
-        _userMock.Setup(u => u.ID).Returns(_userID);
-
-        _memberMock.Setup(m => m.User).Returns(new Optional<IUser>(_userMock.Object));
-        _memberMock.Setup(m => m.Roles).Returns(Array.Empty<Snowflake>());
 
         _guildAPIMock
             .Setup
@@ -467,8 +467,11 @@ public partial class RequireDiscordPermissionConditionTests
     )
         where TPermission : struct, Enum
     {
+        var otherUserMock = new Mock<IUser>();
+        otherUserMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(4));
+
         _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
-        _contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(4));
+        _contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(otherUserMock.Object));
 
         var userOwnedGuildID = DiscordSnowflake.New(5);
 
@@ -547,8 +550,11 @@ public partial class RequireDiscordPermissionConditionTests
     )
         where TPermission : struct, Enum
     {
+        var otherUserMock = new Mock<IUser>();
+        otherUserMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(4));
+
         _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
-        _contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(4));
+        _contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(otherUserMock.Object));
 
         var userOwnedGuildID = DiscordSnowflake.New(5);
 
@@ -711,7 +717,10 @@ public partial class RequireDiscordPermissionConditionTests
     )
         where TPermission : struct, Enum
     {
-        _contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(4));
+        var otherUserMock = new Mock<IUser>();
+        otherUserMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(4));
+
+        _contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(otherUserMock.Object));
 
         effectivePermissions = effectivePermissions.Concat(new[] { DiscordPermission.Administrator }).ToArray();
         _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
@@ -753,7 +762,10 @@ public partial class RequireDiscordPermissionConditionTests
     )
         where TPermission : struct, Enum
     {
-        _contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(4));
+        var otherUserMock = new Mock<IUser>();
+        otherUserMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(4));
+
+        _contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(otherUserMock.Object));
 
         effectivePermissions = effectivePermissions.Concat(new[] { DiscordPermission.Administrator }).ToArray();
         _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));

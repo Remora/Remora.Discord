@@ -1,5 +1,5 @@
 //
-//  MessageCreateExtensions.cs
+//  GroupWithInteractionCommandContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway.Events;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Extensions;
+#pragma warning disable CS1591, SA1600
 
-/// <summary>
-/// Defines extension methods for the <see cref="IMessageCreate"/> interface.
-/// </summary>
-public static class MessageCreateExtensions
+namespace Remora.Discord.Commands.Tests.Data.Contexts;
+
+[Group("interaction-command")]
+public class GroupWithInteractionCommandContext : CommandGroup
 {
-    /// <summary>
-    /// Creates a message context from the given message creation.
-    /// </summary>
-    /// <param name="messageCreate">The message creation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    public static Result<MessageContext> CreateContext(this IMessageCreate messageCreate)
+    // ReSharper disable once NotAccessedField.Local
+    private readonly IInteractionCommandContext _context;
+
+    public GroupWithInteractionCommandContext(IInteractionCommandContext context)
     {
-        return new MessageContext
-        (
-            messageCreate.GuildID,
-            messageCreate.ChannelID,
-            messageCreate.Author,
-            messageCreate.ID,
-            messageCreate
-        );
+        _context = context;
+    }
+
+    [Command("command")]
+    public Task<Result> Command()
+    {
+        return Task.FromResult(Result.FromSuccess());
     }
 }
