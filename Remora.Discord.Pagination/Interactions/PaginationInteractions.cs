@@ -107,7 +107,7 @@ internal class PaginationInteractions : InteractionGroup
     [Button("close")]
     public async Task<Result> CloseAsync()
     {
-        if (!_context.Message.IsDefined(out var message))
+        if (!_context.Interaction.Message.IsDefined(out var message))
         {
             return new InvalidOperationError("No message available for the interaction.");
         }
@@ -125,8 +125,8 @@ internal class PaginationInteractions : InteractionGroup
         {
             return await _interactionAPI.DeleteOriginalInteractionResponseAsync
             (
-                _context.ApplicationID,
-                _context.Token,
+                _context.Interaction.ApplicationID,
+                _context.Interaction.Token,
                 this.CancellationToken
             );
         }
@@ -141,7 +141,7 @@ internal class PaginationInteractions : InteractionGroup
     [Button("help")]
     public async Task<Result> HelpAsync()
     {
-        if (!_context.Message.IsDefined(out var message))
+        if (!_context.Interaction.Message.IsDefined(out var message))
         {
             return new InvalidOperationError("No message available for the interaction.");
         }
@@ -165,7 +165,7 @@ internal class PaginationInteractions : InteractionGroup
 
     private async Task<Result> UpdateAsync(Action<PaginatedMessageData> action, CancellationToken ct)
     {
-        if (!_context.Message.IsDefined(out var message))
+        if (!_context.Interaction.Message.IsDefined(out var message))
         {
             return new InvalidOperationError("No message available for the interaction.");
         }
@@ -187,8 +187,8 @@ internal class PaginationInteractions : InteractionGroup
         {
             return (Result)await _interactionAPI.EditOriginalInteractionResponseAsync
             (
-                _context.ApplicationID,
-                _context.Token,
+                _context.Interaction.ApplicationID,
+                _context.Interaction.Token,
                 embeds: new[] { newPage },
                 components: new Optional<IReadOnlyList<IMessageComponent>?>
                 (

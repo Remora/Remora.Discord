@@ -21,29 +21,18 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+using Remora.Commands.Services;
 
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Represents a command context.
+/// Represents contextual information about an executing command.
 /// </summary>
 [PublicAPI]
-public interface ICommandContext
+public interface ICommandContext : IOperationContext
 {
     /// <summary>
-    /// Gets the ID of the guild the context refers to, if any.
+    /// Gets the command associated with the context.
     /// </summary>
-    Optional<Snowflake> GuildID { get; }
-
-    /// <summary>
-    /// Gets the ID of the channel the context refers to.
-    /// </summary>
-    Snowflake ChannelID { get; }
-
-    /// <summary>
-    /// Gets the user that invoked the command.
-    /// </summary>
-    IUser User { get; }
+    PreparedCommand Command { get; }
 }

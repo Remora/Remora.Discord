@@ -77,7 +77,14 @@ public class RequireBotDiscordPermissionsCondition :
         CancellationToken ct = default
     )
     {
-        if (!_context.GuildID.IsDefined())
+        var guildID = _context switch
+        {
+            InteractionCommandContext ix => ix.Interaction.GuildID,
+            TextCommandContext tx => tx.GuildID,
+            _ => default
+        };
+
+        if (!guildID.HasValue)
         {
             return new PermissionDeniedError
             (
@@ -85,7 +92,19 @@ public class RequireBotDiscordPermissionsCondition :
             );
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
+        var channelID = _context switch
+        {
+            InteractionCommandContext ix => ix.Interaction.ChannelID,
+            TextCommandContext tx => tx.Message.ChannelID,
+            _ => default
+        };
+
+        if (!channelID.HasValue)
+        {
+            return new PermissionDeniedError("Commands executed outside of channels may not require any permissions.");
+        }
+
+        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
 
         if (!getChannel.IsSuccess)
         {
@@ -105,7 +124,14 @@ public class RequireBotDiscordPermissionsCondition :
         CancellationToken ct = default
     )
     {
-        if (!_context.GuildID.IsDefined(out var guildID))
+        var guildID = _context switch
+        {
+            InteractionCommandContext ix => ix.Interaction.GuildID,
+            TextCommandContext tx => tx.GuildID,
+            _ => default
+        };
+
+        if (!guildID.HasValue)
         {
             return new PermissionDeniedError
             (
@@ -121,7 +147,7 @@ public class RequireBotDiscordPermissionsCondition :
 
         var user = getUser.Entity;
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return (Result)getGuild;
@@ -134,7 +160,7 @@ public class RequireBotDiscordPermissionsCondition :
             return Result.FromSuccess();
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
@@ -142,7 +168,7 @@ public class RequireBotDiscordPermissionsCondition :
 
         var guildRoles = getRoles.Entity;
 
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, user.ID, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;

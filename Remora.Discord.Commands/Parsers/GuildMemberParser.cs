@@ -68,12 +68,19 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
             return new ParsingError<IGuildMember>(value, "Unrecognized input format.");
         }
 
-        if (!_context.GuildID.IsDefined(out var guildID))
+        var guildID = _context switch
         {
-            return new InvalidOperationError("You're not in a guild guildMember, so I can't get any guild members.");
+            InteractionCommandContext ix => ix.Interaction.GuildID,
+            TextCommandContext tx => tx.GuildID,
+            _ => default
+        };
+
+        if (!guildID.HasValue)
+        {
+            return new InvalidOperationError("Guild members cannot be parsed outside of guild channels.");
         }
 
-        return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
+        return await _guildAPI.GetGuildMemberAsync(guildID.Value, guildMemberID.Value, ct);
     }
 
     /// <inheritdoc/>
@@ -104,7 +111,12 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
             return null;
         }
 
-        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!injectionContext.Interaction.Data.IsDefined(out var data))
+        {
+            return null;
+        }
+
+        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
         if (!resolvedData.IsDefined(out var resolved) || !resolved.Members.IsDefined(out var guildMembers))
         {
             return null;

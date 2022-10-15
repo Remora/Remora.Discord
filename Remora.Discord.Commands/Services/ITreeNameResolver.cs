@@ -46,7 +46,7 @@ public interface ITreeNameResolver
     /// </returns>
     Task<Result<(string TreeName, bool AllowDefaultTree)>> GetTreeNameAsync
     (
-        ICommandContext context,
+        IOperationContext context,
         CancellationToken ct = default
     );
 }

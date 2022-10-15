@@ -50,10 +50,11 @@ namespace Remora.Discord.Interactivity;
 /// </summary>
 internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 {
-    private readonly ContextInjectionService _contextInjectionService;
+    private readonly ContextInjectionService _contextInjection;
     private readonly IDiscordRestInteractionAPI _interactionAPI;
     private readonly IServiceProvider _services;
     private readonly InteractivityResponderOptions _options;
+    private readonly ExecutionEventCollectorService _eventCollector;
     private readonly CommandService _commandService;
 
     private readonly TokenizerOptions _tokenizerOptions;
@@ -66,22 +67,25 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     /// <param name="options">The responder options.</param>
     /// <param name="interactionAPI">The interaction API.</param>
     /// <param name="services">The available services.</param>
-    /// <param name="contextInjectionService">The context injection service.</param>
+    /// <param name="contextInjection">The context injection service.</param>
     /// <param name="tokenizerOptions">The tokenizer options.</param>
     /// <param name="treeSearchOptions">The tree search options.</param>
+    /// <param name="eventCollector">The execution event collector.</param>
     public InteractivityResponder
     (
         CommandService commandService,
         IOptions<InteractivityResponderOptions> options,
         IDiscordRestInteractionAPI interactionAPI,
         IServiceProvider services,
-        ContextInjectionService contextInjectionService,
+        ContextInjectionService contextInjection,
         IOptions<TokenizerOptions> tokenizerOptions,
-        IOptions<TreeSearchOptions> treeSearchOptions
+        IOptions<TreeSearchOptions> treeSearchOptions,
+        ExecutionEventCollectorService eventCollector
     )
     {
         _services = services;
-        _contextInjectionService = contextInjectionService;
+        _contextInjection = contextInjection;
+        _eventCollector = eventCollector;
         _interactionAPI = interactionAPI;
         _commandService = commandService;
         _options = options.Value;
@@ -103,14 +107,8 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return new InvalidOperationError("Component or modal interaction without data received. Bug?");
         }
 
-        var createContext = gatewayEvent.CreateContext();
-        if (!createContext.IsSuccess)
-        {
-            return (Result)createContext;
-        }
-
-        var context = createContext.Entity;
-        _contextInjectionService.Context = context;
+        var context = new InteractionContext(gatewayEvent);
+        _contextInjection.Context = context;
 
         return data.TryPickT1(out var componentData, out var remainder)
             ? await HandleComponentInteractionAsync(context, componentData, ct)
@@ -171,7 +169,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
         var parameters = buildParameters.Entity;
 
-        return await TryExecuteInteractionCommandAsync(context, commandPath, parameters, ct);
+        return await TryExecuteCommandAsync(context, commandPath, parameters, ct);
     }
 
     private static Result<IReadOnlyDictionary<string, IReadOnlyList<string>>> BuildParametersFromResolvedData
@@ -249,7 +247,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
         var parameters = ExtractParameters(data.Components);
 
-        return await TryExecuteInteractionCommandAsync
+        return await TryExecuteCommandAsync
         (
             context,
             commandPath,
@@ -322,12 +320,12 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         return parameters;
     }
 
-    private async Task<Result> TryExecuteInteractionCommandAsync
+    private async Task<Result> TryExecuteCommandAsync
     (
-        InteractionContext context,
+        InteractionContext operationContext,
         IReadOnlyList<string> commandPath,
         IReadOnlyDictionary<string, IReadOnlyList<string>> parameters,
-        CancellationToken ct
+        CancellationToken ct = default
     )
     {
         var prepareCommand = await _commandService.TryPrepareCommandAsync
@@ -348,19 +346,34 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
         var preparedCommand = prepareCommand.Entity;
 
+        // Update the available context
+        var commandContext = new InteractionCommandContext
+        (
+            operationContext.Interaction,
+            preparedCommand
+        )
+        {
+            HasRespondedToInteraction = operationContext.HasRespondedToInteraction
+        };
+
+        _contextInjection.Context = commandContext;
+
         var suppressResponseAttribute = preparedCommand.Command.Node
             .FindCustomAttributeOnLocalTree<SuppressInteractionResponseAttribute>();
 
-        var shouldSendResponse = !(suppressResponseAttribute?.Suppress ?? _options.SuppressAutomaticResponses);
+        var shouldSendResponse =
+        !(
+            suppressResponseAttribute?.Suppress ?? _options.SuppressAutomaticResponses ||
+            commandContext.HasRespondedToInteraction
+        );
 
-        // ReSharper disable once InvertIf
         if (shouldSendResponse)
         {
             var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
             var createResponse = await _interactionAPI.CreateInteractionResponseAsync
             (
-                context.ID,
-                context.Token,
+                commandContext.Interaction.ID,
+                commandContext.Interaction.Token,
                 response,
                 ct: ct
             );
@@ -369,13 +382,26 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             {
                 return createResponse;
             }
+
+            operationContext.HasRespondedToInteraction = true;
+            commandContext.HasRespondedToInteraction = true;
         }
 
-        // Run the actual command
-        return (Result)await _commandService.TryExecuteAsync
+        // Run any user-provided pre-execution events
+        var preExecution = await _eventCollector.RunPreExecutionEvents(_services, commandContext, ct);
+        if (!preExecution.IsSuccess)
+        {
+            return preExecution;
+        }
+
+        var executionResult = await _commandService.TryExecuteAsync(preparedCommand, _services, ct);
+
+        // Run any user-provided post-execution events
+        return await _eventCollector.RunPostExecutionEvents
         (
-            preparedCommand,
             _services,
+            commandContext,
+            executionResult.IsSuccess ? executionResult.Entity : executionResult,
             ct
         );
     }

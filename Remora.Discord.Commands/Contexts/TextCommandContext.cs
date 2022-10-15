@@ -1,5 +1,5 @@
 //
-//  ContextInjectionService.cs
+//  TextCommandContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,18 +21,19 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.Commands.Contexts;
+using Remora.Commands.Services;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.Commands.Services;
+namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Assists with injection of an <see cref="IOperationContext"/> into a service provider.
+/// Represents contextual information about a currently executing text-based command.
 /// </summary>
+/// <param name="Message">The message that initiated the command.</param>
+/// <param name="GuildID">The ID of the guild the message is in, if any.</param>
+/// <param name="Command">The command associated with the context.</param>
 [PublicAPI]
-public class ContextInjectionService
-{
-    /// <summary>
-    /// Gets or sets the context.
-    /// </summary>
-    public IOperationContext? Context { get; set; }
-}
+public record TextCommandContext(IPartialMessage Message, Optional<Snowflake> GuildID, PreparedCommand Command) :
+    MessageContext(Message, GuildID),
+    ICommandContext;

@@ -28,7 +28,7 @@ namespace Remora.Discord.Samples.Interactivity.Interactions;
 /// </summary>
 public class ColourDropdownInteractions : InteractionGroup
 {
-    private readonly InteractionContext _context;
+    private readonly InteractionCommandContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
     private readonly FeedbackService _feedback;
 
@@ -40,7 +40,7 @@ public class ColourDropdownInteractions : InteractionGroup
     /// <param name="feedback">The feedback service.</param>
     public ColourDropdownInteractions
     (
-        InteractionContext context,
+        InteractionCommandContext context,
         IDiscordRestChannelAPI channelAPI,
         FeedbackService feedback
     )
@@ -58,7 +58,7 @@ public class ColourDropdownInteractions : InteractionGroup
     [SelectMenu("colour-dropdown")]
     public async Task<Result> SetEmbedColourAsync(IReadOnlyList<string> values)
     {
-        if (!_context.Message.IsDefined(out var message))
+        if (!_context.Interaction.Message.IsDefined(out var message))
         {
             return new InvalidOperationError("Interaction without a message?");
         }
@@ -113,7 +113,7 @@ public class ColourDropdownInteractions : InteractionGroup
 
         return (Result)await _channelAPI.EditMessageAsync
         (
-            _context.ChannelID,
+            message.ChannelID,
             message.ID,
             embeds: new[] { embed },
             components: newComponents,
@@ -145,7 +145,7 @@ public class ColourDropdownInteractions : InteractionGroup
         return (Result)await _feedback.SendContextualNeutralAsync
         (
             message,
-            _context.User.ID,
+            _context.Interaction.User.IsDefined(out var user) ? user.ID : default,
             options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
             ct: this.CancellationToken
         );
@@ -178,7 +178,7 @@ public class ColourDropdownInteractions : InteractionGroup
         return (Result)await _feedback.SendContextualNeutralAsync
         (
             stringBuilder.ToString(),
-            _context.User.ID,
+            _context.Interaction.User.IsDefined(out var user) ? user.ID : default,
             options: new FeedbackMessageOptions
             (
                 MessageFlags: MessageFlags.Ephemeral,

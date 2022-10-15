@@ -21,35 +21,19 @@
 //
 
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Represents contextual information about an interaction.
+/// Represents contextual information about an ongoing operation on an interaction.
 /// </summary>
+/// <param name="Interaction">The interaction.</param>
 [PublicAPI]
-public record InteractionContext
-(
-    Optional<Snowflake> GuildID,
-    Snowflake ChannelID,
-    IUser User,
-    Optional<IGuildMember> Member,
-    string Token,
-    Snowflake ID,
-    Snowflake ApplicationID,
-    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData> Data,
-    Optional<IMessage> Message,
-    Optional<string> Locale
-) : CommandContext(GuildID, ChannelID, User)
+public record InteractionContext(IInteraction Interaction) : IOperationContext
 {
     /// <summary>
-    /// Gets a value indicating whether the interaction has been responded to.
+    /// Gets or sets a value indicating whether the interaction has been responded to.
     /// </summary>
-    /// <remarks>
-    /// Note that this value is only updated if the response is created after the context is instantiated.
-    /// </remarks>
-    public bool HasRespondedToInteraction { get; internal set; }
+    public bool HasRespondedToInteraction { get; set; }
 }

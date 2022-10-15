@@ -91,12 +91,17 @@ public class ChannelParser : AbstractTypeParser<IChannel>, ITypeParser<IPartialC
 
     private IPartialChannel? GetResolvedChannelOrDefault(Snowflake channelID)
     {
-        if (_contextInjection.Context is not InteractionContext injectionContext)
+        if (_contextInjection.Context is not InteractionContext interactionContext)
         {
             return null;
         }
 
-        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        {
+            return null;
+        }
+
+        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
         if (!resolvedData.IsDefined(out var resolved) || !resolved.Channels.IsDefined(out var channels))
         {
             return null;
