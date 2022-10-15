@@ -30,6 +30,7 @@ using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -39,6 +40,7 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Interactivity;
@@ -130,12 +132,15 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
-        if (data.ComponentType is ComponentType.StringSelect)
+        var isSelectMenu = data.ComponentType is ComponentType.StringSelect
+            or ComponentType.UserSelect
+            or ComponentType.RoleSelect
+            or ComponentType.MentionableSelect
+            or ComponentType.ChannelSelect;
+
+        if (isSelectMenu && !data.Values.HasValue)
         {
-            if (!data.Values.HasValue)
-            {
-                return new InvalidOperationError("The interaction did not contain any selected values.");
-            }
+            return new InvalidOperationError("The interaction did not contain any selected values.");
         }
 
         var commandPath = data.CustomID[Constants.InteractionTree.Length..][2..]
@@ -176,6 +181,15 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     {
         var parameters = new Dictionary<string, IReadOnlyList<string>>();
 
+        var values = new HashSet<Snowflake>();
+        foreach (var value in data.Values.Value)
+        {
+            if (DiscordSnowflake.TryParse(value, out var parsed))
+            {
+                values.Add(parsed.Value);
+            }
+        }
+
         if (!data.Resolved.IsDefined(out var resolved))
         {
             return parameters;
@@ -186,7 +200,9 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             parameters.Add
             (
                 "users",
-                users.Keys.Select(x => x.ToString()).ToList()
+                users.Keys.Where(x => values.Contains(x))
+                    .Select(x => x.ToString())
+                    .ToList()
             );
         }
 
@@ -195,7 +211,9 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             parameters.Add
             (
                 "roles",
-                roles.Keys.Select(x => x.ToString()).ToList()
+                roles.Keys.Where(x => values.Contains(x))
+                    .Select(x => x.ToString())
+                    .ToList()
             );
         }
 
@@ -204,7 +222,9 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             parameters.Add
             (
                 "channels",
-                channels.Keys.Select(x => x.ToString()).ToList()
+                channels.Keys.Where(x => values.Contains(x))
+                    .Select(x => x.ToString())
+                    .ToList()
             );
         }
 
