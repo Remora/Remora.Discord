@@ -1,0 +1,8 @@
+{
+  "type": 5,
+  "custom_id": "user_select_1",
+  "placeholder": "Choose a user",
+  "min_values": 1,
+  "max_values": 3,
+  "disabled": false
+}

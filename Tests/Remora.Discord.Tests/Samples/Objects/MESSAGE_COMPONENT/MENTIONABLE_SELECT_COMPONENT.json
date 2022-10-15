@@ -1,0 +1,8 @@
+{
+  "type": 7,
+  "custom_id": "mentionable_select_1",
+  "placeholder": "Choose a mentionable",
+  "min_values": 1,
+  "max_values": 3,
+  "disabled": false
+}

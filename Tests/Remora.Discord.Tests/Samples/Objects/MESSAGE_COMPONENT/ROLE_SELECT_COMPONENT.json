@@ -1,0 +1,8 @@
+{
+  "type": 6,
+  "custom_id": "role_select_1",
+  "placeholder": "Choose a role",
+  "min_values": 1,
+  "max_values": 3,
+  "disabled": false
+}

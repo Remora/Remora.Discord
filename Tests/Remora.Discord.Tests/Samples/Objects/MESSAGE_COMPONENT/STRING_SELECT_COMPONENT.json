@@ -12,10 +12,6 @@
       }
     }
   ],
-  "channel_types": [
-    0,
-    1
-  ],
   "placeholder": "Choose a class",
   "min_values": 1,
   "max_values": 3,
