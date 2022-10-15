@@ -1,5 +1,5 @@
 //
-//  MessageComponentData.cs
+//  StringSelectComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,12 +27,18 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IMessageComponentData"/>
+/// <inheritdoc cref="IStringSelectComponent" />
 [PublicAPI]
-public record MessageComponentData
+public record StringSelectComponent
 (
     string CustomID,
-    ComponentType ComponentType,
-    Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<string>> Values
-) : IMessageComponentData;
+    IReadOnlyList<ISelectOption> Options,
+    Optional<string> Placeholder = default,
+    Optional<int> MinValues = default,
+    Optional<int> MaxValues = default,
+    Optional<bool> IsDisabled = default
+) : IStringSelectComponent
+{
+    /// <inheritdoc />
+    public ComponentType Type => ComponentType.StringSelect;
+}

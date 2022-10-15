@@ -1,11 +1,11 @@
 {
   "type": 4,
-  "custom_id": "my-input",
+  "custom_id": "none",
   "style": 1,
   "label": "none",
   "min_length": 1,
   "max_length": 2,
   "required": false,
   "value": "bbbb",
-  "placeholder": "cccc"
+  "placeholder": "none"
 }

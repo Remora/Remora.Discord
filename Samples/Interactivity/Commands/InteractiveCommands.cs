@@ -99,7 +99,7 @@ public class InteractiveCommands : CommandGroup
         {
             new ActionRowComponent(new[]
             {
-                new SelectMenuComponent
+                new StringSelectComponent
                 (
                     CustomIDHelpers.CreateSelectMenuID("colour-dropdown"),
                     new ISelectOption[]
@@ -135,7 +135,7 @@ public class InteractiveCommands : CommandGroup
         {
             new ActionRowComponent(new[]
             {
-                new SelectMenuComponent
+                new StringSelectComponent
                 (
                     CustomIDHelpers.CreateSelectMenuID("typed-dropdown"),
                     new ISelectOption[]
@@ -147,6 +147,32 @@ public class InteractiveCommands : CommandGroup
                     "Emojis...",
                     1,
                     1
+                )
+            })
+        });
+
+        return await _feedback.SendContextualEmbedAsync(embed, options, this.CancellationToken);
+    }
+
+    /// <summary>
+    /// Sends an embed with a dropdown allowing the user to select
+    /// users/roles.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    [Command("mentionable-dropdown")]
+    public async Task<IResult> SendMentionableDropdownAsync()
+    {
+        var embed = new Embed(Description: "Select users and roles below.");
+        var options = new FeedbackMessageOptions(MessageComponents: new IMessageComponent[]
+        {
+            new ActionRowComponent(new[]
+            {
+                new MentionableSelectComponent
+                (
+                    CustomIDHelpers.CreateSelectMenuID("mentionable-dropdown"),
+                    "Users/Roles...",
+                    MinValues: 1,
+                    MaxValues: 10
                 )
             })
         });

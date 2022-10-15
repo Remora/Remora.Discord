@@ -49,9 +49,12 @@ public Task<Result> OnButtonPressedAsync()
 
 ### Select Menus
 Select menus are functions with a list of objects as its sole parameter, 
-decorated with the `SelectMenu` attribute. The parameter *must* be named 
-`values`, and will contain zero or more values selected by the end user in the 
-menu.
+decorated with the `SelectMenu` attribute. There are multiple types of
+select menu, namely _string_, _user_, _role_, _mentionable_ (users AND roles),
+and _channel_ select menus. 
+
+When using a `string` select menu, the command parameter *must* be named
+`values`, and will contain zero or more values selected by the end user in the menu.
 
 You can control the number of allowed values when creating the component through
 its `MinValues` and `MaxValues` properties.
@@ -94,6 +97,45 @@ public Task<Result> OnMenuSelectionAsync(IReadOnlyList<MyArbitraryType> values)
 
 The raw values in question are taken from the select menu options of the 
 component, and can be any parseable data.
+
+When using `user`, `role`, `mentionable` and `channel` select menus, no values are
+returned and the selected values are instead sent as resolved objects on the
+interaction response. Remora will handle this all for you automatically, with the
+expectation that you name your command parameters `users`, `roles` and `channels`
+respectively.
+
+Please note that resolved data will contain _partial_ objects for channels, although resolved
+users and roles are concrete. Hence, by using a non-partial interface on a channel command
+parameter (e.g. `IReadOnlyList<IChannel>` rather than `IReadOnlyList<IPartialChannel>`),
+you may incur additional network calls if the concrete channel objects are not already cached.
+
+```c#
+[SelectMenu("my-channel-select-menu")]
+public Task<Result> OnMenuSelectionAsync(IReadOnlyList<IChannel> channels)
+{
+    // ...
+}
+```
+
+```c#
+private readonly InteractionContext _context; // Injected
+
+[SelectMenu("my-mentionable-menu")]
+public Task<Result> OnMenuSelectionAsync(IReadOnlyList<IChannel> channels)
+{
+    // `values` will contain the IDs of the selected users/roles
+
+    if (!_context.Data.TryPickT1(out var components, out _))
+        // error, expected message component data to be present
+
+    if (!components.Resolved.IsDefined(out var resolvedData))
+        // error, expected resolved data to be present on non-string select menus
+
+    resolvedData.Users.IsDefined(...);
+    resolvedData.Members.IsDefined(...);
+    resolvedData.Roles.IsDefined(...);
+}
+```
 
 ### Modals
 Modals are functions with zero or more parameters matching the value types of 

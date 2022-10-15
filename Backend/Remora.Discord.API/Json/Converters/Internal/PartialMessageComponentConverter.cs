@@ -67,11 +67,19 @@ internal class PartialMessageComponentConverter : JsonConverter<IPartialMessageC
             ComponentType.ActionRow
                 => JsonSerializer.Deserialize<IPartialActionRowComponent>(document.RootElement.GetRawText(), options),
             ComponentType.Button
-                => JsonSerializer.Deserialize<IButtonComponent>(document.RootElement.GetRawText(), options),
-            ComponentType.SelectMenu
-                => JsonSerializer.Deserialize<ISelectMenuComponent>(document.RootElement.GetRawText(), options),
+                => JsonSerializer.Deserialize<IPartialButtonComponent>(document.RootElement.GetRawText(), options),
+            ComponentType.StringSelect
+                => document.RootElement.Deserialize<IPartialStringSelectComponent>(options),
             ComponentType.TextInput
                 => JsonSerializer.Deserialize<IPartialTextInputComponent>(document.RootElement.GetRawText(), options),
+            ComponentType.UserSelect
+                => document.RootElement.Deserialize<IPartialUserSelectComponent>(options),
+            ComponentType.RoleSelect
+                => document.RootElement.Deserialize<IPartialRoleSelectComponent>(options),
+            ComponentType.MentionableSelect
+                => document.RootElement.Deserialize<IPartialMentionableSelectComponent>(options),
+            ComponentType.ChannelSelect
+                => document.RootElement.Deserialize<IPartialChannelSelectComponent>(options),
             _ => throw new ArgumentOutOfRangeException(nameof(type))
         };
     }
@@ -91,14 +99,34 @@ internal class PartialMessageComponentConverter : JsonConverter<IPartialMessageC
                 JsonSerializer.Serialize(writer, button, options);
                 break;
             }
-            case IPartialSelectMenuComponent selectMenu:
+            case IPartialStringSelectComponent stringSelect:
             {
-                JsonSerializer.Serialize(writer, selectMenu, options);
+                JsonSerializer.Serialize(writer, stringSelect, options);
                 break;
             }
             case IPartialTextInputComponent textInput:
             {
                 JsonSerializer.Serialize(writer, textInput, options);
+                break;
+            }
+            case IPartialUserSelectComponent userSelect:
+            {
+                JsonSerializer.Serialize(writer, userSelect, options);
+                break;
+            }
+            case IPartialRoleSelectComponent roleSelect:
+            {
+                JsonSerializer.Serialize(writer, roleSelect, options);
+                break;
+            }
+            case IPartialMentionableSelectComponent mentionableSelect:
+            {
+                JsonSerializer.Serialize(writer, mentionableSelect, options);
+                break;
+            }
+            case IPartialChannelSelectComponent channelSelect:
+            {
+                JsonSerializer.Serialize(writer, channelSelect, options);
                 break;
             }
             default:

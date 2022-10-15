@@ -1,5 +1,5 @@
 //
-//  MessageComponentData.cs
+//  IStringSelectComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,17 +22,21 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IMessageComponentData"/>
+/// <summary>
+/// Represents a dropdown of selectable strings.
+/// </summary>
 [PublicAPI]
-public record MessageComponentData
-(
-    string CustomID,
-    ComponentType ComponentType,
-    Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<string>> Values
-) : IMessageComponentData;
+public interface IStringSelectComponent : ISelectMenuComponent, IPartialStringSelectComponent
+{
+    /// <summary>
+    /// Gets the options in the select menu.
+    /// </summary>
+    new IReadOnlyList<ISelectOption> Options { get; }
+
+    /// <inheritdoc />
+    Optional<IReadOnlyList<IPartialSelectOption>> IPartialStringSelectComponent.Options => new(this.Options);
+}

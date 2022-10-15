@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -41,11 +40,6 @@ public interface ISelectMenuComponent : IMessageComponent, IPartialSelectMenuCom
     /// Gets a custom ID for the component, defined by the developer.
     /// </summary>
     new string CustomID { get; }
-
-    /// <summary>
-    /// Gets the options in the select menu.
-    /// </summary>
-    new IReadOnlyList<ISelectOption> Options { get; }
 
     /// <summary>
     /// Gets the placeholder text for the menu. Max 150 characters.
@@ -72,9 +66,6 @@ public interface ISelectMenuComponent : IMessageComponent, IPartialSelectMenuCom
 
     /// <inheritdoc/>
     Optional<string> IPartialSelectMenuComponent.CustomID => this.CustomID;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IPartialSelectOption>> IPartialSelectMenuComponent.Options => new(this.Options);
 
     /// <inheritdoc/>
     Optional<string> IPartialSelectMenuComponent.Placeholder => this.Placeholder;

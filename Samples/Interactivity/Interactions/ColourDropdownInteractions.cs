@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Remora.Commands.Results;
@@ -87,14 +88,18 @@ public class ColourDropdownInteractions : InteractionGroup
         );
 
         var components = new List<IMessageComponent>(message.Components.Value);
-        var dropdown = (ISelectMenuComponent)((IActionRowComponent)components[0]).Components[0];
+        var component = ((IActionRowComponent)components[0]).Components[0];
+        if (component is not IStringSelectComponent dropdown)
+        {
+            return new InvalidOperationError("Expected a string select component");
+        }
 
         var selected = dropdown.Options.Single(o => o.Value == colourCodeRaw);
         var newComponents = new List<IMessageComponent>
         {
             new ActionRowComponent(new[]
             {
-                new SelectMenuComponent
+                new StringSelectComponent
                 (
                     dropdown.CustomID,
                     dropdown.Options,
@@ -142,6 +147,43 @@ public class ColourDropdownInteractions : InteractionGroup
             message,
             _context.User.ID,
             options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
+            ct: this.CancellationToken
+        );
+    }
+
+    /// <summary>
+    /// Shows the mentionable objects selected by the user.
+    /// </summary>
+    /// <param name="users">The resolved channels.</param>
+    /// <param name="roles">The resolved roles.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    [SelectMenu("mentionable-dropdown")]
+    public async Task<Result> ShowSelectedMentionablesAsync(IReadOnlyList<IUser> users, IReadOnlyList<IRole> roles)
+    {
+        var stringBuilder = new StringBuilder();
+
+        stringBuilder.AppendLine("The following users were selected: ");
+        foreach (var channel in users)
+        {
+            stringBuilder.AppendLine($"• <@{channel.ID}>");
+        }
+
+        stringBuilder.AppendLine();
+        stringBuilder.AppendLine("The following roles were selected: ");
+        foreach (var role in roles)
+        {
+            stringBuilder.AppendLine($"• <@&{role.ID}>");
+        }
+
+        return (Result)await _feedback.SendContextualNeutralAsync
+        (
+            stringBuilder.ToString(),
+            _context.User.ID,
+            options: new FeedbackMessageOptions
+            (
+                MessageFlags: MessageFlags.Ephemeral,
+                AllowedMentions: new AllowedMentions()
+            ),
             ct: this.CancellationToken
         );
     }

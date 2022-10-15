@@ -35,6 +35,12 @@ namespace Remora.Discord.Interactivity;
 public static class CustomIDHelpers
 {
     /// <summary>
+    /// Gets the name used to build IDs for select menu components.
+    /// This may include text, role, channel etc. select menus.
+    /// </summary>
+    private const string SelectComponentName = "select-menu";
+
+    /// <summary>
     /// Creates an ID string that can be used with button components.
     /// </summary>
     /// <param name="name">
@@ -66,7 +72,7 @@ public static class CustomIDHelpers
     /// </param>
     /// <returns>The custom ID.</returns>
     public static string CreateSelectMenuID(string name)
-        => CreateID(name, ComponentType.SelectMenu);
+        => FormatID(SelectComponentName, name, Array.Empty<string>());
 
     /// <summary>
     /// Creates an ID string that can be used with select menu components.
@@ -80,7 +86,7 @@ public static class CustomIDHelpers
     /// </param>
     /// <returns>The custom ID.</returns>
     public static string CreateSelectMenuID(string name, params string[] path)
-        => CreateID(ComponentType.SelectMenu, name, path);
+        => FormatID(SelectComponentName, name, path);
 
     /// <summary>
     /// Creates an ID string that can be used with modals.

@@ -43,6 +43,13 @@ public interface IMessageComponentData
     ComponentType ComponentType { get; }
 
     /// <summary>
+    /// Gets the resolved data. This may be present on, for example,
+    /// <see cref="Remora.Discord.API.Abstractions.Objects.ComponentType.UserSelect"/>
+    /// components.
+    /// </summary>
+    Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+
+    /// <summary>
     /// Gets the values selected by the user.
     /// </summary>
     Optional<IReadOnlyList<string>> Values { get; }

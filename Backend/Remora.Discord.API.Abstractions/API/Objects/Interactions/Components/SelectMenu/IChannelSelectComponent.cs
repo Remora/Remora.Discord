@@ -1,5 +1,5 @@
 //
-//  MessageComponentData.cs
+//  IChannelSelectComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,17 +22,21 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IMessageComponentData"/>
+/// <summary>
+/// Represents a dropdown of selectable channels.
+/// </summary>
 [PublicAPI]
-public record MessageComponentData
-(
-    string CustomID,
-    ComponentType ComponentType,
-    Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<string>> Values
-) : IMessageComponentData;
+public interface IChannelSelectComponent : ISelectMenuComponent, IPartialChannelSelectComponent
+{
+    /// <summary>
+    /// Gets the channel types to show on a <see cref="ComponentType.ChannelSelect"/> component.
+    /// </summary>
+    new Optional<IReadOnlyList<ChannelType>> ChannelTypes { get; }
+
+    /// <inheritdoc />
+    Optional<IReadOnlyList<ChannelType>> IPartialChannelSelectComponent.ChannelTypes => this.ChannelTypes;
+}

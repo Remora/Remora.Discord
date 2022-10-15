@@ -1,5 +1,5 @@
 //
-//  MessageComponentData.cs
+//  PartialStringSelectComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,12 +27,18 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IMessageComponentData"/>
+/// <inheritdoc cref="IPartialStringSelectComponent" />
 [PublicAPI]
-public record MessageComponentData
+public record PartialStringSelectComponent
 (
-    string CustomID,
-    ComponentType ComponentType,
-    Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<string>> Values
-) : IMessageComponentData;
+    Optional<string> CustomID,
+    Optional<IReadOnlyList<IPartialSelectOption>> Options = default,
+    Optional<string> Placeholder = default,
+    Optional<int> MinValues = default,
+    Optional<int> MaxValues = default,
+    Optional<bool> IsDisabled = default
+) : IPartialStringSelectComponent
+{
+    /// <inheritdoc />
+    public Optional<ComponentType> Type => ComponentType.StringSelect;
+}

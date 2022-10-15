@@ -30,6 +30,7 @@ using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -39,6 +40,7 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Interactivity;
@@ -130,12 +132,15 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
-        if (data.ComponentType is ComponentType.SelectMenu)
+        var isSelectMenu = data.ComponentType is ComponentType.StringSelect
+            or ComponentType.UserSelect
+            or ComponentType.RoleSelect
+            or ComponentType.MentionableSelect
+            or ComponentType.ChannelSelect;
+
+        if (isSelectMenu && !data.Values.HasValue)
         {
-            if (!data.Values.HasValue)
-            {
-                return new InvalidOperationError("The interaction did not contain any selected values.");
-            }
+            return new InvalidOperationError("The interaction did not contain any selected values.");
         }
 
         var commandPath = data.CustomID[Constants.InteractionTree.Length..][2..]
@@ -144,13 +149,18 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var buildParameters = data.ComponentType switch
         {
             ComponentType.Button => new Dictionary<string, IReadOnlyList<string>>(),
-            ComponentType.SelectMenu => Result<IReadOnlyDictionary<string, IReadOnlyList<string>>>.FromSuccess
+            ComponentType.StringSelect => Result<IReadOnlyDictionary<string, IReadOnlyList<string>>>.FromSuccess
             (
                 new Dictionary<string, IReadOnlyList<string>>
                 {
                     { "values", data.Values.Value }
                 }
             ),
+            ComponentType.UserSelect
+                or ComponentType.RoleSelect
+                or ComponentType.MentionableSelect
+                or ComponentType.ChannelSelect
+                => BuildParametersFromResolvedData(data),
             _ => new InvalidOperationError("An unsupported component type was encountered.")
         };
 
@@ -162,6 +172,63 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var parameters = buildParameters.Entity;
 
         return await TryExecuteInteractionCommandAsync(context, commandPath, parameters, ct);
+    }
+
+    private static Result<IReadOnlyDictionary<string, IReadOnlyList<string>>> BuildParametersFromResolvedData
+    (
+        IMessageComponentData data
+    )
+    {
+        var parameters = new Dictionary<string, IReadOnlyList<string>>();
+
+        var values = new HashSet<Snowflake>();
+        foreach (var value in data.Values.Value)
+        {
+            if (DiscordSnowflake.TryParse(value, out var parsed))
+            {
+                values.Add(parsed.Value);
+            }
+        }
+
+        if (!data.Resolved.IsDefined(out var resolved))
+        {
+            return parameters;
+        }
+
+        if (resolved.Users.IsDefined(out var users))
+        {
+            parameters.Add
+            (
+                "users",
+                users.Keys.Where(x => values.Contains(x))
+                    .Select(x => x.ToString())
+                    .ToList()
+            );
+        }
+
+        if (resolved.Roles.IsDefined(out var roles))
+        {
+            parameters.Add
+            (
+                "roles",
+                roles.Keys.Where(x => values.Contains(x))
+                    .Select(x => x.ToString())
+                    .ToList()
+            );
+        }
+
+        if (resolved.Channels.IsDefined(out var channels))
+        {
+            parameters.Add
+            (
+                "channels",
+                channels.Keys.Where(x => values.Contains(x))
+                    .Select(x => x.ToString())
+                    .ToList()
+            );
+        }
+
+        return parameters;
     }
 
     private async Task<Result> HandleModalInteractionAsync
@@ -232,7 +299,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
                     parameters.Add(id.Replace('-', '_').Camelize(), new[] { value });
                     break;
                 }
-                case IPartialSelectMenuComponent selectMenu:
+                case IPartialStringSelectComponent selectMenu:
                 {
                     if (!selectMenu.CustomID.IsDefined(out var id))
                     {

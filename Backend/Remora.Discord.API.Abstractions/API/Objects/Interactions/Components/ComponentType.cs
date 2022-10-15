@@ -41,12 +41,32 @@ public enum ComponentType
     Button = 2,
 
     /// <summary>
-    /// A menu of selectable options.
+    /// A menu of selectable strings.
     /// </summary>
-    SelectMenu = 3,
+    StringSelect = 3,
 
     /// <summary>
     /// A text field input.
     /// </summary>
-    TextInput = 4
+    TextInput = 4,
+
+    /// <summary>
+    /// A menu of selectable users.
+    /// </summary>
+    UserSelect = 5,
+
+    /// <summary>
+    /// A menu of selectable roles.
+    /// </summary>
+    RoleSelect = 6,
+
+    /// <summary>
+    /// A menu of selectable mentionables (roles, users).
+    /// </summary>
+    MentionableSelect = 7,
+
+    /// <summary>
+    /// A menu of selectable channels.
+    /// </summary>
+    ChannelSelect = 8
 }

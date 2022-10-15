@@ -1,5 +1,5 @@
 //
-//  MessageComponentData.cs
+//  IPartialRoleSelectComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IMessageComponentData"/>
+/// <summary>
+/// Represents a partial dropdown of selectable roles.
+/// </summary>
 [PublicAPI]
-public record MessageComponentData
-(
-    string CustomID,
-    ComponentType ComponentType,
-    Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<string>> Values
-) : IMessageComponentData;
+public interface IPartialRoleSelectComponent : IPartialSelectMenuComponent
+{
+}

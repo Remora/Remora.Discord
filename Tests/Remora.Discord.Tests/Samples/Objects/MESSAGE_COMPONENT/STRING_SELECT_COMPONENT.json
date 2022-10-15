@@ -1,6 +1,6 @@
 {
   "type": 3,
-  "custom_id": "class_select_1",
+  "custom_id": "none",
   "options": [
     {
       "label": "none",
@@ -11,5 +11,9 @@
         "id": "999999999999999999"
       }
     }
-  ]
+  ],
+  "placeholder": "none",
+  "min_values": 1,
+  "max_values": 3,
+  "disabled": false
 }

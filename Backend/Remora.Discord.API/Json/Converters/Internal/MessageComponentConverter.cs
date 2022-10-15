@@ -68,10 +68,18 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 => JsonSerializer.Deserialize<IActionRowComponent>(document.RootElement.GetRawText(), options),
             ComponentType.Button
                 => JsonSerializer.Deserialize<IButtonComponent>(document.RootElement.GetRawText(), options),
-            ComponentType.SelectMenu
-                => JsonSerializer.Deserialize<ISelectMenuComponent>(document.RootElement.GetRawText(), options),
+            ComponentType.StringSelect
+                => document.RootElement.Deserialize<IStringSelectComponent>(options),
             ComponentType.TextInput
                 => JsonSerializer.Deserialize<ITextInputComponent>(document.RootElement.GetRawText(), options),
+            ComponentType.UserSelect
+                => document.RootElement.Deserialize<IUserSelectComponent>(options),
+            ComponentType.RoleSelect
+                => document.RootElement.Deserialize<IRoleSelectComponent>(options),
+            ComponentType.MentionableSelect
+                => document.RootElement.Deserialize<IMentionableSelectComponent>(options),
+            ComponentType.ChannelSelect
+                => document.RootElement.Deserialize<IChannelSelectComponent>(options),
             _ => throw new ArgumentOutOfRangeException(nameof(type))
         };
     }
@@ -91,14 +99,34 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 JsonSerializer.Serialize(writer, button, options);
                 break;
             }
-            case ISelectMenuComponent selectMenu:
+            case IStringSelectComponent stringSelect:
             {
-                JsonSerializer.Serialize(writer, selectMenu, options);
+                JsonSerializer.Serialize(writer, stringSelect, options);
                 break;
             }
             case ITextInputComponent textInput:
             {
                 JsonSerializer.Serialize(writer, textInput, options);
+                break;
+            }
+            case IUserSelectComponent userSelect:
+            {
+                JsonSerializer.Serialize(writer, userSelect, options);
+                break;
+            }
+            case IRoleSelectComponent roleSelect:
+            {
+                JsonSerializer.Serialize(writer, roleSelect, options);
+                break;
+            }
+            case IMentionableSelectComponent mentionableSelect:
+            {
+                JsonSerializer.Serialize(writer, mentionableSelect, options);
+                break;
+            }
+            case IChannelSelectComponent channelSelect:
+            {
+                JsonSerializer.Serialize(writer, channelSelect, options);
                 break;
             }
             default:

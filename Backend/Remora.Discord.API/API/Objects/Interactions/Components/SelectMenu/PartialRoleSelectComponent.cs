@@ -1,5 +1,5 @@
 //
-//  MessageComponentData.cs
+//  PartialRoleSelectComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IMessageComponentData"/>
+/// <inheritdoc cref="IPartialRoleSelectComponent" />
 [PublicAPI]
-public record MessageComponentData
+public record PartialRoleSelectComponent
 (
-    string CustomID,
-    ComponentType ComponentType,
-    Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<string>> Values
-) : IMessageComponentData;
+    Optional<string> CustomID,
+    Optional<string> Placeholder = default,
+    Optional<int> MinValues = default,
+    Optional<int> MaxValues = default,
+    Optional<bool> IsDisabled = default
+) : IPartialRoleSelectComponent
+{
+    /// <inheritdoc />
+    public Optional<ComponentType> Type => ComponentType.RoleSelect;
+}

@@ -40,6 +40,36 @@
       <Compile Update="API\Objects\Activities\IActivityButton.cs">
         <DependentUpon>IActivity.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IStringSelectComponent.cs">
+        <DependentUpon>ISelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IUserSelectComponent.cs">
+        <DependentUpon>ISelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IRoleSelectComponent.cs">
+        <DependentUpon>ISelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IMentionableSelectComponent.cs">
+        <DependentUpon>ISelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IChannelSelectComponent.cs">
+        <DependentUpon>ISelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IPartialStringSelectComponent.cs">
+        <DependentUpon>IPartialSelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IPartialUserSelectComponent.cs">
+        <DependentUpon>IPartialSelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IPartialRoleSelectComponent.cs">
+        <DependentUpon>IPartialSelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IPartialMentionableSelectComponent.cs">
+        <DependentUpon>IPartialSelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\IPartialChannelSelectComponent.cs">
+        <DependentUpon>IPartialSelectMenuComponent.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
