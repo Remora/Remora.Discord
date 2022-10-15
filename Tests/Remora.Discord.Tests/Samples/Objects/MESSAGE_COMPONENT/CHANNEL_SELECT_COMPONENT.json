@@ -1,11 +1,11 @@
 {
   "type": 8,
-  "custom_id": "channel_select_1",
+  "custom_id": "none",
   "channel_types": [
     0,
     1
   ],
-  "placeholder": "Choose a channel",
+  "placeholder": "none",
   "min_values": 1,
   "max_values": 3,
   "disabled": false
