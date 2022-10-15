@@ -21,17 +21,11 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Remora.Commands.Extensions;
 using Remora.Commands.Services;
-using Remora.Commands.Signatures;
-using Remora.Commands.Trees.Nodes;
-using Remora.Discord.API;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
