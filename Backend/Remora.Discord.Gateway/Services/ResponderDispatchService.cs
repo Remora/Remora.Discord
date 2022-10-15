@@ -326,11 +326,11 @@ public class ResponderDispatchService : IAsyncDisposable
                     async rt =>
                     {
                         await using var serviceScope = _services.CreateAsyncScope();
-                        var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider
-                            .GetRequiredService(rt);
-
                         try
                         {
+                            var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider
+                                .GetRequiredService(rt);
+
                             return await responder.RespondAsync(gatewayEvent.Data, ct);
                         }
                         catch (Exception e)
