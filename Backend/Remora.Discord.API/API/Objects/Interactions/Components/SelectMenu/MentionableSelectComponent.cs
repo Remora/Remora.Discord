@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -40,10 +39,4 @@ public record MentionableSelectComponent
 {
     /// <inheritdoc />
     public ComponentType Type => ComponentType.MentionableSelect;
-
-    /// <inheritdoc />
-    public Optional<IReadOnlyList<ISelectOption>> Options => default;
-
-    /// <inheritdoc cref="ISelectMenuComponent" />
-    public Optional<IReadOnlyList<ChannelType>> ChannelTypes => default;
 }

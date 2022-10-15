@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -28,6 +30,13 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a dropdown of selectable channels.
 /// </summary>
 [PublicAPI]
-public interface IChannelSelectComponent : ISelectMenuComponent
+public interface IChannelSelectComponent : ISelectMenuComponent, IPartialChannelSelectComponent
 {
+    /// <summary>
+    /// Gets the channel types to show on a <see cref="ComponentType.ChannelSelect"/> component.
+    /// </summary>
+    new Optional<IReadOnlyList<ChannelType>> ChannelTypes { get; }
+
+    /// <inheritdoc />
+    Optional<IReadOnlyList<ChannelType>> IPartialChannelSelectComponent.ChannelTypes => this.ChannelTypes;
 }

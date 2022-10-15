@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -30,4 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 [PublicAPI]
 public interface IPartialStringSelectComponent : IPartialSelectMenuComponent
 {
+    /// <inheritdoc cref="IStringSelectComponent.Options" />
+    Optional<IReadOnlyList<IPartialSelectOption>> Options { get; }
 }

@@ -28,6 +28,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a dropdown of selectable mentionables (users and roles).
 /// </summary>
 [PublicAPI]
-public interface IMentionableSelectComponent : ISelectMenuComponent
+public interface IMentionableSelectComponent : ISelectMenuComponent, IPartialMentionableSelectComponent
 {
 }

@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -32,8 +31,6 @@ namespace Remora.Discord.API.Objects;
 public record PartialUserSelectComponent
 (
     Optional<string> CustomID,
-    Optional<IReadOnlyList<IPartialSelectOption>> Options = default,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
     Optional<string> Placeholder = default,
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,

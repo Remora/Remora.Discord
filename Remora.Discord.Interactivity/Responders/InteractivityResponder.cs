@@ -279,7 +279,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
                     parameters.Add(id.Replace('-', '_').Camelize(), new[] { value });
                     break;
                 }
-                case IPartialSelectMenuComponent selectMenu:
+                case IPartialStringSelectComponent selectMenu:
                 {
                     if (!selectMenu.CustomID.IsDefined(out var id))
                     {

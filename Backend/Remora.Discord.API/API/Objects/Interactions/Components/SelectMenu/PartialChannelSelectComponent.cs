@@ -32,7 +32,6 @@ namespace Remora.Discord.API.Objects;
 public record PartialChannelSelectComponent
 (
     Optional<string> CustomID,
-    Optional<IReadOnlyList<IPartialSelectOption>> Options = default,
     Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
     Optional<string> Placeholder = default,
     Optional<int> MinValues = default,

@@ -41,7 +41,4 @@ public record ChannelSelectComponent
 {
     /// <inheritdoc />
     public ComponentType Type => ComponentType.ChannelSelect;
-
-    /// <inheritdoc />
-    public Optional<IReadOnlyList<ISelectOption>> Options => default;
 }

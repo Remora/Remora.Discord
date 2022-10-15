@@ -30,11 +30,13 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a dropdown of selectable strings.
 /// </summary>
 [PublicAPI]
-public interface IStringSelectComponent : ISelectMenuComponent
+public interface IStringSelectComponent : ISelectMenuComponent, IPartialStringSelectComponent
 {
-    /// <inheritdoc cref="ISelectMenuComponent.Options" />
+    /// <summary>
+    /// Gets the options in the select menu.
+    /// </summary>
     new IReadOnlyList<ISelectOption> Options { get; }
 
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<ISelectOption>> ISelectMenuComponent.Options => new(this.Options);
+    /// <inheritdoc />
+    Optional<IReadOnlyList<IPartialSelectOption>> IPartialStringSelectComponent.Options => new(this.Options);
 }

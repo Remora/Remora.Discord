@@ -41,7 +41,4 @@ public record StringSelectComponent
 {
     /// <inheritdoc />
     public ComponentType Type => ComponentType.StringSelect;
-
-    /// <inheritdoc cref="ISelectMenuComponent" />
-    public Optional<IReadOnlyList<ChannelType>> ChannelTypes => default;
 }

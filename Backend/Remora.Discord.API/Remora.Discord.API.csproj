@@ -67,7 +67,7 @@
         <DependentUpon>SelectOption.cs</DependentUpon>
       </Compile>
       <Compile Update="API\Objects\Interactions\Components\SelectMenu\PartialStringSelectComponent.cs">
-        <DependentUpon>SelectMenuComponent.cs</DependentUpon>
+        <DependentUpon>StringSelectComponent.cs</DependentUpon>
       </Compile>
       <Compile Update="API\Objects\Interactions\Components\TextInput\PartialTextInputComponent.cs">
         <DependentUpon>TextInputComponent.cs</DependentUpon>

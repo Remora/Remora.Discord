@@ -88,14 +88,13 @@ public class ColourDropdownInteractions : InteractionGroup
         );
 
         var components = new List<IMessageComponent>(message.Components.Value);
-        var dropdown = (ISelectMenuComponent)((IActionRowComponent)components[0]).Components[0];
-
-        if (!dropdown.Options.IsDefined(out var selectOptions))
+        var component = ((IActionRowComponent)components[0]).Components[0];
+        if (component is not IStringSelectComponent dropdown)
         {
-            return new InvalidOperationError("No options were present on the text select");
+            return new InvalidOperationError("Expected a string select component");
         }
 
-        var selected = selectOptions.Single(o => o.Value == colourCodeRaw);
+        var selected = dropdown.Options.Single(o => o.Value == colourCodeRaw);
         var newComponents = new List<IMessageComponent>
         {
             new ActionRowComponent(new[]
@@ -103,7 +102,7 @@ public class ColourDropdownInteractions : InteractionGroup
                 new StringSelectComponent
                 (
                     dropdown.CustomID,
-                    selectOptions,
+                    dropdown.Options,
                     selected.Label,
                     dropdown.MinValues,
                     dropdown.MaxValues,
@@ -159,7 +158,7 @@ public class ColourDropdownInteractions : InteractionGroup
     /// <param name="roles">The resolved roles.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     [SelectMenu("mentionable-dropdown")]
-    public async Task<Result> ShowSelectedChannelsAsync(IReadOnlyList<IUser> users, IReadOnlyList<IRole> roles)
+    public async Task<Result> ShowSelectedMentionablesAsync(IReadOnlyList<IUser> users, IReadOnlyList<IRole> roles)
     {
         var stringBuilder = new StringBuilder();
 
