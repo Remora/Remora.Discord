@@ -75,7 +75,7 @@ public class RedisCacheProvider : ICacheProvider
             return;
         }
 
-        var serialized = JsonSerializer.Serialize(instance, _jsonOptions);
+        var serialized = JsonSerializer.SerializeToUtf8Bytes(instance, _jsonOptions);
 
         var options = new DistributedCacheEntryOptions
         {
@@ -83,7 +83,7 @@ public class RedisCacheProvider : ICacheProvider
             SlidingExpiration = slidingExpiration
         };
 
-        await _cache.SetStringAsync(key, serialized, options, ct);
+        await _cache.SetAsync(key, serialized, options, ct);
     }
 
     /// <inheritdoc cref="ICacheProvider.RetrieveAsync{TInstance}"/>
