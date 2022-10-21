@@ -24,7 +24,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
@@ -38,17 +37,17 @@ namespace Remora.Discord.Caching.Services;
 public class CacheService
 {
     private readonly ICacheProvider _cacheProvider;
-    private readonly CacheSettings _cacheSettings;
+    private readonly ImmutableCacheSettings _cacheSettings;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CacheService"/> class.
     /// </summary>
     /// <param name="cacheProvider">The cache provider.</param>
     /// <param name="cacheSettings">The cache settings.</param>
-    public CacheService(ICacheProvider cacheProvider, IOptions<CacheSettings> cacheSettings)
+    public CacheService(ICacheProvider cacheProvider, ImmutableCacheSettings cacheSettings)
     {
         _cacheProvider = cacheProvider;
-        _cacheSettings = cacheSettings.Value;
+        _cacheSettings = cacheSettings;
     }
 
     /// <summary>
@@ -63,7 +62,7 @@ public class CacheService
     public async ValueTask CacheAsync<TInstance>(string key, TInstance instance, CancellationToken ct = default)
         where TInstance : class
     {
-        if (_cacheSettings.GetAbsoluteExpirationOrDefault(typeof(TInstance)) is var absoluteExpiration)
+        if (_cacheSettings.GetEntryOptions<TInstance>().AbsoluteExpirationRelativeToNow is var absoluteExpiration)
         {
             if (absoluteExpiration == TimeSpan.Zero)
             {
@@ -131,8 +130,7 @@ public class CacheService
         (
             KeyHelpers.CreateEvictionCacheKey(key),
             evictionResult.Entity,
-            options.AbsoluteExpiration,
-            options.SlidingExpiration,
+            options,
             ct
         );
 
@@ -307,6 +305,6 @@ public class CacheService
         where TInstance : class
     {
         var options = _cacheSettings.GetEntryOptions<TInstance>();
-        return _cacheProvider.CacheAsync(key, instance, options.AbsoluteExpiration, options.SlidingExpiration);
+        return _cacheProvider.CacheAsync(key, instance, options);
     }
 }

@@ -28,6 +28,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Polly;
+using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.API;
 
@@ -162,6 +163,9 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             return response;
         }
 
+        // TODO does moving this cacheOptions up here cause regressions?
+        var cacheOptions = new CacheEntryOptions { AbsoluteExpiration = newLimits.ResetsAt + TimeSpan.FromSeconds(1) };
+
         if (newLimits.ID is null)
         {
             // No shared bucket for this endpoint; clear any old shared information
@@ -173,7 +177,7 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             (
                 endpoint,
                 newLimits,
-                newLimits.ResetsAt + TimeSpan.FromSeconds(1),
+                cacheOptions,
                 ct: cancellationToken
             );
 
@@ -187,7 +191,7 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
         (
             newLimits.ID,
             newLimits,
-            newLimits.ResetsAt + TimeSpan.FromSeconds(1),
+            cacheOptions,
             ct: cancellationToken
         );
 
