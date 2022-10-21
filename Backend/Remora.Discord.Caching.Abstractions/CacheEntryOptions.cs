@@ -28,7 +28,10 @@ namespace Remora.Discord.Caching.Abstractions;
 
 /// <summary>
 /// Wrapper type for options for entries in <see cref="IMemoryCache"/> or <see cref="IDistributedCache"/> instances.
+/// Implicitly convertible to <see cref="MemoryCacheEntryOptions"/> and/or <see cref="DistributedCacheEntryOptions"/>.
 /// </summary>
+/// <seealso cref="MemoryCacheEntryOptions"/>
+/// <seealso cref="DistributedCacheEntryOptions"/>
 public sealed class CacheEntryOptions
 {
     /// <summary>
