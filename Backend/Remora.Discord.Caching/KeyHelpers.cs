@@ -41,7 +41,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append($":Overwrite:{OverwriteID}");
+            => base.AppendToString(stringBuilder).Append($":Overwrite:{this.OverwriteID}");
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Invite:{Code}");
+            => stringBuilder.Append($"Invite:{this.Code}");
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Channel:{ChannelID}");
+            => stringBuilder.Append($"Channel:{this.ChannelID}");
     }
 
     /// <summary>
@@ -102,7 +102,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append($":Message:{MessageID}");
+            => base.AppendToString(stringBuilder).Append($":Message:{this.MessageID}");
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append($":Emoji:{EmojiID}");
+            => base.AppendToString(stringBuilder).Append($":Emoji:{this.EmojiID}");
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Guild:{GuildID}");
+            => stringBuilder.Append($"Guild:{this.GuildID}");
     }
 
     /// <summary>
@@ -151,7 +151,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"GuildPreview:{GuildPreviewID}");
+            => stringBuilder.Append($"GuildPreview:{this.GuildPreviewID}");
     }
 
     /// <summary>
@@ -164,7 +164,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append($":Member:{UserID}");
+            => base.AppendToString(stringBuilder).Append($":Member:{this.UserID}");
     }
 
     /// <summary>
@@ -184,15 +184,17 @@ public static class KeyHelpers
         {
             base.AppendToString(stringBuilder).Append(":Members");
 
-            if (Limit.HasValue)
+            if (this.Limit.HasValue)
             {
-                stringBuilder.Append($":Limit:{Limit.Value}");
+                stringBuilder.Append($":Limit:{this.Limit.Value}");
             }
 
-            if (After.HasValue)
+            if (this.After.HasValue)
             {
-                stringBuilder.Append($":After:{After.Value}");
+                stringBuilder.Append($":After:{this.After.Value}");
             }
+
+            return stringBuilder;
         }
     }
 
@@ -218,7 +220,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append($":Ban:{UserID}");
+            => base.AppendToString(stringBuilder).Append($":Ban:{this.UserID}");
     }
 
     /// <summary>
@@ -243,7 +245,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append($":Role:{RoleID}");
+            => base.AppendToString(stringBuilder).Append($":Role:{this.RoleID}");
     }
 
     /// <summary>
@@ -268,7 +270,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append($":VoiceRegion:{VoiceRegionID}");
+            => base.AppendToString(stringBuilder).Append($":VoiceRegion:{this.VoiceRegionID}");
     }
 
     /// <summary>
@@ -293,7 +295,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append($":Integration:{IntegrationID}");
+            => base.AppendToString(stringBuilder).Append($":Integration:{this.IntegrationID}");
     }
 
     /// <summary>
@@ -317,7 +319,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"User:{UserID}");
+            => stringBuilder.Append($"User:{this.UserID}");
     }
 
     /// <summary>
@@ -362,7 +364,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Connection:{ConnectionID}");
+            => stringBuilder.Append($"Connection:{this.ConnectionID}");
     }
 
     /// <summary>
@@ -385,7 +387,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Template:{TemplateCode}");
+            => stringBuilder.Append($"Template:{this.TemplateCode}");
     }
 
     /// <summary>
@@ -420,7 +422,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"VoiceRegion:{VoiceRegionID}");
+            => stringBuilder.Append($"VoiceRegion:{this.VoiceRegionID}");
     }
 
     /// <summary>
@@ -432,7 +434,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Webhook:{WebhookID}");
+            => stringBuilder.Append($"Webhook:{this.WebhookID}");
     }
 
     /// <summary>
@@ -494,7 +496,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Thread:{ThreadID}:Member:{UserID}");
+            => stringBuilder.Append($"Thread:{this.ThreadID}:Member:{this.UserID}");
     }
 
     /// <summary>
@@ -517,7 +519,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Interaction:{Token}:Original");
+            => stringBuilder.Append($"Interaction:{this.Token}:Original");
     }
 
     /// <summary>
@@ -538,7 +540,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Webhook:{Token}:Message:{MessageID}");
+            => stringBuilder.Append($"Webhook:{this.Token}:Message:{this.MessageID}");
     }
 
     /// <summary>
@@ -562,7 +564,7 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"Thread:{ChannelID}:Members");
+            => stringBuilder.Append($"Thread:{this.ChannelID}:Members");
     }
 
     /// <summary>
@@ -586,6 +588,6 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append("Evicted:").Append(Key.ToCanonicalString());
+            => stringBuilder.Append("Evicted:").Append(this.Key.ToCanonicalString());
     }
 }
