@@ -49,7 +49,7 @@ public interface ICacheProvider
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous operation.</returns>
     ValueTask CacheAsync<TInstance>
     (
-        string key,
+        CacheKey key,
         TInstance instance,
         DateTimeOffset? absoluteExpiration = null,
         TimeSpan? slidingExpiration = null,
@@ -64,7 +64,7 @@ public interface ICacheProvider
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The type to return from the backing store, if it exists.</typeparam>
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous action.</returns>
-    ValueTask<Result<TInstance>> RetrieveAsync<TInstance>(string key, CancellationToken ct = default)
+    ValueTask<Result<TInstance>> RetrieveAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class;
 
     /// <summary>
@@ -73,7 +73,7 @@ public interface ICacheProvider
     /// <param name="key">The key to evict from the backing store.</param>
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous action.</returns>
-    ValueTask<Result> EvictAsync(string key, CancellationToken ct = default);
+    ValueTask<Result> EvictAsync(CacheKey key, CancellationToken ct = default);
 
     /// <summary>
     /// Evicts a key from the backing store, returning its current value if it exists.
@@ -82,6 +82,6 @@ public interface ICacheProvider
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The type to return from the backing store, if it exists.</typeparam>
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous action.</returns>
-    ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
+    ValueTask<Result<TInstance>> EvictAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class;
 }

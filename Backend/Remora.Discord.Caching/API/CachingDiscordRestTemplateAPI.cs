@@ -65,7 +65,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+        var key = new KeyHelpers.TemplateCacheKey(templateCode);
         var cacheResult = await _cacheService.TryGetValueAsync<ITemplate>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -101,7 +101,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
         }
 
         var template = createTemplate.Entity;
-        var key = KeyHelpers.CreateTemplateCacheKey(template.Code);
+        var key = new KeyHelpers.TemplateCacheKey(template.Code);
 
         await _cacheService.CacheAsync(key, template, ct);
 
@@ -122,7 +122,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
             return deleteTemplate;
         }
 
-        var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+        var key = new KeyHelpers.TemplateCacheKey(templateCode);
         await _cacheService.EvictAsync<ITemplate>(key, ct);
 
         return deleteTemplate;
@@ -135,7 +135,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildTemplatesCacheKey(guildID);
+        var key = new KeyHelpers.GuildTemplatesCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<ITemplate>>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -154,7 +154,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
 
         foreach (var template in templates)
         {
-            var templateKey = KeyHelpers.CreateTemplateCacheKey(template.Code);
+            var templateKey = new KeyHelpers.TemplateCacheKey(template.Code);
             await _cacheService.CacheAsync(templateKey, template, ct);
         }
 
@@ -178,7 +178,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
         }
 
         var template = modifyTemplate.Entity;
-        var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+        var key = new KeyHelpers.TemplateCacheKey(templateCode);
 
         await _cacheService.CacheAsync(key, template, ct);
 
@@ -200,7 +200,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
         }
 
         var template = syncTemplate.Entity;
-        var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+        var key = new KeyHelpers.TemplateCacheKey(templateCode);
 
         await _cacheService.CacheAsync(key, template, ct);
 
@@ -223,7 +223,7 @@ public partial class CachingDiscordRestTemplateAPI : IDiscordRestTemplateAPI, IR
         }
 
         var guild = createGuild.Entity;
-        var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
+        var key = new KeyHelpers.GuildCacheKey(guild.ID);
 
         await _cacheService.CacheAsync(key, guild, ct);
 

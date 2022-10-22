@@ -28,6 +28,8 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Polly;
+using Remora.Discord.Caching;
+using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.API;
 
@@ -137,7 +139,10 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             bucketIdentifier = endpoint;
         }
 
-        var getValue = await cache.RetrieveAsync<RateLimitBucket>(bucketIdentifier, cancellationToken);
+        var getValue = await cache.RetrieveAsync<RateLimitBucket>(
+            CacheKey.LocalizedStringKey(nameof(Polly), bucketIdentifier),
+            cancellationToken
+        );
         if (getValue.IsDefined(out var rateLimitBucket))
         {
             // We don't reset route-specific rate limits ourselves; that's the responsibility of the returned headers
@@ -171,7 +176,7 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             // over time
             await cache.CacheAsync
             (
-                endpoint,
+                CacheKey.LocalizedStringKey(nameof(Polly), endpoint),
                 newLimits,
                 newLimits.ResetsAt + TimeSpan.FromSeconds(1),
                 ct: cancellationToken
@@ -185,7 +190,7 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
         _endpointBuckets.AddOrUpdate(endpoint, _ => newLimits.ID, (_, _) => newLimits.ID);
         await cache.CacheAsync
         (
-            newLimits.ID,
+            CacheKey.LocalizedStringKey(nameof(Polly), newLimits.ID),
             newLimits,
             newLimits.ResetsAt + TimeSpan.FromSeconds(1),
             ct: cancellationToken
@@ -194,7 +199,11 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
         if (newLimits.ID != bucketIdentifier)
         {
             // evict the old endpoint-specific or shared bucket
-            await cache.EvictAsync(bucketIdentifier, cancellationToken);
+            await cache.EvictAsync
+            (
+                CacheKey.LocalizedStringKey(nameof(Polly), bucketIdentifier),
+                cancellationToken
+            );
         }
 
         return response;

@@ -99,7 +99,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         }
 
         var guild = createResult.Entity;
-        var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
+        var key = new KeyHelpers.GuildCacheKey(guild.ID);
         await _cacheService.CacheAsync(key, guild, ct);
 
         return createResult;
@@ -113,7 +113,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildCacheKey(guildID);
+        var key = new KeyHelpers.GuildCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IGuild>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -140,7 +140,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildPreviewCacheKey(guildID);
+        var key = new KeyHelpers.GuildPreviewCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IGuildPreview>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -219,7 +219,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         }
 
         var guild = modifyResult.Entity;
-        var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
+        var key = new KeyHelpers.GuildCacheKey(guild.ID);
         await _cacheService.CacheAsync(key, guild, ct);
 
         return modifyResult;
@@ -239,7 +239,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return deleteResult;
         }
 
-        var key = KeyHelpers.CreateGuildCacheKey(guildID);
+        var key = new KeyHelpers.GuildCacheKey(guildID);
         await _cacheService.EvictAsync<IGuild>(key, ct);
 
         return deleteResult;
@@ -252,7 +252,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildChannelsCacheKey(guildID);
+        var key = new KeyHelpers.GuildChannelsCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IChannel>>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -271,7 +271,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         foreach (var channel in channels)
         {
-            var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
+            var channelKey = new KeyHelpers.ChannelCacheKey(channel.ID);
             await _cacheService.CacheAsync(channelKey, channel, ct);
         }
 
@@ -325,7 +325,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         }
 
         var guild = createResult.Entity;
-        var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
+        var key = new KeyHelpers.GuildCacheKey(guild.ID);
         await _cacheService.CacheAsync(key, guild, ct);
 
         return createResult;
@@ -339,7 +339,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildMemberKey(guildID, userID);
+        var key = new KeyHelpers.GuildMemberKey(guildID, userID);
         var cacheResult = await _cacheService.TryGetValueAsync<IGuildMember>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -361,7 +361,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return getResult;
         }
 
-        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+        var userKey = new KeyHelpers.UserCacheKey(user.ID);
         await _cacheService.CacheAsync(userKey, user, ct);
 
         return getResult;
@@ -376,7 +376,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var collectionKey = KeyHelpers.CreateGuildMembersKey(guildID, limit, after);
+        var collectionKey = new KeyHelpers.GuildMembersKey(guildID, limit, after);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IGuildMember>>(collectionKey, ct);
 
         if (cacheResult.IsSuccess)
@@ -400,7 +400,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
                 continue;
             }
 
-            var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
+            var key = new KeyHelpers.GuildMemberKey(guildID, user.ID);
             await _cacheService.CacheAsync(key, member, ct);
         }
 
@@ -443,7 +443,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return getResult;
         }
 
-        var key = KeyHelpers.CreateGuildMemberKey(guildID, userID);
+        var key = new KeyHelpers.GuildMemberKey(guildID, userID);
         await _cacheService.CacheAsync(key, member, ct);
         return getResult;
     }
@@ -470,10 +470,10 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return getResult;
         }
 
-        var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
+        var key = new KeyHelpers.GuildMemberKey(guildID, user.ID);
         await _cacheService.CacheAsync(key, guildMember, ct);
 
-        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+        var userKey = new KeyHelpers.UserCacheKey(user.ID);
         await _cacheService.CacheAsync(userKey, user, ct);
 
         return getResult;
@@ -494,7 +494,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return removeMember;
         }
 
-        var memberKey = KeyHelpers.CreateGuildMemberKey(guildID, userID);
+        var memberKey = new KeyHelpers.GuildMemberKey(guildID, userID);
         await _cacheService.EvictAsync<IGuildMember>(memberKey, ct);
 
         return removeMember;
@@ -510,7 +510,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var collectionKey = KeyHelpers.CreateGuildBansCacheKey(guildID);
+        var collectionKey = new KeyHelpers.GuildBansCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IBan>>(collectionKey, ct);
 
         if (cacheResult.IsSuccess)
@@ -529,7 +529,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         foreach (var ban in bans)
         {
-            var key = KeyHelpers.CreateGuildBanCacheKey(guildID, ban.User.ID);
+            var key = new KeyHelpers.GuildBanCacheKey(guildID, ban.User.ID);
             await _cacheService.CacheAsync(key, ban, ct);
         }
 
@@ -544,7 +544,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildBanCacheKey(guildID, userID);
+        var key = new KeyHelpers.GuildBanCacheKey(guildID, userID);
         var cacheResult = await _cacheService.TryGetValueAsync<IBan>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -579,7 +579,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return deleteResult;
         }
 
-        var key = KeyHelpers.CreateGuildBanCacheKey(guildID, userID);
+        var key = new KeyHelpers.GuildBanCacheKey(guildID, userID);
         await _cacheService.EvictAsync<IBan>(key, ct);
 
         return deleteResult;
@@ -592,7 +592,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var collectionKey = KeyHelpers.CreateGuildRolesCacheKey(guildID);
+        var collectionKey = new KeyHelpers.GuildRolesCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IRole>>(collectionKey, ct);
 
         if (cacheResult.IsSuccess)
@@ -611,7 +611,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         foreach (var role in roles)
         {
-            var key = KeyHelpers.CreateGuildRoleCacheKey(guildID, role.ID);
+            var key = new KeyHelpers.GuildRoleCacheKey(guildID, role.ID);
             await _cacheService.CacheAsync(key, role, ct);
         }
 
@@ -653,7 +653,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         }
 
         var role = createResult.Entity;
-        var key = KeyHelpers.CreateGuildRoleCacheKey(guildID, role.ID);
+        var key = new KeyHelpers.GuildRoleCacheKey(guildID, role.ID);
         await _cacheService.CacheAsync(key, role, ct);
 
         return createResult;
@@ -676,12 +676,12 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         }
 
         var roles = modifyResult.Entity;
-        var collectionKey = KeyHelpers.CreateGuildRolesCacheKey(guildID);
+        var collectionKey = new KeyHelpers.GuildRolesCacheKey(guildID);
         await _cacheService.CacheAsync(collectionKey, roles, ct);
 
         foreach (var role in roles)
         {
-            var key = KeyHelpers.CreateGuildRoleCacheKey(guildID, role.ID);
+            var key = new KeyHelpers.GuildRoleCacheKey(guildID, role.ID);
             await _cacheService.CacheAsync(key, role, ct);
         }
 
@@ -725,7 +725,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         }
 
         var role = modifyResult.Entity;
-        var key = KeyHelpers.CreateGuildRoleCacheKey(guildID, roleID);
+        var key = new KeyHelpers.GuildRoleCacheKey(guildID, roleID);
         await _cacheService.CacheAsync(key, role, ct);
 
         return modifyResult;
@@ -746,7 +746,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return deleteResult;
         }
 
-        var key = KeyHelpers.CreateGuildRoleCacheKey(guildId, roleID);
+        var key = new KeyHelpers.GuildRoleCacheKey(guildId, roleID);
         await _cacheService.EvictAsync<IRole>(key, ct);
 
         return deleteResult;
@@ -759,7 +759,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var collectionKey = KeyHelpers.CreateGuildVoiceRegionsCacheKey(guildID);
+        var collectionKey = new KeyHelpers.GuildVoiceRegionsCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IVoiceRegion>>(collectionKey, ct);
 
         if (cacheResult.IsSuccess)
@@ -779,7 +779,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         foreach (var voiceRegion in voiceRegions)
         {
-            var key = KeyHelpers.CreateGuildVoiceRegionCacheKey(guildID, voiceRegion.ID);
+            var key = new KeyHelpers.GuildVoiceRegionCacheKey(guildID, voiceRegion.ID);
             await _cacheService.CacheAsync(key, voiceRegion, ct);
         }
 
@@ -793,7 +793,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var collectionKey = KeyHelpers.CreateGuildInvitesCacheKey(guildID);
+        var collectionKey = new KeyHelpers.GuildInvitesCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IInvite>>(collectionKey, ct);
 
         if (cacheResult.IsSuccess)
@@ -813,7 +813,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         foreach (var invite in invites)
         {
-            var key = KeyHelpers.CreateInviteCacheKey(invite.Code);
+            var key = new KeyHelpers.InviteCacheKey(invite.Code);
             await _cacheService.CacheAsync(key, invite, ct);
         }
 
@@ -827,7 +827,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var collectionKey = KeyHelpers.CreateGuildIntegrationsCacheKey(guildID);
+        var collectionKey = new KeyHelpers.GuildIntegrationsCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IIntegration>>(collectionKey, ct);
 
         if (cacheResult.IsSuccess)
@@ -847,7 +847,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         foreach (var integration in integrations)
         {
-            var key = KeyHelpers.CreateGuildIntegrationCacheKey(guildID, integration.ID);
+            var key = new KeyHelpers.GuildIntegrationCacheKey(guildID, integration.ID);
             await _cacheService.CacheAsync(key, integration, ct);
         }
 
@@ -861,7 +861,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildWidgetSettingsCacheKey(guildID);
+        var key = new KeyHelpers.GuildWidgetSettingsCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IGuildWidgetSettings>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -897,7 +897,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return modifyResult;
         }
 
-        var key = KeyHelpers.CreateGuildWidgetSettingsCacheKey(guildID);
+        var key = new KeyHelpers.GuildWidgetSettingsCacheKey(guildID);
         var widget = modifyResult.Entity;
         await _cacheService.CacheAsync(key, widget, ct);
 
@@ -911,7 +911,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildWelcomeScreenCacheKey(guildID);
+        var key = new KeyHelpers.GuildWelcomeScreenCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IWelcomeScreen>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -953,7 +953,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
                 continue;
             }
 
-            var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
+            var key = new KeyHelpers.GuildMemberKey(guildID, user.ID);
             await _cacheService.CacheAsync(key, guildMember, ct);
         }
 
@@ -975,10 +975,10 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             return deleteResult;
         }
 
-        var key = KeyHelpers.CreateGuildIntegrationCacheKey(guildID, integrationID);
+        var key = new KeyHelpers.GuildIntegrationCacheKey(guildID, integrationID);
         await _cacheService.EvictAsync<IIntegration>(key, ct);
 
-        var collectionKey = KeyHelpers.CreateGuildIntegrationsCacheKey(guildID);
+        var collectionKey = new KeyHelpers.GuildIntegrationsCacheKey(guildID);
         await _cacheService.EvictAsync<IReadOnlyList<IIntegration>>(collectionKey, ct);
 
         return deleteResult;

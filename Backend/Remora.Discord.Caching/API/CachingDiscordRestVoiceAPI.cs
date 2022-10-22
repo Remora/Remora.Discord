@@ -62,7 +62,7 @@ public partial class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateVoiceRegionsCacheKey();
+        var key = new KeyHelpers.VoiceRegionsCacheKey();
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IVoiceRegion>>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -81,7 +81,7 @@ public partial class CachingDiscordRestVoiceAPI : IDiscordRestVoiceAPI, IRestCus
 
         foreach (var voiceRegion in regions)
         {
-            var regionKey = KeyHelpers.CreateVoiceRegionCacheKey(voiceRegion.ID);
+            var regionKey = new KeyHelpers.VoiceRegionCacheKey(voiceRegion.ID);
             await _cacheService.CacheAsync(regionKey, voiceRegion, ct);
         }
 

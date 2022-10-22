@@ -61,7 +61,7 @@ public partial class CachingDiscordRestOAuth2API : IDiscordRestOAuth2API, IRestC
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateCurrentApplicationCacheKey();
+        var key = new KeyHelpers.CurrentApplicationCacheKey();
         var cacheResult = await _cacheService.TryGetValueAsync<IApplication>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -87,7 +87,7 @@ public partial class CachingDiscordRestOAuth2API : IDiscordRestOAuth2API, IRestC
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateCurrentAuthorizationInformationCacheKey();
+        var key = new KeyHelpers.CurrentAuthorizationInformationCacheKey();
         var cacheResult = await _cacheService.TryGetValueAsync<IAuthorizationInformation>(key, ct);
 
         if (cacheResult.IsSuccess)
