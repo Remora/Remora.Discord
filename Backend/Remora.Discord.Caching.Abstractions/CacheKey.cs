@@ -49,10 +49,10 @@ public abstract record CacheKey
     {
         // We provide an implementation here to avoid the StringBuilder call when the key only contains a simple string.
         public override string ToCanonicalString()
-            => KeyString;
+            => this.KeyString;
 
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append(KeyString);
+            => stringBuilder.Append(this.KeyString);
     }
 
     private record ResourceCacheKey(string Context, string KeyString) : CacheKey
@@ -60,10 +60,10 @@ public abstract record CacheKey
         // We provide an implementation here to avoid the StringBuilder call when the key only contains a simple string
         // concatenation.
         public override string ToCanonicalString()
-            => $"{Context}:{KeyString}";
+            => $"{this.Context}:{this.KeyString}";
 
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => stringBuilder.Append($"{Context}:{KeyString}");
+            => stringBuilder.Append($"{this.Context}:{this.KeyString}");
     }
 
     /// <summary>
