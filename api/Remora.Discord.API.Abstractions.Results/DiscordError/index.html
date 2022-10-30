@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -391,6 +391,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/93A25691">Cannot<wbr>Modify<wbr>System<wbr>Webhook</a></td>
+								<td>50073</td>
+								<td>
+									<div>
+    A system webhook cannot be modified.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/82FBCA2B">Cannot<wbr>Reply<wbr>Without<wbr>Read<wbr>Message<wbr>History</a></td>
 								<td>160002</td>
 								<td>
@@ -416,6 +426,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     Cannot send an empty message.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/0C10E239">Cannot<wbr>Send<wbr>Message<wbr>In<wbr>Forum<wbr>Channel</a></td>
+								<td>40058</td>
+								<td>
+									<div>
+    Messages cannot be sent in a forum channel.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -616,6 +636,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     Invalid account type.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/16246488">Invalid<wbr>Activity<wbr>Action</a></td>
+								<td>50039</td>
+								<td>
+									<div>
+    The activity action is invalid.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -1182,6 +1212,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/259AD80A">No<wbr>Unmoderated<wbr>Tags<wbr>Available</a></td>
+								<td>40066</td>
+								<td>
+									<div>
+    There are no tags available that can be set by non-moderators.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/AC8130BD">NoUserWithTag</a></td>
 								<td>80004</td>
 								<td>
@@ -1397,6 +1437,26 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     The framerate of the sticker is too small or too large.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8722BA31">TagNamesMustBeUnique</a></td>
+								<td>40061</td>
+								<td>
+									<div>
+    Tag names in a forum channel must be unique.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E81ABAD3">TagRequired</a></td>
+								<td>40067</td>
+								<td>
+									<div>
+    A tag is required to create a forum post in this channel.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -1843,6 +1903,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/864D0261">UnknownTag</a></td>
+								<td>10087</td>
+								<td>
+									<div>
+    Unknown tag.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F72C287F">UnknownToken</a></td>
 								<td>10012</td>
 								<td>
@@ -1943,11 +2013,41 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F2A7B97D">Webhook<wbr>Services<wbr>Cannot<wbr>Be<wbr>Used<wbr>In<wbr>Forum<wbr>Channels</a></td>
+								<td>220004</td>
+								<td>
+									<div>
+    Webhook services cannot be used in forum channels.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F863B3A4">Webhooks<wbr>Can<wbr>Only<wbr>Create<wbr>Threads<wbr>In<wbr>Forum<wbr>Channels</a></td>
 								<td>220003</td>
 								<td>
 									<div>
     Webhooks can only create threads in forum channels, not in other channels.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/A814602F">Webhooks<wbr>Cannot<wbr>Have<wbr>Both<wbr>Thread<wbr>Name<wbr>And<wbr>I<wbr>D</a></td>
+								<td>220002</td>
+								<td>
+									<div>
+    Webhook messages sent in forums cannot have both a thread name and an ID.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F3FAAE5B">Webhooks<wbr>Must<wbr>Have<wbr>Thread<wbr>Name<wbr>Or<wbr>I<wbr>D</a></td>
+								<td>220001</td>
+								<td>
+									<div>
+    Webhook messages sent in forums must have either a thread name or an ID.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
