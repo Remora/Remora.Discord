@@ -144,7 +144,8 @@ public class DiscordRestAutoModerationAPITests
                 KeywordFilter: new List<string>(),
                 Presets: new List<AutoModerationKeywordPresetType>()
             );
-            var actions = new List<IAutoModerationAction>();
+
+            IReadOnlyList<IAutoModerationAction> actions = Array.Empty<IAutoModerationAction>();
             var enabled = false;
             var exemptRoles = new List<Snowflake>();
             var exemptChannels = new List<Snowflake>();
@@ -163,9 +164,9 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("trigger_type", p => p.Is((int)triggerType))
                                 .WithProperty("trigger_metadata", p => p.IsObject
                                 (
-                                    o => o
-                                        .WithProperty("keyword_filter", p => p.IsArray(a => a.WithCount(0)))
-                                        .WithProperty("presets", p => p.IsArray(a => a.WithCount(0)))
+                                    oo => oo
+                                        .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
+                                        .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
                                 ))
                                 .WithProperty("actions", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("enabled", p => p.Is(enabled))
@@ -243,9 +244,9 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("trigger_type", p => p.Is((int)triggerType))
                                 .WithProperty("trigger_metadata", p => p.IsObject
                                 (
-                                    o => o
-                                        .WithProperty("keyword_filter", p => p.IsArray(a => a.WithCount(0)))
-                                        .WithProperty("presets", p => p.IsArray(a => a.WithCount(0)))
+                                    oo => oo
+                                        .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
+                                        .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
                                 ))
                                 .WithProperty("actions", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("enabled", p => p.Is(enabled))
