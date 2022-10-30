@@ -1,5 +1,5 @@
 //
-//  ChannelFlags.cs
+//  ForumTag.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects;
+namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Enumerates various channel flags.
-/// </summary>
-[PublicAPI, Flags]
-public enum ChannelFlags
-{
-    /// <summary>
-    /// The thread is pinned to the top of its parent forum channel.
-    /// </summary>
-    Pinned = 1 << 1,
-
-    /// <summary>
-    /// The forum requires a tag to be specified when creating a thread.
-    /// </summary>
-    RequireTag = 1 << 4
-}
+[PublicAPI]
+public record ForumTag
+(
+    Snowflake ID,
+    string Name,
+    bool IsModerated,
+    Optional<Snowflake?> EmojiID = default,
+    Optional<string?> EmojiName = default
+) : IForumTag;

@@ -533,6 +533,12 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 
         options.AddDataObjectConverter<IChannelThreadQueryResponse, ChannelThreadQueryResponse>();
+        options.AddDataObjectConverter<IDefaultReaction, DefaultReaction>();
+        options.AddDataObjectConverter<IForumTag, ForumTag>()
+            .WithPropertyName(t => t.IsModerated, "moderated");
+
+        options.AddDataObjectConverter<IPartialForumTag, PartialForumTag>()
+            .WithPropertyName(t => t.IsModerated, "moderated");
 
         return options;
     }

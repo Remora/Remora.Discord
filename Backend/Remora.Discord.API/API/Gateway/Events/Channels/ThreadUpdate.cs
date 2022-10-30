@@ -60,5 +60,10 @@ public record ThreadUpdate
     Optional<AutoArchiveDuration> DefaultAutoArchiveDuration = default,
     Optional<IDiscordPermissionSet> Permissions = default,
     Optional<ChannelFlags> Flags = default,
-    Optional<int> TotalMessageSent = default
+    Optional<int> TotalMessageSent = default,
+    Optional<IReadOnlyList<IForumTag>> AvailableTags = default,
+    Optional<IReadOnlyList<Snowflake>> AppliedTags = default,
+    Optional<IDefaultReaction?> DefaultReactionEmoji = default,
+    Optional<TimeSpan> DefaultThreadRateLimitPerUser = default,
+    Optional<SortOrder?> DefaultSortOrder = default
 ) : IThreadUpdate;

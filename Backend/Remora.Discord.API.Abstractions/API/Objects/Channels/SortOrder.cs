@@ -1,5 +1,5 @@
 //
-//  ChannelFlags.cs
+//  SortOrder.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Enumerates various channel flags.
+/// Enumerates sorting orders for forum channels.
 /// </summary>
-[PublicAPI, Flags]
-public enum ChannelFlags
+[PublicAPI]
+public enum SortOrder
 {
     /// <summary>
-    /// The thread is pinned to the top of its parent forum channel.
+    /// Sort forum posts by activity.
     /// </summary>
-    Pinned = 1 << 1,
+    LatestActivity = 0,
 
     /// <summary>
-    /// The forum requires a tag to be specified when creating a thread.
+    /// Sort forum posts by creation time (from most recent to oldest).
     /// </summary>
-    RequireTag = 1 << 4
+    CreationDate = 1
 }

@@ -1,5 +1,5 @@
 //
-//  ChannelFlags.cs
+//  IPartialForumTag.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <summary>
-/// Enumerates various channel flags.
-/// </summary>
-[PublicAPI, Flags]
-public enum ChannelFlags
+/// <inheritdoc cref="IForumTag"/>
+[PublicAPI]
+public interface IPartialForumTag
 {
-    /// <summary>
-    /// The thread is pinned to the top of its parent forum channel.
-    /// </summary>
-    Pinned = 1 << 1,
+    /// <inheritdoc cref="IForumTag.ID"/>
+    Optional<Snowflake> ID { get; }
 
-    /// <summary>
-    /// The forum requires a tag to be specified when creating a thread.
-    /// </summary>
-    RequireTag = 1 << 4
+    /// <inheritdoc cref="IForumTag.Name"/>
+    Optional<string> Name { get; }
+
+    /// <inheritdoc cref="IForumTag.IsModerated"/>
+    Optional<bool> IsModerated { get; }
+
+    /// <inheritdoc cref="IForumTag.EmojiID"/>
+    Optional<Snowflake?> EmojiID { get; }
+
+    /// <inheritdoc cref="IForumTag.EmojiName"/>
+    Optional<string?> EmojiName { get; }
 }

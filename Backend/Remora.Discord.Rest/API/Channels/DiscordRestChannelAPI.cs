@@ -103,6 +103,11 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<SortOrder> defaultSortOrder = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -112,9 +117,22 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
         }
 
-        if (topic.HasValue && topic.Value?.Length is > 1024 or < 0)
+        if (topic.HasValue)
         {
-            return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
+            if (type.IsDefined(out var channelType) && channelType == ChannelType.GuildForum)
+            {
+                if (topic.Value?.Length is > 4096 or < 0)
+                {
+                    return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
+                }
+            }
+            else
+            {
+                if (topic.Value?.Length is > 1024 or < 0)
+                {
+                    return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 4096 characters.");
+                }
+            }
         }
 
         if (userLimit.HasValue && userLimit.Value is > 99 or < 0)
@@ -158,6 +176,11 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("default_auto_archive_duration", defaultAutoArchiveDuration);
                         json.Write("rtc_region", rtcRegion, this.JsonOptions);
                         json.Write("flags", flags, this.JsonOptions);
+                        json.Write("available_tags", availableTags, this.JsonOptions);
+                        json.Write("default_reaction_emoji", defaultReactionEmoji, this.JsonOptions);
+                        json.Write("default_thread_rate_limit_per_user", defaultThreadRateLimitPerUser, this.JsonOptions);
+                        json.Write("applied_tags", appliedTags, this.JsonOptions);
+                        json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -314,6 +337,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -328,6 +352,49 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             isInvitable: isInvitable,
             rateLimitPerUser: rateLimitPerUser,
             flags: flags,
+            appliedTags: appliedTags,
+            reason: reason,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<Result<IChannel>> ModifyForumChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<SortOrder> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            position: position,
+            topic: topic,
+            isNsfw: isNsfw,
+            rateLimitPerUser: rateLimitPerUser,
+            permissionOverwrites: permissionOverwrites,
+            parentID: parentID,
+            defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+            flags: flags,
+            availableTags: availableTags,
+            defaultReactionEmoji: defaultReactionEmoji,
+            defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+            defaultSortOrder: defaultSortOrder,
             reason: reason,
             ct: ct
         );
@@ -1032,7 +1099,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
-    public virtual async Task<Result<IChannel>> StartThreadWithMessageAsync
+    public virtual async Task<Result<IChannel>> StartThreadFromMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -1102,6 +1169,85 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IChannel>> StartThreadInForumChannelAsync
+    (
+        Snowflake channelID,
+        string name,
+        Optional<AutoArchiveDuration> autoArchiveDuration = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<string> content = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IAllowedMentions> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<Snowflake>> stickerIds = default,
+        Optional<IReadOnlyList<FileData>> attachments = default,
+        Optional<MessageFlags> flags = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !stickerIds.HasValue)
+        {
+            return new InvalidOperationError
+            (
+                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(embeds)}, or " +
+                $"{nameof(stickerIds)} is required."
+            );
+        }
+
+        return await this.RestHttpClient.PostAsync<IChannel>
+        (
+            $"channels/{channelID}/threads",
+            b =>
+            {
+                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                if (attachments.HasValue)
+                {
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => new PartialAttachment(DiscordSnowflake.New((ulong)i), f.Name, f.Description)
+                    ).ToList();
+
+                    for (var i = 0; i < attachments.Value.Count; i++)
+                    {
+                        var (fileName, stream, _) = attachments.Value[i];
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, fileName);
+                    }
+                }
+
+                // TODO: Remove this or document it somewhere else; it's required for this endpoint to work
+                b.AddQueryParameter("use_nested_fields", "true");
+
+                b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("auto_archive_duration", autoArchiveDuration, this.JsonOptions);
+                        json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
+                        json.WriteStartObject("message");
+                        {
+                            json.Write("content", content, this.JsonOptions);
+                            json.Write("embeds", embeds, this.JsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                            json.Write("components", components, this.JsonOptions);
+                            json.Write("sticker_ids", stickerIds, this.JsonOptions);
+                            json.Write("attachments", attachmentList, this.JsonOptions);
+                            json.Write("flags", flags, this.JsonOptions);
+                        }
+                        json.WriteEndObject();
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
