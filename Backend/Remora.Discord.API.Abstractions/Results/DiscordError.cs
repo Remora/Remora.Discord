@@ -659,6 +659,11 @@ public enum DiscordError
     InviteAcceptedButBotIsNotInGuild = 50036,
 
     /// <summary>
+    /// The activity action is invalid.
+    /// </summary>
+    InvalidActivityAction = 50039,
+
+    /// <summary>
     /// Invalid API version provided.
     /// </summary>
     InvalidAPIVersion = 50041,
