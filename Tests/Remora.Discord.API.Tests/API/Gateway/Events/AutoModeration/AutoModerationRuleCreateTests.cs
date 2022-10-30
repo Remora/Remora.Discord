@@ -1,10 +1,10 @@
 //
-//  AuditLog.cs
+//  AutoModerationRuleCreateTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) Jarl Gullberg
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -20,24 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Tests.TestBases;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Tests.Gateway.Events;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IAuditLog" />
-[PublicAPI]
-public record AuditLog
-(
-    IReadOnlyList<IApplicationCommand> ApplicationCommands,
-    IReadOnlyList<IAuditLogEntry> AuditLogEntries,
-    IReadOnlyList<IAutoModerationRule> AutoModerationRules,
-    IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents,
-    IReadOnlyList<IPartialIntegration> Integrations,
-    IReadOnlyList<IChannel> Threads,
-    IReadOnlyList<IUser> Users,
-    IReadOnlyList<IWebhook> Webhooks
-) : IAuditLog;
+/// <inheritdoc/>
+public class AutoModerationRuleCreateTests : GatewayEventTestBase<IAutoModerationRuleCreate>
+{
+}

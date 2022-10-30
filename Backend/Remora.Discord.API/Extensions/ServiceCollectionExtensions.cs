@@ -88,6 +88,7 @@ public static class ServiceCollectionExtensions
                         .AddVoiceGatewayEventConverters()
                         .AddActivityObjectConverters()
                         .AddAuditLogObjectConverters()
+                        .AddAutoModerationObjectConverters()
                         .AddChannelObjectConverters()
                         .AddEmojiObjectConverters()
                         .AddGatewayObjectConverters()
@@ -191,6 +192,18 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IReconnect, Reconnect>();
         options.AddDataObjectConverter<IResumed, Resumed>();
+
+        // Auto Moderation
+        options.AddDataObjectConverter<IAutoModerationActionExecution, AutoModerationActionExecution>();
+
+        options.AddDataObjectConverter<IAutoModerationRuleCreate, AutoModerationRuleCreate>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
+        options.AddDataObjectConverter<IAutoModerationRuleUpdate, AutoModerationRuleUpdate>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
+        options.AddDataObjectConverter<IAutoModerationRuleDelete, AutoModerationRuleDelete>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
 
         // Channels
         options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
@@ -466,6 +479,27 @@ public static class ServiceCollectionExtensions
             );
 
         options.AddConverter<AuditLogChangeConverter>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle auto moderation objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddAutoModerationObjectConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IAutoModerationAction, AutoModerationAction>();
+
+        options.AddDataObjectConverter<IAutoModerationActionMetadata, AutoModerationActionMetadata>()
+            .WithPropertyName(m => m.Duration, "duration_seconds")
+            .WithPropertyConverter(am => am.Duration, new UnitTimeSpanConverter(TimeUnit.Seconds));
+
+        options.AddDataObjectConverter<IAutoModerationTriggerMetadata, AutoModerationTriggerMetadata>();
+
+        options.AddDataObjectConverter<IAutoModerationRule, AutoModerationRule>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
 
         return options;
     }

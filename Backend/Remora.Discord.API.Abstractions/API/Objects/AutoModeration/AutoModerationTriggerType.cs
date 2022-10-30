@@ -1,10 +1,10 @@
 //
-//  AuditLog.cs
+//  AutoModerationTriggerType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) Jarl Gullberg
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -20,24 +20,33 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IAuditLog" />
+/// <summary>
+/// Characterizes the type of content which can trigger the rule.
+/// </summary>
 [PublicAPI]
-public record AuditLog
-(
-    IReadOnlyList<IApplicationCommand> ApplicationCommands,
-    IReadOnlyList<IAuditLogEntry> AuditLogEntries,
-    IReadOnlyList<IAutoModerationRule> AutoModerationRules,
-    IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents,
-    IReadOnlyList<IPartialIntegration> Integrations,
-    IReadOnlyList<IChannel> Threads,
-    IReadOnlyList<IUser> Users,
-    IReadOnlyList<IWebhook> Webhooks
-) : IAuditLog;
+public enum AutoModerationTriggerType
+{
+    /// <summary>
+    /// Check if content contains words from a user defined list of keywords.
+    /// </summary>
+    Keyword = 1,
+
+    /// <summary>
+    /// Check if content contains any harmful links.
+    /// </summary>
+    HarmfulLink = 2,
+
+    /// <summary>
+    /// Check if content represents generic spam.
+    /// </summary>
+    Spam = 3,
+
+    /// <summary>
+    /// Check if content contains words from internal pre-defined wordsets.
+    /// </summary>
+    KeywordPreset = 4
+}

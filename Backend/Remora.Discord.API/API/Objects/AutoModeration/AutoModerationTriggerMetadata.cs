@@ -1,10 +1,10 @@
 //
-//  AuditLog.cs
+//  AutoModerationTriggerMetadata.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) Jarl Gullberg
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -23,21 +23,14 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-
-#pragma warning disable CS1591
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IAuditLog" />
+/// <inheritdoc cref="IAutoModerationTriggerMetadata"/>
 [PublicAPI]
-public record AuditLog
+public record AutoModerationTriggerMetadata
 (
-    IReadOnlyList<IApplicationCommand> ApplicationCommands,
-    IReadOnlyList<IAuditLogEntry> AuditLogEntries,
-    IReadOnlyList<IAutoModerationRule> AutoModerationRules,
-    IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents,
-    IReadOnlyList<IPartialIntegration> Integrations,
-    IReadOnlyList<IChannel> Threads,
-    IReadOnlyList<IUser> Users,
-    IReadOnlyList<IWebhook> Webhooks
-) : IAuditLog;
+    Optional<IReadOnlyList<string>> KeywordFilter,
+    Optional<IReadOnlyList<AutoModerationKeywordPresetType>> Presets
+) : IAutoModerationTriggerMetadata;
