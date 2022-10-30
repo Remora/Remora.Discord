@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -49,6 +49,15 @@ public class DiscordRestAutoModerationAPITests
     public class ListGuildAutoModerationRulesAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListGuildAutoModerationRulesAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListGuildAutoModerationRulesAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -74,6 +83,15 @@ public class DiscordRestAutoModerationAPITests
     /// </summary>
     public class GetGuildAutoModerationRuleAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildAutoModerationRuleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetGuildAutoModerationRuleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -101,6 +119,15 @@ public class DiscordRestAutoModerationAPITests
     /// </summary>
     public class CreateGuildAutoModerationRuleAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGuildAutoModerationRuleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public CreateGuildAutoModerationRuleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -171,6 +198,15 @@ public class DiscordRestAutoModerationAPITests
     /// </summary>
     public class ModifyGuildAutoModerationRuleAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildAutoModerationRuleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildAutoModerationRuleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>
@@ -243,6 +279,15 @@ public class DiscordRestAutoModerationAPITests
     /// </summary>
     public class DeleteGuildAutoModerationRuleAsync : RestAPITestBase<IDiscordRestAutoModerationAPI>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteGuildAutoModerationRuleAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public DeleteGuildAutoModerationRuleAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
         /// <summary>
         /// Tests whether the API method performs its request correctly.
         /// </summary>

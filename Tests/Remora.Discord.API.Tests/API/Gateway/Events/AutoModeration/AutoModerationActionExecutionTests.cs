@@ -4,7 +4,7 @@
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
 //
-//  Copyright (c) 2017 Jarl Gullberg
+//  Copyright (c) Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -28,4 +28,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events;
 /// <inheritdoc/>
 public class AutoModerationActionExecutionTests : GatewayEventTestBase<IAutoModerationActionExecution>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AutoModerationActionExecutionTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public AutoModerationActionExecutionTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
 }
