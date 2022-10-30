@@ -1,10 +1,11 @@
 <Project Sdk="Remora.Sdk/1.1.1">
 
     <PropertyGroup>
-        <VersionPrefix>1.0.22</VersionPrefix>
+        <VersionPrefix>1.0.23</VersionPrefix>
         <Description>Redis-based cache provider for Remora.Discord</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Make RedisCacheProvider pass values as byte[] directly instead of serializing to string
+            Update Remora.Sdk.
         </PackageReleaseNotes>
     </PropertyGroup>
 

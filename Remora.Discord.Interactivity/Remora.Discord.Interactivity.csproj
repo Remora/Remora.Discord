@@ -1,10 +1,10 @@
 <Project Sdk="Remora.Sdk/1.1.1">
 
     <PropertyGroup>
-        <VersionPrefix>4.2.6</VersionPrefix>
+        <VersionPrefix>4.3.0</VersionPrefix>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Support new select menu types.
         </PackageReleaseNotes>
     </PropertyGroup>
 

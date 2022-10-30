@@ -1,18 +1,22 @@
 <Project Sdk="Remora.Sdk/1.1.1">
 
     <PropertyGroup>
-        <VersionPrefix>2022.48</VersionPrefix>
+        <VersionPrefix>2022.49</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Fix optionality of `channel_id`.
-            Add `application_commands` field.
-            Add `scopes` field.
-            Update command length calculation.
-            Add new flag.
-            Fix more naming.
-            Implement support for slash command mentions.
-            Update the role caching routines.
-            Remove explicit start/stop routines.
+            Make RedisCacheProvider pass values as byte[] directly instead of serializing to string
+            Implement parsing of various partial types.
+            Add various new error codes.
+            Improve memory pressure in ImagePacker by not allocating extra byte[] buffers if they can be retrieved from the Stream directly
+            Throw for invalid slash command trees.
+            Support new select menu types.
+            Implement support for Forums.
+            Fix nullability of various fields.
+            Add buildClient parameter to HostBuilderExtensions.AddDiscordService
+            Guard GetRequiredService call in try-catch in DispatchEventAsync
+            Fix min/max not working for numeric parameters.
+            Allow component-only messages.
+            Add INVITES_DISABLED guild feature.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
