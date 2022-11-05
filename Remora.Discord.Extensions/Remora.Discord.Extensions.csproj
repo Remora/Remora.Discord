@@ -11,6 +11,11 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
+        <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Remora.Commands" Version="10.0.2" />
     </ItemGroup>
 
 </Project>
