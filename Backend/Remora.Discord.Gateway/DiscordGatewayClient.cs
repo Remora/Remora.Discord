@@ -593,16 +593,16 @@ public class DiscordGatewayClient : IDisposable
                     return connectResult;
                 }
 
-                // Now, set up the receive task and start receiving events normally
-                _receiveTask = GatewayReceiverAsync(heartbeatInterval, _disconnectRequestedSource.Token);
-
-                _log.LogInformation("Connected");
-
+                // Need to be set before the receive task is being started to avoid race between connecting and reconnecting
                 _shouldReconnect = false;
                 _isSessionResumable = false;
                 _lastReceivedHeartbeatAck = 0;
                 _lastReceivedEvent = 0;
 
+                // Now, set up the receive task and start receiving events normally
+                _receiveTask = GatewayReceiverAsync(heartbeatInterval, _disconnectRequestedSource.Token);
+
+                _log.LogInformation("Connected");
                 _connectionStatus = GatewayConnectionStatus.Connected;
 
                 break;
