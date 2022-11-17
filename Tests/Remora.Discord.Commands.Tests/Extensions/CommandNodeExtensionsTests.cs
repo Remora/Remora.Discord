@@ -26,6 +26,7 @@ using Remora.Commands.Groups;
 using Remora.Commands.Trees;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Tests.Data.AttributeGroups;
 using Remora.Discord.Commands.Tests.Data.Ephemeral;
 using Xunit;
 
@@ -47,10 +48,10 @@ public static class CommandNodeExtensionsTests
         [Fact]
         public void FindsAttributeOnCommand()
         {
-            var tree = BuildCommandTree<EphemeralCommand>();
-            var node = tree.Search("a").Single();
+            var tree = BuildCommandTree<NamedGroupWithAttribute>();
+            var node = tree.Search("a b").Single();
 
-            Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
+            Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<ExcludeFromSlashCommandsAttribute>());
         }
 
         /// <summary>
@@ -59,14 +60,46 @@ public static class CommandNodeExtensionsTests
         [Fact]
         public void FindsAttributeOnGroup()
         {
-            var tree = BuildCommandTree<EphemeralGroup>();
+            var tree = BuildCommandTree<NamedGroupWithAttribute>();
             var node = tree.Search
             (
                 new[] { "a", "b" },
                 new Dictionary<string, IReadOnlyList<string>>()
             ).Single();
 
-            Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
+            Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<ExcludeFromSlashCommandsAttribute>());
+        }
+
+        /// <summary>
+        /// Tests whether the method finds a custom attribute that decorates the group, but not the command.
+        /// </summary>
+        [Fact]
+        public void FindsAttributeOnGroupWithoutGroupAttribute()
+        {
+            var tree = BuildCommandTree<NoAttributeGroupWithAttribute>();
+            var node = tree.Search
+            (
+                new[] { "b" },
+                new Dictionary<string, IReadOnlyList<string>>()
+            ).Single();
+
+            Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<ExcludeFromSlashCommandsAttribute>());
+        }
+
+        /// <summary>
+        /// Tests whether the method finds a custom attribute that decorates the group, but not the command.
+        /// </summary>
+        [Fact]
+        public void FindsAttributeOnUnnamedGroup()
+        {
+            var tree = BuildCommandTree<UnnamedGroupWithAttribute>();
+            var node = tree.Search
+            (
+                new[] { "b" },
+                new Dictionary<string, IReadOnlyList<string>>()
+            ).Single();
+
+            Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<ExcludeFromSlashCommandsAttribute>());
         }
 
         /// <summary>
