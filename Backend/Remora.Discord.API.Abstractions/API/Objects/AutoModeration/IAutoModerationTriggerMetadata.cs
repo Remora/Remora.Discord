@@ -38,14 +38,43 @@ public interface IAutoModerationTriggerMetadata
     /// </summary>
     /// <remarks>
     /// This property's associated trigger type is <see cref="AutoModerationTriggerType.Keyword"/>.
+    /// Max 1000 elements.
     /// </remarks>
     Optional<IReadOnlyList<string>> KeywordFilter { get; }
 
     /// <summary>
-    /// Gets the internally pre-defined wordsets which will be searched for in content.
+    /// Gets regular expression patterns which will be matched against the content.
     /// </summary>
-    /// /// <remarks>
+    /// <remarks>
+    /// This property's associated trigger type is <see cref="AutoModerationTriggerType.Keyword"/>.
+    /// Only Rust-flavoured regex is supported.
+    /// Max 10 elements.
+    /// </remarks>
+    Optional<IReadOnlyList<string>> RegexPatterns { get; }
+
+    /// <summary>
+    /// Gets the internally pre-defined word sets which will be searched for in content.
+    /// </summary>
+    /// <remarks>
     /// This property's associated trigger type is <see cref="AutoModerationTriggerType.KeywordPreset"/>.
     /// </remarks>
     Optional<IReadOnlyList<AutoModerationKeywordPresetType>> Presets { get; }
+
+    /// <summary>
+    /// Gets substrings which will be exempt from triggering the preset trigger type.
+    /// </summary>
+    /// <remarks>
+    /// This property's associated trigger type is <see cref="AutoModerationTriggerType.KeywordPreset"/>.
+    /// Max 1000 elements.
+    /// </remarks>
+    Optional<IReadOnlyList<string>> AllowList { get; }
+
+    /// <summary>
+    /// Gets the total number of unique allowed user and role mentions per message.
+    /// </summary>
+    /// <remarks>
+    /// This property's associated trigger type is <see cref="AutoModerationTriggerType.MentionSpam"/>.
+    /// Max 50.
+    /// </remarks>
+    Optional<byte> MentionTotalLimit { get; }
 }

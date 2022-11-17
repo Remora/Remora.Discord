@@ -31,6 +31,9 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record AutoModerationTriggerMetadata
 (
-    Optional<IReadOnlyList<string>> KeywordFilter,
-    Optional<IReadOnlyList<AutoModerationKeywordPresetType>> Presets
+    Optional<IReadOnlyList<string>> KeywordFilter = default,
+    Optional<IReadOnlyList<string>> RegexPatterns = default,
+    Optional<IReadOnlyList<AutoModerationKeywordPresetType>> Presets = default,
+    Optional<IReadOnlyList<string>> AllowList = default,
+    Optional<byte> MentionTotalLimit = default
 ) : IAutoModerationTriggerMetadata;

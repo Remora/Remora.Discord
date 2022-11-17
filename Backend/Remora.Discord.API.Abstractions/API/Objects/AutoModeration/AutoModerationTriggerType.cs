@@ -36,17 +36,17 @@ public enum AutoModerationTriggerType
     Keyword = 1,
 
     /// <summary>
-    /// Check if content contains any harmful links.
-    /// </summary>
-    HarmfulLink = 2,
-
-    /// <summary>
     /// Check if content represents generic spam.
     /// </summary>
     Spam = 3,
 
     /// <summary>
-    /// Check if content contains words from internal pre-defined wordsets.
+    /// Check if content contains words from internal pre-defined word sets.
     /// </summary>
-    KeywordPreset = 4
+    KeywordPreset = 4,
+
+    /// <summary>
+    /// Check if content contains more unique mentions than allowed.
+    /// </summary>
+    MentionSpam = 5
 }
