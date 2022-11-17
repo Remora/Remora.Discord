@@ -99,5 +99,10 @@ public enum UserFlags
     /// <summary>
     /// The user is a bot that only uses outgoing webhook interactions, and should always be shown as online.
     /// </summary>
-    BotHttpInteractions = 1 << 19
+    BotHttpInteractions = 1 << 19,
+
+    /// <summary>
+    /// The user is an active bot developer.
+    /// </summary>
+    ActiveDeveloper = 1 << 22
 }
