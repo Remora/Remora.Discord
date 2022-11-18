@@ -78,14 +78,14 @@ public static class ServiceCollectionExtensions
     /// <returns>The service collection to chain calls.</returns>
     public static IServiceCollection AddRespondersFromAssembly(this IServiceCollection serviceCollection, Assembly assembly)
     {
-        var canidates = assembly.GetTypes()
+        var candidates = assembly.GetTypes()
                                 .Where(t => t.IsClass &&
                                            !t.IsAbstract &&
                                             t.GetInterfaces()
                                              .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IResponder<>)))
                                 .ToArray();
 
-        foreach (var canidate in canidates)
+        foreach (var canidate in candidates)
         {
             var grouping = canidate.GetCustomAttribute(typeof(ResponderGroupAttribute)) as ResponderGroupAttribute;
 
