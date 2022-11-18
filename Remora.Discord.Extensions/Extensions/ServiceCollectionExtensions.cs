@@ -76,7 +76,7 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection to register responders in.</param>
     /// <param name="assembly">The assembly to discover responders from.</param>
     /// <returns>The service collection to chain calls.</returns>
-    public static IServiceCollection AddResponders(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddRespondersFromAssembly(this IServiceCollection serviceCollection, Assembly assembly)
     {
         var canidates = assembly.GetTypes()
                                 .Where(t => t.IsClass &&
