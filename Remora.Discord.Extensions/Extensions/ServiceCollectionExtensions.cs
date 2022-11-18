@@ -45,7 +45,7 @@ public static class ServiceCollectionExtensions
     /// <param name="treeName">The name of the tree to register commands to, otherwise the default.</param>
     /// <param name="typeFilter">A function to select whether a given command group should be registered.</param>
     /// <returns>The service collection with registered commands.</returns>
-    public static IServiceCollection AddDiscordCommands
+    public static IServiceCollection AddCommandModulesFromAssembly
     (
         this IServiceCollection serviceCollection,
         Assembly assembly,
@@ -53,13 +53,13 @@ public static class ServiceCollectionExtensions
         Func<Type, bool>? typeFilter = null
     )
     {
-        var canidates = assembly.GetTypes()
+        var candidates = assembly.GetTypes()
                                 .Where(t => t.IsClass && !t.IsAbstract && typeof(CommandGroup).IsAssignableFrom(t))
                                 .ToArray();
 
         var tree = serviceCollection.AddCommandTree(treeName);
 
-        foreach (var canidate in canidates)
+        foreach (var canidate in candidates)
         {
             if (typeFilter?.Invoke(canidate) ?? true)
             {
@@ -81,7 +81,7 @@ public static class ServiceCollectionExtensions
         var canidates = assembly.GetTypes()
                                 .Where(t => t.IsClass &&
                                            !t.IsAbstract &&
-                                            t.GetInterfaces() // .Any(t => typeof(IResponder).IsAssignableFrom(t)) ?
+                                            t.GetInterfaces()
                                              .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IResponder<>)))
                                 .ToArray();
 
