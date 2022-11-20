@@ -1,4 +1,4 @@
-<Project Sdk="Remora.Sdk/1.1.1">
+<Project Sdk="Remora.Sdk/2.0.1">
 
     <PropertyGroup>
         <VersionPrefix>6.0.0</VersionPrefix>
@@ -13,8 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-      <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.4" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+      <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.6" />
     </ItemGroup>
 
 </Project>

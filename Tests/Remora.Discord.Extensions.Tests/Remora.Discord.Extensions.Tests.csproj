@@ -1,8 +1,4 @@
-﻿<Project Sdk="Remora.Tests.Sdk/1.0.5">
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+﻿<Project Sdk="Remora.Tests.Sdk/2.0.2">
 
   <ItemGroup>
     <ProjectReference Include="..\..\Remora.Discord.Extensions\Remora.Discord.Extensions.csproj" />

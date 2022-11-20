@@ -1,4 +1,4 @@
-<Project Sdk="Remora.Sdk/1.1.1">
+<Project Sdk="Remora.Sdk/2.0.1">
 
     <PropertyGroup>
         <VersionPrefix>1.0.3</VersionPrefix>
@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Remora.Results" Version="7.2.2" />
+      <PackageReference Include="Remora.Results" Version="7.2.3" />
     </ItemGroup>
 
 </Project>
