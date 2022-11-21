@@ -38,6 +38,38 @@ namespace Remora.Discord.Commands.Services;
 public class ExecutionEventCollectorService
 {
     /// <summary>
+    /// Runs all collected command preparation error events.
+    /// </summary>
+    /// <param name="services">The service provider.</param>
+    /// <param name="operationContext">The operation context.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    public async Task<Result> RunPreparationErrorEvents
+    (
+        IServiceProvider services,
+        IOperationContext operationContext,
+        CancellationToken ct
+    )
+    {
+        var results = await Task.WhenAll
+        (
+            services
+                .GetServices<IPreparationErrorEvent>()
+                .Select(e => e.PreparationFailed(operationContext, ct))
+        );
+
+        foreach (var result in results)
+        {
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+        }
+
+        return Result.FromSuccess();
+    }
+
+    /// <summary>
     /// Runs all collected pre-execution events.
     /// </summary>
     /// <param name="services">The service provider.</param>

@@ -233,7 +233,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         CancellationToken ct = default
     )
     {
-        var prepareResult = await _commandService.TryPrepareCommandAsync
+        var prepareCommand = await _commandService.TryPrepareCommandAsync
         (
             content,
             _services,
@@ -243,12 +243,18 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             ct
         );
 
-        if (!prepareResult.IsSuccess)
+        if (!prepareCommand.IsSuccess)
         {
-            return Result.FromError(prepareResult);
+            var preparationError = await _eventCollector.RunPreparationErrorEvents(_services, operationContext, ct);
+            if (!preparationError.IsSuccess)
+            {
+                return preparationError;
+            }
+
+            return (Result)prepareCommand;
         }
 
-        var preparedCommand = prepareResult.Entity;
+        var preparedCommand = prepareCommand.Entity;
 
         // Update the available context
         var commandContext = new TextCommandContext

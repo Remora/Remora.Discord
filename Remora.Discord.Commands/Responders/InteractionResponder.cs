@@ -168,6 +168,12 @@ public class InteractionResponder : IResponder<IInteractionCreate>
 
         if (!prepareCommand.IsSuccess)
         {
+            var preparationError = await _eventCollector.RunPreparationErrorEvents(_services, operationContext, ct);
+            if (!preparationError.IsSuccess)
+            {
+                return preparationError;
+            }
+
             return (Result)prepareCommand;
         }
 
