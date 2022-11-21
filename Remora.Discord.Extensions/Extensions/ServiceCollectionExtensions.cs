@@ -45,7 +45,7 @@ public static class ServiceCollectionExtensions
     /// <param name="treeName">The name of the tree to register commands to, otherwise the default.</param>
     /// <param name="typeFilter">A function to select whether a given command group should be registered.</param>
     /// <returns>The service collection with registered commands.</returns>
-    public static IServiceCollection AddCommandModulesFromAssembly
+    public static IServiceCollection AddCommandGroupsFromAssembly
     (
         this IServiceCollection serviceCollection,
         Assembly assembly,
