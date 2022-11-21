@@ -26,6 +26,7 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
+/// <inheritdoc />
 [PublicAPI]
 public record PartialForumTag
 (
