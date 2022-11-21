@@ -9,26 +9,8 @@ if (IsSuccess) is (true) then
     :Run Pre-Execution Events (A);
     :Execute Prepared Command (A);
     :Run Post-Execution Events (A);
-    if (IsSuccess) is (false) then
-        label default_tree
-        :Prepare Command From Default Tree (B);
-        if (IsSuccess) is (true) then
-            :Run Pre-Execution Events (B);
-            :Execute Prepared Command (B);
-            :Run Post-Execution Events (B);
-        else (false)
-            :Run Preparation Error Events (B);
-        endif
-    else (true)
-    endif
 else (false)
     :Run Preparation Error Events (A);
-    label space1
-    label space2
-    label space3
-    label space4
-    label space5
-    goto default_tree
 endif
 
 stop

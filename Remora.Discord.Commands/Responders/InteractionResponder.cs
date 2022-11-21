@@ -123,7 +123,6 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         commandData.UnpackInteraction(out var commandPath, out var parameters);
 
         string? treeName = null;
-        var allowDefaultTree = false;
         if (_treeNameResolver is not null)
         {
             var getTreeName = await _treeNameResolver.GetTreeNameAsync(operationContext, ct);
@@ -132,18 +131,10 @@ public class InteractionResponder : IResponder<IInteractionCreate>
                 return (Result)getTreeName;
             }
 
-            (treeName, allowDefaultTree) = getTreeName.Entity;
+            treeName = getTreeName.Entity;
         }
 
-        var executeResult = await TryExecuteCommandAsync(operationContext, commandPath, parameters, treeName, ct);
-
-        var tryDefaultTree = allowDefaultTree && (treeName is not null || treeName != Constants.DefaultTreeName);
-        if (executeResult.IsSuccess || !tryDefaultTree)
-        {
-            return executeResult;
-        }
-
-        return await TryExecuteCommandAsync(operationContext, commandPath, parameters, null, ct);
+        return await TryExecuteCommandAsync(operationContext, commandPath, parameters, treeName, ct);
     }
 
     private async Task<Result> TryExecuteCommandAsync

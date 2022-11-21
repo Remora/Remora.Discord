@@ -202,7 +202,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         content = content[check.ContentStartIndex..];
 
         string? treeName = null;
-        var allowDefaultTree = false;
         if (_treeNameResolver is not null)
         {
             var getTreeName = await _treeNameResolver.GetTreeNameAsync(operationContext, ct);
@@ -211,18 +210,10 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
                 return (Result)getTreeName;
             }
 
-            (treeName, allowDefaultTree) = getTreeName.Entity;
+            treeName = getTreeName.Entity;
         }
 
-        var executeResult = await TryExecuteCommandAsync(operationContext, content, treeName, ct);
-
-        var tryDefaultTree = allowDefaultTree && (treeName is not null || treeName != Constants.DefaultTreeName);
-        if (executeResult.IsSuccess || !tryDefaultTree)
-        {
-            return executeResult;
-        }
-
-        return await TryExecuteCommandAsync(operationContext, content, null, ct);
+        return await TryExecuteCommandAsync(operationContext, content, treeName, ct);
     }
 
     private async Task<Result> TryExecuteCommandAsync
