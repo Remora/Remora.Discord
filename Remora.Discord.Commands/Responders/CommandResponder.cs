@@ -26,7 +26,6 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Remora.Commands;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
@@ -201,18 +200,18 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         // Strip off the prefix
         content = content[check.ContentStartIndex..];
 
-        string? treeName = null;
-        if (_treeNameResolver is not null)
+        if (_treeNameResolver is null)
         {
-            var getTreeName = await _treeNameResolver.GetTreeNameAsync(operationContext, ct);
-            if (!getTreeName.IsSuccess)
-            {
-                return (Result)getTreeName;
-            }
-
-            treeName = getTreeName.Entity;
+            return await TryExecuteCommandAsync(operationContext, content, null, ct);
         }
 
+        var getTreeName = await _treeNameResolver.GetTreeNameAsync(operationContext, ct);
+        if (!getTreeName.IsSuccess)
+        {
+            return (Result)getTreeName;
+        }
+
+        var treeName = getTreeName.Entity;
         return await TryExecuteCommandAsync(operationContext, content, treeName, ct);
     }
 
