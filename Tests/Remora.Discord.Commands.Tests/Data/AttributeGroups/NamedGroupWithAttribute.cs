@@ -36,7 +36,7 @@ namespace Remora.Discord.Commands.Tests.Data.AttributeGroups;
 public class NamedGroupWithAttribute : CommandGroup
 {
     [Command("b")]
-    [ExcludeFromSlashCommandsAttribute]
+    [ExcludeFromSlashCommands]
     public Task<Result> B()
     {
         throw new NotImplementedException();
