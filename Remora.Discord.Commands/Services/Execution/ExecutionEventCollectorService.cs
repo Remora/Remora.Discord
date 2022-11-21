@@ -42,12 +42,14 @@ public class ExecutionEventCollectorService
     /// </summary>
     /// <param name="services">The service provider.</param>
     /// <param name="operationContext">The operation context.</param>
+    /// <param name="preparationResult">The result of the command preparation.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task<Result> RunPreparationErrorEvents
     (
         IServiceProvider services,
         IOperationContext operationContext,
+        IResult preparationResult,
         CancellationToken ct
     )
     {
@@ -55,7 +57,7 @@ public class ExecutionEventCollectorService
         (
             services
                 .GetServices<IPreparationErrorEvent>()
-                .Select(e => e.PreparationFailed(operationContext, ct))
+                .Select(e => e.PreparationFailed(operationContext, preparationResult, ct))
         );
 
         foreach (var result in results)

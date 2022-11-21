@@ -235,7 +235,14 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
 
         if (!prepareCommand.IsSuccess)
         {
-            var preparationError = await _eventCollector.RunPreparationErrorEvents(_services, operationContext, ct);
+            var preparationError = await _eventCollector.RunPreparationErrorEvents
+            (
+                _services,
+                operationContext,
+                prepareCommand,
+                ct
+            );
+
             if (!preparationError.IsSuccess)
             {
                 return preparationError;
