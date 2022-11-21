@@ -59,11 +59,11 @@ public static class ServiceCollectionExtensions
 
         var tree = serviceCollection.AddCommandTree(treeName);
 
-        foreach (var canidate in candidates)
+        foreach (var candidate in candidates)
         {
-            if (typeFilter?.Invoke(canidate) ?? true)
+            if (typeFilter?.Invoke(candidate) ?? true)
             {
-                tree.WithCommandGroup(canidate);
+                tree.WithCommandGroup(candidate);
             }
         }
 
@@ -85,11 +85,11 @@ public static class ServiceCollectionExtensions
                                              .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IResponder<>)))
                                 .ToArray();
 
-        foreach (var canidate in candidates)
+        foreach (var candidate in candidates)
         {
-            var grouping = canidate.GetCustomAttribute(typeof(ResponderGroupAttribute)) as ResponderGroupAttribute;
+            var grouping = candidate.GetCustomAttribute(typeof(ResponderGroupAttribute)) as ResponderGroupAttribute;
 
-            serviceCollection.AddResponder(canidate, grouping?.Group ?? ResponderGroup.Normal);
+            serviceCollection.AddResponder(candidate, grouping?.Group ?? ResponderGroup.Normal);
         }
 
         return serviceCollection;
