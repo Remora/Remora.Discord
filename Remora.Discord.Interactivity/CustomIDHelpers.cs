@@ -38,7 +38,7 @@ public static class CustomIDHelpers
     /// Gets the name used to build IDs for select menu components.
     /// This may include text, role, channel etc. select menus.
     /// </summary>
-    private const string _selectComponentName = "select-menu";
+    private const string SelectComponentName = "select-menu";
 
     /// <summary>
     /// Creates an ID string that can be used with button components.
@@ -72,7 +72,7 @@ public static class CustomIDHelpers
     /// </param>
     /// <returns>The custom ID.</returns>
     public static string CreateSelectMenuID(string name)
-        => FormatID(_selectComponentName, name, Array.Empty<string>());
+        => FormatID(SelectComponentName, name, Array.Empty<string>());
 
     /// <summary>
     /// Creates an ID string that can be used with select menu components.
@@ -86,7 +86,7 @@ public static class CustomIDHelpers
     /// </param>
     /// <returns>The custom ID.</returns>
     public static string CreateSelectMenuID(string name, params string[] path)
-        => FormatID(_selectComponentName, name, path);
+        => FormatID(SelectComponentName, name, path);
 
     /// <summary>
     /// Creates an ID string that can be used with modals.
