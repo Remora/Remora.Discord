@@ -27,10 +27,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using OneOf;
 using Remora.Commands.Extensions;
+using Remora.Commands.Results;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
@@ -49,6 +51,166 @@ namespace Remora.Discord.Commands.Tests.Responders;
 /// </summary>
 public class InteractionResponderTests
 {
+    /// <summary>
+    /// Tests preparation error events.
+    /// </summary>
+    public class PreparationErrorEvents : InteractionResponderTestBase
+    {
+        private readonly Mock<IPreparationErrorEvent> _preparationErrorEventMock;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreparationErrorEvents"/> class.
+        /// </summary>
+        public PreparationErrorEvents()
+        {
+            _preparationErrorEventMock = new Mock<IPreparationErrorEvent>();
+
+            _preparationErrorEventMock
+                .Setup
+                (
+                    e => e.PreparationFailed
+                    (
+                        It.IsAny<IOperationContext>(),
+                        It.IsAny<IResult>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .Returns(Task.FromResult(Result.FromSuccess()));
+        }
+
+        /// <summary>
+        /// Tests whether preparation error events are executed when a command is not found.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForNotFoundCommands()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IApplicationCommandData>();
+
+            dataMock.Setup(d => d.Name).Returns("nonexistent");
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Unsuccessful(result);
+
+            _preparationErrorEventMock
+                .Verify
+                (
+                    e => e.PreparationFailed
+                    (
+                        It.IsAny<IOperationContext>(),
+                        It.Is<IResult>
+                        (
+                            r => r.Error is CommandNotFoundError
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
+
+        /// <summary>
+        /// Tests whether preparation error events are executed when a command is not found.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForFailedConditions()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IApplicationCommandData>();
+
+            dataMock.Setup(d => d.Name).Returns("failing-condition");
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Unsuccessful(result);
+
+            _preparationErrorEventMock
+                .Verify
+                (
+                    e => e.PreparationFailed
+                    (
+                        It.IsAny<IOperationContext>(),
+                        It.Is<IResult>
+                        (
+                            r => r.Error is ConditionNotSatisfiedError
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
+
+        /// <summary>
+        /// Tests whether preparation error events are executed when a command is not found.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForFailedParsing()
+        {
+            var userMock = new Mock<IUser>();
+            var dataMock = new Mock<IApplicationCommandData>();
+
+            dataMock.Setup(d => d.Name).Returns("with-parameter");
+            dataMock
+                .Setup(d => d.Options)
+                .Returns
+                (
+                    new List<IApplicationCommandInteractionDataOption>
+                    {
+                        new ApplicationCommandInteractionDataOption
+                            ("value", ApplicationCommandOptionType.String, new("not-an-int"))
+                    }
+                );
+
+            var eventMock = new Mock<IInteractionCreate>();
+
+            eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
+            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Unsuccessful(result);
+
+            _preparationErrorEventMock
+                .Verify
+                (
+                    e => e.PreparationFailed
+                    (
+                        It.IsAny<IOperationContext>(),
+                        It.Is<IResult>
+                        (
+                            r => r.Error is ParameterParsingError
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
+
+        /// <inheritdoc />
+        protected override void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddCommandTree()
+                .WithCommandGroup<ComplexGroup>()
+                .Finish()
+                .AddCondition<AlwaysFailCondition>()
+                .AddScoped(_ => _preparationErrorEventMock.Object);
+        }
+    }
+
     /// <summary>
     /// Tests pre-execution events.
     /// </summary>
