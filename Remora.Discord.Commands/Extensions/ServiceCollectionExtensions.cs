@@ -305,6 +305,23 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
+    /// Adds a preparation error event to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <typeparam name="TEvent">The event type.</typeparam>
+    /// <returns>The collection, with the event.</returns>
+    public static IServiceCollection AddPreparationErrorEvent
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEvent
+        >(this IServiceCollection serviceCollection)
+        where TEvent : class, IPreparationErrorEvent
+    {
+        serviceCollection.AddScoped<IPreparationErrorEvent, TEvent>();
+        return serviceCollection;
+    }
+
+    /// <summary>
     /// Adds a pre-execution event to the service collection.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
