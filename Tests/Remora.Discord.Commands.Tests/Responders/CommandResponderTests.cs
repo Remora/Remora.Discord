@@ -86,7 +86,7 @@ public class CommandResponderTests
             eventMock.Setup(e => e.Content).Returns("!nonexistent");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
-            ResultAssert.Unsuccessful(result);
+            ResultAssert.Successful(result);
 
             _preparationErrorEventMock
                 .Verify
@@ -117,7 +117,7 @@ public class CommandResponderTests
             eventMock.Setup(e => e.Content).Returns("!failing-condition");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
-            ResultAssert.Unsuccessful(result);
+            ResultAssert.Successful(result);
 
             _preparationErrorEventMock
                 .Verify
@@ -148,7 +148,7 @@ public class CommandResponderTests
             eventMock.Setup(e => e.Content).Returns("!with-parameter not-an-int");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
-            ResultAssert.Unsuccessful(result);
+            ResultAssert.Successful(result);
 
             _preparationErrorEventMock
                 .Verify

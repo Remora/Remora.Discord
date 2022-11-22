@@ -31,6 +31,7 @@ using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
@@ -246,6 +247,12 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             if (!preparationError.IsSuccess)
             {
                 return preparationError;
+            }
+
+            if (prepareCommand.Error.IsUserOrEnvironmentError())
+            {
+                // We've done our part and notified whoever might be interested; job well done
+                return Result.FromSuccess();
             }
 
             return (Result)prepareCommand;

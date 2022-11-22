@@ -172,6 +172,12 @@ public class InteractionResponder : IResponder<IInteractionCreate>
                 return preparationError;
             }
 
+            if (prepareCommand.Error.IsUserOrEnvironmentError())
+            {
+                // We've done our part and notified whoever might be interested; job well done
+                return Result.FromSuccess();
+            }
+
             return (Result)prepareCommand;
         }
 

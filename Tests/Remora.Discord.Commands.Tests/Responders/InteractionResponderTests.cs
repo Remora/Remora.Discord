@@ -98,7 +98,7 @@ public class InteractionResponderTests
             eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
-            ResultAssert.Unsuccessful(result);
+            ResultAssert.Successful(result);
 
             _preparationErrorEventMock
                 .Verify
@@ -135,7 +135,7 @@ public class InteractionResponderTests
             eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
-            ResultAssert.Unsuccessful(result);
+            ResultAssert.Successful(result);
 
             _preparationErrorEventMock
                 .Verify
@@ -182,7 +182,7 @@ public class InteractionResponderTests
             eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
-            ResultAssert.Unsuccessful(result);
+            ResultAssert.Successful(result);
 
             _preparationErrorEventMock
                 .Verify
