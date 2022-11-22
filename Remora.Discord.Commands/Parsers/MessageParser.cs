@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -72,7 +73,19 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
     {
         if (DiscordSnowflake.TryParse(value.Unmention(), out var messageID))
         {
-            return await _channelAPI.GetChannelMessageAsync(_context.ChannelID, messageID.Value, ct);
+            var channelID = _context switch
+            {
+                IInteractionCommandContext ix => ix.Interaction.ChannelID,
+                ITextCommandContext tx => tx.Message.ChannelID,
+                _ => throw new NotSupportedException()
+            };
+
+            if (!channelID.HasValue)
+            {
+                return new ParsingError<IMessage>(value, "Messages can only be parsed by ID in channels.");
+            }
+
+            return await _channelAPI.GetChannelMessageAsync(channelID.Value, messageID.Value, ct);
         }
 
         var messageLinkMatch = _messageLinkRegex.Match(value);
@@ -129,12 +142,17 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
 
     private IPartialMessage? GetResolvedMessageOrDefault(Snowflake messageID)
     {
-        if (_context is not InteractionContext injectionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return null;
         }
 
-        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        {
+            return null;
+        }
+
+        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
         if (!resolvedData.IsDefined(out var resolved) || !resolved.Messages.IsDefined(out var messages))
         {
             return null;

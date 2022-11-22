@@ -1,5 +1,5 @@
 //
-//  CommandContext.cs
+//  InteractionCommandContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,18 +21,17 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Commands.Services;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
-
-#pragma warning disable CS1591
 
 namespace Remora.Discord.Commands.Contexts;
 
-/// <inheritdoc cref="Remora.Discord.Commands.Contexts.ICommandContext" />
+/// <summary>
+/// Represents contextual information about a currently executing text-based command.
+/// </summary>
+/// <param name="Interaction">The interaction that initiated the command.</param>
+/// <param name="Command">The command associated with the context.</param>
 [PublicAPI]
-public record CommandContext
-(
-    Optional<Snowflake> GuildID,
-    Snowflake ChannelID,
-    IUser User
-) : ICommandContext;
+public record InteractionCommandContext(IInteraction Interaction, PreparedCommand Command) :
+    InteractionContext(Interaction),
+    IInteractionCommandContext;

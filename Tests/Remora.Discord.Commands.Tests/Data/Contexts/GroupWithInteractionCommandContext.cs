@@ -1,5 +1,5 @@
 //
-//  ICommandContext.cs
+//  GroupWithInteractionCommandContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,30 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
+using Remora.Discord.Commands.Contexts;
+using Remora.Results;
 
-namespace Remora.Discord.Commands.Contexts;
+#pragma warning disable CS1591, SA1600
 
-/// <summary>
-/// Represents a command context.
-/// </summary>
-[PublicAPI]
-public interface ICommandContext
+namespace Remora.Discord.Commands.Tests.Data.Contexts;
+
+[Group("interaction-command")]
+public class GroupWithInteractionCommandContext : CommandGroup
 {
-    /// <summary>
-    /// Gets the ID of the guild the context refers to, if any.
-    /// </summary>
-    Optional<Snowflake> GuildID { get; }
+    // ReSharper disable once NotAccessedField.Local
+    private readonly IInteractionCommandContext _context;
 
-    /// <summary>
-    /// Gets the ID of the channel the context refers to.
-    /// </summary>
-    Snowflake ChannelID { get; }
+    public GroupWithInteractionCommandContext(IInteractionCommandContext context)
+    {
+        _context = context;
+    }
 
-    /// <summary>
-    /// Gets the user that invoked the command.
-    /// </summary>
-    IUser User { get; }
+    [Command("command")]
+    public Task<Result> Command()
+    {
+        return Task.FromResult(Result.FromSuccess());
+    }
 }

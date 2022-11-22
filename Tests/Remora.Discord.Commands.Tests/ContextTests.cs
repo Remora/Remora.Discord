@@ -26,7 +26,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Remora.Commands.Extensions;
 using Remora.Commands.Services;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
@@ -59,6 +58,8 @@ public class ContextTests
                 .WithCommandGroup<GroupWithContext>()
                 .WithCommandGroup<GroupWithInteractionContext>()
                 .WithCommandGroup<GroupWithMessageContext>()
+                .WithCommandGroup<GroupWithInteractionCommandContext>()
+                .WithCommandGroup<GroupWithTextCommandContext>()
             .Finish()
             .BuildServiceProvider(true)
             .CreateScope().ServiceProvider;
@@ -74,53 +75,61 @@ public class ContextTests
     [Fact]
     public async Task CanExecuteCommandFromGroupThatWantsInterfaceContext()
     {
-        var dummyContext = new Mock<ICommandContext>().Object;
-        _contextInjection.Context = dummyContext;
+        _contextInjection.Context = Mock.Of<ICommandContext>();
 
         var result = await _commands.TryExecuteAsync("interface command", _services);
         ResultAssert.Successful(result);
     }
 
     /// <summary>
-    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// Tests whether a command in a group that requires an <see cref="MessageContext"/> can be executed.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task CanExecuteCommandFromGroupThatWantsMessageContext()
     {
-        var dummyMessage = new Mock<IPartialMessage>();
-
-        var dummyContext = new MessageContext(default, default, null!, default, dummyMessage.Object);
-        _contextInjection.Context = dummyContext;
+        _contextInjection.Context = Mock.Of<IMessageContext>();
 
         var result = await _commands.TryExecuteAsync("message command", _services);
         ResultAssert.Successful(result);
     }
 
     /// <summary>
-    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// Tests whether a command in a group that requires an <see cref="InteractionContext"/> can be executed.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task CanExecuteCommandFromGroupThatWantsInteractionContext()
     {
-        var dummyContext = new InteractionContext
-        (
-            default,
-            default,
-            null!,
-            default,
-            null!,
-            default,
-            default,
-            default,
-            default,
-            default
-        );
-
-        _contextInjection.Context = dummyContext;
+        _contextInjection.Context = Mock.Of<IInteractionContext>();
 
         var result = await _commands.TryExecuteAsync("interaction command", _services);
+        ResultAssert.Successful(result);
+    }
+
+    /// <summary>
+    /// Tests whether a command in a group that requires an <see cref="TextCommandContext"/> can be executed.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanExecuteCommandFromGroupThatWantsTextCommandContext()
+    {
+        _contextInjection.Context = Mock.Of<ITextCommandContext>();
+
+        var result = await _commands.TryExecuteAsync("text-command command", _services);
+        ResultAssert.Successful(result);
+    }
+
+    /// <summary>
+    /// Tests whether a command in a group that requires an <see cref="InteractionCommandContext"/> can be executed.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanExecuteCommandFromGroupThatWantsInteractionCommandContext()
+    {
+        _contextInjection.Context = Mock.Of<IInteractionCommandContext>();
+
+        var result = await _commands.TryExecuteAsync("interaction-command command", _services);
         ResultAssert.Successful(result);
     }
 }

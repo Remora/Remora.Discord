@@ -1,5 +1,5 @@
 //
-//  ContextInjectionService.cs
+//  IMessageContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Discord.Commands.Contexts;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.Commands.Services;
+namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Assists with injection of an <see cref="IOperationContext"/> into a service provider.
+/// Represents contextual information about an ongoing operation on a message.
 /// </summary>
-[PublicAPI]
-public class ContextInjectionService
+public interface IMessageContext : IOperationContext
 {
     /// <summary>
-    /// Gets or sets the context.
+    /// Gets the message.
     /// </summary>
-    public IOperationContext? Context { get; set; }
+    IPartialMessage Message { get; }
+
+    /// <summary>
+    /// Gets the ID of the guild the message is in, if any.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 }

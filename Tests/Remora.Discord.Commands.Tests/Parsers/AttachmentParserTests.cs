@@ -65,21 +65,7 @@ public class AttachmentParserTests
     [Fact]
     public async Task CannotParseWithoutValidSnowflake()
     {
-        var mockContext = new InteractionContext
-            (
-                default,
-                default,
-                Mock.Of<IUser>(),
-                default,
-                string.Empty,
-                default,
-                default,
-                default,
-                default,
-                default
-            );
-
-        var parser = new AttachmentParser(mockContext);
+        var parser = new AttachmentParser(Mock.Of<ICommandContext>());
 
         var result = await parser.TryParseAsync("invalid-snowflake");
 
@@ -94,21 +80,7 @@ public class AttachmentParserTests
     [Fact]
     public async Task CannotParseWithoutData()
     {
-        var mockContext = new InteractionContext
-        (
-            default,
-            default,
-            Mock.Of<IUser>(),
-            default,
-            string.Empty,
-            default,
-            default,
-            OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(Mock.Of<IApplicationCommandData>()),
-            default,
-            default
-        );
-
-        var parser = new AttachmentParser(mockContext);
+        var parser = new AttachmentParser(Mock.Of<ICommandContext>());
 
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
@@ -128,21 +100,10 @@ public class AttachmentParserTests
 
         mockData.Setup(x => x.Resolved).Returns(() => new(mockResolvedData.Object));
 
-        var mockContext = new InteractionContext
-        (
-            default,
-            default,
-            Mock.Of<IUser>(),
-            default,
-            string.Empty,
-            default,
-            default,
-            OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(mockData.Object),
-            default,
-            default
-        );
+        var mockContext = new Mock<IInteractionCommandContext>();
+        mockContext.Setup(c => c.Interaction.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(mockData.Object));
 
-        var parser = new AttachmentParser(mockContext);
+        var parser = new AttachmentParser(mockContext.Object);
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
         ResultAssert.Unsuccessful(result);
@@ -165,21 +126,10 @@ public class AttachmentParserTests
             .Setup(x => x.Attachments)
             .Returns(() => new Dictionary<Snowflake, IAttachment>());
 
-        var mockContext = new InteractionContext
-        (
-            default,
-            default,
-            Mock.Of<IUser>(),
-            default,
-            string.Empty,
-            default,
-            default,
-            OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(mockData.Object),
-            default,
-            default
-        );
+        var mockContext = new Mock<IInteractionCommandContext>();
+        mockContext.Setup(c => c.Interaction.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(mockData.Object));
 
-        var parser = new AttachmentParser(mockContext);
+        var parser = new AttachmentParser(mockContext.Object);
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
         ResultAssert.Unsuccessful(result);
@@ -207,21 +157,10 @@ public class AttachmentParserTests
                 { _attachmentID, mockAttachment.Object }
             });
 
-        var mockContext = new InteractionContext
-        (
-            default,
-            default,
-            Mock.Of<IUser>(),
-            default,
-            string.Empty,
-            default,
-            default,
-            OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(mockData.Object),
-            default,
-            default
-        );
+        var mockContext = new Mock<IInteractionCommandContext>();
+        mockContext.Setup(c => c.Interaction.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(mockData.Object));
 
-        var parser = new AttachmentParser(mockContext);
+        var parser = new AttachmentParser(mockContext.Object);
         var result = await parser.TryParseAsync(_attachmentID.ToString());
 
         ResultAssert.Successful(result);

@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,6 +39,41 @@ namespace Remora.Discord.Commands.Services;
 public class ExecutionEventCollectorService
 {
     /// <summary>
+    /// Runs all collected command preparation error events.
+    /// </summary>
+    /// <param name="services">The service provider.</param>
+    /// <param name="operationContext">The operation context.</param>
+    /// <param name="preparationResult">The result of the command preparation.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    public async Task<Result> RunPreparationErrorEvents
+    (
+        IServiceProvider services,
+        IOperationContext operationContext,
+        IResult preparationResult,
+        CancellationToken ct
+    )
+    {
+        var events = services.GetServices<IPreparationErrorEvent>();
+        return await RunEvents
+        (
+            events.Select
+            (
+                e => new Func<CancellationToken, Task<Result>>
+                (
+                    token => e.PreparationFailed
+                    (
+                        operationContext,
+                        preparationResult,
+                        token
+                    )
+                )
+            ),
+            ct
+        );
+    }
+
+    /// <summary>
     /// Runs all collected pre-execution events.
     /// </summary>
     /// <param name="services">The service provider.</param>
@@ -51,22 +87,22 @@ public class ExecutionEventCollectorService
         CancellationToken ct
     )
     {
-        var results = await Task.WhenAll
+        var events = services.GetServices<IPreExecutionEvent>();
+        return await RunEvents
         (
-            services
-                .GetServices<IPreExecutionEvent>()
-                .Select(e => e.BeforeExecutionAsync(commandContext, ct))
+            events.Select
+            (
+                e => new Func<CancellationToken, Task<Result>>
+                (
+                    token => e.BeforeExecutionAsync
+                    (
+                        commandContext,
+                        token
+                    )
+                )
+            ),
+            ct
         );
-
-        foreach (var result in results)
-        {
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-        }
-
-        return Result.FromSuccess();
     }
 
     /// <summary>
@@ -85,19 +121,54 @@ public class ExecutionEventCollectorService
         CancellationToken ct
     )
     {
-        var results = await Task.WhenAll
+        var events = services.GetServices<IPostExecutionEvent>();
+        return await RunEvents
         (
-            services
-                .GetServices<IPostExecutionEvent>()
-                .Select(e => e.AfterExecutionAsync(commandContext, commandResult, ct))
+            events.Select
+            (
+                e => new Func<CancellationToken, Task<Result>>
+                (
+                    token => e.AfterExecutionAsync
+                    (
+                        commandContext,
+                        commandResult,
+                        token
+                    )
+                )
+            ),
+            ct
         );
+    }
 
-        foreach (var result in results)
+    private async Task<Result> RunEvents
+    (
+        IEnumerable<Func<CancellationToken, Task<Result>>> events,
+        CancellationToken ct
+    )
+    {
+        var errors = new List<Result>();
+
+        foreach (var eventToExecute in events)
         {
-            if (!result.IsSuccess)
+            try
             {
-                return result;
+                var result = await eventToExecute(ct);
+                if (!result.IsSuccess)
+                {
+                    errors.Add(result);
+                }
             }
+            catch (Exception e)
+            {
+                errors.Add(Result.FromError(new ExceptionError(e)));
+            }
+        }
+
+        if (errors.Count > 0)
+        {
+            return errors.Count == 1
+                ? errors[0]
+                : new AggregateError(errors.Cast<IResult>().ToList());
         }
 
         return Result.FromSuccess();

@@ -72,13 +72,20 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
             }
         }
 
+        var guildID = _context switch
+        {
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
+        };
+
         // If there's nothing available, query the system
-        if (!_context.GuildID.IsDefined(out var guildID))
+        if (!guildID.HasValue)
         {
             return new InvalidOperationError("Roles cannot be parsed outside of guild channels.");
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
         if (!getRoles.IsSuccess)
         {
             return Result<IRole>.FromError(getRoles);
@@ -97,12 +104,17 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
 
     private IRole? GetResolvedRoleOrDefault(Snowflake roleID)
     {
-        if (_context is not InteractionContext injectionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return null;
         }
 
-        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        {
+            return null;
+        }
+
+        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
         if (!resolvedData.IsDefined(out var resolved) || !resolved.Roles.IsDefined(out var roles))
         {
             return null;

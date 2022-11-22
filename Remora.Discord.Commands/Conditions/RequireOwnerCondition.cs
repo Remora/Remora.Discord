@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -66,7 +67,14 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
             return new InvalidOperationError("The application owner's ID was not present.");
         }
 
-        return application.Owner.ID.Value == _context.User.ID
+        var userID = _context switch
+        {
+            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            _ => throw new NotSupportedException()
+        };
+
+        return application.Owner.ID.Value == userID
             ? Result.FromSuccess()
             : new InvalidOperationError("You need to be the bot owner to do that.");
     }

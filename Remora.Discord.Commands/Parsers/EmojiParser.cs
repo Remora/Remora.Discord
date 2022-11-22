@@ -94,12 +94,19 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
             };
         }
 
-        if (!_context.GuildID.IsDefined(out var guildID))
+        var guildID = _context switch
+        {
+            IInteractionCommandContext ix => ix.Interaction.GuildID,
+            ITextCommandContext tx => tx.GuildID,
+            _ => throw new NotSupportedException()
+        };
+
+        if (!guildID.HasValue)
         {
             return new ParsingError<IEmoji>(value, "No matching emoji found.");
         }
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return Result<IEmoji>.FromError(getGuild);

@@ -73,12 +73,17 @@ public class UserParser : AbstractTypeParser<IUser>, ITypeParser<IPartialUser>
 
     private IUser? GetResolvedUserOrDefault(Snowflake userID)
     {
-        if (_contextInjection.Context is not InteractionContext injectionContext)
+        if (_contextInjection.Context is not IInteractionContext interactionContext)
         {
             return null;
         }
 
-        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        {
+            return null;
+        }
+
+        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
         if (!resolvedData.IsDefined(out var resolved))
         {
             return null;

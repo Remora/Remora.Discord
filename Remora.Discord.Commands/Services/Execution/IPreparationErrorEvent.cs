@@ -1,5 +1,5 @@
 //
-//  ContextInjectionService.cs
+//  IPreparationErrorEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.Commands.Contexts;
+using Remora.Results;
 
 namespace Remora.Discord.Commands.Services;
 
 /// <summary>
-/// Assists with injection of an <see cref="IOperationContext"/> into a service provider.
+/// Represents the public interface of a service that can perform a command preparation error event.
 /// </summary>
 [PublicAPI]
-public class ContextInjectionService
+public interface IPreparationErrorEvent
 {
     /// <summary>
-    /// Gets or sets the context.
+    /// Runs when attempted preparation of a command fails.
     /// </summary>
-    public IOperationContext? Context { get; set; }
+    /// <param name="context">The operation context.</param>
+    /// <param name="preparationResult">The result of the command preparation.</param>
+    /// <param name="ct">The cancellation token of the current operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result> PreparationFailed(IOperationContext context, IResult preparationResult, CancellationToken ct = default);
 }

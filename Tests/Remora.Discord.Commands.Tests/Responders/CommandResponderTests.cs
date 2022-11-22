@@ -34,6 +34,7 @@ using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Events;
 using Remora.Discord.Commands.Tests.TestBases;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
@@ -44,6 +45,138 @@ namespace Remora.Discord.Commands.Tests.Responders;
 /// </summary>
 public class CommandResponderTests
 {
+    /// <summary>
+    /// Tests preparation error events.
+    /// </summary>
+    public class PreparationErrorEvents : CommandResponderTestBase
+    {
+        private readonly Mock<IPreparationErrorEvent> _preparationErrorEventMock;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreparationErrorEvents"/> class.
+        /// </summary>
+        public PreparationErrorEvents()
+        {
+            _preparationErrorEventMock = new Mock<IPreparationErrorEvent>();
+
+            _preparationErrorEventMock
+                .Setup
+                (
+                    e => e.PreparationFailed
+                    (
+                        It.IsAny<IOperationContext>(),
+                        It.IsAny<IResult>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .Returns(Task.FromResult(Result.FromSuccess()));
+        }
+
+        /// <summary>
+        /// Tests whether preparation error events are executed when a command is not found.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForNotFoundCommands()
+        {
+            var authorMock = new Mock<IUser>();
+            var eventMock = new Mock<IMessageCreate>();
+
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
+            eventMock.Setup(e => e.Content).Returns("!nonexistent");
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            _preparationErrorEventMock
+                .Verify
+                (
+                    e => e.PreparationFailed
+                    (
+                        It.IsAny<IOperationContext>(),
+                        It.Is<IResult>
+                        (
+                            r => r.Error is CommandNotFoundError
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
+
+        /// <summary>
+        /// Tests whether preparation error events are executed when a command is not found.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForFailedConditions()
+        {
+            var authorMock = new Mock<IUser>();
+            var eventMock = new Mock<IMessageCreate>();
+
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
+            eventMock.Setup(e => e.Content).Returns("!failing-condition");
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            _preparationErrorEventMock
+                .Verify
+                (
+                    e => e.PreparationFailed
+                    (
+                        It.IsAny<IOperationContext>(),
+                        It.Is<IResult>
+                        (
+                            r => r.Error is ConditionNotSatisfiedError
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
+
+        /// <summary>
+        /// Tests whether preparation error events are executed when a command is not found.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForFailedParsing()
+        {
+            var authorMock = new Mock<IUser>();
+            var eventMock = new Mock<IMessageCreate>();
+
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
+            eventMock.Setup(e => e.Content).Returns("!with-parameter not-an-int");
+
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            _preparationErrorEventMock
+                .Verify
+                (
+                    e => e.PreparationFailed
+                    (
+                        It.IsAny<IOperationContext>(),
+                        It.Is<IResult>
+                        (
+                            r => r.Error is ParameterParsingError
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
+
+        /// <inheritdoc />
+        protected override void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddCommandTree()
+                .WithCommandGroup<ComplexGroup>()
+                .Finish()
+                .AddCondition<AlwaysFailCondition>()
+                .AddScoped(_ => _preparationErrorEventMock.Object);
+        }
+    }
+
     /// <summary>
     /// Tests pre-execution events.
     /// </summary>
@@ -73,7 +206,7 @@ public class CommandResponderTests
             var authorMock = new Mock<IUser>();
             var eventMock = new Mock<IMessageCreate>();
 
-            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
             eventMock.Setup(e => e.Content).Returns("!successful");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
@@ -131,7 +264,7 @@ public class CommandResponderTests
             var authorMock = new Mock<IUser>();
             var eventMock = new Mock<IMessageCreate>();
 
-            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
             eventMock.Setup(e => e.Content).Returns("!successful");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
@@ -159,7 +292,7 @@ public class CommandResponderTests
             var authorMock = new Mock<IUser>();
             var eventMock = new Mock<IMessageCreate>();
 
-            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.As<IPartialMessage>().Setup(e => e.Author).Returns(new Optional<IUser>(authorMock.Object));
             eventMock.Setup(e => e.Content).Returns("!unsuccessful");
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
@@ -172,34 +305,6 @@ public class CommandResponderTests
                     (
                         It.IsAny<ICommandContext>(),
                         It.Is<IResult>(r => !r.IsSuccess),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-        }
-
-        /// <summary>
-        /// Tests whether post-execution events are executed properly.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task AreExecutedForNotFoundCommands()
-        {
-            var authorMock = new Mock<IUser>();
-            var eventMock = new Mock<IMessageCreate>();
-
-            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
-            eventMock.Setup(e => e.Content).Returns("!notfound");
-
-            var result = await this.Responder.RespondAsync(eventMock.Object);
-            ResultAssert.Successful(result);
-
-            _postExecutionEventMock
-                .Verify
-                (
-                    e => e.AfterExecutionAsync
-                    (
-                        It.IsAny<ICommandContext>(),
-                        It.Is<IResult>(r => r.Error is CommandNotFoundError),
                         It.IsAny<CancellationToken>()
                     )
                 );

@@ -144,6 +144,18 @@ public static class ServiceCollectionExtensions
                     );
                 }
             );
+        serviceCollection
+            .TryAddTransient
+            (
+                s =>
+                {
+                    var injectionService = s.GetRequiredService<ContextInjectionService>();
+                    return injectionService.Context as ICommandContext ?? throw new InvalidOperationException
+                    (
+                        "No context has been set for this scope."
+                    );
+                }
+            );
 
         serviceCollection
             .TryAddTransient
@@ -151,7 +163,7 @@ public static class ServiceCollectionExtensions
                 s =>
                 {
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
-                    return injectionService.Context as MessageContext ?? throw new InvalidOperationException
+                    return injectionService.Context as IMessageContext ?? throw new InvalidOperationException
                     (
                         "No message context has been set for this scope."
                     );
@@ -164,7 +176,33 @@ public static class ServiceCollectionExtensions
                 s =>
                 {
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
-                    return injectionService.Context as InteractionContext ?? throw new InvalidOperationException
+                    return injectionService.Context as IInteractionContext ?? throw new InvalidOperationException
+                    (
+                        "No interaction context has been set for this scope."
+                    );
+                }
+            );
+
+        serviceCollection
+            .TryAddTransient
+            (
+                s =>
+                {
+                    var injectionService = s.GetRequiredService<ContextInjectionService>();
+                    return injectionService.Context as ITextCommandContext ?? throw new InvalidOperationException
+                    (
+                        "No message context has been set for this scope."
+                    );
+                }
+            );
+
+        serviceCollection
+            .TryAddTransient
+            (
+                s =>
+                {
+                    var injectionService = s.GetRequiredService<ContextInjectionService>();
+                    return injectionService.Context as IInteractionCommandContext ?? throw new InvalidOperationException
                     (
                         "No interaction context has been set for this scope."
                     );
@@ -263,6 +301,23 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddResponder<InteractionResponder>();
         serviceCollection.Configure(optionsConfigurator);
 
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Adds a preparation error event to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <typeparam name="TEvent">The event type.</typeparam>
+    /// <returns>The collection, with the event.</returns>
+    public static IServiceCollection AddPreparationErrorEvent
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TEvent
+        >(this IServiceCollection serviceCollection)
+        where TEvent : class, IPreparationErrorEvent
+    {
+        serviceCollection.AddScoped<IPreparationErrorEvent, TEvent>();
         return serviceCollection;
     }
 

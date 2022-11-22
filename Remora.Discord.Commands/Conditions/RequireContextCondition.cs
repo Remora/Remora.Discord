@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Conditions;
@@ -58,7 +60,22 @@ public class RequireContextCondition : ICondition<RequireContextAttribute>
     /// <inheritdoc />
     public async ValueTask<Result> CheckAsync(RequireContextAttribute attribute, CancellationToken ct)
     {
-        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
+        var channelID = _context switch
+        {
+            IInteractionCommandContext ix => ix.Interaction.ChannelID,
+            ITextCommandContext tx => tx.Message.ChannelID,
+            _ => throw new NotSupportedException()
+        };
+
+        if (!channelID.HasValue)
+        {
+            return new PermissionDeniedError
+            (
+                "Commands executed outside of channels may not require any specific channel types."
+            );
+        }
+
+        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
         if (!getChannel.IsSuccess)
         {
             return (Result)getChannel;

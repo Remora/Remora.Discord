@@ -1,5 +1,5 @@
 //
-//  ContextInjectionService.cs
+//  IOperationContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,18 +21,13 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.Commands.Contexts;
 
-namespace Remora.Discord.Commands.Services;
+namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Assists with injection of an <see cref="IOperationContext"/> into a service provider.
+/// Marker interface for various context types related to commands and interactions.
 /// </summary>
 [PublicAPI]
-public class ContextInjectionService
+public interface IOperationContext
 {
-    /// <summary>
-    /// Gets or sets the context.
-    /// </summary>
-    public IOperationContext? Context { get; set; }
 }

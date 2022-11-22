@@ -1,5 +1,5 @@
 //
-//  MessageCreateExtensions.cs
+//  IInteractionContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.Commands.Contexts;
-using Remora.Results;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.Commands.Extensions;
+namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Defines extension methods for the <see cref="IMessageCreate"/> interface.
+/// Represents contextual information about an ongoing operation on an interaction.
 /// </summary>
-public static class MessageCreateExtensions
+[PublicAPI]
+public interface IInteractionContext : IOperationContext
 {
     /// <summary>
-    /// Creates a message context from the given message creation.
+    /// Gets or sets a value indicating whether the interaction has been responded to.
     /// </summary>
-    /// <param name="messageCreate">The message creation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    public static Result<MessageContext> CreateContext(this IMessageCreate messageCreate)
-    {
-        return new MessageContext
-        (
-            messageCreate.GuildID,
-            messageCreate.ChannelID,
-            messageCreate.Author,
-            messageCreate.ID,
-            messageCreate
-        );
-    }
+    bool HasRespondedToInteraction { get; set; }
+
+    /// <summary>
+    /// Gets the interaction.
+    /// </summary>
+    IInteraction Interaction { get; }
 }

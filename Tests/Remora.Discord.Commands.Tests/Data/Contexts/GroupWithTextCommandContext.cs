@@ -1,5 +1,5 @@
 //
-//  ContextInjectionService.cs
+//  GroupWithTextCommandContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
 using Remora.Discord.Commands.Contexts;
+using Remora.Results;
 
-namespace Remora.Discord.Commands.Services;
+#pragma warning disable CS1591, SA1600
 
-/// <summary>
-/// Assists with injection of an <see cref="IOperationContext"/> into a service provider.
-/// </summary>
-[PublicAPI]
-public class ContextInjectionService
+namespace Remora.Discord.Commands.Tests.Data.Contexts;
+
+[Group("text-command")]
+public class GroupWithTextCommandContext : CommandGroup
 {
-    /// <summary>
-    /// Gets or sets the context.
-    /// </summary>
-    public IOperationContext? Context { get; set; }
+    // ReSharper disable once NotAccessedField.Local
+    private readonly ITextCommandContext _context;
+
+    public GroupWithTextCommandContext(ITextCommandContext context)
+    {
+        _context = context;
+    }
+
+    [Command("command")]
+    public Task<Result> Command()
+    {
+        return Task.FromResult(Result.FromSuccess());
+    }
 }
