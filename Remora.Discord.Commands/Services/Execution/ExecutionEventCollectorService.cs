@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,22 +54,23 @@ public class ExecutionEventCollectorService
         CancellationToken ct
     )
     {
-        var results = await Task.WhenAll
+        var events = services.GetServices<IPreparationErrorEvent>();
+        return await RunEvents
         (
-            services
-                .GetServices<IPreparationErrorEvent>()
-                .Select(e => e.PreparationFailed(operationContext, preparationResult, ct))
+            events.Select
+            (
+                e => new Func<CancellationToken, Task<Result>>
+                (
+                    token => e.PreparationFailed
+                    (
+                        operationContext,
+                        preparationResult,
+                        token
+                    )
+                )
+            ),
+            ct
         );
-
-        foreach (var result in results)
-        {
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-        }
-
-        return Result.FromSuccess();
     }
 
     /// <summary>
@@ -85,22 +87,22 @@ public class ExecutionEventCollectorService
         CancellationToken ct
     )
     {
-        var results = await Task.WhenAll
+        var events = services.GetServices<IPreExecutionEvent>();
+        return await RunEvents
         (
-            services
-                .GetServices<IPreExecutionEvent>()
-                .Select(e => e.BeforeExecutionAsync(commandContext, ct))
+            events.Select
+            (
+                e => new Func<CancellationToken, Task<Result>>
+                (
+                    token => e.BeforeExecutionAsync
+                    (
+                        commandContext,
+                        token
+                    )
+                )
+            ),
+            ct
         );
-
-        foreach (var result in results)
-        {
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-        }
-
-        return Result.FromSuccess();
     }
 
     /// <summary>
@@ -119,19 +121,54 @@ public class ExecutionEventCollectorService
         CancellationToken ct
     )
     {
-        var results = await Task.WhenAll
+        var events = services.GetServices<IPostExecutionEvent>();
+        return await RunEvents
         (
-            services
-                .GetServices<IPostExecutionEvent>()
-                .Select(e => e.AfterExecutionAsync(commandContext, commandResult, ct))
+            events.Select
+            (
+                e => new Func<CancellationToken, Task<Result>>
+                (
+                    token => e.AfterExecutionAsync
+                    (
+                        commandContext,
+                        commandResult,
+                        token
+                    )
+                )
+            ),
+            ct
         );
+    }
 
-        foreach (var result in results)
+    private async Task<Result> RunEvents
+    (
+        IEnumerable<Func<CancellationToken, Task<Result>>> events,
+        CancellationToken ct
+    )
+    {
+        var errors = new List<Result>();
+
+        foreach (var eventToExecute in events)
         {
-            if (!result.IsSuccess)
+            try
             {
-                return result;
+                var result = await eventToExecute(ct);
+                if (!result.IsSuccess)
+                {
+                    errors.Add(result);
+                }
             }
+            catch (Exception e)
+            {
+                errors.Add(Result.FromError(new ExceptionError(e)));
+            }
+        }
+
+        if (errors.Count > 0)
+        {
+            return errors.Count == 1
+                ? errors[0]
+                : new AggregateError(errors.Cast<IResult>().ToList());
         }
 
         return Result.FromSuccess();
