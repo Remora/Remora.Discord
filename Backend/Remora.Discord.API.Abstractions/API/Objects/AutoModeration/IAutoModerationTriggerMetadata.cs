@@ -64,7 +64,8 @@ public interface IAutoModerationTriggerMetadata
     /// Gets substrings which will be exempt from triggering the preset trigger type.
     /// </summary>
     /// <remarks>
-    /// This property's associated trigger type is <see cref="AutoModerationTriggerType.KeywordPreset"/>.
+    /// This property's associated trigger types are <see cref="AutoModerationTriggerType.Keyword"/> and
+    /// <see cref="AutoModerationTriggerType.KeywordPreset"/>.
     /// Max 1000 elements.
     /// </remarks>
     Optional<IReadOnlyList<string>> AllowList { get; }
