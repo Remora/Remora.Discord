@@ -53,7 +53,7 @@ public static class ServiceCollectionExtensions
         Func<Type, bool>? typeFilter = null
     )
     {
-        var candidates = assembly.GetTypes()
+        var candidates = assembly.ExportedTypes
                                 .Where(t => t.IsClass && !t.IsAbstract && typeof(CommandGroup).IsAssignableFrom(t))
                                 .ToArray();
 
@@ -87,7 +87,7 @@ public static class ServiceCollectionExtensions
 
         foreach (var candidate in candidates)
         {
-            var grouping = candidate.GetCustomAttribute(typeof(ResponderGroupAttribute)) as ResponderGroupAttribute;
+            var grouping = candidate.GetCustomAttribute(typeof(ResponderAttribute)) as ResponderAttribute;
 
             serviceCollection.AddResponder(candidate, grouping?.Group ?? ResponderGroup.Normal);
         }

@@ -1,5 +1,5 @@
 //
-//  ResponderGroupAttribute.cs
+//  ResponderAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -29,10 +29,19 @@ namespace Remora.Discord.Extensions.Attributes;
 /// Indicates that a responder type or method should be registered as the specified group.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-public class ResponderGroupAttribute : Attribute
+public class ResponderAttribute : Attribute
 {
     /// <summary>
     /// Gets the group to register the responder as.
     /// </summary>
     public ResponderGroup Group { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ResponderAttribute"/> class.
+    /// </summary>
+    /// <param name="group">The responder group the responder should be added to, defaulting to <see cref="ResponderGroup.Normal"/>.</param>
+    public ResponderAttribute(ResponderGroup group = ResponderGroup.Normal)
+    {
+        this.Group = group;
+    }
 }
