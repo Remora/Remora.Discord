@@ -22,12 +22,23 @@
 
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Rest.Xunit;
 
 namespace Remora.Discord.API.Tests.Objects;
 
 /// <inheritdoc />
 public class ChannelTests : ObjectTestBase<IChannel>
 {
+    /// <inheritdoc />
+    protected override JsonAssertOptions AssertOptions => JsonAssertOptions.Default with
+    {
+        AllowMissing = new[]
+        {
+            "template", // undocumented
+            "default_forum_layout" // undocumented
+        }
+    };
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ChannelTests"/> class.
     /// </summary>
