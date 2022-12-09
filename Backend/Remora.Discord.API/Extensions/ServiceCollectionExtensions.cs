@@ -208,15 +208,18 @@ public static class ServiceCollectionExtensions
         // Channels
         options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelUpdate, ChannelUpdate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelDelete, ChannelDelete>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
@@ -305,7 +308,6 @@ public static class ServiceCollectionExtensions
         // Invites
         options.AddDataObjectConverter<IInviteCreate, InviteCreate>()
             .WithPropertyName(c => c.IsTemporary, "temporary")
-            .WithPropertyConverter(c => c.CreatedAt, new ISO8601DateTimeOffsetConverter())
             .WithPropertyConverter(c => c.MaxAge, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IInviteDelete, InviteDelete>();
@@ -513,7 +515,8 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IChannel, Channel>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IPartialChannel, PartialChannel>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
