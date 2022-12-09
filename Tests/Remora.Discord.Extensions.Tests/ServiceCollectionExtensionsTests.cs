@@ -25,7 +25,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Remora.Commands.Extensions;
 using Remora.Commands.Services;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Extensions.Extensions;
 using Remora.Discord.Extensions.Tests.Samples;
 using Remora.Discord.Gateway.Extensions;

@@ -23,6 +23,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Commands.Extensions;
 using Remora.Commands.Groups;
@@ -35,6 +36,7 @@ namespace Remora.Discord.Extensions.Extensions;
 /// <summary>
 /// A collection of extensions for the <see cref="IServiceCollection"/> interface.
 /// </summary>
+[PublicAPI]
 public static class ServiceCollectionExtensions
 {
     /// <summary>
@@ -76,14 +78,22 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection to register responders in.</param>
     /// <param name="assembly">The assembly to discover responders from.</param>
     /// <returns>The service collection to chain calls.</returns>
-    public static IServiceCollection AddRespondersFromAssembly(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddRespondersFromAssembly
+    (
+        this IServiceCollection serviceCollection,
+        Assembly assembly
+    )
     {
-        var candidates = assembly.GetTypes()
-                                .Where(t => t.IsClass &&
-                                           !t.IsAbstract &&
-                                            t.GetInterfaces()
-                                             .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IResponder<>)))
-                                .ToArray();
+        var candidates = assembly.GetTypes().Where
+        (
+            t => t.IsClass &&
+                 !t.IsAbstract &&
+                 t.GetInterfaces().Any
+                (
+                    i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResponder<>)
+                )
+        )
+        .ToArray();
 
         foreach (var candidate in candidates)
         {
