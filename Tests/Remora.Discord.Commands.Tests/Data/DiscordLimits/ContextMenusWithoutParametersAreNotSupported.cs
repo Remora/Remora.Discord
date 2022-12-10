@@ -1,5 +1,5 @@
 //
-//  ContextMenusWithDescriptionsAreNotSupported.cs
+//  ContextMenusWithoutParametersAreNotSupported.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,23 +21,24 @@
 //
 
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
-using Remora.Rest.Core;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
 namespace Remora.Discord.Commands.Tests.Data.DiscordLimits;
 
-public class ContextMenusWithDescriptionsAreNotSupported : CommandGroup
+public class ContextMenusWithoutParametersAreNotSupported : CommandGroup
 {
-    [Command("Do thing")]
+    [Command("Do user thing")]
     [CommandType(ApplicationCommandType.User)]
-    [Description("Oh no!")]
-    public Task<IResult> ContextCommand(Snowflake user) => throw new NotImplementedException();
+    public Task<IResult> UserContextCommand() => throw new NotImplementedException();
+
+    [Command("Do message thing")]
+    [CommandType(ApplicationCommandType.Message)]
+    public Task<IResult> MessageContextCommand() => throw new NotImplementedException();
 }

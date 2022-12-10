@@ -37,17 +37,9 @@ public class GroupWithContextMenus : CommandGroup
 {
     [Command("Do user thing")]
     [CommandType(ApplicationCommandType.User)]
-    public Task<IResult> UserCommand() => throw new NotImplementedException();
+    public Task<IResult> UserCommand(Snowflake user) => throw new NotImplementedException();
 
     [Command("Do message thing")]
     [CommandType(ApplicationCommandType.Message)]
-    public Task<IResult> MessageCommand() => throw new NotImplementedException();
-
-    [Command("Do user thing with parameter")]
-    [CommandType(ApplicationCommandType.User)]
-    public Task<IResult> UserCommandParameter(Snowflake user) => throw new NotImplementedException();
-
-    [Command("Do message thing with parameter")]
-    [CommandType(ApplicationCommandType.Message)]
-    public Task<IResult> MessageCommandParameter(Snowflake message) => throw new NotImplementedException();
+    public Task<IResult> MessageCommand(Snowflake message) => throw new NotImplementedException();
 }
