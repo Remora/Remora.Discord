@@ -341,6 +341,25 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
         if (!prepareCommand.IsSuccess)
         {
+            var preparationError = await _eventCollector.RunPreparationErrorEvents
+            (
+                _services,
+                operationContext,
+                prepareCommand,
+                ct
+            );
+
+            if (!preparationError.IsSuccess)
+            {
+                return preparationError;
+            }
+
+            if (prepareCommand.Error.IsUserOrEnvironmentError())
+            {
+                // We've done our part and notified whoever might be interested; job well done
+                return Result.FromSuccess();
+            }
+
             return (Result)prepareCommand;
         }
 
