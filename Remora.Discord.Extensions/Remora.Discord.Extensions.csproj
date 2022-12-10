@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>5.1.1</VersionPrefix>
+        <VersionPrefix>5.2.0</VersionPrefix>
         <Description>Utilities and components which extend upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
-            Update Remora.Sdk.
             Update dependencies.
+            Update Remora.Sdk.
+            Add support for adding all responders and/or command groups from an assembly
         </PackageReleaseNotes>
     </PropertyGroup>
 

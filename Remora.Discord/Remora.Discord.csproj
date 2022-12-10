@@ -1,22 +1,22 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2022.49</VersionPrefix>
+        <VersionPrefix>2022.50</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Make RedisCacheProvider pass values as byte[] directly instead of serializing to string
-            Implement parsing of various partial types.
-            Add various new error codes.
-            Improve memory pressure in ImagePacker by not allocating extra byte[] buffers if they can be retrieved from the Stream directly
-            Throw for invalid slash command trees.
-            Support new select menu types.
-            Implement support for Forums.
-            Fix nullability of various fields.
-            Add buildClient parameter to HostBuilderExtensions.AddDiscordService
-            Guard GetRequiredService call in try-catch in DispatchEventAsync
-            Fix min/max not working for numeric parameters.
-            Allow component-only messages.
-            Add INVITES_DISABLED guild feature.
+            Update dependencies.
+            Update Remora.Sdk.
+            BREAKING: Add support for automod regex matching
+            Add missing documentation
+            Fix missing converters for IChannel::DefaultThreadLimitPerUser
+            BREAKING: Add new user flag
+            Fix race condition when reconnecting.
+            Fix issue with attributes on unnamed group types
+            BREAKING: Rework command context inheritance tree
+            BREAKING: Remove fallback tree for command execution
+            Add new command event for preparation failures (not found, condition failed..)
+            Add some UML for the command flow
+            Add support for adding all responders and/or command groups from an assembly
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
