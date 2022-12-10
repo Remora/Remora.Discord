@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -461,16 +461,6 @@ public enum AutoModerationTriggerType</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType/BD7094BF">HarmfulLink</a></td>
-								<td>2</td>
-								<td>
-									<div>
-    Check if content contains any harmful links.
-    </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType/71C1BE74">Keyword</a></td>
 								<td>1</td>
 								<td>
@@ -485,7 +475,17 @@ public enum AutoModerationTriggerType</code></pre>
 								<td>4</td>
 								<td>
 									<div>
-    Check if content contains words from internal pre-defined wordsets.
+    Check if content contains words from internal pre-defined word sets.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType/58839BB5">MentionSpam</a></td>
+								<td>5</td>
+								<td>
+									<div>
+    Check if content contains more unique mentions than allowed.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - AutoModerationTriggerType.HarmfulLink Field</title>
+        <title>Remora.Discord Documentation - API - AutoModerationTriggerType.MentionSpam Field</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -148,9 +148,9 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType">Auto<wbr>Moderation<wbr>Trigger<wbr>Type</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Field Members</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType/BD7094BF">HarmfulLink</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType/71C1BE74">Keyword</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType/2E07AD91">KeywordPreset</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType/58839BB5">MentionSpam</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType/C1CBA3D2">Spam</a></li>
 
 
@@ -167,14 +167,14 @@
 
 <section class="content-header">
 			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationTriggerType">Auto<wbr>Moderation<wbr>Trigger<wbr>Type</a>.</h3>
-	<h1>HarmfulLink <small>Field</small></h1>
+	<h1>MentionSpam <small>Field</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Check if content contains any harmful links.
+    Check if content contains more unique mentions than allowed.
     </div>
 
 		<div class="panel panel-default">
@@ -191,7 +191,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>HarmfulLink</code></pre>
+	<pre><code>MentionSpam</code></pre>
 
 
 
@@ -208,7 +208,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>2</td>
+					<td>5</td>
 					<td>Int32</td>
 				</tr>
 			</tbody></table>

@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -441,6 +441,15 @@ public interface IAutoModerationTriggerMetadata</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAutoModerationTriggerMetadata/7E46D2A7">AllowList</a></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;string&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets substrings which will be exempt from triggering the preset trigger type.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAutoModerationTriggerMetadata/3B9FE7C7">KeywordFilter</a></td>
 								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;string&gt;<wbr>&gt;<wbr></td>
 								<td>
@@ -450,11 +459,29 @@ public interface IAutoModerationTriggerMetadata</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAutoModerationTriggerMetadata/32674426">MentionTotalLimit</a></td>
+								<td>Optional<wbr>&lt;byte&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the total number of unique allowed user and role mentions per message.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAutoModerationTriggerMetadata/F98FC6CF">Presets</a></td>
 								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoModerationKeywordPresetType">Auto<wbr>Moderation<wbr>Keyword<wbr>Preset<wbr>Type</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    Gets the internally pre-defined wordsets which will be searched for in content.
+    Gets the internally pre-defined word sets which will be searched for in content.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAutoModerationTriggerMetadata/D5C7D036">RegexPatterns</a></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;string&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets regular expression patterns which will be matched against the content.
     </div>
 								</td>
 							</tr>
