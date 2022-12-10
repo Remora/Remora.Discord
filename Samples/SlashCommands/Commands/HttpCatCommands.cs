@@ -14,7 +14,6 @@ using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
-using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
@@ -26,48 +25,25 @@ namespace Remora.Discord.Samples.SlashCommands.Commands;
 public class HttpCatCommands : CommandGroup
 {
     private readonly FeedbackService _feedbackService;
-    private readonly ICommandContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="HttpCatCommands"/> class.
     /// </summary>
     /// <param name="feedbackService">The feedback service.</param>
-    /// <param name="context">The command context.</param>
-    public HttpCatCommands(FeedbackService feedbackService, ICommandContext context)
+    public HttpCatCommands(FeedbackService feedbackService)
     {
         _feedbackService = feedbackService;
-        _context = context;
     }
 
     /// <summary>
     /// Posts a cat image that matches the user.
     /// </summary>
+    /// <param name="user">The user selected.</param>
     /// <returns>The result of the command.</returns>
     [Command("Cattify")]
     [CommandType(ApplicationCommandType.User)]
-    public async Task<IResult> PostContextualUserHttpCatAsync()
+    public async Task<IResult> PostContextualUserHttpCatAsync(IUser user)
     {
-        if (_context is not IInteractionContext interactionContext)
-        {
-            return Result.FromSuccess();
-        }
-
-        if (!interactionContext.Interaction.Data.IsDefined(out var data) || !data.TryPickT0(out var commandData, out _))
-        {
-            return Result.FromSuccess();
-        }
-
-        if (!commandData.Resolved.IsDefined(out var resolved))
-        {
-            return Result.FromSuccess();
-        }
-
-        if (!resolved.Users.IsDefined(out var users))
-        {
-            return Result.FromSuccess();
-        }
-
-        var user = users.First().Value;
         return await PostUserHttpCatAsync(user);
     }
 

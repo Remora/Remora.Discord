@@ -458,17 +458,14 @@ public static class CommandTreeExtensions
             }
 
             var parameters = command.CommandMethod.GetParameters();
-            if (parameters.Length > 0)
+            var expectedParameter = commandType.AsParameterName();
+            if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
             {
-                var expectedParameter = commandType.AsParameterName();
-                if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
-                {
-                    throw new InvalidNodeException
-                    (
-                        $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
-                        command
-                    );
-                }
+                throw new InvalidNodeException
+                (
+                    $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
+                    command
+                );
             }
         }
 
