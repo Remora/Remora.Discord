@@ -1,15 +1,13 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>72.0.0</VersionPrefix>
+        <VersionPrefix>73.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Add various new error codes.
-            Support new select menu types.
-            Implement support for Forums.
-            Fix nullability of various fields.
-            Allow component-only messages.
-            Add INVITES_DISABLED guild feature.
+            Update dependencies.
+            Update Remora.Sdk.
+            BREAKING: Add new user flag
+            BREAKING: Add support for automod regex matching
         </PackageReleaseNotes>
     </PropertyGroup>
 
