@@ -110,7 +110,8 @@ public static class ServiceCollectionExtensions
                         .AddOAuth2ObjectConverters()
                         .AddTeamObjectConverters()
                         .AddStageInstanceObjectConverters()
-                        .AddStickerObjectConverters();
+                        .AddStickerObjectConverters()
+                        .AddApplicationRoleConnectionObjectConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
                     options.AddConverter<PropertyErrorDetailsConverter>();
@@ -1123,6 +1124,21 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(s => s.SKUID, "sku_id");
 
         options.AddDataObjectConverter<INitroStickerPacks, NitroStickerPacks>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle application role connection objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddApplicationRoleConnectionObjectConverters
+    (
+        this JsonSerializerOptions options
+    )
+    {
+        options.AddDataObjectConverter<IApplicationRoleConnectionMetadata, ApplicationRoleConnectionMetadata>();
 
         return options;
     }

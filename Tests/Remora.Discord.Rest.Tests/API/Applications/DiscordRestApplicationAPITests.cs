@@ -2092,4 +2092,342 @@ public class DiscordRestApplicationAPITests
             ResultAssert.Successful(result);
         }
     }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetApplicationRoleConnectionMetadataRecordsAsync"/> method.
+    /// </summary>
+    public class GetApplicationRoleConnectionMetadataRecordsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetApplicationRoleConnectionMetadataRecordsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetApplicationRoleConnectionMetadataRecordsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .WithNoContent()
+                    .Respond("application/json", "[ ]")
+            );
+
+            var result = await api.GetApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.UpdateApplicationRoleConnectionMetadataRecordsAsync"/> method.
+    /// </summary>
+    public class UpdateApplicationRoleConnectionMetadataRecordsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateApplicationRoleConnectionMetadataRecordsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public UpdateApplicationRoleConnectionMetadataRecordsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    "a",
+                    "b",
+                    "c",
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                ),
+                new ApplicationRoleConnectionMetadata
+                (
+                    new string('d', 50),
+                    new string('e', 100),
+                    new string('f', 200),
+                    ApplicationRoleConnectionMetadataType.IntegerGreaterThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .WithJson
+                    (
+                        json => json.IsArray
+                        (
+                            a => a
+                                .WithElement
+                                (
+                                    0,
+                                    e => e.IsObject
+                                    (
+                                        o => o
+                                            .WithProperty("key", p => p.Is(records[0].Key))
+                                            .WithProperty("name", p => p.Is(records[0].Name))
+                                            .WithProperty("description", p => p.Is(records[0].Description))
+                                            .WithProperty("type", p => p.Is((int)records[0].Type))
+                                    )
+                                )
+                                .WithElement
+                                (
+                                    1,
+                                    e => e.IsObject
+                                    (
+                                        o => o
+                                            .WithProperty("key", p => p.Is(records[1].Key))
+                                            .WithProperty("name", p => p.Is(records[1].Name))
+                                            .WithProperty("description", p => p.Is(records[1].Description))
+                                            .WithProperty("type", p => p.Is((int)records[1].Type))
+                                    )
+                                )
+                        )
+                    )
+                    .Respond("application/json", "[]")
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfKeyIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    string.Empty,
+                    "b",
+                    "c",
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfKeyIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    new string('a', 51),
+                    "b",
+                    "c",
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    "a",
+                    string.Empty,
+                    "c",
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    "a",
+                    new string('b', 101),
+                    "c",
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    "a",
+                    "b",
+                    string.Empty,
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    "a",
+                    "b",
+                    new string('c', 201),
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
 }

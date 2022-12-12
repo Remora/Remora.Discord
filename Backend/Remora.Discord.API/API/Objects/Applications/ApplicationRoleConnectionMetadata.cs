@@ -1,5 +1,5 @@
 //
-//  Application.cs
+//  ApplicationRoleConnectionMetadata.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,39 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IApplication" />
+/// <inheritdoc cref="IApplicationRoleConnectionMetadata"/>
 [PublicAPI]
-public record Application
+public record ApplicationRoleConnectionMetadata
 (
-    Snowflake ID,
+    string Key,
     string Name,
-    IImageHash? Icon,
     string Description,
-    Optional<IReadOnlyList<string>> RPCOrigins,
-    bool IsBotPublic,
-    bool DoesBotRequireCodeGrant,
-    Optional<string> TermsOfServiceURL,
-    Optional<string> PrivacyPolicyURL,
-    IPartialUser? Owner,
-    string VerifyKey,
-    ITeam? Team,
-    Optional<Snowflake> GuildID = default,
-    Optional<Snowflake> PrimarySKUID = default,
-    Optional<string> Slug = default,
-    Optional<IImageHash> CoverImage = default,
-    Optional<ApplicationFlags> Flags = default,
-    Optional<IReadOnlyList<string>> Tags = default,
-    Optional<IApplicationInstallParameters> InstallParams = default,
-    Optional<Uri> CustomInstallUrl = default,
-    Optional<Uri> RoleConnectionsVerificationUrl = default
-) : IApplication;
+    ApplicationRoleConnectionMetadataType Type,
+    Optional<IReadOnlyDictionary<string, string>> NameLocalizations = default,
+    Optional<IReadOnlyDictionary<string, string>> DescriptionLocalizations = default
+) : IApplicationRoleConnectionMetadata;
