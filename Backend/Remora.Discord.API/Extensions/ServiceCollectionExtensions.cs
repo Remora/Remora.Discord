@@ -1139,6 +1139,7 @@ public static class ServiceCollectionExtensions
     )
     {
         options.AddDataObjectConverter<IApplicationRoleConnectionMetadata, ApplicationRoleConnectionMetadata>();
+        options.AddDataObjectConverter<IApplicationRoleConnection, ApplicationRoleConnection>();
 
         return options;
     }

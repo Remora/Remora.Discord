@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -227,6 +228,75 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
         (
             "users/@me/connections",
             b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IApplicationRoleConnection>> GetUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IApplicationRoleConnection>
+        (
+            $"users/@me/applications/{applicationID}/role-connection",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IApplicationRoleConnection>> UpdateUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        Optional<string> platformName = default,
+        Optional<string> platformUsername = default,
+        Optional<IReadOnlyDictionary<string, string>> metadata = default,
+        CancellationToken ct = default
+    )
+    {
+        if (platformName.HasValue && platformName.Value.Length > 50)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(platformName),
+                "The platform name must be max. 50 characters."
+            );
+        }
+
+        if (platformUsername.HasValue && platformUsername.Value.Length > 100)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(platformUsername),
+                "The platform username must be max. 100 characters."
+            );
+        }
+
+        if (metadata.HasValue && metadata.Value.Values.Any(m => m.Length > 100))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(metadata),
+                "The metadata values must be max. 100 characters."
+            );
+        }
+
+        return await this.RestHttpClient.PutAsync<IApplicationRoleConnection>
+        (
+            $"users/@me/applications/{applicationID}/role-connection",
+            b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("platform_name", platformName, this.JsonOptions);
+                        json.Write("platform_username", platformUsername, this.JsonOptions);
+                        json.Write("metadata", metadata, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

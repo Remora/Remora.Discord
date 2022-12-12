@@ -589,30 +589,30 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         CancellationToken ct = default
     )
     {
-        if (records.Any(r => r.Key.Length is < 1 or > 50))
+        if (records.Any(r => r.Key.Length > 50))
         {
             return new ArgumentOutOfRangeError
             (
                 nameof(records),
-                "Role connection metadata keys must be between 1 and 50 characters."
+                "Role connection metadata keys must be max. 50 characters."
             );
         }
 
-        if (records.Any(r => r.Name.Length is < 1 or > 100))
+        if (records.Any(r => r.Name.Length > 100))
         {
             return new ArgumentOutOfRangeError
             (
                 nameof(records),
-                "Role connection metadata names must be between 1 and 100 characters."
+                "Role connection metadata names must be max. 100 characters."
             );
         }
 
-        if (records.Any(r => r.Description.Length is < 1 or > 200))
+        if (records.Any(r => r.Description.Length > 200))
         {
             return new ArgumentOutOfRangeError
             (
                 nameof(records),
-                "Role connection metadata descriptions must be between 1 and 200 characters."
+                "Role connection metadata descriptions must be max. 200 characters."
             );
         }
 

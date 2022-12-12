@@ -40,13 +40,13 @@ public interface IApplicationRoleConnectionMetadata
     /// <summary>
     /// Gets the dictionary key for the metadata field.
     /// </summary>
-    /// <remarks>The key must only consist of a-z, 0-9 or _ and must have a length between 1 and 50 characters.</remarks>
+    /// <remarks>The key must only consist of a-z, 0-9 or _ and must have a length of max. 50 characters.</remarks>
     string Key { get; }
 
     /// <summary>
     /// Gets the name of the metadata field.
     /// </summary>
-    /// <remarks>The length of the name must be between 1 and 100 characters.</remarks>
+    /// <remarks>The length of the name must be max. 100 characters.</remarks>
     string Name { get; }
 
     /// <summary>
@@ -57,7 +57,7 @@ public interface IApplicationRoleConnectionMetadata
     /// <summary>
     /// Gets the description of the metadata field.
     /// </summary>
-    /// <remarks>The length of the description must be between 1 and 200 characters.</remarks>
+    /// <remarks>The length of the description must be max. 200 characters.</remarks>
     string Description { get; }
 
     /// <summary>
