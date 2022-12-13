@@ -745,33 +745,39 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             b =>
             {
                 Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = default;
-                if (attachments.HasValue && attachments.Value is null)
+                switch (attachments.HasValue)
                 {
-                    attachmentList = null;
-                }
-                else if (attachments.HasValue && attachments.Value is not null)
-                {
-                    // build attachment list
-                    attachmentList = attachments.Value.Select
-                    (
-                        (f, i) => f.Match
-                        (
-                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
-                            attachment => attachment
-                        )
-                    ).ToList();
-
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    case true when attachments.Value is null:
                     {
-                        if (!attachments.Value[i].IsT0)
+                        attachmentList = null;
+                        break;
+                    }
+                    case true when attachments.Value is not null:
+                    {
+                        // build attachment list
+                        attachmentList = attachments.Value.Select
+                        (
+                            (f, i) => f.Match
+                            (
+                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                                attachment => attachment
+                            )
+                        ).ToList();
+
+                        for (var i = 0; i < attachments.Value.Count; i++)
                         {
-                            continue;
+                            if (!attachments.Value[i].IsT0)
+                            {
+                                continue;
+                            }
+
+                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var contentName = $"files[{i}]";
+
+                            b.AddContent(new StreamContent(stream), contentName, name);
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
-                        var contentName = $"files[{i}]";
-
-                        b.AddContent(new StreamContent(stream), contentName, name);
+                        break;
                     }
                 }
 
