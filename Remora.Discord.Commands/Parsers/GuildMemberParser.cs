@@ -43,7 +43,7 @@ namespace Remora.Discord.Commands.Parsers;
 [PublicAPI]
 public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<IPartialGuildMember>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestGuildAPI _guildAPI;
 
     /// <summary>
@@ -51,7 +51,7 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="guildAPI">The guild API.</param>
-    public GuildMemberParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
+    public GuildMemberParser(IOperationContext context, IDiscordRestGuildAPI guildAPI)
     {
         _guildAPI = guildAPI;
         _context = context;
@@ -71,8 +71,8 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
 
         var guildID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
+            IInteractionContext ix => ix.Interaction.GuildID,
+            IMessageContext tx => tx.GuildID,
             _ => throw new NotSupportedException()
         };
 

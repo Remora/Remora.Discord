@@ -39,7 +39,7 @@ namespace Remora.Discord.Commands.Conditions;
 [PublicAPI]
 public class RequireContextCondition : ICondition<RequireContextAttribute>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
 
     /// <summary>
@@ -49,7 +49,7 @@ public class RequireContextCondition : ICondition<RequireContextAttribute>
     /// <param name="channelAPI">The channel API.</param>
     public RequireContextCondition
     (
-        ICommandContext context,
+        IOperationContext context,
         IDiscordRestChannelAPI channelAPI
     )
     {
@@ -62,8 +62,8 @@ public class RequireContextCondition : ICondition<RequireContextAttribute>
     {
         var channelID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.ChannelID,
-            ITextCommandContext tx => tx.Message.ChannelID,
+            IInteractionContext ix => ix.Interaction.ChannelID,
+            IMessageContext tx => tx.Message.ChannelID,
             _ => throw new NotSupportedException()
         };
 

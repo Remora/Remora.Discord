@@ -37,7 +37,7 @@ namespace Remora.Discord.Commands.Conditions;
 [PublicAPI]
 public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestOAuth2API _oauth2API;
 
     /// <summary>
@@ -45,7 +45,7 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="oauth2API">The OAuth2 API.</param>
-    public RequireOwnerCondition(ICommandContext context, IDiscordRestOAuth2API oauth2API)
+    public RequireOwnerCondition(IOperationContext context, IDiscordRestOAuth2API oauth2API)
     {
         _context = context;
         _oauth2API = oauth2API;
@@ -69,8 +69,8 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 
         var userID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            IInteractionContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            IMessageContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
             _ => throw new NotSupportedException()
         };
 

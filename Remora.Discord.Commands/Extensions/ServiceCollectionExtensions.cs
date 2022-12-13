@@ -140,7 +140,7 @@ public static class ServiceCollectionExtensions
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
                     return injectionService.Context ?? throw new InvalidOperationException
                     (
-                        "No context has been set for this scope."
+                        "No operation context has been set for this scope."
                     );
                 }
             );
@@ -152,7 +152,7 @@ public static class ServiceCollectionExtensions
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
                     return injectionService.Context as ICommandContext ?? throw new InvalidOperationException
                     (
-                        "No context has been set for this scope."
+                        "No command context has been set for this scope."
                     );
                 }
             );
@@ -191,7 +191,7 @@ public static class ServiceCollectionExtensions
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
                     return injectionService.Context as ITextCommandContext ?? throw new InvalidOperationException
                     (
-                        "No message context has been set for this scope."
+                        "No text command context has been set for this scope."
                     );
                 }
             );
@@ -204,7 +204,7 @@ public static class ServiceCollectionExtensions
                     var injectionService = s.GetRequiredService<ContextInjectionService>();
                     return injectionService.Context as IInteractionCommandContext ?? throw new InvalidOperationException
                     (
-                        "No interaction context has been set for this scope."
+                        "No interaction command context has been set for this scope."
                     );
                 }
             );

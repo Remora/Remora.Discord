@@ -48,7 +48,7 @@ public class RequireDiscordPermissionCondition :
 {
     private readonly IDiscordRestGuildAPI _guildAPI;
     private readonly IDiscordRestChannelAPI _channelAPI;
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequireDiscordPermissionCondition"/> class.
@@ -60,7 +60,7 @@ public class RequireDiscordPermissionCondition :
     (
         IDiscordRestGuildAPI guildAPI,
         IDiscordRestChannelAPI channelAPI,
-        ICommandContext context
+        IOperationContext context
     )
     {
         _guildAPI = guildAPI;
@@ -80,8 +80,8 @@ public class RequireDiscordPermissionCondition :
     {
         var guildID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
+            IInteractionContext ix => ix.Interaction.GuildID,
+            IMessageContext tx => tx.GuildID,
             _ => throw new NotSupportedException()
         };
 
@@ -101,8 +101,8 @@ public class RequireDiscordPermissionCondition :
 
         var userID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            IInteractionContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            IMessageContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
             _ => throw new NotSupportedException()
         };
 
@@ -138,8 +138,8 @@ public class RequireDiscordPermissionCondition :
     {
         var guildID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
+            IInteractionContext ix => ix.Interaction.GuildID,
+            IMessageContext tx => tx.GuildID,
             _ => throw new NotSupportedException()
         };
 
@@ -176,8 +176,8 @@ public class RequireDiscordPermissionCondition :
     {
         var guildID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
+            IInteractionContext ix => ix.Interaction.GuildID,
+            IMessageContext tx => tx.GuildID,
             _ => throw new NotSupportedException()
         };
 
@@ -197,8 +197,8 @@ public class RequireDiscordPermissionCondition :
 
         var channelID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.ChannelID,
-            ITextCommandContext tx => tx.Message.ChannelID,
+            IInteractionContext ix => ix.Interaction.ChannelID,
+            IMessageContext tx => tx.Message.ChannelID,
             _ => throw new NotSupportedException()
         };
 
@@ -236,8 +236,8 @@ public class RequireDiscordPermissionCondition :
 
         var userID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
+            IInteractionContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            IMessageContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
             _ => throw new NotSupportedException()
         };
 
@@ -288,8 +288,8 @@ public class RequireDiscordPermissionCondition :
     {
         var guildID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
+            IInteractionContext ix => ix.Interaction.GuildID,
+            IMessageContext tx => tx.GuildID,
             _ => throw new NotSupportedException()
         };
 
@@ -309,8 +309,8 @@ public class RequireDiscordPermissionCondition :
 
         var channelID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.ChannelID,
-            ITextCommandContext tx => tx.Message.ChannelID,
+            IInteractionContext ix => ix.Interaction.ChannelID,
+            IMessageContext tx => tx.Message.ChannelID,
             _ => throw new NotSupportedException()
         };
 

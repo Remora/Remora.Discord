@@ -60,7 +60,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
     );
 
     private readonly IDiscordRestGuildAPI _guildAPI;
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmojiParser"/> class.
@@ -70,7 +70,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
     public EmojiParser
     (
         IDiscordRestGuildAPI guildAPI,
-        ICommandContext context
+        IOperationContext context
     )
     {
         _guildAPI = guildAPI;
@@ -96,8 +96,8 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
 
         var guildID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
+            IInteractionContext ix => ix.Interaction.GuildID,
+            IMessageContext tx => tx.GuildID,
             _ => throw new NotSupportedException()
         };
 

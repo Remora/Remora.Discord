@@ -38,13 +38,13 @@ namespace Remora.Discord.Commands.Parsers;
 /// </summary>
 public class AttachmentParser : AbstractTypeParser<IAttachment>, ITypeParser<IPartialAttachment>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AttachmentParser"/> class.
     /// </summary>
     /// <param name="context">The command context.</param>
-    public AttachmentParser(ICommandContext context)
+    public AttachmentParser(IOperationContext context)
     {
         _context = context;
     }

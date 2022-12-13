@@ -47,7 +47,7 @@ public class RequireBotDiscordPermissionsCondition :
     private readonly IDiscordRestUserAPI _userAPI;
     private readonly IDiscordRestGuildAPI _guildAPI;
     private readonly IDiscordRestChannelAPI _channelAPI;
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequireBotDiscordPermissionsCondition"/> class.
@@ -61,7 +61,7 @@ public class RequireBotDiscordPermissionsCondition :
         IDiscordRestUserAPI userAPI,
         IDiscordRestGuildAPI guildAPI,
         IDiscordRestChannelAPI channelAPI,
-        ICommandContext context
+        IOperationContext context
     )
     {
         _userAPI = userAPI;
@@ -79,8 +79,8 @@ public class RequireBotDiscordPermissionsCondition :
     {
         var guildID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
+            IInteractionContext ix => ix.Interaction.GuildID,
+            IMessageContext tx => tx.GuildID,
             _ => throw new NotSupportedException()
         };
 
@@ -94,8 +94,8 @@ public class RequireBotDiscordPermissionsCondition :
 
         var channelID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.ChannelID,
-            ITextCommandContext tx => tx.Message.ChannelID,
+            IInteractionContext ix => ix.Interaction.ChannelID,
+            IMessageContext tx => tx.Message.ChannelID,
             _ => throw new NotSupportedException()
         };
 
@@ -126,8 +126,8 @@ public class RequireBotDiscordPermissionsCondition :
     {
         var guildID = _context switch
         {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
+            IInteractionContext ix => ix.Interaction.GuildID,
+            IMessageContext tx => tx.GuildID,
             _ => throw new NotSupportedException()
         };
 

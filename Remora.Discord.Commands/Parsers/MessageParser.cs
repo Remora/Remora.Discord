@@ -50,7 +50,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
         RegexOptions.Compiled | RegexOptions.CultureInvariant
     );
 
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
 
     /// <summary>
@@ -58,7 +58,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="channelAPI">The channel API.</param>
-    public MessageParser(ICommandContext context, IDiscordRestChannelAPI channelAPI)
+    public MessageParser(IOperationContext context, IDiscordRestChannelAPI channelAPI)
     {
         _channelAPI = channelAPI;
         _context = context;
@@ -75,8 +75,8 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
         {
             var channelID = _context switch
             {
-                IInteractionCommandContext ix => ix.Interaction.ChannelID,
-                ITextCommandContext tx => tx.Message.ChannelID,
+                IInteractionContext ix => ix.Interaction.ChannelID,
+                IMessageContext tx => tx.Message.ChannelID,
                 _ => throw new NotSupportedException()
             };
 
