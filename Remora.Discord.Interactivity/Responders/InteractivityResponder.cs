@@ -322,7 +322,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
     private async Task<Result> TryExecuteCommandAsync
     (
-        InteractionContext operationContext,
+        IInteractionContext operationContext,
         IReadOnlyList<string> commandPath,
         IReadOnlyDictionary<string, IReadOnlyList<string>> parameters,
         CancellationToken ct = default
