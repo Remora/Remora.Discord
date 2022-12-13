@@ -265,6 +265,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
             applicationID,
             ct
         );
+
         if (!getUserApplicationRoleConnection.IsDefined(out var userApplicationRoleConnection))
         {
             return getUserApplicationRoleConnection;

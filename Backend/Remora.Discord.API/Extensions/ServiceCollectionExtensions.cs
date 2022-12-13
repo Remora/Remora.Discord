@@ -1133,10 +1133,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="options">The serializer options.</param>
     /// <returns>The options, with the converters added.</returns>
-    private static JsonSerializerOptions AddApplicationRoleConnectionObjectConverters
-    (
-        this JsonSerializerOptions options
-    )
+    private static JsonSerializerOptions AddApplicationRoleConnectionObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IApplicationRoleConnectionMetadata, ApplicationRoleConnectionMetadata>();
         options.AddDataObjectConverter<IApplicationRoleConnection, ApplicationRoleConnection>();

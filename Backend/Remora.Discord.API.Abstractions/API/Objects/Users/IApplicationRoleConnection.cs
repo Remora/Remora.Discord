@@ -22,7 +22,6 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -36,18 +35,18 @@ public interface IApplicationRoleConnection
     /// Gets the vanity name of the platform a bot has connected.
     /// </summary>
     /// <remarks>The length of the platform username must be max. 50 characters.</remarks>
-    Optional<string> PlatformName { get; }
+    string? PlatformName { get; }
 
     /// <summary>
     /// Gets the username on the platform a bot has connected.
     /// </summary>
     /// <remarks>The length of the platform username must be max. 100 characters.</remarks>
-    Optional<string> PlatformUsername { get; }
+    string? PlatformUsername { get; }
 
     /// <summary>
     /// Gets the object mapping of <see cref="IApplicationRoleConnectionMetadata.Key"/> to their stringified value
     /// for the user on the platform a bot has connected.
     /// </summary>
     /// <remarks>The length of the stringified value must max. 100 characters.</remarks>
-    Optional<IReadOnlyDictionary<string, string>> Metadata { get; }
+    IReadOnlyDictionary<string, string> Metadata { get; }
 }

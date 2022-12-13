@@ -353,7 +353,7 @@ public interface IDiscordRestApplicationAPI
     /// <param name="applicationID">The ID of the bot application.</param>
     /// <param name="records">The metadata records to overwrite the existing ones.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>An creation result which may or may not have succeeded.</returns>
+    /// <returns>An update result which may or may not have succeeded.</returns>
     Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> UpdateApplicationRoleConnectionMetadataRecordsAsync
     (
         Snowflake applicationID,

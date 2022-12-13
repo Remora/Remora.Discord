@@ -23,7 +23,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
@@ -31,7 +30,7 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record ApplicationRoleConnection
 (
-    Optional<string> PlatformName = default,
-    Optional<string> PlatformUsername = default,
-    Optional<IReadOnlyDictionary<string, string>> Metadata = default
+    string? PlatformName,
+    string? PlatformUsername,
+    IReadOnlyDictionary<string, string> Metadata
 ) : IApplicationRoleConnection;
