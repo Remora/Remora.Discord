@@ -6,7 +6,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
@@ -14,7 +13,6 @@ using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
-using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
