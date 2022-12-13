@@ -26,7 +26,7 @@ namespace Remora.Discord.Samples.Interactivity.Interactions;
 /// <summary>
 /// Handles colour dropdown interactions.
 /// </summary>
-public class ColourDropdownInteractions : InteractionGroup
+public partial class ColourDropdownInteractions : InteractionGroup
 {
     private readonly InteractionCommandContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
@@ -69,7 +69,7 @@ public class ColourDropdownInteractions : InteractionGroup
         }
 
         var colourCodeRaw = values.Single();
-        if (!Regex.IsMatch(colourCodeRaw, "^#[0-9A-Fa-f]{6}$"))
+        if (!ColourCodeRegex().IsMatch(colourCodeRaw))
         {
             return new ParsingError<Color>(colourCodeRaw);
         }
@@ -117,7 +117,7 @@ public class ColourDropdownInteractions : InteractionGroup
             message.ID,
             embeds: new[] { embed },
             components: newComponents,
-            ct: this.CancellationToken
+            ct: CancellationToken
         );
     }
 
@@ -147,7 +147,7 @@ public class ColourDropdownInteractions : InteractionGroup
             message,
             _context.Interaction.User.IsDefined(out var user) ? user.ID : default,
             options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
-            ct: this.CancellationToken
+            ct: CancellationToken
         );
     }
 
@@ -184,7 +184,10 @@ public class ColourDropdownInteractions : InteractionGroup
                 MessageFlags: MessageFlags.Ephemeral,
                 AllowedMentions: new AllowedMentions()
             ),
-            ct: this.CancellationToken
+            ct: CancellationToken
         );
     }
+
+    [GeneratedRegex("^#[0-9A-Fa-f]{6}$")]
+    private static partial Regex ColourCodeRegex();
 }
