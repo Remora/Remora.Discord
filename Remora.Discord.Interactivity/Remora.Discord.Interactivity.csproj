@@ -1,12 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>4.4.0</VersionPrefix>
+        <VersionPrefix>4.4.1</VersionPrefix>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
-            Add new command event for preparation failures (not found, condition failed..)
             Update dependencies.
-            Update Remora.Sdk.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -1,16 +1,11 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>26.0.0</VersionPrefix>
+        <VersionPrefix>26.1.0</VersionPrefix>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Update Remora.Sdk.
-            Fix issue with attributes on unnamed group types
-            BREAKING: Rework command context inheritance tree
-            BREAKING: Remove fallback tree for command execution
-            Add new command event for preparation failures (not found, condition failed..)
-            Add some UML for the command flow
+            Throw exceptions when context menu commands are incorrectly declared
+            Use operation contexts instead of command contexts in parsers and conditions.
         </PackageReleaseNotes>
     </PropertyGroup>
 
