@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>5.2.1</VersionPrefix>
+        <VersionPrefix>5.2.2</VersionPrefix>
         <Description>Utilities and components which extend upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Fix usage of PackageReference instead of ProjectReference.
         </PackageReleaseNotes>
     </PropertyGroup>
 
