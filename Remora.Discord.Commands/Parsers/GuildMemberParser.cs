@@ -69,14 +69,7 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
             return new ParsingError<IGuildMember>(value, "Unrecognized input format.");
         }
 
-        var guildID = _context switch
-        {
-            IInteractionContext ix => ix.Interaction.GuildID,
-            IMessageContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new InvalidOperationError("Guild members cannot be parsed outside of guild channels.");
         }

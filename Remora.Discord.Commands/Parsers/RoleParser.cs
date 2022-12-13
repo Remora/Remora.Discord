@@ -72,15 +72,8 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
             }
         }
 
-        var guildID = _context switch
-        {
-            IInteractionContext ix => ix.Interaction.GuildID,
-            IMessageContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
         // If there's nothing available, query the system
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new InvalidOperationError("Roles cannot be parsed outside of guild channels.");
         }

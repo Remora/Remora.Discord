@@ -73,14 +73,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
     {
         if (DiscordSnowflake.TryParse(value.Unmention(), out var messageID))
         {
-            var channelID = _context switch
-            {
-                IInteractionContext ix => ix.Interaction.ChannelID,
-                IMessageContext tx => tx.Message.ChannelID,
-                _ => throw new NotSupportedException()
-            };
-
-            if (!channelID.HasValue)
+            if (!_context.TryGetChannelID(out var channelID))
             {
                 return new ParsingError<IMessage>(value, "Messages can only be parsed by ID in channels.");
             }

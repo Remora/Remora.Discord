@@ -27,6 +27,7 @@ using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Conditions;
@@ -67,12 +68,10 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
             return new InvalidOperationError("The application owner's ID was not present.");
         }
 
-        var userID = _context switch
+        if (!_context.TryGetUserID(out var userID))
         {
-            IInteractionContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            IMessageContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
-            _ => throw new NotSupportedException()
-        };
+            throw new NotSupportedException();
+        }
 
         return application.Owner.ID.Value == userID
             ? Result.FromSuccess()

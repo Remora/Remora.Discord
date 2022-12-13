@@ -14,6 +14,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity;
@@ -80,16 +81,14 @@ public class InteractiveCommands : CommandGroup
             (c, i) => new Embed(Image: new EmbedImage(i), Description: c)
         ).ToList();
 
-        var userID = _context switch
+        if (!_context.TryGetUserID(out var userID))
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
-            _ => throw new NotSupportedException()
-        };
+            throw new NotSupportedException();
+        }
 
         return await _feedback.SendContextualPaginatedMessageAsync
         (
-            userID,
+            userID.Value,
             pages,
             ct: this.CancellationToken
         );
@@ -196,12 +195,10 @@ public class InteractiveCommands : CommandGroup
     [SuppressInteractionResponse(true)]
     public async Task<Result> ShowModalAsync()
     {
-        var userID = _context switch
+        if (!_context.TryGetUserID(out var userID))
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
-            _ => throw new NotSupportedException()
-        };
+            throw new NotSupportedException();
+        }
 
         if (_context is not IInteractionContext interactionContext)
         {

@@ -28,6 +28,7 @@ using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Results;
 using Remora.Results;
 
@@ -60,14 +61,7 @@ public class RequireContextCondition : ICondition<RequireContextAttribute>
     /// <inheritdoc />
     public async ValueTask<Result> CheckAsync(RequireContextAttribute attribute, CancellationToken ct)
     {
-        var channelID = _context switch
-        {
-            IInteractionContext ix => ix.Interaction.ChannelID,
-            IMessageContext tx => tx.Message.ChannelID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!channelID.HasValue)
+        if (!_context.TryGetChannelID(out var channelID))
         {
             return new PermissionDeniedError
             (

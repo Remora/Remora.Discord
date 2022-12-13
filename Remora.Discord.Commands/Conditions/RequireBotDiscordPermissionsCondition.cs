@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Results;
 using Remora.Results;
 
@@ -77,14 +78,7 @@ public class RequireBotDiscordPermissionsCondition :
         CancellationToken ct = default
     )
     {
-        var guildID = _context switch
-        {
-            IInteractionContext ix => ix.Interaction.GuildID,
-            IMessageContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out _))
         {
             return new PermissionDeniedError
             (
@@ -92,14 +86,7 @@ public class RequireBotDiscordPermissionsCondition :
             );
         }
 
-        var channelID = _context switch
-        {
-            IInteractionContext ix => ix.Interaction.ChannelID,
-            IMessageContext tx => tx.Message.ChannelID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!channelID.HasValue)
+        if (!_context.TryGetChannelID(out var channelID))
         {
             return new PermissionDeniedError("Commands executed outside of channels may not require any permissions.");
         }
@@ -124,14 +111,7 @@ public class RequireBotDiscordPermissionsCondition :
         CancellationToken ct = default
     )
     {
-        var guildID = _context switch
-        {
-            IInteractionContext ix => ix.Interaction.GuildID,
-            IMessageContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
