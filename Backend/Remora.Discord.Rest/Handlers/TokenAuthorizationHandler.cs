@@ -72,7 +72,7 @@ internal class TokenAuthorizationHandler : DelegatingHandler
         return base.SendAsync(request, cancellationToken);
     }
 
-    private void AddAuthorizationHeader
+    private static void AddAuthorizationHeader
     (
         HttpRequestMessage request,
         string token,
@@ -86,7 +86,7 @@ internal class TokenAuthorizationHandler : DelegatingHandler
         );
     }
 
-    private void AddTokenToPollyContext(HttpRequestMessage request, string token)
+    private static void AddTokenToPollyContext(HttpRequestMessage request, string token)
     {
         void ModifyContext(Context context)
         {
