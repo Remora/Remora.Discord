@@ -442,7 +442,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is < 1 or > 1000)
+        if (limit is { HasValue: true, Value: < 1 or > 1000 })
         {
             return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
         }
@@ -477,7 +477,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is < 1 or > 1000)
+        if (limit is { HasValue: true, Value: < 1 or > 1000 })
         {
             return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
         }
@@ -939,7 +939,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        if (days.HasValue && days.Value is < 1 or > 30)
+        if (days is { HasValue: true, Value: < 1 or > 30 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -984,7 +984,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        if (days.HasValue && days.Value is < 1 or > 30)
+        if (days is { HasValue: true, Value: < 1 or > 30 })
         {
             return new ArgumentOutOfRangeError
             (

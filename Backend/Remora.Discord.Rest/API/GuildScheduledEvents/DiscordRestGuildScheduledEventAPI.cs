@@ -102,7 +102,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        if (description is { HasValue: true, Value.Length: < 1 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -113,9 +113,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
 
         if
         (
-            entityMetadata.HasValue &&
-            entityMetadata.Value.Location.HasValue &&
-            entityMetadata.Value.Location.Value.Length is < 1 or > 100
+            entityMetadata is { HasValue: true, Value.Location: { HasValue: true, Value.Length: < 1 or > 100 } }
         )
         {
             return new ArgumentOutOfRangeError
@@ -205,7 +203,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is < 1 or > 100)
+        if (name is { HasValue: true, Value.Length: < 1 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -226,8 +224,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         if
         (
             entityMetadata.IsDefined(out var metadata) &&
-            metadata.Location.HasValue &&
-            metadata.Location.Value.Length is < 1 or > 100
+            metadata.Location is { HasValue: true, Value.Length: < 1 or > 100 }
         )
         {
             return new ArgumentOutOfRangeError
@@ -297,7 +294,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is < 1 or >= 100)
+        if (limit is { HasValue: true, Value: < 1 or >= 100 })
         {
             return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
         }

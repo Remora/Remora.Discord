@@ -120,7 +120,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is < 1 or > 200)
+        if (limit is { HasValue: true, Value: < 1 or > 200 })
         {
             return new ArgumentOutOfRangeError
             (

@@ -222,7 +222,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is < 1 or > 32)
+        if (name is { HasValue: true, Value.Length: < 1 or > 32 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -231,7 +231,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             );
         }
 
-        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        if (description is { HasValue: true, Value.Length: < 1 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -451,7 +451,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is < 1 or > 32)
+        if (name is { HasValue: true, Value.Length: < 1 or > 32 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -460,7 +460,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             );
         }
 
-        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        if (description is { HasValue: true, Value.Length: < 1 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (

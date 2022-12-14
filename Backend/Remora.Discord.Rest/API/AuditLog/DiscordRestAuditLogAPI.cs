@@ -60,7 +60,7 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is > 100 or 0)
+        if (limit is { HasValue: true, Value: > 100 or 0 })
         {
             return new ArgumentOutOfRangeError
             (

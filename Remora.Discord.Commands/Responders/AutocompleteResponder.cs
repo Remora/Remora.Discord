@@ -209,7 +209,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
                 return false;
             }
 
-            focusedParameter = options.FirstOrDefault(o => o.IsFocused.HasValue && o.IsFocused.Value);
+            focusedParameter = options.FirstOrDefault(o => o.IsFocused is { HasValue: true, Value: true });
             if (focusedParameter is not null)
             {
                 // Found it

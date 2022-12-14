@@ -112,7 +112,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is > 100 or < 1)
+        if (name is { HasValue: true, Value.Length: > 100 or < 1 })
         {
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
         }
@@ -135,7 +135,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             }
         }
 
-        if (userLimit.HasValue && userLimit.Value is > 99 or < 0)
+        if (userLimit is { HasValue: true, Value: > 99 or < 0 })
         {
             return new ArgumentOutOfRangeError(nameof(userLimit), "The user limit must be between 0 and 99.");
         }
@@ -437,7 +437,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             );
         }
 
-        if (limit.HasValue && limit.Value is > 100 or < 1)
+        if (limit is { HasValue: true, Value: > 100 or < 1 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -510,7 +510,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         CancellationToken ct = default
     )
     {
-        if (nonce.HasValue && nonce.Value.Length > 25)
+        if (nonce is { HasValue: true, Value.Length: > 25 })
         {
             return new ArgumentOutOfRangeError(nameof(nonce), "The nonce length must be less than 25 characters.");
         }
@@ -657,7 +657,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is > 100 or < 1)
+        if (limit is { HasValue: true, Value: > 100 or < 1 })
         {
             return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
         }
@@ -913,7 +913,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         CancellationToken ct = default
     )
     {
-        if (maxAge.HasValue && maxAge.Value.TotalSeconds is < 0 or > 604800)
+        if (maxAge is { HasValue: true, Value.TotalSeconds: < 0 or > 604800 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -922,7 +922,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             );
         }
 
-        if (maxUses.HasValue && maxUses.Value is < 0 or > 100)
+        if (maxUses is { HasValue: true, Value: < 0 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (
