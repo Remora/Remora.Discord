@@ -80,7 +80,7 @@ internal class PartialMessageComponentConverter : JsonConverter<IPartialMessageC
                 => document.RootElement.Deserialize<IPartialMentionableSelectComponent>(options),
             ComponentType.ChannelSelect
                 => document.RootElement.Deserialize<IPartialChannelSelectComponent>(options),
-            _ => throw new ArgumentOutOfRangeException(nameof(type))
+            _ => throw new NotSupportedException($"Deserialization of the component type {type} is not supported")
         };
     }
 
