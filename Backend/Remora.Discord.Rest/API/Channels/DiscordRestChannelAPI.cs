@@ -735,7 +735,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             return new InvalidOperationError
             (
                 $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(components)}, or {nameof(embeds)} "
-                + $"is required."
+                + "is required."
             );
         }
 
