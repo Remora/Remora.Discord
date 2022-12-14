@@ -34,7 +34,7 @@ public enum StagePrivacyLevel
     /// <summary>
     /// The stage instance is visible publicly, such as in stage discovery.
     /// </summary>
-    [Obsolete]
+    [Obsolete("Marked obsolete by Discord")]
     Public = 1,
 
     /// <summary>
