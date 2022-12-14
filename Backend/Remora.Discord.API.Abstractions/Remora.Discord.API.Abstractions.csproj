@@ -12,9 +12,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.223" />
-      <PackageReference Include="Remora.Rest.Core" Version="2.0.5" />
-      <PackageReference Include="Remora.Results" Version="7.2.3" />
+      <PackageReference Include="OneOf" />
+      <PackageReference Include="Remora.Rest.Core" />
+      <PackageReference Include="Remora.Results" />
     </ItemGroup>
 
     <ItemGroup>

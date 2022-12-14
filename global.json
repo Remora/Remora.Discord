@@ -1,6 +1,6 @@
 {
   "msbuild-sdks": {
-    "Remora.Sdk": "2.0.1",
-    "Remora.Tests.Sdk": "2.0.2"
+    "Remora.Sdk": "2.1.0",
+    "Remora.Tests.Sdk": "2.0.3"
   }
 }

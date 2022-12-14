@@ -1,9 +1,9 @@
 <Project Sdk="Remora.Tests.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="Humanizer.Core" Version="2.14.1" />
-        <PackageReference Include="Moq" Version="4.18.3" />
-        <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
+        <PackageReference Include="Humanizer.Core" />
+        <PackageReference Include="Moq" />
+        <PackageReference Include="Xunit.SkippableFact" />
     </ItemGroup>
 
     <ItemGroup>

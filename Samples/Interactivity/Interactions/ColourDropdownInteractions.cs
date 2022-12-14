@@ -117,7 +117,7 @@ public partial class ColourDropdownInteractions : InteractionGroup
             message.ID,
             embeds: new[] { embed },
             components: newComponents,
-            ct: CancellationToken
+            ct: this.CancellationToken
         );
     }
 
@@ -147,7 +147,7 @@ public partial class ColourDropdownInteractions : InteractionGroup
             message,
             _context.Interaction.User.IsDefined(out var user) ? user.ID : default,
             options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
-            ct: CancellationToken
+            ct: this.CancellationToken
         );
     }
 
@@ -184,7 +184,7 @@ public partial class ColourDropdownInteractions : InteractionGroup
                 MessageFlags: MessageFlags.Ephemeral,
                 AllowedMentions: new AllowedMentions()
             ),
-            ct: CancellationToken
+            ct: this.CancellationToken
         );
     }
 

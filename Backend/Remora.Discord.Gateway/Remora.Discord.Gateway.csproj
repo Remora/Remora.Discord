@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.6" />
-      <PackageReference Include="System.Threading.Channels" Version="7.0.0" />
+      <PackageReference Include="Remora.Extensions.Options.Immutable" />
+      <PackageReference Include="System.Threading.Channels" />
     </ItemGroup>
 </Project>

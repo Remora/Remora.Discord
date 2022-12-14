@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Remora.Results" Version="7.2.3" />
+      <PackageReference Include="Remora.Results" />
     </ItemGroup>
 
 </Project>
