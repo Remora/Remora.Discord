@@ -325,7 +325,7 @@ public class RequireDiscordPermissionCondition :
         return result;
     }
 
-    private string Explain
+    private static string Explain
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator
@@ -345,7 +345,7 @@ public class RequireDiscordPermissionCondition :
         };
     }
 
-    private Result CheckRequirements
+    private static Result CheckRequirements
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator

@@ -823,7 +823,7 @@ public class FeedbackService
     /// <param name="contents">The contents of the embed.</param>
     /// <returns>A feedback embed.</returns>
     [Pure]
-    private Embed CreateFeedbackEmbed(Snowflake? target, Color color, string contents)
+    private static Embed CreateFeedbackEmbed(Snowflake? target, Color color, string contents)
     {
         if (target is null)
         {

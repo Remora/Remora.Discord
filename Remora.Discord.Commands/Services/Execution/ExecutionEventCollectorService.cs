@@ -140,7 +140,7 @@ public class ExecutionEventCollectorService
         );
     }
 
-    private async Task<Result> RunEvents
+    private static async Task<Result> RunEvents
     (
         IEnumerable<Func<CancellationToken, Task<Result>>> events,
         CancellationToken ct
