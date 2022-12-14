@@ -259,7 +259,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
                     return new GatewayWebSocketError(result.CloseStatus.Value);
                 }
 
-                await memoryStream.WriteAsync(buffer, 0, result.Count, ct);
+                await memoryStream.WriteAsync(buffer.AsMemory(0, result.Count), ct);
             }
             while (!result.EndOfMessage);
 
@@ -356,7 +356,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             WebSocketError.Success => true, // should never happen, but try again
             WebSocketError.UnsupportedProtocol => false,
             WebSocketError.UnsupportedVersion => false,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => false // no idea, best to assume it's a non-retryable error
         };
     }
 
