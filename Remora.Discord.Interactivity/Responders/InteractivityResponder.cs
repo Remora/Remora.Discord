@@ -119,7 +119,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
     private async Task<Result> HandleComponentInteractionAsync
     (
-        InteractionContext context,
+        IInteractionContext context,
         IMessageComponentData data,
         CancellationToken ct = default
     )
@@ -231,7 +231,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
     private async Task<Result> HandleModalInteractionAsync
     (
-        InteractionContext context,
+        IInteractionContext context,
         IModalSubmitData data,
         CancellationToken ct = default
     )
