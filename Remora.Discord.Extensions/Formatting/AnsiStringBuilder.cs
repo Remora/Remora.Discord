@@ -21,12 +21,14 @@
 //
 
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Extensions.Formatting;
 
 /// <summary>
 /// Provides a builder to build an ANSI formatted string.
 /// </summary>
+[PublicAPI]
 public class AnsiStringBuilder
 {
     private readonly StringBuilder _builder;
