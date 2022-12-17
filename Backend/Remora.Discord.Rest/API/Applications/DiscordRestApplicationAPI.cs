@@ -94,6 +94,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     )
     {
@@ -141,6 +142,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -219,6 +221,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     )
     {
@@ -255,6 +258,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -366,6 +370,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     )
     {
@@ -412,6 +417,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -448,6 +454,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     )
     {
@@ -482,6 +489,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),

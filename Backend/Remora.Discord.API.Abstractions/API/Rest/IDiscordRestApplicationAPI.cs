@@ -69,6 +69,7 @@ public interface IDiscordRestApplicationAPI
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="dmPermission">Whether this command is executable in DMs.</param>
+    /// <param name="isNsfw">Whether the command is age-restricted.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
@@ -82,6 +83,7 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     );
 
@@ -125,6 +127,7 @@ public interface IDiscordRestApplicationAPI
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="dmPermission">Whether this command is executable in DMs.</param>
+    /// <param name="isNsfw">Whether this command is age-restricted.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
@@ -138,6 +141,7 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     );
 
@@ -190,6 +194,7 @@ public interface IDiscordRestApplicationAPI
     /// <param name="nameLocalizations">The localized names of the command.</param>
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
+    /// <param name="isNsfw">Whether the command is age-restricted.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
@@ -203,6 +208,7 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     );
 
@@ -250,6 +256,7 @@ public interface IDiscordRestApplicationAPI
     /// <param name="nameLocalizations">The localized names of the command.</param>
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
+    /// <param name="isNsfw">Whether this command is age-restricted.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     /// <remarks>This method requires a bearer token authorized with the applications.commands.permissions.update scope.</remarks>
@@ -264,6 +271,7 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     );
 

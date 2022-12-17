@@ -967,14 +967,16 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteractionModalCallbackData, InteractionModalCallbackData>();
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
-        options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
+        options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>()
+            .WithPropertyName(d => d.IsNsfw, "nsfw");
         options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
             .WithPropertyName(o => o.IsDefault, "default")
             .WithPropertyName(o => o.IsRequired, "required")
             .WithPropertyName(o => o.EnableAutocomplete, "autocomplete");
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
-        options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>();
+        options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>()
+            .WithPropertyName(d => d.IsNsfw, "nsfw");
 
         options.AddDataObjectConverter
             <

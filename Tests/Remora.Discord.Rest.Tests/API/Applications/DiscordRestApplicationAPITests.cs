@@ -117,6 +117,7 @@ public class DiscordRestApplicationAPITests
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
             var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
+            var nsfw = true;
 
             var api = CreateAPI
             (
@@ -133,6 +134,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                                 .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
                                 .WithProperty("dm_permission", p => p.Is(false))
+                                .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -146,7 +148,8 @@ public class DiscordRestApplicationAPITests
                 options,
                 defaultMemberPermissions: permissions,
                 dmPermission: false,
-                type: type
+                type: type,
+                isNsfw: nsfw
             );
 
             ResultAssert.Successful(result);
@@ -708,6 +711,7 @@ public class DiscordRestApplicationAPITests
             var name = "aaa";
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
+            var nsfw = true;
 
             var api = CreateAPI
             (
@@ -721,6 +725,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
+                                .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -732,7 +737,8 @@ public class DiscordRestApplicationAPITests
                 commandID,
                 name,
                 description,
-                options
+                options,
+                isNsfw: nsfw
             );
 
             ResultAssert.Successful(result);
@@ -1032,6 +1038,7 @@ public class DiscordRestApplicationAPITests
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
             var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
+            var nsfw = true;
 
             var api = CreateAPI
             (
@@ -1051,6 +1058,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
                                 .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
+                                .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -1064,7 +1072,8 @@ public class DiscordRestApplicationAPITests
                 description,
                 options,
                 defaultMemberPermissions: permissions,
-                type: type
+                type: type,
+                isNsfw: nsfw
             );
 
             ResultAssert.Successful(result);
@@ -1682,6 +1691,7 @@ public class DiscordRestApplicationAPITests
             var name = "aaa";
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
+            var nsfw = true;
 
             var api = CreateAPI
             (
@@ -1699,6 +1709,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
+                                .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -1711,7 +1722,8 @@ public class DiscordRestApplicationAPITests
                 commandID,
                 name,
                 description,
-                options
+                options,
+                isNsfw: nsfw
             );
 
             ResultAssert.Successful(result);
