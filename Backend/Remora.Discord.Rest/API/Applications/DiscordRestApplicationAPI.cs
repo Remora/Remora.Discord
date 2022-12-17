@@ -565,4 +565,64 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             ct: ct
         );
     }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> GetApplicationRoleConnectionMetadataRecordsAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationRoleConnectionMetadata>>
+        (
+            $"applications/{applicationID}/role-connections/metadata",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> UpdateApplicationRoleConnectionMetadataRecordsAsync
+    (
+        Snowflake applicationID,
+        IReadOnlyList<IApplicationRoleConnectionMetadata> records,
+        CancellationToken ct = default
+    )
+    {
+        if (records.Any(r => r.Key.Length > 50))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(records),
+                "Role connection metadata keys must be max. 50 characters."
+            );
+        }
+
+        if (records.Any(r => r.Name.Length > 100))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(records),
+                "Role connection metadata names must be max. 100 characters."
+            );
+        }
+
+        if (records.Any(r => r.Description.Length > 200))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(records),
+                "Role connection metadata descriptions must be max. 200 characters."
+            );
+        }
+
+        return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationRoleConnectionMetadata>>
+        (
+            $"applications/{applicationID}/role-connections/metadata",
+            b => b
+                .WithJsonArray(json => JsonSerializer.Serialize(json, records, this.JsonOptions), false)
+                .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
 }

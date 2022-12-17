@@ -133,6 +133,13 @@ public interface IApplication : IPartialApplication
     /// </summary>
     new Optional<Uri> CustomInstallUrl { get; }
 
+    /// <summary>
+    /// Gets the application's role connection verification entry point,
+    /// which when configured will render the app as a verification method
+    /// in the guild role verification configuration.
+    /// </summary>
+    new Optional<Uri> RoleConnectionsVerificationUrl { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.ID => this.ID;
 
@@ -185,11 +192,14 @@ public interface IApplication : IPartialApplication
     Optional<ApplicationFlags> IPartialApplication.Flags => this.Flags;
 
     /// <inheritdoc/>
-    Optional<IReadOnlyList<string>> IPartialApplication.Tags => throw new NotImplementedException();
+    Optional<IReadOnlyList<string>> IPartialApplication.Tags => this.Tags;
 
     /// <inheritdoc/>
-    Optional<IApplicationInstallParameters> IPartialApplication.InstallParams => throw new NotImplementedException();
+    Optional<IApplicationInstallParameters> IPartialApplication.InstallParams => this.InstallParams;
 
     /// <inheritdoc/>
-    Optional<Uri> IPartialApplication.CustomInstallUrl => throw new NotImplementedException();
+    Optional<Uri> IPartialApplication.CustomInstallUrl => this.CustomInstallUrl;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.RoleConnectionsVerificationUrl => this.RoleConnectionsVerificationUrl;
 }

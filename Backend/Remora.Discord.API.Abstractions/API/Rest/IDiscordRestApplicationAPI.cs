@@ -331,4 +331,33 @@ public interface IDiscordRestApplicationAPI
         IReadOnlyList<IApplicationCommandPermissions> permissions,
         CancellationToken ct = default
     );
+
+    /// <summary>
+    /// Gets the application role connection metadata records for the given application..
+    /// </summary>
+    /// <param name="applicationID">The ID of the bot application.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> GetApplicationRoleConnectionMetadataRecordsAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Updates the application role connection metadata records for the given application..
+    /// </summary>
+    /// <remarks>
+    /// An application can have a maximum of 5 metadata records.
+    /// </remarks>
+    /// <param name="applicationID">The ID of the bot application.</param>
+    /// <param name="records">The metadata records to overwrite the existing ones.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>An update result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> UpdateApplicationRoleConnectionMetadataRecordsAsync
+    (
+        Snowflake applicationID,
+        IReadOnlyList<IApplicationRoleConnectionMetadata> records,
+        CancellationToken ct = default
+    );
 }
