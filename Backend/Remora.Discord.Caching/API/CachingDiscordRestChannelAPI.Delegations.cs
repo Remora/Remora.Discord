@@ -222,6 +222,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<SortOrder> defaultSortOrder = default,
+        Optional<ForumLayout> defaultForumLayout = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -242,6 +243,7 @@ public partial class CachingDiscordRestChannelAPI
             defaultReactionEmoji,
             defaultThreadRateLimitPerUser,
             defaultSortOrder,
+            defaultForumLayout,
             reason,
             ct
         );

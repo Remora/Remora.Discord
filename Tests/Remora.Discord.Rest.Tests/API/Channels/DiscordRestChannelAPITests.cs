@@ -457,6 +457,7 @@ public class DiscordRestChannelAPITests
             var defaultReactionEmoji = new DefaultReaction(new Snowflake(1));
             var defaultThreadRateLimitPerUser = 2;
             var defaultSortOrder = SortOrder.CreationDate;
+            var defaultForumLayout = ForumLayout.GalleryView;
             var reason = "test";
 
             var api = CreateAPI
@@ -483,6 +484,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("default_reaction_emoji", p => p.IsObject())
                                     .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                                     .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
+                                    .WithProperty("default_forum_layout", p => p.Is((int)defaultForumLayout))
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -504,6 +506,7 @@ public class DiscordRestChannelAPITests
                 defaultReactionEmoji,
                 defaultThreadRateLimitPerUser,
                 defaultSortOrder,
+                defaultForumLayout,
                 reason
             );
 

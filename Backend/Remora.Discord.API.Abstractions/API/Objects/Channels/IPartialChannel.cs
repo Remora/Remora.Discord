@@ -131,4 +131,7 @@ public interface IPartialChannel
 
     /// <inheritdoc cref="IChannel.DefaultSortOrder" />
     Optional<SortOrder?> DefaultSortOrder { get; }
+
+    /// <inheritdoc cref="IChannel.DefaultForumLayout" />
+    Optional<ForumLayout> DefaultForumLayout { get; }
 }

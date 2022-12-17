@@ -565,7 +565,7 @@ public class DiscordRestUserAPITests
                                         {
                                             foreach (var metaPair in metadata)
                                             {
-                                                m.WithProperty(metaPair.Key, p => p.Is(metaPair.Value));
+                                                m.WithProperty(metaPair.Key, pp => pp.Is(metaPair.Value));
                                             }
                                         }
                                     )

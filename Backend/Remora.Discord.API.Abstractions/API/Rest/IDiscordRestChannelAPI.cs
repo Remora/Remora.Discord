@@ -84,6 +84,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
     /// <param name="appliedTags">The tags applied to the thread.</param>
     /// <param name="defaultSortOrder">The default sort order of posts.</param>
+    /// <param name="defaultForumLayout">The default layout of posts in a forum.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -114,6 +115,7 @@ public interface IDiscordRestChannelAPI
         Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<SortOrder> defaultSortOrder = default,
+        Optional<ForumLayout> defaultForumLayout = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -315,6 +317,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
     /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
     /// <param name="defaultSortOrder">The default sort order of posts.</param>
+    /// <param name="defaultForumLayout">The default layout of posts in a forum.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -334,6 +337,7 @@ public interface IDiscordRestChannelAPI
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<int> defaultThreadRateLimitPerUser = default,
         Optional<SortOrder> defaultSortOrder = default,
+        Optional<ForumLayout> defaultForumLayout = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

@@ -202,6 +202,11 @@ public interface IChannel : IPartialChannel
     /// </summary>
     new Optional<SortOrder?> DefaultSortOrder { get; }
 
+    /// <summary>
+    /// Gets the default post layout for the forum.
+    /// </summary>
+    new Optional<ForumLayout> DefaultForumLayout { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialChannel.ID => this.ID;
 
@@ -300,4 +305,7 @@ public interface IChannel : IPartialChannel
 
     /// <inheritdoc/>
     Optional<SortOrder?> IPartialChannel.DefaultSortOrder => this.DefaultSortOrder;
+
+    /// <inheritdoc/>
+    Optional<ForumLayout> IPartialChannel.DefaultForumLayout => this.DefaultForumLayout;
 }
