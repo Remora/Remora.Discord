@@ -48,19 +48,7 @@ public static class HostBuilderExtensions
     public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<IServiceProvider, string> tokenFactory, Action<IHttpClientBuilder>? buildClient = null)
     {
         hostBuilder.ConfigureServices((_, serviceCollection) =>
-        {
-            serviceCollection.Configure(() => new DiscordServiceOptions());
-
-            serviceCollection
-                .AddDiscordGateway(tokenFactory, buildClient);
-
-            serviceCollection
-                .TryAddSingleton<DiscordService>();
-
-            serviceCollection
-                .AddSingleton<IHostedService, DiscordService>(serviceProvider =>
-                    serviceProvider.GetRequiredService<DiscordService>());
-        });
+            serviceCollection.AddDiscordService(tokenFactory, buildClient));
 
         return hostBuilder;
     }
