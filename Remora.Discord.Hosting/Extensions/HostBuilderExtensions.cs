@@ -39,7 +39,7 @@ namespace Remora.Discord.Hosting.Extensions;
 public static class HostBuilderExtensions
 {
     /// <summary>
-    /// Adds the required services for Remora Discord to an <see cref="IHostBuilder"/>.
+    /// Adds the required services for Remora Discord and a <see cref="IHostedService"/> implementation to an <see cref="IHostBuilder"/>.
     /// </summary>
     /// <param name="hostBuilder">The host builder.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
@@ -54,7 +54,7 @@ public static class HostBuilderExtensions
     }
 
     /// <summary>
-    /// Adds the required services for Remora Discord to an <see cref="IServiceCollection"/>.
+    /// Adds the required services for Remora Discord and a <see cref="IHostedService"/> implementation to an <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
