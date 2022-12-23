@@ -35,7 +35,7 @@ using Xunit;
 namespace Remora.Discord.Caching.Tests;
 
 /// <summary>
-/// Tests injection of various command contexts.
+/// Tests the functionality of the default in-memory cache.
 /// </summary>
 public class CacheTests
 {
@@ -54,7 +54,23 @@ public class CacheTests
     }
 
     /// <summary>
-    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// Creates and configures the basic caching services.
+    /// </summary>
+    /// <param name="configureSettings">
+    /// An optional function to configure the <see cref="CacheSettings"/> instance.
+    /// </param>
+    /// <returns>A newly created <see cref="IServiceProvider"/> with Discord caching services enabled.</returns>
+    private static ServiceProvider CreateServices(Action<CacheSettings>? configureSettings = null)
+    {
+        return new ServiceCollection()
+            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
+            .AddDiscordCaching()
+            .Configure<CacheSettings>(settings => configureSettings?.Invoke(settings))
+            .BuildServiceProvider(validateScopes: true);
+    }
+
+    /// <summary>
+    /// Tests whether a cache entry with an absolute expiration value of <see cref="TimeSpan.Zero"/> is never cached.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
@@ -62,14 +78,10 @@ public class CacheTests
     {
         var dummyMessage = new Mock<Fixture>().Object;
 
-        var services = new ServiceCollection()
-            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
-            .AddDiscordCaching()
-            .Configure<CacheSettings>(settings =>
+        var services = CreateServices(settings =>
             {
                 settings.SetAbsoluteExpiration<Fixture>(TimeSpan.Zero);
             })
-            .BuildServiceProvider(true)
             .CreateScope().ServiceProvider;
 
         var cache = services.GetRequiredService<CacheService>();
@@ -81,7 +93,7 @@ public class CacheTests
     }
 
     /// <summary>
-    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// Tests whether the caching system can store and retrieve multiple cache entries with different keys separately.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
@@ -90,11 +102,7 @@ public class CacheTests
         var dummyMessage = new Mock<Fixture>().Object;
         var dummyMessage2 = new Mock<Fixture>().Object;
 
-        var services = new ServiceCollection()
-            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
-            .AddDiscordCaching()
-            .BuildServiceProvider(true)
-            .CreateScope().ServiceProvider;
+        var services = CreateServices().CreateScope().ServiceProvider;
 
         var cache = services.GetRequiredService<CacheService>();
 
@@ -112,7 +120,7 @@ public class CacheTests
     }
 
     /// <summary>
-    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// Tests whether the caching system produces the same value that was inserted into it.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
@@ -120,11 +128,7 @@ public class CacheTests
     {
         var dummyMessage = new Mock<Fixture>().Object;
 
-        var services = new ServiceCollection()
-            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
-            .AddDiscordCaching()
-            .BuildServiceProvider(true)
-            .CreateScope().ServiceProvider;
+        var services = CreateServices().CreateScope().ServiceProvider;
 
         var cache = services.GetRequiredService<CacheService>();
 
@@ -137,7 +141,7 @@ public class CacheTests
     }
 
     /// <summary>
-    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// Tests whether a cached value does not expire before the specified timeout.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
@@ -145,14 +149,10 @@ public class CacheTests
     {
         var dummyMessage = new Mock<Fixture>().Object;
 
-        var services = new ServiceCollection()
-            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
-            .AddDiscordCaching()
-            .Configure<CacheSettings>(settings =>
+        var services = CreateServices(settings =>
             {
                 settings.SetAbsoluteExpiration<Fixture>(TimeSpan.FromMilliseconds(500));
             })
-            .BuildServiceProvider(true)
             .CreateScope().ServiceProvider;
 
         var cache = services.GetRequiredService<CacheService>();
@@ -166,7 +166,7 @@ public class CacheTests
     }
 
     /// <summary>
-    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// Tests whether a cached value expires after the specified timeout.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
@@ -174,14 +174,10 @@ public class CacheTests
     {
         var dummyMessage = new Mock<Fixture>().Object;
 
-        var services = new ServiceCollection()
-            .AddDiscordRest(_ => ("dummy", DiscordTokenType.Bot))
-            .AddDiscordCaching()
-            .Configure<CacheSettings>(settings =>
+        var services = CreateServices(settings =>
             {
                 settings.SetAbsoluteExpiration<Fixture>(TimeSpan.FromMilliseconds(500));
             })
-            .BuildServiceProvider(true)
             .CreateScope().ServiceProvider;
 
         var cache = services.GetRequiredService<CacheService>();
