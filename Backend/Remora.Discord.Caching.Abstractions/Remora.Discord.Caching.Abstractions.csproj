@@ -10,7 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
-      <PackageReference Include="Remora.Results" Version="7.2.2" />
+      <PackageReference Include="Remora.Results" />
     </ItemGroup>
 
 </Project>
