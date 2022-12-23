@@ -95,6 +95,50 @@ In order to select which autocomplete provider to use, apply the
 `AutocompleteAttribute` to the appropriate parameters in your command groups. If
 you're using the type-specific autocomplete provider, this is not required.
 
+### Preparation error events
+If a command can't be successfully prepared from whatever the user sends (due to
+malformed input, parsing failures, failed conditions etc.), the command's 
+"preparation" is considered failed.
+
+In many cases, it's useful to hook into this event in order to provide the end
+user with helpful information about what they did wrong or why the command 
+didn't work.
+
+This can be accomplished by registering a preparation error event, which is a 
+class that implements `IPreparationErrorEvent`.
+
+```c#
+public class MyPreparationErrorEvent : IPreparationErrorEvent
+{
+    public Task<Result> PreparationFailed(IOperationContext context, IResult preparationResult, CancellationToken ct = default)
+    {
+        // ...
+    }
+}
+
+...
+
+services.AddPreparationErrorEvent<MyPreparationErrorEvent>();
+```
+
+The preparation result contains information about the error - try checking for
+things like `CommandNotFoundError` or `ParameterParsingError` when you get a 
+preparation error.
+
+If you return an error in a preparation error event, the command invocation is
+cancelled, and never progresses to the real execution stage.
+
+By default, user- or environment-caused preparation errors don't produce any log
+messages or user-facing output. It's up to you to decide if and how you want to
+handle these.
+
+Note that if you register multiple preparation events, they will run 
+sequentially within the same service scope. Order is not guaranteed, but 
+typically ends up being the same as registration order. Every event will get a
+chance to run even if one of them fails, but failure of any of the events is 
+considered a collective failure, and will cause the command invocation to be
+cancelled.
+
 ### Pre- and post-execution events
 In some cases, it may be useful to execute pieces of code before or after 
 invocation of a command (checking GDPR consent, logging error messages, etc). 
@@ -121,6 +165,13 @@ If you return an error in a pre-execution event, the command invocation is
 cancelled, and never progresses to the real execution stage. If you return an
 error in a post-execution event, this is treated as if the command itself had 
 failed, which may be useful for things like scrubbing database transactions.
+
+Note that if you register multiple pre- or post-execution events, they will run
+sequentially within the same service scope. Order is not guaranteed, but
+typically ends up being the same as registration order. Every event will get a
+chance to run even if one of them fails, but failure of any of the events is
+considered a collective failure. In the case of pre-execution events, this will
+cause the command invocation to be cancelled.
 
 
 [1]: https://github.com/Remora/Remora.Commands

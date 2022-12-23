@@ -91,7 +91,7 @@ public class MemoryCacheProvider : ICacheProvider
     public ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
         where TInstance : class
     {
-        if (!_memoryCache.TryGetValue(key, out TInstance existingValue))
+        if (!_memoryCache.TryGetValue(key, out TInstance? existingValue))
         {
             return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
         }

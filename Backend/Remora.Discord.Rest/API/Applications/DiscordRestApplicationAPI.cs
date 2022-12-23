@@ -94,6 +94,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     )
     {
@@ -141,6 +142,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -219,10 +221,11 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is < 1 or > 32)
+        if (name is { HasValue: true, Value.Length: < 1 or > 32 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -231,7 +234,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             );
         }
 
-        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        if (description is { HasValue: true, Value.Length: < 1 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -255,6 +258,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -366,6 +370,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     )
     {
@@ -412,6 +417,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -448,10 +454,11 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool> isNsfw = default,
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is < 1 or > 32)
+        if (name is { HasValue: true, Value.Length: < 1 or > 32 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -460,7 +467,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             );
         }
 
-        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        if (description is { HasValue: true, Value.Length: < 1 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -482,6 +489,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("name_localizations", nameLocalizations, this.JsonOptions);
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -561,6 +569,66 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         JsonSerializer.Serialize(json, permissions, this.JsonOptions);
                     }
                 )
+                .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> GetApplicationRoleConnectionMetadataRecordsAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationRoleConnectionMetadata>>
+        (
+            $"applications/{applicationID}/role-connections/metadata",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> UpdateApplicationRoleConnectionMetadataRecordsAsync
+    (
+        Snowflake applicationID,
+        IReadOnlyList<IApplicationRoleConnectionMetadata> records,
+        CancellationToken ct = default
+    )
+    {
+        if (records.Any(r => r.Key.Length > 50))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(records),
+                "Role connection metadata keys must be max. 50 characters."
+            );
+        }
+
+        if (records.Any(r => r.Name.Length > 100))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(records),
+                "Role connection metadata names must be max. 100 characters."
+            );
+        }
+
+        if (records.Any(r => r.Description.Length > 200))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(records),
+                "Role connection metadata descriptions must be max. 200 characters."
+            );
+        }
+
+        return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationRoleConnectionMetadata>>
+        (
+            $"applications/{applicationID}/role-connections/metadata",
+            b => b
+                .WithJsonArray(json => JsonSerializer.Serialize(json, records, this.JsonOptions), false)
                 .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );

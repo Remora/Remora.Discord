@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Results;
 using Remora.Results;
 
@@ -47,7 +48,7 @@ public class RequireBotDiscordPermissionsCondition :
     private readonly IDiscordRestUserAPI _userAPI;
     private readonly IDiscordRestGuildAPI _guildAPI;
     private readonly IDiscordRestChannelAPI _channelAPI;
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequireBotDiscordPermissionsCondition"/> class.
@@ -61,7 +62,7 @@ public class RequireBotDiscordPermissionsCondition :
         IDiscordRestUserAPI userAPI,
         IDiscordRestGuildAPI guildAPI,
         IDiscordRestChannelAPI channelAPI,
-        ICommandContext context
+        IOperationContext context
     )
     {
         _userAPI = userAPI;
@@ -77,7 +78,7 @@ public class RequireBotDiscordPermissionsCondition :
         CancellationToken ct = default
     )
     {
-        if (!_context.GuildID.IsDefined())
+        if (!_context.TryGetGuildID(out _))
         {
             return new PermissionDeniedError
             (
@@ -85,7 +86,12 @@ public class RequireBotDiscordPermissionsCondition :
             );
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
+        if (!_context.TryGetChannelID(out var channelID))
+        {
+            return new PermissionDeniedError("Commands executed outside of channels may not require any permissions.");
+        }
+
+        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
 
         if (!getChannel.IsSuccess)
         {
@@ -105,7 +111,7 @@ public class RequireBotDiscordPermissionsCondition :
         CancellationToken ct = default
     )
     {
-        if (!_context.GuildID.IsDefined(out var guildID))
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -121,7 +127,7 @@ public class RequireBotDiscordPermissionsCondition :
 
         var user = getUser.Entity;
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return (Result)getGuild;
@@ -134,7 +140,7 @@ public class RequireBotDiscordPermissionsCondition :
             return Result.FromSuccess();
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
@@ -142,7 +148,7 @@ public class RequireBotDiscordPermissionsCondition :
 
         var guildRoles = getRoles.Entity;
 
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, user.ID, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;
@@ -197,7 +203,7 @@ public class RequireBotDiscordPermissionsCondition :
         return result;
     }
 
-    private string Explain
+    private static string Explain
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator
@@ -217,7 +223,7 @@ public class RequireBotDiscordPermissionsCondition :
         };
     }
 
-    private Result CheckRequirements
+    private static Result CheckRequirements
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator

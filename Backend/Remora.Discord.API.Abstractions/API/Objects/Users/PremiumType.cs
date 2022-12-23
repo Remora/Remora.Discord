@@ -43,5 +43,10 @@ public enum PremiumType
     /// <summary>
     /// The user has a Nitro subscription.
     /// </summary>
-    Nitro = 2
+    Nitro = 2,
+
+    /// <summary>
+    /// The user has a Nitro Basic subscription.
+    /// </summary>
+    NitroBasic = 3
 }

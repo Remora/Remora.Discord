@@ -88,6 +88,7 @@ public static class ServiceCollectionExtensions
                         .AddVoiceGatewayEventConverters()
                         .AddActivityObjectConverters()
                         .AddAuditLogObjectConverters()
+                        .AddAutoModerationObjectConverters()
                         .AddChannelObjectConverters()
                         .AddEmojiObjectConverters()
                         .AddGatewayObjectConverters()
@@ -109,7 +110,8 @@ public static class ServiceCollectionExtensions
                         .AddOAuth2ObjectConverters()
                         .AddTeamObjectConverters()
                         .AddStageInstanceObjectConverters()
-                        .AddStickerObjectConverters();
+                        .AddStickerObjectConverters()
+                        .AddApplicationRoleConnectionObjectConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
                     options.AddConverter<PropertyErrorDetailsConverter>();
@@ -192,18 +194,33 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IReconnect, Reconnect>();
         options.AddDataObjectConverter<IResumed, Resumed>();
 
+        // Auto Moderation
+        options.AddDataObjectConverter<IAutoModerationActionExecution, AutoModerationActionExecution>();
+
+        options.AddDataObjectConverter<IAutoModerationRuleCreate, AutoModerationRuleCreate>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
+        options.AddDataObjectConverter<IAutoModerationRuleUpdate, AutoModerationRuleUpdate>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
+        options.AddDataObjectConverter<IAutoModerationRuleDelete, AutoModerationRuleDelete>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
         // Channels
         options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelUpdate, ChannelUpdate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelDelete, ChannelDelete>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
@@ -292,7 +309,6 @@ public static class ServiceCollectionExtensions
         // Invites
         options.AddDataObjectConverter<IInviteCreate, InviteCreate>()
             .WithPropertyName(c => c.IsTemporary, "temporary")
-            .WithPropertyConverter(c => c.CreatedAt, new ISO8601DateTimeOffsetConverter())
             .WithPropertyConverter(c => c.MaxAge, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IInviteDelete, InviteDelete>();
@@ -471,6 +487,27 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
+    /// Adds the JSON converters that handle auto moderation objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddAutoModerationObjectConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IAutoModerationAction, AutoModerationAction>();
+
+        options.AddDataObjectConverter<IAutoModerationActionMetadata, AutoModerationActionMetadata>()
+            .WithPropertyName(m => m.Duration, "duration_seconds")
+            .WithPropertyConverter(am => am.Duration, new UnitTimeSpanConverter(TimeUnit.Seconds));
+
+        options.AddDataObjectConverter<IAutoModerationTriggerMetadata, AutoModerationTriggerMetadata>();
+
+        options.AddDataObjectConverter<IAutoModerationRule, AutoModerationRule>()
+            .WithPropertyName(r => r.IsEnabled, "enabled");
+
+        return options;
+    }
+
+    /// <summary>
     /// Adds the JSON converters that handle channel objects.
     /// </summary>
     /// <param name="options">The serializer options.</param>
@@ -479,7 +516,8 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IChannel, Channel>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IPartialChannel, PartialChannel>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
@@ -499,6 +537,12 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 
         options.AddDataObjectConverter<IChannelThreadQueryResponse, ChannelThreadQueryResponse>();
+        options.AddDataObjectConverter<IDefaultReaction, DefaultReaction>();
+        options.AddDataObjectConverter<IForumTag, ForumTag>()
+            .WithPropertyName(t => t.IsModerated, "moderated");
+
+        options.AddDataObjectConverter<IPartialForumTag, PartialForumTag>()
+            .WithPropertyName(t => t.IsModerated, "moderated");
 
         return options;
     }
@@ -923,14 +967,16 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteractionModalCallbackData, InteractionModalCallbackData>();
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
-        options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
+        options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>()
+            .WithPropertyName(d => d.IsNsfw, "nsfw");
         options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
             .WithPropertyName(o => o.IsDefault, "default")
             .WithPropertyName(o => o.IsRequired, "required")
             .WithPropertyName(o => o.EnableAutocomplete, "autocomplete");
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
-        options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>();
+        options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>()
+            .WithPropertyName(d => d.IsNsfw, "nsfw");
 
         options.AddDataObjectConverter
             <
@@ -1080,6 +1126,19 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(s => s.SKUID, "sku_id");
 
         options.AddDataObjectConverter<INitroStickerPacks, NitroStickerPacks>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle application role connection objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddApplicationRoleConnectionObjectConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IApplicationRoleConnectionMetadata, ApplicationRoleConnectionMetadata>();
+        options.AddDataObjectConverter<IApplicationRoleConnection, ApplicationRoleConnection>();
 
         return options;
     }

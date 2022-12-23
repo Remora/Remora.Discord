@@ -185,5 +185,19 @@ public enum GatewayIntents
     /// GUILD_SCHEDULED_EVENT_USER_ADD and GUILD_SCHEDULED_EVENT_USER_REMOVE are currently experimental and not
     /// officially supported.
     /// </remarks>
-    GuildScheduledEvents = 1 << 16
+    GuildScheduledEvents = 1 << 16,
+
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - AUTO_MODERATION_RULE_CREATE
+    ///     - AUTO_MODERATION_RULE_UPDATE
+    ///     - AUTO_MODERATION_RULE_DELETE
+    /// </summary>
+    AutoModerationConfiguration = 1 << 20,
+
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - AUTO_MODERATION_ACTION_EXECUTION
+    /// </summary>
+    AutoModerationExecution = 1 << 21
 }

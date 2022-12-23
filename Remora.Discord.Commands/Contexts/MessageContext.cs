@@ -20,23 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
-
-#pragma warning disable CS1591
 
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Represents contextual information about a message.
+/// Represents contextual information about an ongoing operation on a message.
 /// </summary>
-[PublicAPI]
-public record MessageContext
-(
-    Optional<Snowflake> GuildID,
-    Snowflake ChannelID,
-    IUser User,
-    Snowflake MessageID,
-    IPartialMessage Message
-) : CommandContext(GuildID, ChannelID, User);
+/// <param name="Message">The message.</param>
+/// <param name="GuildID">The ID of the guild the message is in, if any.</param>
+public record MessageContext(IPartialMessage Message, Optional<Snowflake> GuildID) : IMessageContext;

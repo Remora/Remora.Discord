@@ -49,7 +49,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
         RegexOptions.Compiled | RegexOptions.CultureInvariant
     );
 
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
 
     /// <summary>
@@ -57,7 +57,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="channelAPI">The channel API.</param>
-    public MessageParser(ICommandContext context, IDiscordRestChannelAPI channelAPI)
+    public MessageParser(IOperationContext context, IDiscordRestChannelAPI channelAPI)
     {
         _channelAPI = channelAPI;
         _context = context;
@@ -72,7 +72,12 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
     {
         if (DiscordSnowflake.TryParse(value.Unmention(), out var messageID))
         {
-            return await _channelAPI.GetChannelMessageAsync(_context.ChannelID, messageID.Value, ct);
+            if (!_context.TryGetChannelID(out var channelID))
+            {
+                return new ParsingError<IMessage>(value, "Messages can only be parsed by ID in channels.");
+            }
+
+            return await _channelAPI.GetChannelMessageAsync(channelID.Value, messageID.Value, ct);
         }
 
         var messageLinkMatch = _messageLinkRegex.Match(value);
@@ -129,12 +134,17 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
 
     private IPartialMessage? GetResolvedMessageOrDefault(Snowflake messageID)
     {
-        if (_context is not InteractionContext injectionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return null;
         }
 
-        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        {
+            return null;
+        }
+
+        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
         if (!resolvedData.IsDefined(out var resolved) || !resolved.Messages.IsDefined(out var messages))
         {
             return null;

@@ -27,4 +27,4 @@ namespace Remora.Discord.SensitiveDataScrubber;
 /// <summary>
 /// Serves as a data container for sensitive data patterns.
 /// </summary>
-public record SensitivePattern(Regex ValuePattern, string Replacement);
+public record SensitivePattern(ulong Priority, Regex ValuePattern, string Replacement);

@@ -34,5 +34,10 @@ public enum ChannelFlags
     /// <summary>
     /// The thread is pinned to the top of its parent forum channel.
     /// </summary>
-    Pinned = 1 << 1
+    Pinned = 1 << 1,
+
+    /// <summary>
+    /// The forum requires a tag to be specified when creating a thread.
+    /// </summary>
+    RequireTag = 1 << 4
 }

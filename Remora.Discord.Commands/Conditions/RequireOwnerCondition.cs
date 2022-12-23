@@ -20,12 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Conditions;
@@ -36,7 +38,7 @@ namespace Remora.Discord.Commands.Conditions;
 [PublicAPI]
 public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestOAuth2API _oauth2API;
 
     /// <summary>
@@ -44,7 +46,7 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="oauth2API">The OAuth2 API.</param>
-    public RequireOwnerCondition(ICommandContext context, IDiscordRestOAuth2API oauth2API)
+    public RequireOwnerCondition(IOperationContext context, IDiscordRestOAuth2API oauth2API)
     {
         _context = context;
         _oauth2API = oauth2API;
@@ -66,7 +68,12 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
             return new InvalidOperationError("The application owner's ID was not present.");
         }
 
-        return application.Owner.ID.Value == _context.User.ID
+        if (!_context.TryGetUserID(out var userID))
+        {
+            throw new NotSupportedException();
+        }
+
+        return application.Owner.ID.Value == userID
             ? Result.FromSuccess()
             : new InvalidOperationError("You need to be the bot owner to do that.");
     }

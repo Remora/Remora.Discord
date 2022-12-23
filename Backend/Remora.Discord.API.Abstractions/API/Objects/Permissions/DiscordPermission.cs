@@ -92,7 +92,7 @@ public enum DiscordPermission
     ViewChannel = 10,
 
     /// <summary>
-    /// Allows for sending messages in a channel.
+    /// Allows for sending messages in a channel and creating threads in a forum.
     /// </summary>
     SendMessages = 11,
 

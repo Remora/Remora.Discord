@@ -41,6 +41,11 @@ public enum GuildFeature
     AnimatedIcon,
 
     /// <summary>
+    /// The guild has set up Auto Moderation rules.
+    /// </summary>
+    AutoModeration,
+
+    /// <summary>
     /// The guild has access to set a guild banner image.
     /// </summary>
     Banner,
@@ -49,6 +54,11 @@ public enum GuildFeature
     /// The guild has community features enabled.
     /// </summary>
     Community,
+
+    /// <summary>
+    /// The guild has been set as a support server on the app directory.
+    /// </summary>
+    DeveloperSupportServer,
 
     /// <summary>
     /// The guild is able to be discovered in the guild directory.

@@ -14,7 +14,7 @@
       "avatar": null
     },
     "session_id": "none",
-    "resume_gateway_url": "wss://gateway.discord.gg/",
+    "resume_gateway_url": "https://www.example.org",
     "guilds": [],
     "application": {
       "id": "999999999999999999",

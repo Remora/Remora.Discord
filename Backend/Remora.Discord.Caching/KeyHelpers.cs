@@ -299,6 +299,16 @@ public static class KeyHelpers
     }
 
     /// <summary>
+    /// Creates a cache key for an <see cref="IApplicationRoleConnection" /> instance of the current <see cref="IUser"/> instance.
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <returns>The cache key.</returns>
+    public static string CreateCurrentUserApplicationRoleConnectionCacheKey(in Snowflake applicationID)
+    {
+        return $"{CreateCurrentUserCacheKey()}:Application:{applicationID}:RoleConnection";
+    }
+
+    /// <summary>
     /// Creates a cache key for an <see cref="IConnection"/> instance.
     /// </summary>
     /// <param name="connectionID">The ID of the connection.</param>

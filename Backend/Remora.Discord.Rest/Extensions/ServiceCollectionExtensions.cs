@@ -89,6 +89,13 @@ public static class ServiceCollectionExtensions
             s.GetRequiredService<ICacheProvider>()
         ));
 
+        serviceCollection.TryAddTransient<IDiscordRestAutoModerationAPI>(s => new DiscordRestAutoModerationAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ICacheProvider>()
+        ));
+
         serviceCollection.TryAddTransient<IDiscordRestChannelAPI>(s => new DiscordRestChannelAPI
         (
             s.GetRequiredService<IRestHttpClient>(),

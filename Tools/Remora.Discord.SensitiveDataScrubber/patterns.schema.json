@@ -10,6 +10,10 @@
     "additionalProperties": {
         "type": "object",
         "properties": {
+            "priority": {
+                "description": "The priority of the pattern, should multiple ones match.",
+                "type": "integer"
+            },
             "value_pattern": {
                 "description": "The regex pattern to match against the field value.",
                 "type": "regex"

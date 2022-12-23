@@ -26,13 +26,13 @@ using Remora.Discord.Commands.Contexts;
 namespace Remora.Discord.Commands.Services;
 
 /// <summary>
-/// Assists with injection of an <see cref="ICommandContext"/> into a service provider.
+/// Assists with injection of an <see cref="IOperationContext"/> into a service provider.
 /// </summary>
 [PublicAPI]
 public class ContextInjectionService
 {
     /// <summary>
-    /// Gets or sets the command context.
+    /// Gets or sets the context.
     /// </summary>
-    public ICommandContext? Context { get; set; }
+    public IOperationContext? Context { get; set; }
 }

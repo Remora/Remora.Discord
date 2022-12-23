@@ -1,15 +1,18 @@
-﻿<Project Sdk="Remora.Sdk/1.1.1">
+﻿<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>5.1.0</VersionPrefix>
+        <VersionPrefix>5.2.2</VersionPrefix>
         <Description>Utilities and components which extend upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
-            Implement support for slash command mentions.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
+        <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+        <ProjectReference Include="..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />
+        <ProjectReference Include="..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />
     </ItemGroup>
 
 </Project>

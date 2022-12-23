@@ -1,15 +1,11 @@
-﻿<Project Sdk="Remora.Tests.Sdk/1.0.5">
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+﻿<Project Sdk="Remora.Tests.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\..\Remora.Discord.Extensions\Remora.Discord.Extensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.18.2" />
+    <PackageReference Include="Moq" />
   </ItemGroup>
 
 </Project>

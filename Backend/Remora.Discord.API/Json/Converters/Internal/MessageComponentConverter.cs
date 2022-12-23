@@ -80,7 +80,7 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 => document.RootElement.Deserialize<IMentionableSelectComponent>(options),
             ComponentType.ChannelSelect
                 => document.RootElement.Deserialize<IChannelSelectComponent>(options),
-            _ => throw new ArgumentOutOfRangeException(nameof(type))
+            _ => throw new NotSupportedException($"Deserialization of the component type {type} is not supported")
         };
     }
 

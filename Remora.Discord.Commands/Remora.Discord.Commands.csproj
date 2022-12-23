@@ -1,10 +1,12 @@
-<Project Sdk="Remora.Sdk/1.1.1">
+<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>25.2.4</VersionPrefix>
+        <VersionPrefix>26.1.1</VersionPrefix>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
-            Update command length calculation.
+            Throw exceptions when context menu commands are incorrectly declared
+            Use operation contexts instead of command contexts in parsers and conditions.
+            Add helper functions for extracting user, channel, and guild IDs from contexts.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -13,12 +15,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FuzzySharp" Version="2.0.2" />
-        <PackageReference Include="Humanizer.Core" Version="2.14.1" />
-        <PackageReference Include="NGettext" Version="0.6.7" />
-        <PackageReference Include="Remora.Commands" Version="10.0.2" />
-        <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.4" />
-        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+        <PackageReference Include="FuzzySharp" />
+        <PackageReference Include="Humanizer.Core" />
+        <PackageReference Include="NGettext" />
+        <PackageReference Include="Remora.Commands" />
+        <PackageReference Include="Remora.Extensions.Options.Immutable" />
+        <PackageReference Include="System.ComponentModel.Annotations" />
     </ItemGroup>
 
     <ItemGroup>

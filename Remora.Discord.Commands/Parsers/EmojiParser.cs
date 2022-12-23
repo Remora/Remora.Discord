@@ -35,6 +35,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
@@ -60,7 +61,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
     );
 
     private readonly IDiscordRestGuildAPI _guildAPI;
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmojiParser"/> class.
@@ -70,7 +71,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
     public EmojiParser
     (
         IDiscordRestGuildAPI guildAPI,
-        ICommandContext context
+        IOperationContext context
     )
     {
         _guildAPI = guildAPI;
@@ -94,12 +95,12 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
             };
         }
 
-        if (!_context.GuildID.IsDefined(out var guildID))
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new ParsingError<IEmoji>(value, "No matching emoji found.");
         }
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return Result<IEmoji>.FromError(getGuild);
@@ -150,7 +151,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
             return false;
         }
 
-        emoji = new Emoji(emojiID, inputParts[^2], IsAnimated: inputParts.Length == 3 && inputParts[0] == "a");
+        emoji = new Emoji(emojiID, inputParts[^2], IsAnimated: inputParts is["a", _, _]);
         return true;
     }
 
