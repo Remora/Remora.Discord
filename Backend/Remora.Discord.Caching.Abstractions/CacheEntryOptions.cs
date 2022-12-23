@@ -34,6 +34,9 @@ namespace Remora.Discord.Caching.Abstractions;
 /// <seealso cref="DistributedCacheEntryOptions"/>
 public sealed class CacheEntryOptions
 {
+    private MemoryCacheEntryOptions? _memoryCacheOptions;
+    private DistributedCacheEntryOptions? _distributedCacheOptions;
+
     /// <summary>
     /// Gets the absolute expiration time.
     /// </summary>
@@ -48,9 +51,6 @@ public sealed class CacheEntryOptions
     /// Gets the sliding expiration time.
     /// </summary>
     public TimeSpan? SlidingExpiration { get; init; }
-
-    private MemoryCacheEntryOptions? _memoryCacheOptions;
-    private DistributedCacheEntryOptions? _distributedCacheOptions;
 
     /// <summary>
     /// Gets the cached <see cref="MemoryCacheEntryOptions"/> for this instance, or creates a new one and caches it.
