@@ -3,6 +3,7 @@
         <ProjectReference Include="..\..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
         <ProjectReference Include="..\..\Backend\Remora.Discord.Caching\Remora.Discord.Caching.csproj" />
         <ProjectReference Include="..\..\Backend\Remora.Discord.Unstable\Remora.Discord.Unstable.csproj" />
+        <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Moq" />
