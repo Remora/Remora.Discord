@@ -35,6 +35,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Autocomplete;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
@@ -86,13 +87,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
-        var createContext = gatewayEvent.CreateContext();
-        if (!createContext.IsSuccess)
-        {
-            return (Result)createContext;
-        }
-
-        var context = createContext.Entity;
+        var context = new InteractionContext(gatewayEvent);
 
         if (!autocompleteData.Options.IsDefined(out var options))
         {
@@ -214,7 +209,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
                 return false;
             }
 
-            focusedParameter = options.FirstOrDefault(o => o.IsFocused.HasValue && o.IsFocused.Value);
+            focusedParameter = options.FirstOrDefault(o => o.IsFocused is { HasValue: true, Value: true });
             if (focusedParameter is not null)
             {
                 // Found it

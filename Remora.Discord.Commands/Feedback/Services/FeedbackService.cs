@@ -633,7 +633,12 @@ public class FeedbackService
         {
             case MessageContext messageContext:
             {
-                return await SendAsync(messageContext.ChannelID, content, embeds, options, ct);
+                if (!messageContext.Message.ChannelID.IsDefined(out var channelID))
+                {
+                    return new InvalidOperationError("Contextual sends require the channel ID to be available.");
+                }
+
+                return await SendAsync(channelID, content, embeds, options, ct);
             }
             case InteractionContext interactionContext:
             {
@@ -723,8 +728,8 @@ public class FeedbackService
 
         var result = await _interactionAPI.CreateInteractionResponseAsync
         (
-            interactionContext.ID,
-            interactionContext.Token,
+            interactionContext.Interaction.ApplicationID,
+            interactionContext.Interaction.Token,
             new InteractionResponse(InteractionCallbackType.ChannelMessageWithSource, new(callbackData)),
             options?.Attachments ?? default,
             ct
@@ -737,8 +742,8 @@ public class FeedbackService
 
         var getOriginalMessage = await _interactionAPI.GetOriginalInteractionResponseAsync
         (
-            interactionContext.ApplicationID,
-            interactionContext.Token,
+            interactionContext.Interaction.ApplicationID,
+            interactionContext.Interaction.Token,
             ct
         );
 
@@ -781,8 +786,8 @@ public class FeedbackService
     {
         var result = await _interactionAPI.CreateFollowupMessageAsync
         (
-            interactionContext.ApplicationID,
-            interactionContext.Token,
+            interactionContext.Interaction.ApplicationID,
+            interactionContext.Interaction.Token,
             content: content,
             isTTS: options?.IsTTS ?? default,
             embeds: embeds,
@@ -818,7 +823,7 @@ public class FeedbackService
     /// <param name="contents">The contents of the embed.</param>
     /// <returns>A feedback embed.</returns>
     [Pure]
-    private Embed CreateFeedbackEmbed(Snowflake? target, Color color, string contents)
+    private static Embed CreateFeedbackEmbed(Snowflake? target, Color color, string contents)
     {
         if (target is null)
         {

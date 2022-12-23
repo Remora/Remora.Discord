@@ -69,13 +69,13 @@ public static class ParameterShapeExtensions
         return shape.GetActualParameterType() switch
         {
             var t when t == typeof(bool) => ApplicationCommandOptionType.Boolean,
-            var t when t == typeof(IRole) => Role,
-            var t when t == typeof(IUser) => User,
-            var t when t == typeof(IGuildMember) => User,
-            var t when t == typeof(IChannel) => Channel,
+            var t when typeof(IPartialRole).IsAssignableFrom(t) => Role,
+            var t when typeof(IPartialUser).IsAssignableFrom(t) => User,
+            var t when typeof(IPartialGuildMember).IsAssignableFrom(t) => User,
+            var t when typeof(IPartialChannel).IsAssignableFrom(t) => Channel,
             var t when t.IsInteger() => Integer,
             var t when t.IsFloatingPoint() => Number,
-            var t when t == typeof(IAttachment) => Attachment,
+            var t when typeof(IPartialAttachment).IsAssignableFrom(t) => Attachment,
             _ => ApplicationCommandOptionType.String
         };
     }

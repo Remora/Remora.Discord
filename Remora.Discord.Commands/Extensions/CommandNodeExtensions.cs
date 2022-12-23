@@ -69,6 +69,13 @@ public static class CommandNodeExtensions
             return attribute;
         }
 
+        // Check the associated group type directly first
+        attribute = node.GroupType.GetCustomAttribute<T>();
+        if (attribute is not null)
+        {
+            return attribute;
+        }
+
         // Traverse each parent group node, until we find the root node
         var parent = node.Parent;
         while (parent is GroupNode group)

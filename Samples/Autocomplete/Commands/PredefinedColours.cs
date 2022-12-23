@@ -61,7 +61,7 @@ public enum PredefinedColours
     Teal = 0x008080,
     DarkCyan = 0x008B8B,
     Aqua = 0x00FFFF,
-    Cyan = 0x00FFFF,
+    Cyan = Aqua,
     LightCyan = 0xE0FFFF,
     DarkTurquoise = 0x00CED1,
     Turquoise = 0x40E0D0,

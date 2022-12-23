@@ -26,7 +26,6 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Remora.Commands;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
@@ -98,15 +97,17 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         CancellationToken ct = default
     )
     {
-        var createContext = gatewayEvent.CreateContext();
-        if (!createContext.IsSuccess)
+        var context = new MessageContext
+        (
+            gatewayEvent,
+            gatewayEvent.GuildID
+        );
+
+        if (!context.Message.Author.IsDefined(out var author))
         {
-            return (Result)createContext;
+            return Result.FromSuccess();
         }
 
-        var context = createContext.Entity;
-
-        var author = context.User;
         if (author.IsBot.IsDefined(out var isBot) && isBot)
         {
             return Result.FromSuccess();
@@ -132,15 +133,13 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             return Result.FromSuccess();
         }
 
-        var createContext = gatewayEvent.CreateContext();
-        if (!createContext.IsSuccess)
+        var context = new MessageContext(gatewayEvent, gatewayEvent.GuildID);
+
+        if (!context.Message.Author.IsDefined(out var author))
         {
-            return (Result)createContext;
+            return Result.FromSuccess();
         }
 
-        var context = createContext.Entity;
-
-        var author = context.User;
         if (author.IsBot.IsDefined(out var isBot) && isBot)
         {
             return Result.FromSuccess();
@@ -174,18 +173,18 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     /// Executes the actual command.
     /// </summary>
     /// <param name="content">The contents of the message.</param>
-    /// <param name="commandContext">The command context.</param>
+    /// <param name="operationContext">The command context.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     protected virtual async Task<Result> ExecuteCommandAsync
     (
         string content,
-        ICommandContext commandContext,
+        MessageContext operationContext,
         CancellationToken ct = default
     )
     {
         // Provide the created context to any services inside this scope
-        _contextInjection.Context = commandContext;
+        _contextInjection.Context = operationContext;
 
         var prefixMatcher = _services.GetRequiredService<ICommandPrefixMatcher>();
         var checkPrefix = await prefixMatcher.MatchesPrefixAsync(content, ct);
@@ -202,28 +201,30 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         // Strip off the prefix
         content = content[check.ContentStartIndex..];
 
-        // Run any user-provided pre execution events
-        var preExecution = await _eventCollector.RunPreExecutionEvents(_services, commandContext, ct);
-        if (!preExecution.IsSuccess)
+        if (_treeNameResolver is null)
         {
-            return preExecution;
+            return await TryExecuteCommandAsync(operationContext, content, null, ct);
         }
 
-        string? treeName = null;
-        var allowDefaultTree = false;
-        if (_treeNameResolver is not null)
+        var getTreeName = await _treeNameResolver.GetTreeNameAsync(operationContext, ct);
+        if (!getTreeName.IsSuccess)
         {
-            var getTreeName = await _treeNameResolver.GetTreeNameAsync(commandContext, ct);
-            if (!getTreeName.IsSuccess)
-            {
-                return (Result)getTreeName;
-            }
-
-            (treeName, allowDefaultTree) = getTreeName.Entity;
+            return (Result)getTreeName;
         }
 
-        // Run the actual command
-        var executeResult = await _commandService.TryExecuteAsync
+        var treeName = getTreeName.Entity;
+        return await TryExecuteCommandAsync(operationContext, content, treeName, ct);
+    }
+
+    private async Task<Result> TryExecuteCommandAsync
+    (
+        MessageContext operationContext,
+        string content,
+        string? treeName = null,
+        CancellationToken ct = default
+    )
+    {
+        var prepareCommand = await _commandService.TryPrepareCommandAsync
         (
             content,
             _services,
@@ -233,40 +234,57 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             ct
         );
 
-        var tryDefaultTree = allowDefaultTree && (treeName is not null || treeName != Constants.DefaultTreeName);
-        if (executeResult.IsSuccess || !tryDefaultTree)
+        if (!prepareCommand.IsSuccess)
         {
-            return await _eventCollector.RunPostExecutionEvents
+            var preparationError = await _eventCollector.RunPreparationErrorEvents
             (
                 _services,
-                commandContext,
-                executeResult.IsSuccess ? executeResult.Entity : executeResult,
+                operationContext,
+                prepareCommand,
                 ct
             );
+
+            if (!preparationError.IsSuccess)
+            {
+                return preparationError;
+            }
+
+            if (prepareCommand.Error.IsUserOrEnvironmentError())
+            {
+                // We've done our part and notified whoever might be interested; job well done
+                return Result.FromSuccess();
+            }
+
+            return (Result)prepareCommand;
         }
 
-        var oldResult = executeResult;
-        executeResult = await _commandService.TryExecuteAsync
+        var preparedCommand = prepareCommand.Entity;
+
+        // Update the available context
+        var commandContext = new TextCommandContext
         (
-            content,
-            _services,
-            _tokenizerOptions,
-            _treeSearchOptions,
-            ct: ct
+            operationContext.Message,
+            operationContext.GuildID,
+            preparedCommand
         );
 
-        if (!executeResult.IsSuccess)
+        _contextInjection.Context = commandContext;
+
+        // Run any user-provided pre-execution events
+        var preExecution = await _eventCollector.RunPreExecutionEvents(_services, commandContext, ct);
+        if (!preExecution.IsSuccess)
         {
-            executeResult = new AggregateError(oldResult, executeResult);
+            return preExecution;
         }
 
-        // Run any user-provided post execution events, passing along either the result of the command itself, or if
-        // execution failed, the reason why
+        var executionResult = await _commandService.TryExecuteAsync(preparedCommand, _services, ct);
+
+        // Run any user-provided post-execution events
         return await _eventCollector.RunPostExecutionEvents
         (
             _services,
             commandContext,
-            executeResult.IsSuccess ? executeResult.Entity : executeResult,
+            executionResult.IsSuccess ? executionResult.Entity : executionResult,
             ct
         );
     }

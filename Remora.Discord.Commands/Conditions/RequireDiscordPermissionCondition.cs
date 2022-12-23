@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Results;
 using Remora.Results;
 
@@ -48,7 +49,7 @@ public class RequireDiscordPermissionCondition :
 {
     private readonly IDiscordRestGuildAPI _guildAPI;
     private readonly IDiscordRestChannelAPI _channelAPI;
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequireDiscordPermissionCondition"/> class.
@@ -60,7 +61,7 @@ public class RequireDiscordPermissionCondition :
     (
         IDiscordRestGuildAPI guildAPI,
         IDiscordRestChannelAPI channelAPI,
-        ICommandContext context
+        IOperationContext context
     )
     {
         _guildAPI = guildAPI;
@@ -78,7 +79,7 @@ public class RequireDiscordPermissionCondition :
         CancellationToken ct = default
     )
     {
-        if (!_context.GuildID.IsDefined(out var guildID))
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -86,21 +87,26 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return (Result)getGuild;
         }
 
+        if (!_context.TryGetUserID(out var userID))
+        {
+            throw new NotSupportedException();
+        }
+
         var guild = getGuild.Entity;
-        if (guild.OwnerID == _context.User.ID)
+        if (guild.OwnerID == userID)
         {
             // guild owner is always allowed
             return Result.FromSuccess();
         }
 
         // Grab required information
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, _context.User.ID, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, userID.Value, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;
@@ -122,7 +128,7 @@ public class RequireDiscordPermissionCondition :
         CancellationToken ct = default
     )
     {
-        if (!_context.GuildID.IsDefined(out var guildID))
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -131,7 +137,7 @@ public class RequireDiscordPermissionCondition :
         }
 
         // Grab required information
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, user.ID, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;
@@ -153,7 +159,7 @@ public class RequireDiscordPermissionCondition :
         CancellationToken ct = default
     )
     {
-        if (!_context.GuildID.IsDefined(out var guildID))
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -161,13 +167,21 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
+        if (!_context.TryGetChannelID(out var channelID))
+        {
+            return new PermissionDeniedError
+            (
+                "Commands executed outside of channels may not require any permissions."
+            );
+        }
+
+        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
         if (!getChannel.IsSuccess)
         {
             return (Result)getChannel;
@@ -177,7 +191,7 @@ public class RequireDiscordPermissionCondition :
         var channel = getChannel.Entity;
 
         // Collate the various permission sources
-        var everyoneRole = guildRoles.First(r => r.ID == _context.GuildID.Value);
+        var everyoneRole = guildRoles.First(r => r.ID == guildID.Value);
         var memberRoles = guildRoles.Where(r => member.Roles.Contains(r.ID)).ToList();
         var permissionOverwrites = channel.PermissionOverwrites.HasValue
             ? channel.PermissionOverwrites.Value
@@ -191,7 +205,12 @@ public class RequireDiscordPermissionCondition :
             permissionOverwrites
         );
 
-        var isCheckingInvoker = _context.User.ID == member.User.Value.ID;
+        if (!_context.TryGetUserID(out var userID))
+        {
+            throw new NotSupportedException();
+        }
+
+        var isCheckingInvoker = userID == member.User.Value.ID;
         if (isCheckingInvoker && computedPermissions.HasPermission(DiscordPermission.Administrator))
         {
             // always allowed
@@ -236,7 +255,7 @@ public class RequireDiscordPermissionCondition :
         CancellationToken ct = default
     )
     {
-        if (!_context.GuildID.IsDefined(out var guildID))
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -244,13 +263,21 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
+        if (!_context.TryGetChannelID(out var channelID))
+        {
+            return new PermissionDeniedError
+            (
+                "Commands executed outside of channels may not require any permissions."
+            );
+        }
+
+        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
         if (!getChannel.IsSuccess)
         {
             return (Result)getChannel;
@@ -260,7 +287,7 @@ public class RequireDiscordPermissionCondition :
         var channel = getChannel.Entity;
 
         // Collate the various permission sources
-        var everyoneRole = guildRoles.First(r => r.ID == _context.GuildID.Value);
+        var everyoneRole = guildRoles.First(r => r.ID == guildID.Value);
         var permissionOverwrites = channel.PermissionOverwrites.HasValue
             ? channel.PermissionOverwrites.Value
             : Array.Empty<PermissionOverwrite>();
@@ -298,7 +325,7 @@ public class RequireDiscordPermissionCondition :
         return result;
     }
 
-    private string Explain
+    private static string Explain
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator
@@ -318,7 +345,7 @@ public class RequireDiscordPermissionCondition :
         };
     }
 
-    private Result CheckRequirements
+    private static Result CheckRequirements
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator

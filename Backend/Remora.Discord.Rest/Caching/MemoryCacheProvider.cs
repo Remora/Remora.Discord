@@ -89,7 +89,7 @@ public class MemoryCacheProvider : ICacheProvider
         return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="ICacheProvider.EvictAsync" />
     public ValueTask<Result> EvictAsync(CacheKey key, CancellationToken ct = default)
     {
         if (!_memoryCache.TryGetValue(key, out _))
@@ -105,7 +105,7 @@ public class MemoryCacheProvider : ICacheProvider
     public ValueTask<Result<TInstance>> EvictAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class
     {
-        if (!_memoryCache.TryGetValue(key, out TInstance existingValue))
+        if (!_memoryCache.TryGetValue(key, out TInstance? existingValue))
         {
             return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
         }

@@ -4,6 +4,7 @@
 //  SPDX-License-Identifier: MIT
 //
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
@@ -13,6 +14,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity;
@@ -79,9 +81,14 @@ public class InteractiveCommands : CommandGroup
             (c, i) => new Embed(Image: new EmbedImage(i), Description: c)
         ).ToList();
 
+        if (!_context.TryGetUserID(out var userID))
+        {
+            throw new NotSupportedException();
+        }
+
         return await _feedback.SendContextualPaginatedMessageAsync
         (
-            _context.User.ID,
+            userID.Value,
             pages,
             ct: this.CancellationToken
         );
@@ -188,12 +195,17 @@ public class InteractiveCommands : CommandGroup
     [SuppressInteractionResponse(true)]
     public async Task<Result> ShowModalAsync()
     {
-        if (_context is not InteractionContext interactionContext)
+        if (!_context.TryGetUserID(out var userID))
+        {
+            throw new NotSupportedException();
+        }
+
+        if (_context is not IInteractionContext interactionContext)
         {
             return (Result)await _feedback.SendContextualWarningAsync
             (
                 "This command can only be used with slash commands.",
-                _context.User.ID,
+                userID,
                 new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral)
             );
         }
@@ -233,8 +245,8 @@ public class InteractiveCommands : CommandGroup
 
         var result = await _interactionAPI.CreateInteractionResponseAsync
         (
-            interactionContext.ID,
-            interactionContext.Token,
+            interactionContext.Interaction.ID,
+            interactionContext.Interaction.Token,
             response,
             ct: this.CancellationToken
         );

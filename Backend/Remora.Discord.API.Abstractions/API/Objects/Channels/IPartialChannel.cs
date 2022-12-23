@@ -116,4 +116,22 @@ public interface IPartialChannel
 
     /// <inheritdoc cref="IChannel.TotalMessageSent" />
     Optional<int> TotalMessageSent { get; }
+
+    /// <inheritdoc cref="IChannel.AvailableTags" />
+    Optional<IReadOnlyList<IForumTag>> AvailableTags { get; }
+
+    /// <inheritdoc cref="IChannel.AppliedTags" />
+    Optional<IReadOnlyList<Snowflake>> AppliedTags { get; }
+
+    /// <inheritdoc cref="IChannel.DefaultReactionEmoji" />
+    Optional<IDefaultReaction?> DefaultReactionEmoji { get; }
+
+    /// <inheritdoc cref="IChannel.DefaultThreadRateLimitPerUser" />
+    Optional<TimeSpan> DefaultThreadRateLimitPerUser { get; }
+
+    /// <inheritdoc cref="IChannel.DefaultSortOrder" />
+    Optional<SortOrder?> DefaultSortOrder { get; }
+
+    /// <inheritdoc cref="IChannel.DefaultForumLayout" />
+    Optional<ForumLayout> DefaultForumLayout { get; }
 }

@@ -1,26 +1,21 @@
-<Project Sdk="Remora.Sdk/1.1.1">
+<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
         <RootNamespace>Remora.Discord</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup>
-        <VersionPrefix>6.0.21</VersionPrefix>
+        <VersionPrefix>6.0.23</VersionPrefix>
         <Description>Unstable or experimental features of Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
+            Update Remora.Sdk.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.API\Remora.Discord.API.csproj" />
       <ProjectReference Include="..\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="API\Abstractions" />
-      <Folder Include="Unstable" />
     </ItemGroup>
 
 </Project>

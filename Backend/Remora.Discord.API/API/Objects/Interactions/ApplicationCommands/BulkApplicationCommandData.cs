@@ -39,5 +39,6 @@ public record BulkApplicationCommandData
     Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
     Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default,
     IDiscordPermissionSet? DefaultMemberPermissions = default,
-    Optional<bool> DMPermission = default
+    Optional<bool> DMPermission = default,
+    Optional<bool> IsNsfw = default
 ) : IBulkApplicationCommandData;

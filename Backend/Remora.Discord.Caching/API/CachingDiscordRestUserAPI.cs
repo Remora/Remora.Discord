@@ -244,4 +244,65 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
 
         return result;
     }
+
+    /// <inheritdoc />
+    public async Task<Result<IApplicationRoleConnection>> GetUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    )
+    {
+        var key = new KeyHelpers.CurrentUserApplicationRoleConnectionCacheKey(applicationID);
+        var cacheResult = await _cacheService.TryGetValueAsync<IApplicationRoleConnection>(key, ct);
+
+        if (cacheResult.IsSuccess)
+        {
+            return cacheResult;
+        }
+
+        var getUserApplicationRoleConnection = await _actual.GetUserApplicationRoleConnectionAsync
+        (
+            applicationID,
+            ct
+        );
+
+        if (!getUserApplicationRoleConnection.IsDefined(out var userApplicationRoleConnection))
+        {
+            return getUserApplicationRoleConnection;
+        }
+
+        await _cacheService.CacheAsync(key, userApplicationRoleConnection, ct);
+
+        return getUserApplicationRoleConnection;
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IApplicationRoleConnection>> UpdateUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        Optional<string> platformName = default,
+        Optional<string> platformUsername = default,
+        Optional<IReadOnlyDictionary<string, string>> metadata = default,
+        CancellationToken ct = default
+    )
+    {
+        var result = await _actual.UpdateUserApplicationRoleConnectionAsync
+        (
+            applicationID,
+            platformName,
+            platformUsername,
+            metadata,
+            ct
+        );
+
+        if (!result.IsDefined(out var userApplicationRoleConnection))
+        {
+            return result;
+        }
+
+        var key = new KeyHelpers.CurrentUserApplicationRoleConnectionCacheKey(applicationID);
+        await _cacheService.CacheAsync(key, userApplicationRoleConnection, ct);
+
+        return result;
+    }
 }

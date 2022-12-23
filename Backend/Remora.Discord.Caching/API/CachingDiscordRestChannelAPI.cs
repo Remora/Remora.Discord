@@ -111,6 +111,12 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
         Optional<string?> rtcRegion = default,
         Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<SortOrder> defaultSortOrder = default,
+        Optional<ForumLayout> defaultForumLayout = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -137,6 +143,12 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
             defaultAutoArchiveDuration,
             rtcRegion,
             flags,
+            availableTags,
+            defaultReactionEmoji,
+            defaultThreadRateLimitPerUser,
+            appliedTags,
+            defaultSortOrder,
+            defaultForumLayout,
             reason,
             ct
         );
@@ -448,7 +460,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
     }
 
     /// <inheritdoc />
-    public async Task<Result<IChannel>> StartThreadWithMessageAsync
+    public async Task<Result<IChannel>> StartThreadFromMessageAsync
     (
         Snowflake channelID,
         Snowflake messageID,
@@ -459,7 +471,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         CancellationToken ct = default
     )
     {
-        var createResult = await _actual.StartThreadWithMessageAsync
+        var createResult = await _actual.StartThreadFromMessageAsync
         (
             channelID,
             messageID,

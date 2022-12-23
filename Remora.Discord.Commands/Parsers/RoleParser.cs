@@ -44,7 +44,7 @@ namespace Remora.Discord.Commands.Parsers;
 [PublicAPI]
 public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestGuildAPI _guildAPI;
 
     /// <summary>
@@ -52,7 +52,7 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="guildAPI">The guild API.</param>
-    public RoleParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
+    public RoleParser(IOperationContext context, IDiscordRestGuildAPI guildAPI)
     {
         _guildAPI = guildAPI;
         _context = context;
@@ -73,12 +73,12 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
         }
 
         // If there's nothing available, query the system
-        if (!_context.GuildID.IsDefined(out var guildID))
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new InvalidOperationError("Roles cannot be parsed outside of guild channels.");
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
         if (!getRoles.IsSuccess)
         {
             return Result<IRole>.FromError(getRoles);
@@ -97,12 +97,17 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
 
     private IRole? GetResolvedRoleOrDefault(Snowflake roleID)
     {
-        if (_context is not InteractionContext injectionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return null;
         }
 
-        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        {
+            return null;
+        }
+
+        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
         if (!resolvedData.IsDefined(out var resolved) || !resolved.Roles.IsDefined(out var roles))
         {
             return null;

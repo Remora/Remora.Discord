@@ -1,0 +1,55 @@
+@startuml
+
+skinparam linetype ortho
+
+' Context definitions
+interface IOperationContext
+
+interface ICommandContext {
+    +Node: ICommandNode
+}
+ICommandContext <|-- IOperationContext
+
+
+interface IMessageContext {
+    +Message: IMessage
+    +GuildID: Optional<Snowflake>
+}
+IMessageContext <|-- IOperationContext
+
+class MessageContext
+MessageContext <|.. IMessageContext
+
+
+interface IInteractionContext {
+    +Interaction: IInteraction
+    +Message: Optional<IMessage>
+    +<<get>> HasRespondedToInteraction: bool
+    ~<<set>> HasRespondedToInteraction: bool
+}
+IInteractionContext <|-- IOperationContext
+
+class InteractionContext
+InteractionContext <|.. IInteractionContext
+
+
+interface ITextCommandContext
+ITextCommandContext <|-- ICommandContext
+ITextCommandContext <|-- IMessageContext
+
+class TextCommandContext
+TextCommandContext <|-- MessageContext
+TextCommandContext <|.. ITextCommandContext
+
+
+interface IInteractionCommandContext
+IInteractionCommandContext <|-- ICommandContext
+IInteractionCommandContext <|-- IInteractionContext
+
+class InteractionCommandContext
+InteractionCommandContext <|-- InteractionContext
+InteractionCommandContext <|.. IInteractionCommandContext
+
+
+
+@enduml

@@ -130,10 +130,52 @@ public interface IDiscordRestUserAPI
     /// <summary>
     /// Gets a list of connection objects.
     /// </summary>
+    /// <remarks>
+    /// Requires the "connections" OAuth" scope.
+    /// </remarks>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
     (
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets the application role connection for the user.
+    /// </summary>
+    /// <remarks>
+    /// Requires an OAuth2 access token with role_connections.write scope for the specified <paramref name="applicationID"/>.
+    /// </remarks>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IApplicationRoleConnection>> GetUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Updates and returns the application role connection for the user.
+    /// </summary>
+    /// <remarks>
+    /// Requires an OAuth2 access token with role_connections.write scope for the specified <paramref name="applicationID"/>.
+    /// </remarks>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="platformName">The vanity name of the platform a bot has connected (max 50 characters).</param>
+    /// <param name="platformUsername">The username on the platform a bot has connected (max 100 characters).</param>
+    /// <param name="metadata">
+    /// The object mapping application role connection metadata keys to their stringified value (max 100 characters) for
+    /// the user on the platform a bot has connected.
+    /// </param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IApplicationRoleConnection>> UpdateUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        Optional<string> platformName = default,
+        Optional<string> platformUsername = default,
+        Optional<IReadOnlyDictionary<string, string>> metadata = default,
         CancellationToken ct = default
     );
 }

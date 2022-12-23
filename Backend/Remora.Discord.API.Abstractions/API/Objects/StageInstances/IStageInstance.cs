@@ -60,7 +60,7 @@ public interface IStageInstance
     /// <summary>
     /// Gets a value indicating whether stage discovery is disabled for the instance.
     /// </summary>
-    [Obsolete]
+    [Obsolete("Marked obsolete by Discord")]
     bool IsDiscoveryDisabled { get; }
 
     /// <summary>

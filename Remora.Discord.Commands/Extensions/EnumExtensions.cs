@@ -43,8 +43,8 @@ namespace Remora.Discord.Commands.Extensions;
 /// </summary>
 internal static class EnumExtensions
 {
-    private const int _maxChoiceNameLength = 100;
-    private const int _maxChoiceValueLength = 100;
+    private const int MaxChoiceNameLength = 100;
+    private const int MaxChoiceValueLength = 100;
 
     private static readonly ConcurrentDictionary<Type, IReadOnlyList<IApplicationCommandOptionChoice>> _choiceCache
         = new();
@@ -75,7 +75,7 @@ internal static class EnumExtensions
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown if the enum has more than 25 members, or if any of its members translated names or values exceeds one of
-    /// <see cref="_maxChoiceNameLength"/> or <see cref="_maxChoiceValueLength"/>.
+    /// <see cref="MaxChoiceNameLength"/> or <see cref="MaxChoiceValueLength"/>.
     /// </exception>
     /// <param name="enumType">The enumeration type.</param>
     /// <param name="localizationProvider">The localization provider.</param>
@@ -108,19 +108,19 @@ internal static class EnumExtensions
                     var localizedDisplayNames = provider.GetStrings(displayString);
                     foreach (var (locale, localizedDisplayName) in localizedDisplayNames)
                     {
-                        if (localizedDisplayName.Length > _maxChoiceNameLength)
+                        if (localizedDisplayName.Length > MaxChoiceNameLength)
                         {
                             throw new ArgumentOutOfRangeException
                             (
                                 nameof(enumType),
                                 $"The localized display name for the locale {locale} of the enumeration member "
-                                + $"{type.Name}::{enumName} is too long (max {_maxChoiceNameLength})."
+                                + $"{type.Name}::{enumName} is too long (max {MaxChoiceNameLength})."
                             );
                         }
                     }
 
                     var valueString = enumName;
-                    if (valueString.Length <= _maxChoiceValueLength)
+                    if (valueString.Length <= MaxChoiceValueLength)
                     {
                         choices.Add
                         (
@@ -137,13 +137,13 @@ internal static class EnumExtensions
 
                     // Try converting the enum's value representation
                     valueString = value.ToString() ?? throw new InvalidOperationException();
-                    if (valueString.Length > _maxChoiceValueLength)
+                    if (valueString.Length > MaxChoiceValueLength)
                     {
                         throw new ArgumentOutOfRangeException
                         (
                             nameof(enumType),
                             $"The length of the enumeration member {type.Name}::{enumName} value is too long " +
-                            $"(max {_maxChoiceValueLength})."
+                            $"(max {MaxChoiceValueLength})."
                         );
                     }
 
