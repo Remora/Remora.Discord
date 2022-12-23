@@ -26,7 +26,6 @@ using Moq;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Tests;
@@ -50,18 +49,10 @@ public class MessageParserTests
     public MessageParserTests()
     {
         var messageMock = new Mock<IMessage>();
+        messageMock.As<IPartialMessage>().Setup(m => m.ChannelID).Returns(DiscordSnowflake.New(0));
 
-        var commandContext = new CommandContext(
-            default,
-            DiscordSnowflake.New(123),
-            new User
-            (
-                DiscordSnowflake.New(1),
-                "TestUser",
-                1234,
-                default
-            )
-        );
+        var contextMock = new Mock<ITextCommandContext>();
+        contextMock.Setup(c => c.Message).Returns(messageMock.Object);
 
         var channelAPIMock = new Mock<IDiscordRestChannelAPI>();
         channelAPIMock
@@ -74,9 +65,10 @@ public class MessageParserTests
                 )
             )
             .Returns(Task.FromResult(Result<IMessage>.FromSuccess(messageMock.Object)));
+
         _channelAPIMock = channelAPIMock;
 
-        _parser = new MessageParser(commandContext, channelAPIMock.Object);
+        _parser = new MessageParser(contextMock.Object, channelAPIMock.Object);
     }
 
     /// <summary>
@@ -95,7 +87,7 @@ public class MessageParserTests
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
-    public async Task CanParseSnowflakeByNumber()
+    public async Task CanParseMessageByNumber()
     {
         var messageID = DiscordSnowflake.New(6823586735728);
 
@@ -124,7 +116,7 @@ public class MessageParserTests
     [InlineData("https://ptb.discord.com/channels/@me/135347310845612345/135347310845624320/")]
     [InlineData("https://ptb.discord.com/channels/123/135347310845612345/135347310845624320/")]
     [Theory]
-    public async Task CanParseSnowflakeByMessageLink(string value)
+    public async Task CanParseMessageByMessageLink(string value)
     {
         var channelID = DiscordSnowflake.New(135347310845612345);
         var messageID = DiscordSnowflake.New(135347310845624320);

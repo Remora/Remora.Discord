@@ -198,24 +198,26 @@ internal class Program
                         }
                     }
 
-                    foreach (var key in patterns.Keys)
+                    var valueString = value.ToJsonString(jsonOptions);
+
+                    var matchingPatterns = patterns
+                        .Where(kvp => kvp.Key.IsMatch(name))
+                        .Where(kvp => kvp.Value.ValuePattern.IsMatch(valueString))
+                        .ToArray();
+
+                    if (matchingPatterns.Length <= 0)
                     {
-                        if (!key.IsMatch(name))
-                        {
-                            continue;
-                        }
-
-                        var (valuePattern, replacement) = patterns[key];
-                        var valueString = value.ToJsonString(jsonOptions);
-
-                        if (!valuePattern.IsMatch(valueString))
-                        {
-                            continue;
-                        }
-
-                        replacements.Add(name, replacement);
-                        break;
+                        continue;
                     }
+
+                    var bestPattern = matchingPatterns.MaxBy(p => p.Value.Priority).Value;
+
+                    if (valueString == bestPattern.Replacement)
+                    {
+                        continue;
+                    }
+
+                    replacements.Add(name, bestPattern.Replacement);
                 }
 
                 foreach (var (name, replacement) in replacements)
@@ -246,24 +248,26 @@ internal class Program
                     }
 
                     var name = jsonArray.GetPath().Split('.')[^1];
-                    foreach (var key in patterns.Keys)
+                    var valueString = jsonObject.ToJsonString(jsonOptions);
+
+                    var matchingPatterns = patterns
+                        .Where(kvp => kvp.Key.IsMatch(name))
+                        .Where(kvp => kvp.Value.ValuePattern.IsMatch(valueString))
+                        .ToArray();
+
+                    if (matchingPatterns.Length <= 0)
                     {
-                        if (!key.IsMatch(name))
-                        {
-                            continue;
-                        }
-
-                        var (valuePattern, replacement) = patterns[key];
-                        var valueString = jsonObject.ToJsonString(jsonOptions);
-
-                        if (!valuePattern.IsMatch(valueString))
-                        {
-                            continue;
-                        }
-
-                        replacements.Add(i, replacement);
-                        break;
+                        continue;
                     }
+
+                    var bestPattern = matchingPatterns.MaxBy(p => p.Value.Priority).Value;
+
+                    if (valueString == bestPattern.Replacement)
+                    {
+                        continue;
+                    }
+
+                    replacements.Add(i, bestPattern.Replacement);
                 }
 
                 foreach (var (index, replacement) in replacements)

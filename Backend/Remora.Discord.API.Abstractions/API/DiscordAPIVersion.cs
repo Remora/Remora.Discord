@@ -34,7 +34,7 @@ public enum DiscordAPIVersion
     /// <summary>
     /// Version 6 of the API.
     /// </summary>
-    [Obsolete]
+    [Obsolete("Marked obsolete by Discord")]
     V6 = 6,
 
     /// <summary>
@@ -46,7 +46,7 @@ public enum DiscordAPIVersion
     /// <summary>
     /// Version 8 of the API.
     /// </summary>
-    [Obsolete]
+    [Obsolete("Marked obsolete by Discord")]
     V8 = 8,
 
     /// <summary>

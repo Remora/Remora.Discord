@@ -97,7 +97,10 @@ public static class PaginatedEmbedFactory
         }
         else
         {
-            pages.AddRange(await Task.WhenAll(items.Select(async i => await pageBuilder(i))));
+            foreach (var item in items)
+            {
+                pages.Add(await pageBuilder(item));
+            }
         }
 
         return pages;

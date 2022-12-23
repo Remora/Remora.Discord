@@ -1,4 +1,4 @@
-<Project Sdk="Remora.Sdk/1.1.1">
+<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -18,10 +18,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CommandLineParser" Version="2.9.1" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
-      <PackageReference Include="System.Text.Json" Version="6.0.6" />
+      <PackageReference Include="CommandLineParser" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Console" />
+      <PackageReference Include="System.Text.Json" />
     </ItemGroup>
 
     <ItemGroup>

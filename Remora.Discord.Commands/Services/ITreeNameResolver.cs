@@ -37,16 +37,12 @@ public interface ITreeNameResolver
     /// <summary>
     /// Gets the name of the tree to run commands from, given the provided context.
     /// </summary>
-    /// <param name="context">The command context.</param>
+    /// <param name="context">The operation context.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>
-    /// The name of the tree to run commands from, and a boolean indicating whether the command executor may try the
-    /// default tree if no command can be executed from the named tree. Whether this actually happens is up to the
-    /// implementation.
-    /// </returns>
-    Task<Result<(string TreeName, bool AllowDefaultTree)>> GetTreeNameAsync
+    /// <returns>The name of the tree to run commands from.</returns>
+    Task<Result<string>> GetTreeNameAsync
     (
-        ICommandContext context,
+        IOperationContext context,
         CancellationToken ct = default
     );
 }

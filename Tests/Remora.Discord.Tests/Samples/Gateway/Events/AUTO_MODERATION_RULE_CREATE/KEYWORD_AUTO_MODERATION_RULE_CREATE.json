@@ -1,0 +1,44 @@
+{
+  "t": "AUTO_MODERATION_RULE_CREATE",
+  "s": 1,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "guild_id": "999999999999999999",
+    "name": "none",
+    "creator_id": "999999999999999999",
+    "event_type": 1,
+    "trigger_type": 1,
+    "trigger_metadata": {
+      "keyword_filter": [
+        "stupid",
+        "ugly"
+      ]
+    },
+    "actions": [
+      {
+        "type": 1,
+        "metadata": {}
+      },
+      {
+        "type": 2,
+        "metadata": {
+          "channel_id": "999999999999999999"
+        }
+      },
+      {
+        "type": 3,
+        "metadata": {
+          "duration_seconds": 600
+        }
+      }
+    ],
+    "enabled": false,
+    "exempt_roles": [
+      "999999999999999999"
+    ],
+    "exempt_channels": [
+      "999999999999999999"
+    ]
+  }
+}

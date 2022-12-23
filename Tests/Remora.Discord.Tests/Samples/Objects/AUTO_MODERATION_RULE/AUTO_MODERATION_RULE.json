@@ -1,0 +1,32 @@
+{
+  "id": "999999999999999999",
+  "guild_id": "999999999999999999",
+  "creator_id": "999999999999999999",
+  "name": "none",
+  "event_type": 1,
+  "actions": [
+    {
+      "type": 3,
+      "metadata": {
+        "duration_seconds": 86400
+      }
+    }
+  ],
+  "trigger_type": 1,
+  "trigger_metadata": {
+    "keyword_filter": [
+      "none",
+      "none2",
+      "none3"
+    ]
+  },
+  "enabled": false,
+  "exempt_roles": [
+    "999999999999999999",
+    "999999999999999999"
+  ],
+  "exempt_channels": [
+    "999999999999999999",
+    "999999999999999999"
+  ]
+}

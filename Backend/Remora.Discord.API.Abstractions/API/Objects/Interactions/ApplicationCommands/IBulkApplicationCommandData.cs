@@ -58,4 +58,7 @@ public interface IBulkApplicationCommandData
 
     /// <inheritdoc cref="IApplicationCommand.DMPermission"/>
     Optional<bool> DMPermission { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.IsNsfw"/>
+    Optional<bool> IsNsfw { get; }
 }

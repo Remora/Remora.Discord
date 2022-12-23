@@ -65,9 +65,9 @@ public class MockedTransportServiceBuilder
     }
 
     /// <summary>
-    /// Sets whether the service should ignore unexpected receivals.
+    /// Sets whether the service should ignore unexpected events.
     /// </summary>
-    /// <param name="ignoreUnexpected">true if unexpected receivals should be ignored; otherwise, false.</param>
+    /// <param name="ignoreUnexpected">true if unexpected events should be ignored; otherwise, false.</param>
     /// <returns>The builder, with the option configured.</returns>
     public MockedTransportServiceBuilder IgnoreUnexpected(bool ignoreUnexpected = true)
     {

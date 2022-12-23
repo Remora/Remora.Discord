@@ -161,7 +161,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is < 2 or > 30)
+        if (name is { HasValue: true, Value.Length: < 2 or > 30 })
         {
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 30 characters.");
         }
@@ -174,7 +174,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
             );
         }
 
-        if (tags.HasValue && tags.Value.Length is < 2 or > 200)
+        if (tags is { HasValue: true } && tags.Value.Length is < 2 or > 200)
         {
             return new ArgumentOutOfRangeError(nameof(name), "The tags must be between 2 and 200 characters.");
         }

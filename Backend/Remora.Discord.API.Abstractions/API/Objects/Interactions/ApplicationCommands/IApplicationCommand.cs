@@ -106,7 +106,12 @@ public interface IApplicationCommand
     IDiscordPermissionSet? DefaultMemberPermissions { get; }
 
     /// <summary>
-    /// Gets a value that indicates whether this command can be executed in DMs.
+    /// Gets a value indicating whether this command can be executed in DMs.
     /// </summary>
     Optional<bool> DMPermission { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this command is age-restricted.
+    /// </summary>
+    Optional<bool> IsNsfw { get; }
 }

@@ -67,8 +67,8 @@ public class RequireContextConditionTests
         bool expected
     )
     {
-        var contextMock = new Mock<ICommandContext>();
-        contextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(0));
+        var contextMock = new Mock<ITextCommandContext>();
+        contextMock.Setup(c => c.Message.ChannelID).Returns(DiscordSnowflake.New(0));
 
         var channelMock = new Mock<IChannel>();
         channelMock.Setup(c => c.Type).Returns(channelType);
@@ -102,8 +102,8 @@ public class RequireContextConditionTests
         bool expected
     )
     {
-        var contextMock = new Mock<ICommandContext>();
-        contextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(0));
+        var contextMock = new Mock<ITextCommandContext>();
+        contextMock.Setup(c => c.Message.ChannelID).Returns(DiscordSnowflake.New(0));
 
         var channelMock = new Mock<IChannel>();
         channelMock.Setup(c => c.Type).Returns(actual);
@@ -127,11 +127,11 @@ public class RequireContextConditionTests
     [Fact]
     public async Task CanCheckMultipleContexts()
     {
-        var textContextMock = new Mock<ICommandContext>();
-        textContextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(0));
+        var textContextMock = new Mock<ITextCommandContext>();
+        textContextMock.Setup(c => c.Message.ChannelID).Returns(DiscordSnowflake.New(0));
 
-        var groupDMContextMock = new Mock<ICommandContext>();
-        groupDMContextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(1));
+        var groupDMContextMock = new Mock<ITextCommandContext>();
+        groupDMContextMock.Setup(c => c.Message.ChannelID).Returns(DiscordSnowflake.New(1));
 
         var textChannelMock = new Mock<IChannel>();
         textChannelMock.Setup(c => c.Type).Returns(ChannelType.GuildText);
@@ -166,11 +166,11 @@ public class RequireContextConditionTests
     [Fact]
     public async Task CanCheckMultipleTypes()
     {
-        var textContextMock = new Mock<ICommandContext>();
-        textContextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(0));
+        var textContextMock = new Mock<ITextCommandContext>();
+        textContextMock.Setup(c => c.Message.ChannelID).Returns(DiscordSnowflake.New(0));
 
-        var groupDMContextMock = new Mock<ICommandContext>();
-        groupDMContextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(1));
+        var groupDMContextMock = new Mock<ITextCommandContext>();
+        groupDMContextMock.Setup(c => c.Message.ChannelID).Returns(DiscordSnowflake.New(1));
 
         var textChannelMock = new Mock<IChannel>();
         textChannelMock.Setup(c => c.Type).Returns(ChannelType.GuildText);

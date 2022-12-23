@@ -34,9 +34,9 @@ namespace Remora.Discord.Commands.Tests.Data.Contexts;
 public class GroupWithMessageContext : CommandGroup
 {
     // ReSharper disable once NotAccessedField.Local
-    private readonly ICommandContext _context;
+    private readonly IMessageContext _context;
 
-    public GroupWithMessageContext(ICommandContext context)
+    public GroupWithMessageContext(IMessageContext context)
     {
         _context = context;
     }

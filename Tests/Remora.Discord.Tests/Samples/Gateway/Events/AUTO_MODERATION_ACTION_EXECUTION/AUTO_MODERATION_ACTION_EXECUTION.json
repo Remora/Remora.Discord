@@ -1,0 +1,23 @@
+{
+  "t": "AUTO_MODERATION_ACTION_EXECUTION",
+  "s": 1,
+  "op": 0,
+  "d": {
+    "guild_id": "999999999999999999",
+    "action": {
+      "type": 2,
+      "metadata": {
+        "channel_id": "999999999999999999"
+      }
+    },
+    "rule_id": "999999999999999999",
+    "rule_trigger_type": 1,
+    "user_id": "999999999999999999",
+    "channel_id": "999999999999999999",
+    "message_id": "999999999999999999",
+    "alert_system_message_id": "999999999999999999",
+    "content": "none",
+    "matched_keyword": "none1",
+    "matched_content": "none1"
+  }
+}

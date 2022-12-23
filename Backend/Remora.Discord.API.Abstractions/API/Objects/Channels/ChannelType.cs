@@ -84,5 +84,10 @@ public enum ChannelType
     /// <summary>
     /// A channel in a student hub that contains a list of other guilds.
     /// </summary>
-    GuildDirectory = 14
+    GuildDirectory = 14,
+
+    /// <summary>
+    /// A channel that can only contain threads.
+    /// </summary>
+    GuildForum = 15
 }

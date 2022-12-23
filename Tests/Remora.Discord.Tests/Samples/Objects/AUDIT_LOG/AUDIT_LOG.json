@@ -1,6 +1,7 @@
 {
     "application_commands": [ ],
     "webhooks": [ ],
+    "auto_moderation_rules": [ ],
     "guild_scheduled_events": [ ],
     "users": [ ],
     "audit_log_entries": [ ],

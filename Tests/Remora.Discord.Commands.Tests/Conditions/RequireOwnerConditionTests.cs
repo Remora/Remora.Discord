@@ -29,6 +29,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
@@ -46,8 +47,11 @@ public class RequireOwnerConditionTests
     [Fact]
     public async Task ReturnsFalseIfInvokerIsNotBotOwner()
     {
-        var contextMock = new Mock<ICommandContext>();
-        contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(0));
+        var userMock = new Mock<IUser>();
+        userMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(0));
+
+        var contextMock = new Mock<ITextCommandContext>();
+        contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(userMock.Object));
 
         var informationMock = new Mock<IApplication>();
         informationMock.Setup(i => i.Owner!.ID).Returns(DiscordSnowflake.New(1));
@@ -71,8 +75,11 @@ public class RequireOwnerConditionTests
     [Fact]
     public async Task ReturnsTrueIfInvokerIsBotOwner()
     {
-        var contextMock = new Mock<ICommandContext>();
-        contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(0));
+        var userMock = new Mock<IUser>();
+        userMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(0));
+
+        var contextMock = new Mock<ITextCommandContext>();
+        contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(userMock.Object));
 
         var informationMock = new Mock<IApplication>();
         informationMock.Setup(i => i.Owner!.ID).Returns(DiscordSnowflake.New(0));

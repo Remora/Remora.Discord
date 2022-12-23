@@ -38,13 +38,13 @@ namespace Remora.Discord.Commands.Parsers;
 /// </summary>
 public class AttachmentParser : AbstractTypeParser<IAttachment>, ITypeParser<IPartialAttachment>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AttachmentParser"/> class.
     /// </summary>
     /// <param name="context">The command context.</param>
-    public AttachmentParser(ICommandContext context)
+    public AttachmentParser(IOperationContext context)
     {
         _context = context;
     }
@@ -65,12 +65,17 @@ public class AttachmentParser : AbstractTypeParser<IAttachment>, ITypeParser<IPa
 
     private IAttachment? GetResolvedAttachmentOrDefault(Snowflake attachmentID)
     {
-        if (_context is not InteractionContext injectionContext)
+        if (_context is not IInteractionContext interactionContext)
         {
             return null;
         }
 
-        var resolvedData = injectionContext.Data.Match(a => a.Resolved, _ => default, _ => default);
+        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        {
+            return null;
+        }
+
+        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
         if (!resolvedData.IsDefined(out var resolved) || !resolved.Attachments.IsDefined(out var attachments))
         {
             return null;

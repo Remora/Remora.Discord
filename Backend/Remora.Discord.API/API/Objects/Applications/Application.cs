@@ -53,5 +53,6 @@ public record Application
     Optional<ApplicationFlags> Flags = default,
     Optional<IReadOnlyList<string>> Tags = default,
     Optional<IApplicationInstallParameters> InstallParams = default,
-    Optional<Uri> CustomInstallUrl = default
+    Optional<Uri> CustomInstallUrl = default,
+    Optional<Uri> RoleConnectionsVerificationUrl = default
 ) : IApplication;

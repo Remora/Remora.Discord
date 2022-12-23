@@ -51,13 +51,13 @@ public static class CommandTreeExtensions
      * Various Discord-imposed limits.
      */
 
-    private const int _maxRootCommandsOrGroups = 100;
-    private const int _maxGroupCommands = 25;
-    private const int _maxChoiceValues = 25;
-    private const int _maxCommandParameters = 25;
-    private const int _maxCommandStringifiedLength = 4000;
-    private const int _maxCommandDescriptionLength = 100;
-    private const int _maxTreeDepth = 3; // Top level is a depth of 1
+    private const int MaxRootCommandsOrGroups = 100;
+    private const int MaxGroupCommands = 25;
+    private const int MaxChoiceValues = 25;
+    private const int MaxCommandParameters = 25;
+    private const int MaxCommandStringifiedLength = 4000;
+    private const int MaxCommandDescriptionLength = 100;
+    private const int MaxTreeDepth = 3; // Top level is a depth of 1
 
     /// <summary>
     /// Maps a set of Discord application commands to their respective command nodes.
@@ -188,12 +188,12 @@ public static class CommandTreeExtensions
                 throw new UnsupportedFeatureException("Overloads are not supported.", node);
             }
 
-            if (GetCommandStringifiedLength(option) > _maxCommandStringifiedLength)
+            if (GetCommandStringifiedLength(option) > MaxCommandStringifiedLength)
             {
                 throw new UnsupportedFeatureException
                 (
                     "One or more commands is too long (combined length of name, description, and value " +
-                    $"properties), max {_maxCommandStringifiedLength}).",
+                    $"properties), max {MaxCommandStringifiedLength}).",
                     node
                 );
             }
@@ -222,11 +222,11 @@ public static class CommandTreeExtensions
         }
 
         // Perform validations
-        if (commands.Count > _maxRootCommandsOrGroups)
+        if (commands.Count > MaxRootCommandsOrGroups)
         {
             throw new UnsupportedFeatureException
             (
-                $"Too many root-level commands or groups (max {_maxRootCommandsOrGroups}, found {commands.Count}).",
+                $"Too many root-level commands or groups (max {MaxRootCommandsOrGroups}, found {commands.Count}).",
                 tree.Root
             );
         }
@@ -343,11 +343,11 @@ public static class CommandTreeExtensions
         ILocalizationProvider localizationProvider
     )
     {
-        if (treeDepth > _maxTreeDepth)
+        if (treeDepth > MaxTreeDepth)
         {
             throw new UnsupportedFeatureException
             (
-                $"A sub-command or group was nested too deeply (depth {treeDepth}, max {_maxTreeDepth}).",
+                $"A sub-command or group was nested too deeply (depth {treeDepth}, max {MaxTreeDepth}).",
                 node
             );
         }
@@ -408,11 +408,11 @@ public static class CommandTreeExtensions
             return null;
         }
 
-        if (subCommandCount > _maxGroupCommands)
+        if (subCommandCount > MaxGroupCommands)
         {
             throw new UnsupportedFeatureException
             (
-                $"Too many commands under a group ({subCommandCount}, max {_maxGroupCommands}).",
+                $"Too many commands under a group ({subCommandCount}, max {MaxGroupCommands}).",
                 group
             );
         }
@@ -458,17 +458,14 @@ public static class CommandTreeExtensions
             }
 
             var parameters = command.CommandMethod.GetParameters();
-            if (parameters.Length > 0)
+            var expectedParameter = commandType.AsParameterName();
+            if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
             {
-                var expectedParameter = commandType.AsParameterName();
-                if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
-                {
-                    throw new InvalidNodeException
-                    (
-                        $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
-                        command
-                    );
-                }
+                throw new InvalidNodeException
+                (
+                    $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
+                    command
+                );
             }
         }
 
@@ -630,11 +627,11 @@ public static class CommandTreeExtensions
             parameterOptions.Add(parameterOption);
         }
 
-        if (parameterOptions.Count > _maxCommandParameters)
+        if (parameterOptions.Count > MaxCommandParameters)
         {
             throw new UnsupportedFeatureException
             (
-                $"Too many parameters in a command (had {parameterOptions.Count}, max {_maxCommandParameters}).",
+                $"Too many parameters in a command (had {parameterOptions.Count}, max {MaxCommandParameters}).",
                 command
             );
         }
@@ -656,7 +653,7 @@ public static class CommandTreeExtensions
         if (actualParameterType.IsEnum)
         {
             // Add the choices directly
-            if (Enum.GetValues(actualParameterType).Length <= _maxChoiceValues)
+            if (Enum.GetValues(actualParameterType).Length <= MaxChoiceValues)
             {
                 choices = new(EnumExtensions.GetEnumChoices(actualParameterType, localizationProvider));
             }
@@ -770,7 +767,7 @@ public static class CommandTreeExtensions
                 var type = command.GetCommandType();
                 if (type is ApplicationCommandType.ChatInput)
                 {
-                    if (description.Length <= _maxCommandDescriptionLength)
+                    if (description.Length <= MaxCommandDescriptionLength)
                     {
                         return;
                     }
@@ -778,7 +775,7 @@ public static class CommandTreeExtensions
                     throw new UnsupportedFeatureException
                     (
                         $"A command description was too long (length {description.Length}, "
-                        + $"max {_maxCommandDescriptionLength}).",
+                        + $"max {MaxCommandDescriptionLength}).",
                         node
                     );
                 }
@@ -797,7 +794,7 @@ public static class CommandTreeExtensions
             default:
             {
                 // Assume it uses the default limits
-                if (description.Length <= _maxCommandDescriptionLength)
+                if (description.Length <= MaxCommandDescriptionLength)
                 {
                     return;
                 }
@@ -805,7 +802,7 @@ public static class CommandTreeExtensions
                 throw new UnsupportedFeatureException
                 (
                     $"A group or parameter description was too long (length {description.Length}, "
-                    + $"max {_maxCommandDescriptionLength}).",
+                    + $"max {MaxCommandDescriptionLength}).",
                     node
                 );
             }

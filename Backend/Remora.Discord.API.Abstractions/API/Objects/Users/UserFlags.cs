@@ -34,12 +34,12 @@ public enum UserFlags
     /// <summary>
     /// The user is a Discord employee.
     /// </summary>
-    DiscordEmployee = 1 << 0,
+    Staff = 1 << 0,
 
     /// <summary>
     /// The user owns a a Discord-partnered server.
     /// </summary>
-    PartneredServerOwner = 1 << 1,
+    Partner = 1 << 1,
 
     /// <summary>
     /// The user is a member of a HypeSquad event.
@@ -54,27 +54,27 @@ public enum UserFlags
     /// <summary>
     /// The user is part of House Bravery.
     /// </summary>
-    HouseBravery = 1 << 6,
+    HypeSquadOnlineHouse1 = 1 << 6,
 
     /// <summary>
     /// The user is part of House Brilliance.
     /// </summary>
-    HouseBrilliance = 1 << 7,
+    HypeSquadOnlineHouse2 = 1 << 7,
 
     /// <summary>
     /// The user is part of House Balance.
     /// </summary>
-    HouseBalance = 1 << 8,
+    HypeSquadOnlineHouse3 = 1 << 8,
 
     /// <summary>
     /// The user is an early supporter.
     /// </summary>
-    EarlySupporter = 1 << 9,
+    PremiumEarlySupporter = 1 << 9,
 
     /// <summary>
-    /// The user is a team user.
+    /// The user is a team.
     /// </summary>
-    TeamUser = 1 << 10,
+    TeamPseudoUser = 1 << 10,
 
     /// <summary>
     /// The user is a hunter (level 2).
@@ -89,15 +89,20 @@ public enum UserFlags
     /// <summary>
     /// The user is a verified bot developer.
     /// </summary>
-    EarlyVerifiedBotDeveloper = 1 << 17,
+    VerifiedDeveloper = 1 << 17,
 
     /// <summary>
-    /// The user is a Discord-certified moderator.
+    /// The user is a Moderator programs alumni.
     /// </summary>
-    DiscordCertifiedModerator = 1 << 18,
+    CertifiedModerator = 1 << 18,
 
     /// <summary>
     /// The user is a bot that only uses outgoing webhook interactions, and should always be shown as online.
     /// </summary>
-    BotHttpInteractions = 1 << 19
+    BotHttpInteractions = 1 << 19,
+
+    /// <summary>
+    /// The user is an active bot developer.
+    /// </summary>
+    ActiveDeveloper = 1 << 22
 }

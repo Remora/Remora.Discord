@@ -1,6 +1,6 @@
 {
-  "custom_id": "aaa",
-  "title": "bbb",
+  "custom_id": "none",
+  "title": "none",
   "components": [
     {
       "type": 1,
@@ -10,7 +10,7 @@
           "value": "a",
           "style": 1,
           "label": "none",
-          "custom_id": "b"
+          "custom_id": "none"
         }
       ]
     }

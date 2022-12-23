@@ -4,6 +4,7 @@
     <attachedFolders>
       <Path>docs/custom</Path>
       <Path>docs/static</Path>
+      <Path>docs/uml</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes />

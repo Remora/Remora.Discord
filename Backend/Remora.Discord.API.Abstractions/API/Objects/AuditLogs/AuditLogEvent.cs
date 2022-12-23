@@ -268,5 +268,25 @@ public enum AuditLogEvent
     /// <summary>
     /// The permissions for an application command were updated.
     /// </summary>
-    ApplicationCommandPermissionUpdate = 121
+    ApplicationCommandPermissionUpdate = 121,
+
+    /// <summary>
+    /// An Auto Moderation rule was created.
+    /// </summary>
+    AutoModerationRuleCreate = 140,
+
+    /// <summary>
+    /// An Auto Moderation rule was updated.
+    /// </summary>
+    AutoModerationRuleUpdate = 141,
+
+    /// <summary>
+    /// An Auto Moderation rule was deleted.
+    /// </summary>
+    AutoModerationRuleDelete = 142,
+
+    /// <summary>
+    /// A message was blocked by AutoMod (according to a rule).
+    /// </summary>
+    AutoModerationBlockMessage = 143
 }

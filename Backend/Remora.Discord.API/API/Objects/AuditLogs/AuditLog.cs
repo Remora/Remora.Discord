@@ -34,6 +34,7 @@ public record AuditLog
 (
     IReadOnlyList<IApplicationCommand> ApplicationCommands,
     IReadOnlyList<IAuditLogEntry> AuditLogEntries,
+    IReadOnlyList<IAutoModerationRule> AutoModerationRules,
     IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents,
     IReadOnlyList<IPartialIntegration> Integrations,
     IReadOnlyList<IChannel> Threads,

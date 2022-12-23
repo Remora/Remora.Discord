@@ -177,6 +177,36 @@ public interface IChannel : IPartialChannel
     /// </summary>
     new Optional<int> TotalMessageSent { get; }
 
+    /// <summary>
+    /// Gets the set of tags that can be used in a forum channel.
+    /// </summary>
+    new Optional<IReadOnlyList<IForumTag>> AvailableTags { get; }
+
+    /// <summary>
+    /// Gets the IDs of the tags that have been applied to a thread in a forum channel.
+    /// </summary>
+    new Optional<IReadOnlyList<Snowflake>> AppliedTags { get; }
+
+    /// <summary>
+    /// Gets the emoji to show in the add reaction button on threads in a forum channel.
+    /// </summary>
+    new Optional<IDefaultReaction?> DefaultReactionEmoji { get; }
+
+    /// <summary>
+    /// Gets the initial <see cref="RateLimitPerUser"/> to set on newly created threads in a forum channel.
+    /// </summary>
+    new Optional<TimeSpan> DefaultThreadRateLimitPerUser { get; }
+
+    /// <summary>
+    /// Gets the sorting order of the forum channel.
+    /// </summary>
+    new Optional<SortOrder?> DefaultSortOrder { get; }
+
+    /// <summary>
+    /// Gets the default post layout for the forum.
+    /// </summary>
+    new Optional<ForumLayout> DefaultForumLayout { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialChannel.ID => this.ID;
 
@@ -260,4 +290,22 @@ public interface IChannel : IPartialChannel
 
     /// <inheritdoc/>
     Optional<int> IPartialChannel.TotalMessageSent => this.TotalMessageSent;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IForumTag>> IPartialChannel.AvailableTags => this.AvailableTags;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<Snowflake>> IPartialChannel.AppliedTags => this.AppliedTags;
+
+    /// <inheritdoc/>
+    Optional<IDefaultReaction?> IPartialChannel.DefaultReactionEmoji => this.DefaultReactionEmoji;
+
+    /// <inheritdoc/>
+    Optional<TimeSpan> IPartialChannel.DefaultThreadRateLimitPerUser => this.DefaultThreadRateLimitPerUser;
+
+    /// <inheritdoc/>
+    Optional<SortOrder?> IPartialChannel.DefaultSortOrder => this.DefaultSortOrder;
+
+    /// <inheritdoc/>
+    Optional<ForumLayout> IPartialChannel.DefaultForumLayout => this.DefaultForumLayout;
 }

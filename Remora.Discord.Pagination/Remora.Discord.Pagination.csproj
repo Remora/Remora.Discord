@@ -1,7 +1,7 @@
-<Project Sdk="Remora.Sdk/1.1.1">
+<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>3.0.8</VersionPrefix>
+        <VersionPrefix>3.0.12</VersionPrefix>
         <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.

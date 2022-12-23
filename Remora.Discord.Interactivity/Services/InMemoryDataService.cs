@@ -293,6 +293,8 @@ public class InMemoryDataService<TKey, TData> : IAsyncDisposable where TKey : no
             return;
         }
 
+        GC.SuppressFinalize(this);
+
         var keys = _data.Keys.ToList();
         foreach (var key in keys)
         {
