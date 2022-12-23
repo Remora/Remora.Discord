@@ -30,6 +30,7 @@ using Remora.Commands.Groups;
 using Remora.Discord.Extensions.Attributes;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Responders;
+using Remora.Discord.Interactivity;
 
 namespace Remora.Discord.Extensions.Extensions;
 
@@ -56,7 +57,11 @@ public static class ServiceCollectionExtensions
     )
     {
         var candidates = assembly.ExportedTypes
-                                .Where(t => t.IsClass && !t.IsAbstract && typeof(CommandGroup).IsAssignableFrom(t))
+                                .Where(t => t.IsClass &&
+                                            !t.IsAbstract &&
+                                            typeof(CommandGroup).IsAssignableFrom(t) &&
+                                            !typeof(InteractionGroup).IsAssignableFrom(t)
+                                      )
                                 .ToArray();
 
         var tree = serviceCollection.AddCommandTree(treeName);
