@@ -163,7 +163,6 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             return response;
         }
 
-        // TODO does moving this cacheOptions up here cause regressions?
         var cacheOptions = new CacheEntryOptions { AbsoluteExpiration = newLimits.ResetsAt + TimeSpan.FromSeconds(1) };
 
         if (newLimits.ID is null)
