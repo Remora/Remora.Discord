@@ -1,10 +1,10 @@
-<Project Sdk="Remora.Tests.Sdk/1.0.5">
+<Project Sdk="Remora.Tests.Sdk">
     <ItemGroup>
         <ProjectReference Include="..\..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
         <ProjectReference Include="..\..\Backend\Remora.Discord.Caching\Remora.Discord.Caching.csproj" />
         <ProjectReference Include="..\..\Backend\Remora.Discord.Unstable\Remora.Discord.Unstable.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Moq" Version="4.18.2" />
+      <PackageReference Include="Moq" />
     </ItemGroup>
 </Project>
