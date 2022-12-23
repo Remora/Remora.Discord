@@ -22,6 +22,7 @@
 
 using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Remora.Discord.Caching.Extensions;
@@ -41,6 +42,7 @@ public class CacheTests
     /// <summary>
     /// A test fixture for caching.
     /// </summary>
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class Fixture
     {
     }
