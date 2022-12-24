@@ -20,12 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Memory;
-using Remora.Discord.Caching;
 using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
