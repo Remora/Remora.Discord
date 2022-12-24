@@ -22,6 +22,7 @@
 
 using System.Text;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.Caching;

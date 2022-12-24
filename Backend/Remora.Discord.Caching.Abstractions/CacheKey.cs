@@ -22,7 +22,7 @@
 
 using System.Text;
 
-namespace Remora.Discord.Caching;
+namespace Remora.Discord.Caching.Abstractions;
 
 /// <summary>
 /// The base type for a cache key.
