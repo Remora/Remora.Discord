@@ -86,7 +86,7 @@ public interface IIntegration : IPartialIntegration
     /// <summary>
     /// Gets the integration's account information.
     /// </summary>
-    new IAccount Account { get; }
+    new IIntegrationAccount Account { get; }
 
     /// <summary>
     /// Gets the time when the integration was last synced.
@@ -144,7 +144,7 @@ public interface IIntegration : IPartialIntegration
     Optional<IUser> IPartialIntegration.User => this.User;
 
     /// <inheritdoc/>
-    Optional<IAccount> IPartialIntegration.Account => new(this.Account);
+    Optional<IIntegrationAccount> IPartialIntegration.Account => new(this.Account);
 
     /// <inheritdoc/>
     Optional<DateTimeOffset> IPartialIntegration.SyncedAt => this.SyncedAt;

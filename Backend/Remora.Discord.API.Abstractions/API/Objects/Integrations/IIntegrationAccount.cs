@@ -1,5 +1,5 @@
 //
-//  AccountTests.cs
+//  IIntegrationAccount.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Tests.TestBases;
+using JetBrains.Annotations;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Tests.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc />
-public class AccountTests : ObjectTestBase<IAccount>
+/// <summary>
+/// Represents an integration account.
+/// </summary>
+[PublicAPI]
+public interface IIntegrationAccount
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AccountTests"/> class.
+    /// Gets the ID of the account.
     /// </summary>
-    /// <param name="fixture">The test fixture.</param>
-    public AccountTests(JsonBackedTypeTestFixture fixture)
-        : base(fixture)
-    {
-    }
+    Snowflake ID { get; }
+
+    /// <summary>
+    /// Gets the name of the account.
+    /// </summary>
+    string Name { get; }
 }

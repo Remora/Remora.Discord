@@ -1,5 +1,5 @@
 //
-//  Account.cs
+//  IntegrationAccount.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,6 +28,6 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IAccount" />
+/// <inheritdoc cref="IIntegrationAccount" />
 [PublicAPI]
-public record Account(Snowflake ID, string Name) : IAccount;
+public record IntegrationAccount(Snowflake ID, string Name) : IIntegrationAccount;

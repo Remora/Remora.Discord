@@ -692,7 +692,7 @@ public static class ServiceCollectionExtensions
     /// <returns>The options, with the converters added.</returns>
     private static JsonSerializerOptions AddIntegrationObjectConverters(this JsonSerializerOptions options)
     {
-        options.AddDataObjectConverter<IAccount, Account>();
+        options.AddDataObjectConverter<IIntegrationAccount, IntegrationAccount>();
 
         options.AddDataObjectConverter<IIntegration, Integration>()
             .WithPropertyName(i => i.IsEnabled, "enabled")

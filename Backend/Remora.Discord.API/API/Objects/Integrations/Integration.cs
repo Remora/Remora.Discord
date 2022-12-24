@@ -44,7 +44,7 @@ public record Integration
     IntegrationExpireBehaviour ExpireBehaviour,
     TimeSpan ExpireGracePeriod,
     Optional<IUser> User,
-    IAccount Account,
+    IIntegrationAccount Account,
     DateTimeOffset SyncedAt,
     int SubscriberCount,
     bool IsRevoked,

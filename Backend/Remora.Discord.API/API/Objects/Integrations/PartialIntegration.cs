@@ -44,7 +44,7 @@ public record PartialIntegration
     Optional<IntegrationExpireBehaviour> ExpireBehaviour = default,
     Optional<TimeSpan> ExpireGracePeriod = default,
     Optional<IUser> User = default,
-    Optional<IAccount> Account = default,
+    Optional<IIntegrationAccount> Account = default,
     Optional<DateTimeOffset> SyncedAt = default,
     Optional<int> SubscriberCount = default,
     Optional<bool> IsRevoked = default,
