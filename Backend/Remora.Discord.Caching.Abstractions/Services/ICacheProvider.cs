@@ -39,8 +39,7 @@ public interface ICacheProvider
     /// </summary>
     /// <param name="key">The key to cache the value with.</param>
     /// <param name="instance">The instance of the object to cache.</param>
-    /// <param name="absoluteExpiration">The absolute expiration of the value to cache.</param>
-    /// <param name="slidingExpiration">The sliding expiration of the value to cache.</param>
+    /// <param name="options">The options of the value to cache.</param>
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The type to cache.</typeparam>
     /// <remarks>Absolute and sliding expirations may be handled differently (or not at all)
@@ -51,8 +50,7 @@ public interface ICacheProvider
     (
         CacheKey key,
         TInstance instance,
-        DateTimeOffset? absoluteExpiration = null,
-        TimeSpan? slidingExpiration = null,
+        CacheEntryOptions options,
         CancellationToken ct = default
     )
         where TInstance : class;

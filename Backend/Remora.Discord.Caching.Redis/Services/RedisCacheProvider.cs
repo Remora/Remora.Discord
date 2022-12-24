@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
+using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
 
@@ -64,24 +65,17 @@ public class RedisCacheProvider : ICacheProvider
     (
         CacheKey key,
         TInstance instance,
-        DateTimeOffset? absoluteExpiration = null,
-        TimeSpan? slidingExpiration = null,
+        CacheEntryOptions options,
         CancellationToken ct = default
     )
         where TInstance : class
     {
-        if (absoluteExpiration >= DateTimeOffset.UtcNow)
+        if (options.AbsoluteExpiration >= DateTimeOffset.UtcNow)
         {
             return;
         }
 
         var serialized = JsonSerializer.SerializeToUtf8Bytes(instance, _jsonOptions);
-
-        var options = new DistributedCacheEntryOptions
-        {
-            AbsoluteExpiration = absoluteExpiration,
-            SlidingExpiration = slidingExpiration
-        };
 
         await _cache.SetAsync(key.ToCanonicalString(), serialized, options, ct);
     }

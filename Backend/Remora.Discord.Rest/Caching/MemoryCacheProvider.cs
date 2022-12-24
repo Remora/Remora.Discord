@@ -54,24 +54,11 @@ public class MemoryCacheProvider : ICacheProvider
     (
         CacheKey key,
         TInstance instance,
-        DateTimeOffset? absoluteExpiration = null,
-        TimeSpan? slidingExpiration = null,
+        CacheEntryOptions options,
         CancellationToken ct = default
     )
         where TInstance : class
     {
-        var options = new MemoryCacheEntryOptions();
-
-        if (absoluteExpiration.HasValue)
-        {
-            options.SetAbsoluteExpiration(absoluteExpiration.Value);
-        }
-
-        if (slidingExpiration.HasValue)
-        {
-            options.SetSlidingExpiration(slidingExpiration.Value);
-        }
-
         _memoryCache.Set(key, instance, options);
 
         return default;
