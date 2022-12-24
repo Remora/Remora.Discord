@@ -93,6 +93,7 @@ public class CacheSettings
     public CacheSettings SetDefaultAbsoluteExpiration(TimeSpan? defaultAbsoluteExpiration)
     {
         this.DefaultAbsoluteExpiration = defaultAbsoluteExpiration;
+
         return this;
     }
 
@@ -104,6 +105,7 @@ public class CacheSettings
     public CacheSettings SetDefaultSlidingExpiration(TimeSpan? defaultSlidingExpiration)
     {
         this.DefaultSlidingExpiration = defaultSlidingExpiration;
+
         return this;
     }
 
@@ -115,6 +117,7 @@ public class CacheSettings
     public CacheSettings SetDefaultEvictionAbsoluteExpiration(TimeSpan? defaultAbsoluteExpiration)
     {
         this.DefaultAbsoluteExpiration = defaultAbsoluteExpiration;
+
         return this;
     }
 
@@ -126,6 +129,7 @@ public class CacheSettings
     public CacheSettings SetDefaultEvictionSlidingExpiration(TimeSpan? defaultSlidingExpiration)
     {
         this.DefaultSlidingExpiration = defaultSlidingExpiration;
+
         return this;
     }
 
@@ -169,6 +173,7 @@ public class CacheSettings
         this.ConfiguredEvictionTypes.Add(typeof(TCachedType));
         this.SlidingCacheExpirations[typeof(TCachedType)] = slidingExpiration;
         this.SlidingEvictionCacheExpirations.TryAdd(typeof(TCachedType), slidingExpiration);
+
         return this;
     }
 
@@ -184,6 +189,7 @@ public class CacheSettings
     {
         this.ConfiguredEvictionTypes.Add(typeof(TCachedType));
         this.AbsoluteEvictionCacheExpirations[typeof(TCachedType)] = absoluteExpiration;
+
         return this;
     }
 
@@ -199,6 +205,7 @@ public class CacheSettings
     {
         this.ConfiguredEvictionTypes.Add(typeof(TCachedType));
         this.SlidingEvictionCacheExpirations[typeof(TCachedType)] = slidingExpiration;
+
         return this;
     }
 }
