@@ -35,25 +35,32 @@ namespace Remora.Discord.Caching.Services;
 [PublicAPI]
 public class CacheSettings
 {
+    private readonly Dictionary<Type, TimeSpan?> _absoluteCacheExpirations = new();
+    private readonly Dictionary<Type, TimeSpan?> _slidingCacheExpirations = new();
+    private readonly Dictionary<Type, TimeSpan?> _absoluteEvictionCacheExpirations = new();
+    private readonly Dictionary<Type, TimeSpan?> _slidingEvictionCacheExpirations = new();
+    private readonly HashSet<Type> _configuredTypes = new();
+    private readonly HashSet<Type> _configuredEvictionTypes = new();
+
     /// <summary>
     /// Gets the absolute cache expiration values for various types.
     /// </summary>
-    internal Dictionary<Type, TimeSpan?> AbsoluteCacheExpirations { get; } = new();
+    internal IReadOnlyDictionary<Type, TimeSpan?> AbsoluteCacheExpirations => _absoluteCacheExpirations;
 
     /// <summary>
     /// Gets the sliding cache expiration values for various types.
     /// </summary>
-    internal Dictionary<Type, TimeSpan?> SlidingCacheExpirations { get; } = new();
+    internal IReadOnlyDictionary<Type, TimeSpan?> SlidingCacheExpirations => _slidingCacheExpirations;
 
     /// <summary>
     /// Gets the absolute cache expiration values for various types when they have been evicted from the primary cache.
     /// </summary>
-    internal Dictionary<Type, TimeSpan?> AbsoluteEvictionCacheExpirations { get; } = new();
+    internal IReadOnlyDictionary<Type, TimeSpan?> AbsoluteEvictionCacheExpirations => _absoluteEvictionCacheExpirations;
 
     /// <summary>
     /// Gets the sliding cache expiration values for various types when they have been evicted from the primary cache.
     /// </summary>
-    internal Dictionary<Type, TimeSpan?> SlidingEvictionCacheExpirations { get; } = new();
+    internal IReadOnlyDictionary<Type, TimeSpan?> SlidingEvictionCacheExpirations => _slidingEvictionCacheExpirations;
 
     /// <summary>
     /// Gets the default absolute expiration value.
@@ -78,12 +85,12 @@ public class CacheSettings
     /// <summary>
     /// Gets a set of types with custom configured expirations.
     /// </summary>
-    internal HashSet<Type> ConfiguredTypes { get; } = new();
+    internal IReadOnlyCollection<Type> ConfiguredTypes => _configuredTypes;
 
     /// <summary>
     /// Gets a set of types with custom configured expirations for when they have been evicted from the primary cache.
     /// </summary>
-    internal HashSet<Type> ConfiguredEvictionTypes { get; } = new();
+    internal IReadOnlyCollection<Type> ConfiguredEvictionTypes => _configuredEvictionTypes;
 
     /// <summary>
     /// Sets the default absolute expiration value for types.
@@ -147,10 +154,10 @@ public class CacheSettings
     /// <returns>The settings.</returns>
     public CacheSettings SetAbsoluteExpiration<TCachedType>(TimeSpan? absoluteExpiration)
     {
-        this.ConfiguredTypes.Add(typeof(TCachedType));
-        this.ConfiguredEvictionTypes.Add(typeof(TCachedType));
-        this.AbsoluteCacheExpirations[typeof(TCachedType)] = absoluteExpiration;
-        this.AbsoluteEvictionCacheExpirations.TryAdd(typeof(TCachedType), absoluteExpiration);
+        _configuredTypes.Add(typeof(TCachedType));
+        _configuredEvictionTypes.Add(typeof(TCachedType));
+        _absoluteCacheExpirations[typeof(TCachedType)] = absoluteExpiration;
+        _absoluteEvictionCacheExpirations.TryAdd(typeof(TCachedType), absoluteExpiration);
 
         return this;
     }
@@ -169,10 +176,10 @@ public class CacheSettings
     /// <returns>The settings.</returns>
     public CacheSettings SetSlidingExpiration<TCachedType>(TimeSpan? slidingExpiration)
     {
-        this.ConfiguredTypes.Add(typeof(TCachedType));
-        this.ConfiguredEvictionTypes.Add(typeof(TCachedType));
-        this.SlidingCacheExpirations[typeof(TCachedType)] = slidingExpiration;
-        this.SlidingEvictionCacheExpirations.TryAdd(typeof(TCachedType), slidingExpiration);
+        _configuredTypes.Add(typeof(TCachedType));
+        _configuredEvictionTypes.Add(typeof(TCachedType));
+        _slidingCacheExpirations[typeof(TCachedType)] = slidingExpiration;
+        _slidingEvictionCacheExpirations.TryAdd(typeof(TCachedType), slidingExpiration);
 
         return this;
     }
@@ -187,8 +194,8 @@ public class CacheSettings
     /// <returns>The settings.</returns>
     public CacheSettings SetEvictionAbsoluteExpiration<TCachedType>(TimeSpan? absoluteExpiration)
     {
-        this.ConfiguredEvictionTypes.Add(typeof(TCachedType));
-        this.AbsoluteEvictionCacheExpirations[typeof(TCachedType)] = absoluteExpiration;
+        _configuredEvictionTypes.Add(typeof(TCachedType));
+        _absoluteEvictionCacheExpirations[typeof(TCachedType)] = absoluteExpiration;
 
         return this;
     }
@@ -203,8 +210,8 @@ public class CacheSettings
     /// <returns>The settings.</returns>
     public CacheSettings SetEvictionSlidingExpiration<TCachedType>(TimeSpan? slidingExpiration)
     {
-        this.ConfiguredEvictionTypes.Add(typeof(TCachedType));
-        this.SlidingEvictionCacheExpirations[typeof(TCachedType)] = slidingExpiration;
+        _configuredEvictionTypes.Add(typeof(TCachedType));
+        _slidingEvictionCacheExpirations[typeof(TCachedType)] = slidingExpiration;
 
         return this;
     }
