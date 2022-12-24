@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
 /// Marks a command or group as being either accessible or inaccessible in a DM.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class DiscordDefaultDMPermissionAttribute : Attribute
 {

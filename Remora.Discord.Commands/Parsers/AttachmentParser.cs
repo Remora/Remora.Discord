@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
 using Remora.Discord.API;
@@ -36,6 +37,7 @@ namespace Remora.Discord.Commands.Parsers;
 /// <summary>
 /// Parses instances of <see cref="IAttachment"/> from an interaction.
 /// </summary>
+[PublicAPI]
 public class AttachmentParser : AbstractTypeParser<IAttachment>, ITypeParser<IPartialAttachment>
 {
     private readonly IOperationContext _context;

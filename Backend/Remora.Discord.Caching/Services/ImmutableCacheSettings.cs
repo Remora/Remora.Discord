@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.Caching.Abstractions;
 
@@ -30,6 +31,7 @@ namespace Remora.Discord.Caching.Services;
 /// <summary>
 /// Allows for accessing settings for cache objects.
 /// </summary>
+[PublicAPI]
 public class ImmutableCacheSettings
 {
     private readonly Dictionary<Type, CacheEntryOptions> _cacheEntryOptions = new();

@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IGuildScheduledEvent"/>
+[PublicAPI]
 public record GuildScheduledEvent
 (
     Snowflake ID,

@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.Gateway.Responders;
 
 namespace Remora.Discord.Extensions.Attributes;
@@ -28,6 +29,7 @@ namespace Remora.Discord.Extensions.Attributes;
 /// <summary>
 /// Indicates that a responder type or method should be registered as the specified group.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Class)]
 public class ResponderAttribute : Attribute
 {

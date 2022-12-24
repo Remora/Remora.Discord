@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
 /// Represents contextual information about a currently executing text-based command.
 /// </summary>
+[PublicAPI]
 public interface ITextCommandContext : IMessageContext, ICommandContext
 {
 }

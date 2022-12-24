@@ -21,6 +21,7 @@
 //
 
 using System.Text;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Abstractions;
 using Remora.Rest.Core;
@@ -30,6 +31,7 @@ namespace Remora.Discord.Caching;
 /// <summary>
 /// Helpers for Discord-related cache keys.
 /// </summary>
+[PublicAPI]
 public static class KeyHelpers
 {
     /// <summary>

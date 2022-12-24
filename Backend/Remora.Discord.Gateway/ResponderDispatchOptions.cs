@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.Gateway.Services;
 
 namespace Remora.Discord.Gateway;
@@ -28,4 +29,5 @@ namespace Remora.Discord.Gateway;
 ///  Represents options related to <see cref="ResponderDispatchService"/>.
 /// </summary>
 /// <param name="MaxItems">How many items can be queued for dispatch at any given time.</param>
+[PublicAPI]
 public record ResponderDispatchOptions(uint MaxItems = 100);

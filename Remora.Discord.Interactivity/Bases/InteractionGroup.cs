@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Commands.Groups;
 
 namespace Remora.Discord.Interactivity;
@@ -27,6 +28,7 @@ namespace Remora.Discord.Interactivity;
 /// <summary>
 /// Represents the base type for command groups that handle Discord's message component interactions.
 /// </summary>
+[PublicAPI]
 public abstract class InteractionGroup : CommandGroup
 {
 }

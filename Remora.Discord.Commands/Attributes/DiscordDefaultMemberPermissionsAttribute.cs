@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Attributes;
@@ -34,6 +35,7 @@ namespace Remora.Discord.Commands.Attributes;
 /// Permissions serve as a base for command access, however moderators with the appropriate permissions can add
 /// additional filters to the command, either adding or removing applicable users.
 /// </remarks>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class DiscordDefaultMemberPermissionsAttribute : Attribute
 {

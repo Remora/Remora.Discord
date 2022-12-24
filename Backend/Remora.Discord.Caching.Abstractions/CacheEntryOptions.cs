@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -32,6 +33,7 @@ namespace Remora.Discord.Caching.Abstractions;
 /// </summary>
 /// <seealso cref="MemoryCacheEntryOptions"/>
 /// <seealso cref="DistributedCacheEntryOptions"/>
+[PublicAPI]
 public sealed class CacheEntryOptions
 {
     private MemoryCacheEntryOptions? _memoryCacheOptions;

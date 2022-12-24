@@ -22,6 +22,7 @@
 
 using System;
 using System.Reflection;
+using JetBrains.Annotations;
 using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
@@ -31,6 +32,7 @@ namespace Remora.Discord.Commands.Extensions;
 /// <summary>
 /// Defines extension methods for the <see cref="CommandNode"/> type.
 /// </summary>
+[PublicAPI]
 public static class CommandNodeExtensions
 {
     /// <summary>

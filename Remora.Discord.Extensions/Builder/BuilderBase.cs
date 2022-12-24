@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.Extensions.Errors;
 using Remora.Results;
 
 namespace Remora.Discord.Extensions.Builder;
 
 /// <inheritdoc />
+[PublicAPI]
 public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
 {
     /// <inheritdoc />

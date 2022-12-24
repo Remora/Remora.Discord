@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
 /// Marks an enumeration member as being excluded from slash command autocomplete options.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Field)]
 public class ExcludeFromChoicesAttribute : Attribute
 {

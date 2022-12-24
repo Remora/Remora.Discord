@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -30,4 +31,5 @@ namespace Remora.Discord.Commands.Contexts;
 /// </summary>
 /// <param name="Message">The message.</param>
 /// <param name="GuildID">The ID of the guild the message is in, if any.</param>
+[PublicAPI]
 public record MessageContext(IPartialMessage Message, Optional<Snowflake> GuildID) : IMessageContext;

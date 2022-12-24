@@ -21,12 +21,14 @@
 //
 
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Caching.Abstractions;
 
 /// <summary>
 /// The base type for a cache key.
 /// </summary>
+[PublicAPI]
 public abstract record CacheKey
 {
     /// <summary>

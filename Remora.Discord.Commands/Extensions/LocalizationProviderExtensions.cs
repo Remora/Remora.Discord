@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Remora.Discord.Commands.Services;
 
 namespace Remora.Discord.Commands.Extensions;
@@ -29,6 +30,7 @@ namespace Remora.Discord.Commands.Extensions;
 /// <summary>
 /// Defines extension methods for the <see cref="ILocalizationProvider"/> interface.
 /// </summary>
+[PublicAPI]
 public static class LocalizationProviderExtensions
 {
     /// <summary>

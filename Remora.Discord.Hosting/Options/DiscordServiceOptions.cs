@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Hosting.Options;
 
 /// <summary>
@@ -28,4 +30,5 @@ namespace Remora.Discord.Hosting.Options;
 /// <param name="TerminateApplicationOnCriticalGatewayErrors">
 /// Whether the service should stop the application if a critical gateway error is encountered.
 /// </param>
+[PublicAPI]
 public record DiscordServiceOptions(bool TerminateApplicationOnCriticalGatewayErrors = true);
