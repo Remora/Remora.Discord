@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Memory;
+using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
 
@@ -52,24 +53,11 @@ public class MemoryCacheProvider : ICacheProvider
     (
         string key,
         TInstance instance,
-        DateTimeOffset? absoluteExpiration = null,
-        TimeSpan? slidingExpiration = null,
+        CacheEntryOptions options,
         CancellationToken ct = default
     )
         where TInstance : class
     {
-        var options = new MemoryCacheEntryOptions();
-
-        if (absoluteExpiration.HasValue)
-        {
-            options.SetAbsoluteExpiration(absoluteExpiration.Value);
-        }
-
-        if (slidingExpiration.HasValue)
-        {
-            options.SetSlidingExpiration(slidingExpiration.Value);
-        }
-
         _memoryCache.Set(key, instance, options);
 
         return default;

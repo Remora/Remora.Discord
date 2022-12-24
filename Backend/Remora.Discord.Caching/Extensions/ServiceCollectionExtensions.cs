@@ -57,6 +57,7 @@ public static class ServiceCollectionExtensions
     {
         services.TryAddSingleton<CacheService>();
         services.AddOptions<CacheSettings>();
+        services.AddSingleton<ImmutableCacheSettings>();
 
         services
             .Decorate<IDiscordRestChannelAPI, CachingDiscordRestChannelAPI>()
