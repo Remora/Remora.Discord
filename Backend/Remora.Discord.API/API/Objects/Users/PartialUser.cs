@@ -37,6 +37,7 @@ public record PartialUser
     Optional<string> Username = default,
     Optional<ushort> Discriminator = default,
     Optional<IImageHash?> Avatar = default,
+    Optional<IImageHash?> AvatarDecoration = default,
     Optional<bool> IsBot = default,
     Optional<bool> IsSystem = default,
     Optional<bool> IsMFAEnabled = default,

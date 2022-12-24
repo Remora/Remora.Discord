@@ -53,6 +53,11 @@ public interface IUser : IPartialUser
     new IImageHash? Avatar { get; }
 
     /// <summary>
+    /// Gets the user's avatar decoration.
+    /// </summary>
+    new Optional<IImageHash?> AvatarDecoration { get; }
+
+    /// <summary>
     /// Gets a value indicating whether the user is a bot, belonging to an OAuth2 application.
     /// </summary>
     new Optional<bool> IsBot { get; }
@@ -119,6 +124,9 @@ public interface IUser : IPartialUser
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialUser.Avatar => new(this.Avatar);
+
+    /// <inheritdoc/>
+    Optional<IImageHash?> IPartialUser.AvatarDecoration => this.AvatarDecoration;
 
     /// <inheritdoc/>
     Optional<bool> IPartialUser.IsBot => this.IsBot;
