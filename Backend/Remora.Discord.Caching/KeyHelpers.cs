@@ -1,4 +1,4 @@
-//
+﻿//
 //  KeyHelpers.cs
 //
 //  Author:
@@ -20,492 +20,586 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System.Text;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.Caching;
 
 /// <summary>
-/// Contains methods that create cache keys for various identified entities.
+/// Helpers for Discord-related cache keys.
 /// </summary>
-[PublicAPI]
 public static class KeyHelpers
 {
     /// <summary>
     /// Creates a cache key for an <see cref="IPermissionOverwrite"/> instance.
     /// </summary>
-    /// <param name="channelID">The ID of the channel the overwrite is for.</param>
-    /// <param name="overwriteID">The ID of the overwrite.</param>
+    /// <param name="ChannelID">The ID of the channel the overwrite is for.</param>
+    /// <param name="OverwriteID">The ID of the overwrite.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateChannelPermissionCacheKey(in Snowflake channelID, in Snowflake overwriteID)
+    public record ChannelPermissionCacheKey(in Snowflake ChannelID, in Snowflake OverwriteID) : ChannelCacheKey(ChannelID)
     {
-        return $"{CreateChannelCacheKey(channelID)}:Overwrite:{overwriteID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append($":Overwrite:{this.OverwriteID}");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IInvite"/> instance.
     /// </summary>
-    /// <param name="code">The invite code.</param>
+    /// <param name="Code">The invite code.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateInviteCacheKey(string code)
+    public record InviteCacheKey(string Code) : CacheKey
     {
-        return $"Invite:{code}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Invite:{this.Code}");
     }
 
     /// <summary>
     /// Creates a cache key for a collection of <see cref="IInvite"/> instances from a guild.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildInvitesCacheKey(in Snowflake guildID)
+    public record GuildInvitesCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Invites";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Invites");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IChannel"/> instance.
     /// </summary>
-    /// <param name="channelID">The ID of the channel.</param>
+    /// <param name="ChannelID">The ID of the channel.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateChannelCacheKey(in Snowflake channelID)
+    public record ChannelCacheKey(in Snowflake ChannelID) : CacheKey
     {
-        return $"Channel:{channelID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Channel:{this.ChannelID}");
     }
 
     /// <summary>
     /// Creates a cache key for a list of pinned <see cref="IMessage"/> instances.
     /// </summary>
-    /// <param name="channelID">The ID of the channel.</param>
+    /// <param name="ChannelID">The ID of the channel.</param>
     /// <returns>The cache key.</returns>
-    public static string CreatePinnedMessagesCacheKey(in Snowflake channelID)
+    public record PinnedMessagesCacheKey(in Snowflake ChannelID) : ChannelCacheKey(ChannelID)
     {
-        return $"{CreateChannelCacheKey(channelID)}:Messages:Pinned";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Messages:Pinned");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IMessage"/> instance.
     /// </summary>
-    /// <param name="channelID">The ID of the channel the message is in.</param>
-    /// <param name="messageID">The ID of the message.</param>
+    /// <param name="ChannelID">The ID of the channel the message is in.</param>
+    /// <param name="MessageID">The ID of the message.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateMessageCacheKey(in Snowflake channelID, in Snowflake messageID)
+    public record MessageCacheKey(in Snowflake ChannelID, in Snowflake MessageID) : ChannelCacheKey(ChannelID)
     {
-        return $"{CreateChannelCacheKey(channelID)}:Message:{messageID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append($":Message:{this.MessageID}");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IEmoji"/> instance.
     /// </summary>
-    /// <param name="guildID">The ID of the guild the emoji is in.</param>
-    /// <param name="emojiID">The ID of the emoji.</param>
+    /// <param name="GuildID">The ID of the guild the emoji is in.</param>
+    /// <param name="EmojiID">The ID of the emoji.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateEmojiCacheKey(in Snowflake guildID, in Snowflake emojiID)
+    public record EmojiCacheKey(in Snowflake GuildID, in Snowflake EmojiID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Emoji:{emojiID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append($":Emoji:{this.EmojiID}");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IGuild"/> instance.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildCacheKey(in Snowflake guildID)
+    public record GuildCacheKey(in Snowflake GuildID) : CacheKey
     {
-        return $"Guild:{guildID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Guild:{this.GuildID}");
     }
 
     /// <summary>
     /// Creates a cache key for a collection of <see cref="IChannel"/> instances from a guild.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildChannelsCacheKey(in Snowflake guildID)
+    public record GuildChannelsCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Channels";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Channels");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IGuildPreview"/> instance.
     /// </summary>
-    /// <param name="guildPreviewID">The ID of the guild preview.</param>
+    /// <param name="GuildPreviewID">The ID of the guild preview.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildPreviewCacheKey(in Snowflake guildPreviewID)
+    public record GuildPreviewCacheKey(in Snowflake GuildPreviewID) : CacheKey
     {
-        return $"GuildPreview:{guildPreviewID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"GuildPreview:{this.GuildPreviewID}");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IGuildMember"/> instance.
     /// </summary>
-    /// <param name="guildID">The ID of the guild the member is in.</param>
-    /// <param name="userID">The ID of the member.</param>
+    /// <param name="GuildID">The ID of the guild the member is in.</param>
+    /// <param name="UserID">The ID of the member.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildMemberKey(in Snowflake guildID, in Snowflake userID)
+    public record GuildMemberKey(in Snowflake GuildID, in Snowflake UserID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Member:{userID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append($":Member:{this.UserID}");
     }
 
     /// <summary>
     /// Creates a cache key for a collection of <see cref="IGuildMember"/> instances from a guild, constrained by
     /// the given input parameters. The parameters are used as components for the cache key.
     /// </summary>
-    /// <param name="guildID">The ID of the guild the members are in.</param>
-    /// <param name="limit">The limit parameter.</param>
-    /// <param name="after">The after parameter.</param>
+    /// <param name="GuildID">The ID of the guild the members are in.</param>
+    /// <param name="Limit">The limit parameter.</param>
+    /// <param name="After">The after parameter.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildMembersKey
-    (
-        in Snowflake guildID,
-        in Optional<int> limit,
-        in Optional<Snowflake> after
-    )
+    public record GuildMembersKey(
+        in Snowflake GuildID, in Optional<int> Limit, in Optional<Snowflake> After
+    ) : GuildCacheKey(GuildID)
     {
-        var limitKey = limit.HasValue ? $":Limit:{limit.Value}" : string.Empty;
-        var afterKey = after.HasValue ? $":After:{after.Value}" : string.Empty;
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+        {
+            base.AppendToString(stringBuilder).Append(":Members");
 
-        return $"{CreateGuildCacheKey(guildID)}:Members{limitKey}{afterKey}";
+            if (this.Limit.HasValue)
+            {
+                stringBuilder.Append($":Limit:{this.Limit.Value}");
+            }
+
+            if (this.After.HasValue)
+            {
+                stringBuilder.Append($":After:{this.After.Value}");
+            }
+
+            return stringBuilder;
+        }
     }
 
     /// <summary>
     /// Creates a cache key for a collection of <see cref="IBan"/> instances from a guild.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildBansCacheKey(in Snowflake guildID)
+    public record GuildBansCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Bans";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Bans");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IBan"/> instance.
     /// </summary>
-    /// <param name="guildID">The ID of the guild the ban is in.</param>
-    /// <param name="userID">The ID of the banned user.</param>
+    /// <param name="GuildID">The ID of the guild the ban is in.</param>
+    /// <param name="UserID">The ID of the banned user.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildBanCacheKey(in Snowflake guildID, in Snowflake userID)
+    public record GuildBanCacheKey(in Snowflake GuildID, in Snowflake UserID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Ban:{userID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append($":Ban:{this.UserID}");
     }
 
     /// <summary>
     /// Creates a cache key for a collection of <see cref="IRole"/> instances from a guild.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildRolesCacheKey(in Snowflake guildID)
+    public record GuildRolesCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Roles";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Roles");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IRole"/> instance.
     /// </summary>
-    /// <param name="guildID">The ID of the guild the role is in.</param>
-    /// <param name="roleID">The ID of the role.</param>
+    /// <param name="GuildID">The ID of the guild the role is in.</param>
+    /// <param name="RoleID">The ID of the role.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildRoleCacheKey(in Snowflake guildID, in Snowflake roleID)
+    public record GuildRoleCacheKey(in Snowflake GuildID, in Snowflake RoleID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Role:{roleID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append($":Role:{this.RoleID}");
     }
 
     /// <summary>
     /// Creates a cache key for a collection of <see cref="IVoiceRegion"/> instances from a guild.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildVoiceRegionsCacheKey(in Snowflake guildID)
+    public record GuildVoiceRegionsCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:VoiceRegions";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":VoiceRegions");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IVoiceRegion"/> instance.
     /// </summary>
-    /// <param name="guildID">The ID of the guildID the voice region is for.</param>
-    /// <param name="voiceRegionID">The voice region ID.</param>
+    /// <param name="GuildID">The ID of the guildID the voice region is for.</param>
+    /// <param name="VoiceRegionID">The voice region ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildVoiceRegionCacheKey(in Snowflake guildID, string voiceRegionID)
+    public record GuildVoiceRegionCacheKey(in Snowflake GuildID, string VoiceRegionID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:VoiceRegion:{voiceRegionID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append($":VoiceRegion:{this.VoiceRegionID}");
     }
 
     /// <summary>
     /// Creates a cache key for a collection of <see cref="IIntegration"/> instances from a guild.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildIntegrationsCacheKey(in Snowflake guildID)
+    public record GuildIntegrationsCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Integrations";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Integrations");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IIntegration"/> instance.
     /// </summary>
-    /// <param name="guildID">The ID of the guild the integration is in.</param>
-    /// <param name="integrationID">The ID of the integration.</param>
+    /// <param name="GuildID">The ID of the guild the integration is in.</param>
+    /// <param name="IntegrationID">The ID of the integration.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildIntegrationCacheKey(in Snowflake guildID, in Snowflake integrationID)
+    public record GuildIntegrationCacheKey(in Snowflake GuildID, in Snowflake IntegrationID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Integration:{integrationID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append($":Integration:{this.IntegrationID}");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IGuildWidgetSettings"/> instance.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildWidgetSettingsCacheKey(in Snowflake guildID)
+    public record GuildWidgetSettingsCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:WidgetSettings";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":WidgetSettings");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IUser"/> instance.
     /// </summary>
-    /// <param name="userID">The ID of the user.</param>
+    /// <param name="UserID">The ID of the user.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateUserCacheKey(in Snowflake userID)
+    public record UserCacheKey(in Snowflake UserID) : CacheKey
     {
-        return $"User:{userID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"User:{this.UserID}");
     }
 
     /// <summary>
     /// Creates a cache key for the current <see cref="IUser"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static string CreateCurrentUserCacheKey()
+    public record CurrentUserCacheKey : CacheKey
     {
-        return "User:@me";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append("User:@me");
     }
 
     /// <summary>
     /// Creates a cache key for the <see cref="IConnection"/> objects of the current <see cref="IUser"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static string CreateCurrentUserConnectionsCacheKey()
+    public record CurrentUserConnectionsCacheKey : CurrentUserCacheKey
     {
-        return $"{CreateCurrentUserCacheKey()}:Connections";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Connections");
     }
 
     /// <summary>
     /// Creates a cache key for the <see cref="IChannel"/> DM objects of the current <see cref="IUser"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static string CreateCurrentUserDMsCacheKey()
+    public record CurrentUserDMsCacheKey : CurrentUserCacheKey
     {
-        return $"{CreateCurrentUserCacheKey()}:Channels";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Channels");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IApplicationRoleConnection" /> instance of the current <see cref="IUser"/> instance.
     /// </summary>
-    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="ApplicationID">The ID of the application.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateCurrentUserApplicationRoleConnectionCacheKey(in Snowflake applicationID)
+    public record CurrentUserApplicationRoleConnectionCacheKey(in Snowflake ApplicationID) : CurrentUserCacheKey
     {
-        return $"{CreateCurrentUserCacheKey()}:Application:{applicationID}:RoleConnection";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Application:").Append(this.ApplicationID).Append(":RoleConnection");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IConnection"/> instance.
     /// </summary>
-    /// <param name="connectionID">The ID of the connection.</param>
+    /// <param name="ConnectionID">The ID of the connection.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateConnectionCacheKey(string connectionID)
+    public record ConnectionCacheKey(string ConnectionID) : CacheKey
     {
-        return $"Connection:{connectionID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Connection:{this.ConnectionID}");
     }
 
     /// <summary>
     /// Creates a cache key for the current <see cref="IApplication"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static string CreateCurrentApplicationCacheKey()
+    public record CurrentApplicationCacheKey : CacheKey
     {
-        return "Application:@me";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append("Application:@me");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="ITemplate"/> instance.
     /// </summary>
-    /// <param name="templateCode">The template code.</param>
+    /// <param name="TemplateCode">The template code.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateTemplateCacheKey(string templateCode)
+    public record TemplateCacheKey(string TemplateCode) : CacheKey
     {
-        return $"Template:{templateCode}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Template:{this.TemplateCode}");
     }
 
     /// <summary>
     /// Creates a cache key for a set of <see cref="ITemplate"/> instances belonging to a guild.
     /// </summary>
-    /// <param name="guildID">The ID of the guild..</param>
+    /// <param name="GuildID">The ID of the guild..</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildTemplatesCacheKey(in Snowflake guildID)
+    public record GuildTemplatesCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Templates";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Templates");
     }
 
     /// <summary>
     /// Creates a cache key for a set of available <see cref="IVoiceRegion"/> instances.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static string CreateVoiceRegionsCacheKey()
+    public record VoiceRegionsCacheKey : CacheKey
     {
-        return "VoiceRegions";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append("VoiceRegions");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IVoiceRegion"/> instance.
     /// </summary>
-    /// <param name="voiceRegionID">The voice region ID.</param>
+    /// <param name="VoiceRegionID">The voice region ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateVoiceRegionCacheKey(string voiceRegionID)
+    public record VoiceRegionCacheKey(string VoiceRegionID) : CacheKey
     {
-        return $"VoiceRegion:{voiceRegionID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"VoiceRegion:{this.VoiceRegionID}");
     }
 
     /// <summary>
     /// Creates a cache key for an <see cref="IWebhook"/> instance.
     /// </summary>
-    /// <param name="webhookID">The webhook ID.</param>
+    /// <param name="WebhookID">The webhook ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateWebhookCacheKey(in Snowflake webhookID)
+    public record WebhookCacheKey(in Snowflake WebhookID) : CacheKey
     {
-        return $"Webhook:{webhookID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Webhook:{this.WebhookID}");
     }
 
     /// <summary>
     /// Creates a cache key for a set of <see cref="IWebhook"/> instances belonging to a channel.
     /// </summary>
-    /// <param name="channelID">The channel ID.</param>
+    /// <param name="ChannelID">The channel ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateChannelWebhooksCacheKey(in Snowflake channelID)
+    public record ChannelWebhooksCacheKey(in Snowflake ChannelID) : ChannelCacheKey(ChannelID)
     {
-        return $"{CreateChannelCacheKey(channelID)}:Webhooks";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Webhooks");
     }
 
     /// <summary>
     /// Creates a cache key for a set of <see cref="IWebhook"/> instances belonging to a guild.
     /// </summary>
-    /// <param name="guildID">The guild ID.</param>
+    /// <param name="GuildID">The guild ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildWebhooksCacheKey(in Snowflake guildID)
+    public record GuildWebhooksCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Webhooks";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Webhooks");
     }
 
     /// <summary>
     /// Creates a cache key for a <see cref="IPresence"/> instance.
     /// </summary>
-    /// <param name="guildID">The guild ID.</param>
-    /// <param name="userID">The user ID.</param>
+    /// <param name="GuildID">The guild ID.</param>
+    /// <param name="UserID">The user ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreatePresenceCacheKey(in Snowflake guildID, in Snowflake userID)
+    public record PresenceCacheKey(in Snowflake GuildID, in Snowflake UserID) : GuildMemberKey(GuildID, UserID)
     {
-        return $"{CreateGuildMemberKey(guildID, userID)}:Presence";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Presence");
     }
 
     /// <summary>
     /// Creates a cache key for a <see cref="IWelcomeScreen"/> instance.
     /// </summary>
-    /// <param name="guildID">The guild ID.</param>
+    /// <param name="GuildID">The guild ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildWelcomeScreenCacheKey(in Snowflake guildID)
+    public record GuildWelcomeScreenCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:WelcomeScreen";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":WelcomeScreen");
     }
 
     /// <summary>
     /// Creates a cache key for a <see cref="IThreadMember"/> instance.
     /// </summary>
-    /// <param name="threadID">The ID of the thread.</param>
-    /// <param name="userID">The ID of the user.</param>
+    /// <param name="ThreadID">The ID of the thread.</param>
+    /// <param name="UserID">The ID of the user.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateThreadMemberCacheKey(in Snowflake threadID, in Snowflake userID)
+    public record ThreadMemberCacheKey(in Snowflake ThreadID, in Snowflake UserID) : CacheKey
     {
-        return $"Thread:{threadID}:Member:{userID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Thread:{this.ThreadID}:Member:{this.UserID}");
     }
 
     /// <summary>
     /// Creates a cache key for a <see cref="IAuthorizationInformation"/> instance.
     /// </summary>
     /// <returns>The cache key.</returns>
-    public static string CreateCurrentAuthorizationInformationCacheKey()
+    public record CurrentAuthorizationInformationCacheKey : CacheKey
     {
-        return "CurrentAuthorizationInformation";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append("CurrentAuthorizationInformation");
     }
 
     /// <summary>
     /// Creates a cache key for an original interaction <see cref="IMessage"/> instance.
     /// </summary>
-    /// <param name="token">The interaction token.</param>
+    /// <param name="Token">The interaction token.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateOriginalInteractionMessageCacheKey(string token)
+    public record OriginalInteractionMessageCacheKey(string Token) : CacheKey
     {
-        return $"Interaction:{token}:Original";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Interaction:{this.Token}:Original");
     }
 
     /// <summary>
     /// Creates a cache key for an interaction followup <see cref="IMessage"/> instance.
     /// </summary>
-    /// <param name="token">The interaction token.</param>
-    /// <param name="messageID">The message ID.</param>
+    /// <param name="Token">The interaction token.</param>
+    /// <param name="MessageID">The message ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateFollowupMessageCacheKey(string token, in Snowflake messageID)
-    {
-        return CreateWebhookMessageCacheKey(token, messageID);
-    }
+    public record FollowupMessageCacheKey(string Token, in Snowflake MessageID) : WebhookMessageCacheKey(Token, MessageID);
 
     /// <summary>
     /// Creates a cache key for a webhook <see cref="IMessage"/> instance.
     /// </summary>
-    /// <param name="token">The webhook token.</param>
-    /// <param name="messageID">The message ID.</param>
+    /// <param name="Token">The webhook token.</param>
+    /// <param name="MessageID">The message ID.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateWebhookMessageCacheKey(string token, in Snowflake messageID)
+    public record WebhookMessageCacheKey(string Token, in Snowflake MessageID) : CacheKey
     {
-        return $"Webhook:{token}:Message:{messageID}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Webhook:{this.Token}:Message:{this.MessageID}");
     }
 
     /// <summary>
     /// Creates a cache key for a set of channel-scoped <see cref="IInvite"/> instances.
     /// </summary>
-    /// <param name="channelID">The ID of the queried channel.</param>
+    /// <param name="ChannelID">The ID of the queried channel.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateChannelInvitesCacheKey(in Snowflake channelID)
+    public record ChannelInvitesCacheKey(in Snowflake ChannelID) : ChannelCacheKey(ChannelID)
     {
-        return $"{CreateChannelCacheKey(channelID)}:Invites";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Invites");
     }
 
     /// <summary>
     /// Creates a cache key for a set of <see cref="IThreadMember"/> instances.
     /// </summary>
-    /// <param name="channelID">The ID of the queried channel.</param>
+    /// <param name="ChannelID">The ID of the queried channel.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateThreadMembersCacheKey(Snowflake channelID)
+    public record ThreadMembersCacheKey(in Snowflake ChannelID) : CacheKey
     {
-        return $"Thread:{channelID}:Members";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append($"Thread:{this.ChannelID}:Members");
     }
 
     /// <summary>
     /// Creates a cache key for a set of guild-scoped <see cref="IEmoji"/> instances.
     /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="GuildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
-    public static string CreateGuildEmojisCacheKey(Snowflake guildID)
+    public record GuildEmojisCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
     {
-        return $"{CreateGuildCacheKey(guildID)}:Emojis";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Emojis");
     }
 
     /// <summary>
     /// Creates a cache key for an evicted entity, identified by the given key.
     /// </summary>
-    /// <param name="key">The original key.</param>
+    /// <param name="Key">The original key.</param>
     /// <returns>The eviction key.</returns>
-    public static string CreateEvictionCacheKey(string key)
+    public record EvictionCacheKey(CacheKey Key) : CacheKey
     {
-        return $"Evicted:{key}";
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => stringBuilder.Append("Evicted:").Append(this.Key.ToCanonicalString());
     }
 }

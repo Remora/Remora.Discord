@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Memory;
+using Remora.Discord.Caching;
 using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
@@ -51,7 +52,7 @@ public class MemoryCacheProvider : ICacheProvider
     /// <inheritdoc cref="ICacheProvider.CacheAsync{TInstance}" />
     public ValueTask CacheAsync<TInstance>
     (
-        string key,
+        CacheKey key,
         TInstance instance,
         CacheEntryOptions options,
         CancellationToken ct = default
@@ -64,7 +65,7 @@ public class MemoryCacheProvider : ICacheProvider
     }
 
     /// <inheritdoc cref="ICacheProvider.RetrieveAsync{TInstance}"/>
-    public ValueTask<Result<TInstance>> RetrieveAsync<TInstance>(string key, CancellationToken ct = default)
+    public ValueTask<Result<TInstance>> RetrieveAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class
     {
         if (_memoryCache.TryGetValue<TInstance>(key, out var instance))
@@ -75,8 +76,8 @@ public class MemoryCacheProvider : ICacheProvider
         return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
     }
 
-    /// <inheritdoc />
-    public ValueTask<Result> EvictAsync(string key, CancellationToken ct = default)
+    /// <inheritdoc cref="ICacheProvider.EvictAsync" />
+    public ValueTask<Result> EvictAsync(CacheKey key, CancellationToken ct = default)
     {
         if (!_memoryCache.TryGetValue(key, out _))
         {
@@ -88,7 +89,7 @@ public class MemoryCacheProvider : ICacheProvider
     }
 
     /// <inheritdoc cref="ICacheProvider.EvictAsync{TInstance}"/>
-    public ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
+    public ValueTask<Result<TInstance>> EvictAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class
     {
         if (!_memoryCache.TryGetValue(key, out TInstance? existingValue))

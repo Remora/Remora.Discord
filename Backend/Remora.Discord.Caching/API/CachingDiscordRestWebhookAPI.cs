@@ -76,7 +76,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         }
 
         var webhook = createWebhook.Entity;
-        var key = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
+        var key = new KeyHelpers.WebhookCacheKey(webhook.ID);
 
         await _cacheService.CacheAsync(key, webhook, ct);
 
@@ -97,7 +97,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             return deleteWebhook;
         }
 
-        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        var key = new KeyHelpers.WebhookCacheKey(webhookID);
         await _cacheService.EvictAsync<IWebhook>(key, ct);
 
         return deleteWebhook;
@@ -153,7 +153,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             return execute;
         }
 
-        var key = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+        var key = new KeyHelpers.MessageCacheKey(message.ChannelID, message.ID);
         await _cacheService.CacheAsync(key, message, ct);
 
         return execute;
@@ -166,7 +166,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        var key = new KeyHelpers.WebhookCacheKey(webhookID);
         var cacheResult = await _cacheService.TryGetValueAsync<IWebhook>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -203,7 +203,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             return modifyWebhook;
         }
 
-        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        var key = new KeyHelpers.WebhookCacheKey(webhookID);
         var webhook = modifyWebhook.Entity;
 
         await _cacheService.CacheAsync(key, webhook, ct);
@@ -218,7 +218,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateChannelWebhooksCacheKey(channelID);
+        var key = new KeyHelpers.ChannelWebhooksCacheKey(channelID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IWebhook>>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -237,7 +237,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
 
         foreach (var webhook in webhooks)
         {
-            var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
+            var webhookKey = new KeyHelpers.WebhookCacheKey(webhook.ID);
             await _cacheService.CacheAsync(webhookKey, webhook, ct);
         }
 
@@ -250,7 +250,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         Snowflake guildID, CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildWebhooksCacheKey(guildID);
+        var key = new KeyHelpers.GuildWebhooksCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IWebhook>>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -269,7 +269,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
 
         foreach (var webhook in webhooks)
         {
-            var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
+            var webhookKey = new KeyHelpers.WebhookCacheKey(webhook.ID);
             await _cacheService.CacheAsync(webhookKey, webhook, ct);
         }
 
@@ -291,7 +291,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             return deleteWebhook;
         }
 
-        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        var key = new KeyHelpers.WebhookCacheKey(webhookID);
         await _cacheService.EvictAsync<IWebhook>(key, ct);
 
         return deleteWebhook;
@@ -305,7 +305,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        var key = new KeyHelpers.WebhookCacheKey(webhookID);
         var cacheResult = await _cacheService.TryGetValueAsync<IWebhook>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -342,7 +342,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             return modifyWebhook;
         }
 
-        var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
+        var key = new KeyHelpers.WebhookCacheKey(webhookID);
         var webhook = modifyWebhook.Entity;
 
         await _cacheService.CacheAsync(key, webhook, ct);
@@ -384,7 +384,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             return result;
         }
 
-        var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+        var key = new KeyHelpers.WebhookMessageCacheKey(token, messageID);
         await _cacheService.CacheAsync(key, result.Entity, ct);
 
         return result;
@@ -406,7 +406,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             return result;
         }
 
-        var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+        var key = new KeyHelpers.WebhookMessageCacheKey(token, messageID);
         await _cacheService.EvictAsync<IMessage>(key, ct);
 
         return result;
@@ -422,7 +422,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateWebhookMessageCacheKey(webhookToken, messageID);
+        var key = new KeyHelpers.WebhookMessageCacheKey(webhookToken, messageID);
         var cacheResult = await _cacheService.TryGetValueAsync<IMessage>(key, ct);
 
         if (cacheResult.IsSuccess)
