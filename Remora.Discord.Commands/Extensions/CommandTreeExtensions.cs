@@ -199,7 +199,7 @@ public static class CommandTreeExtensions
             }
 
             // Translate from options to bulk data
-            var (commandType, directMessagePermission, defaultMemberPermissions) = GetNodeMetadata(node);
+            var (commandType, directMessagePermission, defaultMemberPermissions, isNsfw) = GetNodeMetadata(node);
 
             var localizedNames = localizationProvider.GetStrings(option.Name);
             var localizedDescriptions = localizationProvider.GetStrings(option.Description);
@@ -216,7 +216,8 @@ public static class CommandTreeExtensions
                     localizedNames.Count > 0 ? new(localizedNames) : default,
                     localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
                     defaultMemberPermissions,
-                    directMessagePermission
+                    directMessagePermission,
+                    isNsfw
                 )
             );
         }
@@ -234,17 +235,12 @@ public static class CommandTreeExtensions
         return commands;
     }
 
-    private static
-    (
-        Optional<ApplicationCommandType> CommandType,
-        Optional<bool> DirectMessagePermission,
-        IDiscordPermissionSet? DefaultMemberPermission
-    )
-    GetNodeMetadata(IChildNode node)
+    private static TopLevelMetadata GetNodeMetadata(IChildNode node)
     {
         Optional<ApplicationCommandType> commandType = default;
         Optional<bool> directMessagePermission = default;
         IDiscordPermissionSet? defaultMemberPermissions = default;
+        Optional<bool> isNsfw = default;
 
         switch (node)
         {
@@ -253,13 +249,6 @@ public static class CommandTreeExtensions
                 var memberPermissionAttributes = groupNode.GroupTypes.Select
                 (
                     t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
-
-                var directMessagePermissionAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
                 )
                 .Where(attribute => attribute is not null)
                 .ToArray();
@@ -284,12 +273,19 @@ public static class CommandTreeExtensions
                     );
                 }
 
+                var directMessagePermissionAttributes = groupNode.GroupTypes.Select
+                (
+                    t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
+                )
+                .Where(attribute => attribute is not null)
+                .ToArray();
+
                 if (directMessagePermissionAttributes.Length > 1)
                 {
                     throw new InvalidNodeException
                     (
                         "In a set of groups with the same name, only one may be marked with a default " +
-                        $"DM permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                        $"DM permissions attribute, but {directMessagePermissionAttributes.Length} were found.",
                         node
                     );
                 }
@@ -299,6 +295,30 @@ public static class CommandTreeExtensions
                 if (directMessagePermissionAttribute is not null)
                 {
                     directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+                }
+
+                var isNsfwAttributes = groupNode.GroupTypes.Select
+                (
+                    t => t.GetCustomAttribute<DiscordNsfwAttribute>()
+                )
+                .Where(attribute => attribute is not null)
+                .ToArray();
+
+                if (isNsfwAttributes.Length > 1)
+                {
+                    throw new InvalidNodeException
+                    (
+                        $"In a set of groups with the same name, only one may be marked with a NSFW attribute, but "
+                        + $"{isNsfwAttributes.Length} were found.",
+                        node
+                    );
+                }
+
+                var nsfwAttribute = isNsfwAttributes.SingleOrDefault();
+
+                if (nsfwAttribute is not null)
+                {
+                    isNsfw = nsfwAttribute.IsNsfw;
                 }
 
                 break;
@@ -312,10 +332,6 @@ public static class CommandTreeExtensions
                     commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
                     commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
 
-                var directMessagePermissionAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
-
                 if (memberPermissionsAttribute is not null)
                 {
                     defaultMemberPermissions = new DiscordPermissionSet
@@ -324,16 +340,29 @@ public static class CommandTreeExtensions
                     );
                 }
 
+                var directMessagePermissionAttribute =
+                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
+                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
+
                 if (directMessagePermissionAttribute is not null)
                 {
                     directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+                }
+
+                var nsfwAttribute =
+                    commandNode.GroupType.GetCustomAttribute<DiscordNsfwAttribute>() ??
+                    commandNode.CommandMethod.GetCustomAttribute<DiscordNsfwAttribute>();
+
+                if (nsfwAttribute is not null)
+                {
+                    isNsfw = nsfwAttribute.IsNsfw;
                 }
 
                 break;
             }
         }
 
-        return (commandType, directMessagePermission, defaultMemberPermissions);
+        return new(commandType, directMessagePermission, defaultMemberPermissions, isNsfw);
     }
 
     private static IApplicationCommandOption? TranslateCommandNode
@@ -371,6 +400,37 @@ public static class CommandTreeExtensions
     )
     {
         ValidateNodeDescription(group.Description, group);
+
+        // Check for invalid attribute usage
+        if (treeDepth > 1)
+        {
+            if (group.GroupTypes.Any(g => g.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() is not null))
+            {
+                throw new InvalidNodeException
+                (
+                    $"{nameof(DiscordDefaultDMPermissionAttribute)} may only be applied to top-level groups.",
+                    group
+                );
+            }
+
+            if (group.GroupTypes.Any(g => g.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() is not null))
+            {
+                throw new InvalidNodeException
+                (
+                    $"{nameof(DiscordDefaultDMPermissionAttribute)} may only be applied to top-level groups.",
+                    group
+                );
+            }
+
+            if (group.GroupTypes.Any(g => g.GetCustomAttribute<DiscordNsfwAttribute>() is not null))
+            {
+                throw new InvalidNodeException
+                (
+                    $"{nameof(DiscordNsfwAttribute)} may only be applied to top-level groups.",
+                    group
+                );
+            }
+        }
 
         var groupOptions = new List<IApplicationCommandOption>();
         var groupOptionNames = new HashSet<string>();
@@ -443,6 +503,36 @@ public static class CommandTreeExtensions
         if (command.FindCustomAttributeOnLocalTree<ExcludeFromSlashCommandsAttribute>() is not null)
         {
             return null;
+        }
+
+        if (treeDepth > 1)
+        {
+            if (command.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() is not null)
+            {
+                throw new InvalidNodeException
+                (
+                    $"{nameof(DiscordDefaultDMPermissionAttribute)} may only be applied to top-level commands.",
+                    command
+                );
+            }
+
+            if (command.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() is not null)
+            {
+                throw new InvalidNodeException
+                (
+                    $"{nameof(DiscordDefaultDMPermissionAttribute)} may only be applied to top-level commands.",
+                    command
+                );
+            }
+
+            if (command.CommandMethod.GetCustomAttribute<DiscordNsfwAttribute>() is not null)
+            {
+                throw new InvalidNodeException
+                (
+                    $"{nameof(DiscordNsfwAttribute)} may only be applied to top-level commands.",
+                    command
+                );
+            }
         }
 
         var commandType = command.GetCommandType();
@@ -866,4 +956,19 @@ public static class CommandTreeExtensions
             yield return subcommand;
         }
     }
+
+    /// <summary>
+    /// Represents Discord-specific node metadata that is only valid or relevant for a top-level node.
+    /// </summary>
+    /// <param name="CommandType">The application command type that the node represents.</param>
+    /// <param name="DirectMessagePermission">The DM permission requested for the node.</param>
+    /// <param name="DefaultMemberPermission">The default member permission requested for the node.</param>
+    /// <param name="IsNsfw">The age restriction requested for the node.</param>
+    private sealed record TopLevelMetadata
+    (
+        Optional<ApplicationCommandType> CommandType,
+        Optional<bool> DirectMessagePermission,
+        IDiscordPermissionSet? DefaultMemberPermission,
+        Optional<bool> IsNsfw
+    );
 }

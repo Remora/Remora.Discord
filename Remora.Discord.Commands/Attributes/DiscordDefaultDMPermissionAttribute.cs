@@ -27,6 +27,8 @@ namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
 /// Marks a command or group as being either accessible or inaccessible in a DM.
+///
+/// Due to Discord's current design, it is only supported on top-level groups or commands.
 /// </summary>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

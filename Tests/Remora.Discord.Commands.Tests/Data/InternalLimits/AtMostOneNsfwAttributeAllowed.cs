@@ -1,5 +1,5 @@
 //
-//  MultipartNamedGroupWithDMPermission.cs
+//  AtMostOneNsfwAttributeAllowed.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,39 +27,46 @@ using Remora.Commands.Groups;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Tests.Data.Valid;
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
 
 /// <summary>
-/// A container for two group parts.
+/// Wraps two test groups.
 /// </summary>
-public class MultipartNamedGroupWithDMPermission : CommandGroup
+public class AtMostOneNsfwAttributeAllowed
 {
     /// <summary>
-    /// The first group.
+    /// Wraps named test groups.
     /// </summary>
-    [Group("a")]
-    [DiscordDefaultDMPermission]
-    public class MultipartNamedGroupWithDMPermissionPart1 : CommandGroup
+    public class Named
     {
         /// <summary>
-        /// The command.
+        /// The first group.
         /// </summary>
-        /// <returns>Nothing.</returns>
-        [Command("b")]
-        public Task<Result> A() => throw new NotImplementedException();
-    }
+        [DiscordNsfw]
+        [Group("a")]
+        public class GroupOne : CommandGroup
+        {
+            /// <summary>
+            /// The first command.
+            /// </summary>
+            /// <returns>Nothing.</returns>
+            [Command("b")]
+            public Task<Result> B() => throw new NotImplementedException();
+        }
 
-    /// <summary>
-    /// The second group part.
-    /// </summary>
-    [Group("a")]
-    public class MultipartNamedGroupWithDMPermissionPart2 : CommandGroup
-    {
         /// <summary>
-        /// The command.
+        /// The second group.
         /// </summary>
-        /// <returns>Nothing.</returns>
-        [Command("c")]
-        public Task<Result> A() => throw new NotImplementedException();
+        [DiscordNsfw]
+        [Group("a")]
+        public class GroupTwo : CommandGroup
+        {
+            /// <summary>
+            /// The second command.
+            /// </summary>
+            /// <returns>Nothing.</returns>
+            [Command("c")]
+            public Task<Result> C() => throw new NotImplementedException();
+        }
     }
 }

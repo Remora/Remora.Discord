@@ -1,5 +1,5 @@
 //
-//  MultipleCommandsWithDMPermission.cs
+//  OnlyTopLevelDMPermissionAttributeAllowed.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,45 +21,59 @@
 //
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Tests.Data.Valid;
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
 
 /// <summary>
 /// Wraps two test groups.
 /// </summary>
-public class MultipleCommandsWithDMPermission
+public class OnlyTopLevelDMPermissionAttributeAllowed
 {
     /// <summary>
     /// The first group.
     /// </summary>
-    [DiscordDefaultDMPermission]
-    public class GroupOne : CommandGroup
+    [Group("a")]
+    public class GroupViolation : CommandGroup
     {
         /// <summary>
         /// The first command.
         /// </summary>
         /// <returns>Nothing.</returns>
-        [Command("a")]
-        [DoesNotReturn]
-        public Task<Result> A() => throw new NotImplementedException();
+        [Command("b")]
+        public Task<Result> B() => throw new NotImplementedException();
+
+        /// <summary>
+        /// The second group.
+        /// </summary>
+        [DiscordDefaultDMPermission]
+        [Group("c")]
+        public class C : CommandGroup
+        {
+            /// <summary>
+            /// The second command.
+            /// </summary>
+            /// <returns>Nothing.</returns>
+            [Command("d")]
+            public Task<Result> D() => throw new NotImplementedException();
+        }
     }
 
     /// <summary>
-    /// The second group.
+    /// The first group.
     /// </summary>
-    [DiscordDefaultDMPermission(false)]
-    public class GroupTwo : CommandGroup
+    [Group("a")]
+    public class CommandViolation : CommandGroup
     {
         /// <summary>
-        /// The second command.
+        /// The first command.
         /// </summary>
         /// <returns>Nothing.</returns>
+        [DiscordDefaultDMPermission]
         [Command("b")]
         public Task<Result> B() => throw new NotImplementedException();
     }

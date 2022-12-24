@@ -1,5 +1,5 @@
 //
-//  MultipartNamedGroupWithDMPermission.cs
+//  OnlyTopLevelNsfwAttributeAllowed.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,39 +27,54 @@ using Remora.Commands.Groups;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Tests.Data.Valid;
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
 
 /// <summary>
-/// A container for two group parts.
+/// Wraps two test groups.
 /// </summary>
-public class MultipartNamedGroupWithDMPermission : CommandGroup
+public class OnlyTopLevelNsfwAttributeAllowed
 {
     /// <summary>
     /// The first group.
     /// </summary>
     [Group("a")]
-    [DiscordDefaultDMPermission]
-    public class MultipartNamedGroupWithDMPermissionPart1 : CommandGroup
+    public class GroupViolation : CommandGroup
     {
         /// <summary>
-        /// The command.
+        /// The first command.
         /// </summary>
         /// <returns>Nothing.</returns>
         [Command("b")]
-        public Task<Result> A() => throw new NotImplementedException();
+        public Task<Result> B() => throw new NotImplementedException();
+
+        /// <summary>
+        /// The second group.
+        /// </summary>
+        [DiscordNsfw]
+        [Group("c")]
+        public class C : CommandGroup
+        {
+            /// <summary>
+            /// The second command.
+            /// </summary>
+            /// <returns>Nothing.</returns>
+            [Command("d")]
+            public Task<Result> D() => throw new NotImplementedException();
+        }
     }
 
     /// <summary>
-    /// The second group part.
+    /// The first group.
     /// </summary>
     [Group("a")]
-    public class MultipartNamedGroupWithDMPermissionPart2 : CommandGroup
+    public class CommandViolation : CommandGroup
     {
         /// <summary>
-        /// The command.
+        /// The first command.
         /// </summary>
         /// <returns>Nothing.</returns>
-        [Command("c")]
-        public Task<Result> A() => throw new NotImplementedException();
+        [DiscordNsfw]
+        [Command("b")]
+        public Task<Result> B() => throw new NotImplementedException();
     }
 }

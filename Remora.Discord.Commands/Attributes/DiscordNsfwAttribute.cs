@@ -1,5 +1,5 @@
 //
-//  DiscordDefaultMemberPermissionsAttribute.cs
+//  DiscordNsfwAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,37 +21,31 @@
 //
 
 using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
-/// Marks a command as requiring the executor of the command to have the specified permissions. Specifying no
-/// permissions will make the command or group inaccessible to anyone.
+/// Marks a command or group as being age-restricted, disallowing its use in unrestricted channels. This attribute does
+/// not perform any botside checks, and serves only to flag the command on Discord's end.
 ///
 /// Due to Discord's current design, it is only supported on top-level groups or commands.
 /// </summary>
-/// <remarks>
-/// Permissions serve as a base for command access, however moderators with the appropriate permissions can add
-/// additional filters to the command, either adding or removing applicable users.
-/// </remarks>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class DiscordDefaultMemberPermissionsAttribute : Attribute
+public class DiscordNsfwAttribute : Attribute
 {
     /// <summary>
-    /// Gets the required permissions to execute the command.
+    /// Gets a value indicating whether the command or group is age-restricted.
     /// </summary>
-    public IReadOnlyList<DiscordPermission> Permissions { get; }
+    public bool IsNsfw { get; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DiscordDefaultMemberPermissionsAttribute"/> class.
+    /// Initializes a new instance of the <see cref="DiscordNsfwAttribute"/> class.
     /// </summary>
-    /// <param name="permissions">The permissions required for executing the application command.</param>
-    public DiscordDefaultMemberPermissionsAttribute(params DiscordPermission[] permissions)
+    /// <param name="isNSFW">Whether this command or group is age-restricted.</param>
+    public DiscordNsfwAttribute(bool isNSFW = true)
     {
-        this.Permissions = permissions;
+        this.IsNsfw = isNSFW;
     }
 }

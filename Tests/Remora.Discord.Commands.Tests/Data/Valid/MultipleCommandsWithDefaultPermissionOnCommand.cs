@@ -1,5 +1,5 @@
 //
-//  MultipartNamedGroupWithDMPermission.cs
+//  MultipleCommandsWithDefaultPermissionOnCommand.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,42 +24,42 @@ using System;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Tests.Data.Valid;
 
 /// <summary>
-/// A container for two group parts.
+/// Wraps two test groups.
 /// </summary>
-public class MultipartNamedGroupWithDMPermission : CommandGroup
+public class MultipleCommandsWithDefaultPermissionOnCommand
 {
     /// <summary>
     /// The first group.
     /// </summary>
-    [Group("a")]
-    [DiscordDefaultDMPermission]
-    public class MultipartNamedGroupWithDMPermissionPart1 : CommandGroup
+    public class GroupOne : CommandGroup
     {
         /// <summary>
-        /// The command.
+        /// The first command.
         /// </summary>
         /// <returns>Nothing.</returns>
-        [Command("b")]
+        [Command("a")]
+        [DiscordDefaultMemberPermissions(DiscordPermission.Administrator)]
         public Task<Result> A() => throw new NotImplementedException();
     }
 
     /// <summary>
-    /// The second group part.
+    /// The second group.
     /// </summary>
-    [Group("a")]
-    public class MultipartNamedGroupWithDMPermissionPart2 : CommandGroup
+    public class GroupTwo : CommandGroup
     {
         /// <summary>
-        /// The command.
+        /// The second command.
         /// </summary>
         /// <returns>Nothing.</returns>
-        [Command("c")]
-        public Task<Result> A() => throw new NotImplementedException();
+        [Command("b")]
+        [DiscordDefaultMemberPermissions(DiscordPermission.BanMembers)]
+        public Task<Result> B() => throw new NotImplementedException();
     }
 }

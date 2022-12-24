@@ -1,5 +1,5 @@
 //
-//  MultipleCommandsWithDefaultPermission.cs
+//  MultipleCommandsWithNsfwOnGroup.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,7 +24,6 @@ using System;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
@@ -33,12 +32,12 @@ namespace Remora.Discord.Commands.Tests.Data.Valid;
 /// <summary>
 /// Wraps two test groups.
 /// </summary>
-public class MultipleCommandsWithDefaultPermission
+public class MultipleCommandsWithNsfwOnGroup
 {
     /// <summary>
     /// The first group.
     /// </summary>
-    [DiscordDefaultMemberPermissions(DiscordPermission.Administrator)]
+    [DiscordNsfw]
     public class GroupOne : CommandGroup
     {
         /// <summary>
@@ -52,7 +51,7 @@ public class MultipleCommandsWithDefaultPermission
     /// <summary>
     /// The second group.
     /// </summary>
-    [DiscordDefaultMemberPermissions(DiscordPermission.BanMembers)]
+    [DiscordNsfw(false)]
     public class GroupTwo : CommandGroup
     {
         /// <summary>

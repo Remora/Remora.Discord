@@ -1,5 +1,5 @@
 //
-//  MultipartNamedGroupWithDMPermission.cs
+//  MultipartNamedGroupWithNsfw.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -32,14 +32,14 @@ namespace Remora.Discord.Commands.Tests.Data.Valid;
 /// <summary>
 /// A container for two group parts.
 /// </summary>
-public class MultipartNamedGroupWithDMPermission : CommandGroup
+public class MultipartNamedGroupWithNsfw : CommandGroup
 {
     /// <summary>
     /// The first group.
     /// </summary>
     [Group("a")]
-    [DiscordDefaultDMPermission]
-    public class MultipartNamedGroupWithDMPermissionPart1 : CommandGroup
+    [DiscordNsfw]
+    public class MultipartNamedGroupWithNsfwPart1 : CommandGroup
     {
         /// <summary>
         /// The command.
@@ -53,7 +53,7 @@ public class MultipartNamedGroupWithDMPermission : CommandGroup
     /// The second group part.
     /// </summary>
     [Group("a")]
-    public class MultipartNamedGroupWithDMPermissionPart2 : CommandGroup
+    public class MultipartNamedGroupWithNsfwPart2 : CommandGroup
     {
         /// <summary>
         /// The command.
