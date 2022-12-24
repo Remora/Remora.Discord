@@ -1,15 +1,13 @@
 {
   "name": "none",
   "type": 4,
-  "url": "https://example.org",
+  "url": null,
   "created_at": 0,
   "timestamps": { },
   "application_id": "999999999999999999",
-  "details": "none",
-  "state": "none",
-  "emoji": {
-    "name": "none"
-  },
+  "details": null,
+  "state": null,
+  "emoji": null,
   "party": { },
   "assets": { },
   "secrets": { },

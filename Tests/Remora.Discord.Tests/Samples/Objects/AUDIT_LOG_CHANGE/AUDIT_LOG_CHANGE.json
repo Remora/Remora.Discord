@@ -1,5 +1,5 @@
 {
-    "new_value": "foo",
-    "old_value": "bar",
+    "new_value": "none",
+    "old_value": "none",
     "key": "name"
 }

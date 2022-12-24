@@ -3,12 +3,8 @@
   "name": "none",
   "icon": "68b329da9893e34099c7d8ad5cb9c940",
   "description": "none",
-  "rpc_origins": [ "https://example.org" ],
   "bot_public": true,
   "bot_require_code_grant": true,
-  "terms_of_service_url": "https://example.org",
-  "privacy_policy_url": "https://example.org",
-  "owner": { },
   "verify_key": "none",
   "team": {
     "icon": "68b329da9893e34099c7d8ad5cb9c940",
@@ -30,17 +26,5 @@
     ],
     "name": "none",
     "owner_user_id": "999999999999999999"
-  },
-  "guild_id": "999999999999999999",
-  "primary_sku_id": "999999999999999999",
-  "slug": "test",
-  "cover_image": "68b329da9893e34099c7d8ad5cb9c940",
-  "flags": 0,
-  "tags": [ "none" ],
-  "install_params": {
-    "scopes": [ "none" ],
-    "permissions": "0"
-  },
-  "custom_install_url": "https://example.org",
-  "role_connections_verification_url": "https://example.org"
+  }
 }

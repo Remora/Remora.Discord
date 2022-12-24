@@ -11,10 +11,10 @@
       "deny": "0"
     }
   ],
-  "name": "none",
-  "topic": "none",
+  "name": null,
+  "topic": null,
   "nsfw": true,
-  "last_message_id": "999999999999999999",
+  "last_message_id": null,
   "bitrate": 1,
   "user_limit": 1,
   "rate_limit_per_user": 1,
@@ -26,12 +26,12 @@
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     }
   ],
-  "icon": "68b329da9893e34099c7d8ad5cb9c940",
+  "icon": null,
   "owner_id": "999999999999999999",
   "application_id": "999999999999999999",
-  "parent_id": "999999999999999999",
-  "last_pin_timestamp": "1970-01-01T00:00:00.000000+00:00",
-  "rtc_region": "none",
+  "parent_id": null,
+  "last_pin_timestamp": null,
+  "rtc_region": null,
   "video_quality_mode": 1,
   "message_count": 1,
   "member_count": 1,
@@ -61,11 +61,8 @@
   "applied_tags": [
     "999999999999999999"
   ],
-  "default_reaction_emoji": {
-    "emoji_id": "999999999999999999",
-    "emoji_name": "none"
-  },
+  "default_reaction_emoji": null,
   "default_thread_rate_limit_per_user": 1,
-  "default_sort_order": 1,
+  "default_sort_order": null,
   "default_forum_layout": 1
 }

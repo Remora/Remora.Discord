@@ -1,7 +1,7 @@
 {
   "id": "999999999999999999",
   "name": "none",
-  "icon": "68b329da9893e34099c7d8ad5cb9c940",
+  "icon": null,
   "description": "none",
   "rpc_origins": [ "https://example.org" ],
   "bot_public": true,
@@ -10,27 +10,7 @@
   "privacy_policy_url": "https://example.org",
   "owner": { },
   "verify_key": "none",
-  "team": {
-    "icon": "68b329da9893e34099c7d8ad5cb9c940",
-    "id": "999999999999999999",
-    "members": [
-      {
-        "membership_state": 2,
-        "permissions": [
-          "*"
-        ],
-        "team_id": "999999999999999999",
-        "user": {
-          "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-          "discriminator": "9999",
-          "id": "999999999999999999",
-          "username": "none"
-        }
-      }
-    ],
-    "name": "none",
-    "owner_user_id": "999999999999999999"
-  },
+  "team": null,
   "guild_id": "999999999999999999",
   "primary_sku_id": "999999999999999999",
   "slug": "test",

@@ -1,10 +1,83 @@
 {
-    "application_commands": [ ],
-    "webhooks": [ ],
-    "auto_moderation_rules": [ ],
-    "guild_scheduled_events": [ ],
-    "users": [ ],
-    "audit_log_entries": [ ],
-    "integrations": [ ],
-    "threads": [ ]
+    "application_commands": [
+        {
+            "id": "999999999999999999",
+            "application_id": "999999999999999999",
+            "name": "none",
+            "description": "none",
+            "default_member_permissions": "0",
+            "version": "999999999999999999"
+        }
+    ],
+    "audit_log_entries": [
+        {
+            "target_id": "999999999999999999",
+            "user_id": null,
+            "id": "999999999999999999",
+            "action_type": 1
+        }
+    ],
+    "auto_moderation_rules": [
+        {
+            "id": "999999999999999999",
+            "guild_id": "999999999999999999",
+            "name": "none",
+            "creator_id": "999999999999999999",
+            "event_type": 1,
+            "trigger_type": 1,
+            "trigger_metadata": { },
+            "actions": {
+                "type": 1
+            },
+            "enabled": true,
+            "exempt_roles": [
+                "999999999999999999"
+            ],
+            "exempt_channels": [
+                "999999999999999999"
+            ]
+        }
+    ],
+    "guild_scheduled_events": [
+        {
+            "id": "999999999999999999",
+            "guild_id": "999999999999999999",
+            "channel_id": null,
+            "name": "none",
+            "scheduled_start_time": "1970-01-01T00:00:00.000000+00:00",
+            "scheduled_end_time": null,
+            "privacy_level": 1,
+            "status": 1,
+            "entity_type": 1,
+            "entity_id": null,
+            "entity_metadata": null
+        }
+    ],
+    "integrations": [
+        { }
+    ],
+    "threads": [
+        {
+            "id": "999999999999999999",
+            "type": 1
+        }
+    ],
+    "users": [
+        {
+            "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+            "discriminator": "9999",
+            "id": "999999999999999999",
+            "username": "none"
+        }
+    ],
+    "webhooks": [
+        {
+            "id": "999999999999999999",
+            "type": 1,
+            "channel_id": "999999999999999999",
+            "name": "none",
+            "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+            "application_id": "999999999999999999"
+        }
+    ]
 }

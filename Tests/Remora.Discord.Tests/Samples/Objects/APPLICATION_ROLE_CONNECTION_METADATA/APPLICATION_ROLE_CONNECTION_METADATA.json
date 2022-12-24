@@ -2,5 +2,11 @@
   "type": 1,
   "key": "none",
   "name": "none",
-  "description": "none"
+  "name_localizations": {
+    "en-GB": "none"
+  },
+  "description": "none",
+  "description_localizations": {
+    "en-GB": "none"
+  }
 }

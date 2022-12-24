@@ -2,5 +2,12 @@
   "name": "none",
   "type": 3,
   "value": "aaaa",
-  "options": []
+  "options": [
+    {
+      "type": 1,
+      "name": "none",
+      "description": "none"
+    }
+  ],
+  "focused": true
 }

@@ -1,4 +1,4 @@
 {
-    "scopes": [ ],
-    "permissions": "372624976"
+    "scopes": [ "none" ],
+    "permissions": "0"
 }

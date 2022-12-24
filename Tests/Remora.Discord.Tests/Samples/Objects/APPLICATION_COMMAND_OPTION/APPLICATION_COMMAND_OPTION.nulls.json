@@ -1,13 +1,9 @@
 {
   "type": 1,
   "name": "none",
-  "name_localizations": {
-    "en-GB": "none"
-  },
+  "name_localizations": null,
   "description": "none",
-  "description_localizations": {
-    "en-GB": "none"
-  },
+  "description_localizations": null,
   "required": true,
   "choices": [
     {

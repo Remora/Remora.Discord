@@ -4,13 +4,9 @@
   "application_id": "999999999999999999",
   "guild_id": "999999999999999999",
   "name": "none",
-  "name_localizations": {
-    "en-GB": "none"
-  },
+  "name_localizations": null,
   "description": "none",
-  "description_localizations": {
-    "en-GB": "none"
-  },
+  "description_localizations": null,
   "options": [
     {
       "type": 1,
@@ -18,7 +14,7 @@
       "description": "none"
     }
   ],
-  "default_member_permissions": "0",
+  "default_member_permissions": null,
   "dm_permission": true,
   "nsfw": true,
   "version": "999999999999999999"
