@@ -98,6 +98,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\wyam.yml = .github\workflows\wyam.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Caching.Tests", "Tests\Remora.Discord.Caching.Tests\Remora.Discord.Caching.Tests.csproj", "{FA47ACDF-BC9D-42C7-9CB9-365D47373E64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -220,6 +222,10 @@ Global
 		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA47ACDF-BC9D-42C7-9CB9-365D47373E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA47ACDF-BC9D-42C7-9CB9-365D47373E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA47ACDF-BC9D-42C7-9CB9-365D47373E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA47ACDF-BC9D-42C7-9CB9-365D47373E64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -250,6 +256,7 @@ Global
 		{5DA36554-2D99-43B4-AFE7-AA15E1236C0E} = {26E93608-29BA-45C7-993A-AA24A49D6013}
 		{E5CCCA86-8F60-4A6B-AE12-AE6AD93B7236} = {6E2D59EB-648D-4968-8A63-8D8E3813EC86}
 		{20343230-657D-48BC-9020-D194670B9B0A} = {A603F82C-7B4C-4583-A101-77E126B04874}
+		{FA47ACDF-BC9D-42C7-9CB9-365D47373E64} = {6E2D59EB-648D-4968-8A63-8D8E3813EC86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02545F40-E06C-4956-A77D-02EB2D41A964}
