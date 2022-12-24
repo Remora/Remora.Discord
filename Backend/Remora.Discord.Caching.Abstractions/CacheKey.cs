@@ -45,7 +45,7 @@ public abstract record CacheKey
         return AppendToString(new StringBuilder()).ToString();
     }
 
-    private record StringCacheKey(string KeyString) : CacheKey
+    private sealed record StringCacheKey(string KeyString) : CacheKey
     {
         // We provide an implementation here to avoid the StringBuilder call when the key only contains a simple string.
         public override string ToCanonicalString()
@@ -55,7 +55,7 @@ public abstract record CacheKey
             => stringBuilder.Append(this.KeyString);
     }
 
-    private record ResourceCacheKey(string Context, string KeyString) : CacheKey
+    private sealed record ResourceCacheKey(string Context, string KeyString) : CacheKey
     {
         // We provide an implementation here to avoid the StringBuilder call when the key only contains a simple string
         // concatenation.
