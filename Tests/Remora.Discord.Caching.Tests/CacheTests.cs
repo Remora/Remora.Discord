@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Extensions;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest;
