@@ -124,14 +124,22 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             {
                 if (topic.Value?.Length is > 4096 or < 0)
                 {
-                    return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
+                    return new ArgumentOutOfRangeError
+                    (
+                        nameof(topic),
+                        "The topic must be between 0 and 1024 characters."
+                    );
                 }
             }
             else
             {
                 if (topic.Value?.Length is > 1024 or < 0)
                 {
-                    return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 4096 characters.");
+                    return new ArgumentOutOfRangeError
+                    (
+                        nameof(topic),
+                        "The topic must be between 0 and 4096 characters."
+                    );
                 }
             }
         }
@@ -179,7 +187,12 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("flags", flags, this.JsonOptions);
                         json.Write("available_tags", availableTags, this.JsonOptions);
                         json.Write("default_reaction_emoji", defaultReactionEmoji, this.JsonOptions);
-                        json.Write("default_thread_rate_limit_per_user", defaultThreadRateLimitPerUser, this.JsonOptions);
+                        json.Write
+                        (
+                            "default_thread_rate_limit_per_user",
+                            defaultThreadRateLimitPerUser,
+                            this.JsonOptions
+                        );
                         json.Write("applied_tags", appliedTags, this.JsonOptions);
                         json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
                         json.Write("default_forum_layout", defaultForumLayout, this.JsonOptions);
@@ -432,7 +445,9 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     )
     {
         var hasAny = around.HasValue || before.HasValue || after.HasValue;
-        var hasStrictlyOne = (around.HasValue ^ before.HasValue ^ after.HasValue) && !(around.HasValue && before.HasValue && after.HasValue);
+        var hasStrictlyOne = (around.HasValue ^ before.HasValue ^ after.HasValue)
+                             && !(around.HasValue && before.HasValue && after.HasValue);
+
         if (hasAny && !hasStrictlyOne)
         {
             return new NotSupportedError
@@ -519,7 +534,13 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             return new ArgumentOutOfRangeError(nameof(nonce), "The nonce length must be less than 25 characters.");
         }
 
-        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !stickerIDs.HasValue && !components.HasValue)
+        var hasAtLeastOnePayload = !content.HasValue
+                            && !attachments.HasValue
+                            && !embeds.HasValue
+                            && !stickerIDs.HasValue
+                            && !components.HasValue;
+
+        if (hasAtLeastOnePayload)
         {
             return new InvalidOperationError
             (
@@ -763,7 +784,12 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         (
                             (f, i) => f.Match
                             (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                                data => new PartialAttachment
+                                (
+                                    DiscordSnowflake.New((ulong)i),
+                                    data.Name,
+                                    data.Description
+                                ),
                                 attachment => attachment
                             )
                         ).ToList();

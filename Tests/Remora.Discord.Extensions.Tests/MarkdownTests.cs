@@ -47,7 +47,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Italicise"/> method italicises input text based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.Italicise"/> method italicises input text based on Discord's markdown
+    /// format.
     /// </summary>
     /// <param name="text">The input text to format.</param>
     [Theory]
@@ -61,7 +62,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Underline"/> method underlines input text based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.Underline"/> method underlines input text based on Discord's markdown
+    /// format.
     /// </summary>
     /// <param name="text">The input text to format.</param>
     [Theory]
@@ -75,7 +77,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Strikethrough"/> method will strikethrough input text based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.Strikethrough"/> method will strikethrough input text based on Discord's
+    /// markdown format.
     /// </summary>
     /// <param name="text">The input text to format.</param>
     [Theory]
@@ -89,7 +92,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Spoiler"/> method spoilers input text based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.Spoiler"/> method spoilers input text based on Discord's markdown
+    /// format.
     /// </summary>
     /// <param name="text">The input text to format.</param>
     [Theory]
@@ -103,7 +107,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.InlineCode"/> method inline codes input text based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.InlineCode"/> method inline codes input text based on Discord's markdown
+    /// format.
     /// </summary>
     /// <param name="text">The input text to format.</param>
     [Theory]
@@ -117,7 +122,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.BlockCode(string)"/> method block codes input text based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.BlockCode(string)"/> method block codes input text based on Discord's
+    /// markdown format.
     /// </summary>
     /// <param name="text">The input text to format.</param>
     [Theory]
@@ -131,8 +137,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.BlockCode(string, string)"/> method block codes input text with a given language
-    /// based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.BlockCode(string, string)"/> method block codes input text with a given
+    /// language based on Discord's markdown format.
     /// </summary>
     /// <param name="text">The input text to format.</param>
     /// <param name="language">The language for syntax highlighting.</param>
@@ -147,7 +153,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.BlockQuote"/> method block quotes input text based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.BlockQuote"/> method block quotes input text based on Discord's markdown
+    /// format.
     /// </summary>
     /// <param name="text">The input text to format.</param>
     [Theory]
@@ -161,7 +168,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.EscapeUrl(Uri)"/> method escapes a <see cref="Uri"/> based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.EscapeUrl(Uri)"/> method escapes a <see cref="Uri"/> based on Discord's
+    /// markdown format.
     /// </summary>
     /// <param name="uri">The input uri to format.</param>
     [Theory]
@@ -174,7 +182,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.EscapeUrl(string)"/> method escapes a URL based on Discord's markdown format.
+    /// Tests to see if the <see cref="Markdown.EscapeUrl(string)"/> method escapes a URL based on Discord's markdown
+    /// format.
     /// </summary>
     /// <param name="url">The url to format.</param>
     [Theory]
@@ -188,7 +197,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Hyperlink(Uri)"/> method hyperlinks a uri to itself based on Discord's markdown
+    /// Tests to see if the <see cref="Markdown.Hyperlink(Uri)"/> method hyperlinks a uri to itself based on Discord's
+    /// markdown
     /// format.
     /// </summary>
     /// <param name="uri">The input uri to format.</param>
@@ -202,7 +212,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Hyperlink(string)"/> method hyperlinks a url to itself based on Discord's markdown
+    /// Tests to see if the <see cref="Markdown.Hyperlink(string)"/> method hyperlinks a url to itself based on
+    /// Discord's markdown
     /// format.
     /// </summary>
     /// <param name="url">The input url to format.</param>
@@ -217,8 +228,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Hyperlink(string)"/> method hyperlinks a url to itself based on Discord's markdown
-    /// format.
+    /// Tests to see if the <see cref="Markdown.Hyperlink(string)"/> method hyperlinks a url to itself based on
+    /// Discord's markdown format.
     /// </summary>
     /// <param name="text">The text to hyperlink to..</param>
     /// <param name="uri">The input uri to format.</param>
@@ -232,8 +243,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Hyperlink(string)"/> method hyperlinks a url to itself based on Discord's markdown
-    /// format.
+    /// Tests to see if the <see cref="Markdown.Hyperlink(string)"/> method hyperlinks a url to itself based on
+    /// Discord's markdown format.
     /// </summary>
     /// <param name="text">The text to hyperlink to..</param>
     /// <param name="url">The input uri to format.</param>
@@ -248,8 +259,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Timestamp(long, TimestampStyle?)"/> method formats a date based on Discord's markdown
-    /// format.
+    /// Tests to see if the <see cref="Markdown.Timestamp(long, TimestampStyle?)"/> method formats a date based on
+    /// Discord's markdown format.
     /// </summary>
     /// <param name="unixTimestamp">The time to format.</param>
     [Theory]
@@ -264,8 +275,8 @@ public class MarkdownTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Markdown.Timestamp(long, TimestampStyle?)"/> method formats a date based on Discord's markdown
-    /// format.
+    /// Tests to see if the <see cref="Markdown.Timestamp(long, TimestampStyle?)"/> method formats a date based on
+    /// Discord's markdown format.
     /// </summary>
     /// <param name="unixTimestamp">The time to format.</param>
     /// <param name="timestampStyle">The timestamp style.</param>

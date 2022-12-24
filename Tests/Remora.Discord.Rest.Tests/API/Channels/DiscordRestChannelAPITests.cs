@@ -178,7 +178,11 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
-                                    .WithProperty("default_auto_archive_duration", p => p.Is((int)defaultAutoArchiveDuration))
+                                    .WithProperty
+                                    (
+                                        "default_auto_archive_duration",
+                                        p => p.Is((int)defaultAutoArchiveDuration)
+                                    )
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -238,7 +242,11 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("nsfw", p => p.Is(nsfw))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
-                                    .WithProperty("default_auto_archive_duration", p => p.Is((int)defaultAutoArchiveDuration))
+                                    .WithProperty
+                                    (
+                                        "default_auto_archive_duration",
+                                        p => p.Is((int)defaultAutoArchiveDuration)
+                                    )
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -478,11 +486,19 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("parent_id", p => p.Is(parentID.ToString()))
-                                    .WithProperty("default_auto_archive_duration", p => p.Is((int)defaultAutoArchiveDuration))
+                                    .WithProperty
+                                    (
+                                        "default_auto_archive_duration",
+                                        p => p.Is((int)defaultAutoArchiveDuration)
+                                    )
                                     .WithProperty("flags", p => p.Is((int)flags))
                                     .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("default_reaction_emoji", p => p.IsObject())
-                                    .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
+                                    .WithProperty
+                                    (
+                                        "default_thread_rate_limit_per_user",
+                                        p => p.Is(defaultThreadRateLimitPerUser)
+                                    )
                                     .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
                                     .WithProperty("default_forum_layout", p => p.Is((int)defaultForumLayout))
                             )

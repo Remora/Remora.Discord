@@ -506,7 +506,11 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection")
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 
@@ -548,7 +552,11 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
                     .WithJson
                     (
                         json => json.IsObject
@@ -603,7 +611,11 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 
@@ -635,7 +647,11 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 
@@ -667,7 +683,11 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 

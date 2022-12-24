@@ -24,8 +24,7 @@ public class EchoResponder : IResponder<IMessageCreate>
     /// Initializes a new instance of the <see cref="EchoResponder"/> class.
     /// </summary>
     /// <param name="channelAPI">The <see cref="IDiscordRestChannelAPI"/>.</param>
-    public EchoResponder(
-        IDiscordRestChannelAPI channelAPI)
+    public EchoResponder(IDiscordRestChannelAPI channelAPI)
     {
         _channelAPI = channelAPI;
     }

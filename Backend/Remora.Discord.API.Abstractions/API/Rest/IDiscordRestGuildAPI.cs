@@ -343,7 +343,9 @@ public interface IDiscordRestGuildAPI
     /// <param name="isMuted">The new mute state of the user.</param>
     /// <param name="isDeafened">The new deaf state of the user.</param>
     /// <param name="channelID">The new voice channel of the user.</param>
-    /// <param name="communicationDisabledUntil">The <see cref="DateTime"/> until the user has communication disabled.</param>
+    /// <param name="communicationDisabledUntil">
+    /// The date and time until which the user has communication disabled.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A rest result which may or may not have succeeded.</returns>
@@ -472,7 +474,9 @@ public interface IDiscordRestGuildAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="userID">The ID of the user.</param>
-    /// <param name="deleteMessageSeconds">The number of seconds to delete messages for (0-604800). Defaults to 0.</param>
+    /// <param name="deleteMessageSeconds">
+    /// The number of seconds to delete messages for (0-604800). Defaults to 0.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>

@@ -140,8 +140,8 @@ public class DiscordGatewayClient : IDisposable
     private bool _isSessionResumable;
 
     /// <summary>
-    /// Gets the time taken for the gateway to respond to the last heartbeat, providing an estimate of round-trip latency.
-    /// Will return zero until the first heartbeat has occurred.
+    /// Gets the time taken for the gateway to respond to the last heartbeat, providing an estimate of round-trip
+    /// latency. Will return zero until the first heartbeat has occurred.
     /// </summary>
     public TimeSpan Latency { get; private set; }
 
@@ -241,7 +241,12 @@ public class DiscordGatewayClient : IDisposable
 
                 if (_transportService.IsConnected)
                 {
-                    var disconnectResult = await _transportService.DisconnectAsync(!stopRequested.IsCancellationRequested, stopRequested);
+                    var disconnectResult = await _transportService.DisconnectAsync
+                    (
+                        !stopRequested.IsCancellationRequested,
+                        stopRequested
+                    );
+
                     if (!disconnectResult.IsSuccess)
                     {
                         // Couldn't disconnect cleanly :(
@@ -593,7 +598,7 @@ public class DiscordGatewayClient : IDisposable
                     return connectResult;
                 }
 
-                // Need to be set before the receive task is being started to avoid race between connecting and reconnecting
+                // Needs to be set before the receive task is started to avoid race between connecting and reconnecting
                 _shouldReconnect = false;
                 _isSessionResumable = false;
                 _lastReceivedHeartbeatAck = 0;
@@ -652,7 +657,12 @@ public class DiscordGatewayClient : IDisposable
         _ = await _sendTask;
         _ = await _receiveTask;
 
-        var disconnectResult = await _transportService.DisconnectAsync(!stopRequested.IsCancellationRequested, stopRequested);
+        var disconnectResult = await _transportService.DisconnectAsync
+        (
+            !stopRequested.IsCancellationRequested,
+            stopRequested
+        );
+
         if (!disconnectResult.IsSuccess)
         {
             return disconnectResult;
@@ -829,7 +839,11 @@ public class DiscordGatewayClient : IDisposable
                 var receiveEvent = await timeoutPolicy.ExecuteAsync(c => _transportService.ReceivePayloadAsync(c), ct);
                 if (!receiveEvent.IsSuccess)
                 {
-                    return Result.FromError(new GatewayError("Failed to receive a payload.", true, false), receiveEvent);
+                    return Result.FromError
+                    (
+                        new GatewayError("Failed to receive a payload.", true, false),
+                        receiveEvent
+                    );
                 }
 
                 switch (receiveEvent.Entity)

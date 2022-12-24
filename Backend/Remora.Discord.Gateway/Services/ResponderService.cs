@@ -59,9 +59,11 @@ public class ResponderService : IResponderTypeRepository
     {
         if (!responderType.IsResponder())
         {
-            throw new ArgumentException(
-                $"{nameof(responderType)} should implement {nameof(IResponder)}.",
-                nameof(responderType));
+            throw new ArgumentException
+            (
+                $"{nameof(responderType)} must implement {nameof(IResponder)}.",
+                nameof(responderType)
+                );
         }
 
         var responderTypeInterfaces = responderType.GetInterfaces();

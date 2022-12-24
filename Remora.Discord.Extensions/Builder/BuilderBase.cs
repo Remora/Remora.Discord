@@ -41,7 +41,7 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
     /// <param name="propertyName">The name of the property you are testing.</param>
     /// <param name="url">The text of the url.</param>
     /// <param name="allowNull">If true, a null url will return a successful result.</param>
-    /// <returns>Returns a successful result if the url is valid; otherwise, a failed result.</returns>
+    /// <returns>A successful result if the url is valid; otherwise, a failed result.</returns>
     internal static Result ValidateUrl(string propertyName, string? url, bool allowNull)
     {
         if (url is null)
@@ -76,7 +76,7 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
     /// <param name="text">The text.</param>
     /// <param name="upperBound">The maximum length of the value.</param>
     /// <param name="allowNull">If true, a null field will return a successful result.</param>
-    /// <returns>Returns a successful result if the text is valid; otherwise, a failed result.</returns>
+    /// <returns>A successful result if the text is valid; otherwise, a failed result.</returns>
     internal static Result ValidateLength(string propertyName, string? text, int upperBound, bool allowNull)
     {
         if (text is null)
@@ -92,7 +92,11 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
         }
 
         return text.Length > upperBound
-            ? new ValidationError(propertyName, $"The {propertyName} is too long. Expected: shorter than {upperBound}. Actual: {text.Length}")
+            ? new ValidationError
+            (
+                propertyName,
+                $"The {propertyName} is too long. Expected: shorter than {upperBound}. Actual: {text.Length}"
+            )
             : Result.FromSuccess();
     }
 }

@@ -38,7 +38,9 @@ namespace Remora.Discord.Commands.Tests.Extensions;
 public static class CommandNodeExtensionsTests
 {
     /// <summary>
-    /// Tests the <see cref="CommandNodeExtensions.FindCustomAttributeOnLocalTree{T}(Remora.Commands.Trees.Nodes.CommandNode, bool)"/> method.
+    /// Tests the
+    /// <see cref="CommandNodeExtensions.FindCustomAttributeOnLocalTree{T}(Remora.Commands.Trees.Nodes.CommandNode, bool)"/>
+    /// method.
     /// </summary>
     public class FindCustomAttributeOnLocalTreeTests
     {

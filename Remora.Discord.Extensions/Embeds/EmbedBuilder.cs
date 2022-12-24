@@ -119,7 +119,12 @@ public class EmbedBuilder : BuilderBase<Embed>
     }
 
     private EmbedBuilder(Optional<IReadOnlyList<IEmbedField>> fields)
-        : this(fields.HasValue ? new List<IEmbedField>(fields.Value) : new List<IEmbedField>(EmbedConstants.MaxFieldCount))
+        : this
+        (
+            fields.HasValue
+                ? new List<IEmbedField>(fields.Value)
+                : new List<IEmbedField>(EmbedConstants.MaxFieldCount)
+        )
     {
     }
 
@@ -129,9 +134,10 @@ public class EmbedBuilder : BuilderBase<Embed>
     }
 
     /// <summary>
-    /// Ensures that the overall length of the embed is less than the value of <see cref="EmbedConstants.MaxEmbedLength"/>.
+    /// Ensures that the overall length of the embed is less than the value of
+    /// <see cref="EmbedConstants.MaxEmbedLength"/>.
     /// </summary>
-    /// <returns>Returns a <see cref="Result"/> indicating success or failure of the validation.</returns>
+    /// <returns>A <see cref="Result"/> indicating success or failure of the validation.</returns>
     public override Result Validate()
     {
         var validateTitleResult = ValidateLength(nameof(this.Title), this.Title, EmbedConstants.MaxTitleLength, true);
@@ -140,7 +146,14 @@ public class EmbedBuilder : BuilderBase<Embed>
             return validateTitleResult;
         }
 
-        var validateDescriptionResult = ValidateLength(nameof(this.Description), this.Description, EmbedConstants.MaxDescriptionLength, true);
+        var validateDescriptionResult = ValidateLength
+        (
+            nameof(this.Description),
+            this.Description,
+            EmbedConstants.MaxDescriptionLength,
+            true
+        );
+
         if (!validateDescriptionResult.IsSuccess)
         {
             return validateDescriptionResult;
@@ -179,7 +192,11 @@ public class EmbedBuilder : BuilderBase<Embed>
 
         if (this.Fields.Count >= EmbedConstants.MaxFieldCount)
         {
-            return new ArgumentOutOfRangeError(nameof(this.Fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {this.Fields.Count}.");
+            return new ArgumentOutOfRangeError
+            (
+                nameof(this.Fields),
+                $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {this.Fields.Count}."
+            );
         }
 
         return this.Length > EmbedConstants.MaxEmbedLength
@@ -264,7 +281,8 @@ public class EmbedBuilder : BuilderBase<Embed>
     }
 
     /// <summary>
-    /// Sets the timestamp of the <see cref="EmbedBuilder"/> to the timestamp specified by the <paramref name="snowflake"/>.
+    /// Sets the timestamp of the <see cref="EmbedBuilder"/> to the timestamp specified by the
+    /// <paramref name="snowflake"/>.
     /// </summary>
     /// <param name="snowflake">The snowflake.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
@@ -378,7 +396,11 @@ public class EmbedBuilder : BuilderBase<Embed>
     {
         if (fields.Count >= EmbedConstants.MaxFieldCount)
         {
-            return new ArgumentOutOfRangeError(nameof(fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {fields.Count}.");
+            return new ArgumentOutOfRangeError
+            (
+                nameof(fields),
+                $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {fields.Count}."
+            );
         }
 
         _fields = fields.ToList();
@@ -410,7 +432,9 @@ public class EmbedBuilder : BuilderBase<Embed>
             Timestamp = this.Timestamp ?? default(Optional<DateTimeOffset>),
             Colour = this.Colour ?? default(Optional<Color>),
             Image = this.ImageUrl is null ? default(Optional<IEmbedImage>) : new EmbedImage(this.ImageUrl),
-            Thumbnail = this.ThumbnailUrl is null ? default(Optional<IEmbedThumbnail>) : new EmbedThumbnail(this.ThumbnailUrl),
+            Thumbnail = this.ThumbnailUrl is null
+                ? default(Optional<IEmbedThumbnail>)
+                : new EmbedThumbnail(this.ThumbnailUrl),
             Author = authorResult is { IsSuccess: true } author
                 ? author.Entity
                 : default(Optional<IEmbedAuthor>),
@@ -425,7 +449,8 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// Converts the provided <see cref="IEmbed"/> to an instance of <see cref="EmbedBuilder"/>.
     /// </summary>
     /// <param name="embed">The embed to convert.</param>
-    /// <returns>An <see cref="EmbedBuilder"/> with the same properties as the provided embed, where present. The <see cref="EmbedType"/> will be overwritten to <see cref="EmbedType.Rich"/>.</returns>
+    /// <returns>An <see cref="EmbedBuilder"/> with the same properties as the provided embed, where present. The
+    /// <see cref="EmbedType"/> will be overwritten to <see cref="EmbedType.Rich"/>.</returns>
     public static EmbedBuilder FromEmbed(IEmbed embed) => new(embed.Fields)
     {
         Title = embed.Title.HasValue ? embed.Title.Value : null,

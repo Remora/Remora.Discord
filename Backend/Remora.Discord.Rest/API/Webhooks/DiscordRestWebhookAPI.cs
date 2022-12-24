@@ -54,7 +54,12 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestWebhookAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestWebhookAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -429,7 +434,12 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                         (
                             (f, i) => f.Match
                             (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                                data => new PartialAttachment
+                                (
+                                    DiscordSnowflake.New((ulong)i),
+                                    data.Name,
+                                    data.Description
+                                ),
                                 attachment => attachment
                             )
                         ).ToList();

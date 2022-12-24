@@ -102,13 +102,21 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
     }
 
     /// <inheritdoc/>
-    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync(IReadOnlyList<string> tokens, CancellationToken ct)
+    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync
+    (
+        IReadOnlyList<string> tokens,
+        CancellationToken ct
+    )
     {
         return (await (this as ITypeParser<IMessage>).TryParseAsync(tokens, ct)).Map(a => a as IPartialMessage);
     }
 
     /// <inheritdoc/>
-    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync(string token, CancellationToken ct)
+    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync
+    (
+        string token,
+        CancellationToken ct
+    )
     {
         _ = DiscordSnowflake.TryParse(token.Unmention(), out var messageID);
         if (messageID is null)

@@ -96,7 +96,11 @@ public class ParameterShapeExtensionsTests
         [InlineData(typeof(IPartialAttachment), ApplicationCommandOptionType.Attachment)]
         [InlineData(typeof(IAttachment), ApplicationCommandOptionType.Attachment)]
         [Theory]
-        public void ReturnsWithoutTypeHintAttributeCorrectly(Type parameterType, ApplicationCommandOptionType expectedResult)
+        public void ReturnsWithoutTypeHintAttributeCorrectly
+        (
+            Type parameterType,
+            ApplicationCommandOptionType expectedResult
+        )
         {
             var parameterInfoMock = new Mock<ParameterInfo>();
             var parameterShapeMock = new Mock<IParameterShape>();

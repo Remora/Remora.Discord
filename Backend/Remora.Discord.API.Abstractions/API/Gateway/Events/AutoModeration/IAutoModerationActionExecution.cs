@@ -74,7 +74,8 @@ public interface IAutoModerationActionExecution : IGatewayEvent
     /// Gets the ID of any system auto moderation messages posted as a result of this action.
     /// </summary>
     /// <remarks>
-    /// This will not exist if this event does not correspond to an action with type <see cref="AutoModerationActionType.SendAlertMessage"/>.
+    /// This will not exist if this event does not correspond to an action with type
+    /// <see cref="AutoModerationActionType.SendAlertMessage"/>.
     /// </remarks>
     Optional<Snowflake> AlertSystemMessageID { get; }
 

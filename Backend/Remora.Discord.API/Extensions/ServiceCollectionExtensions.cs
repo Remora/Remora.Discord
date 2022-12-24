@@ -258,7 +258,11 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
-            .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
+            .WithPropertyConverter
+            (
+                g => g.GuildFeatures,
+                new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+            )
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
@@ -268,7 +272,11 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
-            .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
+            .WithPropertyConverter
+            (
+                g => g.GuildFeatures,
+                new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+            )
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
@@ -591,7 +599,11 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuild, Guild>()
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
-            .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
+            .WithPropertyConverter
+            (
+                g => g.GuildFeatures,
+                new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+            )
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
@@ -599,7 +611,11 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
-            .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
+            .WithPropertyConverter
+            (
+                g => g.GuildFeatures,
+                new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+            )
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
             .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
@@ -622,7 +638,11 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IPruneCount, PruneCount>();
         options.AddDataObjectConverter<IBan, Ban>();
         options.AddDataObjectConverter<IGuildPreview, GuildPreview>()
-            .WithPropertyConverter(p => p.Features, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)));
+            .WithPropertyConverter
+            (
+                p => p.Features,
+                new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+            );
 
         options.AddDataObjectConverter<IGuildWidgetSettings, GuildWidgetSettings>()
             .WithPropertyName(w => w.IsEnabled, "enabled");
@@ -983,12 +1003,36 @@ public static class ServiceCollectionExtensions
                 IApplicationCommandInteractionDataResolved,
                 ApplicationCommandInteractionDataResolved
             >()
-            .WithPropertyConverter(r => r.Users, new SnowflakeDictionaryConverter<IUser>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Members, new SnowflakeDictionaryConverter<IPartialGuildMember>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Attachments, new SnowflakeDictionaryConverter<IAttachment>(Constants.DiscordEpoch));
+            .WithPropertyConverter
+            (
+                r => r.Users,
+                new SnowflakeDictionaryConverter<IUser>(Constants.DiscordEpoch)
+            )
+            .WithPropertyConverter
+            (
+                r => r.Members,
+                new SnowflakeDictionaryConverter<IPartialGuildMember>(Constants.DiscordEpoch)
+            )
+            .WithPropertyConverter
+            (
+                r => r.Roles,
+                new SnowflakeDictionaryConverter<IRole>(Constants.DiscordEpoch)
+            )
+            .WithPropertyConverter
+            (
+                r => r.Channels,
+                new SnowflakeDictionaryConverter<IPartialChannel>(Constants.DiscordEpoch)
+            )
+            .WithPropertyConverter
+            (
+                r => r.Messages,
+                new SnowflakeDictionaryConverter<IPartialMessage>(Constants.DiscordEpoch)
+            )
+            .WithPropertyConverter
+            (
+                r => r.Attachments,
+                new SnowflakeDictionaryConverter<IAttachment>(Constants.DiscordEpoch)
+            );
 
         options.AddDataObjectConverter<IGuildApplicationCommandPermissions, GuildApplicationCommandPermissions>();
         options.AddDataObjectConverter
@@ -1135,7 +1179,10 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="options">The serializer options.</param>
     /// <returns>The options, with the converters added.</returns>
-    private static JsonSerializerOptions AddApplicationRoleConnectionObjectConverters(this JsonSerializerOptions options)
+    private static JsonSerializerOptions AddApplicationRoleConnectionObjectConverters
+    (
+        this JsonSerializerOptions options
+    )
     {
         options.AddDataObjectConverter<IApplicationRoleConnectionMetadata, ApplicationRoleConnectionMetadata>();
         options.AddDataObjectConverter<IApplicationRoleConnection, ApplicationRoleConnection>();

@@ -47,7 +47,12 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestApplicationAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestApplicationAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -575,7 +580,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> GetApplicationRoleConnectionMetadataRecordsAsync
+    public virtual Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>>
+    GetApplicationRoleConnectionMetadataRecordsAsync
     (
         Snowflake applicationID,
         CancellationToken ct = default
@@ -590,7 +596,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     }
 
     /// <inheritdoc />
-    public virtual async Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> UpdateApplicationRoleConnectionMetadataRecordsAsync
+    public virtual async Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>>
+    UpdateApplicationRoleConnectionMetadataRecordsAsync
     (
         Snowflake applicationID,
         IReadOnlyList<IApplicationRoleConnectionMetadata> records,

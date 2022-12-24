@@ -212,13 +212,20 @@ public class RequireBotDiscordPermissionsCondition :
         return logicalOperator switch
         {
             LogicalOperator.Not =>
-                $"had disallowed permissions {string.Join(", ", permissionInformation.Where(kvp => kvp.Value).Select(kvp => kvp.Key.ToString()))}",
+                $"had disallowed permissions {string.Join(", ", permissionInformation
+                    .Where(kvp => kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}",
             LogicalOperator.And =>
-                $"missing permissions {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}",
+                $"missing permissions {string.Join(", ", permissionInformation
+                    .Where(kvp => !kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}",
             LogicalOperator.Or =>
-                $"missing one of {string.Join(", ", permissionInformation.Keys.Select(k => k.ToString()))}",
+                $"missing one of {string.Join(", ", permissionInformation.Keys
+                    .Select(k => k.ToString()))}",
             LogicalOperator.Xor =>
-                $"had {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}; only one is allowed",
+                $"had {string.Join(", ", permissionInformation
+                    .Where(kvp => !kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}; only one is allowed",
             _ => throw new ArgumentOutOfRangeException(nameof(logicalOperator), logicalOperator, null)
         };
     }

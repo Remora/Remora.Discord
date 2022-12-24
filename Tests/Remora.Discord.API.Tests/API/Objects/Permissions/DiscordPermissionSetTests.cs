@@ -108,7 +108,8 @@ public class DiscordPermissionSetTests : ObjectTestBase<IDiscordPermissionSet>
     }
 
     /// <summary>
-    /// Tests that <see cref="DiscordPermissionSet.HasPermission(DiscordPermission)"/> works correctly for large integers that are considered signed as default by <see cref="BigInteger"/>.
+    /// Tests that <see cref="DiscordPermissionSet.HasPermission(DiscordPermission)"/> works correctly for large
+    /// integers that are considered signed as default by <see cref="BigInteger"/>.
     /// </summary>
     [Fact]
     public void HasPermissionReturnsTrueForLargeIntegers()
@@ -341,7 +342,15 @@ public class DiscordPermissionSetTests : ObjectTestBase<IDiscordPermissionSet>
     [Fact]
     public void CanGetPermissions()
     {
-        var permissions = new[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity, DiscordPermission.SendMessagesInThreads, DiscordPermission.UseEmbeddedActivities };
+        var permissions = new[]
+        {
+            DiscordPermission.AddReactions,
+            DiscordPermission.Connect,
+            DiscordPermission.UseVoiceActivity,
+            DiscordPermission.SendMessagesInThreads,
+            DiscordPermission.UseEmbeddedActivities
+        };
+
         var permissionSet = new DiscordPermissionSet(permissions);
 
         Assert.Equal(permissions, permissionSet.GetPermissions());

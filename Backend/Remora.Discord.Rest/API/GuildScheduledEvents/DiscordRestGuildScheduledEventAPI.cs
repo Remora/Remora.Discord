@@ -47,7 +47,12 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestGuildScheduledEventAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestGuildScheduledEventAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -272,7 +277,12 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     }
 
     /// <inheritdoc />
-    public Task<Result> DeleteGuildScheduledEventAsync(Snowflake guildID, Snowflake eventID, CancellationToken ct = default)
+    public Task<Result> DeleteGuildScheduledEventAsync
+    (
+        Snowflake guildID,
+        Snowflake eventID,
+        CancellationToken ct = default
+    )
     {
         return this.RestHttpClient.DeleteAsync
         (

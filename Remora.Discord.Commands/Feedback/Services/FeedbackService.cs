@@ -652,7 +652,15 @@ public class FeedbackService
 
                 return interactionContext.HasRespondedToInteraction
                     ? await SendFollowupAsync(content, embeds, options, messageFlags, interactionContext, ct)
-                    : await SendInteractionResponseAsync(content, embeds, options, messageFlags, interactionContext, ct);
+                    : await SendInteractionResponseAsync
+                    (
+                        content,
+                        embeds,
+                        options,
+                        messageFlags,
+                        interactionContext,
+                        ct
+                    );
             }
             default:
             {

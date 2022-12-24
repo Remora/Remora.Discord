@@ -77,13 +77,21 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
     }
 
     /// <inheritdoc/>
-    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync(IReadOnlyList<string> tokens, CancellationToken ct)
+    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync
+    (
+        IReadOnlyList<string> tokens,
+        CancellationToken ct
+    )
     {
         return (await (this as ITypeParser<IGuildMember>).TryParseAsync(tokens, ct)).Map(a => a as IPartialGuildMember);
     }
 
     /// <inheritdoc/>
-    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync(string token, CancellationToken ct)
+    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync
+    (
+        string token,
+        CancellationToken ct
+    )
     {
         _ = DiscordSnowflake.TryParse(token.Unmention(), out var guildMemberID);
         if (guildMemberID is null)

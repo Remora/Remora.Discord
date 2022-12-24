@@ -47,7 +47,11 @@ internal class TokenAuthorizationHandler : DelegatingHandler
     }
 
     /// <inheritdoc />
-    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override Task<HttpResponseMessage> SendAsync
+    (
+        HttpRequestMessage request,
+        CancellationToken cancellationToken
+    )
     {
         var token = _tokenStore.Token;
         var tokenType = _tokenStore.TokenType;

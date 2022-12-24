@@ -73,15 +73,21 @@ public interface IDiscordRestChannelAPI
     /// <param name="isArchived">Whether the thread is archived.</param>
     /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
     /// <param name="isLocked">Whether the thread is locked.</param>
-    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>
+    /// <param name="isInvitable">
+    /// Whether non-moderators can add other non-moderators to the private thread.
+    /// </param>
     /// <param name="defaultAutoArchiveDuration">
     /// The default time of inactivity after which threads in the channel are archived.
     /// </param>
     /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
     /// <param name="flags">The channel flags to use.</param>
-    /// <param name="availableTags">The set of tags that can be used in a forum channel. Only "name" is required to be set.</param>
+    /// <param name="availableTags">
+    /// The set of tags that can be used in a forum channel. Only "name" is required to be set.
+    /// </param>
     /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
-    /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
+    /// <param name="defaultThreadRateLimitPerUser">
+    /// The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.
+    /// </param>
     /// <param name="appliedTags">The tags applied to the thread.</param>
     /// <param name="defaultSortOrder">The default sort order of posts.</param>
     /// <param name="defaultForumLayout">The default layout of posts in a forum.</param>
@@ -276,7 +282,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="isArchived">Whether the thread is archived.</param>
     /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
     /// <param name="isLocked">Whether the thread is locked.</param>
-    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>
+    /// <param name="isInvitable">Whether non-moderators can add other non-moderators to the private thread.</param>
     /// <param name="rateLimitPerUser">The new rate limit per user.</param>
     /// <param name="flags">The channel flags to use.</param>
     /// <param name="appliedTags">The tags applied to the thread.</param>
@@ -313,9 +319,13 @@ public interface IDiscordRestChannelAPI
     /// The default time of inactivity after which threads in the channel are archived.
     /// </param>
     /// <param name="flags">The new channel flags.</param>
-    /// <param name="availableTags">The set of tags that can be used in a forum channel. Only "name" is required to be set.</param>
+    /// <param name="availableTags">
+    /// The set of tags that can be used in a forum channel. Only "name" is required to be set.
+    /// </param>
     /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
-    /// <param name="defaultThreadRateLimitPerUser">The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.</param>
+    /// <param name="defaultThreadRateLimitPerUser">
+    /// The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.
+    /// </param>
     /// <param name="defaultSortOrder">The default sort order of posts.</param>
     /// <param name="defaultForumLayout">The default layout of posts in a forum.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
@@ -443,7 +453,8 @@ public interface IDiscordRestChannelAPI
     );
 
     /// <summary>
-    /// Crosspost a message otherwise known as "publishing" a message from a announcement channel that other guilds can follow.
+    /// Crosspost a message otherwise known as "publishing" a message from a announcement channel that other guilds can
+    /// follow.
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>
     /// <param name="messageID">The ID of the message.</param>
@@ -845,7 +856,7 @@ public interface IDiscordRestChannelAPI
     /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.PrivateThread"/>,
     /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
     /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
-    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the private thread.</param>
+    /// <param name="isInvitable">Whether non-moderators can add other non-moderators to the private thread.</param>
     /// <param name="rateLimitPerUser">
     /// The message rate limit per user, that is, the number of seconds they have to wait between sending messages.
     /// </param>

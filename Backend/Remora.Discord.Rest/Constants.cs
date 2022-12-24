@@ -81,6 +81,9 @@ public static class Constants
     /// <summary>
     /// Gets the HTTP request option, used when adding of Authorization should be skipped.
     /// </summary>
-    internal static System.Net.Http.HttpRequestOptionsKey<bool> SkipAuthorizationOption { get; } = new(SkipAuthorizationPropertyName);
+    internal static System.Net.Http.HttpRequestOptionsKey<bool> SkipAuthorizationOption { get; } = new
+    (
+        SkipAuthorizationPropertyName
+    );
 #endif
 }

@@ -464,9 +464,12 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("name", p => p.Is(commands[0].Name))
                                             .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
                                             .WithProperty("description", p => p.Is(commands[0].Description))
-                                            .WithProperty("options", p => p.IsArray(
-                                                ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
+                                            .WithProperty("options", p => p.IsArray(ar => ar.WithCount(0)))
+                                            .WithProperty
+                                            (
+                                                "default_member_permissions",
+                                                p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString())
+                                            )
                                     )
                                 )
                                 .WithElement
@@ -477,9 +480,12 @@ public class DiscordRestApplicationAPITests
                                         o => o
                                             .WithProperty("name", p => p.Is(commands[1].Name))
                                             .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
-                                            .WithProperty("options", p => p.IsArray(
-                                                ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString()))
+                                            .WithProperty("options", p => p.IsArray(ar => ar.WithCount(0)))
+                                            .WithProperty
+                                            (
+                                                "default_member_permissions",
+                                                p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString())
+                                            )
                                     )
                                 )
                                 .WithElement
@@ -1413,7 +1419,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .WithJson
                     (
                         json => json.IsArray
@@ -1428,9 +1438,12 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("name", p => p.Is(commands[0].Name))
                                             .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
                                             .WithProperty("description", p => p.Is(commands[0].Description))
-                                            .WithProperty("options", p => p.IsArray(
-                                                ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
+                                            .WithProperty("options", p => p.IsArray(ar => ar.WithCount(0)))
+                                            .WithProperty
+                                            (
+                                                "default_member_permissions",
+                                                p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString())
+                                            )
                                     )
                                 )
                                 .WithElement
@@ -1441,9 +1454,12 @@ public class DiscordRestApplicationAPITests
                                         o => o
                                             .WithProperty("name", p => p.Is(commands[1].Name))
                                             .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
-                                            .WithProperty("options", p => p.IsArray(
-                                                ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString()))
+                                            .WithProperty("options", p => p.IsArray(ar => ar.WithCount(0)))
+                                            .WithProperty
+                                            (
+                                                "default_member_permissions",
+                                                p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString())
+                                            )
                                     )
                                 )
                                 .WithElement
@@ -1495,7 +1511,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
             );
 
@@ -1530,7 +1550,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
             );
 
@@ -1565,7 +1589,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
             );
 
@@ -1600,7 +1628,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
             );
 
@@ -2100,7 +2132,13 @@ public class DiscordRestApplicationAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)])
             );
 
-            var result = await api.EditApplicationCommandPermissionsAsync(applicationID, guildID, commandID, permissions);
+            var result = await api.EditApplicationCommandPermissionsAsync
+            (
+                applicationID,
+                guildID,
+                commandID,
+                permissions
+            );
             ResultAssert.Successful(result);
         }
     }
@@ -2131,7 +2169,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
                     .WithNoContent()
                     .Respond("application/json", "[ ]")
             );
@@ -2188,7 +2230,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
                     .WithJson
                     (
                         json => json.IsArray
@@ -2254,8 +2300,16 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
-                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
+                    .Respond
+                    (
+                        "application/json",
+                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                    )
             );
 
             var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
@@ -2289,8 +2343,16 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
-                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
+                    .Respond
+                    (
+                        "application/json",
+                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                    )
             );
 
             var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
@@ -2324,8 +2386,16 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata")
-                    .Respond("application/json", $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
+                    .Respond
+                    (
+                        "application/json",
+                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                    )
             );
 
             var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync

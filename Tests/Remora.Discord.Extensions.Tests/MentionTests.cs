@@ -34,7 +34,8 @@ namespace Remora.Discord.Extensions.Tests;
 public class MentionTests
 {
     /// <summary>
-    /// Tests to see if the <see cref="Mention.User(IUser)"/> method formats a user mention based on Discord's specifications.
+    /// Tests to see if the <see cref="Mention.User(IUser)"/> method formats a user mention based on Discord's
+    /// specifications.
     /// </summary>
     /// <param name="userID">The user ID.</param>
     [Theory]
@@ -59,7 +60,8 @@ public class MentionTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Mention.User(Snowflake)"/> method formats a channel mention based on Discord's specifications.
+    /// Tests to see if the <see cref="Mention.User(Snowflake)"/> method formats a channel mention based on Discord's
+    /// specifications.
     /// </summary>
     /// <param name="userID">The user ID.</param>
     [Theory]
@@ -79,7 +81,8 @@ public class MentionTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Mention.Channel(IChannel)"/> method formats a channel mention based on Discord's specifications.
+    /// Tests to see if the <see cref="Mention.Channel(IChannel)"/> method formats a channel mention based on Discord's
+    /// specifications.
     /// </summary>
     /// <param name="channelID">The channel ID.</param>
     [Theory]
@@ -104,7 +107,8 @@ public class MentionTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Mention.Channel(Snowflake)"/> method formats a role mention based on Discord's specifications.
+    /// Tests to see if the <see cref="Mention.Channel(Snowflake)"/> method formats a role mention based on Discord's
+    /// specifications.
     /// </summary>
     /// <param name="channelID">The channel ID.</param>
     [Theory]
@@ -124,7 +128,8 @@ public class MentionTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Mention.Role(IRole)"/> method formats a role mention based on Discord's specifications.
+    /// Tests to see if the <see cref="Mention.Role(IRole)"/> method formats a role mention based on Discord's
+    /// specifications.
     /// </summary>
     /// <param name="roleID">The channel ID.</param>
     [Theory]
@@ -149,7 +154,8 @@ public class MentionTests
     }
 
     /// <summary>
-    /// Tests to see if the <see cref="Mention.Role(Snowflake)"/> method formats a rike mention based on Discord's specifications.
+    /// Tests to see if the <see cref="Mention.Role(Snowflake)"/> method formats a rike mention based on Discord's
+    /// specifications.
     /// </summary>
     /// <param name="roleID">The role ID.</param>
     [Theory]

@@ -30,7 +30,8 @@ namespace Remora.Discord.API.Tests.Services;
 /// Represents a source of sample data for an xUnit test.
 /// </summary>
 /// <typeparam name="TData">The data type.</typeparam>
-public class SampleBidirectionalDataSource<TData> : TheoryData<SampleDataDescriptor> where TData : IGatewayEvent, IGatewayCommand
+public class SampleBidirectionalDataSource<TData> : TheoryData<SampleDataDescriptor>
+    where TData : IGatewayEvent, IGatewayCommand
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SampleBidirectionalDataSource{TData}"/> class.

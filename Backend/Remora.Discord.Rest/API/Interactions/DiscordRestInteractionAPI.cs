@@ -52,7 +52,12 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestInteractionAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestInteractionAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -200,7 +205,12 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         (
                             (f, i) => f.Match
                             (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                                data => new PartialAttachment
+                                (
+                                    DiscordSnowflake.New((ulong)i),
+                                    data.Name,
+                                    data.Description
+                                ),
                                 attachment => attachment
                             )
                         ).ToList();
@@ -382,7 +392,12 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         (
                             (f, i) => f.Match
                             (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                                data => new PartialAttachment
+                                (
+                                    DiscordSnowflake.New((ulong)i),
+                                    data.Name,
+                                    data.Description
+                                ),
                                 attachment => attachment
                             )
                         ).ToList();

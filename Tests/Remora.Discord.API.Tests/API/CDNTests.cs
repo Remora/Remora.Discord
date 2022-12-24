@@ -618,8 +618,9 @@ public class CDNTests
     }
 
     /// <summary>
-    /// Tests the <see cref="CDN.GetGuildMemberAvatarUrl(Snowflake, IGuildMember, Optional{CDNImageFormat}, Optional{ushort})"/> method and
-    /// its overloads.
+    /// Tests the
+    /// <see cref="CDN.GetGuildMemberAvatarUrl(Snowflake, IGuildMember, Optional{CDNImageFormat}, Optional{ushort})"/>
+    /// method and its overloads.
     /// </summary>
     public class GetGuildMemberAvatarUrl : CDNTestBase
     {
@@ -1043,7 +1044,8 @@ public class CDNTests
     }
 
     /// <summary>
-    /// Tests the <see cref="CDN.GetGuildScheduledEventCoverUrl(IGuildScheduledEvent, Optional{CDNImageFormat}, Optional{ushort})"/>
+    /// Tests the
+    /// <see cref="CDN.GetGuildScheduledEventCoverUrl(IGuildScheduledEvent, Optional{CDNImageFormat}, Optional{ushort})"/>
     /// method and its overloads.
     /// </summary>
     public class GetGuildScheduledEventCoverUrl : CDNTestBase

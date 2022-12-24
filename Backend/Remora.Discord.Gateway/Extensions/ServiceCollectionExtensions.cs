@@ -67,7 +67,10 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.TryAddSingleton<Random>();
         serviceCollection.TryAddSingleton<ResponderDispatchService>();
-        serviceCollection.TryAddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<IOptions<ResponderService>>().Value);
+        serviceCollection.TryAddSingleton<IResponderTypeRepository>
+        (
+            s => s.GetRequiredService<IOptions<ResponderService>>().Value
+        );
         serviceCollection.TryAddSingleton<DiscordGatewayClient>();
 
         serviceCollection.TryAddTransient<ClientWebSocket>();
@@ -113,7 +116,9 @@ public static class ServiceCollectionExtensions
     /// <param name="responderType">The type implementing <see cref="IResponder"/>.</param>
     /// <param name="group">The group the responder belongs to.</param>
     /// <returns>The service collection, with the responder added.</returns>
-    /// <exception cref="ArgumentException">Throws if responderType does not implement <see cref="IResponder"/>.</exception>
+    /// <exception cref="ArgumentException">
+    /// Thrown if responderType does not implement <see cref="IResponder"/>.
+    /// </exception>
     public static IServiceCollection AddResponder
     (
         this IServiceCollection serviceCollection,
@@ -123,9 +128,11 @@ public static class ServiceCollectionExtensions
     {
         if (!responderType.IsResponder())
         {
-            throw new ArgumentException(
-                $"{nameof(responderType)} should implement {nameof(IResponder)}.",
-                nameof(responderType));
+            throw new ArgumentException
+            (
+                $"{nameof(responderType)} must implement {nameof(IResponder)}.",
+                nameof(responderType)
+            );
         }
 
         var responderTypeInterfaces = responderType.GetInterfaces();

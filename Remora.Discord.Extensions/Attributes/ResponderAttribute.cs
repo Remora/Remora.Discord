@@ -39,7 +39,9 @@ public class ResponderAttribute : Attribute
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponderAttribute"/> class.
     /// </summary>
-    /// <param name="group">The responder group the responder should be added to, defaulting to <see cref="ResponderGroup.Normal"/>.</param>
+    /// <param name="group">
+    /// The responder group the responder should be added to, defaulting to <see cref="ResponderGroup.Normal"/>.
+    /// </param>
     public ResponderAttribute(ResponderGroup group = ResponderGroup.Normal)
     {
         this.Group = group;

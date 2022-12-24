@@ -38,7 +38,8 @@ public static class KeyHelpers
     /// <param name="ChannelID">The ID of the channel the overwrite is for.</param>
     /// <param name="OverwriteID">The ID of the overwrite.</param>
     /// <returns>The cache key.</returns>
-    public record ChannelPermissionCacheKey(in Snowflake ChannelID, in Snowflake OverwriteID) : ChannelCacheKey(ChannelID)
+    public record ChannelPermissionCacheKey(in Snowflake ChannelID, in Snowflake OverwriteID)
+        : ChannelCacheKey(ChannelID)
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
@@ -176,8 +177,11 @@ public static class KeyHelpers
     /// <param name="Limit">The limit parameter.</param>
     /// <param name="After">The after parameter.</param>
     /// <returns>The cache key.</returns>
-    public record GuildMembersKey(
-        in Snowflake GuildID, in Optional<int> Limit, in Optional<Snowflake> After
+    public record GuildMembersKey
+    (
+        in Snowflake GuildID,
+        in Optional<int> Limit,
+        in Optional<Snowflake> After
     ) : GuildCacheKey(GuildID)
     {
         /// <inheritdoc/>
@@ -357,7 +361,8 @@ public static class KeyHelpers
     }
 
     /// <summary>
-    /// Creates a cache key for an <see cref="IApplicationRoleConnection" /> instance of the current <see cref="IUser"/> instance.
+    /// Creates a cache key for an <see cref="IApplicationRoleConnection" /> instance of the current
+    /// <see cref="IUser"/> instance.
     /// </summary>
     /// <param name="ApplicationID">The ID of the application.</param>
     /// <returns>The cache key.</returns>
@@ -365,7 +370,10 @@ public static class KeyHelpers
     {
         /// <inheritdoc/>
         protected override StringBuilder AppendToString(StringBuilder stringBuilder)
-            => base.AppendToString(stringBuilder).Append(":Application:").Append(this.ApplicationID).Append(":RoleConnection");
+            => base.AppendToString(stringBuilder)
+                .Append(":Application:")
+                .Append(this.ApplicationID)
+                .Append(":RoleConnection");
     }
 
     /// <summary>
@@ -541,7 +549,8 @@ public static class KeyHelpers
     /// <param name="Token">The interaction token.</param>
     /// <param name="MessageID">The message ID.</param>
     /// <returns>The cache key.</returns>
-    public record FollowupMessageCacheKey(string Token, in Snowflake MessageID) : WebhookMessageCacheKey(Token, MessageID);
+    public record FollowupMessageCacheKey(string Token, in Snowflake MessageID)
+        : WebhookMessageCacheKey(Token, MessageID);
 
     /// <summary>
     /// Creates a cache key for a webhook <see cref="IMessage"/> instance.

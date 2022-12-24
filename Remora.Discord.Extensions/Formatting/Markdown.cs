@@ -106,7 +106,8 @@ public static partial class Markdown
     /// language for syntax highlighting.
     /// </summary>
     /// <remarks>
-    /// Discord supports the following languages: <see href="https://github.com/highlightjs/highlight.js/tree/main/src/languages"/>.
+    /// Discord supports the following languages:
+    /// <see href="https://github.com/highlightjs/highlight.js/tree/main/src/languages"/>.
     /// </remarks>
     /// <param name="text">The input text to format.</param>
     /// <param name="language">The language.</param>
@@ -195,5 +196,6 @@ public static partial class Markdown
     /// <returns>
     /// A sanitized string.
     /// </returns>
-    public static string Sanitize(string text) => _sensitiveCharacters.Aggregate(text, (current, unsafeChar) => current.Replace(unsafeChar, $@"\{unsafeChar}"));
+    public static string Sanitize(string text) =>
+        _sensitiveCharacters.Aggregate(text, (current, unsafeChar) => current.Replace(unsafeChar, $@"\{unsafeChar}"));
 }

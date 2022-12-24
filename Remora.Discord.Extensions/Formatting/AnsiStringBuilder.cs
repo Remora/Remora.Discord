@@ -130,7 +130,7 @@ public class AnsiStringBuilder
     /// <summary>
     /// Build the ansi formatted string.
     /// </summary>
-    /// <returns>Returns a string containing the ansi formatting codes.</returns>
+    /// <returns>A string containing the ansi formatting codes.</returns>
     public string Build()
     {
         return _builder.ToString();

@@ -33,7 +33,12 @@ namespace Remora.Discord.API.Json;
 internal class MessageComponentConverter : JsonConverter<IMessageComponent>
 {
     /// <inheritdoc />
-    public override IMessageComponent? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IMessageComponent? Read
+    (
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
     {
         if (reader.TokenType != JsonTokenType.StartObject)
         {

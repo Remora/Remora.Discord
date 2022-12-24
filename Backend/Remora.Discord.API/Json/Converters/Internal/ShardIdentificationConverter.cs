@@ -34,7 +34,12 @@ namespace Remora.Discord.API.Json;
 internal class ShardIdentificationConverter : JsonConverter<IShardIdentification?>
 {
     /// <inheritdoc/>
-    public override IShardIdentification? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IShardIdentification? Read
+    (
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
     {
         if (reader.TokenType == JsonTokenType.Null)
         {

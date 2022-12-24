@@ -136,7 +136,11 @@ public class RedisCacheProvider : ICacheProvider
     /// In the event that this is not the case, this method can be overridden in a derived class to provide
     /// a more apt transformation of evicted data.
     /// </remarks>
-    public virtual async ValueTask<Result<TInstance>> EvictAsync<TInstance>(CacheKey key, CancellationToken ct = default)
+    public virtual async ValueTask<Result<TInstance>> EvictAsync<TInstance>
+    (
+        CacheKey key,
+        CancellationToken ct = default
+    )
         where TInstance : class
     {
         var keyString = key.ToCanonicalString();

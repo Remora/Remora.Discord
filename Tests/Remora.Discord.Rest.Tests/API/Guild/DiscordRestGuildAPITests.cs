@@ -673,7 +673,11 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("parent_id", p => p.Is(parentId.ToString()))
                                 .WithProperty("nsfw", p => p.Is(nsfw))
-                                .WithProperty("default_auto_archive_duration", p => p.Is((int)defaultAutoArchiveDuration))
+                                .WithProperty
+                                (
+                                    "default_auto_archive_duration",
+                                    p => p.Is((int)defaultAutoArchiveDuration)
+                                )
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -2690,7 +2694,11 @@ public class DiscordRestGuildAPITests
                             o => o
                                 .WithProperty("channel_id", p => p.Is(channelID.ToString()))
                                 .WithProperty("suppress", p => p.Is(suppress))
-                                .WithProperty("request_to_speak_timestamp", p => p.Is("2020-08-28T18:17:25.377506\u002B00:00"))
+                                .WithProperty
+                                (
+                                    "request_to_speak_timestamp",
+                                    p => p.Is("2020-08-28T18:17:25.377506\u002B00:00")
+                                )
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IVoiceState)])

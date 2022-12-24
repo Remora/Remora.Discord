@@ -463,7 +463,8 @@ public static class CommandTreeExtensions
             {
                 throw new InvalidNodeException
                 (
-                    $"{commandType.Humanize()} context menu commands may only have a single parameter named {expectedParameter}.",
+                    $"{commandType.Humanize()} context menu commands may only have a single parameter named "
+                    + $"{expectedParameter}.",
                     command
                 );
             }
@@ -570,7 +571,10 @@ public static class CommandTreeExtensions
             var minLength = parameter.Parameter.GetCustomAttribute<MinLengthAttribute>();
             var maxLength = parameter.Parameter.GetCustomAttribute<MaxLengthAttribute>();
 
-            if (discordType is not ApplicationCommandOptionType.String && (minLength is not null || maxLength is not null))
+            var isNonStringWithLengthConstraint = discordType is not ApplicationCommandOptionType.String
+                                                  && (minLength is not null || maxLength is not null);
+
+            if (isNonStringWithLengthConstraint)
             {
                 throw new InvalidCommandParameterException
                 (

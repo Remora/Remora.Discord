@@ -144,7 +144,8 @@ public interface IDiscordRestUserAPI
     /// Gets the application role connection for the user.
     /// </summary>
     /// <remarks>
-    /// Requires an OAuth2 access token with role_connections.write scope for the specified <paramref name="applicationID"/>.
+    /// Requires an OAuth2 access token with role_connections.write scope for the specified
+    /// <paramref name="applicationID"/>.
     /// </remarks>
     /// <param name="applicationID">The ID of the application.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
@@ -159,7 +160,8 @@ public interface IDiscordRestUserAPI
     /// Updates and returns the application role connection for the user.
     /// </summary>
     /// <remarks>
-    /// Requires an OAuth2 access token with role_connections.write scope for the specified <paramref name="applicationID"/>.
+    /// Requires an OAuth2 access token with role_connections.write scope for the specified
+    /// <paramref name="applicationID"/>.
     /// </remarks>
     /// <param name="applicationID">The ID of the application.</param>
     /// <param name="platformName">The vanity name of the platform a bot has connected (max 50 characters).</param>

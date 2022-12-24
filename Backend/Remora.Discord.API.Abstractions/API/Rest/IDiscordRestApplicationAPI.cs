@@ -259,7 +259,9 @@ public interface IDiscordRestApplicationAPI
     /// <param name="isNsfw">Whether this command is age-restricted.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
-    /// <remarks>This method requires a bearer token authorized with the applications.commands.permissions.update scope.</remarks>
+    /// <remarks>
+    /// This method requires a bearer token authorized with the applications.commands.permissions.update scope.
+    /// </remarks>
     Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
     (
         Snowflake applicationID,
@@ -330,7 +332,9 @@ public interface IDiscordRestApplicationAPI
     /// <param name="permissions">The permissions to overwrite the existing ones with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>An edit result which may or may not have succeeded.</returns>
-    /// <remarks>This method requires a bearer token authorized with the applications.commands.permissions.update scope.</remarks>
+    /// <remarks>
+    /// This method requires a bearer token authorized with the applications.commands.permissions.update scope.
+    /// </remarks>
     Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
     (
         Snowflake applicationID,

@@ -51,12 +51,14 @@ public enum ApplicationRoleConnectionMetadataType
     IntegerNotEqual = 4,
 
     /// <summary>
-    /// The metadata value (ISO8601 string) is less than or equal to the guild's configured value (integer; days before current date).
+    /// The metadata value (ISO8601 string) is less than or equal to the guild's configured value (integer; days before
+    /// current date).
     /// </summary>
     DateTimeLessThanOrEqual = 5,
 
     /// <summary>
-    /// The metadata value (ISO8601 string) is greater than or equal to the guild's configured value (integer; days before current date).
+    /// The metadata value (ISO8601 string) is greater than or equal to the guild's configured value (integer; days
+    /// before current date).
     /// </summary>
     DateTimeGreaterThanOrEqual = 6,
 

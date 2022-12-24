@@ -35,12 +35,12 @@ public interface IBuilder<TEntity>
     /// <summary>
     /// Validate the model within specifications described by the model.
     /// </summary>
-    /// <returns>Returns a <see cref="Result"/> indicating the result of validation.</returns>
+    /// <returns>A <see cref="Result"/> indicating the result of validation.</returns>
     Result Validate();
 
     /// <summary>
     /// Validates and then builds the model.
     /// </summary>
-    /// <returns>Returns a <see cref="Result{TEntity}"/> containing the result of the build or the reason for failure.</returns>
+    /// <returns>A <see cref="Result{TEntity}"/> containing the result of the build or the reason for failure.</returns>
     Result<TEntity> Build();
 }

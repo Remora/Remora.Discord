@@ -48,7 +48,12 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestTemplateAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestTemplateAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -135,7 +140,11 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
 
         if (description.IsDefined(out var descriptionValue) && descriptionValue.Length > 120)
         {
-            return new ArgumentOutOfRangeError(nameof(description), "The description must be between 0 and 120 characters.");
+            return new ArgumentOutOfRangeError
+            (
+                nameof(description),
+                "The description must be between 0 and 120 characters."
+            );
         }
 
         return await this.RestHttpClient.PostAsync<ITemplate>
@@ -187,7 +196,11 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
 
         if (description.IsDefined(out var descriptionValue) && descriptionValue.Length > 120)
         {
-            return new ArgumentOutOfRangeError(nameof(description), "The description must be between 0 and 120 characters.");
+            return new ArgumentOutOfRangeError
+            (
+                nameof(description),
+                "The description must be between 0 and 120 characters."
+            );
         }
 
         return await this.RestHttpClient.PatchAsync<ITemplate>

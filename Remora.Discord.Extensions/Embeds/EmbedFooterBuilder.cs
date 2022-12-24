@@ -36,7 +36,8 @@ namespace Remora.Discord.Extensions.Embeds;
 public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
 {
     /// <summary>
-    /// Gets or sets the text of the footer. Must be shorter than or equal to <see cref="EmbedConstants.MaxFooterTextLength"/> in length.
+    /// Gets or sets the text of the footer. Must be shorter than or equal to
+    /// <see cref="EmbedConstants.MaxFooterTextLength"/> in length.
     /// </summary>
     public string Text { get; set; }
 
@@ -69,7 +70,14 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     /// <inheritdoc />
     public override Result Validate()
     {
-        var textValidationResult = ValidateLength(nameof(this.Text), this.Text, EmbedConstants.MaxFooterTextLength, false);
+        var textValidationResult = ValidateLength
+        (
+            nameof(this.Text),
+            this.Text,
+            EmbedConstants.MaxFooterTextLength,
+            false
+        );
+
         if (!textValidationResult.IsSuccess)
         {
             return textValidationResult;

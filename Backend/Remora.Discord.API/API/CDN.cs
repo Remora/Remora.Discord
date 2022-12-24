@@ -968,7 +968,8 @@ public static class CDN
 
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
-            Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/{iconHash.Value}.{format.ToFileExtension()}"
+            Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/"
+                   + $"{iconHash.Value}.{format.ToFileExtension()}"
         };
 
         if (imageSize.HasValue)

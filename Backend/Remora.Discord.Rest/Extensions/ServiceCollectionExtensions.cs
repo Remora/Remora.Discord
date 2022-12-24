@@ -57,7 +57,9 @@ public static class ServiceCollectionExtensions
     /// Adds the services required for Discord's REST API.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
-    /// <param name="tokenFactory">A function that creates or retrieves the authorization token and its token type.</param>
+    /// <param name="tokenFactory">
+    /// A function that creates or retrieves the authorization token and its token type.
+    /// </param>
     /// <param name="buildClient">Extra client building operations.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordRest
@@ -254,7 +256,8 @@ public static class ServiceCollectionExtensions
     /// Registers a decorator service, replacing the existing interface.
     /// </summary>
     /// <remarks>
-    /// Implementation based off of https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection/.
+    /// Implementation based off of
+    /// https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection/.
     /// </remarks>
     /// <param name="services">The service collection.</param>
     /// <typeparam name="TInterface">The interface type to decorate.</typeparam>

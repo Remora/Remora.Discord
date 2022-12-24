@@ -40,7 +40,9 @@ public static class ServiceCollectionExtensions
     /// Adds experimental features from the Discord API.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
-    /// <param name="optionsName">The name of the serializer options, if any. You should probably leave this set to the default value.</param>
+    /// <param name="optionsName">
+    /// The name of the serializer options, if any. You should probably leave this set to the default value.
+    /// </param>
     /// <returns>The service collection, with the services.</returns>
     public static IServiceCollection AddExperimentalDiscordApi
     (
