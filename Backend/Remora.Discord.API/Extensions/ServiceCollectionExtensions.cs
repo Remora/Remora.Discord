@@ -541,6 +541,7 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IThreadMetadata, ThreadMetadata>()
             .WithPropertyName(m => m.IsArchived, "archived")
+            .WithPropertyName(m => m.IsInvitable, "invitable")
             .WithPropertyName(m => m.IsLocked, "locked");
 
         options.AddDataObjectConverter<IThreadMember, ThreadMember>();
