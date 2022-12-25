@@ -259,7 +259,8 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(i => i.IsDiscoveryDisabled, "discoverable_disabled");
 
         // Guilds
-        options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
+        options.AddConverter<GuildCreateConverter>();
+        options.AddDataObjectConverter<IGuildCreate.IAvailableGuild, GuildCreate.AvailableGuild>()
             .WithPropertyName(g => g.IsOwner, "owner")
             .WithPropertyName(g => g.GuildFeatures, "features")
             .WithPropertyConverter

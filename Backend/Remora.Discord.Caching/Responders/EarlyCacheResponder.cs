@@ -96,8 +96,13 @@ public class EarlyCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
     {
-        var key = new KeyHelpers.GuildCacheKey(gatewayEvent.ID);
-        await _cacheService.CacheAsync<IGuild>(key, gatewayEvent, ct);
+        if (!gatewayEvent.Guild.TryPickT0(out var availableGuild, out _))
+        {
+            return Result.FromSuccess();
+        }
+
+        var key = new KeyHelpers.GuildCacheKey(availableGuild.ID);
+        await _cacheService.CacheAsync<IGuild>(key, availableGuild, ct);
 
         return Result.FromSuccess();
     }

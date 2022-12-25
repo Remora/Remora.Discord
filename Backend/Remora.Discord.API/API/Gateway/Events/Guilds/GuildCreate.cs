@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -31,57 +32,62 @@ namespace Remora.Discord.API.Gateway.Events;
 
 /// <inheritdoc cref="IGuildCreate"/>
 [PublicAPI]
-public record GuildCreate
-(
-    Snowflake ID,
-    string Name,
-    IImageHash? Icon,
-    IImageHash? Splash,
-    Optional<IImageHash?> IconHash,
-    IImageHash? DiscoverySplash,
-    Optional<bool> IsOwner,
-    Snowflake OwnerID,
-    Optional<IDiscordPermissionSet> Permissions,
-    Snowflake? AFKChannelID,
-    TimeSpan AFKTimeout,
-    VerificationLevel VerificationLevel,
-    MessageNotificationLevel DefaultMessageNotifications,
-    ExplicitContentFilterLevel ExplicitContentFilter,
-    IReadOnlyList<IRole> Roles,
-    IReadOnlyList<IEmoji> Emojis,
-    IReadOnlyList<GuildFeature> GuildFeatures,
-    MultiFactorAuthenticationLevel MFALevel,
-    Snowflake? ApplicationID,
-    Optional<bool> IsWidgetEnabled,
-    Optional<Snowflake?> WidgetChannelID,
-    Snowflake? SystemChannelID,
-    SystemChannelFlags SystemChannelFlags,
-    Snowflake? RulesChannelID,
-    Optional<int?> MaxPresences,
-    Optional<int> MaxMembers,
-    string? VanityUrlCode,
-    string? Description,
-    IImageHash? Banner,
-    PremiumTier PremiumTier,
-    Optional<int> PremiumSubscriptionCount,
-    string PreferredLocale,
-    Snowflake? PublicUpdatesChannelID,
-    Optional<int> MaxVideoChannelUsers,
-    Optional<int> ApproximateMemberCount,
-    Optional<int> ApproximatePresenceCount,
-    Optional<IWelcomeScreen> WelcomeScreen,
-    GuildNSFWLevel NSFWLevel,
-    Optional<IReadOnlyList<ISticker>> Stickers,
-    bool IsPremiumProgressBarEnabled,
-    DateTimeOffset JoinedAt,
-    bool IsLarge,
-    Optional<bool> IsUnavailable,
-    int MemberCount,
-    IReadOnlyList<IPartialVoiceState> VoiceStates,
-    IReadOnlyList<IGuildMember> Members,
-    IReadOnlyList<IChannel> Channels,
-    IReadOnlyList<IChannel> Threads,
-    IReadOnlyList<IPartialPresence> Presences,
-    IReadOnlyList<IStageInstance> StageInstances,
-    IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents
-) : IGuildCreate;
+public record GuildCreate(OneOf<IGuildCreate.IAvailableGuild, IUnavailableGuild> Guild) : IGuildCreate
+{
+    /// <inheritdoc />
+    [PublicAPI]
+    public record AvailableGuild
+    (
+        Snowflake ID,
+        string Name,
+        IImageHash? Icon,
+        IImageHash? Splash,
+        Optional<IImageHash?> IconHash,
+        IImageHash? DiscoverySplash,
+        Optional<bool> IsOwner,
+        Snowflake OwnerID,
+        Optional<IDiscordPermissionSet> Permissions,
+        Snowflake? AFKChannelID,
+        TimeSpan AFKTimeout,
+        VerificationLevel VerificationLevel,
+        MessageNotificationLevel DefaultMessageNotifications,
+        ExplicitContentFilterLevel ExplicitContentFilter,
+        IReadOnlyList<IRole> Roles,
+        IReadOnlyList<IEmoji> Emojis,
+        IReadOnlyList<GuildFeature> GuildFeatures,
+        MultiFactorAuthenticationLevel MFALevel,
+        Snowflake? ApplicationID,
+        Optional<bool> IsWidgetEnabled,
+        Optional<Snowflake?> WidgetChannelID,
+        Snowflake? SystemChannelID,
+        SystemChannelFlags SystemChannelFlags,
+        Snowflake? RulesChannelID,
+        Optional<int?> MaxPresences,
+        Optional<int> MaxMembers,
+        string? VanityUrlCode,
+        string? Description,
+        IImageHash? Banner,
+        PremiumTier PremiumTier,
+        Optional<int> PremiumSubscriptionCount,
+        string PreferredLocale,
+        Snowflake? PublicUpdatesChannelID,
+        Optional<int> MaxVideoChannelUsers,
+        Optional<int> ApproximateMemberCount,
+        Optional<int> ApproximatePresenceCount,
+        Optional<IWelcomeScreen> WelcomeScreen,
+        GuildNSFWLevel NSFWLevel,
+        Optional<IReadOnlyList<ISticker>> Stickers,
+        bool IsPremiumProgressBarEnabled,
+        DateTimeOffset JoinedAt,
+        bool IsLarge,
+        Optional<bool> IsUnavailable,
+        int MemberCount,
+        IReadOnlyList<IPartialVoiceState> VoiceStates,
+        IReadOnlyList<IGuildMember> Members,
+        IReadOnlyList<IChannel> Channels,
+        IReadOnlyList<IChannel> Threads,
+        IReadOnlyList<IPartialPresence> Presences,
+        IReadOnlyList<IStageInstance> StageInstances,
+        IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents
+    ) : IGuildCreate.IAvailableGuild;
+}
