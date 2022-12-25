@@ -298,5 +298,5 @@ public enum AuditLogEvent
     /// <summary>
     /// A member was timed out by AutoMod (according to a rule.
     /// </summary>
-    AutoModerationUserCommunicationsDisabled = 145
+    AutoModerationUserCommunicationDisabled = 145
 }

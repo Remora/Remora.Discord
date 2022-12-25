@@ -45,7 +45,7 @@ public interface IOptionalAuditEntryInfo
     /// <remarks>
     /// Relevant for <see cref="AuditLogEvent.AutoModerationBlockMessage"/>,
     /// <see cref="AuditLogEvent.AutoModerationFlagToChannel"/> and
-    /// <see cref="AuditLogEvent.AutoModerationUserCommunicationsDisabled"/>.
+    /// <see cref="AuditLogEvent.AutoModerationUserCommunicationDisabled"/>.
     /// </remarks>
     Optional<string> AutoModerationRuleName { get; }
 
@@ -55,7 +55,7 @@ public interface IOptionalAuditEntryInfo
     /// <remarks>
     /// Relevant for <see cref="AuditLogEvent.AutoModerationBlockMessage"/>,
     /// <see cref="AuditLogEvent.AutoModerationFlagToChannel"/> and
-    /// <see cref="AuditLogEvent.AutoModerationUserCommunicationsDisabled"/>.
+    /// <see cref="AuditLogEvent.AutoModerationUserCommunicationDisabled"/>.
     /// </remarks>
     Optional<string> AutoModerationRuleTriggerType { get; }
 
