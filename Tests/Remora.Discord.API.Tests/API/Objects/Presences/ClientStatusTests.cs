@@ -1,5 +1,5 @@
 //
-//  ClientStatusesTests.cs
+//  ClientStatusTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,13 +26,13 @@ using Remora.Discord.API.Tests.TestBases;
 namespace Remora.Discord.API.Tests.Objects;
 
 /// <inheritdoc />
-public class ClientStatusesTests : ObjectTestBase<IClientStatuses>
+public class ClientStatusTests : ObjectTestBase<IClientStatus>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ClientStatusesTests"/> class.
+    /// Initializes a new instance of the <see cref="ClientStatusTests"/> class.
     /// </summary>
     /// <param name="fixture">The test fixture.</param>
-    public ClientStatusesTests(JsonBackedTypeTestFixture fixture)
+    public ClientStatusTests(JsonBackedTypeTestFixture fixture)
         : base(fixture)
     {
     }

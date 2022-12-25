@@ -1,5 +1,5 @@
 //
-//  ConnectionPropertiesTests.cs
+//  IdentifyConnectionPropertiesTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,15 +28,15 @@ using Xunit;
 namespace Remora.Discord.API.Tests.Gateway.Commands;
 
 /// <summary>
-/// Tests the <see cref="ConnectionProperties"/> class.
+/// Tests the <see cref="IdentifyConnectionProperties"/> class.
 /// </summary>
-public class ConnectionPropertiesTests : ObjectTestBase<IConnectionProperties>
+public class IdentifyConnectionPropertiesTests : ObjectTestBase<IIdentifyConnectionProperties>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConnectionPropertiesTests"/> class.
+    /// Initializes a new instance of the <see cref="IdentifyConnectionPropertiesTests"/> class.
     /// </summary>
     /// <param name="fixture">The test fixture.</param>
-    public ConnectionPropertiesTests(JsonBackedTypeTestFixture fixture)
+    public IdentifyConnectionPropertiesTests(JsonBackedTypeTestFixture fixture)
         : base(fixture)
     {
     }
@@ -47,6 +47,6 @@ public class ConnectionPropertiesTests : ObjectTestBase<IConnectionProperties>
     [Fact]
     public void CanCreateFromLibraryName()
     {
-        _ = new ConnectionProperties("Remora.Discord");
+        _ = new IdentifyConnectionProperties("Remora.Discord");
     }
 }
