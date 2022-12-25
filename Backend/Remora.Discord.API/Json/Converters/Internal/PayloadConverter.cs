@@ -312,25 +312,54 @@ internal class PayloadConverter : JsonConverter<IPayload?>
 
         if (!_eventTypes.TryGetValue(eventName, out var eventType))
         {
-            var convertibleTypes = options.Converters.Where
-                (
-                    c =>
+            // Consider interface types which have either a JsonConverter or DataObjectConverter registered
+            var convertibleTypes = options.Converters.Select
+            (
+                c =>
+                {
+                    var converterType = c.GetType();
+                    if (!converterType.IsGenericType)
                     {
-                        var converterType = c.GetType();
-                        if (!converterType.IsGenericType)
+                        var baseType = converterType.BaseType;
+                        if (baseType is null)
                         {
-                            return false;
+                            return null;
                         }
 
-                        var genericConverterType = converterType.GetGenericTypeDefinition();
-                        return genericConverterType == typeof(DataObjectConverter<,>);
+                        if (!baseType.IsGenericType)
+                        {
+                            return null;
+                        }
+
+                        // Include explicitly convertible types in the search
+                        if (baseType.GetGenericTypeDefinition() != typeof(JsonConverter<>))
+                        {
+                            return null;
+                        }
+
+                        var converterArgument = baseType.GetGenericArguments()[0];
+                        return converterArgument.IsInterface
+                            ? converterArgument
+                            : null;
                     }
-                )
-                .Select(c => c.GetType().GetGenericArguments()[0]);
+
+                    var genericConverterType = converterType.GetGenericTypeDefinition();
+                    if (genericConverterType != typeof(DataObjectConverter<,>))
+                    {
+                        return null;
+                    }
+
+                    var dataConverterArgument = genericConverterType.GetGenericArguments()[0];
+                    return dataConverterArgument.IsInterface
+                        ? dataConverterArgument
+                        : null;
+                }
+            )
+            .Where(t => t is not null);
 
             eventType = convertibleTypes.FirstOrDefault
             (
-                t => _snakeCase.ConvertName(t.Name[1..]).ToUpperInvariant() == eventName
+                t => _snakeCase.ConvertName(t!.Name[1..]).ToUpperInvariant() == eventName
             );
 
             _eventTypes.TryAdd(eventName, eventType);
