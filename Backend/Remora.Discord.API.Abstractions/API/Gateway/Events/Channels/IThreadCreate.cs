@@ -22,6 +22,7 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events;
 
@@ -34,5 +35,5 @@ public interface IThreadCreate : IGatewayEvent, IChannel
     /// <summary>
     /// Gets a value indicating whether the thread was newly created.
     /// </summary>
-    bool IsNewlyCreated { get; }
+    Optional<bool> IsNewlyCreated { get; }
 }

@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Gateway.Events.Channels;
 [PublicAPI]
 public record ThreadCreate
 (
-    bool IsNewlyCreated,
+    Optional<bool> IsNewlyCreated,
     Snowflake ID,
     ChannelType Type,
     Optional<Snowflake> GuildID = default,
