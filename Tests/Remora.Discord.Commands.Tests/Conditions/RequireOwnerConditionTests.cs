@@ -49,12 +49,17 @@ public class RequireOwnerConditionTests
     {
         var userMock = new Mock<IUser>();
         userMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(0));
+        userMock.As<IPartialUser>().Setup(u => u.ID).Returns(DiscordSnowflake.New(0));
+
+        var otherUserMock = new Mock<IUser>();
+        otherUserMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(1));
+        otherUserMock.As<IPartialUser>().Setup(u => u.ID).Returns(DiscordSnowflake.New(1));
 
         var contextMock = new Mock<ITextCommandContext>();
         contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(userMock.Object));
 
         var informationMock = new Mock<IApplication>();
-        informationMock.Setup(i => i.Owner.Value.ID).Returns(DiscordSnowflake.New(1));
+        informationMock.Setup(i => i.Owner).Returns(new Optional<IPartialUser>(otherUserMock.Object));
 
         var apiMock = new Mock<IDiscordRestOAuth2API>();
         apiMock
@@ -77,6 +82,7 @@ public class RequireOwnerConditionTests
     {
         var userMock = new Mock<IUser>();
         userMock.Setup(u => u.ID).Returns(DiscordSnowflake.New(0));
+        userMock.As<IPartialUser>().Setup(u => u.ID).Returns(DiscordSnowflake.New(0));
 
         var contextMock = new Mock<ITextCommandContext>();
         contextMock.Setup(c => c.Message.Author).Returns(new Optional<IUser>(userMock.Object));
