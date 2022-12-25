@@ -42,6 +42,7 @@ public record PartialMessage
     Optional<DateTimeOffset?> EditedTimestamp = default,
     Optional<bool> IsTTS = default,
     Optional<bool> MentionsEveryone = default,
+    Optional<IReadOnlyList<IUser>> Mentions = default,
     Optional<IReadOnlyList<Snowflake>> MentionedRoles = default,
     Optional<IReadOnlyList<IChannelMention>> MentionedChannels = default,
     Optional<IReadOnlyList<IAttachment>> Attachments = default,

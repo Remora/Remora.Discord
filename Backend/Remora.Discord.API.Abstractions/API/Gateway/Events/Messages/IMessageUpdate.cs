@@ -48,5 +48,10 @@ public interface IMessageUpdate : IPartialMessage, IGatewayEvent
     /// <summary>
     /// Gets a list of users mentioned in the message.
     /// </summary>
-    Optional<IReadOnlyList<IUserMention>> Mentions { get; }
+    new Optional<IReadOnlyList<IUserMention>> Mentions { get; }
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IUser>> IPartialMessage.Mentions => this.Mentions.HasValue
+        ? new(this.Mentions.Value)
+        : default;
 }
