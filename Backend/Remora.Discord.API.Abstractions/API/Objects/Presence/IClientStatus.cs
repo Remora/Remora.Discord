@@ -1,5 +1,5 @@
 //
-//  ClientStatuses.cs
+//  IClientStatus.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,18 +21,28 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IClientStatuses" />
+/// <summary>
+/// Represents a collection of platform statues.
+/// </summary>
 [PublicAPI]
-public record ClientStatuses
-(
-    Optional<ClientStatus> Desktop = default,
-    Optional<ClientStatus> Mobile = default,
-    Optional<ClientStatus> Web = default
-) : IClientStatuses;
+public interface IClientStatus
+{
+    /// <summary>
+    /// Gets the status of the user on desktop.
+    /// </summary>
+    Optional<UserStatus> Desktop { get; }
+
+    /// <summary>
+    /// Gets the status of the user on mobile.
+    /// </summary>
+    Optional<UserStatus> Mobile { get; }
+
+    /// <summary>
+    /// Gets the status of the user in the browser.
+    /// </summary>
+    Optional<UserStatus> Web { get; }
+}

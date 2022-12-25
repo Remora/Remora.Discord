@@ -39,11 +39,11 @@ public interface IPartialPresence
     Optional<Snowflake> GuildID { get; }
 
     /// <inheritdoc cref="IPresence.Status" />
-    Optional<ClientStatus> Status { get; }
+    Optional<UserStatus> Status { get; }
 
     /// <inheritdoc cref="IPresence.Activities" />
     Optional<IReadOnlyList<IActivity>?> Activities { get; }
 
     /// <inheritdoc cref="IPresence.ClientStatus" />
-    Optional<IClientStatuses> ClientStatus { get; }
+    Optional<IClientStatus> ClientStatus { get; }
 }

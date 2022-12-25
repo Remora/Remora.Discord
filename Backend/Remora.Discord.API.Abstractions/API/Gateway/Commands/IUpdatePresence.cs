@@ -46,7 +46,7 @@ public interface IUpdatePresence : IGatewayCommand
     /// <summary>
     /// Gets the user's status.
     /// </summary>
-    ClientStatus Status { get; }
+    UserStatus Status { get; }
 
     /// <summary>
     /// Gets a value indicating whether the user is AFK.

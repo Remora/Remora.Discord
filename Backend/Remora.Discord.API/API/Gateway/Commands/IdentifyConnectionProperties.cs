@@ -1,5 +1,5 @@
 //
-//  ConnectionProperties.cs
+//  IdentifyConnectionProperties.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -32,13 +32,14 @@ namespace Remora.Discord.API.Gateway.Commands;
 /// Represents a set of connection properties sent to the Discord gateway.
 /// </summary>
 [PublicAPI]
-public record ConnectionProperties(string OperatingSystem, string Browser, string Device) : IConnectionProperties
+public record IdentifyConnectionProperties(string OperatingSystem, string Browser, string Device)
+    : IIdentifyConnectionProperties
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConnectionProperties"/> class.
+    /// Initializes a new instance of the <see cref="IdentifyConnectionProperties"/> class.
     /// </summary>
     /// <param name="libraryName">The name of the library.</param>
-    public ConnectionProperties(string libraryName)
+    public IdentifyConnectionProperties(string libraryName)
         : this(GetCurrentOSPlatformName(), libraryName, libraryName)
     {
     }

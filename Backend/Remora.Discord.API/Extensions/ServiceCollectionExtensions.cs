@@ -41,6 +41,7 @@ using Remora.Discord.API.VoiceGateway.Events;
 using Remora.Rest.Extensions;
 using Remora.Rest.Json;
 using Remora.Rest.Json.Policies;
+using ClientStatus = Remora.Discord.API.Objects.ClientStatus;
 
 namespace Remora.Discord.API.Extensions;
 
@@ -146,7 +147,7 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IIdentify, Identify>();
 
-        options.AddDataObjectConverter<IConnectionProperties, ConnectionProperties>()
+        options.AddDataObjectConverter<IIdentifyConnectionProperties, IdentifyConnectionProperties>()
             .WithPropertyName(p => p.OperatingSystem, "os")
             .WithPropertyName(p => p.Browser, "browser")
             .WithPropertyName(p => p.Device, "device");
@@ -164,7 +165,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyConverter
             (
                 u => u.Status,
-                new StringEnumConverter<ClientStatus>(new SnakeCaseNamingPolicy())
+                new StringEnumConverter<UserStatus>(new SnakeCaseNamingPolicy())
             )
             .WithPropertyConverter(u => u.Since, new UnixMillisecondsDateTimeOffsetConverter());
 
@@ -347,7 +348,7 @@ public static class ServiceCollectionExtensions
 
         // Presences
         options.AddDataObjectConverter<IPresenceUpdate, PresenceUpdate>()
-            .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(new SnakeCaseNamingPolicy()));
+            .WithPropertyConverter(p => p.Status, new StringEnumConverter<UserStatus>(new SnakeCaseNamingPolicy()));
 
         // Users
         options.AddDataObjectConverter<ITypingStart, TypingStart>()
@@ -811,16 +812,16 @@ public static class ServiceCollectionExtensions
     {
         var snakeCase = new SnakeCaseNamingPolicy();
 
-        options.AddDataObjectConverter<IClientStatuses, ClientStatuses>()
-            .WithPropertyConverter(p => p.Desktop, new StringEnumConverter<ClientStatus>(snakeCase))
-            .WithPropertyConverter(p => p.Mobile, new StringEnumConverter<ClientStatus>(snakeCase))
-            .WithPropertyConverter(p => p.Web, new StringEnumConverter<ClientStatus>(snakeCase));
+        options.AddDataObjectConverter<IClientStatus, ClientStatus>()
+            .WithPropertyConverter(p => p.Desktop, new StringEnumConverter<UserStatus>(snakeCase))
+            .WithPropertyConverter(p => p.Mobile, new StringEnumConverter<UserStatus>(snakeCase))
+            .WithPropertyConverter(p => p.Web, new StringEnumConverter<UserStatus>(snakeCase));
 
         options.AddDataObjectConverter<IPresence, Presence>()
-            .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(snakeCase));
+            .WithPropertyConverter(p => p.Status, new StringEnumConverter<UserStatus>(snakeCase));
 
         options.AddDataObjectConverter<IPartialPresence, PartialPresence>()
-            .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(snakeCase));
+            .WithPropertyConverter(p => p.Status, new StringEnumConverter<UserStatus>(snakeCase));
 
         return options;
     }

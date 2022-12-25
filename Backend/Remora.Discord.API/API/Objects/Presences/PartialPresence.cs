@@ -35,7 +35,7 @@ public record PartialPresence
 (
     Optional<IPartialUser> User = default,
     Optional<Snowflake> GuildID = default,
-    Optional<ClientStatus> Status = default,
+    Optional<UserStatus> Status = default,
     Optional<IReadOnlyList<IActivity>?> Activities = default,
-    Optional<IClientStatuses> ClientStatus = default
+    Optional<IClientStatus> ClientStatus = default
 ) : IPartialPresence;

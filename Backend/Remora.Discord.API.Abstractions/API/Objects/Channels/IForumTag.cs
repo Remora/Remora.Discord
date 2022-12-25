@@ -50,11 +50,19 @@ public interface IForumTag : IPartialForumTag
     /// <summary>
     /// Gets the ID of the custom guild emoji to use.
     /// </summary>
+    /// <remarks>
+    /// Discord's documentation is somewhat unclear as to whether this field is optional, nullable, or both. As as
+    /// result, we're hedging our bets here.
+    /// </remarks>
     new Optional<Snowflake?> EmojiID { get; }
 
     /// <summary>
     /// Gets the unicode string of the emoji to use.
     /// </summary>
+    /// <remarks>
+    /// Discord's documentation is somewhat unclear as to whether this field is optional, nullable, or both. As as
+    /// result, we're hedging our bets here.
+    /// </remarks>
     new Optional<string?> EmojiName { get; }
 
     /// <inheritdoc/>

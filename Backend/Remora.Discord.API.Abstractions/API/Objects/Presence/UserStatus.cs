@@ -1,5 +1,5 @@
 //
-//  IConnectionProperties.cs
+//  UserStatus.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,28 +22,36 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a set of connection properties sent to the Discord gateway.
+/// Enumerates various presence states for a user.
 /// </summary>
 [PublicAPI]
-public interface IConnectionProperties
+public enum UserStatus
 {
     /// <summary>
-    /// Gets the operating system in use by the connection.
+    /// The user is idle.
     /// </summary>
-    string OperatingSystem { get; }
+    Idle,
 
     /// <summary>
-    /// Gets the browser in use by the connection. Typically, this is the name of the library that initialized the
-    /// connection.
+    /// The user is invisible.
     /// </summary>
-    string Browser { get; }
+    Invisible,
 
     /// <summary>
-    /// Gets the device in use by the connection. Typically, this is the name of the library that initializes the
-    /// connection.
+    /// The user is not to be disturbed.
     /// </summary>
-    string Device { get; }
+    DND,
+
+    /// <summary>
+    /// The user is online.
+    /// </summary>
+    Online,
+
+    /// <summary>
+    /// The user is offline.
+    /// </summary>
+    Offline
 }

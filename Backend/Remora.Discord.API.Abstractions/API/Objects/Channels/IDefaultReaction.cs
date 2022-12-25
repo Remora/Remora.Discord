@@ -34,10 +34,10 @@ public interface IDefaultReaction
     /// <summary>
     /// Gets the ID of the custom guild emoji to use.
     /// </summary>
-    Optional<Snowflake?> EmojiID { get; }
+    Snowflake? EmojiID { get; }
 
     /// <summary>
     /// Gets the unicode string of the emoji to use.
     /// </summary>
-    Optional<string?> EmojiName { get; }
+    string? EmojiName { get; }
 }

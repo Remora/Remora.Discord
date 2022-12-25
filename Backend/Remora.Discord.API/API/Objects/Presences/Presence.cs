@@ -35,7 +35,7 @@ public record Presence
 (
     IPartialUser User,
     Snowflake GuildID,
-    ClientStatus Status,
+    UserStatus Status,
     IReadOnlyList<IActivity>? Activities,
-    IClientStatuses ClientStatus
+    IClientStatus ClientStatus
 ) : IPresence;

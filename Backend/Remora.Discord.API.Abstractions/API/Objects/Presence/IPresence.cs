@@ -45,7 +45,7 @@ public interface IPresence : IPartialPresence
     /// <summary>
     /// Gets the current status of the user.
     /// </summary>
-    new ClientStatus Status { get; }
+    new UserStatus Status { get; }
 
     /// <summary>
     /// Gets the user's current activities.
@@ -55,7 +55,7 @@ public interface IPresence : IPartialPresence
     /// <summary>
     /// Gets the user's platform-dependent status.
     /// </summary>
-    new IClientStatuses ClientStatus { get; }
+    new IClientStatus ClientStatus { get; }
 
     /// <inheritdoc/>
     Optional<IPartialUser> IPartialPresence.User => new(this.User);
@@ -64,11 +64,11 @@ public interface IPresence : IPartialPresence
     Optional<Snowflake> IPartialPresence.GuildID => this.GuildID;
 
     /// <inheritdoc/>
-    Optional<ClientStatus> IPartialPresence.Status => this.Status;
+    Optional<UserStatus> IPartialPresence.Status => this.Status;
 
     /// <inheritdoc/>
     Optional<IReadOnlyList<IActivity>?> IPartialPresence.Activities => new(this.Activities);
 
     /// <inheritdoc/>
-    Optional<IClientStatuses> IPartialPresence.ClientStatus => new(this.ClientStatus);
+    Optional<IClientStatus> IPartialPresence.ClientStatus => new(this.ClientStatus);
 }

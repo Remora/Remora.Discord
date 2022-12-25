@@ -51,7 +51,7 @@
       <Compile Update="API\EventPayload.cs">
         <DependentUpon>Payload.cs</DependentUpon>
       </Compile>
-      <Compile Update="API\Gateway\Commands\ConnectionProperties.cs">
+      <Compile Update="API\Gateway\Commands\IdentifyConnectionProperties.cs">
         <DependentUpon>Identify.cs</DependentUpon>
       </Compile>
       <Compile Update="API\Gateway\Commands\ShardIdentification.cs">
