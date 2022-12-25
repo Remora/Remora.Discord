@@ -288,5 +288,15 @@ public enum AuditLogEvent
     /// <summary>
     /// A message was blocked by AutoMod (according to a rule).
     /// </summary>
-    AutoModerationBlockMessage = 143
+    AutoModerationBlockMessage = 143,
+
+    /// <summary>
+    /// A message was flagged by AutoMod (according to a rule).
+    /// </summary>
+    AutoModerationFlagToChannel = 144,
+
+    /// <summary>
+    /// A member was timed out by AutoMod (according to a rule.
+    /// </summary>
+    AutoModerationUserCommunicationsDisabled = 145
 }
