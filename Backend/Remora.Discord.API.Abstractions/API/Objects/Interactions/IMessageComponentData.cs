@@ -52,5 +52,5 @@ public interface IMessageComponentData
     /// <summary>
     /// Gets the values selected by the user.
     /// </summary>
-    Optional<IReadOnlyList<string>> Values { get; }
+    Optional<IReadOnlyList<ISelectOption>> Values { get; }
 }
