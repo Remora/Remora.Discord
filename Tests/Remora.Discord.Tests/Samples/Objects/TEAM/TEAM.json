@@ -1,7 +1,6 @@
 {
   "icon": "68b329da9893e34099c7d8ad5cb9c940",
   "id": "999999999999999999",
-  "owner_user_id": "999999999999999999",
   "members": [
     {
       "membership_state": 2,
@@ -10,12 +9,13 @@
       ],
       "team_id": "999999999999999999",
       "user": {
-        "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+        "username": "none",
         "discriminator": "9999",
         "id": "999999999999999999",
-        "username": "none"
+        "avatar": "68b329da9893e34099c7d8ad5cb9c940"
       }
     }
   ],
-  "name": "none"
+  "name": "none",
+  "owner_user_id": "999999999999999999"
 }

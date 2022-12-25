@@ -8,7 +8,13 @@
   },
   "guild_id": "999999999999999999",
   "status": "idle",
-  "activities": [],
+  "activities": [
+    {
+      "name": "none",
+      "type": 4,
+      "created_at": 0
+    }
+  ],
   "client_status": {
     "desktop": "idle",
     "mobile": "dnd",

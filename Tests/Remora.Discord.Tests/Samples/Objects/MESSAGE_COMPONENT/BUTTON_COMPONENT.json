@@ -2,11 +2,8 @@
   "type": 2,
   "style": 1,
   "label": "none",
-  "emoji": {
-    "name": "none",
-    "id": "999999999999999999",
-    "animated": false
-  },
+  "emoji": { },
   "custom_id": "none",
+  "url": "https://www.example.org",
   "disabled": false
 }

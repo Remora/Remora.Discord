@@ -1,6 +1,15 @@
 {
   "id": "999999999999999999",
-  "stickers": [],
+  "stickers": [
+    {
+      "id": "999999999999999999",
+      "name": "none",
+      "description": "none",
+      "tags": "none",
+      "type": 1,
+      "format_type": 1
+    }
+  ],
   "name": "none",
   "sku_id": "999999999999999999",
   "cover_sticker_id": "999999999999999999",

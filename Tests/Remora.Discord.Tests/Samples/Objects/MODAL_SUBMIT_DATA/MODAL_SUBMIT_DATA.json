@@ -1,4 +1,9 @@
 {
   "custom_id": "none",
-  "components": []
+  "components": [
+    {
+      "type": 1,
+      "components": [ ]
+    }
+  ]
 }

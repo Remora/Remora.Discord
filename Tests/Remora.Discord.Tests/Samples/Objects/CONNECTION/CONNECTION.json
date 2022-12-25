@@ -3,9 +3,12 @@
   "name": "none",
   "type": "twitch",
   "revoked": true,
-  "integrations": [],
+  "integrations": [
+    { }
+  ],
   "verified": true,
-  "friend_sync": false,
-  "show_activity": false,
+  "friend_sync": true,
+  "show_activity": true,
+  "two_way_link": true,
   "visibility": 1
 }

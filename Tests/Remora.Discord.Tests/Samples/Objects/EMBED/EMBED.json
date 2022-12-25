@@ -6,42 +6,23 @@
   "timestamp": "1970-01-01T00:00:00.000000+00:00",
   "color": 12,
   "footer": {
-    "text": "cc",
-    "icon_url": "https://www.example.org",
-    "proxy_icon_url": "https://www.example.org"
+    "text": "cc"
   },
   "image": {
-    "url": "https://www.example.org",
-    "proxy_url": "https://www.example.org",
-    "height": 1,
-    "width": 1
-  },
-  "thumbnail": {
-    "url": "https://www.example.org",
-    "proxy_url": "https://www.example.org",
-    "height": 1,
-    "width": 1
-  },
-  "video": {
-    "url": "https://www.example.org",
-    "height": 1,
-    "width": 1
-  },
-  "provider": {
-    "name": "none",
     "url": "https://www.example.org"
   },
+  "thumbnail": {
+    "url": "https://www.example.org"
+  },
+  "video": { },
+  "provider": { },
   "author": {
-    "name": "none",
-    "url": "https://www.example.org",
-    "icon_url": "https://www.example.org",
-    "proxy_icon_url": "https://www.example.org"
+    "name": "none"
   },
   "fields": [
     {
       "name": "none",
-      "value": "ff",
-      "inline": false
+      "value": "ff"
     }
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "id": "999999999999999999",
+  "type": 1,
+  "guild_id": null,
+  "channel_id": null,
+  "user": {
+    "username": "none",
+    "discriminator": "9999",
+    "id": "999999999999999999",
+    "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+  },
+  "name": null,
+  "avatar": null,
+  "token": "none",
+  "application_id": null,
+  "source_guild": { },
+  "source_channel": { },
+  "url": "https://www.example.org"
+}

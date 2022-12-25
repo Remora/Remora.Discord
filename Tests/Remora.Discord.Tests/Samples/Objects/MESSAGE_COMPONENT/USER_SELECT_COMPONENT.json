@@ -4,5 +4,5 @@
   "placeholder": "none",
   "min_values": 1,
   "max_values": 3,
-  "disabled": false
+  "disabled": true
 }

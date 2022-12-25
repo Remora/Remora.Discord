@@ -1,6 +1,10 @@
 {
   "custom_id": "none",
-  "component_type": 0,
-  "resolved": {},
-  "values": []
+  "component_type": 1,
+  "values": [
+    {
+      "label": "none",
+      "value": "none"
+    }
+  ]
 }

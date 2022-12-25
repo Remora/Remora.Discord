@@ -1,0 +1,29 @@
+{
+  "id": "999999999999999999",
+  "name": "none",
+  "icon": null,
+  "splash": null,
+  "discovery_splash": null,
+  "emojis": [
+    {
+      "id": "999999999999999999",
+      "name": "none"
+    }
+  ],
+  "features": [
+    "DISCOVERABLE"
+  ],
+  "approximate_member_count": 1,
+  "approximate_presence_count": 1,
+  "description": null,
+  "stickers": [
+    {
+      "id": "999999999999999999",
+      "name": "none",
+      "description": "none",
+      "tags": "none",
+      "type": 1,
+      "format_type": 1
+    }
+  ]
+}

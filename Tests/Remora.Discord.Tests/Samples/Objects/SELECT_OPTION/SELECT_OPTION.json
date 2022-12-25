@@ -1,11 +1,7 @@
 {
   "label": "none",
-  "value": "priest",
+  "value": "none",
   "description": "none",
-  "emoji": {
-    "name": "none",
-    "id": "999999999999999999",
-    "animated": false
-  },
-  "default": false
+  "emoji": { },
+  "default": true
 }

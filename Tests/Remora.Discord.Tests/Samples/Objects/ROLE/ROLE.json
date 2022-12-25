@@ -1,12 +1,15 @@
 {
   "id": "999999999999999999",
   "name": "none",
-  "color": 3447003,
+  "color": 1,
   "hoist": true,
   "icon": "68b329da9893e34099c7d8ad5cb9c940",
-  "unicode_emoji": null,
+  "unicode_emoji": "none",
   "position": 1,
-  "permissions": "66321471",
-  "managed": false,
-  "mentionable": false
+  "permissions": "0",
+  "managed": true,
+  "mentionable": true,
+  "tags": [
+    { }
+  ]
 }

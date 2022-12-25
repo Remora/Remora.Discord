@@ -4,32 +4,8 @@
     {
       "channel_id": "999999999999999999",
       "description": "none",
-      "emoji_id": null,
-      "emoji_name": "\uD83D\uDCE1"
-    },
-    {
-      "channel_id": "999999999999999999",
-      "description": "none",
-      "emoji_id": null,
-      "emoji_name": "\uD83D\uDCF8"
-    },
-    {
-      "channel_id": "999999999999999999",
-      "description": "none",
-      "emoji_id": null,
-      "emoji_name": "\uD83D\uDD2C"
-    },
-    {
-      "channel_id": "999999999999999999",
-      "description": "none",
-      "emoji_id": null,
-      "emoji_name": "\uD83C\uDFAE"
-    },
-    {
-      "channel_id": "999999999999999999",
-      "description": "none",
-      "emoji_id": null,
-      "emoji_name": "\uD83D\uDD26"
+      "emoji_id": "999999999999999999",
+      "emoji_name": "none"
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "guild_id": "999999999999999999",
+  "channel_id": null,
+  "user_id": "999999999999999999",
+  "member": {
+    "roles": [
+      "999999999999999999"
+    ],
+    "joined_at": "1970-01-01T00:00:00.000000+00:00",
+    "deaf": true,
+    "mute": true
+  },
+  "session_id": "none",
+  "deaf": true,
+  "mute": true,
+  "self_deaf": true,
+  "self_mute": true,
+  "self_stream": true,
+  "self_video": true,
+  "suppress": true,
+  "request_to_speak_timestamp": null
+}
