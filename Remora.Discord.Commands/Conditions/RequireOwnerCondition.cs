@@ -63,7 +63,7 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 
         var application = getApplication.Entity;
 
-        if (application.Owner is null || !application.Owner.ID.HasValue)
+        if (!application.Owner.IsDefined(out var owner) || !owner.ID.IsDefined(out var ownerID))
         {
             return new InvalidOperationError("The application owner's ID was not present.");
         }
@@ -73,7 +73,7 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
             throw new NotSupportedException();
         }
 
-        return application.Owner.ID.Value == userID
+        return ownerID == userID
             ? Result.FromSuccess()
             : new InvalidOperationError("You need to be the bot owner to do that.");
     }

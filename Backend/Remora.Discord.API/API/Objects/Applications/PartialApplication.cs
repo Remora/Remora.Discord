@@ -43,7 +43,7 @@ public record PartialApplication
     Optional<bool> DoesBotRequireCodeGrant = default,
     Optional<string> TermsOfServiceURL = default,
     Optional<string> PrivacyPolicyURL = default,
-    Optional<IPartialUser?> Owner = default,
+    Optional<IPartialUser> Owner = default,
     Optional<string> VerifyKey = default,
     Optional<ITeam?> Team = default,
     Optional<Snowflake> GuildID = default,

@@ -81,7 +81,7 @@ public interface IApplication : IPartialApplication
     /// <summary>
     /// Gets the user information of the application owner.
     /// </summary>
-    new IPartialUser? Owner { get; }
+    new Optional<IPartialUser> Owner { get; }
 
     /// <summary>
     /// Gets the hex-encoded key for GameSDK's GetTicket function.
@@ -168,7 +168,7 @@ public interface IApplication : IPartialApplication
     Optional<string> IPartialApplication.PrivacyPolicyURL => this.PrivacyPolicyURL;
 
     /// <inheritdoc/>
-    Optional<IPartialUser?> IPartialApplication.Owner => new(this.Owner);
+    Optional<IPartialUser> IPartialApplication.Owner => this.Owner;
 
     /// <inheritdoc/>
     Optional<string> IPartialApplication.VerifyKey => this.VerifyKey;

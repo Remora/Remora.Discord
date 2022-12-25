@@ -61,7 +61,7 @@ public interface IPartialApplication
     Optional<string> PrivacyPolicyURL { get; }
 
     /// <inheritdoc cref="IApplication.Owner" />
-    Optional<IPartialUser?> Owner { get; }
+    Optional<IPartialUser> Owner { get; }
 
     /// <inheritdoc cref="IApplication.VerifyKey" />
     Optional<string> VerifyKey { get; }

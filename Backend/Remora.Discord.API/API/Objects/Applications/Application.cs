@@ -43,7 +43,7 @@ public record Application
     bool DoesBotRequireCodeGrant,
     Optional<string> TermsOfServiceURL,
     Optional<string> PrivacyPolicyURL,
-    IPartialUser? Owner,
+    Optional<IPartialUser> Owner,
     string VerifyKey,
     ITeam? Team,
     Optional<Snowflake> GuildID = default,
