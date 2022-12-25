@@ -1,0 +1,76 @@
+{
+    "t": "CHANNEL_UPDATE",
+    "s": 3,
+    "op": 0,
+    "d": {
+        "id": "999999999999999999",
+        "type": 1,
+        "guild_id": "999999999999999999",
+        "position": 1,
+        "permission_overwrites": [
+            {
+                "id": "999999999999999999",
+                "type": 1,
+                "allow": "0",
+                "deny": "0"
+            }
+        ],
+        "name": "none",
+        "topic": "none",
+        "nsfw": true,
+        "last_message_id": "999999999999999999",
+        "bitrate": 1,
+        "user_limit": 1,
+        "rate_limit_per_user": 1,
+        "recipients": [
+            {
+                "username": "none",
+                "discriminator": "9999",
+                "id": "999999999999999999",
+                "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+            }
+        ],
+        "icon": "68b329da9893e34099c7d8ad5cb9c940",
+        "owner_id": "999999999999999999",
+        "application_id": "999999999999999999",
+        "parent_id": "999999999999999999",
+        "last_pin_timestamp": "1970-01-01T00:00:00.000000+00:00",
+        "rtc_region": "none",
+        "video_quality_mode": 1,
+        "message_count": 1,
+        "member_count": 1,
+        "thread_metadata": {
+            "archived": true,
+            "auto_archive_duration": 1,
+            "archive_timestamp": "1970-01-01T00:00:00.000000+00:00",
+            "locked": true
+        },
+        "member": {
+            "join_timestamp": "1970-01-01T00:00:00.000000+00:00",
+            "flags": 1
+        },
+        "default_auto_archive_duration": 60,
+        "permissions": "0",
+        "flags": 1,
+        "total_message_sent": 1,
+        "available_tags": [
+            {
+                "id": "999999999999999999",
+                "name": "none",
+                "moderated": true,
+                "emoji_id": "999999999999999999",
+                "emoji_name": "none"
+            }
+        ],
+        "applied_tags": [
+            "999999999999999999"
+        ],
+        "default_reaction_emoji": {
+            "emoji_id": "999999999999999999",
+            "emoji_name": "none"
+        },
+        "default_thread_rate_limit_per_user": 1,
+        "default_sort_order": 1,
+        "default_forum_layout": 1
+    }
+}

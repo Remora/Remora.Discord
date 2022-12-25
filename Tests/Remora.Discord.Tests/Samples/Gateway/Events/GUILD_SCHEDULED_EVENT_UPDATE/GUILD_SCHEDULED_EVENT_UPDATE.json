@@ -15,23 +15,12 @@
     "status": 1,
     "entity_type": 1,
     "entity_id": "999999999999999999",
-    "entity_metadata": {},
+    "entity_metadata": { },
     "creator": {
-      "id": "999999999999999999",
       "username": "none",
       "discriminator": "9999",
-      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-      "bot": false,
-      "system": false,
-      "mfa_enabled": false,
-      "locale": "en-US",
-      "verified": true,
-      "email": "nobody@example.org",
-      "flags": 0,
-      "banner": "68b329da9893e34099c7d8ad5cb9c940",
-      "accent_color": 16711680,
-      "premium_type": 0,
-      "public_flags": 0
+      "id": "999999999999999999",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
     "user_count": 1,
     "image": "68b329da9893e34099c7d8ad5cb9c940"

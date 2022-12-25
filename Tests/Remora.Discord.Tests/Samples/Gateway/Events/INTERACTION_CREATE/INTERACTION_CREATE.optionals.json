@@ -1,0 +1,12 @@
+{
+  "t": "INTERACTION_CREATE",
+  "s": 3,
+  "op": 0,
+  "d":{
+    "id": "999999999999999999",
+    "application_id": "999999999999999999",
+    "type": 2,
+    "token": "none",
+    "version": 1
+  }
+}

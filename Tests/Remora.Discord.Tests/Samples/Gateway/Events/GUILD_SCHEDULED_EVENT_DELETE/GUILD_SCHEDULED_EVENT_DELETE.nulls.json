@@ -1,0 +1,28 @@
+{
+  "t": "GUILD_SCHEDULED_EVENT_DELETE",
+  "s": 5,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "guild_id": "999999999999999999",
+    "channel_id": null,
+    "creator_id": null,
+    "name": "none",
+    "description": null,
+    "scheduled_start_time": "1970-01-01T00:00:00.000000+00:00",
+    "scheduled_end_time": null,
+    "privacy_level": 1,
+    "status": 1,
+    "entity_type": 1,
+    "entity_id": null,
+    "entity_metadata": null,
+    "creator": {
+      "username": "none",
+      "discriminator": "9999",
+      "id": "999999999999999999",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+    },
+    "user_count": 1,
+    "image": null
+  }
+}

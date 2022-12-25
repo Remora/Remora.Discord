@@ -1,0 +1,8 @@
+{
+  "t": "CHANNEL_PINS_UPDATE",
+  "s": 7,
+  "op": 0,
+  "d": {
+    "channel_id": "999999999999999999"
+  }
+}

@@ -3,30 +3,16 @@
   "s": 5,
   "op": 0,
   "d": {
-    "role": {
-      "position": 1,
-      "permissions": "372624976",
-      "name": "none",
-      "mentionable": false,
-      "managed": false,
-      "id": "999999999999999999",
-      "hoist": true,
-      "icon": "68b329da9893e34099c7d8ad5cb9c940",
-      "unicode_emoji": null,
-      "color": 1146986
-    },
     "guild_id": "999999999999999999",
-    "guild_hashes": {
-      "version": 1,
-      "roles": {
-        "hash": "3aTL2ZFTSxE"
-      },
-      "metadata": {
-        "hash": "38doHWQin94"
-      },
-      "channels": {
-        "hash": "icJytnZ2VDI"
-      }
+    "role": {
+      "id": "999999999999999999",
+      "name": "none",
+      "color": 1,
+      "hoist": true,
+      "position": 1,
+      "permissions": "0",
+      "managed": true,
+      "mentionable": true
     }
   }
 }

@@ -5,10 +5,7 @@
   "d": {
     "guild_id": "999999999999999999",
     "action": {
-      "type": 2,
-      "metadata": {
-        "channel_id": "999999999999999999"
-      }
+      "type": 2
     },
     "rule_id": "999999999999999999",
     "rule_trigger_type": 1,
@@ -17,7 +14,7 @@
     "message_id": "999999999999999999",
     "alert_system_message_id": "999999999999999999",
     "content": "none",
-    "matched_keyword": "none1",
-    "matched_content": "none1"
+    "matched_keyword": "none",
+    "matched_content": "none"
   }
 }

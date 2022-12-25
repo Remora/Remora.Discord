@@ -4,11 +4,46 @@
   "op": 0,
   "d": {
     "guild_id": "999999999999999999",
-    "members": [],
+    "members": [
+      {
+        "roles": [
+          "999999999999999999"
+        ],
+        "joined_at": "1970-01-01T00:00:00.000000+00:00",
+        "deaf": true,
+        "mute": true
+      }
+    ],
     "chunk_index": 1,
     "chunk_count": 1,
-    "not_found": [],
-    "presences": [],
-    "nonce": "999999999999999999"
+    "not_found": [
+      "999999999999999999"
+    ],
+    "presences": [
+      {
+        "user": {
+          "username": "none",
+          "public_flags": 0,
+          "id": "999999999999999999",
+          "discriminator": "9999",
+          "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+        },
+        "guild_id": "999999999999999999",
+        "status": "idle",
+        "activities": [
+          {
+            "name": "none",
+            "type": 4,
+            "created_at": 0
+          }
+        ],
+        "client_status": {
+          "desktop": "idle",
+          "mobile": "dnd",
+          "web": "idle"
+        }
+      }
+    ],
+    "nonce": "none"
   }
 }

@@ -4,12 +4,8 @@
     "since": 91879201,
     "activities": [
       {
-        "type": 0,
-        "timestamps": {
-          "start": 0
-        },
         "name": "none",
-        "id": "none",
+        "type": 4,
         "created_at": 0
       }
     ],

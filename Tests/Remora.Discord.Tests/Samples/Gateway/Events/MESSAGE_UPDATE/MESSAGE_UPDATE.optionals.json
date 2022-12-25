@@ -1,0 +1,19 @@
+{
+  "t": "MESSAGE_UPDATE",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "channel_id": "999999999999999999",
+    "guild_id": "999999999999999999",
+    "mentions": [
+      {
+        "id": "999999999999999999",
+        "username": "none",
+        "discriminator": "9999",
+        "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+        "member": { }
+      }
+    ]
+  }
+}

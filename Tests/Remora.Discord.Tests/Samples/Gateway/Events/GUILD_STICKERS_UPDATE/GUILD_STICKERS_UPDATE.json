@@ -4,6 +4,15 @@
   "op": 0,
   "d": {
     "guild_id": "999999999999999999",
-    "stickers": []
+    "stickers": [
+      {
+        "id": "999999999999999999",
+        "name": "none",
+        "description": "none",
+        "tags": "none",
+        "type": 1,
+        "format_type": 1
+      }
+    ]
   }
 }

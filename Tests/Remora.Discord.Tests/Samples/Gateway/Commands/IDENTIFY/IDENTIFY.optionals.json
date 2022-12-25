@@ -1,0 +1,14 @@
+{
+  "op": 2,
+  "d": {
+    "token": "none",
+    "properties": {
+      "os": "linux",
+      "browser": "disco",
+      "device": "disco"
+    },
+    "intents": 7
+  },
+  "s": null,
+  "t": null
+}

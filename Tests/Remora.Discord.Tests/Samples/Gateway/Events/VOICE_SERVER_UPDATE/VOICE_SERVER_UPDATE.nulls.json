@@ -1,0 +1,10 @@
+{
+  "t": "VOICE_SERVER_UPDATE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "token": "none",
+    "guild_id": "999999999999999999",
+    "endpoint": null
+  }
+}
