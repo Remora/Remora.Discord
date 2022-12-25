@@ -41,5 +41,6 @@ public record Connection
     bool IsVerified,
     bool IsFriendSyncEnabled,
     bool ShouldShowActivity,
+    bool IsTwoWayLink,
     ConnectionVisibility Visibility
 ) : IConnection;

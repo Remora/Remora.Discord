@@ -73,6 +73,11 @@ public interface IConnection
     bool ShouldShowActivity { get; }
 
     /// <summary>
+    /// Gets a value indicating whether the connection is two-way.
+    /// </summary>
+    bool IsTwoWayLink { get; }
+
+    /// <summary>
     /// Gets the visibility of this connection.
     /// </summary>
     ConnectionVisibility Visibility { get; }

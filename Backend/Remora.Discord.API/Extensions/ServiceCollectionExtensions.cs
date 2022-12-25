@@ -875,6 +875,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(c => c.IsRevoked, "revoked")
             .WithPropertyName(c => c.IsVerified, "verified")
             .WithPropertyName(c => c.IsFriendSyncEnabled, "friend_sync")
+            .WithPropertyName(c => c.IsTwoWayLink, "two_way_link")
             .WithPropertyName(c => c.ShouldShowActivity, "show_activity");
 
         return options;
