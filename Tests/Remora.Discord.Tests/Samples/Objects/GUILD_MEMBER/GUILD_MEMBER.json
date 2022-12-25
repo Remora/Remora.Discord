@@ -16,5 +16,5 @@
   "mute": true,
   "pending": true,
   "permissions": "0",
-  "communications_disabled_until": "1970-01-01T00:00:00.000000+00:00"
+  "communication_disabled_until": "1970-01-01T00:00:00.000000+00:00"
 }

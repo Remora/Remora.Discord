@@ -16,5 +16,5 @@
   "mute": true,
   "pending": true,
   "permissions": "0",
-  "communications_disabled_until": null
+  "communication_disabled_until": null
 }
