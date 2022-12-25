@@ -1069,7 +1069,7 @@ public class CDNTests
         public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
         {
             var mockedEvent = new Mock<IGuildScheduledEvent>();
-            mockedEvent.SetupGet(g => g.Image).Returns(default(IImageHash?));
+            mockedEvent.SetupGet(g => g.Image).Returns(default(Optional<IImageHash?>));
 
             var scheduledEvent = mockedEvent.Object;
 

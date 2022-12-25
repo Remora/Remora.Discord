@@ -1261,9 +1261,9 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        return scheduledEvent.Image is null
-            ? new ImageNotFoundError()
-            : GetGuildScheduledEventCoverUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
+        return scheduledEvent.Image.IsDefined(out var image)
+            ? GetGuildScheduledEventCoverUrl(scheduledEvent.ID, image, imageFormat, imageSize)
+            : new ImageNotFoundError();
     }
 
     /// <summary>
