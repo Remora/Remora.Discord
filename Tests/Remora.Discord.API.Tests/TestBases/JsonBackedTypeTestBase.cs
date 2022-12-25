@@ -163,7 +163,7 @@ public class JsonBackedTypeTestFixture
     public JsonBackedTypeTestFixture()
     {
         var services = new ServiceCollection()
-            .ConfigureDiscordJsonConverters()
+            .ConfigureDiscordJsonConverters(allowUnknownEvents: false)
             .AddExperimentalDiscordApi()
             .BuildServiceProvider(true);
 
