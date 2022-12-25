@@ -26,9 +26,11 @@
             "event_type": 1,
             "trigger_type": 1,
             "trigger_metadata": { },
-            "actions": {
-                "type": 1
-            },
+            "actions": [
+                {
+                    "type": 1
+                }
+            ],
             "enabled": true,
             "exempt_roles": [
                 "999999999999999999"
