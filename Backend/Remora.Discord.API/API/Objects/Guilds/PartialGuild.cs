@@ -37,6 +37,7 @@ public record PartialGuild
     Optional<Snowflake> ID = default,
     Optional<string> Name = default,
     Optional<IImageHash?> Icon = default,
+    Optional<IImageHash?> IconHash = default,
     Optional<IImageHash?> Splash = default,
     Optional<IImageHash?> DiscoverySplash = default,
     Optional<bool> IsOwner = default,

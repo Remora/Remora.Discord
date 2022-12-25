@@ -37,6 +37,7 @@ public record Guild
     Snowflake ID,
     string Name,
     IImageHash? Icon,
+    Optional<IImageHash?> IconHash,
     IImageHash? Splash,
     IImageHash? DiscoverySplash,
     Optional<bool> IsOwner,

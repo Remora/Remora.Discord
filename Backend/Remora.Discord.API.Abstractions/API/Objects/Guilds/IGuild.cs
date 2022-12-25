@@ -49,6 +49,14 @@ public interface IGuild : IPartialGuild
     new IImageHash? Icon { get; }
 
     /// <summary>
+    /// Gets the image hash of the guild's icon.
+    /// </summary>
+    /// <remarks>
+    /// Only present when part of a guild template.
+    /// </remarks>
+    new Optional<IImageHash?> IconHash { get; }
+
+    /// <summary>
     /// Gets the guild's splash banner.
     /// </summary>
     new IImageHash? Splash { get; }
@@ -238,6 +246,9 @@ public interface IGuild : IPartialGuild
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialGuild.Icon => new(this.Icon);
+
+    /// <inheritdoc/>
+    Optional<IImageHash?> IPartialGuild.IconHash => this.IconHash;
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialGuild.Splash => new(this.Splash);

@@ -42,6 +42,9 @@ public interface IPartialGuild
     /// <inheritdoc cref="IGuild.Icon" />
     Optional<IImageHash?> Icon { get; }
 
+    /// <inheritdoc cref="IGuild.IconHash" />
+    Optional<IImageHash?> IconHash { get; }
+
     /// <inheritdoc cref="IGuild.Splash" />
     Optional<IImageHash?> Splash { get; }
 
