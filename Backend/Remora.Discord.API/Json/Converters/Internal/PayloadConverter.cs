@@ -343,13 +343,12 @@ internal class PayloadConverter : JsonConverter<IPayload?>
                             : null;
                     }
 
-                    var genericConverterType = converterType.GetGenericTypeDefinition();
-                    if (genericConverterType != typeof(DataObjectConverter<,>))
+                    if (converterType.GetGenericTypeDefinition() != typeof(DataObjectConverter<,>))
                     {
                         return null;
                     }
 
-                    var dataConverterArgument = genericConverterType.GetGenericArguments()[0];
+                    var dataConverterArgument = converterType.GetGenericArguments()[0];
                     return dataConverterArgument.IsInterface
                         ? dataConverterArgument
                         : null;
