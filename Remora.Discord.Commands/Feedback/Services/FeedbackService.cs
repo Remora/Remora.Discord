@@ -736,7 +736,7 @@ public class FeedbackService
 
         var result = await _interactionAPI.CreateInteractionResponseAsync
         (
-            interactionContext.Interaction.ApplicationID,
+            interactionContext.Interaction.ID,
             interactionContext.Interaction.Token,
             new InteractionResponse(InteractionCallbackType.ChannelMessageWithSource, new(callbackData)),
             options?.Attachments ?? default,
