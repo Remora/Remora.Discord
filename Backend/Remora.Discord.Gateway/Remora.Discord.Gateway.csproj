@@ -1,12 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>11.0.2</VersionPrefix>
+        <VersionPrefix>11.0.3</VersionPrefix>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Update Remora.Sdk.
-            Fix race condition when reconnecting.
         </PackageReleaseNotes>
     </PropertyGroup>
 

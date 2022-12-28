@@ -1,13 +1,30 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>73.0.0</VersionPrefix>
+        <VersionPrefix>74.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Update Remora.Sdk.
-            BREAKING: Add new user flag
-            BREAKING: Add support for automod regex matching
+            BREAKING: Fix nullability for IApplicationRoleConnection
+            BREAKING: Update flag names to match the docs.
+            BREAKING: Implement DefaultForumLayout.
+            Implement support for age-restricted commands.
+            Use value-based keys for caching
+            BREAKING: Fix name of API type.
+            BREAKING: Fix type names.
+            BREAKING: Fix parameter types.
+            BREAKING: Fix missing audit log fields.
+            BREAKING: Add missing `mentions` field.
+            BREAKING: Add missing `member` field.
+            BREAKING: Fix optionality and nullability of `owner`.
+            BREAKING: Fix optionality of several fields in IIntegration.
+            BREAKING: Fix type of select menu values.
+            BREAKING: Add missing `icon_hash` field.
+            BREAKING: Fix incorrect enumeration member name.
+            BREAKING: Fix optionality of `image` field.
+            BREAKING: Add missing `two_way_link` field.
+            BREAKING: Fix optionality of field.
+            BREAKING: Support both available and unavailable guilds in GUILD_CREATE.
         </PackageReleaseNotes>
     </PropertyGroup>
 

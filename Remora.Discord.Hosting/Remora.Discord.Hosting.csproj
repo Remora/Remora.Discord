@@ -5,7 +5,7 @@
         <Description>Implementation of a hosted Discord gateway service for the .NET Generic Host</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Update Remora.Sdk.
+            Add overload of AddDiscordService for use with HostApplicationBuilder
         </PackageReleaseNotes>
     </PropertyGroup>
 
