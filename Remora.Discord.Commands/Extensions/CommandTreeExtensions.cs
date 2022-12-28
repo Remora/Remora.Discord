@@ -634,10 +634,6 @@ public static class CommandTreeExtensions
             }
 
             var actualParameterType = parameter.GetActualParameterType();
-            var discordType = parameter.GetDiscordType();
-
-            var channelTypes = CreateChannelTypesOption(command, parameter, discordType);
-
             var (enableAutocomplete, choices) = GetParameterChoices
             (
                 parameter.Parameter,
@@ -645,64 +641,17 @@ public static class CommandTreeExtensions
                 localizationProvider
             );
 
-            var minValue = parameter.Parameter.GetCustomAttribute<MinValueAttribute>();
-            var maxValue = parameter.Parameter.GetCustomAttribute<MaxValueAttribute>();
-
-            if (discordType is not (Number or Integer) && (minValue is not null || maxValue is not null))
-            {
-                throw new InvalidCommandParameterException
-                (
-                    "A non-numerical parameter may not specify a minimum or maximum value.",
-                    command,
-                    parameter
-                );
-            }
-
-            var minLength = parameter.Parameter.GetCustomAttribute<MinLengthAttribute>();
-            var maxLength = parameter.Parameter.GetCustomAttribute<MaxLengthAttribute>();
-
-            var isNonStringWithLengthConstraint = discordType is not ApplicationCommandOptionType.String
-                                                  && (minLength is not null || maxLength is not null);
-
-            if (isNonStringWithLengthConstraint)
-            {
-                throw new InvalidCommandParameterException
-                (
-                    "A non-string parameter may not specify a minimum or maximum length.",
-                    command,
-                    parameter
-                );
-            }
-
-            if (minLength?.Length is < 0)
-            {
-                throw new InvalidCommandParameterException
-                (
-                    "The minimum length must be more than 0.",
-                    command,
-                    parameter
-                );
-            }
-
-            if (maxLength?.Length is < 1)
-            {
-                throw new InvalidCommandParameterException
-                (
-                    "The maximum length must be more than 1.",
-                    command,
-                    parameter
-                );
-            }
-
             var name = parameter.HintName.ToLowerInvariant();
             var description = parameter.Description;
 
             var localizedNames = localizationProvider.GetStrings(name);
             var localizedDescriptions = localizationProvider.GetStrings(description);
 
+            var (channelTypes, minValue, maxValue, minLength, maxLength) = GetParameterConstraints(command, parameter);
+
             var parameterOption = new ApplicationCommandOption
             (
-                discordType,
+                parameter.GetDiscordType(),
                 name,
                 parameter.Description,
                 default,
@@ -710,12 +659,12 @@ public static class CommandTreeExtensions
                 choices,
                 ChannelTypes: channelTypes,
                 EnableAutocomplete: enableAutocomplete,
-                MinValue: minValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
-                MaxValue: maxValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
+                MinValue: minValue,
+                MaxValue: maxValue,
                 NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
                 DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
-                MinLength: (uint?)minLength?.Length ?? default(Optional<uint>),
-                MaxLength: (uint?)maxLength?.Length ?? default(Optional<uint>)
+                MinLength: minLength,
+                MaxLength: maxLength
             );
 
             parameterOptions.Add(parameterOption);
@@ -956,6 +905,136 @@ public static class CommandTreeExtensions
             yield return subcommand;
         }
     }
+
+    /// <summary>
+    /// Gets any constraints applied to a parameter.
+    /// </summary>
+    /// <param name="command">The command the parameter belongs to.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <returns>The constraints.</returns>
+    private static ParameterConstraints GetParameterConstraints(CommandNode command, IParameterShape parameter)
+    {
+        var discordType = parameter.GetDiscordType();
+        var channelTypes = CreateChannelTypesOption(command, parameter, discordType);
+
+        var (minValue, maxValue) = GetNumericParameterConstraints(command, parameter, discordType);
+        var (minLength, maxLength) = GetStringParameterConstraints(command, parameter, discordType);
+
+        return new ParameterConstraints
+        (
+            channelTypes,
+            minValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
+            maxValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
+            (uint?)minLength?.Length ?? default(Optional<uint>),
+            (uint?)maxLength?.Length ?? default(Optional<uint>)
+        );
+    }
+
+    /// <summary>
+    /// Gets any numeric constraints applied to a parameter.
+    /// </summary>
+    /// <param name="command">The command the parameter belongs to.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="discordType">The Discord type of the command.</param>
+    /// <returns>The numeric constraints.</returns>
+    /// <exception cref="InvalidCommandParameterException">
+    /// Thrown if the parameter has any incorrectly applied constraints.
+    /// </exception>
+    private static (MinValueAttribute? MinValue, MaxValueAttribute? MaxValue) GetNumericParameterConstraints
+    (
+        CommandNode command,
+        IParameterShape parameter,
+        ApplicationCommandOptionType discordType
+    )
+    {
+        var minValue = parameter.Parameter.GetCustomAttribute<MinValueAttribute>();
+        var maxValue = parameter.Parameter.GetCustomAttribute<MaxValueAttribute>();
+
+        if (discordType is not (Number or Integer) && (minValue is not null || maxValue is not null))
+        {
+            throw new InvalidCommandParameterException
+            (
+                "A non-numerical parameter may not specify a minimum or maximum value.",
+                command,
+                parameter
+            );
+        }
+
+        return (minValue, maxValue);
+    }
+
+    /// <summary>
+    /// Gets any string constraints applied to a parameter.
+    /// </summary>
+    /// <param name="command">The command the parameter belongs to.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="discordType">The Discord type of the command.</param>
+    /// <returns>The string constraints.</returns>
+    /// <exception cref="InvalidCommandParameterException">
+    /// Thrown if the parameter has any incorrectly applied constraints.
+    /// </exception>
+    private static (MinLengthAttribute? MinLength, MaxLengthAttribute? MaxLength) GetStringParameterConstraints
+    (
+        CommandNode command,
+        IParameterShape parameter,
+        ApplicationCommandOptionType discordType
+    )
+    {
+        var minLength = parameter.Parameter.GetCustomAttribute<MinLengthAttribute>();
+        var maxLength = parameter.Parameter.GetCustomAttribute<MaxLengthAttribute>();
+
+        var isNonStringWithLengthConstraint = discordType is not ApplicationCommandOptionType.String
+                                              && (minLength is not null || maxLength is not null);
+
+        if (isNonStringWithLengthConstraint)
+        {
+            throw new InvalidCommandParameterException
+            (
+                "A non-string parameter may not specify a minimum or maximum length.",
+                command,
+                parameter
+            );
+        }
+
+        if (minLength?.Length is < 0)
+        {
+            throw new InvalidCommandParameterException
+            (
+                "The minimum length must be more than 0.",
+                command,
+                parameter
+            );
+        }
+
+        if (maxLength?.Length is < 1)
+        {
+            throw new InvalidCommandParameterException
+            (
+                "The maximum length must be more than 1.",
+                command,
+                parameter
+            );
+        }
+
+        return (minLength, maxLength);
+    }
+
+    /// <summary>
+    /// Represents Discord-specific parameter metadata that is only valid or relevant for command nodes.
+    /// </summary>
+    /// <param name="ChannelTypes">The channel types the parameter is constrained to.</param>
+    /// <param name="MinValue">The minimum numeric value the parameter accepts.</param>
+    /// <param name="MaxValue">The maximum numeric value the parameter accepts.</param>
+    /// <param name="MinLength">The minimum string length the parameter accepts.</param>
+    /// <param name="MaxLength">The maximum string length the parameter accepts.</param>
+    private sealed record ParameterConstraints
+    (
+        Optional<IReadOnlyList<ChannelType>> ChannelTypes,
+        Optional<OneOf<ulong, long, float, double>> MinValue,
+        Optional<OneOf<ulong, long, float, double>> MaxValue,
+        Optional<uint> MinLength,
+        Optional<uint> MaxLength
+    );
 
     /// <summary>
     /// Represents Discord-specific node metadata that is only valid or relevant for a top-level node.
