@@ -51,6 +51,11 @@ public abstract class CustomIDTestBase
     protected abstract string TypeName { get; }
 
     /// <summary>
+    /// Gets the state used for test, if any.
+    /// </summary>
+    protected virtual string? State => null;
+
+    /// <summary>
     /// Gets the simple method under test.
     /// </summary>
     protected abstract SimpleDelegate Simple { get; }
@@ -67,8 +72,9 @@ public abstract class CustomIDTestBase
     public void ReturnsCorrectValueForSimpleCase()
     {
         const string name = "ooga";
+        var statePrefix = this.State != null ? $"{Constants.StatePrefix}{this.State} " : string.Empty;
 
-        var expected = $"{Constants.InteractionTree}::{this.TypeName}::{name}";
+        var expected = $"{Constants.InteractionTree}::{statePrefix}{this.TypeName}::{name}";
         var actual = this.Simple(name);
 
         Assert.Equal(expected, actual);
@@ -84,8 +90,9 @@ public abstract class CustomIDTestBase
         const string name = "ooga";
         const string group1 = "wooga";
         const string group2 = "booga";
+        var statePrefix = this.State != null ? $"{Constants.StatePrefix}{this.State} " : string.Empty;
 
-        var expected = $"{Constants.InteractionTree}::{group1} {group2} {this.TypeName}::{name}";
+        var expected = $"{Constants.InteractionTree}::{statePrefix}{group1} {group2} {this.TypeName}::{name}";
         var actual = this.Grouped(name, group1, group2);
 
         Assert.Equal(expected, actual);

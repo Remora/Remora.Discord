@@ -253,4 +253,46 @@ public class InteractiveCommands : CommandGroup
 
         return result;
     }
+
+    /// <summary>
+    /// Pass state along with buttons.
+    /// </summary>
+    /// <returns>A result, indicating if the modal was sent successfully.</returns>
+    [Command("stateful-buttons")]
+    public async Task<IResult> SendStatefulButtonsAsync()
+    {
+        var embed = new Embed(Description: "Click on any button below.");
+        var options = new FeedbackMessageOptions(MessageComponents: new IMessageComponent[]
+        {
+            new ActionRowComponent(new[]
+            {
+                new ButtonComponent
+                (
+                    ButtonComponentStyle.Primary,
+                    "Primary",
+                    CustomID: CustomIDHelpers.CreateButtonIDWithState("stateful-button", "Primary")
+                ),
+                new ButtonComponent
+                (
+                    ButtonComponentStyle.Secondary,
+                    "Secondary",
+                    CustomID: CustomIDHelpers.CreateButtonIDWithState("stateful-button", "Secondary")
+                ),
+                new ButtonComponent
+                (
+                    ButtonComponentStyle.Success,
+                    "Success",
+                    CustomID: CustomIDHelpers.CreateButtonIDWithState("stateful-button", "Success")
+                ),
+                new ButtonComponent
+                (
+                    ButtonComponentStyle.Danger,
+                    "No State",
+                    CustomID: CustomIDHelpers.CreateButtonID("stateful-button")
+                )
+            })
+        });
+
+        return await _feedback.SendContextualEmbedAsync(embed, options, this.CancellationToken);
+    }
 }
