@@ -140,19 +140,19 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
             "users/@me/guilds",
             b =>
             {
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (after.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("after", after.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);

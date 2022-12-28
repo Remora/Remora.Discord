@@ -51,7 +51,5 @@ public interface IMessageUpdate : IPartialMessage, IGatewayEvent
     new Optional<IReadOnlyList<IUserMention>> Mentions { get; }
 
     /// <inheritdoc/>
-    Optional<IReadOnlyList<IUser>> IPartialMessage.Mentions => this.Mentions.HasValue
-        ? new(this.Mentions.Value)
-        : default;
+    Optional<IReadOnlyList<IUser>> IPartialMessage.Mentions => this.Mentions.Map<IReadOnlyList<IUser>>(u => u);
 }

@@ -78,25 +78,25 @@ public class UserParser : AbstractTypeParser<IUser>, ITypeParser<IPartialUser>
             return null;
         }
 
-        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        if (!interactionContext.Interaction.Data.TryGet(out var data))
         {
             return null;
         }
 
         var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.IsDefined(out var resolved))
+        if (!resolvedData.TryGet(out var resolved))
         {
             return null;
         }
 
-        if (resolved.Users.IsDefined(out var users) && users.TryGetValue(userID, out var user))
+        if (resolved.Users.TryGet(out var users) && users.TryGetValue(userID, out var user))
         {
             return user;
         }
 
-        if (resolved.Members.IsDefined(out var members) && members.TryGetValue(userID, out var member))
+        if (resolved.Members.TryGet(out var members) && members.TryGetValue(userID, out var member))
         {
-            _ = member.User.IsDefined(out user);
+            _ = member.User.TryGet(out user);
         }
         else
         {

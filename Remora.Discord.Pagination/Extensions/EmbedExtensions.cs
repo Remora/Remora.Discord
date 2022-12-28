@@ -40,17 +40,17 @@ public static class EmbedExtensions
     {
         var length = 0;
 
-        if (embed.Title.IsDefined(out var title))
+        if (embed.Title.TryGet(out var title))
         {
             length += title.Length;
         }
 
-        if (embed.Description.IsDefined(out var description))
+        if (embed.Description.TryGet(out var description))
         {
             length += description.Length;
         }
 
-        if (embed.Fields.IsDefined(out var fields))
+        if (embed.Fields.TryGet(out var fields))
         {
             foreach (var field in fields)
             {
@@ -59,12 +59,12 @@ public static class EmbedExtensions
             }
         }
 
-        if (embed.Author.IsDefined(out var author))
+        if (embed.Author.TryGet(out var author))
         {
             length += author.Name.Length;
         }
 
-        if (embed.Footer.IsDefined(out var footer))
+        if (embed.Footer.TryGet(out var footer))
         {
             length += footer.Text.Length;
         }

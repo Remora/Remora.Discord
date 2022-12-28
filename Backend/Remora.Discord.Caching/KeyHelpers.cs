@@ -191,14 +191,14 @@ public static class KeyHelpers
         {
             base.AppendToString(stringBuilder).Append(":Members");
 
-            if (this.Limit.HasValue)
+            if (this.Limit.TryGet(out var limit))
             {
-                stringBuilder.Append($":Limit:{this.Limit.Value}");
+                stringBuilder.Append($":Limit:{limit}");
             }
 
-            if (this.After.HasValue)
+            if (this.After.TryGet(out var after))
             {
-                stringBuilder.Append($":After:{this.After.Value}");
+                stringBuilder.Append($":After:{after}");
             }
 
             return stringBuilder;

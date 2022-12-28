@@ -307,9 +307,9 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
             $"webhooks/{webhookID}/{token}",
             b =>
             {
-                if (shouldWait.HasValue)
+                if (shouldWait.TryGet(out var realShouldWait))
                 {
-                    b.AddQueryParameter("wait", shouldWait.Value.ToString());
+                    b.AddQueryParameter("wait", realShouldWait.ToString());
                 }
 
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
@@ -378,9 +378,9 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
             $"webhooks/{webhookID}/{webhookToken}/messages/{messageID}",
             b =>
             {
-                if (threadID.HasValue)
+                if (threadID.TryGet(out var realThreadID))
                 {
-                    b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                    b.AddQueryParameter("thread_id", realThreadID.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -419,50 +419,41 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
             $"webhooks/{webhookID}/{token}/messages/{messageID}",
             b =>
             {
-                Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = default;
-                switch (attachments.HasValue)
+                Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = null;
+                if (attachments.IsDefined(out var realAttachments))
                 {
-                    case true when attachments.Value is null:
-                    {
-                        attachmentList = null;
-                        break;
-                    }
-                    case true when attachments.Value is not null:
-                    {
-                        // build attachment list
-                        attachmentList = attachments.Value.Select
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => f.Match
                         (
-                            (f, i) => f.Match
+                            data => new PartialAttachment
                             (
-                                data => new PartialAttachment
-                                (
-                                    DiscordSnowflake.New((ulong)i),
-                                    data.Name,
-                                    data.Description
-                                ),
-                                attachment => attachment
-                            )
-                        ).ToList();
+                                DiscordSnowflake.New((ulong)i),
+                                data.Name,
+                                data.Description
+                            ),
+                            attachment => attachment
+                        )
+                    ).ToList();
 
-                        for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < attachments.Value.Count; i++)
+                    {
+                        if (!attachments.Value[i].IsT0)
                         {
-                            if (!attachments.Value[i].IsT0)
-                            {
-                                continue;
-                            }
-
-                            var (name, stream, _) = attachments.Value[i].AsT0;
-                            var contentName = $"files[{i}]";
-
-                            b.AddContent(new StreamContent(stream), contentName, name);
+                            continue;
                         }
-                        break;
+
+                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, name);
                     }
                 }
 
-                if (threadID.HasValue)
+                if (threadID.TryGet(out var realThreadID))
                 {
-                    b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                    b.AddQueryParameter("thread_id", realThreadID.ToString());
                 }
 
                 b.WithJson
@@ -497,9 +488,9 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
             $"webhooks/{webhookID}/{token}/messages/{messageID}",
             b =>
             {
-                if (threadID.HasValue)
+                if (threadID.TryGet(out var realThreadID))
                 {
-                    b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                    b.AddQueryParameter("thread_id", realThreadID.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);

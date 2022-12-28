@@ -79,24 +79,24 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
             $"guilds/{guildID}/audit-logs",
             b =>
             {
-                if (userID.HasValue)
+                if (userID.TryGet(out var id))
                 {
-                    b.AddQueryParameter("user_id", userID.Value.ToString());
+                    b.AddQueryParameter("user_id", id.ToString());
                 }
 
-                if (actionType.HasValue)
+                if (actionType.TryGet(out var action))
                 {
-                    b.AddQueryParameter("action_type", ((int)actionType.Value).ToString());
+                    b.AddQueryParameter("action_type", ((int)action).ToString());
                 }
 
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);

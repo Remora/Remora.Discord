@@ -112,13 +112,13 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
             return null;
         }
 
-        if (!injectionContext.Interaction.Data.IsDefined(out var data))
+        if (!injectionContext.Interaction.Data.TryGet(out var data))
         {
             return null;
         }
 
         var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.IsDefined(out var resolved) || !resolved.Members.IsDefined(out var guildMembers))
+        if (!resolvedData.TryGet(out var resolved) || !resolved.Members.TryGet(out var guildMembers))
         {
             return null;
         }

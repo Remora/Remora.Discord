@@ -147,13 +147,13 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
             return null;
         }
 
-        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        if (!interactionContext.Interaction.Data.TryGet(out var data))
         {
             return null;
         }
 
         var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.IsDefined(out var resolved) || !resolved.Messages.IsDefined(out var messages))
+        if (!resolvedData.TryGet(out var resolved) || !resolved.Messages.TryGet(out var messages))
         {
             return null;
         }

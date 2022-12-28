@@ -103,17 +103,17 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             gatewayEvent.GuildID
         );
 
-        if (!context.Message.Author.IsDefined(out var author))
+        if (!context.Message.Author.TryGet(out var author))
         {
             return Result.FromSuccess();
         }
 
-        if (author.IsBot.IsDefined(out var isBot) && isBot)
+        if (author.IsBot.TryGet(out var isBot) && isBot)
         {
             return Result.FromSuccess();
         }
 
-        if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
+        if (author.IsSystem.TryGet(out var isSystem) && isSystem)
         {
             return Result.FromSuccess();
         }
@@ -128,24 +128,24 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         CancellationToken ct = default
     )
     {
-        if (!gatewayEvent.Content.IsDefined(out var content))
+        if (!gatewayEvent.Content.TryGet(out var content))
         {
             return Result.FromSuccess();
         }
 
         var context = new MessageContext(gatewayEvent, gatewayEvent.GuildID);
 
-        if (!context.Message.Author.IsDefined(out var author))
+        if (!context.Message.Author.TryGet(out var author))
         {
             return Result.FromSuccess();
         }
 
-        if (author.IsBot.IsDefined(out var isBot) && isBot)
+        if (author.IsBot.TryGet(out var isBot) && isBot)
         {
             return Result.FromSuccess();
         }
 
-        if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
+        if (author.IsSystem.TryGet(out var isSystem) && isSystem)
         {
             return Result.FromSuccess();
         }

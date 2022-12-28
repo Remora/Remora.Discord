@@ -32,8 +32,8 @@ public class EchoResponder : IResponder<IMessageCreate>
     /// <inheritdoc />
     public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
     {
-        if ((gatewayEvent.Author.IsBot.IsDefined(out var isBot) && isBot) ||
-            (gatewayEvent.Author.IsSystem.IsDefined(out var isSystem) && isSystem))
+        if ((gatewayEvent.Author.IsBot.TryGet(out var isBot) && isBot) ||
+            (gatewayEvent.Author.IsSystem.TryGet(out var isSystem) && isSystem))
         {
             return Result.FromSuccess();
         }

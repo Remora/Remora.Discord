@@ -79,16 +79,16 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         {
             writer.Write("key", value.Key, options);
 
-            if (value.NewValue.HasValue)
+            if (value.NewValue.TryGet(out var newValue))
             {
                 writer.WritePropertyName("new_value");
-                writer.WriteRawValue(value.NewValue.Value);
+                writer.WriteRawValue(newValue);
             }
 
-            if (value.OldValue.HasValue)
+            if (value.OldValue.TryGet(out var oldValue))
             {
                 writer.WritePropertyName("old_value");
-                writer.WriteRawValue(value.OldValue.Value);
+                writer.WriteRawValue(oldValue);
             }
         }
         writer.WriteEndObject();

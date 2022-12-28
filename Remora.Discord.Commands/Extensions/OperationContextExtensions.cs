@@ -47,15 +47,15 @@ public static class OperationContextExtensions
         {
             case IInteractionContext interactionCommandContext:
             {
-                if (interactionCommandContext.Interaction.User.IsDefined(out var user))
+                if (interactionCommandContext.Interaction.User.TryGet(out var user))
                 {
                     userID = user.ID;
                     return true;
                 }
 
-                if (interactionCommandContext.Interaction.Member.IsDefined(out var member))
+                if (interactionCommandContext.Interaction.Member.TryGet(out var member))
                 {
-                    if (member.User.IsDefined(out user))
+                    if (member.User.TryGet(out user))
                     {
                         userID = user.ID;
                         return true;
@@ -88,7 +88,7 @@ public static class OperationContextExtensions
         {
             case IInteractionContext interactionCommandContext:
             {
-                if (interactionCommandContext.Interaction.GuildID.IsDefined(out var id))
+                if (interactionCommandContext.Interaction.GuildID.TryGet(out var id))
                 {
                     guildID = id;
                     return true;
@@ -98,7 +98,7 @@ public static class OperationContextExtensions
             }
             case IMessageContext messageContext:
             {
-                if (messageContext.GuildID.IsDefined(out var id))
+                if (messageContext.GuildID.TryGet(out var id))
                 {
                     guildID = id;
                     return true;
@@ -125,7 +125,7 @@ public static class OperationContextExtensions
         {
             case IInteractionContext interactionCommandContext:
             {
-                if (interactionCommandContext.Interaction.ChannelID.IsDefined(out var id))
+                if (interactionCommandContext.Interaction.ChannelID.TryGet(out var id))
                 {
                     channelID = id;
                     return true;
@@ -135,7 +135,7 @@ public static class OperationContextExtensions
             }
             case IMessageContext messageContext:
             {
-                if (messageContext.Message.ChannelID.IsDefined(out var id))
+                if (messageContext.Message.ChannelID.TryGet(out var id))
                 {
                     channelID = id;
                     return true;

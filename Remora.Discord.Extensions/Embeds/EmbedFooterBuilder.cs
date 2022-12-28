@@ -93,5 +93,5 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     /// <param name="footer">The footer.</param>
     /// <returns>A new <see cref="EmbedFooterBuilder"/> based on the provided footer.</returns>
     public static EmbedFooterBuilder FromFooter(IEmbedFooter footer)
-        => new(footer.Text, footer.IconUrl.HasValue ? footer.IconUrl.Value : null);
+        => new(footer.Text, footer.IconUrl.AsNullable());
 }

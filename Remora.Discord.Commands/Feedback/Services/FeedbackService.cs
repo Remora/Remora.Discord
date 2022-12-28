@@ -633,7 +633,7 @@ public class FeedbackService
         {
             case MessageContext messageContext:
             {
-                if (!messageContext.Message.ChannelID.IsDefined(out var channelID))
+                if (!messageContext.Message.ChannelID.TryGet(out var channelID))
                 {
                     return new InvalidOperationError("Contextual sends require the channel ID to be available.");
                 }
@@ -766,7 +766,7 @@ public class FeedbackService
             return Result<IMessage>.FromSuccess(message);
         }
 
-        _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+        _isOriginalEphemeral = message.Flags.TryGet(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
 
         this.HasEditedOriginalMessage = true;
         return Result<IMessage>.FromSuccess(message);
@@ -817,7 +817,7 @@ public class FeedbackService
         }
 
         var message = result.Entity;
-        _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+        _isOriginalEphemeral = message.Flags.TryGet(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
 
         this.HasEditedOriginalMessage = true;
         return result;

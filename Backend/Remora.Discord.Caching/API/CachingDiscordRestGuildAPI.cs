@@ -362,7 +362,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         var guildMember = getResult.Entity;
         await _cacheService.CacheAsync(key, guildMember, ct);
 
-        if (!guildMember.User.IsDefined(out var user))
+        if (!guildMember.User.TryGet(out var user))
         {
             return getResult;
         }
@@ -401,7 +401,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         foreach (var member in members)
         {
-            if (!member.User.IsDefined(out var user))
+            if (!member.User.TryGet(out var user))
             {
                 continue;
             }
@@ -471,7 +471,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         var guildMember = getResult.Entity;
 
-        if (!guildMember.User.IsDefined(out var user))
+        if (!guildMember.User.TryGet(out var user))
         {
             return getResult;
         }
@@ -954,7 +954,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
 
         foreach (var guildMember in result.Entity)
         {
-            if (!guildMember.User.IsDefined(out var user))
+            if (!guildMember.User.TryGet(out var user))
             {
                 continue;
             }

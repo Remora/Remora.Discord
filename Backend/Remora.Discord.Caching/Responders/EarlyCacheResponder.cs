@@ -127,7 +127,7 @@ public class EarlyCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IGuildMemberAdd gatewayEvent, CancellationToken ct = default)
     {
-        if (!gatewayEvent.User.IsDefined(out var user))
+        if (!gatewayEvent.User.TryGet(out var user))
         {
             return Result.FromSuccess();
         }
@@ -143,7 +143,7 @@ public class EarlyCacheResponder :
     {
         foreach (var member in gatewayEvent.Members)
         {
-            if (!member.User.IsDefined(out var user))
+            if (!member.User.TryGet(out var user))
             {
                 continue;
             }
@@ -152,14 +152,14 @@ public class EarlyCacheResponder :
             await _cacheService.CacheAsync(key, member, ct);
         }
 
-        if (!gatewayEvent.Presences.IsDefined(out var presences))
+        if (!gatewayEvent.Presences.TryGet(out var presences))
         {
             return Result.FromSuccess();
         }
 
         foreach (var presence in presences)
         {
-            if (!presence.User.ID.IsDefined(out var userID))
+            if (!presence.User.ID.TryGet(out var userID))
             {
                 continue;
             }
@@ -191,9 +191,9 @@ public class EarlyCacheResponder :
                 gatewayEvent.Roles,
                 gatewayEvent.JoinedAt ?? cachedInstance.JoinedAt,
                 gatewayEvent.PremiumSince.IsDefined(out var premiumSince) ? premiumSince : cachedInstance.PremiumSince,
-                gatewayEvent.IsDeafened.IsDefined(out var isDeafened) ? isDeafened : cachedInstance.IsDeafened,
-                gatewayEvent.IsMuted.IsDefined(out var isMuted) ? isMuted : cachedInstance.IsMuted,
-                gatewayEvent.IsPending.IsDefined(out var isPending) ? isPending : cachedInstance.IsPending,
+                gatewayEvent.IsDeafened.TryGet(out var isDeafened) ? isDeafened : cachedInstance.IsDeafened,
+                gatewayEvent.IsMuted.TryGet(out var isMuted) ? isMuted : cachedInstance.IsMuted,
+                gatewayEvent.IsPending.TryGet(out var isPending) ? isPending : cachedInstance.IsPending,
                 cachedInstance.Permissions
             );
         }
@@ -207,9 +207,9 @@ public class EarlyCacheResponder :
                 gatewayEvent.Roles,
                 gatewayEvent.JoinedAt.Value,
                 gatewayEvent.PremiumSince,
-                gatewayEvent.IsDeafened.IsDefined(out var isDeafened) && isDeafened,
-                gatewayEvent.IsMuted.IsDefined(out var isMuted) && isMuted,
-                gatewayEvent.IsPending.IsDefined(out var isPending) && isPending
+                gatewayEvent.IsDeafened.TryGet(out var isDeafened) && isDeafened,
+                gatewayEvent.IsMuted.TryGet(out var isMuted) && isMuted,
+                gatewayEvent.IsPending.TryGet(out var isPending) && isPending
             );
         }
         else
@@ -252,17 +252,17 @@ public class EarlyCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IMessageReactionAdd gatewayEvent, CancellationToken ct = default)
     {
-        if (!gatewayEvent.GuildID.IsDefined(out var guildID))
+        if (!gatewayEvent.GuildID.TryGet(out var guildID))
         {
             return Result.FromSuccess();
         }
 
-        if (!gatewayEvent.Member.IsDefined(out var member))
+        if (!gatewayEvent.Member.TryGet(out var member))
         {
             return Result.FromSuccess();
         }
 
-        if (!member.User.IsDefined(out var user))
+        if (!member.User.TryGet(out var user))
         {
             return Result.FromSuccess();
         }
@@ -285,7 +285,7 @@ public class EarlyCacheResponder :
     /// <inheritdoc />
     public async Task<Result> RespondAsync(IInteractionCreate gatewayEvent, CancellationToken ct = default)
     {
-        if (!gatewayEvent.Data.IsDefined(out var data))
+        if (!gatewayEvent.Data.TryGet(out var data))
         {
             return Result.FromSuccess();
         }
@@ -295,12 +295,12 @@ public class EarlyCacheResponder :
             return Result.FromSuccess();
         }
 
-        if (!commandData.Resolved.IsDefined(out var resolved))
+        if (!commandData.Resolved.TryGet(out var resolved))
         {
             return Result.FromSuccess();
         }
 
-        if (resolved.Users.IsDefined(out var users))
+        if (resolved.Users.TryGet(out var users))
         {
             foreach (var (key, value) in users)
             {
@@ -309,7 +309,7 @@ public class EarlyCacheResponder :
             }
         }
 
-        if (!resolved.Roles.IsDefined(out var roles) || !gatewayEvent.GuildID.IsDefined(out var guildID))
+        if (!resolved.Roles.TryGet(out var roles) || !gatewayEvent.GuildID.TryGet(out var guildID))
         {
             return Result.FromSuccess();
         }

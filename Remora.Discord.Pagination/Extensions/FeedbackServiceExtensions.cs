@@ -84,7 +84,7 @@ public static class FeedbackServiceExtensions
         {
             MessageComponents = new Optional<IReadOnlyList<IMessageComponent>>
             (
-                options.MessageComponents.IsDefined(out var existingComponents)
+                options.MessageComponents.TryGet(out var existingComponents)
                     ? components.Concat(existingComponents).ToList()
                     : components
             )
@@ -152,7 +152,7 @@ public static class FeedbackServiceExtensions
         {
             MessageComponents = new Optional<IReadOnlyList<IMessageComponent>>
             (
-                options.MessageComponents.IsDefined(out var existingComponents)
+                options.MessageComponents.TryGet(out var existingComponents)
                     ? components.Concat(existingComponents).ToList()
                     : components
             )
@@ -217,7 +217,7 @@ public static class FeedbackServiceExtensions
         {
             MessageComponents = new Optional<IReadOnlyList<IMessageComponent>>
             (
-                options.MessageComponents.IsDefined(out var existingComponents)
+                options.MessageComponents.TryGet(out var existingComponents)
                     ? components.Concat(existingComponents).ToList()
                     : components
             )

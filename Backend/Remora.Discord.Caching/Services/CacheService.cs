@@ -142,7 +142,7 @@ public class CacheService
     {
         await CacheInstanceAsync(key, webhook);
 
-        if (!webhook.User.IsDefined(out var user))
+        if (!webhook.User.TryGet(out var user))
         {
             return;
         }
@@ -163,7 +163,7 @@ public class CacheService
     {
         await CacheInstanceAsync(key, integration);
 
-        if (!integration.User.IsDefined(out var user))
+        if (!integration.User.TryGet(out var user))
         {
             return;
         }
@@ -184,7 +184,7 @@ public class CacheService
     {
         await CacheInstanceAsync(key, member);
 
-        if (!member.User.IsDefined(out var user))
+        if (!member.User.TryGet(out var user))
         {
             return;
         }
@@ -238,7 +238,7 @@ public class CacheService
     {
         await CacheInstanceAsync(key, emoji);
 
-        if (!emoji.User.IsDefined(out var creator))
+        if (!emoji.User.TryGet(out var creator))
         {
             return;
         }
@@ -251,7 +251,7 @@ public class CacheService
     {
         await CacheInstanceAsync(key, invite);
 
-        if (!invite.Inviter.IsDefined(out var inviter))
+        if (!invite.Inviter.TryGet(out var inviter))
         {
             return;
         }
@@ -284,7 +284,7 @@ public class CacheService
     private async ValueTask CacheChannelAsync(CacheKey key, IChannel channel)
     {
         await CacheInstanceAsync(key, channel);
-        if (!channel.Recipients.IsDefined(out var recipients))
+        if (!channel.Recipients.TryGet(out var recipients))
         {
             return;
         }

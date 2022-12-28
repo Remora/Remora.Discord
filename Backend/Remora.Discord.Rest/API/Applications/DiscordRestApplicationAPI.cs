@@ -71,14 +71,14 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             $"applications/{applicationID}/commands",
             b =>
             {
-                if (withLocalizations.HasValue)
+                if (withLocalizations.TryGet(out var realWithLocalizations))
                 {
-                    b.AddQueryParameter("with_localizations", withLocalizations.Value.ToString());
+                    b.AddQueryParameter("with_localizations", realWithLocalizations.ToString());
                 }
 
-                if (locale.HasValue)
+                if (locale.TryGet(out var realLocale))
                 {
-                    b.AddHeader(Constants.LocaleHeaderName, locale.Value);
+                    b.AddHeader(Constants.LocaleHeaderName, realLocale);
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -114,7 +114,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
 
         if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
         {
-            if (!description.IsDefined(out var value) || value.Length is < 1 or > 100)
+            if (!description.TryGet(out var value) || value.Length is < 1 or > 100)
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -176,7 +176,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             commands.Any
             (
                 c =>
-                    (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
+                    (!c.Type.TryGet(out var type) || type is ApplicationCommandType.ChatInput) &&
                     c.Description.Length is < 1 or > 100
             )
         )
@@ -302,14 +302,14 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             $"applications/{applicationID}/guilds/{guildID}/commands",
             b =>
             {
-                if (withLocalizations.HasValue)
+                if (withLocalizations.TryGet(out var realWithLocalizations))
                 {
-                    b.AddQueryParameter("with_localizations", withLocalizations.Value.ToString());
+                    b.AddQueryParameter("with_localizations", realWithLocalizations.ToString());
                 }
 
-                if (locale.HasValue)
+                if (locale.TryGet(out var realLocale))
                 {
-                    b.AddHeader(Constants.LocaleHeaderName, locale.Value);
+                    b.AddHeader(Constants.LocaleHeaderName, realLocale);
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -341,7 +341,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             commands.Any
             (
                 c =>
-                    (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
+                    (!c.Type.TryGet(out var type) || type is ApplicationCommandType.ChatInput) &&
                     c.Description.Length is < 1 or > 100
             )
         )
@@ -390,7 +390,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
 
         if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
         {
-            if (!description.IsDefined(out var value) || value.Length is < 1 or > 100)
+            if (!description.TryGet(out var value) || value.Length is < 1 or > 100)
             {
                 return new ArgumentOutOfRangeError
                 (

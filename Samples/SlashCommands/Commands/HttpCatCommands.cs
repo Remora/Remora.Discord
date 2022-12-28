@@ -88,7 +88,7 @@ public class HttpCatCommands : CommandGroup
     [Description("Posts a cat image that matches the user.")]
     public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IPartialUser catUser)
     {
-        if (!catUser.ID.IsDefined(out var id))
+        if (!catUser.ID.TryGet(out var id))
         {
             return Task.FromResult<IResult>(Result.FromSuccess());
         }

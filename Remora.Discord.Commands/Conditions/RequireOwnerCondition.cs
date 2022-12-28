@@ -63,7 +63,7 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 
         var application = getApplication.Entity;
 
-        if (!application.Owner.IsDefined(out var owner) || !owner.ID.IsDefined(out var ownerID))
+        if (!application.Owner.TryGet(out var owner) || !owner.ID.TryGet(out var ownerID))
         {
             return new InvalidOperationError("The application owner's ID was not present.");
         }

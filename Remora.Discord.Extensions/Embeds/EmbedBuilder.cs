@@ -453,11 +453,11 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <see cref="EmbedType"/> will be overwritten to <see cref="EmbedType.Rich"/>.</returns>
     public static EmbedBuilder FromEmbed(IEmbed embed) => new(embed.Fields)
     {
-        Title = embed.Title.HasValue ? embed.Title.Value : null,
-        Description = embed.Description.HasValue ? embed.Description.Value : null,
-        Url = embed.Url.HasValue ? embed.Url.Value : null,
-        Timestamp = embed.Timestamp.HasValue ? embed.Timestamp.Value : null,
-        Colour = embed.Colour.HasValue ? embed.Colour.Value : null,
+        Title = embed.Title.AsNullable(),
+        Description = embed.Description.AsNullable(),
+        Url = embed.Url.AsNullable(),
+        Timestamp = embed.Timestamp.AsNullable(),
+        Colour = embed.Colour.AsNullable(),
         ImageUrl = embed.Image.HasValue ? embed.Image.Value.Url : null,
         ThumbnailUrl = embed.Thumbnail.HasValue ? embed.Thumbnail.Value.Url : null,
         Author = embed.Author.HasValue ? EmbedAuthorBuilder.FromAuthor(embed.Author.Value) : default,

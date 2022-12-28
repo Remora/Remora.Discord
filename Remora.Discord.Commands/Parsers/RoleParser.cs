@@ -102,13 +102,13 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
             return null;
         }
 
-        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        if (!interactionContext.Interaction.Data.TryGet(out var data))
         {
             return null;
         }
 
         var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.IsDefined(out var resolved) || !resolved.Roles.IsDefined(out var roles))
+        if (!resolvedData.TryGet(out var resolved) || !resolved.Roles.TryGet(out var roles))
         {
             return null;
         }

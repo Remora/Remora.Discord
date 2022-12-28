@@ -83,7 +83,7 @@ public static class CommandTreeExtensions
 
         foreach (var node in discordTree)
         {
-            var isContextMenuOrRootCommand = !node.Options.IsDefined(out var options) ||
+            var isContextMenuOrRootCommand = !node.Options.TryGet(out var options) ||
                                              options.All(o => o.Type is not (SubCommand or SubCommandGroup));
             if (isContextMenuOrRootCommand)
             {
@@ -97,7 +97,7 @@ public static class CommandTreeExtensions
                 continue;
             }
 
-            if (!node.Options.IsDefined(out options))
+            if (!node.Options.TryGet(out options))
             {
                 // Group without children?
                 throw new InvalidOperationException();
@@ -770,7 +770,7 @@ public static class CommandTreeExtensions
             length += option.Description.Length;
         }
 
-        if (option.Choices.IsDefined(out var choices))
+        if (option.Choices.TryGet(out var choices))
         {
             foreach (var choice in choices)
             {
@@ -793,7 +793,7 @@ public static class CommandTreeExtensions
             }
         }
 
-        if (option.Options.IsDefined(out var options))
+        if (option.Options.TryGet(out var options))
         {
             length += options.Sum(GetCommandStringifiedLength);
         }

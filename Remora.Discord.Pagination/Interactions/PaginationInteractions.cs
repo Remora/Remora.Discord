@@ -107,7 +107,7 @@ internal class PaginationInteractions : InteractionGroup
     [Button("close")]
     public async Task<Result> CloseAsync()
     {
-        if (!_context.Interaction.Message.IsDefined(out var message))
+        if (!_context.Interaction.Message.TryGet(out var message))
         {
             return new InvalidOperationError("No message available for the interaction.");
         }
@@ -141,7 +141,7 @@ internal class PaginationInteractions : InteractionGroup
     [Button("help")]
     public async Task<Result> HelpAsync()
     {
-        if (!_context.Interaction.Message.IsDefined(out var message))
+        if (!_context.Interaction.Message.TryGet(out var message))
         {
             return new InvalidOperationError("No message available for the interaction.");
         }
@@ -165,7 +165,7 @@ internal class PaginationInteractions : InteractionGroup
 
     private async Task<Result> UpdateAsync(Action<PaginatedMessageData> action, CancellationToken ct)
     {
-        if (!_context.Interaction.Message.IsDefined(out var message))
+        if (!_context.Interaction.Message.TryGet(out var message))
         {
             return new InvalidOperationError("No message available for the interaction.");
         }
@@ -192,7 +192,7 @@ internal class PaginationInteractions : InteractionGroup
                 embeds: new[] { newPage },
                 components: new Optional<IReadOnlyList<IMessageComponent>?>
                 (
-                    message.Components.IsDefined(out var existingComponents)
+                    message.Components.TryGet(out var existingComponents)
                         ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
                         : newComponents
                 ),
@@ -208,7 +208,7 @@ internal class PaginationInteractions : InteractionGroup
                 embeds: new[] { newPage },
                 components: new Optional<IReadOnlyList<IMessageComponent>?>
                 (
-                    message.Components.IsDefined(out var existingComponents)
+                    message.Components.TryGet(out var existingComponents)
                         ? newComponents.Concat(existingComponents.Skip(newComponents.Count)).ToList()
                         : newComponents
                 ),

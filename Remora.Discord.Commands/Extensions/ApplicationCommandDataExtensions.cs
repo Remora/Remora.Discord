@@ -56,7 +56,7 @@ public static class ApplicationCommandDataExtensions
 
             commandPath = new[] { commandData.Name };
 
-            if (commandData.TargetID.IsDefined(out var targetId))
+            if (commandData.TargetID.TryGet(out var targetId))
             {
                 parameters = new Dictionary<string, IReadOnlyList<string>>
                 {
@@ -71,7 +71,7 @@ public static class ApplicationCommandDataExtensions
             return;
         }
 
-        if (!commandData.Options.IsDefined(out var options))
+        if (!commandData.Options.TryGet(out var options))
         {
             commandPath = new[] { commandData.Name };
             parameters = new Dictionary<string, IReadOnlyList<string>>();
@@ -127,7 +127,7 @@ public static class ApplicationCommandDataExtensions
                 { name, values }
             };
         }
-        else if (singleOption.Options.IsDefined(out var nestedOptions))
+        else if (singleOption.Options.TryGet(out var nestedOptions))
         {
             // A nested group
             UnpackInteractionOptions(nestedOptions, out var nestedCommandPath, out parameters);
@@ -149,7 +149,7 @@ public static class ApplicationCommandDataExtensions
         IApplicationCommandInteractionDataOption option
     )
     {
-        if (!option.Value.IsDefined(out var optionValue))
+        if (!option.Value.TryGet(out var optionValue))
         {
             throw new InvalidOperationException();
         }

@@ -234,7 +234,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
         }
 
         var member = result.Entity;
-        if (!member.User.IsDefined(out var user))
+        if (!member.User.TryGet(out var user))
         {
             return result;
         }

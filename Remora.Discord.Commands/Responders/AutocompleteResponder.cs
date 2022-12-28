@@ -82,14 +82,14 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
-        if (!gatewayEvent.Data.IsDefined(out var data) || !data.TryPickT0(out var autocompleteData, out _))
+        if (!gatewayEvent.Data.TryGet(out var data) || !data.TryPickT0(out var autocompleteData, out _))
         {
             return Result.FromSuccess();
         }
 
         var context = new InteractionContext(gatewayEvent);
 
-        if (!autocompleteData.Options.IsDefined(out var options))
+        if (!autocompleteData.Options.TryGet(out var options))
         {
             return new InvalidOperationError("Autocomplete interaction without options received. Bug?");
         }
@@ -168,7 +168,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             }
         }
 
-        var userInput = focusedParameter.Value.IsDefined(out var inputValue)
+        var userInput = focusedParameter.Value.TryGet(out var inputValue)
             ? inputValue.Value.ToString() ?? string.Empty
             : string.Empty;
 
@@ -197,7 +197,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
     {
         focusedParameter = null;
 
-        if (!data.Options.IsDefined(out var options))
+        if (!data.Options.TryGet(out var options))
         {
             return false;
         }
@@ -222,7 +222,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
                 return false;
             }
 
-            if (!options[0].Options.IsDefined(out options))
+            if (!options[0].Options.TryGet(out options))
             {
                 return false;
             }

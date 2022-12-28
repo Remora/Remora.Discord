@@ -120,7 +120,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
 
         if (topic.HasValue)
         {
-            if (type.IsDefined(out var channelType) && channelType == ChannelType.GuildForum)
+            if (type.TryGet(out var channelType) && channelType == ChannelType.GuildForum)
             {
                 if (topic.Value?.Length is > 4096 or < 0)
                 {
@@ -470,24 +470,24 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             $"channels/{channelID}/messages",
             b =>
             {
-                if (around.HasValue)
+                if (around.TryGet(out var realAround))
                 {
-                    b.AddQueryParameter("around", around.Value.ToString());
+                    b.AddQueryParameter("around", realAround.ToString());
                 }
 
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (after.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("after", after.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -692,14 +692,14 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
             b =>
             {
-                if (after.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("after", after.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -1387,14 +1387,14 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             $"channels/{channelID}/threads/archived/public",
             b =>
             {
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToISO8601String());
+                    b.AddQueryParameter("before", realBefore.ToISO8601String());
                 }
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -1417,14 +1417,14 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             $"channels/{channelID}/threads/archived/private",
             b =>
             {
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToISO8601String());
+                    b.AddQueryParameter("before", realBefore.ToISO8601String());
                 }
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -1447,14 +1447,14 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             $"channels/{channelID}/users/@me/threads/archived/private",
             b =>
             {
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);

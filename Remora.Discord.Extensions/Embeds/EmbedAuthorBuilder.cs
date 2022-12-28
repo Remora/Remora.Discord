@@ -88,8 +88,8 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
     new
     (
         author.Name,
-        author.Url.HasValue ? author.Url.Value : null,
-        author.IconUrl.HasValue ? author.Url.Value : null
+        author.Url.AsNullable(),
+        author.IconUrl.AsNullable()
     );
 
     /// <inheritdoc/>

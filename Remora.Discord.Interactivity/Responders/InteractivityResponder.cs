@@ -102,7 +102,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
-        if (!gatewayEvent.Data.IsDefined(out var data))
+        if (!gatewayEvent.Data.TryGet(out var data))
         {
             return new InvalidOperationError("Component or modal interaction without data received. Bug?");
         }
@@ -188,12 +188,12 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             }
         }
 
-        if (!data.Resolved.IsDefined(out var resolved))
+        if (!data.Resolved.TryGet(out var resolved))
         {
             return parameters;
         }
 
-        if (resolved.Users.IsDefined(out var users))
+        if (resolved.Users.TryGet(out var users))
         {
             parameters.Add
             (
@@ -204,7 +204,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             );
         }
 
-        if (resolved.Roles.IsDefined(out var roles))
+        if (resolved.Roles.TryGet(out var roles))
         {
             parameters.Add
             (
@@ -215,7 +215,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             );
         }
 
-        if (resolved.Channels.IsDefined(out var channels))
+        if (resolved.Channels.TryGet(out var channels))
         {
             parameters.Add
             (
@@ -266,7 +266,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         {
             if (component is IPartialActionRowComponent actionRow)
             {
-                if (!actionRow.Components.IsDefined(out var rowComponents))
+                if (!actionRow.Components.TryGet(out var rowComponents))
                 {
                     continue;
                 }
@@ -284,12 +284,12 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             {
                 case IPartialTextInputComponent textInput:
                 {
-                    if (!textInput.CustomID.IsDefined(out var id))
+                    if (!textInput.CustomID.TryGet(out var id))
                     {
                         continue;
                     }
 
-                    if (!textInput.Value.IsDefined(out var value))
+                    if (!textInput.Value.TryGet(out var value))
                     {
                         continue;
                     }
@@ -299,12 +299,12 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
                 }
                 case IPartialStringSelectComponent selectMenu:
                 {
-                    if (!selectMenu.CustomID.IsDefined(out var id))
+                    if (!selectMenu.CustomID.TryGet(out var id))
                     {
                         continue;
                     }
 
-                    if (!selectMenu.Options.IsDefined(out var options))
+                    if (!selectMenu.Options.TryGet(out var options))
                     {
                         continue;
                     }

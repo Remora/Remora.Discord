@@ -189,7 +189,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         CancellationToken ct = default
     )
     {
-        if (name.IsDefined(out var nameValue) && nameValue.Length is < 1 or > 100)
+        if (name.TryGet(out var nameValue) && nameValue.Length is < 1 or > 100)
         {
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
         }

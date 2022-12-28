@@ -58,7 +58,7 @@ public partial class ColourDropdownInteractions : InteractionGroup
     [SelectMenu("colour-dropdown")]
     public async Task<Result> SetEmbedColourAsync(IReadOnlyList<string> values)
     {
-        if (!_context.Interaction.Message.IsDefined(out var message))
+        if (!_context.Interaction.Message.TryGet(out var message))
         {
             return new InvalidOperationError("Interaction without a message?");
         }
@@ -145,7 +145,7 @@ public partial class ColourDropdownInteractions : InteractionGroup
         return (Result)await _feedback.SendContextualNeutralAsync
         (
             message,
-            _context.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            _context.Interaction.User.TryGet(out var user) ? user.ID : default,
             options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
             ct: this.CancellationToken
         );
@@ -178,7 +178,7 @@ public partial class ColourDropdownInteractions : InteractionGroup
         return (Result)await _feedback.SendContextualNeutralAsync
         (
             stringBuilder.ToString(),
-            _context.Interaction.User.IsDefined(out var user) ? user.ID : default,
+            _context.Interaction.User.TryGet(out var user) ? user.ID : default,
             options: new FeedbackMessageOptions
             (
                 MessageFlags: MessageFlags.Ephemeral,

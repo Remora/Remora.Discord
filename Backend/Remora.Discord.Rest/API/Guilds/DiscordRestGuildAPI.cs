@@ -88,7 +88,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         var iconData = default(Optional<string?>);
 
         // ReSharper disable once InvertIf
-        if (icon.IsDefined(out var iconStream))
+        if (icon.TryGet(out var iconStream))
         {
             var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
             if (!packIcon.IsSuccess)
@@ -142,9 +142,9 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             $"guilds/{guildID}",
             b =>
             {
-                if (withCounts.HasValue)
+                if (withCounts.TryGet(out var realWithCounts))
                 {
-                    b.AddQueryParameter("with_counts", withCounts.Value.ToString());
+                    b.AddQueryParameter("with_counts", realWithCounts.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -452,14 +452,14 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             $"guilds/{guildID}/members",
             b =>
             {
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
-                if (after.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("after", after.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -489,9 +489,9 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             {
                 b.AddQueryParameter("query", query);
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -658,19 +658,19 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             $"guilds/{guildID}/bans",
             b =>
             {
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (after.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("after", after.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -953,9 +953,9 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             $"guilds/{guildID}/prune",
             b =>
             {
-                if (days.HasValue)
+                if (days.TryGet(out var realDays))
                 {
-                    b.AddQueryParameter("days", days.Value.ToString());
+                    b.AddQueryParameter("days", realDays.ToString());
                 }
 
                 if (includeRoles.HasValue)
@@ -1159,9 +1159,9 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             $"guilds/{guildID}/widget.png",
             b =>
             {
-                if (style.HasValue)
+                if (style.TryGet(out var realStyle))
                 {
-                    b.AddQueryParameter("style", style.Value.ToString().ToLowerInvariant());
+                    b.AddQueryParameter("style", realStyle.ToString().ToLowerInvariant());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);

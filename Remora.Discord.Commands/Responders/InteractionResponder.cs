@@ -110,7 +110,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             return Result.FromSuccess();
         }
 
-        if (!gatewayEvent.Data.IsDefined(out var data) || !data.TryPickT0(out var commandData, out _))
+        if (!gatewayEvent.Data.TryGet(out var data) || !data.TryPickT0(out var commandData, out _))
         {
             return Result.FromSuccess();
         }

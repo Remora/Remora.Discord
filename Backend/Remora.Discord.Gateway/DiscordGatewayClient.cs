@@ -464,7 +464,7 @@ public class DiscordGatewayClient : IDisposable
                 }
 
                 var endpointInformation = getGatewayEndpoint.Entity;
-                if (endpointInformation.Shards.IsDefined(out var shards))
+                if (endpointInformation.Shards.TryGet(out var shards))
                 {
                     if (shards > 1 && _gatewayOptions.ShardIdentification?.ShardCount != shards)
                     {
@@ -477,7 +477,7 @@ public class DiscordGatewayClient : IDisposable
                     }
                 }
 
-                if (endpointInformation.SessionStartLimit.IsDefined(out var startLimit))
+                if (endpointInformation.SessionStartLimit.TryGet(out var startLimit))
                 {
                     if (_sessionID is null)
                     {

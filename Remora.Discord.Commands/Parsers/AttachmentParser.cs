@@ -72,13 +72,13 @@ public class AttachmentParser : AbstractTypeParser<IAttachment>, ITypeParser<IPa
             return null;
         }
 
-        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        if (!interactionContext.Interaction.Data.TryGet(out var data))
         {
             return null;
         }
 
         var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.IsDefined(out var resolved) || !resolved.Attachments.IsDefined(out var attachments))
+        if (!resolvedData.TryGet(out var resolved) || !resolved.Attachments.TryGet(out var attachments))
         {
             return null;
         }

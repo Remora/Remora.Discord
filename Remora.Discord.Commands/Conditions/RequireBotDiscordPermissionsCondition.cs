@@ -159,7 +159,7 @@ public class RequireBotDiscordPermissionsCondition :
         var member = getMember.Entity;
         var memberRoles = guildRoles.Where(r => member.Roles.Contains(r.ID)).ToArray();
 
-        var channelOverwrites = data.PermissionOverwrites.IsDefined(out var overwrites)
+        var channelOverwrites = data.PermissionOverwrites.TryGet(out var overwrites)
             ? overwrites
             : Array.Empty<IPermissionOverwrite>();
 

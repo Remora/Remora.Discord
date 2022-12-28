@@ -662,7 +662,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
 
         foreach (var threadMember in result.Entity)
         {
-            if (!threadMember.UserID.IsDefined(out var userID))
+            if (!threadMember.UserID.TryGet(out var userID))
             {
                 continue;
             }

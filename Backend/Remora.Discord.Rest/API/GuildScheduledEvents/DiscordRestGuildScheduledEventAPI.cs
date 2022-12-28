@@ -72,9 +72,9 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             $"guilds/{guildID}/scheduled-events",
             b =>
             {
-                if (withUserCount.HasValue)
+                if (withUserCount.TryGet(out var realWithUserCount))
                 {
-                    b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
+                    b.AddQueryParameter("with_user_count", realWithUserCount.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -180,9 +180,9 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             $"guilds/{guildID}/scheduled-events/{eventID}",
             b =>
             {
-                if (withUserCount.HasValue)
+                if (withUserCount.TryGet(out var realWithUserCount))
                 {
-                    b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
+                    b.AddQueryParameter("with_user_count", realWithUserCount.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -316,24 +316,24 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             $"guilds/{guildID}/scheduled-events/{eventID}/users",
             b =>
             {
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
-                if (withMember.HasValue)
+                if (withMember.TryGet(out var realWithMember))
                 {
-                    b.AddQueryParameter("with_member", withMember.Value.ToString());
+                    b.AddQueryParameter("with_member", realWithMember.ToString());
                 }
 
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (after.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("after", after.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
