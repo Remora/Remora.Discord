@@ -198,6 +198,50 @@ public class DiscordGatewayClient : IDisposable
     }
 
     /// <summary>
+    /// Uses a given gateway session to connect to the gateway with.
+    /// </summary>
+    /// <param name="sessionInformation">The gateway session to connect with.</param>
+    /// <returns>A result that may or not have succeeded.</returns>
+    public Result UseGatewaySession(GatewaySessionInformation sessionInformation)
+    {
+        if (_connectionStatus is not GatewayConnectionStatus.Offline)
+        {
+            return new InvalidOperationError("Cannot use a gateway session while the client is connected.");
+        }
+
+        _sessionID = sessionInformation.SessionID;
+        _lastSequenceNumber = sessionInformation.SequenceNumber;
+        _isSessionResumable = true;
+
+        return Result.FromSuccess();
+    }
+
+    /// <summary>
+    /// Returns information about the current gateweay session.
+    /// </summary>
+    /// <remarks>
+    /// This method should only be called after the client has disconnected.
+    /// If the client reconnects, or is still running, the session ID and sequence number may be invalid.
+    /// </remarks>
+    /// <returns>A result containing the current gateway session information.</returns>
+    public Result<GatewaySessionInformation> GetGatewaySessionInformation()
+    {
+        if (string.IsNullOrEmpty(_sessionID) || _lastSequenceNumber is 0)
+        {
+            return Result<GatewaySessionInformation>.FromError
+            (
+                new InvalidOperationException("No session information is available.")
+            );
+        }
+
+        return new GatewaySessionInformation
+        (
+            _sessionID,
+            _lastSequenceNumber
+        );
+    }
+
+    /// <summary>
     /// Starts and connects the gateway client.
     /// </summary>
     /// <remarks>
@@ -300,13 +344,11 @@ public class DiscordGatewayClient : IDisposable
         }
         finally
         {
-            _sessionID = null;
             _resumeGatewayUrl = null;
             _connectionStatus = GatewayConnectionStatus.Offline;
         }
 
         // Reconnection is not allowed at this point.
-        _sessionID = null;
         _resumeGatewayUrl = null;
         _connectionStatus = GatewayConnectionStatus.Offline;
 
