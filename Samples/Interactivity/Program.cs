@@ -101,7 +101,8 @@ public class Program
                         .Finish()
                     .AddPagination()
                     .AddInteractionGroup<ColourDropdownInteractions>()
-                    .AddInteractionGroup<ModalInteractions>();
+                    .AddInteractionGroup<ModalInteractions>()
+                    .AddInteractionGroup<StatefulInteractions>();
             }
         )
         .ConfigureLogging

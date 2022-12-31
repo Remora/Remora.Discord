@@ -144,10 +144,12 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var commandPath = data.CustomID[Constants.InteractionTree.Length..][2..]
             .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+        commandPath = ExtractState(commandPath, out var state);
+
         var buildParameters = data.ComponentType switch
         {
             ComponentType.Button => new Dictionary<string, IReadOnlyList<string>>(),
-            ComponentType.StringSelect => Result<IReadOnlyDictionary<string, IReadOnlyList<string>>>.FromSuccess
+            ComponentType.StringSelect => Result<Dictionary<string, IReadOnlyList<string>>>.FromSuccess
             (
                 new Dictionary<string, IReadOnlyList<string>>
                 {
@@ -169,10 +171,15 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
         var parameters = buildParameters.Entity;
 
+        if (state != null)
+        {
+            parameters.Add("state", new[] { state });
+        }
+
         return await TryExecuteCommandAsync(context, commandPath, parameters, ct);
     }
 
-    private static Result<IReadOnlyDictionary<string, IReadOnlyList<string>>> BuildParametersFromResolvedData
+    private static Result<Dictionary<string, IReadOnlyList<string>>> BuildParametersFromResolvedData
     (
         IMessageComponentData data
     )
@@ -245,7 +252,14 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var commandPath = data.CustomID[Constants.InteractionTree.Length..][2..]
             .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+        commandPath = ExtractState(commandPath, out var state);
+
         var parameters = ExtractParameters(data.Components);
+
+        if (state != null)
+        {
+            parameters.Add("state", new[] { state });
+        }
 
         return await TryExecuteCommandAsync
         (
@@ -256,7 +270,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         );
     }
 
-    private static IReadOnlyDictionary<string, IReadOnlyList<string>> ExtractParameters
+    private static Dictionary<string, IReadOnlyList<string>> ExtractParameters
     (
         IEnumerable<IPartialMessageComponent> components
     )
@@ -423,5 +437,17 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             executionResult.IsSuccess ? executionResult.Entity : executionResult,
             ct
         );
+    }
+
+    private static string[] ExtractState(string[] commandPath, out string? state)
+    {
+        if (commandPath.Length <= 0 || !commandPath[0].StartsWith(Constants.StatePrefix))
+        {
+            state = null;
+            return commandPath;
+        }
+
+        state = commandPath[0][Constants.StatePrefix.Length..];
+        return commandPath[1..];
     }
 }

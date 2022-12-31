@@ -34,4 +34,9 @@ public static class Constants
     /// Gets the name of the interaction command tree.
     /// </summary>
     public const string InteractionTree = "remora::interactivity";
+
+    /// <summary>
+    /// Gets the prefix used for passing the state.
+    /// </summary>
+    public const string StatePrefix = "$!";
 }
