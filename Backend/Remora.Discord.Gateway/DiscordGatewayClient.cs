@@ -211,7 +211,7 @@ public class DiscordGatewayClient : IDisposable
 
         _sessionID = sessionInformation.SessionID;
         _lastSequenceNumber = sessionInformation.SequenceNumber;
-        _resumeGatewayUrl = sessionInformation.GatewayUrl.ToString();
+        _resumeGatewayUrl = sessionInformation.GatewayUrl;
         _isSessionResumable = true;
 
         return Result.FromSuccess();
@@ -227,7 +227,7 @@ public class DiscordGatewayClient : IDisposable
     /// <returns>A result containing the current gateway session information.</returns>
     public Result<GatewaySessionInformation> GetGatewaySessionInformation()
     {
-        if (string.IsNullOrEmpty(_sessionID) || _lastSequenceNumber is 0 || _resumeGatewayUrl is null)
+        if (string.IsNullOrEmpty(_sessionID) || _resumeGatewayUrl is null)
         {
             return new NotFoundError("No session information is available.");
         }
@@ -236,7 +236,7 @@ public class DiscordGatewayClient : IDisposable
         (
             _sessionID,
             _lastSequenceNumber,
-            new Uri(_resumeGatewayUrl)
+            _resumeGatewayUrl
         );
     }
 
@@ -343,12 +343,10 @@ public class DiscordGatewayClient : IDisposable
         }
         finally
         {
-            _resumeGatewayUrl = null;
             _connectionStatus = GatewayConnectionStatus.Offline;
         }
 
         // Reconnection is not allowed at this point.
-        _resumeGatewayUrl = null;
         _connectionStatus = GatewayConnectionStatus.Offline;
 
         return Result.FromSuccess();

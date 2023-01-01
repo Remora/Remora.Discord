@@ -53,6 +53,11 @@ public static class Constants
     public static string MockSessionID => "mock-session";
 
     /// <summary>
+    /// Gets the default mocked sequence number.
+    /// </summary>
+    public static int MockSequenceNumber => 0;
+
+    /// <summary>
     /// Gets the default mocked resume gateway URL.
     /// </summary>
     public static string MockResumeGatewayUrl => "wss://us-east1-b.gateway.discord.gg";
