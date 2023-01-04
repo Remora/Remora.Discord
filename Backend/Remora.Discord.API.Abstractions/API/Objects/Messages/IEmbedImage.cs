@@ -34,6 +34,7 @@ public interface IEmbedImage
     /// <summary>
     /// Gets the source URL of the thumbnail. Only supports http(s) and attachments.
     /// </summary>
+    [UriString("GET")]
     string Url { get; }
 
     /// <summary>

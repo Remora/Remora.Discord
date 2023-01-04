@@ -112,6 +112,7 @@ public class DiscordGatewayClient : IDisposable
     /// <summary>
     /// Holds the resume gateway URL.
     /// </summary>
+    [UriString]
     private string? _resumeGatewayUrl;
 
     /// <summary>

@@ -59,11 +59,13 @@ public interface IAttachment : IPartialAttachment
     /// <summary>
     /// Gets the source URL of the file.
     /// </summary>
+    [UriString("GET")]
     new string Url { get; }
 
     /// <summary>
     /// Gets the proxied URL of the file.
     /// </summary>
+    [UriString("GET")]
     new string ProxyUrl { get; }
 
     /// <summary>

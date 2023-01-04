@@ -44,7 +44,7 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
     /// <param name="url">The text of the url.</param>
     /// <param name="allowNull">If true, a null url will return a successful result.</param>
     /// <returns>A successful result if the url is valid; otherwise, a failed result.</returns>
-    internal static Result ValidateUrl(string propertyName, string? url, bool allowNull)
+    internal static Result ValidateUrl(string propertyName, [UriString] string? url, bool allowNull)
     {
         if (url is null)
         {

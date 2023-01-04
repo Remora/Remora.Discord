@@ -38,5 +38,6 @@ public interface IActivityButton
     /// <summary>
     /// Gets the URL opened when clicking the button (1-512 characters).
     /// </summary>
+    [UriString("GET")]
     string URL { get; }
 }

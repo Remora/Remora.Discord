@@ -54,6 +54,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <summary>
     /// Gets or sets the url of the embed.
     /// </summary>
+    [UriString("GET")]
     public string? Url { get; set; }
 
     /// <summary>
@@ -74,11 +75,13 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <summary>
     /// Gets or sets the image added to this embed.
     /// </summary>
+    [UriString("GET")]
     public string? ImageUrl { get; set; }
 
     /// <summary>
     /// Gets or sets the thumbnail added to this embed.
     /// </summary>
+    [UriString("GET")]
     public string? ThumbnailUrl { get; set; }
 
     /// <summary>
@@ -231,7 +234,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="url">The url.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithUrl(string url)
+    public EmbedBuilder WithUrl([UriString("GET")] string url)
     {
         this.Url = url;
         return this;
@@ -242,7 +245,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="thumbnailUrl">The url of the thumbnail.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithThumbnailUrl(string thumbnailUrl)
+    public EmbedBuilder WithThumbnailUrl([UriString("GET")] string thumbnailUrl)
     {
         this.ThumbnailUrl = thumbnailUrl;
         return this;
@@ -253,7 +256,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="imageUrl">The url of the thumbnail.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithImageUrl(string imageUrl)
+    public EmbedBuilder WithImageUrl([UriString("GET")] string imageUrl)
     {
         this.ImageUrl = imageUrl;
         return this;
@@ -314,7 +317,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     (
         string name,
         string? url = null,
-        string? iconUrl = null
+        [UriString("GET")] string? iconUrl = null
     )
     {
         this.Author = new EmbedAuthorBuilder(name, url, iconUrl);
@@ -344,7 +347,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <param name="text">The text of the footer.</param>
     /// <param name="iconUrl">The url of the icon.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithFooter(string text, string? iconUrl = null)
+    public EmbedBuilder WithFooter(string text, [UriString("GET")] string? iconUrl = null)
     {
         this.Footer = new EmbedFooterBuilder(text, iconUrl);
         return this;
