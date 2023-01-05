@@ -34,5 +34,5 @@ public record MessageComponentData
     string CustomID,
     ComponentType ComponentType,
     Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<ISelectOption>> Values
+    Optional<IReadOnlyList<string>> Values
 ) : IMessageComponentData;

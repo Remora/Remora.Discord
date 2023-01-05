@@ -52,5 +52,10 @@ public interface IMessageComponentData
     /// <summary>
     /// Gets the values selected by the user.
     /// </summary>
-    Optional<IReadOnlyList<ISelectOption>> Values { get; }
+    /// <remarks>
+    /// The Discord API docs denote that this field should contain a list of
+    /// <see cref="ISelectOption"/> values. However, in their samples and as
+    /// identified through testing, it actually always contains a list of strings.
+    /// </remarks>
+    Optional<IReadOnlyList<string>> Values { get; }
 }
