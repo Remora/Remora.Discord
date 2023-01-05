@@ -1,5 +1,5 @@
 //
-//  SPDX-FileName: ColourDropdownInteractions.cs
+//  SPDX-FileName: SelectMenuInteractions.cs
 //  SPDX-FileCopyrightText: Copyright (c) Jarl Gullberg
 //  SPDX-License-Identifier: MIT
 //
@@ -26,21 +26,21 @@ namespace Remora.Discord.Samples.Interactivity.Interactions;
 /// <summary>
 /// Handles colour dropdown interactions.
 /// </summary>
-public partial class ColourDropdownInteractions : InteractionGroup
+public partial class SelectMenuInteractions : InteractionGroup
 {
-    private readonly InteractionCommandContext _context;
+    private readonly IInteractionCommandContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
     private readonly FeedbackService _feedback;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ColourDropdownInteractions"/> class.
+    /// Initializes a new instance of the <see cref="SelectMenuInteractions"/> class.
     /// </summary>
     /// <param name="context">The interaction context.</param>
     /// <param name="channelAPI">The channel API.</param>
     /// <param name="feedback">The feedback service.</param>
-    public ColourDropdownInteractions
+    public SelectMenuInteractions
     (
-        InteractionCommandContext context,
+        IInteractionCommandContext context,
         IDiscordRestChannelAPI channelAPI,
         FeedbackService feedback
     )
