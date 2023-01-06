@@ -30,7 +30,6 @@ using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
-using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -149,13 +148,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var buildParameters = data.ComponentType switch
         {
             ComponentType.Button => new Dictionary<string, IReadOnlyList<string>>(),
-            ComponentType.StringSelect => Result<Dictionary<string, IReadOnlyList<string>>>.FromSuccess
-            (
-                new Dictionary<string, IReadOnlyList<string>>
-                {
-                    { "values", data.Values.Value }
-                }
-            ),
+            ComponentType.StringSelect when data.Values.Value.IsT1 => BuildParametersFromStringData(data),
             ComponentType.UserSelect
                 or ComponentType.RoleSelect
                 or ComponentType.MentionableSelect
@@ -179,6 +172,21 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         return await TryExecuteCommandAsync(context, commandPath, parameters, ct);
     }
 
+    private static Result<Dictionary<string, IReadOnlyList<string>>> BuildParametersFromStringData
+    (
+        IMessageComponentData data
+    )
+    {
+        var parameters = new Dictionary<string, IReadOnlyList<string>>();
+
+        if (data.Values.Value.TryPickT1(out var values, out _))
+        {
+            parameters.Add("values", values);
+        }
+
+        return parameters;
+    }
+
     private static Result<Dictionary<string, IReadOnlyList<string>>> BuildParametersFromResolvedData
     (
         IMessageComponentData data
@@ -187,11 +195,11 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var parameters = new Dictionary<string, IReadOnlyList<string>>();
 
         var values = new HashSet<Snowflake>();
-        foreach (var value in data.Values.Value)
+        if (data.Values.Value.TryPickT0(out var snowflakes, out _))
         {
-            if (DiscordSnowflake.TryParse(value, out var parsed))
+            foreach (var snowflake in snowflakes)
             {
-                values.Add(parsed.Value);
+                values.Add(snowflake);
             }
         }
 
