@@ -36,13 +36,14 @@ public sealed class EmbedImageBuilder : BuilderBase<EmbedImage>
     /// <summary>
     /// Gets or sets the url of the image. Must be a valid url. Null values are not allowed.
     /// </summary>
+    [UriString("GET")]
     public string Url { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmbedImageBuilder"/> class.
     /// </summary>
     /// <param name="url">The url of the image.</param>
-    public EmbedImageBuilder(string url)
+    public EmbedImageBuilder([UriString("GET")] string url)
     {
         this.Url = url;
     }

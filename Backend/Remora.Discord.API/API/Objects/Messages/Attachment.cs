@@ -37,8 +37,8 @@ public record Attachment
     Optional<string> Description,
     Optional<string> ContentType,
     int Size,
-    string Url,
-    string ProxyUrl,
+    [UriString("GET")] string Url,
+    [UriString("GET")] string ProxyUrl,
     Optional<int?> Height,
     Optional<int?> Width,
     Optional<bool> IsEphemeral

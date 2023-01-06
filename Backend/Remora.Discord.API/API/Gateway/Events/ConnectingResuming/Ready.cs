@@ -39,7 +39,7 @@ public record Ready
     IUser User,
     IReadOnlyList<IUnavailableGuild> Guilds,
     string SessionID,
-    string ResumeGatewayUrl,
+    [UriString] string ResumeGatewayUrl,
     Optional<IShardIdentification> Shard,
     IPartialApplication Application
 ) : IReady;

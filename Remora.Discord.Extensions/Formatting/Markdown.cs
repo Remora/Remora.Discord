@@ -141,7 +141,7 @@ public static partial class Markdown
     /// <returns>
     /// A formatted URL string that will not embed its content.
     /// </returns>
-    public static string EscapeUrl(string url) => $"<{url}>";
+    public static string EscapeUrl([UriString] string url) => $"<{url}>";
 
     /// <summary>
     /// Formats a string to contain a Markdown hyperlink of itself. The hyperlink will only hyperlink inside
@@ -163,7 +163,7 @@ public static partial class Markdown
     /// <returns>
     /// A Markdown-formatted hyperlink string.
     /// </returns>
-    public static string Hyperlink(string url) => Hyperlink(url, url);
+    public static string Hyperlink([UriString("GET")] string url) => Hyperlink(url, url);
 
     /// <summary>
     /// Formats a string to contain a Markdown Hyperlink. The hyperlink will only appear inside
@@ -187,7 +187,7 @@ public static partial class Markdown
     /// <returns>
     /// A Markdown-formatted hyperlink string.
     /// </returns>
-    public static string Hyperlink(string text, string url) => $"[{text}]({url})";
+    public static string Hyperlink(string text, [UriString("GET")] string url) => $"[{text}]({url})";
 
     /// <summary>
     /// Sanitizes a string of sensitive characters.

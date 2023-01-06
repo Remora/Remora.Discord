@@ -27,4 +27,4 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityButton" />
 [PublicAPI]
-public record ActivityButton(string Label, string URL) : IActivityButton;
+public record ActivityButton(string Label, [UriString("GET")] string URL) : IActivityButton;

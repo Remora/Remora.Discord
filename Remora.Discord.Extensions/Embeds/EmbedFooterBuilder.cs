@@ -44,6 +44,7 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     /// <summary>
     /// Gets or sets the icon url of the footer. Provide <c>null</c> if no url is needed.
     /// </summary>
+    [UriString("GET")]
     public string? IconUrl { get; set; }
 
     /// <summary>
@@ -51,7 +52,7 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     /// </summary>
     /// <param name="text">The text of the footer.</param>
     /// <param name="iconUrl">The icon url of the footer.</param>
-    public EmbedFooterBuilder(string text, string? iconUrl = null)
+    public EmbedFooterBuilder(string text, [UriString("GET")] string? iconUrl = null)
     {
         this.Text = text;
         this.IconUrl = iconUrl;

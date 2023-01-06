@@ -44,11 +44,13 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
     /// <summary>
     /// Gets or sets the author's website. Provide <c>null</c> if no url is needed.
     /// </summary>
+    [UriString("GET")]
     public string? Url { get; set; }
 
     /// <summary>
     /// Gets or sets the author's icon url. Provide <c>null</c> if no url is needed.
     /// </summary>
+    [UriString("GET")]
     public string? IconUrl { get; set; }
 
     /// <summary>
@@ -57,7 +59,12 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
     /// <param name="name">The author's name.</param>
     /// <param name="url">The author's website.</param>
     /// <param name="iconUrl">The author's icon url.</param>
-    public EmbedAuthorBuilder(string name, string? url = null, string? iconUrl = null)
+    public EmbedAuthorBuilder
+    (
+        string name,
+        [UriString("GET")] string? url = null,
+        [UriString("GET")] string? iconUrl = null
+    )
     {
         this.Name = name;
         this.Url = url;

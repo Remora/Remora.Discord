@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record EmbedImage
 (
-    string Url,
+    [UriString("GET")] string Url,
     Optional<string> ProxyUrl = default,
     Optional<int> Height = default,
     Optional<int> Width = default
