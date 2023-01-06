@@ -16,13 +16,13 @@ namespace Remora.Discord.Samples.Interactivity.Interactions;
 /// </summary>
 public class StatefulInteractions : InteractionGroup
 {
-    private readonly ILogger<ModalInteractions> _log;
+    private readonly ILogger<StatefulInteractions> _log;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="StatefulInteractions"/> class.
     /// </summary>
     /// <param name="log">The logging instance for this type.</param>
-    public StatefulInteractions(ILogger<ModalInteractions> log)
+    public StatefulInteractions(ILogger<StatefulInteractions> log)
     {
         _log = log;
     }
