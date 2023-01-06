@@ -153,7 +153,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             (
                 new Dictionary<string, IReadOnlyList<string>>
                 {
-                    { "values", data.Values.Value.Select(o => o.Value).ToArray() }
+                    { "values", data.Values.Value }
                 }
             ),
             ComponentType.UserSelect
@@ -189,7 +189,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var values = new HashSet<Snowflake>();
         foreach (var value in data.Values.Value)
         {
-            if (DiscordSnowflake.TryParse(value.Value, out var parsed))
+            if (DiscordSnowflake.TryParse(value, out var parsed))
             {
                 values.Add(parsed.Value);
             }
