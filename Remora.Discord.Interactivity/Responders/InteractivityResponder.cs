@@ -177,6 +177,8 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         IMessageComponentData data
     )
     {
+        // In the case that the developer defined options are similar to Snowflakes, they'll
+        // be incorrectly parsed. Hence, we have to handle either case for string selects.
         var values = data.Values.Value.TryPickT1(out var stringValues, out var snowflakeValues)
             ? stringValues
             : snowflakeValues.Select(x => x.ToString()).ToList();
