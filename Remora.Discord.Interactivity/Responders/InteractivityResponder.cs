@@ -148,7 +148,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var buildParameters = data.ComponentType switch
         {
             ComponentType.Button => new Dictionary<string, IReadOnlyList<string>>(),
-            ComponentType.StringSelect when data.Values.Value.IsT1 => BuildParametersFromStringData(data),
+            ComponentType.StringSelect => BuildParametersFromStringData(data),
             ComponentType.UserSelect
                 or ComponentType.RoleSelect
                 or ComponentType.MentionableSelect
@@ -177,14 +177,14 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         IMessageComponentData data
     )
     {
-        var parameters = new Dictionary<string, IReadOnlyList<string>>();
+        var values = data.Values.Value.TryPickT1(out var stringValues, out var snowflakeValues)
+            ? stringValues
+            : snowflakeValues.Select(x => x.ToString()).ToList();
 
-        if (data.Values.Value.TryPickT1(out var values, out _))
+        return new Dictionary<string, IReadOnlyList<string>>
         {
-            parameters.Add("values", values);
-        }
-
-        return parameters;
+            { "values", values }
+        };
     }
 
     private static Result<Dictionary<string, IReadOnlyList<string>>> BuildParametersFromResolvedData
