@@ -5,7 +5,8 @@
         {
           "src": "../../",
           "files": [
-             "Remora.*/**.csproj"
+             "Remora.*/**.csproj",
+             "Backend/Remora.*/**.csproj"
           ]
         }
       ],
@@ -28,11 +29,6 @@
           "articles/**/toc.yml",
           "toc.yml",
           "*.md"
-        ]
-      },
-      {
-        "files": [
-            "fusion/**"
         ]
       }
     ],
