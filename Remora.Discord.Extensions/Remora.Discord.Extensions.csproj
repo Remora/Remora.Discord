@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>5.2.3</VersionPrefix>
+        <VersionPrefix>5.2.4</VersionPrefix>
         <Description>Utilities and components which extend upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Don't register interaction groups on arbitrary trees
         </PackageReleaseNotes>
     </PropertyGroup>
 

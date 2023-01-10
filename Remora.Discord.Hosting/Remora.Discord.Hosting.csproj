@@ -1,11 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>6.0.2</VersionPrefix>
+        <VersionPrefix>6.0.3</VersionPrefix>
         <Description>Implementation of a hosted Discord gateway service for the .NET Generic Host</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Add overload of AddDiscordService for use with HostApplicationBuilder
         </PackageReleaseNotes>
     </PropertyGroup>
 

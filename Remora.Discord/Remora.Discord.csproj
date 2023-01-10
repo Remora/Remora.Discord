@@ -1,40 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2022.53</VersionPrefix>
+        <VersionPrefix>2022.54</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            BREAKING: Fix nullability for IApplicationRoleConnection
-            BREAKING: Update flag names to match the docs.
-            BREAKING: Implement DefaultForumLayout.
-            Implement support for age-restricted commands.
-            Use value-based keys for caching
-            BREAKING: Fix name of API type.
-            BREAKING: Fix type names.
-            BREAKING: Fix parameter types.
-            Fix missing name configuration.
-            BREAKING: Fix missing audit log fields.
-            BREAKING: Add missing `mentions` field.
-            BREAKING: Add missing `member` field.
-            BREAKING: Fix optionality and nullability of `owner`.
-            BREAKING: Fix optionality of several fields in IIntegration.
-            BREAKING: Fix type of select menu values.
-            BREAKING: Add missing `icon_hash` field.
-            BREAKING: Fix incorrect enumeration member name.
-            BREAKING: Fix optionality of `image` field.
-            BREAKING: Add missing `two_way_link` field.
-            BREAKING: Fix optionality of field.
-            Fix missing configuration.
-            BREAKING: Support both available and unavailable guilds in GUILD_CREATE.
-            Search any explicitly convertible type when converting payloads
-            Use value-based keys for caching
-            Fix duplication of cache entry options
-            Add overload of AddDiscordService for use with HostApplicationBuilder
-            Handle IPartial* correctly when updating slash commands
-            Improve error checking when using top-level Discord attributes.
-            Implement attribute for marking commands as age-restricted.
-            CreateInteractionResponse expects an InteractionID not ApplicationID
-            Don't register interaction groups on arbitrary trees
+            Add UriString markers
+            Change attachment->image in documentation
+            BREAKING: Re-type IMessageComponentData.cs#Values to an optional list of strings
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
