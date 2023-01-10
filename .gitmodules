@@ -1,0 +1,6 @@
+[submodule "docfx/templates/DiscordFX"]
+	path = docfx/templates/DiscordFX
+	url = https://github.com/jbltx/DiscordFX.git
+[submodule "docfx/docfx_project/templates/discordfx"]
+	path = docfx/docfx_project/templates/discordfx
+	url = https://github.com/jbltx/DiscordFX.git
