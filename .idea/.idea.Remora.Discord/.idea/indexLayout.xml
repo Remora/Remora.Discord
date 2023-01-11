@@ -3,9 +3,9 @@
   <component name="UserContentModel">
     <attachedFolders>
       <Path>docfx</Path>
+      <Path>docs</Path>
       <Path>docs/custom</Path>
       <Path>docs/static</Path>
-      <Path>docs/uml</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes />
