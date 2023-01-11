@@ -35,7 +35,8 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "articles/images/**"
         ]
       }
     ],
@@ -63,6 +64,10 @@
     "noLangKeyword": false,
     "keepFileLink": false,
     "cleanupCacheHistory": false,
-    "disableGitFeatures": false
+    "disableGitFeatures": false,
+    "globalMetadata": {
+      "_appLogoPath": "images/1f988.svg",
+      "_appFaviconPath": "images/1f988.svg"
+    }
   }
 }
