@@ -31,9 +31,6 @@ jobs:
     - name: Test
       run: dotnet test -c Release --no-restore --no-build --verbosity minimal
 
-    - name: Build Docs
-      run: cd ./docfx && dotnet docfx docfx_project/docfx.json
-
     - name: Package
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
@@ -42,13 +39,36 @@ jobs:
         name: nupkg
         path: nuget/*
 
-    - name: Deploy Docs
+    - name: Build Docs
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      uses: peaceiris/actions-gh-pages@v3
+      run: cd ./docfx && dotnet docfx docfx_project/docfx.json
+    - uses: actions/upload-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docfx/docfx_project/_site
-  prerelease:
+        name: docfx-site
+        path: docfx/docfx_project/_site/
+
+  publish_docs:
+    # TODO: Publish two copies of the docs - one for tagged releases, and one for the latest commit
+    name: Publish Documentation
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download documentation artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: docfx-site
+          path: site
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+
+  publish_prerelease_packages:
+    name: Publish Prerelease Packages
     needs: build
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
