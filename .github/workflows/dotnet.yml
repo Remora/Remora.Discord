@@ -35,6 +35,7 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
     - uses: actions/upload-artifact@v3
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       with:
         name: nupkg
         path: nuget/*
@@ -43,6 +44,7 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: cd ./docfx && dotnet docfx docfx_project/docfx.json
     - uses: actions/upload-artifact@v3
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       with:
         name: docfx-site
         path: docfx/docfx_project/_site/
