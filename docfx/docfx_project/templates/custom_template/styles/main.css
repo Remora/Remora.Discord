@@ -113,3 +113,19 @@ ul.level9 > li > a.sidebar-item.active
 {
     color: var(--link-active-color);
 }
+
+/* Fix unclickable view source/contribute buttons (https://github.com/jbltx/DiscordFX/pull/22) */
+.divider {
+    margin: 0 5px;
+}
+
+article span.small.pull-right {
+    z-index: 999;
+    position: relative;
+}
+
+/* Fix nested unordered lists not showing (https://github.com/jbltx/DiscordFX/pull/21) */
+article li > ul
+{
+    display: block;
+}
