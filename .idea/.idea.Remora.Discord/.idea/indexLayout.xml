@@ -2,6 +2,7 @@
 <project version="4">
   <component name="UserContentModel">
     <attachedFolders>
+      <Path>docfx</Path>
       <Path>docs/custom</Path>
       <Path>docs/static</Path>
       <Path>docs/uml</Path>
