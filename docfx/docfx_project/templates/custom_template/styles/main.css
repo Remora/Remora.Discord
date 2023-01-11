@@ -1,0 +1,115 @@
+/* Customize font sizes in navigation */
+.sidebar-item
+{
+    font-size: 1em;
+}
+
+span.sidebar-item
+{
+    font-size: .8em;
+}
+
+ul.level2,
+ul.level3,
+ul.level4,
+ul.level5,
+ul.level6,
+ul.level7,
+ul.level8,
+ul.level9
+{
+    font-size: 0.96em;
+}
+
+ul.level2 > li > a.sidebar-item,
+ul.level3 > li > a.sidebar-item,
+ul.level4 > li > a.sidebar-item,
+ul.level5 > li > a.sidebar-item,
+ul.level6 > li > a.sidebar-item,
+ul.level7 > li > a.sidebar-item,
+ul.level8 > li > a.sidebar-item,
+ul.level9 > li > a.sidebar-item
+{
+    font-size: 1em;
+}
+
+/* Add additional layers for navigation */
+ul.level4,
+ul.level5,
+ul.level6,
+ul.level7,
+ul.level8,
+ul.level9
+{
+    padding-inline-start: 1em;
+    list-style-type: none;
+}
+
+ul.level4 > li > a.sidebar-item,
+ul.level5 > li > a.sidebar-item,
+ul.level6 > li > a.sidebar-item,
+ul.level7 > li > a.sidebar-item,
+ul.level8 > li > a.sidebar-item,
+ul.level9 > li > a.sidebar-item
+{
+    font-weight: 500;
+    padding: 0;
+    margin: 2px 16px;
+}
+
+ul.level4 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level5 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level6 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level7 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level8 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level9 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level4 > li > a.sidebar-item:hover,
+ul.level4 > li > a.sidebar-item:focus,
+ul.level5 > li > a.sidebar-item:hover,
+ul.level5 > li > a.sidebar-item:focus,
+ul.level6 > li > a.sidebar-item:hover,
+ul.level6 > li > a.sidebar-item:focus,
+ul.level7 > li > a.sidebar-item:hover,
+ul.level7 > li > a.sidebar-item:focus,
+ul.level8 > li > a.sidebar-item:hover,
+ul.level8 > li > a.sidebar-item:focus,
+ul.level9 > li > a.sidebar-item:hover,
+ul.level9 > li > a.sidebar-item:focus
+{
+    color: var(--link-active-color);
+    text-decoration: underline;
+}
+
+ul.level4 > li > a.sidebar-item.active,
+ul.level5 > li > a.sidebar-item.active,
+ul.level6 > li > a.sidebar-item.active,
+ul.level7 > li > a.sidebar-item.active,
+ul.level8 > li > a.sidebar-item.active,
+ul.level9 > li > a.sidebar-item.active
+{
+    color: var(--link-active-color);
+}
