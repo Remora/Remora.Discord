@@ -1,6 +1,8 @@
 name: .NET
 
 env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
   GITHUB_USER: Nihlus
   GITHUB_FEED: https://nuget.pkg.github.com/Remora
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,6 +31,9 @@ jobs:
     - name: Test
       run: dotnet test -c Release --no-restore --no-build --verbosity minimal
 
+    - name: Build Docs
+      run: cd ./docfx && dotnet docfx docfx_project/docfx.json
+
     - name: Package
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
@@ -36,6 +41,13 @@ jobs:
       with:
         name: nupkg
         path: nuget/*
+
+    - name: Deploy Docs
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docfx/docfx_project/_site
   prerelease:
     needs: build
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
