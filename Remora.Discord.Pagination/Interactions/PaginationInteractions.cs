@@ -46,7 +46,7 @@ internal class PaginationInteractions : InteractionGroup
     private readonly IDiscordRestChannelAPI _channelAPI;
     private readonly IDiscordRestInteractionAPI _interactionAPI;
     private readonly InMemoryDataService<Snowflake, PaginatedMessageData> _paginationData;
-    private readonly InteractionContext _context;
+    private readonly IInteractionContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PaginationInteractions"/> class.
@@ -62,7 +62,7 @@ internal class PaginationInteractions : InteractionGroup
         IDiscordRestChannelAPI channelAPI,
         IDiscordRestInteractionAPI interactionAPI,
         InMemoryDataService<Snowflake, PaginatedMessageData> paginationData,
-        InteractionContext context
+        IInteractionContext context
     )
     {
         _feedback = feedback;
