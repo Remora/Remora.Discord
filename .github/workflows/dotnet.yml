@@ -42,7 +42,7 @@ jobs:
 
     - name: Build Docs
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: cd ./docfx && dotnet docfx docfx_project/docfx.json
+      run: dotnet tool restore && cd ./docfx && dotnet docfx docfx_project/docfx.json
     - uses: actions/upload-artifact@v3
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       with:
