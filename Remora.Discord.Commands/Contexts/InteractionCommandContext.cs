@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Represents contextual information about a currently executing text-based command.
+/// Represents contextual information about a currently executing interaction-based command.
 /// </summary>
 /// <param name="Interaction">The interaction that initiated the command.</param>
 /// <param name="Command">The command associated with the context.</param>
