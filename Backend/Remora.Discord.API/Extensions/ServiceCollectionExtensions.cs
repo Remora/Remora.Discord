@@ -289,6 +289,8 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
             .WithPropertyName(d => d.IsUnavailable, "unavailable");
 
+        options.AddDataObjectConverter<IGuildAuditLogEntryCreate, GuildAuditLogEntryCreate>();
+
         options.AddDataObjectConverter<IGuildBanAdd, GuildBanAdd>();
         options.AddDataObjectConverter<IGuildBanRemove, GuildBanRemove>();
 
