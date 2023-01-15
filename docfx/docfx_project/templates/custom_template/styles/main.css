@@ -232,3 +232,24 @@ article li > ul
     font-style: normal;
     font-weight: normal;
 }
+
+/* Version Bar */
+#versionbar .nav > li.active > .expand-stub::before,
+#versionbar .nav > li.in > .expand-stub::before,
+#versionbar .nav > li.in.active > .expand-stub::before,
+#versionbar .nav > li.filtered > .expand-stub::before {
+    transform: none;
+}
+
+#versionbar .nav > li > .expand-stub::before,
+#versionbar .nav > li.active > .expand-stub::before {
+    content: " ";
+    position: absolute;
+    transform: rotate(-90deg);
+    width: 10px;
+    height: 10px;
+    top: 5px;
+    left: 5px;
+    background-repeat: no-repeat;
+    background: url(down-arrow.svg);
+}

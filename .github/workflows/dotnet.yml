@@ -8,8 +8,10 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
-  - push
-  - pull_request
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+  pull_request:
 
 jobs:
   build:
@@ -17,6 +19,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: ${{ github.event_name == 'push' }}
+
     - uses: actions/setup-dotnet@v2
       with:
         dotnet-version: |
@@ -34,6 +39,7 @@ jobs:
     - name: Package
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
+
     - uses: actions/upload-artifact@v3
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       with:
@@ -41,27 +47,81 @@ jobs:
         path: nuget/*
 
     - name: Build Docs
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: dotnet tool restore && cd ./docfx && dotnet docfx docfx_project/docfx.json
+      if: github.event_name == 'push'
+      run: |
+        dotnet tool restore
+        cd ./docfx
+        sed -i -E "s/%APP_VERSION%/${GITHUB_REF_NAME}/" docfx_project/docfx.json
+        dotnet docfx docfx_project/docfx.json
+
     - uses: actions/upload-artifact@v3
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      if: github.event_name == 'push'
       with:
         name: docfx-site
         path: docfx/docfx_project/_site/
 
   publish_docs:
-    # TODO: Publish two copies of the docs - one for tagged releases, and one for the latest commit
     name: Publish Documentation
     needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
+    env:
+      KEEP_TAG_VERSIONS: 5
+
     steps:
+      - name: Checkout current gh-pages
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: site
+
+      - name: Clear version
+        working-directory: site
+        run: |
+          rm -rf ${GITHUB_REF_NAME}
+          echo "Cleared ${GITHUB_REF_NAME}"
+
       - name: Download documentation artifacts
         uses: actions/download-artifact@v3
         with:
           name: docfx-site
-          path: site
+          path: site/${{ github.ref_name }}
+
+      - name: Manage versions
+        shell: bash
+        working-directory: site
+        run: |
+          # Read versions
+          readarray -d '' versions < <( \
+              find . -maxdepth 1 -type d -regextype posix-extended -regex '\./[0-9]{4}\.[0-9]{1,}' -printf '%f\0' \
+            | sort -z -r \
+          )
+
+          # Check if we have to remove old versions
+          if [[ ${#versions[@]} -gt ${KEEP_TAG_VERSIONS} ]]; then
+              echo "::group::Removing old versions"
+              for (( i=${KEEP_TAG_VERSIONS}; i<${#versions[@]}; i++ )); do
+                  echo "${versions[$i]}"
+                  rm -rf ${versions[$i]}
+              done
+              echo "::endgroup::"
+          fi
+
+          # Generate versions.json
+          echo "[" > versions.json
+          echo "  \"main\"" >> versions.json
+          VERSION_COUNT=$((${#versions[@]} > ${KEEP_TAG_VERSIONS} ? ${KEEP_TAG_VERSIONS} : ${#versions[@]}))
+          for (( i=0; i<${VERSION_COUNT}; i++ )); do
+              echo " ,\"${versions[$i]}\"" >> versions.json
+          done
+          echo "]" >> versions.json
+
+          echo "Generated versions.json"
+
+          # Update index.html
+          sed -i -E "s/url=.*\"/url=.\/${versions[0]}\"/" index.html
+          echo "Updated index.html"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
