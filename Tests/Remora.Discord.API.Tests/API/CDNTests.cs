@@ -1002,28 +1002,9 @@ public class CDNTests
             : base
             (
                 new Uri("https://cdn.discordapp.com/stickers/0"),
-                new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                new[] { CDNImageFormat.PNG, CDNImageFormat.Lottie, CDNImageFormat.GIF }
             )
         {
-        }
-
-        /// <summary>
-        /// Tests whether the correct address is returned when the instance has no image set.
-        /// </summary>
-        [Fact]
-        public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
-        {
-            var stickerID = DiscordSnowflake.New(0);
-
-            var mockedSticker = new Mock<ISticker>();
-            mockedSticker.SetupGet(g => g.ID).Returns(stickerID);
-
-            var sticker = mockedSticker.Object;
-
-            var getActual = CDN.GetStickerUrl(sticker, CDNImageFormat.PNG);
-
-            Assert.False(getActual.IsSuccess);
-            Assert.IsType<ImageNotFoundError>(getActual.Error);
         }
 
         /// <inheritdoc />
