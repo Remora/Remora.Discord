@@ -547,14 +547,7 @@ public class DiscordGatewayClient : IDisposable
                     return transportConnectResult;
                 }
 
-                var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(TimeSpan.FromSeconds(5));
-
-                var receiveHello = await timeoutPolicy.ExecuteAsync
-                (
-                    c => _transportService.ReceivePayloadAsync(c),
-                    stopRequested
-                );
-
+                var receiveHello = await _transportService.ReceivePayloadAsync(stopRequested);
                 if (!receiveHello.IsSuccess)
                 {
                     return Result.FromError
@@ -725,11 +718,9 @@ public class DiscordGatewayClient : IDisposable
                 )
             );
 
-            var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(TimeSpan.FromSeconds(5));
-
             while (true)
             {
-                var receiveReady = await timeoutPolicy.ExecuteAsync(c => _transportService.ReceivePayloadAsync(c), ct);
+                var receiveReady = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveReady.IsSuccess)
                 {
                     return Result.FromError(receiveReady);
@@ -825,8 +816,6 @@ public class DiscordGatewayClient : IDisposable
                 )
             );
 
-            var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(TimeSpan.FromSeconds(5));
-
             // Push resumed events onto the queue
             var resuming = true;
             while (resuming)
@@ -836,7 +825,7 @@ public class DiscordGatewayClient : IDisposable
                     return new GatewayError("Operation was cancelled.", false, false);
                 }
 
-                var receiveEvent = await timeoutPolicy.ExecuteAsync(c => _transportService.ReceivePayloadAsync(c), ct);
+                var receiveEvent = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveEvent.IsSuccess)
                 {
                     return Result.FromError
@@ -1058,16 +1047,9 @@ public class DiscordGatewayClient : IDisposable
 
         try
         {
-            var timeoutPolicy = Policy.TimeoutAsync<Result<IPayload>>(heartbeatInterval * 2);
-
             while (!disconnectRequested.IsCancellationRequested)
             {
-                var receivedPayload = await timeoutPolicy.ExecuteAsync
-                (
-                    c => _transportService.ReceivePayloadAsync(c),
-                    disconnectRequested
-                );
-
+                var receivedPayload = await _transportService.ReceivePayloadAsync(disconnectRequested);
                 var receivedAt = DateTime.UtcNow;
 
                 if (!receivedPayload.IsSuccess)
