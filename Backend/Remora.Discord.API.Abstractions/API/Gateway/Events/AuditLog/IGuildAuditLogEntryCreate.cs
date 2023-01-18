@@ -1,5 +1,5 @@
 //
-//  AuditLogEntryCreateTests.cs
+//  IGuildAuditLogEntryCreate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Tests.TestBases;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Tests.Gateway.Events;
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
 
 /// <summary>
-/// Tests the IAuditLogEntryCreate event.
+/// Represents the creation of an audit log entry.
 /// </summary>
-public class AuditLogEntryCreateTests : GatewayEventTestBase<IAuditLogEntryCreate>
+[PublicAPI]
+public interface IGuildAuditLogEntryCreate : IGatewayEvent, IAuditLogEntry
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="AuditLogEntryCreateTests"/> class.
-    /// </summary>
-    /// <param name="fixture">The test fixture.</param>
-    public AuditLogEntryCreateTests(JsonBackedTypeTestFixture fixture)
-        : base(fixture)
-    {
-    }
 }

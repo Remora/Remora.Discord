@@ -208,7 +208,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(r => r.IsEnabled, "enabled");
 
         // Audit logs
-        options.AddDataObjectConverter<IAuditLogEntryCreate, AuditLogEntryCreate>();
+        options.AddDataObjectConverter<IGuildAuditLogEntryCreate, GuildAuditLogEntryCreate>();
 
         // Channels
         options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()

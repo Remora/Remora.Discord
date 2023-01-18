@@ -1,5 +1,5 @@
 //
-//  AuditLogEntryCreate.cs
+//  GuildAuditLogEntryCreate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Gateway.Events;
 
 /// <inheritdoc />
 [PublicAPI]
-public record AuditLogEntryCreate
+public record GuildAuditLogEntryCreate
 (
     string? TargetID,
     Optional<IReadOnlyList<IAuditLogChange>> Changes,
@@ -39,4 +39,4 @@ public record AuditLogEntryCreate
     AuditLogEvent ActionType,
     Optional<IOptionalAuditEntryInfo> Options = default,
     Optional<string> Reason = default
-) : IAuditLogEntryCreate;
+) : IGuildAuditLogEntryCreate;

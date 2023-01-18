@@ -1,5 +1,5 @@
 {
-  "t": "AUDIT_LOG_ENTRY_CREATE",
+  "t": "GUILD_AUDIT_LOG_ENTRY_CREATE",
   "s": 3,
   "op": 0,
   "d": {
