@@ -420,8 +420,7 @@ public class DiscordGatewayClient : IDisposable
                         _log.LogWarning
                         (
                             exe.Exception,
-                            "Transient error in gateway client: {Exception}",
-                            exe.Message
+                            "Transient error in gateway client"
                         );
 
                         return true;
