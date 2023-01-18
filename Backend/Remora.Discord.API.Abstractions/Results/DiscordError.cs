@@ -719,6 +719,11 @@ public enum DiscordError
     InvalidGuild = 50055,
 
     /// <summary>
+    /// The request origin is invalid.
+    /// </summary>
+    InvalidRequestOrigin = 50067,
+
+    /// <summary>
     /// Some message type is invalid.
     /// </summary>
     InvalidMessageType = 50068,
