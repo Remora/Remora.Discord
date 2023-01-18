@@ -990,6 +990,61 @@ public class CDNTests
     }
 
     /// <summary>
+    /// Tests the <see cref="CDN.GetStickerUrl(ISticker, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+    /// overloads.
+    /// </summary>
+    public class GetStickerUrl : CDNTestBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetStickerUrl"/> class.
+        /// </summary>
+        public GetStickerUrl()
+            : base
+            (
+                new Uri("https://cdn.discordapp.com/stickers/0"),
+                new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+            )
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the correct address is returned when the instance has no image set.
+        /// </summary>
+        [Fact]
+        public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
+        {
+            var stickerID = DiscordSnowflake.New(0);
+
+            var mockedSticker = new Mock<ISticker>();
+            mockedSticker.SetupGet(g => g.ID).Returns(stickerID);
+
+            var sticker = mockedSticker.Object;
+
+            var getActual = CDN.GetStickerUrl(sticker, CDNImageFormat.PNG);
+
+            Assert.False(getActual.IsSuccess);
+            Assert.IsType<ImageNotFoundError>(getActual.Error);
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<Result<Uri>> GetImageUris
+        (
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var stickerID = DiscordSnowflake.New(0);
+
+            var mockedSticker = new Mock<ISticker>();
+            mockedSticker.SetupGet(g => g.ID).Returns(stickerID);
+
+            var sticker = mockedSticker.Object;
+            yield return CDN.GetStickerUrl(sticker, imageFormat, imageSize);
+            yield return CDN.GetStickerUrl(stickerID, imageFormat, imageSize);
+        }
+    }
+
+    /// <summary>
     /// Tests the <see cref="CDN.GetRoleIconUrl(IRole, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
     /// overloads.
     /// </summary>

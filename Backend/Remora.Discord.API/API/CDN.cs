@@ -1149,7 +1149,8 @@ public static class CDN
         (
             imageFormat,
             CDNImageFormat.PNG,
-            CDNImageFormat.Lottie
+            CDNImageFormat.Lottie,
+            CDNImageFormat.GIF
         );
 
         if (!formatValidation.IsSuccess)
