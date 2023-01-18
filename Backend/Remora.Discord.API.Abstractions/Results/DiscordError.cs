@@ -457,6 +457,11 @@ public enum DiscordError
     MaximumNumberOfPremiumEmojisReached = 30056,
 
     /// <summary>
+    /// The maximum number of webhooks per guild has been reached (1000).
+    /// </summary>
+    MaximumNumberOfWebhooksPerGuildReached = 30058,
+
+    /// <summary>
     /// Unauthorized. Provide a valid token and try again.
     /// </summary>
     Unauthorized = 40001,
