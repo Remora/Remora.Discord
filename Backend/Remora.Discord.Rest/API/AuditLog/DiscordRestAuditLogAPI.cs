@@ -55,12 +55,13 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
     }
 
     /// <inheritdoc />
-    public virtual async Task<Result<IAuditLog>> GetAuditLogAsync
+    public virtual async Task<Result<IAuditLog>> GetGuildAuditLogAsync
     (
         Snowflake guildID,
         Optional<Snowflake> userID = default,
         Optional<AuditLogEvent> actionType = default,
         Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         Optional<byte> limit = default,
         CancellationToken ct = default
     )
@@ -92,6 +93,11 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
                 if (before.TryGet(out var realBefore))
                 {
                     b.AddQueryParameter("before", realBefore.ToString());
+                }
+
+                if (after.TryGet(out var realAfter))
+                {
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
                 if (limit.TryGet(out var realLimit))
