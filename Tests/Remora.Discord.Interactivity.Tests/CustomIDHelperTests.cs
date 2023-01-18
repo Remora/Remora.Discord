@@ -59,10 +59,10 @@ public class CustomIDHelperTests
         protected override string State => "state";
 
         /// <inheritdoc />
-        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateButtonIDWithState(name, this.State!);
+        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateButtonIDWithState(name, this.State);
 
         /// <inheritdoc />
-        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateButtonIDWithState(name, this.State!, path);
+        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateButtonIDWithState(name, this.State, path);
     }
 
     /// <summary>
@@ -92,10 +92,10 @@ public class CustomIDHelperTests
         protected override string State => "state";
 
         /// <inheritdoc />
-        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateSelectMenuIDWithState(name, this.State!);
+        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateSelectMenuIDWithState(name, this.State);
 
         /// <inheritdoc />
-        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateSelectMenuIDWithState(name, this.State!, path);
+        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateSelectMenuIDWithState(name, this.State, path);
     }
 
     /// <summary>
@@ -125,10 +125,10 @@ public class CustomIDHelperTests
         protected override string State => "state";
 
         /// <inheritdoc />
-        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateModalIDWithState(name, this.State!);
+        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateModalIDWithState(name, this.State);
 
         /// <inheritdoc />
-        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateModalIDWithState(name, this.State!, path);
+        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateModalIDWithState(name, this.State, path);
     }
 
     /// <summary>

@@ -73,10 +73,10 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
     )
     {
         Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-        if (attachments.HasValue)
+        if (attachments.TryGet(out var realAttachments))
         {
             // build attachment list
-            attachmentList = attachments.Value.Select
+            attachmentList = realAttachments.Select
             (
                 (f, i) => f.Match
                 (
@@ -107,14 +107,14 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                 {
                     if (attachmentList.HasValue)
                     {
-                        for (var i = 0; i < attachments.Value.Count; i++)
+                        for (var i = 0; i < realAttachments!.Count; i++)
                         {
-                            if (!attachments.Value[i].IsT0)
+                            if (!realAttachments[i].IsT0)
                             {
                                 continue;
                             }
 
-                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var (name, stream, _) = realAttachments[i].AsT0;
                             var contentName = $"files[{i}]";
 
                             b.AddContent(new StreamContent(stream), contentName, name);
@@ -208,14 +208,14 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         )
                     ).ToList();
 
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < realAttachments.Count; i++)
                     {
-                        if (!attachments.Value[i].IsT0)
+                        if (!realAttachments[i].IsT0)
                         {
                             continue;
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var (name, stream, _) = realAttachments[i].AsT0;
                         var contentName = $"files[{i}]";
 
                         b.AddContent(new StreamContent(stream), contentName, name);
@@ -276,10 +276,10 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             b =>
             {
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                if (attachments.HasValue)
+                if (attachments.TryGet(out var realAttachments))
                 {
                     // build attachment list
-                    attachmentList = attachments.Value.Select
+                    attachmentList = realAttachments.Select
                     (
                         (f, i) => f.Match
                         (
@@ -288,14 +288,14 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         )
                     ).ToList();
 
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < realAttachments.Count; i++)
                     {
-                        if (!attachments.Value[i].IsT0)
+                        if (!realAttachments[i].IsT0)
                         {
                             continue;
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var (name, stream, _) = realAttachments[i].AsT0;
                         var contentName = $"files[{i}]";
 
                         b.AddContent(new StreamContent(stream), contentName, name);
@@ -371,7 +371,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                 if (attachments.IsDefined(out var realAttachments))
                 {
                     // build attachment list
-                    attachmentList = attachments.Value.Select
+                    attachmentList = realAttachments.Select
                     (
                         (f, i) => f.Match
                         (
@@ -385,14 +385,14 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         )
                     ).ToList();
 
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < realAttachments.Count; i++)
                     {
-                        if (!attachments.Value[i].IsT0)
+                        if (!realAttachments[i].IsT0)
                         {
                             continue;
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var (name, stream, _) = realAttachments[i].AsT0;
                         var contentName = $"files[{i}]";
 
                         b.AddContent(new StreamContent(stream), contentName, name);
