@@ -5,7 +5,7 @@
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
             Add UriString markers
-            Change attachment->image in documentation
+            Change attachment-&gt;image in documentation
             BREAKING: Re-type IMessageComponentData.cs#Values to an optional list of strings
         </PackageReleaseNotes>
     </PropertyGroup>

@@ -207,6 +207,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IAutoModerationRuleDelete, AutoModerationRuleDelete>()
             .WithPropertyName(r => r.IsEnabled, "enabled");
 
+        // Audit logs
+        options.AddDataObjectConverter<IAuditLogEntryCreate, AuditLogEntryCreate>();
+
         // Channels
         options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
