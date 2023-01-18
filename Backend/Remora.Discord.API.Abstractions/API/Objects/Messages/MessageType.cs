@@ -153,5 +153,15 @@ public enum MessageType
     /// <summary>
     /// A subscriber role has been purchased.
     /// </summary>
-    RoleSubscriptionPurchase = 25
+    RoleSubscriptionPurchase = 25,
+
+    /// <summary>
+    /// An upsell message about premium interactions.
+    /// </summary>
+    InteractionPremiumUpsell = 26,
+
+    /// <summary>
+    /// TODO: Some kind of notification that a user has subscribed? Discord docs are unclear.
+    /// </summary>
+    GuildApplicationPremiumSubscription = 32
 }
