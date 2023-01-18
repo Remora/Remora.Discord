@@ -784,6 +784,11 @@ public enum DiscordError
     CommunityServerChannelMustBeTextChannel = 50086,
 
     /// <summary>
+    /// The entity type of the event is different from the entity you are trying to start the event for.
+    /// </summary>
+    EventEntityTypeIsDifferentThanAttemptedStartEntity = 50091,
+
+    /// <summary>
     /// This server is not available in your location.
     /// </summary>
     ServerUnavailableInYourLocation = 50095,
