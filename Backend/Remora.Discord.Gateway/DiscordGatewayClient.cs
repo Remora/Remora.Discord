@@ -895,6 +895,10 @@ public class DiscordGatewayClient : IDisposable
                     {
                         _log.LogInformation("Resume rejected by the gateway");
 
+                        // Our session is invalidated; so is this data.
+                        _sessionID = null;
+                        _lastSequenceNumber = 0;
+
                         await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
                         return await CreateNewSessionAsync(ct);
                     }
