@@ -53,8 +53,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     private readonly JsonSerializerOptions _jsonOptions;
 
     private readonly AsyncRetryPolicy<ClientWebSocket> _connectRetryPolicy;
-    private readonly AsyncRetryPolicy<WebSocketReceiveResult> _receiveRetryPolicy;
-    private readonly AsyncRetryPolicy _sendRetryPolicy;
 
     private readonly ILogger<WebSocketPayloadTransportService> _log;
 
@@ -86,14 +84,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         _log = log;
 
         _connectRetryPolicy = Policy<ClientWebSocket>
-            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
-            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
-
-        _receiveRetryPolicy = Policy<WebSocketReceiveResult>
-            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
-            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
-
-        _sendRetryPolicy = Policy
             .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
             .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
     }
@@ -199,11 +189,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             // Send the whole payload as one chunk
             var segment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
 
-            await _sendRetryPolicy.ExecuteAsync
-            (
-                c => _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, c),
-                ct
-            );
+            await _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
 
             if (_clientWebSocket.CloseStatus.HasValue)
             {
@@ -249,7 +235,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
             do
             {
-                result = await _receiveRetryPolicy.ExecuteAsync(c => _clientWebSocket.ReceiveAsync(buffer, c), ct);
+                result = await _clientWebSocket.ReceiveAsync(buffer, ct);
 
                 if (result.CloseStatus.HasValue)
                 {
@@ -362,34 +348,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         };
     }
 
-    private void LogRetry(Exception result, TimeSpan delay, int count, Context context)
-    {
-        _log.LogWarning
-        (
-            result,
-            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
-            delay,
-            count
-        );
-    }
-
     private void LogRetry(DelegateResult<ClientWebSocket> result, TimeSpan delay, int count, Context context)
-    {
-        if (result.Result is not null)
-        {
-            return;
-        }
-
-        _log.LogWarning
-        (
-            result.Exception,
-            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
-            delay,
-            count
-        );
-    }
-
-    private void LogRetry(DelegateResult<WebSocketReceiveResult> result, TimeSpan delay, int count, Context context)
     {
         if (result.Result is not null)
         {
