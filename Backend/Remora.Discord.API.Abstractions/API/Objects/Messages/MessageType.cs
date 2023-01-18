@@ -148,5 +148,10 @@ public enum MessageType
     /// <summary>
     /// An executed action of an Auto Moderation rule.
     /// </summary>
-    AutoModerationAction = 24
+    AutoModerationAction = 24,
+
+    /// <summary>
+    /// A subscriber role has been purchased.
+    /// </summary>
+    RoleSubscriptionPurchase = 25
 }

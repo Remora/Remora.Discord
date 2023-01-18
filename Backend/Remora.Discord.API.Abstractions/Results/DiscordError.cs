@@ -452,6 +452,11 @@ public enum DiscordError
     BitrateTooHighForChannelType = 30052,
 
     /// <summary>
+    /// The maximum number of premium emojis has been reached (25).
+    /// </summary>
+    MaximumNumberOfPremiumEmojisReached = 30056,
+
+    /// <summary>
     /// Unauthorized. Provide a valid token and try again.
     /// </summary>
     Unauthorized = 40001,
@@ -792,6 +797,16 @@ public enum DiscordError
     /// Failed to resize the uploaded asset below the maximum size (262144 bytes).
     /// </summary>
     FailedToResizeAsset = 50138,
+
+    /// <summary>
+    /// Cannot mix subscription and non subscriptions roles for an emoji.
+    /// </summary>
+    CannotMixSubscriptionAndNormalRolesForEmoji = 50144,
+
+    /// <summary>
+    /// Cannot convert between premium emoji and normal emoji.
+    /// </summary>
+    CannotConvertBetweenPremiumAndNormalEmoji = 50145,
 
     /// <summary>
     /// The uploaded file was not found.
