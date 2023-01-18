@@ -51,9 +51,11 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 {
     private readonly IServiceProvider _services;
     private readonly JsonSerializerOptions _jsonOptions;
-    private readonly AsyncRetryPolicy _retryPolicy;
+
     private readonly AsyncRetryPolicy<ClientWebSocket> _connectRetryPolicy;
     private readonly AsyncRetryPolicy<WebSocketReceiveResult> _receiveRetryPolicy;
+    private readonly AsyncRetryPolicy _sendRetryPolicy;
+
     private readonly ILogger<WebSocketPayloadTransportService> _log;
 
     /// <summary>
@@ -83,15 +85,15 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         _jsonOptions = jsonOptions;
         _log = log;
 
-        _retryPolicy = Policy
-            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
-            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
-
         _connectRetryPolicy = Policy<ClientWebSocket>
             .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
             .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
 
         _receiveRetryPolicy = Policy<WebSocketReceiveResult>
+            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
+            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
+
+        _sendRetryPolicy = Policy
             .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
             .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
     }
@@ -197,7 +199,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             // Send the whole payload as one chunk
             var segment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
 
-            await _retryPolicy.ExecuteAsync
+            await _sendRetryPolicy.ExecuteAsync
             (
                 c => _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, c),
                 ct
