@@ -532,6 +532,11 @@ public enum DiscordError
     TagNamesMustBeUnique = 40061,
 
     /// <summary>
+    /// A service resource is being rate limited.
+    /// </summary>
+    ServiceResourceIsBeingRateLimited = 40062,
+
+    /// <summary>
     /// There are no tags available that can be set by non-moderators.
     /// </summary>
     NoUnmoderatedTagsAvailable = 40066,

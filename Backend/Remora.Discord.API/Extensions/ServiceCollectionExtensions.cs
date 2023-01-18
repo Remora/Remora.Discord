@@ -939,7 +939,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The options, with the converters added.</returns>
     private static JsonSerializerOptions AddErrorObjectConverters(this JsonSerializerOptions options)
     {
-        options.AddDataObjectConverter<IRestError, RestError>();
+        options.AddDataObjectConverter<IRestError, RestError>()
+            .WithPropertyName(e => e.IsGlobal, "global");
         options.AddDataObjectConverter<IErrorDetails, ErrorDetails>();
 
         return options;

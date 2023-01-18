@@ -138,10 +138,12 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             bucketIdentifier = endpoint;
         }
 
-        var getValue = await cache.RetrieveAsync<RateLimitBucket>(
+        var getValue = await cache.RetrieveAsync<RateLimitBucket>
+        (
             CacheKey.LocalizedStringKey(nameof(Polly), bucketIdentifier),
             cancellationToken
         );
+
         if (getValue.IsDefined(out var rateLimitBucket))
         {
             // We don't reset route-specific rate limits ourselves; that's the responsibility of the returned headers
