@@ -1,5 +1,8 @@
 {
   "bot_id": "999999999999999999",
   "integration_id": "999999999999999999",
-  "premium_subscriber": null
+  "premium_subscriber": null,
+  "subscription_listing_id": "999999999999999999",
+  "available_for_purchase": null,
+  "guild_connections": null
 }

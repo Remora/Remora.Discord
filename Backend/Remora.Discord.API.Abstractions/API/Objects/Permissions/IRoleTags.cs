@@ -49,4 +49,27 @@ public interface IRoleTags
     /// nonpresence may correspond to "false".
     /// </remarks>
     Optional<bool?> IsPremiumSubscriberRole { get; }
+
+    /// <summary>
+    /// Gets the ID of the role's subscription SKU and listing.
+    /// </summary>
+    Optional<Snowflake> SubscriptionListingID { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the role is available for purchase.
+    /// </summary>
+    /// <remarks>
+    /// This value is strangely documented in Discord. It appears that a null value may correspond to "true", and
+    /// nonpresence may correspond to "false".
+    /// </remarks>
+    Optional<bool?> IsAvailableForPurchase { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this role is a guild's linked role.
+    /// </summary>
+    /// <remarks>
+    /// This value is strangely documented in Discord. It appears that a null value may correspond to "true", and
+    /// nonpresence may correspond to "false".
+    /// </remarks>
+    Optional<bool?> HasGuildConnections { get; }
 }

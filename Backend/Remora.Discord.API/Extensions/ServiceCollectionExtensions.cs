@@ -803,7 +803,9 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(r => r.IsMentionable, "mentionable");
 
         options.AddDataObjectConverter<IRoleTags, RoleTags>()
-            .WithPropertyName(t => t.IsPremiumSubscriberRole, "premium_subscriber");
+            .WithPropertyName(t => t.IsPremiumSubscriberRole, "premium_subscriber")
+            .WithPropertyName(t => t.IsAvailableForPurchase, "available_for_purchase")
+            .WithPropertyName(t => t.HasGuildConnections, "guild_connections");
 
         return options;
     }

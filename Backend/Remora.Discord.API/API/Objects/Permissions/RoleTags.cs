@@ -34,5 +34,8 @@ public record RoleTags
 (
     Optional<Snowflake> BotID = default,
     Optional<Snowflake> IntegrationID = default,
-    Optional<bool?> IsPremiumSubscriberRole = default
+    Optional<bool?> IsPremiumSubscriberRole = default,
+    Optional<Snowflake> SubscriptionListingID = default,
+    Optional<bool?> IsAvailableForPurchase = default,
+    Optional<bool?> HasGuildConnections = default
 ) : IRoleTags;
