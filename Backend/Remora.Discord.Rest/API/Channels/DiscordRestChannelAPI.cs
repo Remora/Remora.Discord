@@ -1347,13 +1347,22 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     (
         Snowflake channelID,
         Snowflake userID,
+        Optional<bool> withMember = default,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IThreadMember>
         (
             $"channels/{channelID}/thread-members/{userID}",
-            b => b.WithRateLimitContext(this.RateLimitCache),
+            b =>
+            {
+                if (withMember.TryGet(out var realWithMember))
+                {
+                    b.AddQueryParameter("with_member", realWithMember.ToString());
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
@@ -1362,13 +1371,34 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     public virtual Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
     (
         Snowflake channelID,
+        Optional<bool> withMember = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
         (
             $"channels/{channelID}/thread-members",
-            b => b.WithRateLimitContext(this.RateLimitCache),
+            b =>
+            {
+                if (withMember.TryGet(out var realWithMember))
+                {
+                    b.AddQueryParameter("with_member", realWithMember.ToString());
+                }
+
+                if (after.TryGet(out var realAfter))
+                {
+                    b.AddQueryParameter("after", realAfter.ToString());
+                }
+
+                if (limit.TryGet(out var realLimit))
+                {
+                    b.AddQueryParameter("limit", realLimit.ToString());
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }

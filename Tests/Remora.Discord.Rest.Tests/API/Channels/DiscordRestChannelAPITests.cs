@@ -3311,6 +3311,7 @@ public class DiscordRestChannelAPITests
         {
             var channelId = DiscordSnowflake.New(0);
             var userId = DiscordSnowflake.New(1);
+            var withMember = true;
 
             var api = CreateAPI
             (
@@ -3321,10 +3322,11 @@ public class DiscordRestChannelAPITests
                         $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
                     )
                     .WithNoContent()
+                    .WithQueryString("with_member", withMember.ToString())
                     .Respond("application/json", SampleRepository.Samples[typeof(IThreadMember)])
             );
 
-            var result = await api.GetThreadMemberAsync(channelId, userId);
+            var result = await api.GetThreadMemberAsync(channelId, userId, withMember);
             ResultAssert.Successful(result);
         }
     }
@@ -3351,6 +3353,9 @@ public class DiscordRestChannelAPITests
         public async Task PerformsRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
+            var withMember = true;
+            var after = DiscordSnowflake.New(2);
+            var limit = 1;
 
             var api = CreateAPI
             (
@@ -3361,10 +3366,16 @@ public class DiscordRestChannelAPITests
                         $"{Constants.BaseURL}channels/{channelId}/thread-members"
                     )
                     .WithNoContent()
+                    .WithQueryString(new KeyValuePair<string, string>[]
+                    {
+                        new("with_member", withMember.ToString()),
+                        new("after", after.ToString()),
+                        new("limit", limit.ToString())
+                    })
                     .Respond("application/json", "[]")
             );
 
-            var result = await api.ListThreadMembersAsync(channelId);
+            var result = await api.ListThreadMembersAsync(channelId, withMember, after, limit);
             ResultAssert.Successful(result);
         }
     }

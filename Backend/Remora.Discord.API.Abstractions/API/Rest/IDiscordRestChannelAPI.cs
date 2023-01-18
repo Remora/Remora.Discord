@@ -968,12 +968,14 @@ public interface IDiscordRestChannelAPI
     /// </summary>
     /// <param name="channelID">The ID of the thread.</param>
     /// <param name="userID">The ID of the user.</param>
+    /// <param name="withMember">Whether to include the <see cref="IThreadMember.Member"/> field.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     Task<Result<IThreadMember>> GetThreadMemberAsync
     (
         Snowflake channelID,
         Snowflake userID,
+        Optional<bool> withMember = default,
         CancellationToken ct = default
     );
 
@@ -981,11 +983,17 @@ public interface IDiscordRestChannelAPI
     /// Lists the members of the given thread. Restricted to bots with with GuildMembers intent.
     /// </summary>
     /// <param name="channelID">The thread to list the members of.</param>
+    /// <param name="withMember">Whether to include the <see cref="IThreadMember.Member"/> field.</param>
+    /// <param name="after">The ID of the member to get members after.</param>
+    /// <param name="limit">The maximum number of messages to retrieve. Ranges between 1 and 100.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
     (
         Snowflake channelID,
+        Optional<bool> withMember = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
         CancellationToken ct = default
     );
 
