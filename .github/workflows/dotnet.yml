@@ -70,17 +70,19 @@ jobs:
       KEEP_TAG_VERSIONS: 5
 
     steps:
-      - name: Checkout current gh-pages
+      - name: Checkout triggering branch 
+        uses: actions/checkout@v3
+        with:
+          path: base
+
+      - name: Checkout gh-pages
         uses: actions/checkout@v3
         with:
           ref: gh-pages
           path: site
 
-      - name: Clear version
-        working-directory: site
-        run: |
-          rm -rf ${GITHUB_REF_NAME}
-          echo "Cleared ${GITHUB_REF_NAME}"
+      - name: Prepare
+        run: bash base/docfx/scripts/prepare.sh
 
       - name: Download documentation artifacts
         uses: actions/download-artifact@v3
@@ -88,40 +90,8 @@ jobs:
           name: docfx-site
           path: site/${{ github.ref_name }}
 
-      - name: Manage versions
-        shell: bash
-        working-directory: site
-        run: |
-          # Read versions
-          readarray -d '' versions < <( \
-              find . -maxdepth 1 -type d -regextype posix-extended -regex '\./[0-9]{4}\.[0-9]{1,}' -printf '%f\0' \
-            | sort -z -r \
-          )
-
-          # Check if we have to remove old versions
-          if [[ ${#versions[@]} -gt ${KEEP_TAG_VERSIONS} ]]; then
-              echo "::group::Removing old versions"
-              for (( i=${KEEP_TAG_VERSIONS}; i<${#versions[@]}; i++ )); do
-                  echo "${versions[$i]}"
-                  rm -rf ${versions[$i]}
-              done
-              echo "::endgroup::"
-          fi
-
-          # Generate versions.json
-          echo "[" > versions.json
-          echo "  \"main\"" >> versions.json
-          VERSION_COUNT=$((${#versions[@]} > ${KEEP_TAG_VERSIONS} ? ${KEEP_TAG_VERSIONS} : ${#versions[@]}))
-          for (( i=0; i<${VERSION_COUNT}; i++ )); do
-              echo " ,\"${versions[$i]}\"" >> versions.json
-          done
-          echo "]" >> versions.json
-
-          echo "Generated versions.json"
-
-          # Update index.html
-          sed -i -E "s/url=.*\"/url=.\/${versions[0]}\"/" index.html
-          echo "Updated index.html"
+      - name: Build
+        run: bash base/docfx/scripts/build.sh
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
