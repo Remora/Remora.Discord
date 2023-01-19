@@ -59,14 +59,14 @@
                                     <li><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
         <li><a href="/Remora.Discord/README">README</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.API">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.API.Abstractions">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Caching.Abstractions">Remora</a></li>
-        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
         <li><a href="/Remora.Discord/Remora.Discord.Rest">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching.Redis">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Caching">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Unstable">Remora</a></li>
+        <li><a href="/Remora.Discord/Remora.Discord.Gateway">Remora</a></li>
         <li class="active"><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
@@ -331,6 +331,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/D0AF9E50">Cannot<wbr>Convert<wbr>Between<wbr>Premium<wbr>And<wbr>Normal<wbr>Emoji</a></td>
+								<td>50145</td>
+								<td>
+									<div>
+    Cannot convert between premium emoji and normal emoji.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/0A95AB2A">Cannot<wbr>Delete<wbr>Community<wbr>Required<wbr>Channel</a></td>
 								<td>50074</td>
 								<td>
@@ -386,6 +396,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     Cannot execute action on a system message.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/999219C9">Cannot<wbr>Mix<wbr>Subscription<wbr>And<wbr>Normal<wbr>Roles<wbr>For<wbr>Emoji</a></td>
+								<td>50144</td>
+								<td>
+									<div>
+    Cannot mix subscription and non subscriptions roles for an emoji.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -516,6 +536,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     This message cannot be edited due to announcement rate limits.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/DC49C7DB">Event<wbr>Entity<wbr>Type<wbr>Is<wbr>Different<wbr>Than<wbr>Attempted<wbr>Start<wbr>Entity</a></td>
+								<td>50091</td>
+								<td>
+									<div>
+    The entity type of the event is different from the entity you are trying to start the event for.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -777,6 +807,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     One or more recipients were invalid.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/2A9A6F83">InvalidRequestOrigin</a></td>
+								<td>50067</td>
+								<td>
+									<div>
+    The request origin is invalid.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -1122,6 +1162,26 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E42757B8">Maximum<wbr>Number<wbr>Of<wbr>Premium<wbr>Emojis<wbr>Reached</a></td>
+								<td>30056</td>
+								<td>
+									<div>
+    The maximum number of premium emojis has been reached (25).
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/5998EE8D">Maximum<wbr>Number<wbr>Of<wbr>Webhooks<wbr>Per<wbr>Guild<wbr>Reached</a></td>
+								<td>30058</td>
+								<td>
+									<div>
+    The maximum number of webhooks per guild has been reached (1000).
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/31B5EE59">Message<wbr>Already<wbr>Crossposted</a></td>
 								<td>40033</td>
 								<td>
@@ -1377,6 +1437,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     The write action you are performing on the server has hit the write rate limit.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/07194720">Service<wbr>Resource<wbr>Is<wbr>Being<wbr>Rate<wbr>Limited</a></td>
+								<td>40062</td>
+								<td>
+									<div>
+    A service resource is being rate limited.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
