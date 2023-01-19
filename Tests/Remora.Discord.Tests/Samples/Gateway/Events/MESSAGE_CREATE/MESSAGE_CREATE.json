@@ -30,20 +30,20 @@
     "attachments": [
       {
         "id": "999999999999999999",
-        "filename": "none",
+        "filename": "file.png",
         "size": 0,
         "url": "https://www.example.org",
         "proxy_url": "https://www.example.org"
       }
     ],
     "embeds": [
-      { }
+      {}
     ],
     "reactions": [
       {
         "count": 1,
         "me": true,
-        "emoji": { }
+        "emoji": {}
       }
     ],
     "nonce": "none",
@@ -53,9 +53,9 @@
     "activity": {
       "type": 1
     },
-    "application": { },
+    "application": {},
     "application_id": "999999999999999999",
-    "message_reference": { },
+    "message_reference": {},
     "flags": 1,
     "referenced_message": {
       "id": "999999999999999999",
@@ -71,10 +71,10 @@
       "edited_timestamp": "1970-01-01T00:00:00.000000+00:00",
       "tts": true,
       "mention_everyone": true,
-      "mentions": [ ],
-      "mention_roles": [ ],
-      "attachments": [ ],
-      "embeds": [ ],
+      "mentions": [],
+      "mention_roles": [],
+      "attachments": [],
+      "embeds": [],
       "pinned": true,
       "type": 1
     },
@@ -96,7 +96,7 @@
     "components": [
       {
         "type": 1,
-        "components": [ ]
+        "components": []
       }
     ],
     "sticker_items": [
@@ -108,14 +108,14 @@
     ],
     "position": 1,
     "guild_id": "999999999999999999",
-    "member": { },
+    "member": {},
     "mentions": [
       {
         "id": "999999999999999999",
         "username": "none",
         "discriminator": "9999",
         "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-        "member": { }
+        "member": {}
       }
     ]
   }
