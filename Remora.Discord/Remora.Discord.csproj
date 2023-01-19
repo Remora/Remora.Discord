@@ -1,12 +1,26 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2022.54</VersionPrefix>
+        <VersionPrefix>2023.1</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Add UriString markers
-            Change attachment->image in documentation
-            BREAKING: Re-type IMessageComponentData.cs#Values to an optional list of strings
+            Fix dependency injection exception for PaginationInteractions
+            Fix comment on (I)InteractionCommandContext
+            Fuck it, get rid of receive/send retries.
+            Remove the timeout policies from payload reception.
+            Don't log the exception message manually; let the logging system handle it.
+            Support GIF stickers.
+            BREAKING: Implement support for thread member pagination.
+            BREAKING: Fix optionality of IsEnabled.
+            BREAKING: Add additional role tags.
+            BREAKING: Implement role subscriptions.
+            BREAKING: Implement new error code and more error fields.
+            Implement support for AUDIT_LOG_ENTRY_CREATE.
+            Add new error code.
+            Add new error.
+            Add new message type.
+            BREAKING: Implement support for thread member pagination.
+            BREAKING: Implement "after" for audit log retrieval.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

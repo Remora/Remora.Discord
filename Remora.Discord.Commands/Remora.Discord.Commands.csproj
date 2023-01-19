@@ -1,10 +1,11 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>26.2.1</VersionPrefix>
+        <VersionPrefix>26.2.2</VersionPrefix>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
+            Fix comment on (I)InteractionCommandContext
         </PackageReleaseNotes>
     </PropertyGroup>
 

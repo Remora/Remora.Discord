@@ -1,7 +1,7 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>4.4.4</VersionPrefix>
+        <VersionPrefix>4.4.5</VersionPrefix>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
             Update dependencies.

@@ -1,7 +1,7 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>34.0.1</VersionPrefix>
+        <VersionPrefix>34.0.2</VersionPrefix>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
             Update dependencies.

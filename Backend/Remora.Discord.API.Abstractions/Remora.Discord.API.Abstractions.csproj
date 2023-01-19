@@ -1,12 +1,20 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>75.0.0</VersionPrefix>
+        <VersionPrefix>76.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            Add UriString markers
-            Change attachment-&gt;image in documentation
-            BREAKING: Re-type IMessageComponentData.cs#Values to an optional list of strings
+          BREAKING: Implement support for thread member pagination.
+          BREAKING: Fix optionality of IsEnabled.
+          BREAKING: Add additional role tags.
+          BREAKING: Implement role subscriptions.
+          BREAKING: Implement "after" for audit log retrieval.
+          Implement new error code.
+          BREAKING: Implement new error code and more error fields.
+          Add new error code.
+          Add new error.
+          Add new message type.
+          Implement support for AUDIT_LOG_ENTRY_CREATE.
         </PackageReleaseNotes>
     </PropertyGroup>
 
