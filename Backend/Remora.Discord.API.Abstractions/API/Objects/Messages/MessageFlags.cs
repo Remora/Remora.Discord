@@ -79,7 +79,7 @@ public enum MessageFlags
     FailedToMentionSomeRolesInThread = 1 << 8,
 
     /// <summary>
-    /// The message contains a link to a file, and will prompt the user as being potentially dangerous. This is a satus flag and is not settable in user code.
+    /// The message contains a link to a file, and will prompt the user as being potentially dangerous. This is a status flag and is not settable in user code.
     /// </summary>
     ContainsPotentialDangerousLink = 1 << 10,
 
