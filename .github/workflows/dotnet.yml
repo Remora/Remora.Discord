@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        submodules: ${{ github.event_name == 'push' }}
+        submodules: recursive
 
     - uses: actions/setup-dotnet@v2
       with:
@@ -70,7 +70,7 @@ jobs:
       KEEP_TAG_VERSIONS: 5
 
     steps:
-      - name: Checkout triggering branch 
+      - name: Checkout triggering branch
         uses: actions/checkout@v3
         with:
           path: base
