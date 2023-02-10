@@ -66,8 +66,11 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
+      "_appName": "Remora.Discord",
+      "_appTitle": "Remora.Discord",
       "_appLogoPath": "images/1f988.svg",
-      "_appFaviconPath": "images/1f988.svg"
+      "_appFaviconPath": "images/1f988.svg",
+      "_appVersion": "%APP_VERSION%"
     }
   }
 }
