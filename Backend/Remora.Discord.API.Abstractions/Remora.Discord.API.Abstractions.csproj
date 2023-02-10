@@ -76,6 +76,42 @@
       <Compile Update="API\Objects\Interactions\Components\SelectMenu\IPartialChannelSelectComponent.cs">
         <DependentUpon>IPartialSelectMenuComponent.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\Guilds\IPartialGuildMember.cs">
+        <DependentUpon>IGuildMember.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Guilds\IPartialGuild.cs">
+        <DependentUpon>IGuild.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Applications\IPartialApplication.cs">
+        <DependentUpon>IApplication.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Channels\IPartialChannel.cs">
+        <DependentUpon>IChannel.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Channels\IPartialForumTag.cs">
+        <DependentUpon>IForumTag.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Emojis\IPartialEmoji.cs">
+        <DependentUpon>IEmoji.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Integrations\IPartialIntegration.cs">
+        <DependentUpon>IIntegration.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Invites\IPartialInvite.cs">
+        <DependentUpon>IInvite.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Messages\IPartialAttachment.cs">
+        <DependentUpon>IAttachment.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Presence\IPartialPresence.cs">
+        <DependentUpon>IPresence.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Users\IPartialUser.cs">
+        <DependentUpon>IUser.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Voice\IPartialVoiceState.cs">
+        <DependentUpon>IVoiceState.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
