@@ -346,6 +346,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="communicationDisabledUntil">
     /// The date and time until which the user has communication disabled.
     /// </param>
+    /// <param name="flags">The new flags of the user.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A rest result which may or may not have succeeded.</returns>
@@ -359,6 +360,7 @@ public interface IDiscordRestGuildAPI
         Optional<bool?> isDeafened = default,
         Optional<Snowflake?> channelID = default,
         Optional<DateTimeOffset?> communicationDisabledUntil = default,
+        Optional<GuildMemberFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

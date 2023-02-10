@@ -87,7 +87,8 @@
         ],
         "joined_at": "1970-01-01T00:00:00.000000+00:00",
         "deaf": true,
-        "mute": true
+        "mute": true,
+        "flags": 1
       }
     ],
     "channels": [

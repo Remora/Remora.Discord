@@ -14,6 +14,7 @@
   "premium_since": null,
   "deaf": true,
   "mute": true,
+  "flags": 1,
   "pending": true,
   "permissions": "0",
   "communication_disabled_until": null

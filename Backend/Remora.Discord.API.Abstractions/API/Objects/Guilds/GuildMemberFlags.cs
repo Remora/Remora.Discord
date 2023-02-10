@@ -1,5 +1,5 @@
 //
-//  GuildMember.cs
+//  GuildMemberFlags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,29 +21,33 @@
 //
 
 using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
+/// <summary>
+/// Represents various flags that can be set on a guild member.
+/// </summary>
+[PublicAPI, Flags]
+public enum GuildMemberFlags
+{
+    /// <summary>
+    /// Member has left and rejoined the guild.
+    /// </summary>
+    DidRejoin = 1 << 0,
 
-/// <inheritdoc cref="IGuildMember" />
-[PublicAPI]
-public record GuildMember
-(
-    Optional<IUser> User,
-    Optional<string?> Nickname,
-    Optional<IImageHash?> Avatar,
-    IReadOnlyList<Snowflake> Roles,
-    DateTimeOffset JoinedAt,
-    Optional<DateTimeOffset?> PremiumSince,
-    bool IsDeafened,
-    bool IsMuted,
-    GuildMemberFlags Flags,
-    Optional<bool?> IsPending = default,
-    Optional<IDiscordPermissionSet> Permissions = default,
-    Optional<DateTimeOffset?> CommunicationDisabledUntil = default
-) : IGuildMember;
+    /// <summary>
+    /// Member has completed onboarding.
+    /// </summary>
+    CompletedOnboarding = 1 << 1,
+
+    /// <summary>
+    /// Member is exempt from guild verification requirements.
+    /// </summary>
+    BypassesVerification = 1 << 2,
+
+    /// <summary>
+    /// Member has started onboarding.
+    /// </summary>
+    StartedOnboarding = 1 << 3
+}

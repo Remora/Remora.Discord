@@ -42,6 +42,7 @@ public record PartialGuildMember
     Optional<DateTimeOffset?> PremiumSince = default,
     Optional<bool> IsDeafened = default,
     Optional<bool> IsMuted = default,
+    Optional<GuildMemberFlags> Flags = default,
     Optional<bool?> IsPending = default,
     Optional<IDiscordPermissionSet> Permissions = default,
     Optional<DateTimeOffset?> CommunicationDisabledUntil = default

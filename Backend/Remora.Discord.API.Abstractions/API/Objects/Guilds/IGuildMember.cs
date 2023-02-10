@@ -74,6 +74,11 @@ public interface IGuildMember : IPartialGuildMember
     new bool IsMuted { get; }
 
     /// <summary>
+    /// Gets the flags set on the member.
+    /// </summary>
+    new GuildMemberFlags Flags { get; }
+
+    /// <summary>
     /// Gets a value indicating whether the user has passed the guild membership screening requirements.
     /// </summary>
     new Optional<bool?> IsPending { get; }
@@ -111,6 +116,9 @@ public interface IGuildMember : IPartialGuildMember
 
     /// <inheritdoc/>
     Optional<bool> IPartialGuildMember.IsMuted => this.IsMuted;
+
+    /// <inheritdoc/>
+    Optional<GuildMemberFlags> IPartialGuildMember.Flags => this.Flags;
 
     /// <inheritdoc/>
     Optional<bool?> IPartialGuildMember.IsPending => this.IsPending;

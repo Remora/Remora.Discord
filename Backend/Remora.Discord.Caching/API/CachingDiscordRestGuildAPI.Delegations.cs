@@ -69,6 +69,7 @@ public partial class CachingDiscordRestGuildAPI
         Optional<bool?> isDeafened = default,
         Optional<Snowflake?> channelID = default,
         Optional<DateTimeOffset?> communicationDisabledUntil = default,
+        Optional<GuildMemberFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -83,6 +84,7 @@ public partial class CachingDiscordRestGuildAPI
             isDeafened,
             channelID,
             communicationDisabledUntil,
+            flags,
             reason,
             ct
         );

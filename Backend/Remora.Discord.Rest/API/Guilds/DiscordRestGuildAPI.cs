@@ -544,6 +544,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<bool?> isDeafened = default,
         Optional<Snowflake?> channelID = default,
         Optional<DateTimeOffset?> communicationDisabledUntil = default,
+        Optional<GuildMemberFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -563,6 +564,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("deaf", isDeafened, this.JsonOptions);
                         json.Write("channel_id", channelID, this.JsonOptions);
                         json.Write("communication_disabled_until", communicationDisabledUntil, this.JsonOptions);
+                        json.Write("flags", flags, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),

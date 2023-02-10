@@ -1300,6 +1300,7 @@ public class DiscordRestGuildAPITests
             var nick = "cdd";
             var roles = new List<Snowflake>();
             var mute = true;
+            var flags = GuildMemberFlags.BypassesVerification;
             var deaf = true;
             var channelId = DiscordSnowflake.New(2);
             var communicationDisabledUntil = DateTimeOffset.Now.AddDays(2);
@@ -1318,6 +1319,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("nick", p => p.Is(nick))
                                 .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("mute", p => p.Is(mute))
+                                .WithProperty("flags", p => p.Is((int)flags))
                                 .WithProperty("deaf", p => p.Is(deaf))
                                 .WithProperty("channel_id", p => p.Is(channelId.ToString()))
                                 .WithProperty("communication_disabled_until", p => p.IsString())
@@ -1336,6 +1338,7 @@ public class DiscordRestGuildAPITests
                 deaf,
                 channelId,
                 communicationDisabledUntil,
+                flags,
                 reason
             );
 
