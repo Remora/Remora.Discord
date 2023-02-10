@@ -1,0 +1,255 @@
+/* Customize font sizes in navigation */
+.sidebar-item
+{
+    font-size: 1em;
+}
+
+span.sidebar-item
+{
+    font-size: .8em;
+}
+
+ul.level2,
+ul.level3,
+ul.level4,
+ul.level5,
+ul.level6,
+ul.level7,
+ul.level8,
+ul.level9
+{
+    font-size: 0.96em;
+}
+
+ul.level2 > li > a.sidebar-item,
+ul.level3 > li > a.sidebar-item,
+ul.level4 > li > a.sidebar-item,
+ul.level5 > li > a.sidebar-item,
+ul.level6 > li > a.sidebar-item,
+ul.level7 > li > a.sidebar-item,
+ul.level8 > li > a.sidebar-item,
+ul.level9 > li > a.sidebar-item
+{
+    font-size: 1em;
+}
+
+/* Add additional layers for navigation */
+ul.level4,
+ul.level5,
+ul.level6,
+ul.level7,
+ul.level8,
+ul.level9
+{
+    padding-inline-start: 1em;
+    list-style-type: none;
+}
+
+ul.level4 > li > a.sidebar-item,
+ul.level5 > li > a.sidebar-item,
+ul.level6 > li > a.sidebar-item,
+ul.level7 > li > a.sidebar-item,
+ul.level8 > li > a.sidebar-item,
+ul.level9 > li > a.sidebar-item
+{
+    font-weight: 500;
+    padding: 0;
+    margin: 2px 16px;
+}
+
+ul.level4 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level5 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level6 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level7 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level8 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level9 > li > a.sidebar-item
+{
+    color: var(--sidebar-item-3rd-color);
+}
+
+ul.level4 > li > a.sidebar-item:hover,
+ul.level4 > li > a.sidebar-item:focus,
+ul.level5 > li > a.sidebar-item:hover,
+ul.level5 > li > a.sidebar-item:focus,
+ul.level6 > li > a.sidebar-item:hover,
+ul.level6 > li > a.sidebar-item:focus,
+ul.level7 > li > a.sidebar-item:hover,
+ul.level7 > li > a.sidebar-item:focus,
+ul.level8 > li > a.sidebar-item:hover,
+ul.level8 > li > a.sidebar-item:focus,
+ul.level9 > li > a.sidebar-item:hover,
+ul.level9 > li > a.sidebar-item:focus
+{
+    color: var(--link-active-color);
+    text-decoration: underline;
+}
+
+ul.level4 > li > a.sidebar-item.active,
+ul.level5 > li > a.sidebar-item.active,
+ul.level6 > li > a.sidebar-item.active,
+ul.level7 > li > a.sidebar-item.active,
+ul.level8 > li > a.sidebar-item.active,
+ul.level9 > li > a.sidebar-item.active
+{
+    color: var(--link-active-color);
+}
+
+/* Fix unclickable view source/contribute buttons (https://github.com/jbltx/DiscordFX/pull/22) */
+.divider {
+    margin: 0 5px;
+}
+
+article span.small.pull-right {
+    z-index: 999;
+    position: relative;
+}
+
+/* Fix nested unordered lists not showing (https://github.com/jbltx/DiscordFX/pull/21) */
+article li > ul
+{
+    display: block;
+}
+
+/* Override highlight.js colours */
+:root {
+    --hljs-bg-color: #1e1e1e;
+    --hljs-color: #dbdbdb;
+    --hljs-keyword-color: #569BD5;
+    --hljs-comment-color: #3d904a;
+    --hljs-macro-color: #bc63c4;
+    --hljs-string-color: #d59c84;
+    --hljs-string-escape-color: #bbffbb;
+    --hljs-field-color: #bcb66b;
+    --hljs-function-color: #ff8000;
+    --hljs-class-color: #fdd601;
+    --hljs-number-color: #9ccda7;
+    --hljs-operator-color: #B3B3B3
+}
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: var(--hljs-color);
+    background: var(--hljs-bg-color);
+}
+
+.hljs-subst {
+    color: var(--hljs-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-title,
+.hljs-title.class_ {
+    color: var(--hljs-class-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-title.function_ {
+    color: var(--hljs-function-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-variable.constant_,
+.hljs-symbol {
+    color: var(--hljs-macro-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-built_in,
+.hljs-keyword,
+.hljs-literal,
+.hljs-variable.language_,
+.hljs-meta,
+.hljs-type {
+    color: var(--hljs-keyword-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-operator,
+.hljs-punctuation {
+    color: var(--hljs-operator-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-property,
+.hljs-variable,
+.hljs-params {
+    color: var(--hljs-field-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-comment {
+    color: var(--hljs-comment-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-string,
+.hljs-attr,
+.hljs-meta.string_,
+.hljs-regexp {
+    color: var(--hljs-string-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-number {
+    color: var(--hljs-number-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+.hljs-char.escape_ {
+    color: var(--hljs-string-escape-color);
+    font-style: normal;
+    font-weight: normal;
+}
+
+/* Version Bar */
+#versionbar .nav > li.active > .expand-stub::before,
+#versionbar .nav > li.in > .expand-stub::before,
+#versionbar .nav > li.in.active > .expand-stub::before,
+#versionbar .nav > li.filtered > .expand-stub::before {
+    transform: none;
+}
+
+#versionbar .nav > li > .expand-stub::before,
+#versionbar .nav > li.active > .expand-stub::before {
+    content: " ";
+    position: absolute;
+    transform: rotate(-90deg);
+    width: 10px;
+    height: 10px;
+    top: 5px;
+    left: 5px;
+    background-repeat: no-repeat;
+    background: url(down-arrow.svg);
+}
