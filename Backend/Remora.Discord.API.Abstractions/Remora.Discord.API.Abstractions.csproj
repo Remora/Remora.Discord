@@ -112,6 +112,15 @@
       <Compile Update="API\Objects\Voice\IPartialVoiceState.cs">
         <DependentUpon>IVoiceState.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\Permissions\IPartialRole.cs">
+        <DependentUpon>IRole.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Permissions\IPartialPermissionOverwrite.cs">
+        <DependentUpon>PermissionOverwriteType.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Messages\IPartialMessage.cs">
+        <DependentUpon>IMessage.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

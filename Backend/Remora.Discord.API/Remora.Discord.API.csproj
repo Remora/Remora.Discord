@@ -87,6 +87,48 @@
       <Compile Update="API\Objects\Interactions\Components\SelectMenu\PartialRoleSelectComponent.cs">
         <DependentUpon>RoleSelectComponent.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\Applications\PartialApplication.cs">
+        <DependentUpon>Application.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Channels\PartialChannel.cs">
+        <DependentUpon>Channel.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Channels\PartialForumTag.cs">
+        <DependentUpon>ForumTag.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Emojis\PartialEmoji.cs">
+        <DependentUpon>Emoji.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Guilds\PartialGuild.cs">
+        <DependentUpon>Guild.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Guilds\PartialGuildMember.cs">
+        <DependentUpon>GuildMember.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Integrations\PartialIntegration.cs">
+        <DependentUpon>Integration.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Invites\PartialInvite.cs">
+        <DependentUpon>Invite.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Messages\PartialAttachment.cs">
+        <DependentUpon>Attachment.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Messages\PartialMessage.cs">
+        <DependentUpon>Message.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Permissions\PartialRole.cs">
+        <DependentUpon>Role.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Permissions\PartialPermissionOverwrite.cs">
+        <DependentUpon>PermissionOverwrite.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Presences\PartialPresence.cs">
+        <DependentUpon>Presence.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Voice\PartialVoiceState.cs">
+        <DependentUpon>VoiceState.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
