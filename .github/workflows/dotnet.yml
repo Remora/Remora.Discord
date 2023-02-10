@@ -1,13 +1,17 @@
 name: .NET
 
 env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
   GITHUB_USER: Nihlus
   GITHUB_FEED: https://nuget.pkg.github.com/Remora
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
-  - push
-  - pull_request
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+  pull_request:
 
 jobs:
   build:
@@ -15,6 +19,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
     - uses: actions/setup-dotnet@v2
       with:
         dotnet-version: |
@@ -32,11 +39,68 @@ jobs:
     - name: Package
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
+
     - uses: actions/upload-artifact@v3
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       with:
         name: nupkg
         path: nuget/*
-  prerelease:
+
+    - name: Build Docs
+      if: github.event_name == 'push'
+      run: |
+        dotnet tool restore
+        cd ./docfx
+        sed -i -E "s/%APP_VERSION%/${GITHUB_REF_NAME}/" docfx_project/docfx.json
+        dotnet docfx docfx_project/docfx.json
+
+    - uses: actions/upload-artifact@v3
+      if: github.event_name == 'push'
+      with:
+        name: docfx-site
+        path: docfx/docfx_project/_site/
+
+  publish_docs:
+    name: Publish Documentation
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    env:
+      KEEP_TAG_VERSIONS: 5
+
+    steps:
+      - name: Checkout triggering branch
+        uses: actions/checkout@v3
+        with:
+          path: base
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: site
+
+      - name: Prepare
+        run: bash base/docfx/scripts/prepare.sh
+
+      - name: Download documentation artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: docfx-site
+          path: site/${{ github.ref_name }}
+
+      - name: Build
+        run: bash base/docfx/scripts/build.sh
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+
+  publish_prerelease_packages:
+    name: Publish Prerelease Packages
     needs: build
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest

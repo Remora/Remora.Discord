@@ -1,5 +1,5 @@
-Title: Using Undocumented Features
-----------------------------------
+Using Undocumented Features
+===========================
 
 The unfortunate reality of using the Discord API is that, while the online 
 documentation is extensive, it is not exhaustive. Discord often exposes 
