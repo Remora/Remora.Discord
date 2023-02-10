@@ -114,7 +114,7 @@ jobs:
 
       # To ensure that the current version being pushed does not get pruned we prune first.
       - name: Prune packages older than 4 versions (new version is the 5th)
-        uses: smartsquaregmbh/delete-old-packages@v0.4.0
+        uses: smartsquaregmbh/delete-old-packages@v0.6.0
         with:
           keep: 4
           names: |
