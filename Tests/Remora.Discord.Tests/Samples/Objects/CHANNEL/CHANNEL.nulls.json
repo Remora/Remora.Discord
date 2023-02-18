@@ -29,6 +29,7 @@
   "icon": null,
   "owner_id": "999999999999999999",
   "application_id": "999999999999999999",
+  "managed": true,
   "parent_id": null,
   "last_pin_timestamp": null,
   "rtc_region": null,

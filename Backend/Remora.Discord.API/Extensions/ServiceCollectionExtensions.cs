@@ -213,16 +213,19 @@ public static class ServiceCollectionExtensions
         // Channels
         options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
+            .WithPropertyName(c => c.IsManaged, "managed")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
             .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelUpdate, ChannelUpdate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
+            .WithPropertyName(c => c.IsManaged, "managed")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
             .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelDelete, ChannelDelete>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
+            .WithPropertyName(c => c.IsManaged, "managed")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
             .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
@@ -231,16 +234,19 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IThreadCreate, ThreadCreate>()
             .WithPropertyName(c => c.IsNewlyCreated, "newly_created")
             .WithPropertyName(c => c.IsNsfw, "nsfw")
+            .WithPropertyName(c => c.IsManaged, "managed")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
             .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IThreadUpdate, ThreadUpdate>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
+            .WithPropertyName(c => c.IsManaged, "managed")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
             .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IThreadDelete, ThreadDelete>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
+            .WithPropertyName(c => c.IsManaged, "managed")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
             .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
@@ -532,11 +538,13 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IChannel, Channel>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
+            .WithPropertyName(c => c.IsManaged, "managed")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
             .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IPartialChannel, PartialChannel>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
+            .WithPropertyName(c => c.IsManaged, "managed")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelMention, ChannelMention>();

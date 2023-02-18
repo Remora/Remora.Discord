@@ -352,6 +352,11 @@ public enum DiscordError
     MaxReactionsReached = 30010,
 
     /// <summary>
+    /// Maximum number of group DMs has been reached (10).
+    /// </summary>
+    MaximumNumberOfGroupDMsReached = 30011,
+
+    /// <summary>
     /// Maximum number of guild channels reached (500).
     /// </summary>
     MaxGuildChannelsReached = 30013,
