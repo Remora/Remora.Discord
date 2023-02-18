@@ -464,7 +464,7 @@ public enum DiscordError
     /// <summary>
     /// The channels for the guild are too large.
     /// </summary>
-    ChannelsForGiildAreTooLarge = 30061,
+    ChannelsForGuildAreTooLarge = 30061,
 
     /// <summary>
     /// Unauthorized. Provide a valid token and try again.
