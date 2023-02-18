@@ -462,6 +462,11 @@ public enum DiscordError
     MaximumNumberOfWebhooksPerGuildReached = 30058,
 
     /// <summary>
+    /// The maximum number of channel permission overwrites has been reached (1000).
+    /// </summary>
+    MaximumNumberOfChannelPermissionOverwritesReached = 30060,
+
+    /// <summary>
     /// The channels for the guild are too large.
     /// </summary>
     ChannelsForGuildAreTooLarge = 30061,
