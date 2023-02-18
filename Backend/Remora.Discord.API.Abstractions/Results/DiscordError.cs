@@ -462,6 +462,11 @@ public enum DiscordError
     MaximumNumberOfWebhooksPerGuildReached = 30058,
 
     /// <summary>
+    /// The channels for the guild are too large.
+    /// </summary>
+    ChannelsForGiildAreTooLarge = 30061,
+
+    /// <summary>
     /// Unauthorized. Provide a valid token and try again.
     /// </summary>
     Unauthorized = 40001,
