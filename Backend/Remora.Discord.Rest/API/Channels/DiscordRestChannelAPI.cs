@@ -289,9 +289,13 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Snowflake channelID,
         Optional<string> name = default,
         Optional<int?> position = default,
+        Optional<bool?> isNsfw = default,
         Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -301,9 +305,13 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             channelID,
             name,
             position: position,
+            isNsfw: isNsfw,
             bitrate: bitrate,
+            userLimit: userLimit,
             permissionOverwrites: permissionOverwrites,
+            parentID: parentID,
             rtcRegion: rtcRegion,
+            videoQualityMode: videoQualityMode,
             reason: reason,
             ct: ct
         );

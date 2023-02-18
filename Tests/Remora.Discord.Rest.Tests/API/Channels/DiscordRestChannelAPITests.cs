@@ -341,9 +341,13 @@ public class DiscordRestChannelAPITests
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
             var position = 1;
+            var isNsfw = true;
             var bitrate = 8000;
+            var userLimit = 10;
             var permissionOverwrites = new List<PermissionOverwrite>();
+            var parentId = DiscordSnowflake.New(1);
             var rtcRegion = "somewhere";
+            var videoQualityMode = VideoQualityMode.Auto;
             var reason = "test";
 
             var api = CreateAPI
@@ -359,9 +363,13 @@ public class DiscordRestChannelAPITests
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("position", p => p.Is(position))
+                                    .WithProperty("nsfw", p => p.Is(isNsfw))
                                     .WithProperty("bitrate", p => p.Is(bitrate))
+                                    .WithProperty("user_limit", p => p.Is(userLimit))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
                                     .WithProperty("rtc_region", p => p.Is(rtcRegion))
+                                    .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -372,9 +380,13 @@ public class DiscordRestChannelAPITests
                 channelId,
                 name,
                 position,
+                isNsfw,
                 bitrate,
+                userLimit,
                 permissionOverwrites,
+                parentId,
                 rtcRegion,
+                videoQualityMode,
                 reason
             );
 

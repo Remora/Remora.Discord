@@ -121,9 +121,13 @@ public partial class CachingDiscordRestChannelAPI
         Snowflake channelID,
         Optional<string> name = default,
         Optional<int?> position = default,
+        Optional<bool?> isNsfw = default,
         Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -133,9 +137,13 @@ public partial class CachingDiscordRestChannelAPI
             channelID,
             name,
             position,
+            isNsfw,
             bitrate,
+            userLimit,
             permissionOverwrites,
+            parentID,
             rtcRegion,
+            videoQualityMode,
             reason,
             ct
         );

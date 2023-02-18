@@ -37,11 +37,38 @@ public enum DiscordStagePermission
     /// <inheritdoc cref="DiscordPermission.ManageChannels"/>
     ManageChannels = DiscordPermission.ManageChannels,
 
+    /// <inheritdoc cref="DiscordPermission.AddReactions"/>
+    AddReactions = DiscordPermission.AddReactions,
+
+    /// <inheritdoc cref="DiscordPermission.Stream"/>
+    Stream = DiscordPermission.Stream,
+
     /// <inheritdoc cref="DiscordPermission.ViewChannel"/>
     ViewChannel = DiscordPermission.ViewChannel,
 
+    /// <inheritdoc cref="DiscordPermission.SendMessages"/>
+    SendMessages = DiscordPermission.SendMessages,
+
+    /// <inheritdoc cref="DiscordPermission.SendTTSMessages"/>
+    SendTTSMessages = DiscordPermission.SendTTSMessages,
+
+    /// <inheritdoc cref="DiscordPermission.ManageMessages"/>
+    ManageMessages = DiscordPermission.ManageMessages,
+
+    /// <inheritdoc cref="DiscordPermission.EmbedLinks"/>
+    EmbedLinks = DiscordPermission.EmbedLinks,
+
+    /// <inheritdoc cref="DiscordPermission.AttachFiles"/>
+    AttachFiles = DiscordPermission.AttachFiles,
+
+    /// <inheritdoc cref="DiscordPermission.ReadMessageHistory"/>
+    ReadMessageHistory = DiscordPermission.ReadMessageHistory,
+
     /// <inheritdoc cref="DiscordPermission.MentionEveryone"/>
     MentionEveryone = DiscordPermission.MentionEveryone,
+
+    /// <inheritdoc cref="DiscordPermission.UseExternalEmojis"/>
+    UseExternalEmojis = DiscordPermission.UseExternalEmojis,
 
     /// <inheritdoc cref="DiscordPermission.Connect"/>
     Connect = DiscordPermission.Connect,
@@ -49,18 +76,24 @@ public enum DiscordStagePermission
     /// <inheritdoc cref="DiscordPermission.MuteMembers"/>
     MuteMembers = DiscordPermission.MuteMembers,
 
-    /// <inheritdoc cref="DiscordPermission.DeafenMembers"/>
-    DeafenMembers = DiscordPermission.DeafenMembers,
-
     /// <inheritdoc cref="DiscordPermission.MoveMembers"/>
     MoveMembers = DiscordPermission.MoveMembers,
 
     /// <inheritdoc cref="DiscordPermission.ManageRoles"/>
     ManageRoles = DiscordPermission.ManageRoles,
 
+    /// <inheritdoc cref="DiscordPermission.ManageWebhooks"/>
+    ManageWebhooks = DiscordPermission.ManageWebhooks,
+
+    /// <inheritdoc cref="DiscordPermission.UseApplicationCommands"/>
+    UseApplicationCommands = DiscordPermission.UseApplicationCommands,
+
     /// <inheritdoc cref="DiscordPermission.RequestToSpeak"/>
     RequestToSpeak = DiscordPermission.RequestToSpeak,
 
     /// <inheritdoc cref="DiscordPermission.ManageEvents"/>
-    ManageEvents = DiscordPermission.ManageEvents
+    ManageEvents = DiscordPermission.ManageEvents,
+
+    /// <inheritdoc cref="DiscordPermission.UseExternalStickers"/>
+    UseExternalStickers = DiscordPermission.UseExternalStickers
 }

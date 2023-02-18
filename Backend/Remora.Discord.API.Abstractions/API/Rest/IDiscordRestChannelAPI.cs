@@ -221,9 +221,13 @@ public interface IDiscordRestChannelAPI
     /// <param name="channelID">The ID of the channel.</param>
     /// <param name="name">The new name of the channel.</param>
     /// <param name="position">The new position of the channel in the listing.</param>
+    /// <param name="isNsfw">The new NSFW status of the channel.</param>
     /// <param name="bitrate">The new bitrate.</param>
+    /// <param name="userLimit">The new user limit.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
+    /// <param name="parentID">The new parent category ID.</param>
     /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
+    /// <param name="videoQualityMode">The new video quality mode.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -232,9 +236,13 @@ public interface IDiscordRestChannelAPI
         Snowflake channelID,
         Optional<string> name = default,
         Optional<int?> position = default,
+        Optional<bool?> isNsfw = default,
         Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
