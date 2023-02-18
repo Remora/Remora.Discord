@@ -161,6 +161,26 @@ public enum MessageType
     InteractionPremiumUpsell = 26,
 
     /// <summary>
+    /// A stage instance has started.
+    /// </summary>
+    StageStart = 27,
+
+    /// <summary>
+    /// A stage instance has ended.
+    /// </summary>
+    StageEnd = 28,
+
+    /// <summary>
+    /// A stage instance speaker.
+    /// </summary>
+    StageSpeaker = 29,
+
+    /// <summary>
+    /// A stage instance topic.
+    /// </summary>
+    StageTopic = 31,
+
+    /// <summary>
     /// TODO: Some kind of notification that a user has subscribed? Discord docs are unclear.
     /// </summary>
     GuildApplicationPremiumSubscription = 32
