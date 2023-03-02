@@ -233,7 +233,7 @@ public class InteractiveCommands : CommandGroup
                                     1,
                                     32,
                                     true,
-                                    string.Empty,
+                                    default,
                                     "Short Text here"
                                 )
                             }
