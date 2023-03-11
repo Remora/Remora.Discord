@@ -219,13 +219,13 @@ public class DiscordPermissionSet : IDiscordPermissionSet
     /// <summary>
     /// Computes a full permission set for a role, taking overwrites into account.
     /// </summary>
-    /// <param name="roleID">The ID of the role.</param>
+    /// <param name="role">The role.</param>
     /// <param name="everyoneRole">The @everyone role, assigned to every user.</param>
     /// <param name="overwrites">The channel overwrites currently in effect, if any.</param>
     /// <returns>The true permission set.</returns>
     public static IDiscordPermissionSet ComputePermissions
     (
-        Snowflake roleID,
+        IRole role,
         IRole everyoneRole,
         IReadOnlyList<IPermissionOverwrite>? overwrites = default
     )
@@ -234,6 +234,9 @@ public class DiscordPermissionSet : IDiscordPermissionSet
 
         // Start calculations with the everyone role
         var basePermissions = everyoneRole.Permissions.Value;
+
+        // Apply the role's own permissions
+        basePermissions |= role.Permissions.Value;
 
         // Apply the everyone role overwrites, if applicable
         var everyoneOverwrite = overwrites.FirstOrDefault(o => o.ID == everyoneRole.ID);
@@ -244,7 +247,7 @@ public class DiscordPermissionSet : IDiscordPermissionSet
         }
 
         // Apply role overwrites, if applicable
-        var roleOverwrite = overwrites.FirstOrDefault(o => o.ID == roleID);
+        var roleOverwrite = overwrites.FirstOrDefault(o => o.ID == role.ID);
 
         // ReSharper disable once InvertIf
         if (roleOverwrite is not null)

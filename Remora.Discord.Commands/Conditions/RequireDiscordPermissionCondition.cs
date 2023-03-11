@@ -294,7 +294,7 @@ public class RequireDiscordPermissionCondition :
 
         var computedPermissions = DiscordPermissionSet.ComputePermissions
         (
-            role.ID,
+            role,
             everyoneRole,
             permissionOverwrites
         );
