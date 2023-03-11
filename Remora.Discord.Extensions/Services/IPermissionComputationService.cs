@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -69,7 +70,7 @@ public interface IPermissionComputationService
     /// <param name="userID">The ID of the user.</param>
     /// <param name="inChannel">Whether the computation should use the channel ID from the context.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
-    /// <exception cref="InvalidOperationError">
+    /// <exception cref="InvalidOperationException">
     /// Thrown if no context is available or it does not have the required information.
     /// </exception>
     /// <returns>The computed permissions.</returns>
@@ -113,7 +114,7 @@ public interface IPermissionComputationService
     /// <param name="roleID">The ID of the role.</param>
     /// <param name="inChannel">Whether the computation should use the channel ID from the context.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
-    /// <exception cref="InvalidOperationError">
+    /// <exception cref="InvalidOperationException">
     /// Thrown if no context is available or it does not have the required information.
     /// </exception>
     /// <returns>The computed permissions.</returns>
