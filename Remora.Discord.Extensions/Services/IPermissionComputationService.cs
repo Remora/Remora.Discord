@@ -34,6 +34,11 @@ namespace Remora.Discord.Extensions.Services;
 /// <summary>
 /// Computes permission sets based on available data.
 /// </summary>
+/// <remarks>
+/// Note that since this service typically accesses data via the Discord API in order to gather enough information to
+/// perform its calculations, caching could result in it taking some time for the values produced by this service to
+/// reflect reality. Normally, this isn't a problem, but be aware of it and program accordingly.
+/// </remarks>
 [PublicAPI]
 public interface IPermissionComputationService
 {
