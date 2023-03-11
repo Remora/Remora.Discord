@@ -56,13 +56,13 @@ public static class ServiceCollectionExtensions
         Func<Type, bool>? typeFilter = null
     )
     {
-        var candidates = assembly.ExportedTypes
-                                .Where(t => t.IsClass &&
-                                            !t.IsAbstract &&
-                                            typeof(CommandGroup).IsAssignableFrom(t) &&
-                                            !typeof(InteractionGroup).IsAssignableFrom(t)
-                                      )
-                                .ToArray();
+        var candidates = assembly.ExportedTypes.Where
+        (
+            t => t is { IsClass: true, IsAbstract: false } &&
+                 typeof(CommandGroup).IsAssignableFrom(t) &&
+                 !typeof(InteractionGroup).IsAssignableFrom(t)
+        )
+        .ToArray();
 
         var tree = serviceCollection.AddCommandTree(treeName);
 
@@ -91,12 +91,11 @@ public static class ServiceCollectionExtensions
     {
         var candidates = assembly.GetTypes().Where
         (
-            t => t.IsClass &&
-                 !t.IsAbstract &&
+            t => t is { IsClass: true, IsAbstract: false } &&
                  t.GetInterfaces().Any
-                (
-                    i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResponder<>)
-                )
+                 (
+                     i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResponder<>)
+                 )
         )
         .ToArray();
 
