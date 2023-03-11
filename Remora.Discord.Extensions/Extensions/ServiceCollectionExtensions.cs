@@ -28,6 +28,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Remora.Commands.Extensions;
 using Remora.Commands.Groups;
 using Remora.Discord.Extensions.Attributes;
+using Remora.Discord.Extensions.Services;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Interactivity;
@@ -40,6 +41,17 @@ namespace Remora.Discord.Extensions.Extensions;
 [PublicAPI]
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// Adds services provided by Remora.Discord.Extensions.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <returns>The service collection, with the services added.</returns>
+    public static IServiceCollection AddExtensions(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<IPermissionComputationService, PermissionComputationService>();
+        return serviceCollection;
+    }
+
     /// <summary>
     /// Automatically registers every command group in the given assembly.
     /// </summary>

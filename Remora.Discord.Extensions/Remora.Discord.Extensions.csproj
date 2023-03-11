@@ -15,4 +15,10 @@
         <ProjectReference Include="..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Services\IPermissionComputationService.cs">
+        <DependentUpon>PermissionComputationService.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>
