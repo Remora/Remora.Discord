@@ -16,6 +16,7 @@
     }
   ],
   "build": {
+    "xrefService": "https://xref.docs.microsoft.com/query?uid={uid}",
     "content": [
       {
         "files": [
