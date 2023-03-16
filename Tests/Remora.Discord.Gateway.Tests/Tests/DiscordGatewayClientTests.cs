@@ -274,7 +274,7 @@ public class DiscordGatewayClientTests
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
-    public async Task CanRetreiveGatewaySessionAsync()
+    public async Task CanRetrieveGatewaySessionAsync()
     {
         var tokenSource = new CancellationTokenSource();
         var transportMock = new MockedTransportServiceBuilder(_testOutput)
