@@ -83,26 +83,15 @@ public class DiscordGatewayClient : IDisposable
     private GatewayConnectionStatus _connectionStatus;
 
     /// <summary>
-    /// Holds information about the current session.
+    /// Holds portable information about the current session, such as the session ID and the last received sequence
+    /// number.
     /// </summary>
     private GatewaySessionInformation? _sessionInformation;
 
     /// <summary>
-    /// Holds the time when the last heartbeat was sent, using <see cref="DateTime.ToBinary"/>.
+    /// Holds internal state related to the current session.
     /// </summary>
-    private long _lastSentHeartbeat;
-
-    /// <summary>
-    /// Holds the time when the last event acknowledgement was received, encoded using
-    /// <see cref="DateTime.ToBinary()"/>.
-    /// </summary>
-    private long _lastReceivedEvent;
-
-    /// <summary>
-    /// Holds the time when the last heartbeat acknowledgement was received, encoded using
-    /// <see cref="DateTime.ToBinary()"/>.
-    /// </summary>
-    private long _lastReceivedHeartbeatAck;
+    private GatewaySessionState _sessionState;
 
     /// <summary>
     /// Holds the cancellation token source for internal operations.
@@ -162,6 +151,8 @@ public class DiscordGatewayClient : IDisposable
         _connectionStatus = GatewayConnectionStatus.Offline;
 
         _disconnectRequestedSource = new CancellationTokenSource();
+        _sessionState = new GatewaySessionState();
+
         _sendTask = Task.FromResult(Result.FromSuccess());
         _receiveTask = Task.FromResult(Result<(bool, bool)>.FromSuccess((false, false)));
     }
@@ -461,6 +452,9 @@ public class DiscordGatewayClient : IDisposable
             case GatewayConnectionStatus.Offline:
             case GatewayConnectionStatus.Disconnected:
             {
+                // First of all, reset the watchdog states we've got hanging around, if any
+                _sessionState = new GatewaySessionState();
+
                 _log.LogInformation("Retrieving gateway endpoint...");
 
                 // Start connecting
@@ -611,10 +605,6 @@ public class DiscordGatewayClient : IDisposable
                 {
                     return handshakeResult;
                 }
-
-                // Needs to be set before the receive task is started to avoid race between connecting and reconnecting
-                _lastReceivedHeartbeatAck = 0;
-                _lastReceivedEvent = 0;
 
                 // Now, set up the receive task and start receiving events normally
                 _receiveTask = GatewayReceiverAsync(heartbeatInterval, _disconnectRequestedSource.Token);
@@ -940,7 +930,7 @@ public class DiscordGatewayClient : IDisposable
 
             while (!disconnectRequested.IsCancellationRequested)
             {
-                var lastSentHeartbeatTime = ReadTimeAtomic(ref _lastSentHeartbeat);
+                var lastSentHeartbeatTime = _sessionState.LastSentHeartbeat;
 
                 var now = DateTime.UtcNow;
                 var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
@@ -954,8 +944,8 @@ public class DiscordGatewayClient : IDisposable
                 // policy to avoid timing issues.
                 if (needsHeartbeat)
                 {
-                    var lastReceivedEventTime = ReadTimeAtomic(ref _lastReceivedEvent);
-                    var lastHeartbeatAckTime = ReadTimeAtomic(ref _lastReceivedHeartbeatAck);
+                    var lastReceivedEventTime = _sessionState.LastReceivedEvent;
+                    var lastHeartbeatAckTime = _sessionState.LastReceivedHeartbeatAck;
 
                     var isConnectionSilent = lastHeartbeatAckTime < lastSentHeartbeatTime &&
                                              now - lastReceivedEventTime >= heartbeatInterval - safetyMargin;
@@ -981,7 +971,7 @@ public class DiscordGatewayClient : IDisposable
                     var heartbeatPayload = new Payload<IHeartbeat>(new Heartbeat(sequenceNumber));
 
                     sendResult = await _transportService.SendPayloadAsync(heartbeatPayload, disconnectRequested);
-                    WriteTimeAtomic(ref _lastSentHeartbeat, DateTime.UtcNow);
+                    _sessionState.LastSentHeartbeat = DateTime.UtcNow;
                 }
                 else
                 {
@@ -1100,16 +1090,16 @@ public class DiscordGatewayClient : IDisposable
                     };
 
                     Interlocked.Exchange(ref _sessionInformation, newSessionInformation);
-                    WriteTimeAtomic(ref _lastReceivedEvent, receivedAt);
+                    _sessionState.LastReceivedEvent = receivedAt;
                 }
 
                 // Update the ack timestamp
                 if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
                 {
-                    WriteTimeAtomic(ref _lastReceivedHeartbeatAck, receivedAt);
+                    _sessionState.LastReceivedHeartbeatAck = receivedAt;
 
                     // Update the latency
-                    var lastSentHeartbeat = ReadTimeAtomic(ref _lastSentHeartbeat);
+                    var lastSentHeartbeat = _sessionState.LastSentHeartbeat;
                     if (lastSentHeartbeat != null)
                     {
                         this.Latency = receivedAt - lastSentHeartbeat.Value;
@@ -1176,25 +1166,9 @@ public class DiscordGatewayClient : IDisposable
         }
     }
 
-    private static DateTime? ReadTimeAtomic(ref long field)
-    {
-        var binary = Interlocked.Read(ref field);
-        return binary > 0
-            ? DateTime.FromBinary(binary)
-            : null;
-    }
-
-    private static void WriteTimeAtomic(ref long field, DateTime value)
-    {
-        Interlocked.Exchange(ref field, value.ToBinary());
-    }
-
     private TimeSpan CalculateAllowedSleepTime(TimeSpan heartbeatInterval)
     {
-        var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
-        var lastSentHeartbeat = lastSentHeartbeatBinary > 0
-            ? DateTime.FromBinary(lastSentHeartbeatBinary)
-            : (DateTime?)null;
+        var lastSentHeartbeat = _sessionState.LastSentHeartbeat;
 
         var now = DateTime.UtcNow;
         var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
