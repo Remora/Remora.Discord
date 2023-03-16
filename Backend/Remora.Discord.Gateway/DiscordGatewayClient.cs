@@ -83,9 +83,9 @@ public class DiscordGatewayClient : IDisposable
     private GatewayConnectionStatus _connectionStatus;
 
     /// <summary>
-    /// Holds the last sequence number received by the gateway client.
+    /// Holds information about the current session.
     /// </summary>
-    private int _lastSequenceNumber;
+    private GatewaySessionInformation? _sessionInformation;
 
     /// <summary>
     /// Holds the time when the last heartbeat was sent, using <see cref="DateTime.ToBinary"/>.
@@ -105,17 +105,6 @@ public class DiscordGatewayClient : IDisposable
     private long _lastReceivedHeartbeatAck;
 
     /// <summary>
-    /// Holds the session ID.
-    /// </summary>
-    private string? _sessionID;
-
-    /// <summary>
-    /// Holds the resume gateway URL.
-    /// </summary>
-    [UriString]
-    private string? _resumeGatewayUrl;
-
-    /// <summary>
     /// Holds the cancellation token source for internal operations.
     /// </summary>
     private CancellationTokenSource _disconnectRequestedSource;
@@ -128,17 +117,7 @@ public class DiscordGatewayClient : IDisposable
     /// <summary>
     /// Holds the task responsible for receiving payloads from the gateway.
     /// </summary>
-    private Task<Result> _receiveTask;
-
-    /// <summary>
-    /// Holds a value indicating that the client should reconnect and resume at its earliest convenience.
-    /// </summary>
-    private bool _shouldReconnect;
-
-    /// <summary>
-    /// Holds a value indicating whether the client's current session is resumable.
-    /// </summary>
-    private bool _isSessionResumable;
+    private Task<Result<(bool ShouldReconnect, bool IsSessionResumable)>> _receiveTask;
 
     /// <summary>
     /// Gets the time taken for the gateway to respond to the last heartbeat, providing an estimate of round-trip
@@ -184,7 +163,7 @@ public class DiscordGatewayClient : IDisposable
 
         _disconnectRequestedSource = new CancellationTokenSource();
         _sendTask = Task.FromResult(Result.FromSuccess());
-        _receiveTask = Task.FromResult(Result.FromSuccess());
+        _receiveTask = Task.FromResult(Result<(bool, bool)>.FromSuccess((false, false)));
     }
 
     /// <summary>
@@ -210,16 +189,13 @@ public class DiscordGatewayClient : IDisposable
             return new InvalidOperationError("Cannot use a gateway session while the client is connected.");
         }
 
-        _sessionID = sessionInformation.SessionID;
-        _lastSequenceNumber = sessionInformation.SequenceNumber;
-        _resumeGatewayUrl = sessionInformation.GatewayUrl;
-        _isSessionResumable = true;
+        _sessionInformation = sessionInformation;
 
         return Result.FromSuccess();
     }
 
     /// <summary>
-    /// Returns information about the current gateweay session.
+    /// Returns information about the current gateway session.
     /// </summary>
     /// <remarks>
     /// This method should only be called after the client has disconnected.
@@ -228,17 +204,12 @@ public class DiscordGatewayClient : IDisposable
     /// <returns>A result containing the current gateway session information.</returns>
     public Result<GatewaySessionInformation> GetGatewaySessionInformation()
     {
-        if (string.IsNullOrEmpty(_sessionID) || _resumeGatewayUrl is null)
+        if (_sessionInformation is null)
         {
             return new NotFoundError("No session information is available.");
         }
 
-        return new GatewaySessionInformation
-        (
-            _sessionID,
-            _lastSequenceNumber,
-            _resumeGatewayUrl
-        );
+        return _sessionInformation;
     }
 
     /// <summary>
@@ -308,8 +279,7 @@ public class DiscordGatewayClient : IDisposable
                 {
                     if (withNewSession)
                     {
-                        _sessionID = null;
-                        _resumeGatewayUrl = null;
+                        _sessionInformation = null;
                         _connectionStatus = GatewayConnectionStatus.Disconnected;
                     }
                     else
@@ -484,6 +454,8 @@ public class DiscordGatewayClient : IDisposable
     /// <returns>A connection result, based on the results of the iteration.</returns>
     private async Task<Result> RunConnectionIterationAsync(CancellationToken stopRequested)
     {
+        var shouldReconnect = false;
+
         switch (_connectionStatus)
         {
             case GatewayConnectionStatus.Offline:
@@ -518,7 +490,7 @@ public class DiscordGatewayClient : IDisposable
 
                 if (endpointInformation.SessionStartLimit.TryGet(out var startLimit))
                 {
-                    if (_sessionID is null)
+                    if (_sessionInformation is null)
                     {
                         if (startLimit.Remaining <= 0)
                         {
@@ -563,8 +535,8 @@ public class DiscordGatewayClient : IDisposable
                     );
                 }
 
-                var gatewayEndpointUrl = _resumeGatewayUrl is not null && _isSessionResumable
-                    ? _resumeGatewayUrl
+                var gatewayEndpointUrl = _sessionInformation is not null
+                    ? _sessionInformation.GatewayUrl
                     : getGatewayEndpoint.Entity.Url;
 
                 var gatewayEndpoint = $"{gatewayEndpointUrl}?v={(int)DiscordAPIVersion.V10}&encoding=json";
@@ -624,15 +596,23 @@ public class DiscordGatewayClient : IDisposable
                 _sendTask = GatewaySenderAsync(heartbeatInterval, _disconnectRequestedSource.Token);
 
                 // Attempt to connect or resume
-                var connectResult = await AttemptConnectionAsync(stopRequested);
-                if (!connectResult.IsSuccess)
+                Result handshakeResult;
+                if (_sessionInformation is null)
                 {
-                    return connectResult;
+                    // We've never connected before, or the current session isn't resumable
+                    handshakeResult = await CreateNewSessionAsync(_disconnectRequestedSource.Token);
+                }
+                else
+                {
+                    handshakeResult = await ResumeExistingSessionAsync(_disconnectRequestedSource.Token);
+                }
+
+                if (!handshakeResult.IsSuccess)
+                {
+                    return handshakeResult;
                 }
 
                 // Needs to be set before the receive task is started to avoid race between connecting and reconnecting
-                _shouldReconnect = false;
-                _isSessionResumable = false;
                 _lastReceivedHeartbeatAck = 0;
                 _lastReceivedEvent = 0;
 
@@ -661,7 +641,13 @@ public class DiscordGatewayClient : IDisposable
                     var receiveResult = await _receiveTask;
                     if (!receiveResult.IsSuccess)
                     {
-                        return receiveResult;
+                        return (Result)receiveResult;
+                    }
+
+                    (shouldReconnect, var isSessionResumable) = receiveResult.Entity;
+                    if (!isSessionResumable)
+                    {
+                        _sessionInformation = null;
                     }
                 }
 
@@ -673,7 +659,7 @@ public class DiscordGatewayClient : IDisposable
 
         if (!stopRequested.IsCancellationRequested)
         {
-            if (!_shouldReconnect)
+            if (!shouldReconnect)
             {
                 return Result.FromSuccess();
             }
@@ -706,22 +692,6 @@ public class DiscordGatewayClient : IDisposable
         _connectionStatus = GatewayConnectionStatus.Disconnected;
 
         return Result.FromSuccess();
-    }
-
-    /// <summary>
-    /// Attempts to identify or resume the gateway connection.
-    /// </summary>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A connection result which may or may not have succeeded.</returns>
-    private Task<Result> AttemptConnectionAsync(CancellationToken ct = default)
-    {
-        if (_sessionID is null || !_isSessionResumable)
-        {
-            // We've never connected before, or the current session isn't resumable
-            return CreateNewSessionAsync(ct);
-        }
-
-        return ResumeExistingSessionAsync(ct);
     }
 
     /// <summary>
@@ -802,8 +772,12 @@ public class DiscordGatewayClient : IDisposable
                             return dispatch;
                         }
 
-                        _sessionID = ready.Data.SessionID;
-                        _resumeGatewayUrl = ready.Data.ResumeGatewayUrl;
+                        _sessionInformation = new GatewaySessionInformation
+                        (
+                            ready.Data.SessionID,
+                            0,
+                            ready.Data.ResumeGatewayUrl
+                        );
 
                         return Result.FromSuccess();
                     }
@@ -838,7 +812,7 @@ public class DiscordGatewayClient : IDisposable
     {
         try
         {
-            if (_sessionID is null)
+            if (_sessionInformation is null)
             {
                 return new InvalidOperationError("There's no previous session to resume.");
             }
@@ -850,8 +824,8 @@ public class DiscordGatewayClient : IDisposable
                 new Resume
                 (
                     _tokenStore.Token,
-                    _sessionID,
-                    _lastSequenceNumber
+                    _sessionInformation.SessionID,
+                    _sessionInformation.SequenceNumber
                 )
             );
 
@@ -885,8 +859,7 @@ public class DiscordGatewayClient : IDisposable
                         _log.LogInformation("Resume rejected by the gateway");
 
                         // Our session is invalidated; so is this data.
-                        _sessionID = null;
-                        _lastSequenceNumber = 0;
+                        _sessionInformation = null;
 
                         await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
                         return await CreateNewSessionAsync(ct);
@@ -997,13 +970,15 @@ public class DiscordGatewayClient : IDisposable
                         );
                     }
 
-                    // 32-bit reads are atomic, so this is fine
-                    var lastSequenceNumber = _lastSequenceNumber;
+                    // 32-bit reads are atomic, so this is fine, and it's okay if we get slightly stale data
+                    var sequenceNumber = _sessionInformation?.SequenceNumber;
+                    if (sequenceNumber is 0)
+                    {
+                        // Collapse zeroes to null
+                        sequenceNumber = null;
+                    }
 
-                    var heartbeatPayload = new Payload<IHeartbeat>(new Heartbeat
-                    (
-                        lastSequenceNumber == 0 ? null : lastSequenceNumber
-                    ));
+                    var heartbeatPayload = new Payload<IHeartbeat>(new Heartbeat(sequenceNumber));
 
                     sendResult = await _transportService.SendPayloadAsync(heartbeatPayload, disconnectRequested);
                     WriteTimeAtomic(ref _lastSentHeartbeat, DateTime.UtcNow);
@@ -1084,7 +1059,11 @@ public class DiscordGatewayClient : IDisposable
     /// <returns>A receiver result which may or may not have been successful. A failed result indicates that
     /// something has gone wrong when receiving a payload, and that the connection has been deemed nonviable. A
     /// nonviable connection should be either terminated, reestablished, or resumed as appropriate.</returns>
-    private async Task<Result> GatewayReceiverAsync(TimeSpan heartbeatInterval, CancellationToken disconnectRequested)
+    private async Task<Result<(bool ShouldReconnect, bool IsSessionResumable)>> GatewayReceiverAsync
+    (
+        TimeSpan heartbeatInterval,
+        CancellationToken disconnectRequested
+    )
     {
         await Task.Yield();
 
@@ -1097,16 +1076,30 @@ public class DiscordGatewayClient : IDisposable
 
                 if (!receivedPayload.IsSuccess)
                 {
-                    // Normal closures are okay
-                    return receivedPayload.Error is GatewayWebSocketError { CloseStatus: NormalClosure }
-                        ? Result.FromSuccess()
-                        : Result.FromError(receivedPayload);
+                    // Normal closures are okay, and we'll try to both reconnect and resume on them
+                    if (receivedPayload.Error is GatewayWebSocketError { CloseStatus: NormalClosure })
+                    {
+                        return (ShouldReconnect: true, IsSessionResumable: true);
+                    }
+
+                    // otherwise, we'll just throw the error upstairs and let them figure it out
+                    return Result<(bool, bool)>.FromError(receivedPayload);
                 }
 
                 // Update the sequence number
                 if (receivedPayload.Entity is IEventPayload eventPayload)
                 {
-                    Interlocked.Exchange(ref _lastSequenceNumber, eventPayload.SequenceNumber);
+                    if (_sessionInformation is null)
+                    {
+                        throw new InvalidOperationException("Received events, but the session was null?");
+                    }
+
+                    var newSessionInformation = _sessionInformation with
+                    {
+                        SequenceNumber = eventPayload.SequenceNumber
+                    };
+
+                    Interlocked.Exchange(ref _sessionInformation, newSessionInformation);
                     WriteTimeAtomic(ref _lastReceivedEvent, receivedAt);
                 }
 
@@ -1132,7 +1125,7 @@ public class DiscordGatewayClient : IDisposable
 
                 if (!dispatch.IsSuccess)
                 {
-                    return dispatch;
+                    return Result<(bool, bool)>.FromError(dispatch);
                 }
 
                 // Signal the governor task that a reconnection is requested, if necessary.
@@ -1140,27 +1133,23 @@ public class DiscordGatewayClient : IDisposable
                 {
                     case IPayload<IReconnect>:
                     {
-                        _shouldReconnect = true;
-                        _isSessionResumable = true;
-
-                        break;
+                        return (ShouldReconnect: true, IsSessionResumable: true);
                     }
                     case IPayload<IInvalidSession> invalidSession:
                     {
-                        _shouldReconnect = true;
-                        _isSessionResumable = invalidSession.Data.IsResumable;
-
-                        break;
+                        return (ShouldReconnect: true, IsSessionResumable: invalidSession.Data.IsResumable);
                     }
                     case IPayload<IHeartbeat>:
                     {
-                        // 32-bit reads are atomic, so this is fine
-                        var lastSequenceNumber = _lastSequenceNumber;
+                        // 32-bit reads are atomic, so this is fine, and it's okay if we get slightly stale data
+                        var sequenceNumber = _sessionInformation?.SequenceNumber;
+                        if (sequenceNumber is 0)
+                        {
+                            // Collapse zeroes to null
+                            sequenceNumber = null;
+                        }
 
-                        var heartbeat = new Heartbeat
-                        (
-                            lastSequenceNumber == 0 ? null : lastSequenceNumber
-                        );
+                        var heartbeat = new Heartbeat(sequenceNumber);
 
                         SubmitCommand(heartbeat);
                         continue;
@@ -1170,16 +1159,16 @@ public class DiscordGatewayClient : IDisposable
                         continue;
                     }
                 }
-
-                break;
             }
 
-            return Result.FromSuccess();
+            // Cancellation requested, so we're not interested in reconnecting but we should leave the door open for
+            // resuming
+            return (ShouldReconnect: false, IsSessionResumable: true);
         }
         catch (OperationCanceledException)
         {
-            // Cancellation is a success
-            return Result.FromSuccess();
+            // as above, so below
+            return (ShouldReconnect: false, IsSessionResumable: true);
         }
         catch (Exception e)
         {

@@ -635,7 +635,7 @@ public class DiscordGatewayClientTests
                     (
                         new Ready
                         (
-                            8,
+                            10,
                             Constants.BotUser,
                             Array.Empty<IUnavailableGuild>(),
                             Constants.MockSessionID,
@@ -647,56 +647,44 @@ public class DiscordGatewayClientTests
                     .SendException(() => new WebSocketException())
                     .ExpectConnection
                     (
-                        new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json")
+                        new Uri($"{Constants.MockResumeGatewayUrl}/?v={(int)DiscordAPIVersion.V10}&encoding=json")
                     )
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                    .Expect<Identify>
+                    .Expect<Resume>
                     (
                         i =>
                         {
                             Assert.Equal(Constants.MockToken, i?.Token);
+                            Assert.Equal(Constants.MockSessionID, i?.SessionID);
+                            Assert.Equal(0, i?.SequenceNumber);
+
                             return true;
                         }
                     )
                     .Send
                     (
-                        new Ready
-                        (
-                            8,
-                            Constants.BotUser,
-                            Array.Empty<IUnavailableGuild>(),
-                            Constants.MockSessionID,
-                            Constants.MockResumeGatewayUrl,
-                            default,
-                            new PartialApplication()
-                        )
+                        new Resumed()
                     )
                     .SendException(() => new HttpRequestException())
                     .ExpectConnection
                     (
-                        new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json")
+                        new Uri($"{Constants.MockResumeGatewayUrl}/?v={(int)DiscordAPIVersion.V10}&encoding=json")
                     )
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                    .Expect<Identify>
+                    .Expect<Resume>
                     (
                         i =>
                         {
                             Assert.Equal(Constants.MockToken, i?.Token);
+                            Assert.Equal(Constants.MockSessionID, i?.SessionID);
+                            Assert.Equal(0, i?.SequenceNumber);
+
                             return true;
                         }
                     )
                     .Send
                     (
-                        new Ready
-                        (
-                            8,
-                            Constants.BotUser,
-                            Array.Empty<IUnavailableGuild>(),
-                            Constants.MockSessionID,
-                            Constants.MockResumeGatewayUrl,
-                            default,
-                            new PartialApplication()
-                        )
+                        new Resumed()
                     )
             )
             .Continuously
