@@ -305,11 +305,9 @@ public class DiscordGatewayClient : IDisposable
         }
         finally
         {
+            // we don't null out the session information here so that it can be transferred after a clean shutdown
             _connectionStatus = GatewayConnectionStatus.Offline;
         }
-
-        // Reconnection is not allowed at this point.
-        _connectionStatus = GatewayConnectionStatus.Offline;
 
         return Result.FromSuccess();
     }
