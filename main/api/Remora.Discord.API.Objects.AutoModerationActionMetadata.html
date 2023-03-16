@@ -151,18 +151,18 @@ public record AutoModerationActionMetadata : IAutoModerationActionMetadata, IEqu
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_AutoModerationActionMetadata__ctor_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_TimeSpan__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.AutoModerationActionMetadata.%23ctor(Remora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BSystem.TimeSpan%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_AutoModerationActionMetadata__ctor_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_TimeSpan__Remora_Rest_Core_Optional_System_String__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.AutoModerationActionMetadata.%23ctor(Remora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BSystem.TimeSpan%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/AutoModeration/AutoModerationActionMetadata.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_AutoModerationActionMetadata__ctor_" data-uid="Remora.Discord.API.Objects.AutoModerationActionMetadata.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_AutoModerationActionMetadata__ctor_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_TimeSpan__" data-uid="Remora.Discord.API.Objects.AutoModerationActionMetadata.#ctor(Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.TimeSpan})">AutoModerationActionMetadata(Optional&lt;Snowflake&gt;, Optional&lt;TimeSpan&gt;)</h4>
+  <h4 id="Remora_Discord_API_Objects_AutoModerationActionMetadata__ctor_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_TimeSpan__Remora_Rest_Core_Optional_System_String__" data-uid="Remora.Discord.API.Objects.AutoModerationActionMetadata.#ctor(Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.TimeSpan},Remora.Rest.Core.Optional{System.String})">AutoModerationActionMetadata(Optional&lt;Snowflake&gt;, Optional&lt;TimeSpan&gt;, Optional&lt;string&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AutoModerationActionMetadata(Optional&lt;Snowflake&gt; ChannelID, Optional&lt;TimeSpan&gt; Duration)</code></pre>
+    <pre><code class="lang-csharp hljs">public AutoModerationActionMetadata(Optional&lt;Snowflake&gt; ChannelID, Optional&lt;TimeSpan&gt; Duration, Optional&lt;string&gt; CustomMessage)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -182,6 +182,11 @@ public record AutoModerationActionMetadata : IAutoModerationActionMetadata, IEqu
       <tr>
         <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
         <td><span class="parametername">Duration</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td><span class="parametername">CustomMessage</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -214,6 +219,36 @@ public record AutoModerationActionMetadata : IAutoModerationActionMetadata, IEqu
     <tbody>
       <tr>
         <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_AutoModerationActionMetadata_CustomMessage.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.AutoModerationActionMetadata.CustomMessage%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/AutoModeration/AutoModerationActionMetadata.cs/#L36">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_AutoModerationActionMetadata_CustomMessage_" data-uid="Remora.Discord.API.Objects.AutoModerationActionMetadata.CustomMessage*"></a>
+  <h4 id="Remora_Discord_API_Objects_AutoModerationActionMetadata_CustomMessage" data-uid="Remora.Discord.API.Objects.AutoModerationActionMetadata.CustomMessage">CustomMessage</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; CustomMessage { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
