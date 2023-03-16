@@ -264,7 +264,7 @@ latency. Will return zero until the first heartbeat has occurred.</p>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_DiscordGatewayClient_Dispose.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.DiscordGatewayClient.Dispose%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClient.cs/#L1180">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClient.cs/#L1223">View Source</a>
   </span>
   <a id="Remora_Discord_Gateway_DiscordGatewayClient_Dispose_" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.Dispose*"></a>
   <h4 id="Remora_Discord_Gateway_DiscordGatewayClient_Dispose" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.Dispose">Dispose()</h4>
@@ -276,10 +276,46 @@ latency. Will return zero until the first heartbeat has occurred.</p>
   </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_DiscordGatewayClient_GetGatewaySessionInformation.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.DiscordGatewayClient.GetGatewaySessionInformation%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClient.cs/#L229">View Source</a>
+  </span>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClient_GetGatewaySessionInformation_" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.GetGatewaySessionInformation*"></a>
+  <h4 id="Remora_Discord_Gateway_DiscordGatewayClient_GetGatewaySessionInformation" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.GetGatewaySessionInformation">GetGatewaySessionInformation()</h4>
+  <div class="markdown level1 summary"><p>Returns information about the current gateweay session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Result&lt;GatewaySessionInformation&gt; GetGatewaySessionInformation()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.Gateway.GatewaySessionInformation.html">GatewaySessionInformation</a>&gt;</td>
+        <td><p>A result containing the current gateway session information.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Remora_Discord_Gateway_DiscordGatewayClient_GetGatewaySessionInformation_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method should only be called after the client has disconnected.
+If the client reconnects, or is still running, the session ID and sequence number may be invalid.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_DiscordGatewayClient_RunAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.DiscordGatewayClient.RunAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClient.cs/#L213">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClient.cs/#L256">View Source</a>
   </span>
   <a id="Remora_Discord_Gateway_DiscordGatewayClient_RunAsync_" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.RunAsync*"></a>
   <h4 id="Remora_Discord_Gateway_DiscordGatewayClient_RunAsync_System_Threading_CancellationToken_" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.RunAsync(System.Threading.CancellationToken)">RunAsync(CancellationToken)</h4>
@@ -376,6 +412,56 @@ successful result.</p>
       <tr>
         <td><span class="parametername">TCommand</span></td>
         <td><p>The type of command to send.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_DiscordGatewayClient_UseGatewaySession_Remora_Discord_Gateway_GatewaySessionInformation_.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.DiscordGatewayClient.UseGatewaySession(Remora.Discord.Gateway.GatewaySessionInformation)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClient.cs/#L206">View Source</a>
+  </span>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClient_UseGatewaySession_" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.UseGatewaySession*"></a>
+  <h4 id="Remora_Discord_Gateway_DiscordGatewayClient_UseGatewaySession_Remora_Discord_Gateway_GatewaySessionInformation_" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.UseGatewaySession(Remora.Discord.Gateway.GatewaySessionInformation)">UseGatewaySession(GatewaySessionInformation)</h4>
+  <div class="markdown level1 summary"><p>Uses a given gateway session to connect to the gateway with.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Result UseGatewaySession(GatewaySessionInformation sessionInformation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.Gateway.GatewaySessionInformation.html">GatewaySessionInformation</a></td>
+        <td><span class="parametername">sessionInformation</span></td>
+        <td><p>The gateway session to connect with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Results.Result</span></td>
+        <td><p>A result that may or not have succeeded.</p>
 </td>
       </tr>
     </tbody>
