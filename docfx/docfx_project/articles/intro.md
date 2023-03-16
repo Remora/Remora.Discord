@@ -2,7 +2,7 @@ Welcome!
 ========
 
 Hi, and welcome to the online documentation for Remora.Discord! Here, you'll
-find everything you need to get started with the library - tutorials, API
+find everything you need to get started with the library – tutorials, API
 references, and more.
 
 To get started as a new user, it's recommended to check out
