@@ -107,46 +107,46 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">GuildCreate.AvailableGuild</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGuildCreate.IAvailableGuild.html">IGuildCreate.IAvailableGuild</a></div>
+    <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGuildCreate.html">IGuildCreate</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGuildCreate.IAvailableGuild.html">IAvailableGuild</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuild.html">IGuild</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuild.html">IPartialGuild</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.html">GuildCreate.AvailableGuild</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.GuildCreate.html">GuildCreate</a>.<a class="xref" href="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.html">AvailableGuild</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Gateway.Events.html">Remora.Discord.API.Gateway.Events</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<span class="xref">Gateway</span>.<a class="xref" href="Remora.Discord.API.Gateway.Events.html">Events</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuild, IEquatable&lt;GuildCreate.AvailableGuild&gt;</code></pre>
+public record GuildCreate.AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuild, IEquatable&lt;GuildCreate.AvailableGuild&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -158,13 +158,12 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Guilds/GuildCreate.cs/#L38">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild__ctor_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild__ctor_Remora_Rest_Core_Snowflake_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__System_Nullable_Remora_Rest_Core_Snowflake__System_TimeSpan_Remora_Discord_API_Abstractions_Objects_VerificationLevel_Remora_Discord_API_Abstractions_Objects_MessageNotificationLevel_Remora_Discord_API_Abstractions_Objects_ExplicitContentFilterLevel_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IRole__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IEmoji__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_GuildFeature__Remora_Discord_API_Abstractions_Objects_MultiFactorAuthenticationLevel_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___System_Nullable_Remora_Rest_Core_Snowflake__Remora_Discord_API_Abstractions_Objects_SystemChannelFlags_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Nullable_System_Int32___Remora_Rest_Core_Optional_System_Int32__System_String_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Discord_API_Abstractions_Objects_PremiumTier_Remora_Rest_Core_Optional_System_Int32__System_String_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IWelcomeScreen__Remora_Discord_API_Abstractions_Objects_GuildNSFWLevel_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_ISticker___System_Boolean_System_DateTimeOffset_System_Boolean_Remora_Rest_Core_Optional_System_Boolean__System_Int32_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IPartialVoiceState__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IGuildMember__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IChannel__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IChannel__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IPartialPresence__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IStageInstance__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IGuildScheduledEvent__" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.#ctor(Remora.Rest.Core.Snowflake,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},System.Nullable{Remora.Rest.Core.Snowflake},System.TimeSpan,Remora.Discord.API.Abstractions.Objects.VerificationLevel,Remora.Discord.API.Abstractions.Objects.MessageNotificationLevel,Remora.Discord.API.Abstractions.Objects.ExplicitContentFilterLevel,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IRole},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IEmoji},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.GuildFeature},Remora.Discord.API.Abstractions.Objects.MultiFactorAuthenticationLevel,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},System.Nullable{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.SystemChannelFlags,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Nullable{System.Int32}},Remora.Rest.Core.Optional{System.Int32},System.String,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Discord.API.Abstractions.Objects.PremiumTier,Remora.Rest.Core.Optional{System.Int32},System.String,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IWelcomeScreen},Remora.Discord.API.Abstractions.Objects.GuildNSFWLevel,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.ISticker}},System.Boolean,System.DateTimeOffset,System.Boolean,Remora.Rest.Core.Optional{System.Boolean},System.Int32,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IPartialVoiceState},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IGuildMember},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IChannel},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IChannel},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IPartialPresence},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IStageInstance},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IGuildScheduledEvent})">AvailableGuild(Snowflake, String, IImageHash, IImageHash, Optional&lt;IImageHash&gt;, IImageHash, Optional&lt;Boolean&gt;, Snowflake, Optional&lt;IDiscordPermissionSet&gt;, Nullable&lt;Snowflake&gt;, TimeSpan, VerificationLevel, MessageNotificationLevel, ExplicitContentFilterLevel, IReadOnlyList&lt;IRole&gt;, IReadOnlyList&lt;IEmoji&gt;, IReadOnlyList&lt;GuildFeature&gt;, MultiFactorAuthenticationLevel, Nullable&lt;Snowflake&gt;, Optional&lt;Boolean&gt;, Optional&lt;Nullable&lt;Snowflake&gt;&gt;, Nullable&lt;Snowflake&gt;, SystemChannelFlags, Nullable&lt;Snowflake&gt;, Optional&lt;Nullable&lt;Int32&gt;&gt;, Optional&lt;Int32&gt;, String, String, IImageHash, PremiumTier, Optional&lt;Int32&gt;, String, Nullable&lt;Snowflake&gt;, Optional&lt;Int32&gt;, Optional&lt;Int32&gt;, Optional&lt;Int32&gt;, Optional&lt;IWelcomeScreen&gt;, GuildNSFWLevel, Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt;, Boolean, DateTimeOffset, Boolean, Optional&lt;Boolean&gt;, Int32, IReadOnlyList&lt;IPartialVoiceState&gt;, IReadOnlyList&lt;IGuildMember&gt;, IReadOnlyList&lt;IChannel&gt;, IReadOnlyList&lt;IChannel&gt;, IReadOnlyList&lt;IPartialPresence&gt;, IReadOnlyList&lt;IStageInstance&gt;, IReadOnlyList&lt;IGuildScheduledEvent&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild__ctor_Remora_Rest_Core_Snowflake_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__System_Nullable_Remora_Rest_Core_Snowflake__System_TimeSpan_Remora_Discord_API_Abstractions_Objects_VerificationLevel_Remora_Discord_API_Abstractions_Objects_MessageNotificationLevel_Remora_Discord_API_Abstractions_Objects_ExplicitContentFilterLevel_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IRole__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IEmoji__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_GuildFeature__Remora_Discord_API_Abstractions_Objects_MultiFactorAuthenticationLevel_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___System_Nullable_Remora_Rest_Core_Snowflake__Remora_Discord_API_Abstractions_Objects_SystemChannelFlags_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Nullable_System_Int32___Remora_Rest_Core_Optional_System_Int32__System_String_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Discord_API_Abstractions_Objects_PremiumTier_Remora_Rest_Core_Optional_System_Int32__System_String_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IWelcomeScreen__Remora_Discord_API_Abstractions_Objects_GuildNSFWLevel_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_ISticker___System_Boolean_System_DateTimeOffset_System_Boolean_Remora_Rest_Core_Optional_System_Boolean__System_Int32_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IPartialVoiceState__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IGuildMember__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IChannel__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IChannel__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IPartialPresence__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IStageInstance__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IGuildScheduledEvent__" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.#ctor(Remora.Rest.Core.Snowflake,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},System.Nullable{Remora.Rest.Core.Snowflake},System.TimeSpan,Remora.Discord.API.Abstractions.Objects.VerificationLevel,Remora.Discord.API.Abstractions.Objects.MessageNotificationLevel,Remora.Discord.API.Abstractions.Objects.ExplicitContentFilterLevel,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IRole},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IEmoji},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.GuildFeature},Remora.Discord.API.Abstractions.Objects.MultiFactorAuthenticationLevel,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},System.Nullable{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.SystemChannelFlags,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Nullable{System.Int32}},Remora.Rest.Core.Optional{System.Int32},System.String,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Discord.API.Abstractions.Objects.PremiumTier,Remora.Rest.Core.Optional{System.Int32},System.String,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IWelcomeScreen},Remora.Discord.API.Abstractions.Objects.GuildNSFWLevel,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.ISticker}},System.Boolean,System.DateTimeOffset,System.Boolean,Remora.Rest.Core.Optional{System.Boolean},System.Int32,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IPartialVoiceState},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IGuildMember},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IChannel},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IChannel},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IPartialPresence},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IStageInstance},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IGuildScheduledEvent})">AvailableGuild(Snowflake, string, IImageHash?, IImageHash?, Optional&lt;IImageHash?&gt;, IImageHash?, Optional&lt;bool&gt;, Snowflake, Optional&lt;IDiscordPermissionSet&gt;, Snowflake?, TimeSpan, VerificationLevel, MessageNotificationLevel, ExplicitContentFilterLevel, IReadOnlyList&lt;IRole&gt;, IReadOnlyList&lt;IEmoji&gt;, IReadOnlyList&lt;GuildFeature&gt;, MultiFactorAuthenticationLevel, Snowflake?, Optional&lt;bool&gt;, Optional&lt;Snowflake?&gt;, Snowflake?, SystemChannelFlags, Snowflake?, Optional&lt;int?&gt;, Optional&lt;int&gt;, string?, string?, IImageHash?, PremiumTier, Optional&lt;int&gt;, string, Snowflake?, Optional&lt;int&gt;, Optional&lt;int&gt;, Optional&lt;int&gt;, Optional&lt;IWelcomeScreen&gt;, GuildNSFWLevel, Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt;, bool, DateTimeOffset, bool, Optional&lt;bool&gt;, int, IReadOnlyList&lt;IPartialVoiceState&gt;, IReadOnlyList&lt;IGuildMember&gt;, IReadOnlyList&lt;IChannel&gt;, IReadOnlyList&lt;IChannel&gt;, IReadOnlyList&lt;IPartialPresence&gt;, IReadOnlyList&lt;IStageInstance&gt;, IReadOnlyList&lt;IGuildScheduledEvent&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AvailableGuild(Snowflake ID, string Name, IImageHash Icon, IImageHash Splash, Optional&lt;IImageHash&gt; IconHash, IImageHash DiscoverySplash, Optional&lt;bool&gt; IsOwner, Snowflake OwnerID, Optional&lt;IDiscordPermissionSet&gt; Permissions, Snowflake? AFKChannelID, TimeSpan AFKTimeout, VerificationLevel VerificationLevel, MessageNotificationLevel DefaultMessageNotifications, ExplicitContentFilterLevel ExplicitContentFilter, IReadOnlyList&lt;IRole&gt; Roles, IReadOnlyList&lt;IEmoji&gt; Emojis, IReadOnlyList&lt;GuildFeature&gt; GuildFeatures, MultiFactorAuthenticationLevel MFALevel, Snowflake? ApplicationID, Optional&lt;bool&gt; IsWidgetEnabled, Optional&lt;Snowflake?&gt; WidgetChannelID, Snowflake? SystemChannelID, SystemChannelFlags SystemChannelFlags, Snowflake? RulesChannelID, Optional&lt;int?&gt; MaxPresences, Optional&lt;int&gt; MaxMembers, string VanityUrlCode, string Description, IImageHash Banner, PremiumTier PremiumTier, Optional&lt;int&gt; PremiumSubscriptionCount, string PreferredLocale, Snowflake? PublicUpdatesChannelID, Optional&lt;int&gt; MaxVideoChannelUsers, Optional&lt;int&gt; ApproximateMemberCount, Optional&lt;int&gt; ApproximatePresenceCount, Optional&lt;IWelcomeScreen&gt; WelcomeScreen, GuildNSFWLevel NSFWLevel, Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt; Stickers, bool IsPremiumProgressBarEnabled, DateTimeOffset JoinedAt, bool IsLarge, Optional&lt;bool&gt; IsUnavailable, int MemberCount, IReadOnlyList&lt;IPartialVoiceState&gt; VoiceStates, IReadOnlyList&lt;IGuildMember&gt; Members, IReadOnlyList&lt;IChannel&gt; Channels, IReadOnlyList&lt;IChannel&gt; Threads, IReadOnlyList&lt;IPartialPresence&gt; Presences, IReadOnlyList&lt;IStageInstance&gt; StageInstances, IReadOnlyList&lt;IGuildScheduledEvent&gt; GuildScheduledEvents)</code></pre>
+    <pre><code class="lang-csharp hljs">public AvailableGuild(Snowflake ID, string Name, IImageHash? Icon, IImageHash? Splash, Optional&lt;IImageHash?&gt; IconHash, IImageHash? DiscoverySplash, Optional&lt;bool&gt; IsOwner, Snowflake OwnerID, Optional&lt;IDiscordPermissionSet&gt; Permissions, Snowflake? AFKChannelID, TimeSpan AFKTimeout, VerificationLevel VerificationLevel, MessageNotificationLevel DefaultMessageNotifications, ExplicitContentFilterLevel ExplicitContentFilter, IReadOnlyList&lt;IRole&gt; Roles, IReadOnlyList&lt;IEmoji&gt; Emojis, IReadOnlyList&lt;GuildFeature&gt; GuildFeatures, MultiFactorAuthenticationLevel MFALevel, Snowflake? ApplicationID, Optional&lt;bool&gt; IsWidgetEnabled, Optional&lt;Snowflake?&gt; WidgetChannelID, Snowflake? SystemChannelID, SystemChannelFlags SystemChannelFlags, Snowflake? RulesChannelID, Optional&lt;int?&gt; MaxPresences, Optional&lt;int&gt; MaxMembers, string? VanityUrlCode, string? Description, IImageHash? Banner, PremiumTier PremiumTier, Optional&lt;int&gt; PremiumSubscriptionCount, string PreferredLocale, Snowflake? PublicUpdatesChannelID, Optional&lt;int&gt; MaxVideoChannelUsers, Optional&lt;int&gt; ApproximateMemberCount, Optional&lt;int&gt; ApproximatePresenceCount, Optional&lt;IWelcomeScreen&gt; WelcomeScreen, GuildNSFWLevel NSFWLevel, Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt; Stickers, bool IsPremiumProgressBarEnabled, DateTimeOffset JoinedAt, bool IsLarge, Optional&lt;bool&gt; IsUnavailable, int MemberCount, IReadOnlyList&lt;IPartialVoiceState&gt; VoiceStates, IReadOnlyList&lt;IGuildMember&gt; Members, IReadOnlyList&lt;IChannel&gt; Channels, IReadOnlyList&lt;IChannel&gt; Threads, IReadOnlyList&lt;IPartialPresence&gt; Presences, IReadOnlyList&lt;IStageInstance&gt; StageInstances, IReadOnlyList&lt;IGuildScheduledEvent&gt; GuildScheduledEvents)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -182,7 +181,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Name</span></td>
         <td></td>
       </tr>
@@ -197,7 +196,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td><span class="parametername">IconHash</span></td>
         <td></td>
       </tr>
@@ -207,7 +206,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsOwner</span></td>
         <td></td>
       </tr>
@@ -217,17 +216,17 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td><span class="parametername">Permissions</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">AFKChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.TimeSpan</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
         <td><span class="parametername">AFKTimeout</span></td>
         <td></td>
       </tr>
@@ -247,17 +246,17 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRole.html">IRole</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRole.html">IRole</a>&gt;</td>
         <td><span class="parametername">Roles</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmoji.html">IEmoji</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmoji.html">IEmoji</a>&gt;</td>
         <td><span class="parametername">Emojis</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildFeature.html">GuildFeature</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildFeature.html">GuildFeature</a>&gt;</td>
         <td><span class="parametername">GuildFeatures</span></td>
         <td></td>
       </tr>
@@ -267,22 +266,22 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">ApplicationID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsWidgetEnabled</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td><span class="parametername">WidgetChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">SystemChannelID</span></td>
         <td></td>
       </tr>
@@ -292,27 +291,27 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">RulesChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?&gt;</td>
         <td><span class="parametername">MaxPresences</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">MaxMembers</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">VanityUrlCode</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Description</span></td>
         <td></td>
       </tr>
@@ -327,37 +326,37 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">PremiumSubscriptionCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">PreferredLocale</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">PublicUpdatesChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">MaxVideoChannelUsers</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">ApproximateMemberCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">ApproximatePresenceCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.html">IWelcomeScreen</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.html">IWelcomeScreen</a>&gt;</td>
         <td><span class="parametername">WelcomeScreen</span></td>
         <td></td>
       </tr>
@@ -367,67 +366,67 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISticker.html">ISticker</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISticker.html">ISticker</a>&gt;&gt;</td>
         <td><span class="parametername">Stickers</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsPremiumProgressBarEnabled</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.DateTimeOffset</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td><span class="parametername">JoinedAt</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsLarge</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsUnavailable</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">MemberCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialVoiceState.html">IPartialVoiceState</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialVoiceState.html">IPartialVoiceState</a>&gt;</td>
         <td><span class="parametername">VoiceStates</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
         <td><span class="parametername">Members</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;</td>
         <td><span class="parametername">Channels</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;</td>
         <td><span class="parametername">Threads</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialPresence.html">IPartialPresence</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialPresence.html">IPartialPresence</a>&gt;</td>
         <td><span class="parametername">Presences</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IStageInstance.html">IStageInstance</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IStageInstance.html">IStageInstance</a>&gt;</td>
         <td><span class="parametername">StageInstances</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildScheduledEvent.html">IGuildScheduledEvent</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildScheduledEvent.html">IGuildScheduledEvent</a>&gt;</td>
         <td><span class="parametername">GuildScheduledEvents</span></td>
         <td></td>
       </tr>
@@ -444,12 +443,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_AFKChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.AFKChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_AFKChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.AFKChannelID">AFKChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? AFKChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? AFKChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -461,7 +459,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -475,12 +473,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_AFKTimeout_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.AFKTimeout*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_AFKTimeout" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.AFKTimeout">AFKTimeout</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeSpan AFKTimeout { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public TimeSpan AFKTimeout { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -492,7 +489,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.TimeSpan</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -506,12 +503,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ApplicationID_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ApplicationID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ApplicationID" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ApplicationID">ApplicationID</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? ApplicationID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? ApplicationID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -523,7 +519,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -537,12 +533,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ApproximateMemberCount_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ApproximateMemberCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ApproximateMemberCount" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ApproximateMemberCount">ApproximateMemberCount</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ApproximateMemberCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ApproximateMemberCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -554,7 +549,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -568,12 +563,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ApproximatePresenceCount_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ApproximatePresenceCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ApproximatePresenceCount" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ApproximatePresenceCount">ApproximatePresenceCount</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ApproximatePresenceCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ApproximatePresenceCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -585,7 +579,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -599,12 +593,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Banner_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Banner*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Banner" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Banner">Banner</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash Banner { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? Banner { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -630,12 +623,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Channels_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Channels*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Channels" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Channels">Channels</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IChannel&gt; Channels { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IChannel&gt; Channels { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -647,7 +639,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -661,12 +653,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_DefaultMessageNotifications_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.DefaultMessageNotifications*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_DefaultMessageNotifications" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.DefaultMessageNotifications">DefaultMessageNotifications</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MessageNotificationLevel DefaultMessageNotifications { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public MessageNotificationLevel DefaultMessageNotifications { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -692,12 +683,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Description_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Description*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Description" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Description">Description</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Description { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string? Description { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -709,7 +699,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -723,12 +713,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_DiscoverySplash_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.DiscoverySplash*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_DiscoverySplash" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.DiscoverySplash">DiscoverySplash</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash DiscoverySplash { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? DiscoverySplash { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -754,12 +743,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Emojis_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Emojis*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Emojis" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Emojis">Emojis</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IEmoji&gt; Emojis { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IEmoji&gt; Emojis { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -771,7 +759,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmoji.html">IEmoji</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmoji.html">IEmoji</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -785,12 +773,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ExplicitContentFilter_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ExplicitContentFilter*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ExplicitContentFilter" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ExplicitContentFilter">ExplicitContentFilter</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExplicitContentFilterLevel ExplicitContentFilter { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ExplicitContentFilterLevel ExplicitContentFilter { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -816,12 +803,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_GuildFeatures_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.GuildFeatures*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_GuildFeatures" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.GuildFeatures">GuildFeatures</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;GuildFeature&gt; GuildFeatures { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;GuildFeature&gt; GuildFeatures { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -833,7 +819,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildFeature.html">GuildFeature</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildFeature.html">GuildFeature</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -847,12 +833,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_GuildScheduledEvents_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.GuildScheduledEvents*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_GuildScheduledEvents" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.GuildScheduledEvents">GuildScheduledEvents</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IGuildScheduledEvent&gt; GuildScheduledEvents { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IGuildScheduledEvent&gt; GuildScheduledEvents { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -864,7 +849,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildScheduledEvent.html">IGuildScheduledEvent</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildScheduledEvent.html">IGuildScheduledEvent</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -878,12 +863,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Icon_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Icon*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Icon" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Icon">Icon</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash Icon { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? Icon { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -909,12 +893,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IconHash_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IconHash*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IconHash" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IconHash">IconHash</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash&gt; IconHash { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash?&gt; IconHash { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -926,7 +909,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -940,12 +923,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ID_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_ID" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.ID">ID</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -971,12 +953,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsLarge_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsLarge*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsLarge" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsLarge">IsLarge</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsLarge { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsLarge { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -988,7 +969,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1002,12 +983,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsOwner_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsOwner*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsOwner" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsOwner">IsOwner</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsOwner { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsOwner { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1019,7 +999,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1033,12 +1013,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsPremiumProgressBarEnabled_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsPremiumProgressBarEnabled*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsPremiumProgressBarEnabled" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsPremiumProgressBarEnabled">IsPremiumProgressBarEnabled</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPremiumProgressBarEnabled { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsPremiumProgressBarEnabled { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1050,7 +1029,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1064,12 +1043,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsUnavailable_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsUnavailable*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsUnavailable" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsUnavailable">IsUnavailable</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsUnavailable { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsUnavailable { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1081,7 +1059,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1095,12 +1073,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsWidgetEnabled_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsWidgetEnabled*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_IsWidgetEnabled" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.IsWidgetEnabled">IsWidgetEnabled</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsWidgetEnabled { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsWidgetEnabled { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1112,7 +1089,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1126,12 +1103,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_JoinedAt_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.JoinedAt*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_JoinedAt" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.JoinedAt">JoinedAt</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DateTimeOffset JoinedAt { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public DateTimeOffset JoinedAt { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1143,7 +1119,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.DateTimeOffset</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1157,12 +1133,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MaxMembers_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MaxMembers*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MaxMembers" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MaxMembers">MaxMembers</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MaxMembers { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MaxMembers { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1174,7 +1149,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1188,12 +1163,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MaxPresences_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MaxPresences*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MaxPresences" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MaxPresences">MaxPresences</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int?&gt; MaxPresences { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int?&gt; MaxPresences { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1205,7 +1179,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1219,12 +1193,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MaxVideoChannelUsers_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MaxVideoChannelUsers*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MaxVideoChannelUsers" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MaxVideoChannelUsers">MaxVideoChannelUsers</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MaxVideoChannelUsers { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MaxVideoChannelUsers { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1236,7 +1209,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1250,12 +1223,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MemberCount_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MemberCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MemberCount" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MemberCount">MemberCount</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int MemberCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int MemberCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1267,7 +1239,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1281,12 +1253,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Members_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Members*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Members" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Members">Members</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IGuildMember&gt; Members { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IGuildMember&gt; Members { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1298,7 +1269,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1312,12 +1283,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MFALevel_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MFALevel*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_MFALevel" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.MFALevel">MFALevel</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MultiFactorAuthenticationLevel MFALevel { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public MultiFactorAuthenticationLevel MFALevel { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1343,12 +1313,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Name_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Name*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Name" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Name { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1360,7 +1329,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1374,12 +1343,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_NSFWLevel_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.NSFWLevel*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_NSFWLevel" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.NSFWLevel">NSFWLevel</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GuildNSFWLevel NSFWLevel { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public GuildNSFWLevel NSFWLevel { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1405,12 +1373,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_OwnerID_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.OwnerID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_OwnerID" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.OwnerID">OwnerID</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake OwnerID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake OwnerID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1436,12 +1403,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Permissions_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Permissions*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Permissions" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Permissions">Permissions</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; Permissions { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; Permissions { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1453,7 +1419,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1467,12 +1433,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_PreferredLocale_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.PreferredLocale*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_PreferredLocale" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.PreferredLocale">PreferredLocale</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string PreferredLocale { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string PreferredLocale { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1484,7 +1449,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1498,12 +1463,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_PremiumSubscriptionCount_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.PremiumSubscriptionCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_PremiumSubscriptionCount" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.PremiumSubscriptionCount">PremiumSubscriptionCount</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; PremiumSubscriptionCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; PremiumSubscriptionCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1515,7 +1479,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1529,12 +1493,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_PremiumTier_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.PremiumTier*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_PremiumTier" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.PremiumTier">PremiumTier</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PremiumTier PremiumTier { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PremiumTier PremiumTier { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1560,12 +1523,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Presences_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Presences*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Presences" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Presences">Presences</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IPartialPresence&gt; Presences { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IPartialPresence&gt; Presences { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1577,7 +1539,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialPresence.html">IPartialPresence</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialPresence.html">IPartialPresence</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1591,12 +1553,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_PublicUpdatesChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.PublicUpdatesChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_PublicUpdatesChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.PublicUpdatesChannelID">PublicUpdatesChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? PublicUpdatesChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? PublicUpdatesChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1608,7 +1569,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -1622,12 +1583,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Roles_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Roles*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Roles" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Roles">Roles</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IRole&gt; Roles { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IRole&gt; Roles { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1639,7 +1599,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRole.html">IRole</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRole.html">IRole</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1653,12 +1613,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_RulesChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.RulesChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_RulesChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.RulesChannelID">RulesChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? RulesChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? RulesChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1670,7 +1629,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -1684,12 +1643,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Splash_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Splash*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Splash" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Splash">Splash</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash Splash { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? Splash { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1715,12 +1673,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_StageInstances_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.StageInstances*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_StageInstances" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.StageInstances">StageInstances</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IStageInstance&gt; StageInstances { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IStageInstance&gt; StageInstances { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1732,7 +1689,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IStageInstance.html">IStageInstance</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IStageInstance.html">IStageInstance</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1746,12 +1703,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Stickers_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Stickers*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Stickers" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Stickers">Stickers</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt; Stickers { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt; Stickers { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1763,7 +1719,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISticker.html">ISticker</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISticker.html">ISticker</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1777,12 +1733,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_SystemChannelFlags_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.SystemChannelFlags*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_SystemChannelFlags" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.SystemChannelFlags">SystemChannelFlags</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SystemChannelFlags SystemChannelFlags { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public SystemChannelFlags SystemChannelFlags { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1808,12 +1763,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_SystemChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.SystemChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_SystemChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.SystemChannelID">SystemChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? SystemChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? SystemChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1825,7 +1779,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -1839,12 +1793,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Threads_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Threads*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_Threads" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.Threads">Threads</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IChannel&gt; Threads { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IChannel&gt; Threads { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1856,7 +1809,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1870,12 +1823,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_VanityUrlCode_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.VanityUrlCode*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_VanityUrlCode" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.VanityUrlCode">VanityUrlCode</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string VanityUrlCode { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string? VanityUrlCode { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1887,7 +1839,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1901,12 +1853,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_VerificationLevel_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.VerificationLevel*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_VerificationLevel" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.VerificationLevel">VerificationLevel</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public VerificationLevel VerificationLevel { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public VerificationLevel VerificationLevel { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1932,12 +1883,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_VoiceStates_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.VoiceStates*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_VoiceStates" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.VoiceStates">VoiceStates</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IPartialVoiceState&gt; VoiceStates { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IPartialVoiceState&gt; VoiceStates { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1949,7 +1899,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialVoiceState.html">IPartialVoiceState</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialVoiceState.html">IPartialVoiceState</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1963,12 +1913,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_WelcomeScreen_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.WelcomeScreen*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_WelcomeScreen" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.WelcomeScreen">WelcomeScreen</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IWelcomeScreen&gt; WelcomeScreen { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IWelcomeScreen&gt; WelcomeScreen { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1980,7 +1929,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.html">IWelcomeScreen</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.html">IWelcomeScreen</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1994,12 +1943,11 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_WidgetChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.WidgetChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildCreate_AvailableGuild_WidgetChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildCreate.AvailableGuild.WidgetChannelID">WidgetChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents an available guild sent during a GUILD_CREATE event.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake?&gt; WidgetChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake?&gt; WidgetChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2011,7 +1959,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -2027,7 +1975,7 @@ public class AvailableGuild : IGuildCreate.IAvailableGuild, IGuild, IPartialGuil
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuild.html">IPartialGuild</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

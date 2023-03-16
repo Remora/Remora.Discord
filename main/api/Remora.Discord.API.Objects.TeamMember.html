@@ -107,44 +107,44 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">TeamMember</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.ITeamMember.html">ITeamMember</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.TeamMember.html">TeamMember</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.TeamMember.html">TeamMember</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_TeamMember_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
+public record TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -156,9 +156,8 @@ public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Teams/TeamMember.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_TeamMember__ctor_" data-uid="Remora.Discord.API.Objects.TeamMember.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_TeamMember__ctor_Remora_Discord_API_Abstractions_Objects_MembershipState_System_Collections_Generic_IReadOnlyList_System_String__Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_IPartialUser_" data-uid="Remora.Discord.API.Objects.TeamMember.#ctor(Remora.Discord.API.Abstractions.Objects.MembershipState,System.Collections.Generic.IReadOnlyList{System.String},Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.IPartialUser)">TeamMember(MembershipState, IReadOnlyList&lt;String&gt;, Snowflake, IPartialUser)</h4>
-  <div class="markdown level1 summary"><p>Represents a Discord developer team member.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_TeamMember__ctor_Remora_Discord_API_Abstractions_Objects_MembershipState_System_Collections_Generic_IReadOnlyList_System_String__Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_IPartialUser_" data-uid="Remora.Discord.API.Objects.TeamMember.#ctor(Remora.Discord.API.Abstractions.Objects.MembershipState,System.Collections.Generic.IReadOnlyList{System.String},Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.IPartialUser)">TeamMember(MembershipState, IReadOnlyList&lt;string&gt;, Snowflake, IPartialUser)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
@@ -180,7 +179,7 @@ public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Permissions</span></td>
         <td></td>
       </tr>
@@ -207,12 +206,11 @@ public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_TeamMember_MembershipState_" data-uid="Remora.Discord.API.Objects.TeamMember.MembershipState*"></a>
   <h4 id="Remora_Discord_API_Objects_TeamMember_MembershipState" data-uid="Remora.Discord.API.Objects.TeamMember.MembershipState">MembershipState</h4>
-  <div class="markdown level1 summary"><p>Represents a Discord developer team member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MembershipState MembershipState { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public MembershipState MembershipState { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -238,12 +236,11 @@ public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_TeamMember_Permissions_" data-uid="Remora.Discord.API.Objects.TeamMember.Permissions*"></a>
   <h4 id="Remora_Discord_API_Objects_TeamMember_Permissions" data-uid="Remora.Discord.API.Objects.TeamMember.Permissions">Permissions</h4>
-  <div class="markdown level1 summary"><p>Represents a Discord developer team member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;string&gt; Permissions { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;string&gt; Permissions { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -255,7 +252,7 @@ public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -269,12 +266,11 @@ public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_TeamMember_TeamID_" data-uid="Remora.Discord.API.Objects.TeamMember.TeamID*"></a>
   <h4 id="Remora_Discord_API_Objects_TeamMember_TeamID" data-uid="Remora.Discord.API.Objects.TeamMember.TeamID">TeamID</h4>
-  <div class="markdown level1 summary"><p>Represents a Discord developer team member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake TeamID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake TeamID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -300,12 +296,11 @@ public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_TeamMember_User_" data-uid="Remora.Discord.API.Objects.TeamMember.User*"></a>
   <h4 id="Remora_Discord_API_Objects_TeamMember_User" data-uid="Remora.Discord.API.Objects.TeamMember.User">User</h4>
-  <div class="markdown level1 summary"><p>Represents a Discord developer team member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IPartialUser User { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IPartialUser User { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -327,7 +322,7 @@ public class TeamMember : ITeamMember, IEquatable&lt;TeamMember&gt;</code></pre>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.ITeamMember.html">ITeamMember</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

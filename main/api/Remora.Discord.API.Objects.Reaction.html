@@ -107,44 +107,44 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Reaction</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IReaction.html">IReaction</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.Reaction.html">Reaction</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.Reaction.html">Reaction</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_Reaction_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
+public record Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -156,9 +156,8 @@ public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Reactions/Reaction.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_Reaction__ctor_" data-uid="Remora.Discord.API.Objects.Reaction.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_Reaction__ctor_System_Int32_System_Boolean_Remora_Discord_API_Abstractions_Objects_IPartialEmoji_" data-uid="Remora.Discord.API.Objects.Reaction.#ctor(System.Int32,System.Boolean,Remora.Discord.API.Abstractions.Objects.IPartialEmoji)">Reaction(Int32, Boolean, IPartialEmoji)</h4>
-  <div class="markdown level1 summary"><p>Represents a reaction to a message.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_Reaction__ctor_System_Int32_System_Boolean_Remora_Discord_API_Abstractions_Objects_IPartialEmoji_" data-uid="Remora.Discord.API.Objects.Reaction.#ctor(System.Int32,System.Boolean,Remora.Discord.API.Abstractions.Objects.IPartialEmoji)">Reaction(int, bool, IPartialEmoji)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
@@ -175,12 +174,12 @@ public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">Count</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">HasCurrentUserReacted</span></td>
         <td></td>
       </tr>
@@ -202,12 +201,11 @@ public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Reaction_Count_" data-uid="Remora.Discord.API.Objects.Reaction.Count*"></a>
   <h4 id="Remora_Discord_API_Objects_Reaction_Count" data-uid="Remora.Discord.API.Objects.Reaction.Count">Count</h4>
-  <div class="markdown level1 summary"><p>Represents a reaction to a message.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Count { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int Count { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -219,7 +217,7 @@ public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -233,12 +231,11 @@ public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Reaction_Emoji_" data-uid="Remora.Discord.API.Objects.Reaction.Emoji*"></a>
   <h4 id="Remora_Discord_API_Objects_Reaction_Emoji" data-uid="Remora.Discord.API.Objects.Reaction.Emoji">Emoji</h4>
-  <div class="markdown level1 summary"><p>Represents a reaction to a message.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IPartialEmoji Emoji { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IPartialEmoji Emoji { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -264,12 +261,11 @@ public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Reaction_HasCurrentUserReacted_" data-uid="Remora.Discord.API.Objects.Reaction.HasCurrentUserReacted*"></a>
   <h4 id="Remora_Discord_API_Objects_Reaction_HasCurrentUserReacted" data-uid="Remora.Discord.API.Objects.Reaction.HasCurrentUserReacted">HasCurrentUserReacted</h4>
-  <div class="markdown level1 summary"><p>Represents a reaction to a message.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool HasCurrentUserReacted { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool HasCurrentUserReacted { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -281,7 +277,7 @@ public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -291,7 +287,7 @@ public class Reaction : IReaction, IEquatable&lt;Reaction&gt;</code></pre>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IReaction.html">IReaction</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

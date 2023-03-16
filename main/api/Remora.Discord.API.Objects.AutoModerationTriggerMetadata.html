@@ -108,44 +108,44 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">AutoModerationTriggerMetadata</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata.html">IAutoModerationTriggerMetadata</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.html">AutoModerationTriggerMetadata</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.html">AutoModerationTriggerMetadata</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class AutoModerationTriggerMetadata : IAutoModerationTriggerMetadata, IEquatable&lt;AutoModerationTriggerMetadata&gt;</code></pre>
+public record AutoModerationTriggerMetadata : IAutoModerationTriggerMetadata, IEquatable&lt;AutoModerationTriggerMetadata&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -157,14 +157,12 @@ public class AutoModerationTriggerMetadata : IAutoModerationTriggerMetadata, IEq
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/AutoModeration/AutoModerationTriggerMetadata.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata__ctor_" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata__ctor_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_AutoModerationKeywordPresetType___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___Remora_Rest_Core_Optional_System_Byte__" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.#ctor(Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.AutoModerationKeywordPresetType}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},Remora.Rest.Core.Optional{System.Byte})">AutoModerationTriggerMetadata(Optional&lt;IReadOnlyList&lt;String&gt;&gt;, Optional&lt;IReadOnlyList&lt;String&gt;&gt;, Optional&lt;IReadOnlyList&lt;AutoModerationKeywordPresetType&gt;&gt;, Optional&lt;IReadOnlyList&lt;String&gt;&gt;, Optional&lt;Byte&gt;)</h4>
-  <div class="markdown level1 summary"><p>Additional data used to determine whether a rule should be triggered. Different fields are relevant based
-on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType.html">AutoModerationTriggerType</a>.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata__ctor_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_AutoModerationKeywordPresetType___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___Remora_Rest_Core_Optional_System_Byte__" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.#ctor(Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.AutoModerationKeywordPresetType}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},Remora.Rest.Core.Optional{System.Byte})">AutoModerationTriggerMetadata(Optional&lt;IReadOnlyList&lt;string&gt;&gt;, Optional&lt;IReadOnlyList&lt;string&gt;&gt;, Optional&lt;IReadOnlyList&lt;AutoModerationKeywordPresetType&gt;&gt;, Optional&lt;IReadOnlyList&lt;string&gt;&gt;, Optional&lt;byte&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AutoModerationTriggerMetadata(Optional&lt;IReadOnlyList&lt;string&gt;&gt; KeywordFilter = default(Optional&lt;IReadOnlyList&lt;string&gt;&gt;), Optional&lt;IReadOnlyList&lt;string&gt;&gt; RegexPatterns = default(Optional&lt;IReadOnlyList&lt;string&gt;&gt;), Optional&lt;IReadOnlyList&lt;AutoModerationKeywordPresetType&gt;&gt; Presets = default(Optional&lt;IReadOnlyList&lt;AutoModerationKeywordPresetType&gt;&gt;), Optional&lt;IReadOnlyList&lt;string&gt;&gt; AllowList = default(Optional&lt;IReadOnlyList&lt;string&gt;&gt;), Optional&lt;byte&gt; MentionTotalLimit = default(Optional&lt;byte&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public AutoModerationTriggerMetadata(Optional&lt;IReadOnlyList&lt;string&gt;&gt; KeywordFilter = default, Optional&lt;IReadOnlyList&lt;string&gt;&gt; RegexPatterns = default, Optional&lt;IReadOnlyList&lt;AutoModerationKeywordPresetType&gt;&gt; Presets = default, Optional&lt;IReadOnlyList&lt;string&gt;&gt; AllowList = default, Optional&lt;byte&gt; MentionTotalLimit = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -177,27 +175,27 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">KeywordFilter</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">RegexPatterns</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationKeywordPresetType.html">AutoModerationKeywordPresetType</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationKeywordPresetType.html">AutoModerationKeywordPresetType</a>&gt;&gt;</td>
         <td><span class="parametername">Presets</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">AllowList</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Byte</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
         <td><span class="parametername">MentionTotalLimit</span></td>
         <td></td>
       </tr>
@@ -214,13 +212,11 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
   </span>
   <a id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_AllowList_" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.AllowList*"></a>
   <h4 id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_AllowList" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.AllowList">AllowList</h4>
-  <div class="markdown level1 summary"><p>Additional data used to determine whether a rule should be triggered. Different fields are relevant based
-on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType.html">AutoModerationTriggerType</a>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; AllowList { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; AllowList { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -232,7 +228,7 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -246,13 +242,11 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
   </span>
   <a id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_KeywordFilter_" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.KeywordFilter*"></a>
   <h4 id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_KeywordFilter" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.KeywordFilter">KeywordFilter</h4>
-  <div class="markdown level1 summary"><p>Additional data used to determine whether a rule should be triggered. Different fields are relevant based
-on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType.html">AutoModerationTriggerType</a>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; KeywordFilter { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; KeywordFilter { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -264,7 +258,7 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -278,13 +272,11 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
   </span>
   <a id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_MentionTotalLimit_" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.MentionTotalLimit*"></a>
   <h4 id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_MentionTotalLimit" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.MentionTotalLimit">MentionTotalLimit</h4>
-  <div class="markdown level1 summary"><p>Additional data used to determine whether a rule should be triggered. Different fields are relevant based
-on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType.html">AutoModerationTriggerType</a>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;byte&gt; MentionTotalLimit { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;byte&gt; MentionTotalLimit { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -296,7 +288,7 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Byte</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -310,13 +302,11 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
   </span>
   <a id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_Presets_" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.Presets*"></a>
   <h4 id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_Presets" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.Presets">Presets</h4>
-  <div class="markdown level1 summary"><p>Additional data used to determine whether a rule should be triggered. Different fields are relevant based
-on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType.html">AutoModerationTriggerType</a>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;AutoModerationKeywordPresetType&gt;&gt; Presets { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;AutoModerationKeywordPresetType&gt;&gt; Presets { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -328,7 +318,7 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationKeywordPresetType.html">AutoModerationKeywordPresetType</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationKeywordPresetType.html">AutoModerationKeywordPresetType</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -342,13 +332,11 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
   </span>
   <a id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_RegexPatterns_" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.RegexPatterns*"></a>
   <h4 id="Remora_Discord_API_Objects_AutoModerationTriggerMetadata_RegexPatterns" data-uid="Remora.Discord.API.Objects.AutoModerationTriggerMetadata.RegexPatterns">RegexPatterns</h4>
-  <div class="markdown level1 summary"><p>Additional data used to determine whether a rule should be triggered. Different fields are relevant based
-on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType.html">AutoModerationTriggerType</a>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; RegexPatterns { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; RegexPatterns { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -360,7 +348,7 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -370,7 +358,7 @@ on the value of <a class="xref" href="Remora.Discord.API.Abstractions.Objects.Au
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata.html">IAutoModerationTriggerMetadata</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

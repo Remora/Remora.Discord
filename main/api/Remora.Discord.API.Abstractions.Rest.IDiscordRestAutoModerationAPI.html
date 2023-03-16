@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents the Discord Auto Moderation API.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Abstractions.Rest.html">Remora.Discord.API.Abstractions.Rest</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Rest.html">Rest</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAutoModerationAPI_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -122,13 +122,13 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestAutoModerationAPI.cs/#L79">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAutoModerationAPI_CreateAutoModerationRuleAsync_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAutoModerationAPI.CreateAutoModerationRuleAsync*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAutoModerationAPI_CreateAutoModerationRuleAsync_Remora_Rest_Core_Snowflake_System_String_Remora_Discord_API_Abstractions_Objects_AutoModerationEventType_Remora_Discord_API_Abstractions_Objects_AutoModerationTriggerType_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IAutoModerationTriggerMetadata__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IAutoModerationAction__Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAutoModerationAPI.CreateAutoModerationRuleAsync(Remora.Rest.Core.Snowflake,System.String,Remora.Discord.API.Abstractions.Objects.AutoModerationEventType,Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IAutoModerationAction},Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},System.Threading.CancellationToken)">CreateAutoModerationRuleAsync(Snowflake, String, AutoModerationEventType, AutoModerationTriggerType, Optional&lt;IAutoModerationTriggerMetadata&gt;, IReadOnlyList&lt;IAutoModerationAction&gt;, Optional&lt;Nullable&lt;Boolean&gt;&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, CancellationToken)</h4>
+  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAutoModerationAPI_CreateAutoModerationRuleAsync_Remora_Rest_Core_Snowflake_System_String_Remora_Discord_API_Abstractions_Objects_AutoModerationEventType_Remora_Discord_API_Abstractions_Objects_AutoModerationTriggerType_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IAutoModerationTriggerMetadata__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IAutoModerationAction__Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAutoModerationAPI.CreateAutoModerationRuleAsync(Remora.Rest.Core.Snowflake,System.String,Remora.Discord.API.Abstractions.Objects.AutoModerationEventType,Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IAutoModerationAction},Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},System.Threading.CancellationToken)">CreateAutoModerationRuleAsync(Snowflake, string, AutoModerationEventType, AutoModerationTriggerType, Optional&lt;IAutoModerationTriggerMetadata&gt;, IReadOnlyList&lt;IAutoModerationAction&gt;, Optional&lt;bool?&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt;, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Creates a new Auto Moderation rule in a guild.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IAutoModerationRule&gt;&gt; CreateAutoModerationRuleAsync(Snowflake guildID, string name, AutoModerationEventType eventType, AutoModerationTriggerType triggerType, Optional&lt;IAutoModerationTriggerMetadata&gt; triggerMetadata, IReadOnlyList&lt;IAutoModerationAction&gt; actions, Optional&lt;bool?&gt; enabled = default(Optional&lt;bool?&gt;), Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; exemptRoles = default(Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;), Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; exemptChannels = default(Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IAutoModerationRule&gt;&gt; CreateAutoModerationRuleAsync(Snowflake guildID, string name, AutoModerationEventType eventType, AutoModerationTriggerType triggerType, Optional&lt;IAutoModerationTriggerMetadata&gt; triggerMetadata, IReadOnlyList&lt;IAutoModerationAction&gt; actions, Optional&lt;bool?&gt; enabled = default, Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt; exemptRoles = default, Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt; exemptChannels = default, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -147,7 +147,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>The name of the rule.</p>
 </td>
@@ -165,37 +165,37 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata.html">IAutoModerationTriggerMetadata</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata.html">IAutoModerationTriggerMetadata</a>&gt;</td>
         <td><span class="parametername">triggerMetadata</span></td>
         <td><p>The associated trigger metadata.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationAction.html">IAutoModerationAction</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationAction.html">IAutoModerationAction</a>&gt;</td>
         <td><span class="parametername">actions</span></td>
         <td><p>The actions which will execute when the rule is triggered.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Boolean</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?&gt;</td>
         <td><span class="parametername">enabled</span></td>
         <td><p>Whether the rule is enabled.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
         <td><span class="parametername">exemptRoles</span></td>
         <td><p>The role IDs that should not be affected by this rule.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
         <td><span class="parametername">exemptChannels</span></td>
         <td><p>The channel IDs that should not be affected by this rule.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -212,7 +212,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationRule.html">IAutoModerationRule</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationRule.html">IAutoModerationRule</a>&gt;&gt;</td>
         <td><p>A modification result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -232,7 +232,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; DeleteAutoModerationRuleAsync(Snowflake guildID, Snowflake ruleID, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; DeleteAutoModerationRuleAsync(Snowflake guildID, Snowflake ruleID, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -257,7 +257,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -274,7 +274,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A deletion result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -294,7 +294,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IAutoModerationRule&gt;&gt; GetAutoModerationRuleAsync(Snowflake guildID, Snowflake ruleID, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IAutoModerationRule&gt;&gt; GetAutoModerationRuleAsync(Snowflake guildID, Snowflake ruleID, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -319,7 +319,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -336,7 +336,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationRule.html">IAutoModerationRule</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationRule.html">IAutoModerationRule</a>&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -356,7 +356,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IAutoModerationRule&gt;&gt;&gt; ListAutoModerationRulesAsync(Snowflake guildID, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IAutoModerationRule&gt;&gt;&gt; ListAutoModerationRulesAsync(Snowflake guildID, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -375,7 +375,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -392,7 +392,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationRule.html">IAutoModerationRule</a>&gt;&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationRule.html">IAutoModerationRule</a>&gt;&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -406,13 +406,13 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestAutoModerationAPI.cs/#L108">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAutoModerationAPI_ModifyAutoModerationRuleAsync_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAutoModerationAPI.ModifyAutoModerationRuleAsync*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAutoModerationAPI_ModifyAutoModerationRuleAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_AutoModerationEventType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_AutoModerationTriggerType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IAutoModerationTriggerMetadata__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IAutoModerationAction___Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAutoModerationAPI.ModifyAutoModerationRuleAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.AutoModerationEventType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IAutoModerationAction}},Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},System.Threading.CancellationToken)">ModifyAutoModerationRuleAsync(Snowflake, Snowflake, Optional&lt;String&gt;, Optional&lt;AutoModerationEventType&gt;, Optional&lt;AutoModerationTriggerType&gt;, Optional&lt;IAutoModerationTriggerMetadata&gt;, Optional&lt;IReadOnlyList&lt;IAutoModerationAction&gt;&gt;, Optional&lt;Nullable&lt;Boolean&gt;&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, CancellationToken)</h4>
+  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAutoModerationAPI_ModifyAutoModerationRuleAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_AutoModerationEventType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_AutoModerationTriggerType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IAutoModerationTriggerMetadata__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IAutoModerationAction___Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAutoModerationAPI.ModifyAutoModerationRuleAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.AutoModerationEventType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IAutoModerationAction}},Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},System.Threading.CancellationToken)">ModifyAutoModerationRuleAsync(Snowflake, Snowflake, Optional&lt;string&gt;, Optional&lt;AutoModerationEventType&gt;, Optional&lt;AutoModerationTriggerType&gt;, Optional&lt;IAutoModerationTriggerMetadata&gt;, Optional&lt;IReadOnlyList&lt;IAutoModerationAction&gt;&gt;, Optional&lt;bool?&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt;, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Modifies an existing Auto Moderation rule in a guild.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IAutoModerationRule&gt;&gt; ModifyAutoModerationRuleAsync(Snowflake guildID, Snowflake ruleID, Optional&lt;string&gt; name = default(Optional&lt;string&gt;), Optional&lt;AutoModerationEventType&gt; eventType = default(Optional&lt;AutoModerationEventType&gt;), Optional&lt;AutoModerationTriggerType&gt; triggerType = default(Optional&lt;AutoModerationTriggerType&gt;), Optional&lt;IAutoModerationTriggerMetadata&gt; triggerMetadata = default(Optional&lt;IAutoModerationTriggerMetadata&gt;), Optional&lt;IReadOnlyList&lt;IAutoModerationAction&gt;&gt; actions = default(Optional&lt;IReadOnlyList&lt;IAutoModerationAction&gt;&gt;), Optional&lt;bool?&gt; enabled = default(Optional&lt;bool?&gt;), Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; exemptRoles = default(Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;), Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; exemptChannels = default(Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IAutoModerationRule&gt;&gt; ModifyAutoModerationRuleAsync(Snowflake guildID, Snowflake ruleID, Optional&lt;string&gt; name = default, Optional&lt;AutoModerationEventType&gt; eventType = default, Optional&lt;AutoModerationTriggerType&gt; triggerType = default, Optional&lt;IAutoModerationTriggerMetadata&gt; triggerMetadata = default, Optional&lt;IReadOnlyList&lt;IAutoModerationAction&gt;&gt; actions = default, Optional&lt;bool?&gt; enabled = default, Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt; exemptRoles = default, Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt; exemptChannels = default, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -437,55 +437,55 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">name</span></td>
         <td><p>The name of the rule.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationEventType.html">AutoModerationEventType</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationEventType.html">AutoModerationEventType</a>&gt;</td>
         <td><span class="parametername">eventType</span></td>
         <td><p>The type event on which the rule should be triggered.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType.html">AutoModerationTriggerType</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType.html">AutoModerationTriggerType</a>&gt;</td>
         <td><span class="parametername">triggerType</span></td>
         <td><p>The type of content which can trigger the rule.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata.html">IAutoModerationTriggerMetadata</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationTriggerMetadata.html">IAutoModerationTriggerMetadata</a>&gt;</td>
         <td><span class="parametername">triggerMetadata</span></td>
         <td><p>The associated trigger metadata.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationAction.html">IAutoModerationAction</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationAction.html">IAutoModerationAction</a>&gt;&gt;</td>
         <td><span class="parametername">actions</span></td>
         <td><p>The actions which will execute when the rule is triggered.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Boolean</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?&gt;</td>
         <td><span class="parametername">enabled</span></td>
         <td><p>Whether the rule is enabled.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
         <td><span class="parametername">exemptRoles</span></td>
         <td><p>The role IDs that should not be affected by this rule.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
         <td><span class="parametername">exemptChannels</span></td>
         <td><p>The channel IDs that should not be affected by this rule.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -502,7 +502,7 @@ public interface IDiscordRestAutoModerationAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationRule.html">IAutoModerationRule</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAutoModerationRule.html">IAutoModerationRule</a>&gt;&gt;</td>
         <td><p>A modification result which may or may not have succeeded.</p>
 </td>
       </tr>

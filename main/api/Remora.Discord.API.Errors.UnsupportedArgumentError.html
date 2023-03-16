@@ -107,15 +107,15 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Remora.Results.ResultError</span></div>
     <div class="level2"><span class="xref">UnsupportedArgumentError</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><span class="xref">Remora.Results.IResultError</span></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">Remora.Results.ResultError</span>&gt;</div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Errors.UnsupportedArgumentError.html">UnsupportedArgumentError</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<span class="xref">Remora.Results.ResultError</span>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Errors.UnsupportedArgumentError.html">UnsupportedArgumentError</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -129,7 +129,7 @@
       <span class="xref">Remora.Results.ResultError.GetHashCode()</span>
     </div>
     <div>
-      <span class="xref">Remora.Results.ResultError.Equals(System.Object)</span>
+      <span class="xref">Remora.Results.ResultError.Equals(object)</span>
     </div>
     <div>
       <span class="xref">Remora.Results.ResultError.Equals(Remora.Results.ResultError)</span>
@@ -138,7 +138,7 @@
       <span class="xref">Remora.Results.ResultError.&lt;Clone&gt;$()</span>
     </div>
     <div>
-      <span class="xref">Remora.Results.ResultError.Deconstruct(System.String)</span>
+      <span class="xref">Remora.Results.ResultError.Deconstruct(out string)</span>
     </div>
     <div>
       <span class="xref">Remora.Results.ResultError.EqualityContract</span>
@@ -147,24 +147,24 @@
       <span class="xref">Remora.Results.ResultError.Message</span>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Errors.html">Remora.Discord.API.Errors</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Errors.html">Errors</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Errors_UnsupportedArgumentError_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class UnsupportedArgumentError : ResultError, IResultError, IEquatable&lt;ResultError&gt;, IEquatable&lt;UnsupportedArgumentError&gt;</code></pre>
+public record UnsupportedArgumentError : ResultError, IResultError, IEquatable&lt;ResultError&gt;, IEquatable&lt;UnsupportedArgumentError&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -176,7 +176,7 @@ public class UnsupportedArgumentError : ResultError, IResultError, IEquatable&lt
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/Errors/UnsupportedArgumentError.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Errors_UnsupportedArgumentError__ctor_" data-uid="Remora.Discord.API.Errors.UnsupportedArgumentError.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Errors_UnsupportedArgumentError__ctor_System_String_" data-uid="Remora.Discord.API.Errors.UnsupportedArgumentError.#ctor(System.String)">UnsupportedArgumentError(String)</h4>
+  <h4 id="Remora_Discord_API_Errors_UnsupportedArgumentError__ctor_System_String_" data-uid="Remora.Discord.API.Errors.UnsupportedArgumentError.#ctor(System.String)">UnsupportedArgumentError(string)</h4>
   <div class="markdown level1 summary"><p>Represents an error produced by an unsupported argument.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -195,7 +195,7 @@ public class UnsupportedArgumentError : ResultError, IResultError, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Message</span></td>
         <td></td>
       </tr>
@@ -206,10 +206,10 @@ public class UnsupportedArgumentError : ResultError, IResultError, IEquatable&lt
       <span class="xref">Remora.Results.IResultError</span>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

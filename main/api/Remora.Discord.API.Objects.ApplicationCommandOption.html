@@ -107,44 +107,44 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">ApplicationCommandOption</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption.html">IApplicationCommandOption</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.ApplicationCommandOption.html">ApplicationCommandOption</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.ApplicationCommandOption.html">ApplicationCommandOption</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_ApplicationCommandOption_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt;ApplicationCommandOption&gt;</code></pre>
+public record ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt;ApplicationCommandOption&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -156,13 +156,12 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/ApplicationCommands/ApplicationCommandOption.cs/#L34">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption__ctor_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption__ctor_Remora_Discord_API_Abstractions_Objects_ApplicationCommandOptionType_System_String_System_String_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IApplicationCommandOptionChoice___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IApplicationCommandOption___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_ChannelType___Remora_Rest_Core_Optional_OneOf_OneOf_System_UInt64_System_Int64_System_Single_System_Double___Remora_Rest_Core_Optional_OneOf_OneOf_System_UInt64_System_Int64_System_Single_System_Double___Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_UInt32__Remora_Rest_Core_Optional_System_UInt32__" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.#ctor(Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType,System.String,System.String,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.ChannelType}},Remora.Rest.Core.Optional{OneOf.OneOf{System.UInt64,System.Int64,System.Single,System.Double}},Remora.Rest.Core.Optional{OneOf.OneOf{System.UInt64,System.Int64,System.Single,System.Double}},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.UInt32},Remora.Rest.Core.Optional{System.UInt32})">ApplicationCommandOption(ApplicationCommandOptionType, String, String, Optional&lt;Boolean&gt;, Optional&lt;Boolean&gt;, Optional&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt;, Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt;, Optional&lt;IReadOnlyList&lt;ChannelType&gt;&gt;, Optional&lt;OneOf&lt;UInt64, Int64, Single, Double&gt;&gt;, Optional&lt;OneOf&lt;UInt64, Int64, Single, Double&gt;&gt;, Optional&lt;Boolean&gt;, Optional&lt;IReadOnlyDictionary&lt;String, String&gt;&gt;, Optional&lt;String&gt;, Optional&lt;IReadOnlyDictionary&lt;String, String&gt;&gt;, Optional&lt;String&gt;, Optional&lt;UInt32&gt;, Optional&lt;UInt32&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption__ctor_Remora_Discord_API_Abstractions_Objects_ApplicationCommandOptionType_System_String_System_String_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IApplicationCommandOptionChoice___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IApplicationCommandOption___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_ChannelType___Remora_Rest_Core_Optional_OneOf_OneOf_System_UInt64_System_Int64_System_Single_System_Double___Remora_Rest_Core_Optional_OneOf_OneOf_System_UInt64_System_Int64_System_Single_System_Double___Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_UInt32__Remora_Rest_Core_Optional_System_UInt32__" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.#ctor(Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType,System.String,System.String,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.ChannelType}},Remora.Rest.Core.Optional{OneOf.OneOf{System.UInt64,System.Int64,System.Single,System.Double}},Remora.Rest.Core.Optional{OneOf.OneOf{System.UInt64,System.Int64,System.Single,System.Double}},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.UInt32},Remora.Rest.Core.Optional{System.UInt32})">ApplicationCommandOption(ApplicationCommandOptionType, string, string, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt;, Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt;, Optional&lt;IReadOnlyList&lt;ChannelType&gt;&gt;, Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt;, Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt;, Optional&lt;bool&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt;, Optional&lt;string&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt;, Optional&lt;string&gt;, Optional&lt;uint&gt;, Optional&lt;uint&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ApplicationCommandOption(ApplicationCommandOptionType Type, string Name, string Description, Optional&lt;bool&gt; IsDefault = default(Optional&lt;bool&gt;), Optional&lt;bool&gt; IsRequired = default(Optional&lt;bool&gt;), Optional&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt; Choices = default(Optional&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt;), Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt; Options = default(Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt;), Optional&lt;IReadOnlyList&lt;ChannelType&gt;&gt; ChannelTypes = default(Optional&lt;IReadOnlyList&lt;ChannelType&gt;&gt;), Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt; MinValue = default(Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt;), Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt; MaxValue = default(Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt;), Optional&lt;bool&gt; EnableAutocomplete = default(Optional&lt;bool&gt;), Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt; NameLocalizations = default(Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt;), Optional&lt;string&gt; NameLocalized = default(Optional&lt;string&gt;), Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt; DescriptionLocalizations = default(Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt;), Optional&lt;string&gt; DescriptionLocalized = default(Optional&lt;string&gt;), Optional&lt;uint&gt; MinLength = default(Optional&lt;uint&gt;), Optional&lt;uint&gt; MaxLength = default(Optional&lt;uint&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public ApplicationCommandOption(ApplicationCommandOptionType Type, string Name, string Description, Optional&lt;bool&gt; IsDefault = default, Optional&lt;bool&gt; IsRequired = default, Optional&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt; Choices = default, Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt; Options = default, Optional&lt;IReadOnlyList&lt;ChannelType&gt;&gt; ChannelTypes = default, Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt; MinValue = default, Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt; MaxValue = default, Optional&lt;bool&gt; EnableAutocomplete = default, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt; NameLocalizations = default, Optional&lt;string&gt; NameLocalized = default, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt; DescriptionLocalizations = default, Optional&lt;string&gt; DescriptionLocalized = default, Optional&lt;uint&gt; MinLength = default, Optional&lt;uint&gt; MaxLength = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -180,82 +179,82 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Name</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Description</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsDefault</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsRequired</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice.html">IApplicationCommandOptionChoice</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice.html">IApplicationCommandOptionChoice</a>&gt;&gt;</td>
         <td><span class="parametername">Choices</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption.html">IApplicationCommandOption</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption.html">IApplicationCommandOption</a>&gt;&gt;</td>
         <td><span class="parametername">Options</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ChannelType.html">ChannelType</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ChannelType.html">ChannelType</a>&gt;&gt;</td>
         <td><span class="parametername">ChannelTypes</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">OneOf.OneOf</span>&lt;<span class="xref">System.UInt64</span>, <span class="xref">System.Int64</span>, <span class="xref">System.Single</span>, <span class="xref">System.Double</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1, T2, T3&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">ulong</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>&gt;&gt;</td>
         <td><span class="parametername">MinValue</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">OneOf.OneOf</span>&lt;<span class="xref">System.UInt64</span>, <span class="xref">System.Int64</span>, <span class="xref">System.Single</span>, <span class="xref">System.Double</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1, T2, T3&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">ulong</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>&gt;&gt;</td>
         <td><span class="parametername">MaxValue</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">EnableAutocomplete</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">NameLocalizations</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">NameLocalized</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">DescriptionLocalizations</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">DescriptionLocalized</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.UInt32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a>&gt;</td>
         <td><span class="parametername">MinLength</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.UInt32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a>&gt;</td>
         <td><span class="parametername">MaxLength</span></td>
         <td></td>
       </tr>
@@ -272,12 +271,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_ChannelTypes_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.ChannelTypes*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_ChannelTypes" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.ChannelTypes">ChannelTypes</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;ChannelType&gt;&gt; ChannelTypes { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;ChannelType&gt;&gt; ChannelTypes { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -289,7 +287,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ChannelType.html">ChannelType</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ChannelType.html">ChannelType</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -303,12 +301,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_Choices_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Choices*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_Choices" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Choices">Choices</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt; Choices { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt; Choices { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -320,7 +317,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice.html">IApplicationCommandOptionChoice</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice.html">IApplicationCommandOptionChoice</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -334,12 +331,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_Description_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Description*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_Description" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Description">Description</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Description { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Description { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -351,7 +347,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -365,12 +361,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_DescriptionLocalizations_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.DescriptionLocalizations*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_DescriptionLocalizations" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.DescriptionLocalizations">DescriptionLocalizations</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt; DescriptionLocalizations { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt; DescriptionLocalizations { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -382,7 +377,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -396,12 +391,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_DescriptionLocalized_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.DescriptionLocalized*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_DescriptionLocalized" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.DescriptionLocalized">DescriptionLocalized</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; DescriptionLocalized { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; DescriptionLocalized { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -413,7 +407,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -427,12 +421,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_EnableAutocomplete_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.EnableAutocomplete*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_EnableAutocomplete" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.EnableAutocomplete">EnableAutocomplete</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; EnableAutocomplete { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; EnableAutocomplete { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -444,7 +437,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -458,12 +451,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_IsDefault_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.IsDefault*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_IsDefault" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.IsDefault">IsDefault</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsDefault { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsDefault { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -475,7 +467,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -489,12 +481,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_IsRequired_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.IsRequired*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_IsRequired" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.IsRequired">IsRequired</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsRequired { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsRequired { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -506,7 +497,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -520,12 +511,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_MaxLength_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.MaxLength*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_MaxLength" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.MaxLength">MaxLength</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;uint&gt; MaxLength { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;uint&gt; MaxLength { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -537,7 +527,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.UInt32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -551,12 +541,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_MaxValue_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.MaxValue*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_MaxValue" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.MaxValue">MaxValue</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt; MaxValue { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt; MaxValue { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -568,7 +557,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">OneOf.OneOf</span>&lt;<span class="xref">System.UInt64</span>, <span class="xref">System.Int64</span>, <span class="xref">System.Single</span>, <span class="xref">System.Double</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1, T2, T3&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">ulong</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -582,12 +571,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_MinLength_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.MinLength*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_MinLength" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.MinLength">MinLength</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;uint&gt; MinLength { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;uint&gt; MinLength { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -599,7 +587,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.UInt32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -613,12 +601,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_MinValue_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.MinValue*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_MinValue" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.MinValue">MinValue</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt; MinValue { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;OneOf&lt;ulong, long, float, double&gt;&gt; MinValue { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -630,7 +617,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">OneOf.OneOf</span>&lt;<span class="xref">System.UInt64</span>, <span class="xref">System.Int64</span>, <span class="xref">System.Single</span>, <span class="xref">System.Double</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1, T2, T3&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">ulong</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -644,12 +631,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_Name_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Name*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_Name" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Name { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -661,7 +647,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -675,12 +661,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_NameLocalizations_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.NameLocalizations*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_NameLocalizations" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.NameLocalizations">NameLocalizations</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt; NameLocalizations { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyDictionary&lt;string, string&gt;?&gt; NameLocalizations { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -692,7 +677,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -706,12 +691,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_NameLocalized_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.NameLocalized*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_NameLocalized" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.NameLocalized">NameLocalized</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; NameLocalized { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; NameLocalized { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -723,7 +707,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -737,12 +721,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_Options_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Options*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_Options" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Options">Options</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt; Options { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IApplicationCommandOption&gt;&gt; Options { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -754,7 +737,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption.html">IApplicationCommandOption</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption.html">IApplicationCommandOption</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -768,12 +751,11 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
   </span>
   <a id="Remora_Discord_API_Objects_ApplicationCommandOption_Type_" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Type*"></a>
   <h4 id="Remora_Discord_API_Objects_ApplicationCommandOption_Type" data-uid="Remora.Discord.API.Objects.ApplicationCommandOption.Type">Type</h4>
-  <div class="markdown level1 summary"><p>Represents an option in an application command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ApplicationCommandOptionType Type { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ApplicationCommandOptionType Type { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -795,7 +777,7 @@ public class ApplicationCommandOption : IApplicationCommandOption, IEquatable&lt
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption.html">IApplicationCommandOption</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

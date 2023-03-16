@@ -107,44 +107,44 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Embed</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.Embed.html">Embed</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.Embed.html">Embed</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_Embed_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
+public record Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -156,13 +156,12 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Messages/Embed.cs/#L35">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_Embed__ctor_" data-uid="Remora.Discord.API.Objects.Embed.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_Embed__ctor_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_EmbedType__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_DateTimeOffset__Remora_Rest_Core_Optional_System_Drawing_Color__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedFooter__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedImage__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedThumbnail__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedVideo__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedProvider__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedAuthor__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IEmbedField___" data-uid="Remora.Discord.API.Objects.Embed.#ctor(Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.EmbedType},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.DateTimeOffset},Remora.Rest.Core.Optional{System.Drawing.Color},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedFooter},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedImage},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedThumbnail},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedVideo},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedProvider},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedAuthor},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IEmbedField}})">Embed(Optional&lt;String&gt;, Optional&lt;EmbedType&gt;, Optional&lt;String&gt;, Optional&lt;String&gt;, Optional&lt;DateTimeOffset&gt;, Optional&lt;Color&gt;, Optional&lt;IEmbedFooter&gt;, Optional&lt;IEmbedImage&gt;, Optional&lt;IEmbedThumbnail&gt;, Optional&lt;IEmbedVideo&gt;, Optional&lt;IEmbedProvider&gt;, Optional&lt;IEmbedAuthor&gt;, Optional&lt;IReadOnlyList&lt;IEmbedField&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_Embed__ctor_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_EmbedType__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_DateTimeOffset__Remora_Rest_Core_Optional_System_Drawing_Color__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedFooter__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedImage__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedThumbnail__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedVideo__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedProvider__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IEmbedAuthor__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IEmbedField___" data-uid="Remora.Discord.API.Objects.Embed.#ctor(Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.EmbedType},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.DateTimeOffset},Remora.Rest.Core.Optional{System.Drawing.Color},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedFooter},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedImage},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedThumbnail},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedVideo},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedProvider},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IEmbedAuthor},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IEmbedField}})">Embed(Optional&lt;string&gt;, Optional&lt;EmbedType&gt;, Optional&lt;string&gt;, Optional&lt;string&gt;, Optional&lt;DateTimeOffset&gt;, Optional&lt;Color&gt;, Optional&lt;IEmbedFooter&gt;, Optional&lt;IEmbedImage&gt;, Optional&lt;IEmbedThumbnail&gt;, Optional&lt;IEmbedVideo&gt;, Optional&lt;IEmbedProvider&gt;, Optional&lt;IEmbedAuthor&gt;, Optional&lt;IReadOnlyList&lt;IEmbedField&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Embed(Optional&lt;string&gt; Title = default(Optional&lt;string&gt;), Optional&lt;EmbedType&gt; Type = default(Optional&lt;EmbedType&gt;), Optional&lt;string&gt; Description = default(Optional&lt;string&gt;), Optional&lt;string&gt; Url = default(Optional&lt;string&gt;), Optional&lt;DateTimeOffset&gt; Timestamp = default(Optional&lt;DateTimeOffset&gt;), Optional&lt;Color&gt; Colour = default(Optional&lt;Color&gt;), Optional&lt;IEmbedFooter&gt; Footer = default(Optional&lt;IEmbedFooter&gt;), Optional&lt;IEmbedImage&gt; Image = default(Optional&lt;IEmbedImage&gt;), Optional&lt;IEmbedThumbnail&gt; Thumbnail = default(Optional&lt;IEmbedThumbnail&gt;), Optional&lt;IEmbedVideo&gt; Video = default(Optional&lt;IEmbedVideo&gt;), Optional&lt;IEmbedProvider&gt; Provider = default(Optional&lt;IEmbedProvider&gt;), Optional&lt;IEmbedAuthor&gt; Author = default(Optional&lt;IEmbedAuthor&gt;), Optional&lt;IReadOnlyList&lt;IEmbedField&gt;&gt; Fields = default(Optional&lt;IReadOnlyList&lt;IEmbedField&gt;&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public Embed(Optional&lt;string&gt; Title = default, Optional&lt;EmbedType&gt; Type = default, Optional&lt;string&gt; Description = default, Optional&lt;string&gt; Url = default, Optional&lt;DateTimeOffset&gt; Timestamp = default, Optional&lt;Color&gt; Colour = default, Optional&lt;IEmbedFooter&gt; Footer = default, Optional&lt;IEmbedImage&gt; Image = default, Optional&lt;IEmbedThumbnail&gt; Thumbnail = default, Optional&lt;IEmbedVideo&gt; Video = default, Optional&lt;IEmbedProvider&gt; Provider = default, Optional&lt;IEmbedAuthor&gt; Author = default, Optional&lt;IReadOnlyList&lt;IEmbedField&gt;&gt; Fields = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -175,67 +174,67 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Title</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.EmbedType.html">EmbedType</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.EmbedType.html">EmbedType</a>&gt;</td>
         <td><span class="parametername">Type</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Description</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Url</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>&gt;</td>
         <td><span class="parametername">Timestamp</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Drawing.Color</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.drawing.color">Color</a>&gt;</td>
         <td><span class="parametername">Colour</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedFooter.html">IEmbedFooter</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedFooter.html">IEmbedFooter</a>&gt;</td>
         <td><span class="parametername">Footer</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedImage.html">IEmbedImage</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedImage.html">IEmbedImage</a>&gt;</td>
         <td><span class="parametername">Image</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedThumbnail.html">IEmbedThumbnail</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedThumbnail.html">IEmbedThumbnail</a>&gt;</td>
         <td><span class="parametername">Thumbnail</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedVideo.html">IEmbedVideo</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedVideo.html">IEmbedVideo</a>&gt;</td>
         <td><span class="parametername">Video</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedProvider.html">IEmbedProvider</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedProvider.html">IEmbedProvider</a>&gt;</td>
         <td><span class="parametername">Provider</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedAuthor.html">IEmbedAuthor</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedAuthor.html">IEmbedAuthor</a>&gt;</td>
         <td><span class="parametername">Author</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedField.html">IEmbedField</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedField.html">IEmbedField</a>&gt;&gt;</td>
         <td><span class="parametername">Fields</span></td>
         <td></td>
       </tr>
@@ -252,12 +251,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Author_" data-uid="Remora.Discord.API.Objects.Embed.Author*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Author" data-uid="Remora.Discord.API.Objects.Embed.Author">Author</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedAuthor&gt; Author { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedAuthor&gt; Author { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -269,7 +267,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedAuthor.html">IEmbedAuthor</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedAuthor.html">IEmbedAuthor</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -283,12 +281,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Colour_" data-uid="Remora.Discord.API.Objects.Embed.Colour*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Colour" data-uid="Remora.Discord.API.Objects.Embed.Colour">Colour</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Color&gt; Colour { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Color&gt; Colour { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -300,7 +297,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Drawing.Color</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.drawing.color">Color</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -314,12 +311,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Description_" data-uid="Remora.Discord.API.Objects.Embed.Description*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Description" data-uid="Remora.Discord.API.Objects.Embed.Description">Description</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Description { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Description { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -331,7 +327,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -345,12 +341,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Fields_" data-uid="Remora.Discord.API.Objects.Embed.Fields*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Fields" data-uid="Remora.Discord.API.Objects.Embed.Fields">Fields</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IEmbedField&gt;&gt; Fields { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IEmbedField&gt;&gt; Fields { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -362,7 +357,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedField.html">IEmbedField</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedField.html">IEmbedField</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -376,12 +371,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Footer_" data-uid="Remora.Discord.API.Objects.Embed.Footer*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Footer" data-uid="Remora.Discord.API.Objects.Embed.Footer">Footer</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedFooter&gt; Footer { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedFooter&gt; Footer { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -393,7 +387,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedFooter.html">IEmbedFooter</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedFooter.html">IEmbedFooter</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -407,12 +401,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Image_" data-uid="Remora.Discord.API.Objects.Embed.Image*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Image" data-uid="Remora.Discord.API.Objects.Embed.Image">Image</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedImage&gt; Image { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedImage&gt; Image { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -424,7 +417,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedImage.html">IEmbedImage</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedImage.html">IEmbedImage</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -438,12 +431,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Provider_" data-uid="Remora.Discord.API.Objects.Embed.Provider*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Provider" data-uid="Remora.Discord.API.Objects.Embed.Provider">Provider</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedProvider&gt; Provider { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedProvider&gt; Provider { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -455,7 +447,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedProvider.html">IEmbedProvider</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedProvider.html">IEmbedProvider</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -469,12 +461,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Thumbnail_" data-uid="Remora.Discord.API.Objects.Embed.Thumbnail*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Thumbnail" data-uid="Remora.Discord.API.Objects.Embed.Thumbnail">Thumbnail</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedThumbnail&gt; Thumbnail { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedThumbnail&gt; Thumbnail { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -486,7 +477,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedThumbnail.html">IEmbedThumbnail</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedThumbnail.html">IEmbedThumbnail</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -500,12 +491,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Timestamp_" data-uid="Remora.Discord.API.Objects.Embed.Timestamp*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Timestamp" data-uid="Remora.Discord.API.Objects.Embed.Timestamp">Timestamp</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset&gt; Timestamp { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset&gt; Timestamp { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -517,7 +507,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -531,12 +521,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Title_" data-uid="Remora.Discord.API.Objects.Embed.Title*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Title" data-uid="Remora.Discord.API.Objects.Embed.Title">Title</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Title { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Title { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -548,7 +537,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -562,12 +551,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Type_" data-uid="Remora.Discord.API.Objects.Embed.Type*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Type" data-uid="Remora.Discord.API.Objects.Embed.Type">Type</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;EmbedType&gt; Type { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;EmbedType&gt; Type { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -579,7 +567,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.EmbedType.html">EmbedType</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.EmbedType.html">EmbedType</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -593,12 +581,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Url_" data-uid="Remora.Discord.API.Objects.Embed.Url*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Url" data-uid="Remora.Discord.API.Objects.Embed.Url">Url</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Url { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Url { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -610,7 +597,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -624,12 +611,11 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_Embed_Video_" data-uid="Remora.Discord.API.Objects.Embed.Video*"></a>
   <h4 id="Remora_Discord_API_Objects_Embed_Video" data-uid="Remora.Discord.API.Objects.Embed.Video">Video</h4>
-  <div class="markdown level1 summary"><p>Represents an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedVideo&gt; Video { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IEmbedVideo&gt; Video { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -641,7 +627,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedVideo.html">IEmbedVideo</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedVideo.html">IEmbedVideo</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -651,7 +637,7 @@ public class Embed : IEmbed, IEquatable&lt;Embed&gt;</code></pre>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

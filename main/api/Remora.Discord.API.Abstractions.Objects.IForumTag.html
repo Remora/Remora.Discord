@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents a tag that can be attached to posts in a forum.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Abstractions.Objects.html">Remora.Discord.API.Abstractions.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Objects_IForumTag_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -140,7 +140,7 @@ public interface IForumTag : IPartialForumTag</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -163,7 +163,7 @@ result, we're hedging our bets here.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; EmojiName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">Optional&lt;string?&gt; EmojiName { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -175,7 +175,7 @@ result, we're hedging our bets here.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -242,7 +242,7 @@ result, we're hedging our bets here.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -273,173 +273,7 @@ result, we're hedging our bets here.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="eii">Explicit Interface Implementations
-</h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_EmojiID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IForumTag.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialForumTag%23EmojiID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IForumTag.cs/#L78">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_EmojiID_" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#EmojiID*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_EmojiID" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#EmojiID">IPartialForumTag.EmojiID</h4>
-  <div class="markdown level1 summary"><p>Gets the ID of the custom guild emoji to use.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;Snowflake?&gt; IPartialForumTag.EmojiID { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_EmojiID_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Discord's documentation is somewhat unclear as to whether this field is optional, nullable, or both. As as
-result, we're hedging our bets here.</p>
-</div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_EmojiName.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IForumTag.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialForumTag%23EmojiName%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IForumTag.cs/#L81">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_EmojiName_" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#EmojiName*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_EmojiName" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#EmojiName">IPartialForumTag.EmojiName</h4>
-  <div class="markdown level1 summary"><p>Gets the unicode string of the emoji to use.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; IPartialForumTag.EmojiName { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_EmojiName_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Discord's documentation is somewhat unclear as to whether this field is optional, nullable, or both. As as
-result, we're hedging our bets here.</p>
-</div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_ID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IForumTag.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialForumTag%23ID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IForumTag.cs/#L69">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_ID_" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#ID*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_ID" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#ID">IPartialForumTag.ID</h4>
-  <div class="markdown level1 summary"><p>Gets the ID of the tag.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;Snowflake&gt; IPartialForumTag.ID { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_IsModerated.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IForumTag.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialForumTag%23IsModerated%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IForumTag.cs/#L75">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_IsModerated_" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#IsModerated*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_IsModerated" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#IsModerated">IPartialForumTag.IsModerated</h4>
-  <div class="markdown level1 summary"><p>Gets a value indicating whether the tag can only be added or removed by someone with the
-<a class="xref" href="Remora.Discord.API.Abstractions.Objects.DiscordPermission.html#Remora_Discord_API_Abstractions_Objects_DiscordPermission_ManageThreads">ManageThreads</a> permission.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;bool&gt; IPartialForumTag.IsModerated { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_Name.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IForumTag.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialForumTag%23Name%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IForumTag.cs/#L72">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_Name_" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#Name*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IForumTag_Remora_Discord_API_Abstractions_Objects_IPartialForumTag_Name" data-uid="Remora.Discord.API.Abstractions.Objects.IForumTag.Remora#Discord#API#Abstractions#Objects#IPartialForumTag#Name">IPartialForumTag.Name</h4>
-  <div class="markdown level1 summary"><p>Gets the name of the tag.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; IPartialForumTag.Name { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>

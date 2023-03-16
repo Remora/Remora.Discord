@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents an abstraction between a cache service and it's backing store.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.Caching.Abstractions.Services.html">Remora.Discord.Caching.Abstractions.Services</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.Caching.html">Caching</a>.<a class="xref" href="Remora.Discord.Caching.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.Caching.Abstractions.Services.html">Services</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.Caching.Abstractions.dll</h6>
   <h5 id="Remora_Discord_Caching_Abstractions_Services_ICacheProvider_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -128,8 +128,7 @@ public interface ICacheProvider</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">ValueTask CacheAsync&lt;TInstance&gt;(CacheKey key, TInstance instance, CacheEntryOptions options, CancellationToken ct = default(CancellationToken))
-    where TInstance : class</code></pre>
+    <pre><code class="lang-csharp hljs">ValueTask CacheAsync&lt;TInstance&gt;(CacheKey key, TInstance instance, CacheEntryOptions options, CancellationToken ct = default) where TInstance : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -160,7 +159,7 @@ public interface ICacheProvider</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>A cancellation token to cancel the operation.</p>
 </td>
@@ -177,8 +176,8 @@ public interface ICacheProvider</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.ValueTask</span></td>
-        <td><p>A <span class="xref">System.Threading.Tasks.ValueTask</span> representing the result of the potentially asynchronous operation.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask">ValueTask</a></td>
+        <td><p>A <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask">ValueTask</a> representing the result of the potentially asynchronous operation.</p>
 </td>
       </tr>
     </tbody>
@@ -218,7 +217,7 @@ value should have a pre-determined lifetime in it's backing-store.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">ValueTask&lt;Result&gt; EvictAsync(CacheKey key, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">ValueTask&lt;Result&gt; EvictAsync(CacheKey key, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -237,7 +236,7 @@ value should have a pre-determined lifetime in it's backing-store.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>A cancellation token to cancel the operation.</p>
 </td>
@@ -254,8 +253,8 @@ value should have a pre-determined lifetime in it's backing-store.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.ValueTask</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
-        <td><p>A <span class="xref">System.Threading.Tasks.ValueTask</span> representing the result of the potentially asynchronous action.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1">ValueTask</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><p>A <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask">ValueTask</a> representing the result of the potentially asynchronous action.</p>
 </td>
       </tr>
     </tbody>
@@ -274,8 +273,7 @@ value should have a pre-determined lifetime in it's backing-store.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">ValueTask&lt;Result&lt;TInstance&gt;&gt; EvictAsync&lt;TInstance&gt;(CacheKey key, CancellationToken ct = default(CancellationToken))
-    where TInstance : class</code></pre>
+    <pre><code class="lang-csharp hljs">ValueTask&lt;Result&lt;TInstance&gt;&gt; EvictAsync&lt;TInstance&gt;(CacheKey key, CancellationToken ct = default) where TInstance : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -294,7 +292,7 @@ value should have a pre-determined lifetime in it's backing-store.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>A cancellation token to cancel the operation.</p>
 </td>
@@ -311,8 +309,8 @@ value should have a pre-determined lifetime in it's backing-store.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.ValueTask</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;TInstance&gt;&gt;</td>
-        <td><p>A <span class="xref">System.Threading.Tasks.ValueTask</span> representing the result of the potentially asynchronous action.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1">ValueTask</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;TInstance&gt;&gt;</td>
+        <td><p>A <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask">ValueTask</a> representing the result of the potentially asynchronous action.</p>
 </td>
       </tr>
     </tbody>
@@ -347,8 +345,7 @@ value should have a pre-determined lifetime in it's backing-store.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">ValueTask&lt;Result&lt;TInstance&gt;&gt; RetrieveAsync&lt;TInstance&gt;(CacheKey key, CancellationToken ct = default(CancellationToken))
-    where TInstance : class</code></pre>
+    <pre><code class="lang-csharp hljs">ValueTask&lt;Result&lt;TInstance&gt;&gt; RetrieveAsync&lt;TInstance&gt;(CacheKey key, CancellationToken ct = default) where TInstance : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -367,7 +364,7 @@ value should have a pre-determined lifetime in it's backing-store.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>A cancellation token to cancel the operation.</p>
 </td>
@@ -384,8 +381,8 @@ value should have a pre-determined lifetime in it's backing-store.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.ValueTask</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;TInstance&gt;&gt;</td>
-        <td><p>A <span class="xref">System.Threading.Tasks.ValueTask</span> representing the result of the potentially asynchronous action.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1">ValueTask</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;TInstance&gt;&gt;</td>
+        <td><p>A <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask">ValueTask</a> representing the result of the potentially asynchronous action.</p>
 </td>
       </tr>
     </tbody>

@@ -107,7 +107,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">ThreadCreate</span></div>
   </div>
   <div class="implements">
@@ -117,38 +117,38 @@
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialChannel.html">IPartialChannel</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.html">ThreadCreate</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.html">ThreadCreate</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Gateway.Events.Channels.html">Remora.Discord.API.Gateway.Events.Channels</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<span class="xref">Gateway</span>.<a class="xref" href="Remora.Discord.API.Gateway.Events.html">Events</a>.<a class="xref" href="Remora.Discord.API.Gateway.Events.Channels.html">Channels</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, IChannel, IPartialChannel, IEquatable&lt;ThreadCreate&gt;</code></pre>
+public record ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, IChannel, IPartialChannel, IEquatable&lt;ThreadCreate&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -160,13 +160,12 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Channels/ThreadCreate.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate__ctor_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate__ctor_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_ChannelType_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IPermissionOverwrite___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_TimeSpan__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IUser___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Nullable_System_DateTimeOffset___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_VideoQualityMode__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IThreadMetadata__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IThreadMember__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_AutoArchiveDuration__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_ChannelFlags__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IForumTag___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDefaultReaction__Remora_Rest_Core_Optional_System_TimeSpan__Remora_Rest_Core_Optional_System_Nullable_Remora_Discord_API_Abstractions_Objects_SortOrder___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_ForumLayout__" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.#ctor(Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.ChannelType,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IPermissionOverwrite}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.TimeSpan},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IUser}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Nullable{System.DateTimeOffset}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.VideoQualityMode},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IThreadMetadata},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IThreadMember},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.AutoArchiveDuration},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.ChannelFlags},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IForumTag}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDefaultReaction},Remora.Rest.Core.Optional{System.TimeSpan},Remora.Rest.Core.Optional{System.Nullable{Remora.Discord.API.Abstractions.Objects.SortOrder}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.ForumLayout})">ThreadCreate(Optional&lt;Boolean&gt;, Snowflake, ChannelType, Optional&lt;Snowflake&gt;, Optional&lt;Int32&gt;, Optional&lt;IReadOnlyList&lt;IPermissionOverwrite&gt;&gt;, Optional&lt;String&gt;, Optional&lt;String&gt;, Optional&lt;Boolean&gt;, Optional&lt;Nullable&lt;Snowflake&gt;&gt;, Optional&lt;Int32&gt;, Optional&lt;Int32&gt;, Optional&lt;TimeSpan&gt;, Optional&lt;IReadOnlyList&lt;IUser&gt;&gt;, Optional&lt;IImageHash&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Boolean&gt;, Optional&lt;Nullable&lt;Snowflake&gt;&gt;, Optional&lt;Nullable&lt;DateTimeOffset&gt;&gt;, Optional&lt;String&gt;, Optional&lt;VideoQualityMode&gt;, Optional&lt;Int32&gt;, Optional&lt;Int32&gt;, Optional&lt;IThreadMetadata&gt;, Optional&lt;IThreadMember&gt;, Optional&lt;AutoArchiveDuration&gt;, Optional&lt;IDiscordPermissionSet&gt;, Optional&lt;ChannelFlags&gt;, Optional&lt;Int32&gt;, Optional&lt;IReadOnlyList&lt;IForumTag&gt;&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, Optional&lt;IDefaultReaction&gt;, Optional&lt;TimeSpan&gt;, Optional&lt;Nullable&lt;SortOrder&gt;&gt;, Optional&lt;ForumLayout&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate__ctor_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_ChannelType_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IPermissionOverwrite___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_TimeSpan__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IUser___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Nullable_System_DateTimeOffset___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_VideoQualityMode__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IThreadMetadata__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IThreadMember__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_AutoArchiveDuration__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_ChannelFlags__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IForumTag___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDefaultReaction__Remora_Rest_Core_Optional_System_TimeSpan__Remora_Rest_Core_Optional_System_Nullable_Remora_Discord_API_Abstractions_Objects_SortOrder___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_ForumLayout__" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.#ctor(Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.ChannelType,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IPermissionOverwrite}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.TimeSpan},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IUser}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Nullable{System.DateTimeOffset}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.VideoQualityMode},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IThreadMetadata},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IThreadMember},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.AutoArchiveDuration},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.ChannelFlags},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IForumTag}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDefaultReaction},Remora.Rest.Core.Optional{System.TimeSpan},Remora.Rest.Core.Optional{System.Nullable{Remora.Discord.API.Abstractions.Objects.SortOrder}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.ForumLayout})">ThreadCreate(Optional&lt;bool&gt;, Snowflake, ChannelType, Optional&lt;Snowflake&gt;, Optional&lt;int&gt;, Optional&lt;IReadOnlyList&lt;IPermissionOverwrite&gt;&gt;, Optional&lt;string?&gt;, Optional&lt;string?&gt;, Optional&lt;bool&gt;, Optional&lt;Snowflake?&gt;, Optional&lt;int&gt;, Optional&lt;int&gt;, Optional&lt;TimeSpan&gt;, Optional&lt;IReadOnlyList&lt;IUser&gt;&gt;, Optional&lt;IImageHash?&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;bool&gt;, Optional&lt;Snowflake?&gt;, Optional&lt;DateTimeOffset?&gt;, Optional&lt;string?&gt;, Optional&lt;VideoQualityMode&gt;, Optional&lt;int&gt;, Optional&lt;int&gt;, Optional&lt;IThreadMetadata&gt;, Optional&lt;IThreadMember&gt;, Optional&lt;AutoArchiveDuration&gt;, Optional&lt;IDiscordPermissionSet&gt;, Optional&lt;ChannelFlags&gt;, Optional&lt;int&gt;, Optional&lt;IReadOnlyList&lt;IForumTag&gt;&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, Optional&lt;IDefaultReaction?&gt;, Optional&lt;TimeSpan&gt;, Optional&lt;SortOrder?&gt;, Optional&lt;ForumLayout&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ThreadCreate(Optional&lt;bool&gt; IsNewlyCreated, Snowflake ID, ChannelType Type, Optional&lt;Snowflake&gt; GuildID = default(Optional&lt;Snowflake&gt;), Optional&lt;int&gt; Position = default(Optional&lt;int&gt;), Optional&lt;IReadOnlyList&lt;IPermissionOverwrite&gt;&gt; PermissionOverwrites = default(Optional&lt;IReadOnlyList&lt;IPermissionOverwrite&gt;&gt;), Optional&lt;string&gt; Name = default(Optional&lt;string&gt;), Optional&lt;string&gt; Topic = default(Optional&lt;string&gt;), Optional&lt;bool&gt; IsNsfw = default(Optional&lt;bool&gt;), Optional&lt;Snowflake?&gt; LastMessageID = default(Optional&lt;Snowflake?&gt;), Optional&lt;int&gt; Bitrate = default(Optional&lt;int&gt;), Optional&lt;int&gt; UserLimit = default(Optional&lt;int&gt;), Optional&lt;TimeSpan&gt; RateLimitPerUser = default(Optional&lt;TimeSpan&gt;), Optional&lt;IReadOnlyList&lt;IUser&gt;&gt; Recipients = default(Optional&lt;IReadOnlyList&lt;IUser&gt;&gt;), Optional&lt;IImageHash&gt; Icon = default(Optional&lt;IImageHash&gt;), Optional&lt;Snowflake&gt; OwnerID = default(Optional&lt;Snowflake&gt;), Optional&lt;Snowflake&gt; ApplicationID = default(Optional&lt;Snowflake&gt;), Optional&lt;bool&gt; IsManaged = default(Optional&lt;bool&gt;), Optional&lt;Snowflake?&gt; ParentID = default(Optional&lt;Snowflake?&gt;), Optional&lt;DateTimeOffset?&gt; LastPinTimestamp = default(Optional&lt;DateTimeOffset?&gt;), Optional&lt;string&gt; RTCRegion = default(Optional&lt;string&gt;), Optional&lt;VideoQualityMode&gt; VideoQualityMode = default(Optional&lt;VideoQualityMode&gt;), Optional&lt;int&gt; MessageCount = default(Optional&lt;int&gt;), Optional&lt;int&gt; MemberCount = default(Optional&lt;int&gt;), Optional&lt;IThreadMetadata&gt; ThreadMetadata = default(Optional&lt;IThreadMetadata&gt;), Optional&lt;IThreadMember&gt; Member = default(Optional&lt;IThreadMember&gt;), Optional&lt;AutoArchiveDuration&gt; DefaultAutoArchiveDuration = default(Optional&lt;AutoArchiveDuration&gt;), Optional&lt;IDiscordPermissionSet&gt; Permissions = default(Optional&lt;IDiscordPermissionSet&gt;), Optional&lt;ChannelFlags&gt; Flags = default(Optional&lt;ChannelFlags&gt;), Optional&lt;int&gt; TotalMessageSent = default(Optional&lt;int&gt;), Optional&lt;IReadOnlyList&lt;IForumTag&gt;&gt; AvailableTags = default(Optional&lt;IReadOnlyList&lt;IForumTag&gt;&gt;), Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; AppliedTags = default(Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;), Optional&lt;IDefaultReaction&gt; DefaultReactionEmoji = default(Optional&lt;IDefaultReaction&gt;), Optional&lt;TimeSpan&gt; DefaultThreadRateLimitPerUser = default(Optional&lt;TimeSpan&gt;), Optional&lt;SortOrder?&gt; DefaultSortOrder = default(Optional&lt;SortOrder?&gt;), Optional&lt;ForumLayout&gt; DefaultForumLayout = default(Optional&lt;ForumLayout&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public ThreadCreate(Optional&lt;bool&gt; IsNewlyCreated, Snowflake ID, ChannelType Type, Optional&lt;Snowflake&gt; GuildID = default, Optional&lt;int&gt; Position = default, Optional&lt;IReadOnlyList&lt;IPermissionOverwrite&gt;&gt; PermissionOverwrites = default, Optional&lt;string?&gt; Name = default, Optional&lt;string?&gt; Topic = default, Optional&lt;bool&gt; IsNsfw = default, Optional&lt;Snowflake?&gt; LastMessageID = default, Optional&lt;int&gt; Bitrate = default, Optional&lt;int&gt; UserLimit = default, Optional&lt;TimeSpan&gt; RateLimitPerUser = default, Optional&lt;IReadOnlyList&lt;IUser&gt;&gt; Recipients = default, Optional&lt;IImageHash?&gt; Icon = default, Optional&lt;Snowflake&gt; OwnerID = default, Optional&lt;Snowflake&gt; ApplicationID = default, Optional&lt;bool&gt; IsManaged = default, Optional&lt;Snowflake?&gt; ParentID = default, Optional&lt;DateTimeOffset?&gt; LastPinTimestamp = default, Optional&lt;string?&gt; RTCRegion = default, Optional&lt;VideoQualityMode&gt; VideoQualityMode = default, Optional&lt;int&gt; MessageCount = default, Optional&lt;int&gt; MemberCount = default, Optional&lt;IThreadMetadata&gt; ThreadMetadata = default, Optional&lt;IThreadMember&gt; Member = default, Optional&lt;AutoArchiveDuration&gt; DefaultAutoArchiveDuration = default, Optional&lt;IDiscordPermissionSet&gt; Permissions = default, Optional&lt;ChannelFlags&gt; Flags = default, Optional&lt;int&gt; TotalMessageSent = default, Optional&lt;IReadOnlyList&lt;IForumTag&gt;&gt; AvailableTags = default, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; AppliedTags = default, Optional&lt;IDefaultReaction?&gt; DefaultReactionEmoji = default, Optional&lt;TimeSpan&gt; DefaultThreadRateLimitPerUser = default, Optional&lt;SortOrder?&gt; DefaultSortOrder = default, Optional&lt;ForumLayout&gt; DefaultForumLayout = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -179,7 +178,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsNewlyCreated</span></td>
         <td></td>
       </tr>
@@ -194,167 +193,167 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">GuildID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">Position</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPermissionOverwrite.html">IPermissionOverwrite</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPermissionOverwrite.html">IPermissionOverwrite</a>&gt;&gt;</td>
         <td><span class="parametername">PermissionOverwrites</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Name</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Topic</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsNsfw</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td><span class="parametername">LastMessageID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">Bitrate</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">UserLimit</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.TimeSpan</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
         <td><span class="parametername">RateLimitPerUser</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
         <td><span class="parametername">Recipients</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td><span class="parametername">Icon</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">OwnerID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">ApplicationID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsManaged</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td><span class="parametername">ParentID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td><span class="parametername">LastPinTimestamp</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">RTCRegion</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.VideoQualityMode.html">VideoQualityMode</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.VideoQualityMode.html">VideoQualityMode</a>&gt;</td>
         <td><span class="parametername">VideoQualityMode</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">MessageCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">MemberCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IThreadMetadata.html">IThreadMetadata</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IThreadMetadata.html">IThreadMetadata</a>&gt;</td>
         <td><span class="parametername">ThreadMetadata</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IThreadMember.html">IThreadMember</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IThreadMember.html">IThreadMember</a>&gt;</td>
         <td><span class="parametername">Member</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoArchiveDuration.html">AutoArchiveDuration</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoArchiveDuration.html">AutoArchiveDuration</a>&gt;</td>
         <td><span class="parametername">DefaultAutoArchiveDuration</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td><span class="parametername">Permissions</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ChannelFlags.html">ChannelFlags</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ChannelFlags.html">ChannelFlags</a>&gt;</td>
         <td><span class="parametername">Flags</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">TotalMessageSent</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IForumTag.html">IForumTag</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IForumTag.html">IForumTag</a>&gt;&gt;</td>
         <td><span class="parametername">AvailableTags</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
         <td><span class="parametername">AppliedTags</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDefaultReaction.html">IDefaultReaction</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDefaultReaction.html">IDefaultReaction</a>&gt;</td>
         <td><span class="parametername">DefaultReactionEmoji</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.TimeSpan</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
         <td><span class="parametername">DefaultThreadRateLimitPerUser</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.SortOrder.html">SortOrder</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.SortOrder.html">SortOrder</a>?&gt;</td>
         <td><span class="parametername">DefaultSortOrder</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ForumLayout.html">ForumLayout</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ForumLayout.html">ForumLayout</a>&gt;</td>
         <td><span class="parametername">DefaultForumLayout</span></td>
         <td></td>
       </tr>
@@ -371,12 +370,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_ApplicationID_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.ApplicationID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_ApplicationID" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.ApplicationID">ApplicationID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; ApplicationID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; ApplicationID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -388,7 +386,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -402,12 +400,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_AppliedTags_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.AppliedTags*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_AppliedTags" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.AppliedTags">AppliedTags</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; AppliedTags { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; AppliedTags { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -419,7 +416,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -433,12 +430,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_AvailableTags_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.AvailableTags*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_AvailableTags" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.AvailableTags">AvailableTags</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IForumTag&gt;&gt; AvailableTags { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IForumTag&gt;&gt; AvailableTags { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -450,7 +446,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IForumTag.html">IForumTag</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IForumTag.html">IForumTag</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -464,12 +460,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Bitrate_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Bitrate*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Bitrate" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Bitrate">Bitrate</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; Bitrate { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; Bitrate { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -481,7 +476,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -495,12 +490,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultAutoArchiveDuration_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultAutoArchiveDuration*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultAutoArchiveDuration" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultAutoArchiveDuration">DefaultAutoArchiveDuration</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;AutoArchiveDuration&gt; DefaultAutoArchiveDuration { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;AutoArchiveDuration&gt; DefaultAutoArchiveDuration { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -512,7 +506,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoArchiveDuration.html">AutoArchiveDuration</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AutoArchiveDuration.html">AutoArchiveDuration</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -526,12 +520,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultForumLayout_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultForumLayout*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultForumLayout" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultForumLayout">DefaultForumLayout</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;ForumLayout&gt; DefaultForumLayout { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;ForumLayout&gt; DefaultForumLayout { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -543,7 +536,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ForumLayout.html">ForumLayout</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ForumLayout.html">ForumLayout</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -557,12 +550,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultReactionEmoji_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultReactionEmoji*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultReactionEmoji" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultReactionEmoji">DefaultReactionEmoji</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IDefaultReaction&gt; DefaultReactionEmoji { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IDefaultReaction?&gt; DefaultReactionEmoji { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -574,7 +566,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDefaultReaction.html">IDefaultReaction</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDefaultReaction.html">IDefaultReaction</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -588,12 +580,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultSortOrder_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultSortOrder*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultSortOrder" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultSortOrder">DefaultSortOrder</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;SortOrder?&gt; DefaultSortOrder { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;SortOrder?&gt; DefaultSortOrder { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -605,7 +596,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.SortOrder.html">SortOrder</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.SortOrder.html">SortOrder</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -619,12 +610,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultThreadRateLimitPerUser_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultThreadRateLimitPerUser*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_DefaultThreadRateLimitPerUser" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.DefaultThreadRateLimitPerUser">DefaultThreadRateLimitPerUser</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;TimeSpan&gt; DefaultThreadRateLimitPerUser { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;TimeSpan&gt; DefaultThreadRateLimitPerUser { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -636,7 +626,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.TimeSpan</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -650,12 +640,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Flags_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Flags*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Flags" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Flags">Flags</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;ChannelFlags&gt; Flags { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;ChannelFlags&gt; Flags { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -667,7 +656,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ChannelFlags.html">ChannelFlags</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ChannelFlags.html">ChannelFlags</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -681,12 +670,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_GuildID_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.GuildID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_GuildID" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.GuildID">GuildID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; GuildID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; GuildID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -698,7 +686,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -712,12 +700,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Icon_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Icon*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Icon" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Icon">Icon</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash&gt; Icon { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash?&gt; Icon { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -729,7 +716,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -743,12 +730,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_ID_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.ID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_ID" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.ID">ID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -774,12 +760,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_IsManaged_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.IsManaged*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_IsManaged" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.IsManaged">IsManaged</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsManaged { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsManaged { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -791,7 +776,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -805,12 +790,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_IsNewlyCreated_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.IsNewlyCreated*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_IsNewlyCreated" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.IsNewlyCreated">IsNewlyCreated</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsNewlyCreated { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsNewlyCreated { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -822,7 +806,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -836,12 +820,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_IsNsfw_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.IsNsfw*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_IsNsfw" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.IsNsfw">IsNsfw</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsNsfw { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsNsfw { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -853,7 +836,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -867,12 +850,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_LastMessageID_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.LastMessageID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_LastMessageID" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.LastMessageID">LastMessageID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake?&gt; LastMessageID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake?&gt; LastMessageID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -884,7 +866,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -898,12 +880,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_LastPinTimestamp_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.LastPinTimestamp*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_LastPinTimestamp" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.LastPinTimestamp">LastPinTimestamp</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset?&gt; LastPinTimestamp { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset?&gt; LastPinTimestamp { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -915,7 +896,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -929,12 +910,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Member_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Member*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Member" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Member">Member</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IThreadMember&gt; Member { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IThreadMember&gt; Member { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -946,7 +926,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IThreadMember.html">IThreadMember</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IThreadMember.html">IThreadMember</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -960,12 +940,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_MemberCount_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.MemberCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_MemberCount" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.MemberCount">MemberCount</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MemberCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MemberCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -977,7 +956,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -991,12 +970,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_MessageCount_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.MessageCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_MessageCount" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.MessageCount">MessageCount</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MessageCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MessageCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1008,7 +986,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1022,12 +1000,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Name_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Name*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Name" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Name { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string?&gt; Name { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1039,7 +1016,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1053,12 +1030,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_OwnerID_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.OwnerID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_OwnerID" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.OwnerID">OwnerID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; OwnerID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; OwnerID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1070,7 +1046,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1084,12 +1060,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_ParentID_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.ParentID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_ParentID" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.ParentID">ParentID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake?&gt; ParentID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake?&gt; ParentID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1101,7 +1076,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1115,12 +1090,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_PermissionOverwrites_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.PermissionOverwrites*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_PermissionOverwrites" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.PermissionOverwrites">PermissionOverwrites</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IPermissionOverwrite&gt;&gt; PermissionOverwrites { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IPermissionOverwrite&gt;&gt; PermissionOverwrites { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1132,7 +1106,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPermissionOverwrite.html">IPermissionOverwrite</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPermissionOverwrite.html">IPermissionOverwrite</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1146,12 +1120,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Permissions_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Permissions*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Permissions" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Permissions">Permissions</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; Permissions { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; Permissions { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1163,7 +1136,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1177,12 +1150,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Position_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Position*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Position" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Position">Position</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; Position { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; Position { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1194,7 +1166,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1208,12 +1180,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_RateLimitPerUser_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.RateLimitPerUser*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_RateLimitPerUser" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.RateLimitPerUser">RateLimitPerUser</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;TimeSpan&gt; RateLimitPerUser { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;TimeSpan&gt; RateLimitPerUser { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1225,7 +1196,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.TimeSpan</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1239,12 +1210,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Recipients_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Recipients*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Recipients" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Recipients">Recipients</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IUser&gt;&gt; Recipients { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IUser&gt;&gt; Recipients { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1256,7 +1226,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1270,12 +1240,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_RTCRegion_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.RTCRegion*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_RTCRegion" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.RTCRegion">RTCRegion</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; RTCRegion { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string?&gt; RTCRegion { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1287,7 +1256,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1301,12 +1270,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_ThreadMetadata_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.ThreadMetadata*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_ThreadMetadata" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.ThreadMetadata">ThreadMetadata</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IThreadMetadata&gt; ThreadMetadata { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IThreadMetadata&gt; ThreadMetadata { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1318,7 +1286,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IThreadMetadata.html">IThreadMetadata</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IThreadMetadata.html">IThreadMetadata</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1332,12 +1300,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Topic_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Topic*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Topic" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Topic">Topic</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Topic { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string?&gt; Topic { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1349,7 +1316,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1363,12 +1330,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_TotalMessageSent_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.TotalMessageSent*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_TotalMessageSent" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.TotalMessageSent">TotalMessageSent</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; TotalMessageSent { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; TotalMessageSent { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1380,7 +1346,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1394,12 +1360,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Type_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Type*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_Type" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.Type">Type</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ChannelType Type { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ChannelType Type { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1425,12 +1390,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_UserLimit_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.UserLimit*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_UserLimit" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.UserLimit">UserLimit</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; UserLimit { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; UserLimit { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1442,7 +1406,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1456,12 +1420,11 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
   </span>
   <a id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_VideoQualityMode_" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.VideoQualityMode*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_Channels_ThreadCreate_VideoQualityMode" data-uid="Remora.Discord.API.Gateway.Events.Channels.ThreadCreate.VideoQualityMode">VideoQualityMode</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;VideoQualityMode&gt; VideoQualityMode { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;VideoQualityMode&gt; VideoQualityMode { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1473,7 +1436,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.VideoQualityMode.html">VideoQualityMode</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.VideoQualityMode.html">VideoQualityMode</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1495,7 +1458,7 @@ public class ThreadCreate : IThreadCreate, IGatewayEvent, IGatewayPayloadData, I
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialChannel.html">IPartialChannel</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

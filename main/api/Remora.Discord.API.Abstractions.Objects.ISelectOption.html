@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents a single selectable option.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Abstractions.Objects.html">Remora.Discord.API.Abstractions.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Objects_ISelectOption_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -140,7 +140,7 @@ public interface ISelectOption : IPartialSelectOption</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -171,7 +171,7 @@ public interface ISelectOption : IPartialSelectOption</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialEmoji.html">IPartialEmoji</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialEmoji.html">IPartialEmoji</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -203,7 +203,7 @@ than one option in a multi-select menu.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -234,7 +234,7 @@ than one option in a multi-select menu.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -265,165 +265,7 @@ than one option in a multi-select menu.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="eii">Explicit Interface Implementations
-</h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Description.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialSelectOption%23Description%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/Components/SelectMenu/ISelectOption.cs/#L67">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Description_" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#Description*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Description" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#Description">IPartialSelectOption.Description</h4>
-  <div class="markdown level1 summary"><p>Gets an additional description of the option. Max 100 characters.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; IPartialSelectOption.Description { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Emoji.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialSelectOption%23Emoji%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/Components/SelectMenu/ISelectOption.cs/#L70">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Emoji_" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#Emoji*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Emoji" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#Emoji">IPartialSelectOption.Emoji</h4>
-  <div class="markdown level1 summary"><p>Gets an emoji that will render along with the option.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IPartialEmoji&gt; IPartialSelectOption.Emoji { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialEmoji.html">IPartialEmoji</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_IsDefault.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialSelectOption%23IsDefault%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/Components/SelectMenu/ISelectOption.cs/#L73">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_IsDefault_" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#IsDefault*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_IsDefault" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#IsDefault">IPartialSelectOption.IsDefault</h4>
-  <div class="markdown level1 summary"><p>Gets a value indicating whether this option will be selected by default. May be <returns>true</returns> for more
-than one option in a multi-select menu.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;bool&gt; IPartialSelectOption.IsDefault { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Label.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialSelectOption%23Label%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/Components/SelectMenu/ISelectOption.cs/#L61">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Label_" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#Label*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Label" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#Label">IPartialSelectOption.Label</h4>
-  <div class="markdown level1 summary"><p>Gets the user-facing name of the option. Max 100 characters.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; IPartialSelectOption.Label { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Value.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialSelectOption%23Value%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/Components/SelectMenu/ISelectOption.cs/#L64">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Value_" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#Value*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_ISelectOption_Remora_Discord_API_Abstractions_Objects_IPartialSelectOption_Value" data-uid="Remora.Discord.API.Abstractions.Objects.ISelectOption.Remora#Discord#API#Abstractions#Objects#IPartialSelectOption#Value">IPartialSelectOption.Value</h4>
-  <div class="markdown level1 summary"><p>Gets the developer-defined value of the option. Max 100 characters.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; IPartialSelectOption.Value { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>

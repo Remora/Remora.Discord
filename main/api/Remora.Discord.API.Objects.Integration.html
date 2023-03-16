@@ -107,45 +107,45 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Integration</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IIntegration.html">IIntegration</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialIntegration.html">IPartialIntegration</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.Integration.html">Integration</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.Integration.html">Integration</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_Integration_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Integration&gt;</code></pre>
+public record Integration : IIntegration, IPartialIntegration, IEquatable&lt;Integration&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -157,13 +157,12 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Integrations/Integration.cs/#L34">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_Integration__ctor_" data-uid="Remora.Discord.API.Objects.Integration.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_Integration__ctor_Remora_Rest_Core_Snowflake_System_String_System_String_System_Boolean_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IntegrationExpireBehaviour__Remora_Rest_Core_Optional_System_TimeSpan__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IUser__Remora_Discord_API_Abstractions_Objects_IIntegrationAccount_Remora_Rest_Core_Optional_System_DateTimeOffset__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IIntegrationApplication__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___" data-uid="Remora.Discord.API.Objects.Integration.#ctor(Remora.Rest.Core.Snowflake,System.String,System.String,System.Boolean,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IntegrationExpireBehaviour},Remora.Rest.Core.Optional{System.TimeSpan},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IUser},Remora.Discord.API.Abstractions.Objects.IIntegrationAccount,Remora.Rest.Core.Optional{System.DateTimeOffset},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IIntegrationApplication},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}})">Integration(Snowflake, String, String, Boolean, Optional&lt;Boolean&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Boolean&gt;, Optional&lt;IntegrationExpireBehaviour&gt;, Optional&lt;TimeSpan&gt;, Optional&lt;IUser&gt;, IIntegrationAccount, Optional&lt;DateTimeOffset&gt;, Optional&lt;Int32&gt;, Optional&lt;Boolean&gt;, Optional&lt;IIntegrationApplication&gt;, Optional&lt;IReadOnlyList&lt;String&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_Integration__ctor_Remora_Rest_Core_Snowflake_System_String_System_String_System_Boolean_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IntegrationExpireBehaviour__Remora_Rest_Core_Optional_System_TimeSpan__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IUser__Remora_Discord_API_Abstractions_Objects_IIntegrationAccount_Remora_Rest_Core_Optional_System_DateTimeOffset__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IIntegrationApplication__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___" data-uid="Remora.Discord.API.Objects.Integration.#ctor(Remora.Rest.Core.Snowflake,System.String,System.String,System.Boolean,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IntegrationExpireBehaviour},Remora.Rest.Core.Optional{System.TimeSpan},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IUser},Remora.Discord.API.Abstractions.Objects.IIntegrationAccount,Remora.Rest.Core.Optional{System.DateTimeOffset},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IIntegrationApplication},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}})">Integration(Snowflake, string, string, bool, Optional&lt;bool&gt;, Optional&lt;Snowflake&gt;, Optional&lt;bool&gt;, Optional&lt;IntegrationExpireBehaviour&gt;, Optional&lt;TimeSpan&gt;, Optional&lt;IUser&gt;, IIntegrationAccount, Optional&lt;DateTimeOffset&gt;, Optional&lt;int&gt;, Optional&lt;bool&gt;, Optional&lt;IIntegrationApplication&gt;, Optional&lt;IReadOnlyList&lt;string&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Integration(Snowflake ID, string Name, string Type, bool IsEnabled, Optional&lt;bool&gt; IsSyncing, Optional&lt;Snowflake&gt; RoleID, Optional&lt;bool&gt; EnableEmoticons, Optional&lt;IntegrationExpireBehaviour&gt; ExpireBehaviour, Optional&lt;TimeSpan&gt; ExpireGracePeriod, Optional&lt;IUser&gt; User, IIntegrationAccount Account, Optional&lt;DateTimeOffset&gt; SyncedAt, Optional&lt;int&gt; SubscriberCount, Optional&lt;bool&gt; IsRevoked, Optional&lt;IIntegrationApplication&gt; Application = default(Optional&lt;IIntegrationApplication&gt;), Optional&lt;IReadOnlyList&lt;string&gt;&gt; Scopes = default(Optional&lt;IReadOnlyList&lt;string&gt;&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public Integration(Snowflake ID, string Name, string Type, bool IsEnabled, Optional&lt;bool&gt; IsSyncing, Optional&lt;Snowflake&gt; RoleID, Optional&lt;bool&gt; EnableEmoticons, Optional&lt;IntegrationExpireBehaviour&gt; ExpireBehaviour, Optional&lt;TimeSpan&gt; ExpireGracePeriod, Optional&lt;IUser&gt; User, IIntegrationAccount Account, Optional&lt;DateTimeOffset&gt; SyncedAt, Optional&lt;int&gt; SubscriberCount, Optional&lt;bool&gt; IsRevoked, Optional&lt;IIntegrationApplication&gt; Application = default, Optional&lt;IReadOnlyList&lt;string&gt;&gt; Scopes = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -181,47 +180,47 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Name</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Type</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsEnabled</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsSyncing</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">RoleID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">EnableEmoticons</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IntegrationExpireBehaviour.html">IntegrationExpireBehaviour</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IntegrationExpireBehaviour.html">IntegrationExpireBehaviour</a>&gt;</td>
         <td><span class="parametername">ExpireBehaviour</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.TimeSpan</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
         <td><span class="parametername">ExpireGracePeriod</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
         <td><span class="parametername">User</span></td>
         <td></td>
       </tr>
@@ -231,27 +230,27 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>&gt;</td>
         <td><span class="parametername">SyncedAt</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">SubscriberCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsRevoked</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IIntegrationApplication.html">IIntegrationApplication</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IIntegrationApplication.html">IIntegrationApplication</a>&gt;</td>
         <td><span class="parametername">Application</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">Scopes</span></td>
         <td></td>
       </tr>
@@ -268,12 +267,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_Account_" data-uid="Remora.Discord.API.Objects.Integration.Account*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_Account" data-uid="Remora.Discord.API.Objects.Integration.Account">Account</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IIntegrationAccount Account { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IIntegrationAccount Account { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -299,12 +297,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_Application_" data-uid="Remora.Discord.API.Objects.Integration.Application*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_Application" data-uid="Remora.Discord.API.Objects.Integration.Application">Application</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IIntegrationApplication&gt; Application { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IIntegrationApplication&gt; Application { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -316,7 +313,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IIntegrationApplication.html">IIntegrationApplication</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IIntegrationApplication.html">IIntegrationApplication</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -330,12 +327,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_EnableEmoticons_" data-uid="Remora.Discord.API.Objects.Integration.EnableEmoticons*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_EnableEmoticons" data-uid="Remora.Discord.API.Objects.Integration.EnableEmoticons">EnableEmoticons</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; EnableEmoticons { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; EnableEmoticons { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -347,7 +343,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -361,12 +357,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_ExpireBehaviour_" data-uid="Remora.Discord.API.Objects.Integration.ExpireBehaviour*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_ExpireBehaviour" data-uid="Remora.Discord.API.Objects.Integration.ExpireBehaviour">ExpireBehaviour</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IntegrationExpireBehaviour&gt; ExpireBehaviour { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IntegrationExpireBehaviour&gt; ExpireBehaviour { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -378,7 +373,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IntegrationExpireBehaviour.html">IntegrationExpireBehaviour</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IntegrationExpireBehaviour.html">IntegrationExpireBehaviour</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -392,12 +387,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_ExpireGracePeriod_" data-uid="Remora.Discord.API.Objects.Integration.ExpireGracePeriod*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_ExpireGracePeriod" data-uid="Remora.Discord.API.Objects.Integration.ExpireGracePeriod">ExpireGracePeriod</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;TimeSpan&gt; ExpireGracePeriod { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;TimeSpan&gt; ExpireGracePeriod { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -409,7 +403,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.TimeSpan</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -423,12 +417,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_ID_" data-uid="Remora.Discord.API.Objects.Integration.ID*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_ID" data-uid="Remora.Discord.API.Objects.Integration.ID">ID</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -454,12 +447,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_IsEnabled_" data-uid="Remora.Discord.API.Objects.Integration.IsEnabled*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_IsEnabled" data-uid="Remora.Discord.API.Objects.Integration.IsEnabled">IsEnabled</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsEnabled { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsEnabled { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -471,7 +463,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -485,12 +477,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_IsRevoked_" data-uid="Remora.Discord.API.Objects.Integration.IsRevoked*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_IsRevoked" data-uid="Remora.Discord.API.Objects.Integration.IsRevoked">IsRevoked</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsRevoked { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsRevoked { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -502,7 +493,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -516,12 +507,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_IsSyncing_" data-uid="Remora.Discord.API.Objects.Integration.IsSyncing*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_IsSyncing" data-uid="Remora.Discord.API.Objects.Integration.IsSyncing">IsSyncing</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsSyncing { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsSyncing { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -533,7 +523,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -547,12 +537,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_Name_" data-uid="Remora.Discord.API.Objects.Integration.Name*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_Name" data-uid="Remora.Discord.API.Objects.Integration.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Name { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -564,7 +553,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -578,12 +567,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_RoleID_" data-uid="Remora.Discord.API.Objects.Integration.RoleID*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_RoleID" data-uid="Remora.Discord.API.Objects.Integration.RoleID">RoleID</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; RoleID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; RoleID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -595,7 +583,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -609,12 +597,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_Scopes_" data-uid="Remora.Discord.API.Objects.Integration.Scopes*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_Scopes" data-uid="Remora.Discord.API.Objects.Integration.Scopes">Scopes</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; Scopes { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; Scopes { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -626,7 +613,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -640,12 +627,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_SubscriberCount_" data-uid="Remora.Discord.API.Objects.Integration.SubscriberCount*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_SubscriberCount" data-uid="Remora.Discord.API.Objects.Integration.SubscriberCount">SubscriberCount</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; SubscriberCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; SubscriberCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -657,7 +643,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -671,12 +657,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_SyncedAt_" data-uid="Remora.Discord.API.Objects.Integration.SyncedAt*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_SyncedAt" data-uid="Remora.Discord.API.Objects.Integration.SyncedAt">SyncedAt</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset&gt; SyncedAt { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset&gt; SyncedAt { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -688,7 +673,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -702,12 +687,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_Type_" data-uid="Remora.Discord.API.Objects.Integration.Type*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_Type" data-uid="Remora.Discord.API.Objects.Integration.Type">Type</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Type { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Type { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -719,7 +703,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -733,12 +717,11 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
   </span>
   <a id="Remora_Discord_API_Objects_Integration_User_" data-uid="Remora.Discord.API.Objects.Integration.User*"></a>
   <h4 id="Remora_Discord_API_Objects_Integration_User" data-uid="Remora.Discord.API.Objects.Integration.User">User</h4>
-  <div class="markdown level1 summary"><p>Represents an integration object.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IUser&gt; User { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IUser&gt; User { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -750,7 +733,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -763,7 +746,7 @@ public class Integration : IIntegration, IPartialIntegration, IEquatable&lt;Inte
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialIntegration.html">IPartialIntegration</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

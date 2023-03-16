@@ -107,44 +107,44 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">EmbedImage</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedImage.html">IEmbedImage</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.EmbedImage.html">EmbedImage</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.EmbedImage.html">EmbedImage</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_EmbedImage_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
+public record EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -156,13 +156,12 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Messages/EmbedImage.cs/#L32">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_EmbedImage__ctor_" data-uid="Remora.Discord.API.Objects.EmbedImage.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_EmbedImage__ctor_System_String_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__" data-uid="Remora.Discord.API.Objects.EmbedImage.#ctor(System.String,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32})">EmbedImage(String, Optional&lt;String&gt;, Optional&lt;Int32&gt;, Optional&lt;Int32&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents information about an image in an embed.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_EmbedImage__ctor_System_String_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__" data-uid="Remora.Discord.API.Objects.EmbedImage.#ctor(System.String,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32})">EmbedImage(string, Optional&lt;string&gt;, Optional&lt;int&gt;, Optional&lt;int&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EmbedImage([UriString(&quot;GET&quot;)] string Url, Optional&lt;string&gt; ProxyUrl = default(Optional&lt;string&gt;), Optional&lt;int&gt; Height = default(Optional&lt;int&gt;), Optional&lt;int&gt; Width = default(Optional&lt;int&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public EmbedImage(string Url, Optional&lt;string&gt; ProxyUrl = default, Optional&lt;int&gt; Height = default, Optional&lt;int&gt; Width = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -175,22 +174,22 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Url</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">ProxyUrl</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">Height</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">Width</span></td>
         <td></td>
       </tr>
@@ -207,12 +206,11 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_EmbedImage_Height_" data-uid="Remora.Discord.API.Objects.EmbedImage.Height*"></a>
   <h4 id="Remora_Discord_API_Objects_EmbedImage_Height" data-uid="Remora.Discord.API.Objects.EmbedImage.Height">Height</h4>
-  <div class="markdown level1 summary"><p>Represents information about an image in an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; Height { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; Height { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -224,7 +222,7 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -238,12 +236,11 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_EmbedImage_ProxyUrl_" data-uid="Remora.Discord.API.Objects.EmbedImage.ProxyUrl*"></a>
   <h4 id="Remora_Discord_API_Objects_EmbedImage_ProxyUrl" data-uid="Remora.Discord.API.Objects.EmbedImage.ProxyUrl">ProxyUrl</h4>
-  <div class="markdown level1 summary"><p>Represents information about an image in an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; ProxyUrl { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; ProxyUrl { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -255,7 +252,7 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -269,12 +266,11 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_EmbedImage_Url_" data-uid="Remora.Discord.API.Objects.EmbedImage.Url*"></a>
   <h4 id="Remora_Discord_API_Objects_EmbedImage_Url" data-uid="Remora.Discord.API.Objects.EmbedImage.Url">Url</h4>
-  <div class="markdown level1 summary"><p>Represents information about an image in an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Url { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Url { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -286,7 +282,7 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -300,12 +296,11 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_EmbedImage_Width_" data-uid="Remora.Discord.API.Objects.EmbedImage.Width*"></a>
   <h4 id="Remora_Discord_API_Objects_EmbedImage_Width" data-uid="Remora.Discord.API.Objects.EmbedImage.Width">Width</h4>
-  <div class="markdown level1 summary"><p>Represents information about an image in an embed.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; Width { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; Width { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -317,7 +312,7 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -327,7 +322,7 @@ public class EmbedImage : IEmbedImage, IEquatable&lt;EmbedImage&gt;</code></pre>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbedImage.html">IEmbedImage</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

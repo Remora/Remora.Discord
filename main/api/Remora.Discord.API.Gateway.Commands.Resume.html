@@ -107,7 +107,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Resume</span></div>
   </div>
   <div class="implements">
@@ -115,38 +115,38 @@
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Commands.IResume.html">IResume</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Commands.IGatewayCommand.html">IGatewayCommand</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Commands.Resume.html">Resume</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Commands.Resume.html">Resume</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Gateway.Commands.html">Remora.Discord.API.Gateway.Commands</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<span class="xref">Gateway</span>.<a class="xref" href="Remora.Discord.API.Gateway.Commands.html">Commands</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Gateway_Commands_Resume_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&lt;Resume&gt;</code></pre>
+public record Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&lt;Resume&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -158,7 +158,7 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Commands/Resume.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Commands_Resume__ctor_" data-uid="Remora.Discord.API.Gateway.Commands.Resume.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Gateway_Commands_Resume__ctor_System_String_System_String_System_Int32_" data-uid="Remora.Discord.API.Gateway.Commands.Resume.#ctor(System.String,System.String,System.Int32)">Resume(String, String, Int32)</h4>
+  <h4 id="Remora_Discord_API_Gateway_Commands_Resume__ctor_System_String_System_String_System_Int32_" data-uid="Remora.Discord.API.Gateway.Commands.Resume.#ctor(System.String,System.String,System.Int32)">Resume(string, string, int)</h4>
   <div class="markdown level1 summary"><p>Represents a resume command.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -177,17 +177,17 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Token</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">SessionID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">SequenceNumber</span></td>
         <td></td>
       </tr>
@@ -204,12 +204,11 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
   </span>
   <a id="Remora_Discord_API_Gateway_Commands_Resume_SequenceNumber_" data-uid="Remora.Discord.API.Gateway.Commands.Resume.SequenceNumber*"></a>
   <h4 id="Remora_Discord_API_Gateway_Commands_Resume_SequenceNumber" data-uid="Remora.Discord.API.Gateway.Commands.Resume.SequenceNumber">SequenceNumber</h4>
-  <div class="markdown level1 summary"><p>Represents a resume command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int SequenceNumber { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int SequenceNumber { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -221,7 +220,7 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -235,12 +234,11 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
   </span>
   <a id="Remora_Discord_API_Gateway_Commands_Resume_SessionID_" data-uid="Remora.Discord.API.Gateway.Commands.Resume.SessionID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Commands_Resume_SessionID" data-uid="Remora.Discord.API.Gateway.Commands.Resume.SessionID">SessionID</h4>
-  <div class="markdown level1 summary"><p>Represents a resume command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string SessionID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string SessionID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -252,7 +250,7 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -266,12 +264,11 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
   </span>
   <a id="Remora_Discord_API_Gateway_Commands_Resume_Token_" data-uid="Remora.Discord.API.Gateway.Commands.Resume.Token*"></a>
   <h4 id="Remora_Discord_API_Gateway_Commands_Resume_Token" data-uid="Remora.Discord.API.Gateway.Commands.Resume.Token">Token</h4>
-  <div class="markdown level1 summary"><p>Represents a resume command.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Token { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Token { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -283,7 +280,7 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -299,7 +296,7 @@ public class Resume : IResume, IGatewayCommand, IGatewayPayloadData, IEquatable&
       <a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

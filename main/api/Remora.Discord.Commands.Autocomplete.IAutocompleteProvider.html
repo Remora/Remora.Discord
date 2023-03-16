@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents the public interface of an autocomplete provider.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.Commands.Autocomplete.html">Remora.Discord.Commands.Autocomplete</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.Commands.html">Commands</a>.<a class="xref" href="Remora.Discord.Commands.Autocomplete.html">Autocomplete</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.Commands.dll</h6>
   <h5 id="Remora_Discord_Commands_Autocomplete_IAutocompleteProvider_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -140,7 +140,7 @@ public interface IAutocompleteProvider</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -155,13 +155,13 @@ public interface IAutocompleteProvider</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Commands/Autocomplete/IAutocompleteProvider.cs/#L68">View Source</a>
   </span>
   <a id="Remora_Discord_Commands_Autocomplete_IAutocompleteProvider_GetSuggestionsAsync_" data-uid="Remora.Discord.Commands.Autocomplete.IAutocompleteProvider.GetSuggestionsAsync*"></a>
-  <h4 id="Remora_Discord_Commands_Autocomplete_IAutocompleteProvider_GetSuggestionsAsync_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IApplicationCommandInteractionDataOption__System_String_System_Threading_CancellationToken_" data-uid="Remora.Discord.Commands.Autocomplete.IAutocompleteProvider.GetSuggestionsAsync(System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataOption},System.String,System.Threading.CancellationToken)">GetSuggestionsAsync(IReadOnlyList&lt;IApplicationCommandInteractionDataOption&gt;, String, CancellationToken)</h4>
+  <h4 id="Remora_Discord_Commands_Autocomplete_IAutocompleteProvider_GetSuggestionsAsync_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IApplicationCommandInteractionDataOption__System_String_System_Threading_CancellationToken_" data-uid="Remora.Discord.Commands.Autocomplete.IAutocompleteProvider.GetSuggestionsAsync(System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataOption},System.String,System.Threading.CancellationToken)">GetSuggestionsAsync(IReadOnlyList&lt;IApplicationCommandInteractionDataOption&gt;, string, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets a set of autocomplete suggestions based on provided user input.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">ValueTask&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt; GetSuggestionsAsync(IReadOnlyList&lt;IApplicationCommandInteractionDataOption&gt; options, string userInput, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">ValueTask&lt;IReadOnlyList&lt;IApplicationCommandOptionChoice&gt;&gt; GetSuggestionsAsync(IReadOnlyList&lt;IApplicationCommandInteractionDataOption&gt; options, string userInput, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -174,19 +174,19 @@ public interface IAutocompleteProvider</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataOption.html">IApplicationCommandInteractionDataOption</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataOption.html">IApplicationCommandInteractionDataOption</a>&gt;</td>
         <td><span class="parametername">options</span></td>
         <td><p>The other options in the command being invoked.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">userInput</span></td>
         <td><p>The user's current input.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -203,7 +203,7 @@ public interface IAutocompleteProvider</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.ValueTask</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice.html">IApplicationCommandOptionChoice</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1">ValueTask</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice.html">IApplicationCommandOptionChoice</a>&gt;&gt;</td>
         <td><p>The suggested options.</p>
 </td>
       </tr>

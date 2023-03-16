@@ -107,44 +107,44 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Interaction</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IInteraction.html">IInteraction</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.Interaction.html">Interaction</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.Interaction.html">Interaction</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_Interaction_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></pre>
+public record Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -156,13 +156,12 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Interaction.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_Interaction__ctor_" data-uid="Remora.Discord.API.Objects.Interaction.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_Interaction__ctor_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_InteractionType_Remora_Rest_Core_Optional_OneOf_OneOf_Remora_Discord_API_Abstractions_Objects_IApplicationCommandData_Remora_Discord_API_Abstractions_Objects_IMessageComponentData_Remora_Discord_API_Abstractions_Objects_IModalSubmitData___Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IGuildMember__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IUser__System_String_System_Int32_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessage__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__" data-uid="Remora.Discord.API.Objects.Interaction.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.InteractionType,Remora.Rest.Core.Optional{OneOf.OneOf{Remora.Discord.API.Abstractions.Objects.IApplicationCommandData,Remora.Discord.API.Abstractions.Objects.IMessageComponentData,Remora.Discord.API.Abstractions.Objects.IModalSubmitData}},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IUser},System.String,System.Int32,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessage},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String})">Interaction(Snowflake, Snowflake, InteractionType, Optional&lt;OneOf&lt;IApplicationCommandData, IMessageComponentData, IModalSubmitData&gt;&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;IGuildMember&gt;, Optional&lt;IUser&gt;, String, Int32, Optional&lt;IMessage&gt;, Optional&lt;IDiscordPermissionSet&gt;, Optional&lt;String&gt;, Optional&lt;String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_Interaction__ctor_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_InteractionType_Remora_Rest_Core_Optional_OneOf_OneOf_Remora_Discord_API_Abstractions_Objects_IApplicationCommandData_Remora_Discord_API_Abstractions_Objects_IMessageComponentData_Remora_Discord_API_Abstractions_Objects_IModalSubmitData___Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IGuildMember__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IUser__System_String_System_Int32_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessage__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__" data-uid="Remora.Discord.API.Objects.Interaction.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.InteractionType,Remora.Rest.Core.Optional{OneOf.OneOf{Remora.Discord.API.Abstractions.Objects.IApplicationCommandData,Remora.Discord.API.Abstractions.Objects.IMessageComponentData,Remora.Discord.API.Abstractions.Objects.IModalSubmitData}},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IUser},System.String,System.Int32,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessage},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String})">Interaction(Snowflake, Snowflake, InteractionType, Optional&lt;OneOf&lt;IApplicationCommandData, IMessageComponentData, IModalSubmitData&gt;&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;IGuildMember&gt;, Optional&lt;IUser&gt;, string, int, Optional&lt;IMessage&gt;, Optional&lt;IDiscordPermissionSet&gt;, Optional&lt;string&gt;, Optional&lt;string&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Interaction(Snowflake ID, Snowflake ApplicationID, InteractionType Type, Optional&lt;OneOf&lt;IApplicationCommandData, IMessageComponentData, IModalSubmitData&gt;&gt; Data, Optional&lt;Snowflake&gt; GuildID, Optional&lt;Snowflake&gt; ChannelID, Optional&lt;IGuildMember&gt; Member, Optional&lt;IUser&gt; User, string Token, int Version, Optional&lt;IMessage&gt; Message = default(Optional&lt;IMessage&gt;), Optional&lt;IDiscordPermissionSet&gt; AppPermissions = default(Optional&lt;IDiscordPermissionSet&gt;), Optional&lt;string&gt; Locale = default(Optional&lt;string&gt;), Optional&lt;string&gt; GuildLocale = default(Optional&lt;string&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public Interaction(Snowflake ID, Snowflake ApplicationID, InteractionType Type, Optional&lt;OneOf&lt;IApplicationCommandData, IMessageComponentData, IModalSubmitData&gt;&gt; Data, Optional&lt;Snowflake&gt; GuildID, Optional&lt;Snowflake&gt; ChannelID, Optional&lt;IGuildMember&gt; Member, Optional&lt;IUser&gt; User, string Token, int Version, Optional&lt;IMessage&gt; Message = default, Optional&lt;IDiscordPermissionSet&gt; AppPermissions = default, Optional&lt;string&gt; Locale = default, Optional&lt;string&gt; GuildLocale = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -190,57 +189,57 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">OneOf.OneOf</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandData.html">IApplicationCommandData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.html">IMessageComponentData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IModalSubmitData.html">IModalSubmitData</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1, T2&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandData.html">IApplicationCommandData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.html">IMessageComponentData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IModalSubmitData.html">IModalSubmitData</a>&gt;&gt;</td>
         <td><span class="parametername">Data</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">GuildID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">ChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
         <td><span class="parametername">Member</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
         <td><span class="parametername">User</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Token</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td><span class="parametername">Version</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;</td>
         <td><span class="parametername">Message</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td><span class="parametername">AppPermissions</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Locale</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">GuildLocale</span></td>
         <td></td>
       </tr>
@@ -257,12 +256,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_ApplicationID_" data-uid="Remora.Discord.API.Objects.Interaction.ApplicationID*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_ApplicationID" data-uid="Remora.Discord.API.Objects.Interaction.ApplicationID">ApplicationID</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ApplicationID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ApplicationID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -288,12 +286,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_AppPermissions_" data-uid="Remora.Discord.API.Objects.Interaction.AppPermissions*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_AppPermissions" data-uid="Remora.Discord.API.Objects.Interaction.AppPermissions">AppPermissions</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; AppPermissions { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; AppPermissions { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -305,7 +302,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -319,12 +316,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_ChannelID_" data-uid="Remora.Discord.API.Objects.Interaction.ChannelID*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_ChannelID" data-uid="Remora.Discord.API.Objects.Interaction.ChannelID">ChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; ChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; ChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -336,7 +332,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -350,12 +346,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_Data_" data-uid="Remora.Discord.API.Objects.Interaction.Data*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_Data" data-uid="Remora.Discord.API.Objects.Interaction.Data">Data</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;OneOf&lt;IApplicationCommandData, IMessageComponentData, IModalSubmitData&gt;&gt; Data { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;OneOf&lt;IApplicationCommandData, IMessageComponentData, IModalSubmitData&gt;&gt; Data { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -367,7 +362,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">OneOf.OneOf</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandData.html">IApplicationCommandData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.html">IMessageComponentData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IModalSubmitData.html">IModalSubmitData</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1, T2&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationCommandData.html">IApplicationCommandData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.html">IMessageComponentData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IModalSubmitData.html">IModalSubmitData</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -381,12 +376,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_GuildID_" data-uid="Remora.Discord.API.Objects.Interaction.GuildID*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_GuildID" data-uid="Remora.Discord.API.Objects.Interaction.GuildID">GuildID</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; GuildID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; GuildID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -398,7 +392,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -412,12 +406,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_GuildLocale_" data-uid="Remora.Discord.API.Objects.Interaction.GuildLocale*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_GuildLocale" data-uid="Remora.Discord.API.Objects.Interaction.GuildLocale">GuildLocale</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; GuildLocale { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; GuildLocale { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -429,7 +422,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -443,12 +436,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_ID_" data-uid="Remora.Discord.API.Objects.Interaction.ID*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_ID" data-uid="Remora.Discord.API.Objects.Interaction.ID">ID</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -474,12 +466,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_Locale_" data-uid="Remora.Discord.API.Objects.Interaction.Locale*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_Locale" data-uid="Remora.Discord.API.Objects.Interaction.Locale">Locale</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Locale { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Locale { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -491,7 +482,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -505,12 +496,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_Member_" data-uid="Remora.Discord.API.Objects.Interaction.Member*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_Member" data-uid="Remora.Discord.API.Objects.Interaction.Member">Member</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IGuildMember&gt; Member { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IGuildMember&gt; Member { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -522,7 +512,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -536,12 +526,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_Message_" data-uid="Remora.Discord.API.Objects.Interaction.Message*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_Message" data-uid="Remora.Discord.API.Objects.Interaction.Message">Message</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IMessage&gt; Message { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IMessage&gt; Message { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -553,7 +542,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -567,12 +556,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_Token_" data-uid="Remora.Discord.API.Objects.Interaction.Token*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_Token" data-uid="Remora.Discord.API.Objects.Interaction.Token">Token</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Token { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Token { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -584,7 +572,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -598,12 +586,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_Type_" data-uid="Remora.Discord.API.Objects.Interaction.Type*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_Type" data-uid="Remora.Discord.API.Objects.Interaction.Type">Type</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public InteractionType Type { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public InteractionType Type { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -629,12 +616,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_User_" data-uid="Remora.Discord.API.Objects.Interaction.User*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_User" data-uid="Remora.Discord.API.Objects.Interaction.User">User</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IUser&gt; User { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IUser&gt; User { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -646,7 +632,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -660,12 +646,11 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
   </span>
   <a id="Remora_Discord_API_Objects_Interaction_Version_" data-uid="Remora.Discord.API.Objects.Interaction.Version*"></a>
   <h4 id="Remora_Discord_API_Objects_Interaction_Version" data-uid="Remora.Discord.API.Objects.Interaction.Version">Version</h4>
-  <div class="markdown level1 summary"><p>Represents a user interaction.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Version { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int Version { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -677,7 +662,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -687,7 +672,7 @@ public class Interaction : IInteraction, IEquatable&lt;Interaction&gt;</code></p
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IInteraction.html">IInteraction</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

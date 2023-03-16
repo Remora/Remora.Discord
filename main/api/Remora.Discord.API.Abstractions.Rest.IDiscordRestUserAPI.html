@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents the Discord User API.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Abstractions.Rest.html">Remora.Discord.API.Abstractions.Rest</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Rest.html">Rest</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -128,7 +128,7 @@ public interface IDiscordRestUserAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IChannel&gt;&gt; CreateDMAsync(Snowflake recipientID, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IChannel&gt;&gt; CreateDMAsync(Snowflake recipientID, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -147,7 +147,7 @@ public interface IDiscordRestUserAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -164,7 +164,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;&gt;</td>
         <td><p>A creation result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -184,7 +184,7 @@ public interface IDiscordRestUserAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IUser&gt;&gt; GetCurrentUserAsync(CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IUser&gt;&gt; GetCurrentUserAsync(CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -197,7 +197,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -214,7 +214,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -234,7 +234,7 @@ public interface IDiscordRestUserAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IGuildMember&gt;&gt; GetCurrentUserGuildMemberAsync(Snowflake guildID, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IGuildMember&gt;&gt; GetCurrentUserGuildMemberAsync(Snowflake guildID, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -253,7 +253,7 @@ public interface IDiscordRestUserAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -270,7 +270,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -287,13 +287,13 @@ public interface IDiscordRestUserAPI</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestUserAPI.cs/#L81">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetCurrentUserGuildsAsync_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserGuildsAsync*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetCurrentUserGuildsAsync_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserGuildsAsync(Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},System.Threading.CancellationToken)">GetCurrentUserGuildsAsync(Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Int32&gt;, CancellationToken)</h4>
+  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetCurrentUserGuildsAsync_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserGuildsAsync(Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},System.Threading.CancellationToken)">GetCurrentUserGuildsAsync(Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;int&gt;, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets the guilds the user is in.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IPartialGuild&gt;&gt;&gt; GetCurrentUserGuildsAsync(Optional&lt;Snowflake&gt; before = default(Optional&lt;Snowflake&gt;), Optional&lt;Snowflake&gt; after = default(Optional&lt;Snowflake&gt;), Optional&lt;int&gt; limit = default(Optional&lt;int&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IPartialGuild&gt;&gt;&gt; GetCurrentUserGuildsAsync(Optional&lt;Snowflake&gt; before = default, Optional&lt;Snowflake&gt; after = default, Optional&lt;int&gt; limit = default, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -306,25 +306,25 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">before</span></td>
         <td><p>Get guilds before this guild ID.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">after</span></td>
         <td><p>Get guilds after this guild ID.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">limit</span></td>
         <td><p>The maximum number of guilds to get (1-200). Defaults to 200.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -341,7 +341,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuild.html">IPartialGuild</a>&gt;&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuild.html">IPartialGuild</a>&gt;&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -361,7 +361,7 @@ public interface IDiscordRestUserAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IApplicationRoleConnection&gt;&gt; GetUserApplicationRoleConnectionAsync(Snowflake applicationID, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IApplicationRoleConnection&gt;&gt; GetUserApplicationRoleConnectionAsync(Snowflake applicationID, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -380,7 +380,7 @@ public interface IDiscordRestUserAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -397,7 +397,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationRoleConnection.html">IApplicationRoleConnection</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationRoleConnection.html">IApplicationRoleConnection</a>&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -421,7 +421,7 @@ public interface IDiscordRestUserAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IUser&gt;&gt; GetUserAsync(Snowflake userID, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IUser&gt;&gt; GetUserAsync(Snowflake userID, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -440,7 +440,7 @@ public interface IDiscordRestUserAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -457,7 +457,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -477,7 +477,7 @@ public interface IDiscordRestUserAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IConnection&gt;&gt;&gt; GetUserConnectionsAsync(CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IConnection&gt;&gt;&gt; GetUserConnectionsAsync(CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -490,7 +490,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -507,7 +507,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IConnection.html">IConnection</a>&gt;&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IConnection.html">IConnection</a>&gt;&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -530,7 +530,7 @@ public interface IDiscordRestUserAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IChannel&gt;&gt;&gt; GetUserDMsAsync(CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IChannel&gt;&gt;&gt; GetUserDMsAsync(CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -543,7 +543,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -560,7 +560,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IChannel.html">IChannel</a>&gt;&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -580,7 +580,7 @@ public interface IDiscordRestUserAPI</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -599,7 +599,7 @@ public interface IDiscordRestUserAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -616,7 +616,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A deletion result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -630,13 +630,13 @@ public interface IDiscordRestUserAPI</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestUserAPI.cs/#L66">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_ModifyCurrentUserAsync_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.ModifyCurrentUserAsync*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_ModifyCurrentUserAsync_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_IO_Stream__System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.ModifyCurrentUserAsync(Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.IO.Stream},System.Threading.CancellationToken)">ModifyCurrentUserAsync(Optional&lt;String&gt;, Optional&lt;Stream&gt;, CancellationToken)</h4>
+  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_ModifyCurrentUserAsync_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_IO_Stream__System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.ModifyCurrentUserAsync(Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.IO.Stream},System.Threading.CancellationToken)">ModifyCurrentUserAsync(Optional&lt;string&gt;, Optional&lt;Stream?&gt;, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Modifies the current user.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IUser&gt;&gt; ModifyCurrentUserAsync(Optional&lt;string&gt; username, Optional&lt;Stream&gt; avatar = default(Optional&lt;Stream&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IUser&gt;&gt; ModifyCurrentUserAsync(Optional&lt;string&gt; username, Optional&lt;Stream?&gt; avatar = default, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -649,19 +649,19 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">username</span></td>
         <td><p>The new username.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.IO.Stream</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a>&gt;</td>
         <td><span class="parametername">avatar</span></td>
         <td><p>The new avatar.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -678,7 +678,7 @@ public interface IDiscordRestUserAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
         <td><p>A modification result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -696,13 +696,13 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestUserAPI.cs/#L175">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_UpdateUserApplicationRoleConnectionAsync_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateUserApplicationRoleConnectionAsync*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_UpdateUserApplicationRoleConnectionAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}},System.Threading.CancellationToken)">UpdateUserApplicationRoleConnectionAsync(Snowflake, Optional&lt;String&gt;, Optional&lt;String&gt;, Optional&lt;IReadOnlyDictionary&lt;String, String&gt;&gt;, CancellationToken)</h4>
+  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_UpdateUserApplicationRoleConnectionAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}},System.Threading.CancellationToken)">UpdateUserApplicationRoleConnectionAsync(Snowflake, Optional&lt;string&gt;, Optional&lt;string&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt;, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Updates and returns the application role connection for the user.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IApplicationRoleConnection&gt;&gt; UpdateUserApplicationRoleConnectionAsync(Snowflake applicationID, Optional&lt;string&gt; platformName = default(Optional&lt;string&gt;), Optional&lt;string&gt; platformUsername = default(Optional&lt;string&gt;), Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt; metadata = default(Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IApplicationRoleConnection&gt;&gt; UpdateUserApplicationRoleConnectionAsync(Snowflake applicationID, Optional&lt;string&gt; platformName = default, Optional&lt;string&gt; platformUsername = default, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt; metadata = default, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -721,26 +721,26 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">platformName</span></td>
         <td><p>The vanity name of the platform a bot has connected (max 50 characters).</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">platformUsername</span></td>
         <td><p>The username on the platform a bot has connected (max 100 characters).</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">metadata</span></td>
         <td><p>The object mapping application role connection metadata keys to their stringified value (max 100 characters) for
 the user on the platform a bot has connected.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -757,7 +757,7 @@ the user on the platform a bot has connected.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationRoleConnection.html">IApplicationRoleConnection</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationRoleConnection.html">IApplicationRoleConnection</a>&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>

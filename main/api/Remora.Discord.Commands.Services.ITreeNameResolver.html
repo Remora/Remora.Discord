@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Resolves appropriate tree names for command execution based on a command context.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.Commands.Services.html">Remora.Discord.Commands.Services</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.Commands.html">Commands</a>.<a class="xref" href="Remora.Discord.Commands.Services.html">Services</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.Commands.dll</h6>
   <h5 id="Remora_Discord_Commands_Services_ITreeNameResolver_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -128,7 +128,7 @@ public interface ITreeNameResolver</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;string&gt;&gt; GetTreeNameAsync(IOperationContext context, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;string&gt;&gt; GetTreeNameAsync(IOperationContext context, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -147,7 +147,7 @@ public interface ITreeNameResolver</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -164,7 +164,7 @@ public interface ITreeNameResolver</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><p>The name of the tree to run commands from.</p>
 </td>
       </tr>

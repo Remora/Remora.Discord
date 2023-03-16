@@ -107,7 +107,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">GuildAuditLogEntryCreate</span></div>
   </div>
   <div class="implements">
@@ -116,38 +116,38 @@
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGatewayEvent.html">IGatewayEvent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAuditLogEntry.html">IAuditLogEntry</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.html">GuildAuditLogEntryCreate</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.html">GuildAuditLogEntryCreate</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Gateway.Events.html">Remora.Discord.API.Gateway.Events</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<span class="xref">Gateway</span>.<a class="xref" href="Remora.Discord.API.Gateway.Events.html">Events</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent, IGatewayPayloadData, IAuditLogEntry, IEquatable&lt;GuildAuditLogEntryCreate&gt;</code></pre>
+public record GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent, IGatewayPayloadData, IAuditLogEntry, IEquatable&lt;GuildAuditLogEntryCreate&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -159,13 +159,12 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/AuditLog/GuildAuditLogEntryCreate.cs/#L32">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate__ctor_" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate__ctor_System_String_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IAuditLogChange___System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_AuditLogEvent_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IOptionalAuditEntryInfo__Remora_Rest_Core_Optional_System_String__" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.#ctor(System.String,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IAuditLogChange}},System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.AuditLogEvent,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IOptionalAuditEntryInfo},Remora.Rest.Core.Optional{System.String})">GuildAuditLogEntryCreate(String, Optional&lt;IReadOnlyList&lt;IAuditLogChange&gt;&gt;, Nullable&lt;Snowflake&gt;, Snowflake, AuditLogEvent, Optional&lt;IOptionalAuditEntryInfo&gt;, Optional&lt;String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of an audit log entry.</p>
-</div>
+  <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate__ctor_System_String_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IAuditLogChange___System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_AuditLogEvent_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IOptionalAuditEntryInfo__Remora_Rest_Core_Optional_System_String__" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.#ctor(System.String,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IAuditLogChange}},System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.AuditLogEvent,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IOptionalAuditEntryInfo},Remora.Rest.Core.Optional{System.String})">GuildAuditLogEntryCreate(string?, Optional&lt;IReadOnlyList&lt;IAuditLogChange&gt;&gt;, Snowflake?, Snowflake, AuditLogEvent, Optional&lt;IOptionalAuditEntryInfo&gt;, Optional&lt;string&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GuildAuditLogEntryCreate(string TargetID, Optional&lt;IReadOnlyList&lt;IAuditLogChange&gt;&gt; Changes, Snowflake? UserID, Snowflake ID, AuditLogEvent ActionType, Optional&lt;IOptionalAuditEntryInfo&gt; Options = default(Optional&lt;IOptionalAuditEntryInfo&gt;), Optional&lt;string&gt; Reason = default(Optional&lt;string&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public GuildAuditLogEntryCreate(string? TargetID, Optional&lt;IReadOnlyList&lt;IAuditLogChange&gt;&gt; Changes, Snowflake? UserID, Snowflake ID, AuditLogEvent ActionType, Optional&lt;IOptionalAuditEntryInfo&gt; Options = default, Optional&lt;string&gt; Reason = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -178,17 +177,17 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">TargetID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAuditLogChange.html">IAuditLogChange</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAuditLogChange.html">IAuditLogChange</a>&gt;&gt;</td>
         <td><span class="parametername">Changes</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">UserID</span></td>
         <td></td>
       </tr>
@@ -203,12 +202,12 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IOptionalAuditEntryInfo.html">IOptionalAuditEntryInfo</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IOptionalAuditEntryInfo.html">IOptionalAuditEntryInfo</a>&gt;</td>
         <td><span class="parametername">Options</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Reason</span></td>
         <td></td>
       </tr>
@@ -225,12 +224,11 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_ActionType_" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.ActionType*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_ActionType" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.ActionType">ActionType</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of an audit log entry.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AuditLogEvent ActionType { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public AuditLogEvent ActionType { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -256,12 +254,11 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_Changes_" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.Changes*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_Changes" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.Changes">Changes</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of an audit log entry.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IAuditLogChange&gt;&gt; Changes { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IAuditLogChange&gt;&gt; Changes { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -273,7 +270,7 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAuditLogChange.html">IAuditLogChange</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAuditLogChange.html">IAuditLogChange</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -287,12 +284,11 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_ID_" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.ID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_ID" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.ID">ID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of an audit log entry.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -318,12 +314,11 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_Options_" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.Options*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_Options" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.Options">Options</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of an audit log entry.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IOptionalAuditEntryInfo&gt; Options { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IOptionalAuditEntryInfo&gt; Options { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -335,7 +330,7 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IOptionalAuditEntryInfo.html">IOptionalAuditEntryInfo</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IOptionalAuditEntryInfo.html">IOptionalAuditEntryInfo</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -349,12 +344,11 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_Reason_" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.Reason*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_Reason" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.Reason">Reason</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of an audit log entry.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Reason { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Reason { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -366,7 +360,7 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -380,12 +374,11 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_TargetID_" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.TargetID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_TargetID" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.TargetID">TargetID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of an audit log entry.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TargetID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string? TargetID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -397,7 +390,7 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -411,12 +404,11 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_UserID_" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.UserID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildAuditLogEntryCreate_UserID" data-uid="Remora.Discord.API.Gateway.Events.GuildAuditLogEntryCreate.UserID">UserID</h4>
-  <div class="markdown level1 summary"><p>Represents the creation of an audit log entry.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? UserID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? UserID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -428,7 +420,7 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -447,7 +439,7 @@ public class GuildAuditLogEntryCreate : IGuildAuditLogEntryCreate, IGatewayEvent
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAuditLogEntry.html">IAuditLogEntry</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

@@ -107,7 +107,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">AutoModerationActionExecution</span></div>
   </div>
   <div class="implements">
@@ -115,38 +115,38 @@
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IAutoModerationActionExecution.html">IAutoModerationActionExecution</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGatewayEvent.html">IGatewayEvent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.html">AutoModerationActionExecution</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.html">AutoModerationActionExecution</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Gateway.Events.html">Remora.Discord.API.Gateway.Events</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<span class="xref">Gateway</span>.<a class="xref" href="Remora.Discord.API.Gateway.Events.html">Events</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class AutoModerationActionExecution : IAutoModerationActionExecution, IGatewayEvent, IGatewayPayloadData, IEquatable&lt;AutoModerationActionExecution&gt;</code></pre>
+public record AutoModerationActionExecution : IAutoModerationActionExecution, IGatewayEvent, IGatewayPayloadData, IEquatable&lt;AutoModerationActionExecution&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -158,13 +158,12 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/AutoModeration/AutoModerationActionExecution.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution__ctor_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution__ctor_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_IAutoModerationAction_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_AutoModerationTriggerType_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__System_String_System_String_System_String_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.#ctor(Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.IAutoModerationAction,Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},System.String,System.String,System.String)">AutoModerationActionExecution(Snowflake, IAutoModerationAction, Snowflake, AutoModerationTriggerType, Snowflake, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, String, String, String)</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution__ctor_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_IAutoModerationAction_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_AutoModerationTriggerType_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__System_String_System_String_System_String_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.#ctor(Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.IAutoModerationAction,Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.AutoModerationTriggerType,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},System.String,System.String,System.String)">AutoModerationActionExecution(Snowflake, IAutoModerationAction, Snowflake, AutoModerationTriggerType, Snowflake, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, string, string?, string?)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AutoModerationActionExecution(Snowflake GuildID, IAutoModerationAction Action, Snowflake RuleID, AutoModerationTriggerType RuleTriggerType, Snowflake UserID, Optional&lt;Snowflake&gt; ChannelID, Optional&lt;Snowflake&gt; MessageID, Optional&lt;Snowflake&gt; AlertSystemMessageID, string Content, string MatchedKeyword, string MatchedContent)</code></pre>
+    <pre><code class="lang-csharp hljs">public AutoModerationActionExecution(Snowflake GuildID, IAutoModerationAction Action, Snowflake RuleID, AutoModerationTriggerType RuleTriggerType, Snowflake UserID, Optional&lt;Snowflake&gt; ChannelID, Optional&lt;Snowflake&gt; MessageID, Optional&lt;Snowflake&gt; AlertSystemMessageID, string Content, string? MatchedKeyword, string? MatchedContent)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -202,32 +201,32 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">ChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">MessageID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">AlertSystemMessageID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Content</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">MatchedKeyword</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">MatchedContent</span></td>
         <td></td>
       </tr>
@@ -244,12 +243,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_Action_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.Action*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_Action" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.Action">Action</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IAutoModerationAction Action { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IAutoModerationAction Action { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -275,12 +273,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_AlertSystemMessageID_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.AlertSystemMessageID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_AlertSystemMessageID" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.AlertSystemMessageID">AlertSystemMessageID</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; AlertSystemMessageID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; AlertSystemMessageID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -292,7 +289,7 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -306,12 +303,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_ChannelID_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.ChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_ChannelID" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.ChannelID">ChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; ChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; ChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -323,7 +319,7 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -337,12 +333,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_Content_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.Content*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_Content" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.Content">Content</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Content { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Content { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -354,7 +349,7 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -368,12 +363,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_GuildID_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.GuildID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_GuildID" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.GuildID">GuildID</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake GuildID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake GuildID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -399,12 +393,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_MatchedContent_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.MatchedContent*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_MatchedContent" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.MatchedContent">MatchedContent</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string MatchedContent { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string? MatchedContent { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -416,7 +409,7 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -430,12 +423,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_MatchedKeyword_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.MatchedKeyword*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_MatchedKeyword" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.MatchedKeyword">MatchedKeyword</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string MatchedKeyword { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string? MatchedKeyword { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -447,7 +439,7 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -461,12 +453,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_MessageID_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.MessageID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_MessageID" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.MessageID">MessageID</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; MessageID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; MessageID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -478,7 +469,7 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -492,12 +483,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_RuleID_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.RuleID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_RuleID" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.RuleID">RuleID</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake RuleID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake RuleID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -523,12 +513,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_RuleTriggerType_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.RuleTriggerType*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_RuleTriggerType" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.RuleTriggerType">RuleTriggerType</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AutoModerationTriggerType RuleTriggerType { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public AutoModerationTriggerType RuleTriggerType { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -554,12 +543,11 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
   </span>
   <a id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_UserID_" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.UserID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_AutoModerationActionExecution_UserID" data-uid="Remora.Discord.API.Gateway.Events.AutoModerationActionExecution.UserID">UserID</h4>
-  <div class="markdown level1 summary"><p>Represents the execution of an auto moderation action.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake UserID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake UserID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -587,7 +575,7 @@ public class AutoModerationActionExecution : IAutoModerationActionExecution, IGa
       <a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents an arbitrary transport service for <a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IPayload.html">IPayload</a> instances.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.Gateway.Transport.html">Remora.Discord.Gateway.Transport</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.Gateway.html">Gateway</a>.<a class="xref" href="Remora.Discord.Gateway.Transport.html">Transport</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.Gateway.dll</h6>
   <h5 id="Remora_Discord_Gateway_Transport_IPayloadTransportService_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -148,7 +148,7 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -177,7 +177,7 @@ minimum.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; ConnectAsync(Uri endpoint, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; ConnectAsync(Uri endpoint, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -190,13 +190,13 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Uri</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a></td>
         <td><span class="parametername">endpoint</span></td>
         <td><p>The endpoint to connect to.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -213,7 +213,7 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A connection result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -235,13 +235,13 @@ minimum.</p>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/Transport/IPayloadTransportService.cs/#L87">View Source</a>
   </span>
   <a id="Remora_Discord_Gateway_Transport_IPayloadTransportService_DisconnectAsync_" data-uid="Remora.Discord.Gateway.Transport.IPayloadTransportService.DisconnectAsync*"></a>
-  <h4 id="Remora_Discord_Gateway_Transport_IPayloadTransportService_DisconnectAsync_System_Boolean_System_Threading_CancellationToken_" data-uid="Remora.Discord.Gateway.Transport.IPayloadTransportService.DisconnectAsync(System.Boolean,System.Threading.CancellationToken)">DisconnectAsync(Boolean, CancellationToken)</h4>
+  <h4 id="Remora_Discord_Gateway_Transport_IPayloadTransportService_DisconnectAsync_System_Boolean_System_Threading_CancellationToken_" data-uid="Remora.Discord.Gateway.Transport.IPayloadTransportService.DisconnectAsync(System.Boolean,System.Threading.CancellationToken)">DisconnectAsync(bool, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Disconnects from the transport endpoint.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; DisconnectAsync(bool reconnectionIntended, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; DisconnectAsync(bool reconnectionIntended, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -254,13 +254,13 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">reconnectionIntended</span></td>
         <td><p>Whether reconnection is intended.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -277,7 +277,7 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A connection result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -305,7 +305,7 @@ minimum.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IPayload&gt;&gt; ReceivePayloadAsync(CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IPayload&gt;&gt; ReceivePayloadAsync(CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -318,7 +318,7 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -335,7 +335,7 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IPayload.html">IPayload</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IPayload.html">IPayload</a>&gt;&gt;</td>
         <td><p>A receive result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -358,7 +358,7 @@ minimum.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; SendPayloadAsync(IPayload payload, CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; SendPayloadAsync(IPayload payload, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -377,7 +377,7 @@ minimum.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -394,7 +394,7 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A send result which may or may not have succeeded.</p>
 </td>
       </tr>

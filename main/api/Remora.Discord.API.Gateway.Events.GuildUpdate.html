@@ -107,7 +107,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">GuildUpdate</span></div>
   </div>
   <div class="implements">
@@ -117,38 +117,38 @@
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuild.html">IGuild</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuild.html">IPartialGuild</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.GuildUpdate.html">GuildUpdate</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.GuildUpdate.html">GuildUpdate</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Gateway.Events.html">Remora.Discord.API.Gateway.Events</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<span class="xref">Gateway</span>.<a class="xref" href="Remora.Discord.API.Gateway.Events.html">Events</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Gateway_Events_GuildUpdate_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGuild, IPartialGuild, IEquatable&lt;GuildUpdate&gt;</code></pre>
+public record GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGuild, IPartialGuild, IEquatable&lt;GuildUpdate&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -160,13 +160,12 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Guilds/GuildUpdate.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate__ctor_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate__ctor_Remora_Rest_Core_Snowflake_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__System_Nullable_Remora_Rest_Core_Snowflake__System_TimeSpan_Remora_Discord_API_Abstractions_Objects_VerificationLevel_Remora_Discord_API_Abstractions_Objects_MessageNotificationLevel_Remora_Discord_API_Abstractions_Objects_ExplicitContentFilterLevel_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IRole__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IEmoji__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_GuildFeature__Remora_Discord_API_Abstractions_Objects_MultiFactorAuthenticationLevel_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___System_Nullable_Remora_Rest_Core_Snowflake__Remora_Discord_API_Abstractions_Objects_SystemChannelFlags_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Nullable_System_Int32___Remora_Rest_Core_Optional_System_Int32__System_String_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Discord_API_Abstractions_Objects_PremiumTier_Remora_Rest_Core_Optional_System_Int32__System_String_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IWelcomeScreen__Remora_Discord_API_Abstractions_Objects_GuildNSFWLevel_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_ISticker___System_Boolean_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.#ctor(Remora.Rest.Core.Snowflake,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},System.Nullable{Remora.Rest.Core.Snowflake},System.TimeSpan,Remora.Discord.API.Abstractions.Objects.VerificationLevel,Remora.Discord.API.Abstractions.Objects.MessageNotificationLevel,Remora.Discord.API.Abstractions.Objects.ExplicitContentFilterLevel,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IRole},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IEmoji},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.GuildFeature},Remora.Discord.API.Abstractions.Objects.MultiFactorAuthenticationLevel,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},System.Nullable{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.SystemChannelFlags,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Nullable{System.Int32}},Remora.Rest.Core.Optional{System.Int32},System.String,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Discord.API.Abstractions.Objects.PremiumTier,Remora.Rest.Core.Optional{System.Int32},System.String,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IWelcomeScreen},Remora.Discord.API.Abstractions.Objects.GuildNSFWLevel,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.ISticker}},System.Boolean)">GuildUpdate(Snowflake, String, IImageHash, Optional&lt;IImageHash&gt;, IImageHash, IImageHash, Optional&lt;Boolean&gt;, Snowflake, Optional&lt;IDiscordPermissionSet&gt;, Nullable&lt;Snowflake&gt;, TimeSpan, VerificationLevel, MessageNotificationLevel, ExplicitContentFilterLevel, IReadOnlyList&lt;IRole&gt;, IReadOnlyList&lt;IEmoji&gt;, IReadOnlyList&lt;GuildFeature&gt;, MultiFactorAuthenticationLevel, Nullable&lt;Snowflake&gt;, Optional&lt;Boolean&gt;, Optional&lt;Nullable&lt;Snowflake&gt;&gt;, Nullable&lt;Snowflake&gt;, SystemChannelFlags, Nullable&lt;Snowflake&gt;, Optional&lt;Nullable&lt;Int32&gt;&gt;, Optional&lt;Int32&gt;, String, String, IImageHash, PremiumTier, Optional&lt;Int32&gt;, String, Nullable&lt;Snowflake&gt;, Optional&lt;Int32&gt;, Optional&lt;Int32&gt;, Optional&lt;Int32&gt;, Optional&lt;IWelcomeScreen&gt;, GuildNSFWLevel, Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt;, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate__ctor_Remora_Rest_Core_Snowflake_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__System_Nullable_Remora_Rest_Core_Snowflake__System_TimeSpan_Remora_Discord_API_Abstractions_Objects_VerificationLevel_Remora_Discord_API_Abstractions_Objects_MessageNotificationLevel_Remora_Discord_API_Abstractions_Objects_ExplicitContentFilterLevel_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IRole__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IEmoji__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_GuildFeature__Remora_Discord_API_Abstractions_Objects_MultiFactorAuthenticationLevel_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___System_Nullable_Remora_Rest_Core_Snowflake__Remora_Discord_API_Abstractions_Objects_SystemChannelFlags_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Nullable_System_Int32___Remora_Rest_Core_Optional_System_Int32__System_String_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Discord_API_Abstractions_Objects_PremiumTier_Remora_Rest_Core_Optional_System_Int32__System_String_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IWelcomeScreen__Remora_Discord_API_Abstractions_Objects_GuildNSFWLevel_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_ISticker___System_Boolean_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.#ctor(Remora.Rest.Core.Snowflake,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},System.Nullable{Remora.Rest.Core.Snowflake},System.TimeSpan,Remora.Discord.API.Abstractions.Objects.VerificationLevel,Remora.Discord.API.Abstractions.Objects.MessageNotificationLevel,Remora.Discord.API.Abstractions.Objects.ExplicitContentFilterLevel,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IRole},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IEmoji},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.GuildFeature},Remora.Discord.API.Abstractions.Objects.MultiFactorAuthenticationLevel,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},System.Nullable{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.SystemChannelFlags,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Nullable{System.Int32}},Remora.Rest.Core.Optional{System.Int32},System.String,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Discord.API.Abstractions.Objects.PremiumTier,Remora.Rest.Core.Optional{System.Int32},System.String,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IWelcomeScreen},Remora.Discord.API.Abstractions.Objects.GuildNSFWLevel,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.ISticker}},System.Boolean)">GuildUpdate(Snowflake, string, IImageHash?, Optional&lt;IImageHash?&gt;, IImageHash?, IImageHash?, Optional&lt;bool&gt;, Snowflake, Optional&lt;IDiscordPermissionSet&gt;, Snowflake?, TimeSpan, VerificationLevel, MessageNotificationLevel, ExplicitContentFilterLevel, IReadOnlyList&lt;IRole&gt;, IReadOnlyList&lt;IEmoji&gt;, IReadOnlyList&lt;GuildFeature&gt;, MultiFactorAuthenticationLevel, Snowflake?, Optional&lt;bool&gt;, Optional&lt;Snowflake?&gt;, Snowflake?, SystemChannelFlags, Snowflake?, Optional&lt;int?&gt;, Optional&lt;int&gt;, string?, string?, IImageHash?, PremiumTier, Optional&lt;int&gt;, string, Snowflake?, Optional&lt;int&gt;, Optional&lt;int&gt;, Optional&lt;int&gt;, Optional&lt;IWelcomeScreen&gt;, GuildNSFWLevel, Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt;, bool)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GuildUpdate(Snowflake ID, string Name, IImageHash Icon, Optional&lt;IImageHash&gt; IconHash, IImageHash Splash, IImageHash DiscoverySplash, Optional&lt;bool&gt; IsOwner, Snowflake OwnerID, Optional&lt;IDiscordPermissionSet&gt; Permissions, Snowflake? AFKChannelID, TimeSpan AFKTimeout, VerificationLevel VerificationLevel, MessageNotificationLevel DefaultMessageNotifications, ExplicitContentFilterLevel ExplicitContentFilter, IReadOnlyList&lt;IRole&gt; Roles, IReadOnlyList&lt;IEmoji&gt; Emojis, IReadOnlyList&lt;GuildFeature&gt; GuildFeatures, MultiFactorAuthenticationLevel MFALevel, Snowflake? ApplicationID, Optional&lt;bool&gt; IsWidgetEnabled, Optional&lt;Snowflake?&gt; WidgetChannelID, Snowflake? SystemChannelID, SystemChannelFlags SystemChannelFlags, Snowflake? RulesChannelID, Optional&lt;int?&gt; MaxPresences, Optional&lt;int&gt; MaxMembers, string VanityUrlCode, string Description, IImageHash Banner, PremiumTier PremiumTier, Optional&lt;int&gt; PremiumSubscriptionCount, string PreferredLocale, Snowflake? PublicUpdatesChannelID, Optional&lt;int&gt; MaxVideoChannelUsers, Optional&lt;int&gt; ApproximateMemberCount, Optional&lt;int&gt; ApproximatePresenceCount, Optional&lt;IWelcomeScreen&gt; WelcomeScreen, GuildNSFWLevel NSFWLevel, Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt; Stickers, bool IsPremiumProgressBarEnabled)</code></pre>
+    <pre><code class="lang-csharp hljs">public GuildUpdate(Snowflake ID, string Name, IImageHash? Icon, Optional&lt;IImageHash?&gt; IconHash, IImageHash? Splash, IImageHash? DiscoverySplash, Optional&lt;bool&gt; IsOwner, Snowflake OwnerID, Optional&lt;IDiscordPermissionSet&gt; Permissions, Snowflake? AFKChannelID, TimeSpan AFKTimeout, VerificationLevel VerificationLevel, MessageNotificationLevel DefaultMessageNotifications, ExplicitContentFilterLevel ExplicitContentFilter, IReadOnlyList&lt;IRole&gt; Roles, IReadOnlyList&lt;IEmoji&gt; Emojis, IReadOnlyList&lt;GuildFeature&gt; GuildFeatures, MultiFactorAuthenticationLevel MFALevel, Snowflake? ApplicationID, Optional&lt;bool&gt; IsWidgetEnabled, Optional&lt;Snowflake?&gt; WidgetChannelID, Snowflake? SystemChannelID, SystemChannelFlags SystemChannelFlags, Snowflake? RulesChannelID, Optional&lt;int?&gt; MaxPresences, Optional&lt;int&gt; MaxMembers, string? VanityUrlCode, string? Description, IImageHash? Banner, PremiumTier PremiumTier, Optional&lt;int&gt; PremiumSubscriptionCount, string PreferredLocale, Snowflake? PublicUpdatesChannelID, Optional&lt;int&gt; MaxVideoChannelUsers, Optional&lt;int&gt; ApproximateMemberCount, Optional&lt;int&gt; ApproximatePresenceCount, Optional&lt;IWelcomeScreen&gt; WelcomeScreen, GuildNSFWLevel NSFWLevel, Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt; Stickers, bool IsPremiumProgressBarEnabled)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -184,7 +183,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Name</span></td>
         <td></td>
       </tr>
@@ -194,7 +193,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td><span class="parametername">IconHash</span></td>
         <td></td>
       </tr>
@@ -209,7 +208,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsOwner</span></td>
         <td></td>
       </tr>
@@ -219,17 +218,17 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td><span class="parametername">Permissions</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">AFKChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.TimeSpan</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
         <td><span class="parametername">AFKTimeout</span></td>
         <td></td>
       </tr>
@@ -249,17 +248,17 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRole.html">IRole</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRole.html">IRole</a>&gt;</td>
         <td><span class="parametername">Roles</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmoji.html">IEmoji</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmoji.html">IEmoji</a>&gt;</td>
         <td><span class="parametername">Emojis</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildFeature.html">GuildFeature</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildFeature.html">GuildFeature</a>&gt;</td>
         <td><span class="parametername">GuildFeatures</span></td>
         <td></td>
       </tr>
@@ -269,22 +268,22 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">ApplicationID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsWidgetEnabled</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td><span class="parametername">WidgetChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">SystemChannelID</span></td>
         <td></td>
       </tr>
@@ -294,27 +293,27 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">RulesChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?&gt;</td>
         <td><span class="parametername">MaxPresences</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">MaxMembers</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">VanityUrlCode</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Description</span></td>
         <td></td>
       </tr>
@@ -329,37 +328,37 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">PremiumSubscriptionCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">PreferredLocale</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">PublicUpdatesChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">MaxVideoChannelUsers</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">ApproximateMemberCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td><span class="parametername">ApproximatePresenceCount</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.html">IWelcomeScreen</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.html">IWelcomeScreen</a>&gt;</td>
         <td><span class="parametername">WelcomeScreen</span></td>
         <td></td>
       </tr>
@@ -369,12 +368,12 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISticker.html">ISticker</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISticker.html">ISticker</a>&gt;&gt;</td>
         <td><span class="parametername">Stickers</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsPremiumProgressBarEnabled</span></td>
         <td></td>
       </tr>
@@ -391,12 +390,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_AFKChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.AFKChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_AFKChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.AFKChannelID">AFKChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? AFKChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? AFKChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -408,7 +406,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -422,12 +420,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_AFKTimeout_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.AFKTimeout*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_AFKTimeout" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.AFKTimeout">AFKTimeout</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeSpan AFKTimeout { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public TimeSpan AFKTimeout { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -439,7 +436,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.TimeSpan</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -453,12 +450,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_ApplicationID_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ApplicationID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_ApplicationID" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ApplicationID">ApplicationID</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? ApplicationID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? ApplicationID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -470,7 +466,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -484,12 +480,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_ApproximateMemberCount_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ApproximateMemberCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_ApproximateMemberCount" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ApproximateMemberCount">ApproximateMemberCount</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ApproximateMemberCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ApproximateMemberCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -501,7 +496,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -515,12 +510,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_ApproximatePresenceCount_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ApproximatePresenceCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_ApproximatePresenceCount" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ApproximatePresenceCount">ApproximatePresenceCount</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ApproximatePresenceCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ApproximatePresenceCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -532,7 +526,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -546,12 +540,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Banner_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Banner*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Banner" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Banner">Banner</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash Banner { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? Banner { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -577,12 +570,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_DefaultMessageNotifications_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.DefaultMessageNotifications*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_DefaultMessageNotifications" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.DefaultMessageNotifications">DefaultMessageNotifications</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MessageNotificationLevel DefaultMessageNotifications { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public MessageNotificationLevel DefaultMessageNotifications { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -608,12 +600,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Description_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Description*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Description" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Description">Description</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Description { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string? Description { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -625,7 +616,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -639,12 +630,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_DiscoverySplash_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.DiscoverySplash*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_DiscoverySplash" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.DiscoverySplash">DiscoverySplash</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash DiscoverySplash { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? DiscoverySplash { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -670,12 +660,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Emojis_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Emojis*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Emojis" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Emojis">Emojis</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IEmoji&gt; Emojis { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IEmoji&gt; Emojis { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -687,7 +676,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmoji.html">IEmoji</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmoji.html">IEmoji</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -701,12 +690,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_ExplicitContentFilter_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ExplicitContentFilter*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_ExplicitContentFilter" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ExplicitContentFilter">ExplicitContentFilter</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExplicitContentFilterLevel ExplicitContentFilter { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ExplicitContentFilterLevel ExplicitContentFilter { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -732,12 +720,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_GuildFeatures_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.GuildFeatures*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_GuildFeatures" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.GuildFeatures">GuildFeatures</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;GuildFeature&gt; GuildFeatures { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;GuildFeature&gt; GuildFeatures { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -749,7 +736,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildFeature.html">GuildFeature</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildFeature.html">GuildFeature</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -763,12 +750,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Icon_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Icon*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Icon" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Icon">Icon</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash Icon { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? Icon { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -794,12 +780,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_IconHash_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.IconHash*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_IconHash" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.IconHash">IconHash</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash&gt; IconHash { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash?&gt; IconHash { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -811,7 +796,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -825,12 +810,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_ID_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_ID" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.ID">ID</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -856,12 +840,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_IsOwner_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.IsOwner*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_IsOwner" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.IsOwner">IsOwner</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsOwner { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsOwner { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -873,7 +856,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -887,12 +870,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_IsPremiumProgressBarEnabled_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.IsPremiumProgressBarEnabled*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_IsPremiumProgressBarEnabled" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.IsPremiumProgressBarEnabled">IsPremiumProgressBarEnabled</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPremiumProgressBarEnabled { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsPremiumProgressBarEnabled { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -904,7 +886,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -918,12 +900,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_IsWidgetEnabled_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.IsWidgetEnabled*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_IsWidgetEnabled" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.IsWidgetEnabled">IsWidgetEnabled</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsWidgetEnabled { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsWidgetEnabled { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -935,7 +916,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -949,12 +930,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_MaxMembers_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.MaxMembers*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_MaxMembers" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.MaxMembers">MaxMembers</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MaxMembers { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MaxMembers { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -966,7 +946,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -980,12 +960,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_MaxPresences_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.MaxPresences*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_MaxPresences" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.MaxPresences">MaxPresences</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int?&gt; MaxPresences { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int?&gt; MaxPresences { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -997,7 +976,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1011,12 +990,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_MaxVideoChannelUsers_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.MaxVideoChannelUsers*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_MaxVideoChannelUsers" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.MaxVideoChannelUsers">MaxVideoChannelUsers</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MaxVideoChannelUsers { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; MaxVideoChannelUsers { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1028,7 +1006,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1042,12 +1020,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_MFALevel_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.MFALevel*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_MFALevel" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.MFALevel">MFALevel</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MultiFactorAuthenticationLevel MFALevel { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public MultiFactorAuthenticationLevel MFALevel { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1073,12 +1050,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Name_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Name*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Name" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Name { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1090,7 +1066,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1104,12 +1080,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_NSFWLevel_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.NSFWLevel*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_NSFWLevel" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.NSFWLevel">NSFWLevel</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GuildNSFWLevel NSFWLevel { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public GuildNSFWLevel NSFWLevel { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1135,12 +1110,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_OwnerID_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.OwnerID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_OwnerID" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.OwnerID">OwnerID</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake OwnerID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake OwnerID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1166,12 +1140,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Permissions_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Permissions*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Permissions" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Permissions">Permissions</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; Permissions { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; Permissions { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1183,7 +1156,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1197,12 +1170,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_PreferredLocale_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.PreferredLocale*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_PreferredLocale" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.PreferredLocale">PreferredLocale</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string PreferredLocale { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string PreferredLocale { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1214,7 +1186,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1228,12 +1200,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_PremiumSubscriptionCount_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.PremiumSubscriptionCount*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_PremiumSubscriptionCount" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.PremiumSubscriptionCount">PremiumSubscriptionCount</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; PremiumSubscriptionCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; PremiumSubscriptionCount { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1245,7 +1216,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1259,12 +1230,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_PremiumTier_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.PremiumTier*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_PremiumTier" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.PremiumTier">PremiumTier</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PremiumTier PremiumTier { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PremiumTier PremiumTier { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1290,12 +1260,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_PublicUpdatesChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.PublicUpdatesChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_PublicUpdatesChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.PublicUpdatesChannelID">PublicUpdatesChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? PublicUpdatesChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? PublicUpdatesChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1307,7 +1276,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -1321,12 +1290,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Roles_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Roles*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Roles" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Roles">Roles</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IRole&gt; Roles { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IRole&gt; Roles { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1338,7 +1306,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRole.html">IRole</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRole.html">IRole</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1352,12 +1320,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_RulesChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.RulesChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_RulesChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.RulesChannelID">RulesChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? RulesChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? RulesChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1369,7 +1336,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -1383,12 +1350,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Splash_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Splash*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Splash" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Splash">Splash</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash Splash { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? Splash { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1414,12 +1380,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_Stickers_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Stickers*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_Stickers" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.Stickers">Stickers</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt; Stickers { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;ISticker&gt;&gt; Stickers { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1431,7 +1396,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISticker.html">ISticker</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISticker.html">ISticker</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1445,12 +1410,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_SystemChannelFlags_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.SystemChannelFlags*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_SystemChannelFlags" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.SystemChannelFlags">SystemChannelFlags</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SystemChannelFlags SystemChannelFlags { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public SystemChannelFlags SystemChannelFlags { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1476,12 +1440,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_SystemChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.SystemChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_SystemChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.SystemChannelID">SystemChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake? SystemChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake? SystemChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1493,7 +1456,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -1507,12 +1470,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_VanityUrlCode_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.VanityUrlCode*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_VanityUrlCode" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.VanityUrlCode">VanityUrlCode</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string VanityUrlCode { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string? VanityUrlCode { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1524,7 +1486,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1538,12 +1500,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_VerificationLevel_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.VerificationLevel*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_VerificationLevel" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.VerificationLevel">VerificationLevel</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public VerificationLevel VerificationLevel { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public VerificationLevel VerificationLevel { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1569,12 +1530,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_WelcomeScreen_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.WelcomeScreen*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_WelcomeScreen" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.WelcomeScreen">WelcomeScreen</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IWelcomeScreen&gt; WelcomeScreen { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IWelcomeScreen&gt; WelcomeScreen { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1586,7 +1546,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.html">IWelcomeScreen</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.html">IWelcomeScreen</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1600,12 +1560,11 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
   </span>
   <a id="Remora_Discord_API_Gateway_Events_GuildUpdate_WidgetChannelID_" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.WidgetChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_GuildUpdate_WidgetChannelID" data-uid="Remora.Discord.API.Gateway.Events.GuildUpdate.WidgetChannelID">WidgetChannelID</h4>
-  <div class="markdown level1 summary"><p>Represents the update of a guild.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake?&gt; WidgetChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake?&gt; WidgetChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1617,7 +1576,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1639,7 +1598,7 @@ public class GuildUpdate : IGuildUpdate, IGatewayEvent, IGatewayPayloadData, IGu
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuild.html">IPartialGuild</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

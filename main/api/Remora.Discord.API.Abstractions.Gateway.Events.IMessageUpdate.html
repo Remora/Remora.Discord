@@ -192,7 +192,7 @@
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialMessage.html#Remora_Discord_API_Abstractions_Objects_IPartialMessage_Position">IPartialMessage.Position</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.html">Remora.Discord.API.Abstractions.Gateway.Events</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.html">Gateway</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.html">Events</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Gateway_Events_IMessageUpdate_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -227,7 +227,7 @@ public interface IMessageUpdate : IPartialMessage, IGatewayEvent, IGatewayPayloa
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -260,7 +260,7 @@ without requiring bots to keep member state in memory.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuildMember.html">IPartialGuildMember</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuildMember.html">IPartialGuildMember</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -291,40 +291,7 @@ without requiring bots to keep member state in memory.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUserMention.html">IUserMention</a>&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="eii">Explicit Interface Implementations
-</h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Gateway_Events_IMessageUpdate_Remora_Discord_API_Abstractions_Objects_IPartialMessage_Mentions.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialMessage%23Mentions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Gateway/Events/Messages/IMessageUpdate.cs/#L54">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Gateway_Events_IMessageUpdate_Remora_Discord_API_Abstractions_Objects_IPartialMessage_Mentions_" data-uid="Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate.Remora#Discord#API#Abstractions#Objects#IPartialMessage#Mentions*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Gateway_Events_IMessageUpdate_Remora_Discord_API_Abstractions_Objects_IPartialMessage_Mentions" data-uid="Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate.Remora#Discord#API#Abstractions#Objects#IPartialMessage#Mentions">IPartialMessage.Mentions</h4>
-  <div class="markdown level1 summary"><p>Gets a value indicating whether this message mentions everyone.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IReadOnlyList&lt;IUser&gt;&gt; IPartialMessage.Mentions { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUserMention.html">IUserMention</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>

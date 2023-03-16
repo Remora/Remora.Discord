@@ -107,7 +107,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">TypingStart</span></div>
   </div>
   <div class="implements">
@@ -115,38 +115,38 @@
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.ITypingStart.html">ITypingStart</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGatewayEvent.html">IGatewayEvent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.TypingStart.html">TypingStart</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Gateway.Events.TypingStart.html">TypingStart</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Gateway.Events.html">Remora.Discord.API.Gateway.Events</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<span class="xref">Gateway</span>.<a class="xref" href="Remora.Discord.API.Gateway.Events.html">Events</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Gateway_Events_TypingStart_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEquatable&lt;TypingStart&gt;</code></pre>
+public record TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEquatable&lt;TypingStart&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -159,12 +159,11 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
   </span>
   <a id="Remora_Discord_API_Gateway_Events_TypingStart__ctor_" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.#ctor*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_TypingStart__ctor_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Snowflake_System_DateTimeOffset_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IGuildMember__" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Snowflake,System.DateTimeOffset,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember})">TypingStart(Snowflake, Optional&lt;Snowflake&gt;, Snowflake, DateTimeOffset, Optional&lt;IGuildMember&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sent when a user starts typing in a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TypingStart(Snowflake ChannelID, Optional&lt;Snowflake&gt; GuildID, Snowflake UserID, DateTimeOffset Timestamp, Optional&lt;IGuildMember&gt; Member = default(Optional&lt;IGuildMember&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public TypingStart(Snowflake ChannelID, Optional&lt;Snowflake&gt; GuildID, Snowflake UserID, DateTimeOffset Timestamp, Optional&lt;IGuildMember&gt; Member = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -182,7 +181,7 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">GuildID</span></td>
         <td></td>
       </tr>
@@ -192,12 +191,12 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.DateTimeOffset</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td><span class="parametername">Timestamp</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
         <td><span class="parametername">Member</span></td>
         <td></td>
       </tr>
@@ -214,12 +213,11 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
   </span>
   <a id="Remora_Discord_API_Gateway_Events_TypingStart_ChannelID_" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.ChannelID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_TypingStart_ChannelID" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.ChannelID">ChannelID</h4>
-  <div class="markdown level1 summary"><p>Sent when a user starts typing in a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ChannelID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -245,12 +243,11 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
   </span>
   <a id="Remora_Discord_API_Gateway_Events_TypingStart_GuildID_" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.GuildID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_TypingStart_GuildID" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.GuildID">GuildID</h4>
-  <div class="markdown level1 summary"><p>Sent when a user starts typing in a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; GuildID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; GuildID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -262,7 +259,7 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -276,12 +273,11 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
   </span>
   <a id="Remora_Discord_API_Gateway_Events_TypingStart_Member_" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.Member*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_TypingStart_Member" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.Member">Member</h4>
-  <div class="markdown level1 summary"><p>Sent when a user starts typing in a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IGuildMember&gt; Member { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IGuildMember&gt; Member { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -293,7 +289,7 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -307,12 +303,11 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
   </span>
   <a id="Remora_Discord_API_Gateway_Events_TypingStart_Timestamp_" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.Timestamp*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_TypingStart_Timestamp" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.Timestamp">Timestamp</h4>
-  <div class="markdown level1 summary"><p>Sent when a user starts typing in a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DateTimeOffset Timestamp { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public DateTimeOffset Timestamp { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -324,7 +319,7 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.DateTimeOffset</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -338,12 +333,11 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
   </span>
   <a id="Remora_Discord_API_Gateway_Events_TypingStart_UserID_" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.UserID*"></a>
   <h4 id="Remora_Discord_API_Gateway_Events_TypingStart_UserID" data-uid="Remora.Discord.API.Gateway.Events.TypingStart.UserID">UserID</h4>
-  <div class="markdown level1 summary"><p>Sent when a user starts typing in a channel.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake UserID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake UserID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -371,7 +365,7 @@ public class TypingStart : ITypingStart, IGatewayEvent, IGatewayPayloadData, IEq
       <a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

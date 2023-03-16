@@ -107,45 +107,45 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">GuildMember</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuildMember.html">IPartialGuildMember</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.GuildMember.html">GuildMember</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.GuildMember.html">GuildMember</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_GuildMember_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;GuildMember&gt;</code></pre>
+public record GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;GuildMember&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -157,13 +157,12 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Guilds/GuildMember.cs/#L34">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember__ctor_" data-uid="Remora.Discord.API.Objects.GuildMember.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_GuildMember__ctor_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IUser__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake__System_DateTimeOffset_Remora_Rest_Core_Optional_System_Nullable_System_DateTimeOffset___System_Boolean_System_Boolean_Remora_Discord_API_Abstractions_Objects_GuildMemberFlags_Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__Remora_Rest_Core_Optional_System_Nullable_System_DateTimeOffset___" data-uid="Remora.Discord.API.Objects.GuildMember.#ctor(Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IUser},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake},System.DateTimeOffset,Remora.Rest.Core.Optional{System.Nullable{System.DateTimeOffset}},System.Boolean,System.Boolean,Remora.Discord.API.Abstractions.Objects.GuildMemberFlags,Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},Remora.Rest.Core.Optional{System.Nullable{System.DateTimeOffset}})">GuildMember(Optional&lt;IUser&gt;, Optional&lt;String&gt;, Optional&lt;IImageHash&gt;, IReadOnlyList&lt;Snowflake&gt;, DateTimeOffset, Optional&lt;Nullable&lt;DateTimeOffset&gt;&gt;, Boolean, Boolean, GuildMemberFlags, Optional&lt;Nullable&lt;Boolean&gt;&gt;, Optional&lt;IDiscordPermissionSet&gt;, Optional&lt;Nullable&lt;DateTimeOffset&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_GuildMember__ctor_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IUser__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake__System_DateTimeOffset_Remora_Rest_Core_Optional_System_Nullable_System_DateTimeOffset___System_Boolean_System_Boolean_Remora_Discord_API_Abstractions_Objects_GuildMemberFlags_Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__Remora_Rest_Core_Optional_System_Nullable_System_DateTimeOffset___" data-uid="Remora.Discord.API.Objects.GuildMember.#ctor(Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IUser},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake},System.DateTimeOffset,Remora.Rest.Core.Optional{System.Nullable{System.DateTimeOffset}},System.Boolean,System.Boolean,Remora.Discord.API.Abstractions.Objects.GuildMemberFlags,Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},Remora.Rest.Core.Optional{System.Nullable{System.DateTimeOffset}})">GuildMember(Optional&lt;IUser&gt;, Optional&lt;string?&gt;, Optional&lt;IImageHash?&gt;, IReadOnlyList&lt;Snowflake&gt;, DateTimeOffset, Optional&lt;DateTimeOffset?&gt;, bool, bool, GuildMemberFlags, Optional&lt;bool?&gt;, Optional&lt;IDiscordPermissionSet&gt;, Optional&lt;DateTimeOffset?&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GuildMember(Optional&lt;IUser&gt; User, Optional&lt;string&gt; Nickname, Optional&lt;IImageHash&gt; Avatar, IReadOnlyList&lt;Snowflake&gt; Roles, DateTimeOffset JoinedAt, Optional&lt;DateTimeOffset?&gt; PremiumSince, bool IsDeafened, bool IsMuted, GuildMemberFlags Flags, Optional&lt;bool?&gt; IsPending = default(Optional&lt;bool?&gt;), Optional&lt;IDiscordPermissionSet&gt; Permissions = default(Optional&lt;IDiscordPermissionSet&gt;), Optional&lt;DateTimeOffset?&gt; CommunicationDisabledUntil = default(Optional&lt;DateTimeOffset?&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public GuildMember(Optional&lt;IUser&gt; User, Optional&lt;string?&gt; Nickname, Optional&lt;IImageHash?&gt; Avatar, IReadOnlyList&lt;Snowflake&gt; Roles, DateTimeOffset JoinedAt, Optional&lt;DateTimeOffset?&gt; PremiumSince, bool IsDeafened, bool IsMuted, GuildMemberFlags Flags, Optional&lt;bool?&gt; IsPending = default, Optional&lt;IDiscordPermissionSet&gt; Permissions = default, Optional&lt;DateTimeOffset?&gt; CommunicationDisabledUntil = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -176,42 +175,42 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
         <td><span class="parametername">User</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Nickname</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td><span class="parametername">Avatar</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">Roles</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.DateTimeOffset</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td><span class="parametername">JoinedAt</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td><span class="parametername">PremiumSince</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsDeafened</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsMuted</span></td>
         <td></td>
       </tr>
@@ -221,17 +220,17 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Boolean</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?&gt;</td>
         <td><span class="parametername">IsPending</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td><span class="parametername">Permissions</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td><span class="parametername">CommunicationDisabledUntil</span></td>
         <td></td>
       </tr>
@@ -248,12 +247,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_Avatar_" data-uid="Remora.Discord.API.Objects.GuildMember.Avatar*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_Avatar" data-uid="Remora.Discord.API.Objects.GuildMember.Avatar">Avatar</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash&gt; Avatar { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash?&gt; Avatar { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -265,7 +263,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -279,12 +277,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_CommunicationDisabledUntil_" data-uid="Remora.Discord.API.Objects.GuildMember.CommunicationDisabledUntil*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_CommunicationDisabledUntil" data-uid="Remora.Discord.API.Objects.GuildMember.CommunicationDisabledUntil">CommunicationDisabledUntil</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset?&gt; CommunicationDisabledUntil { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset?&gt; CommunicationDisabledUntil { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -296,7 +293,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -310,12 +307,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_Flags_" data-uid="Remora.Discord.API.Objects.GuildMember.Flags*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_Flags" data-uid="Remora.Discord.API.Objects.GuildMember.Flags">Flags</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GuildMemberFlags Flags { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public GuildMemberFlags Flags { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -341,12 +337,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_IsDeafened_" data-uid="Remora.Discord.API.Objects.GuildMember.IsDeafened*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_IsDeafened" data-uid="Remora.Discord.API.Objects.GuildMember.IsDeafened">IsDeafened</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsDeafened { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsDeafened { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -358,7 +353,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -372,12 +367,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_IsMuted_" data-uid="Remora.Discord.API.Objects.GuildMember.IsMuted*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_IsMuted" data-uid="Remora.Discord.API.Objects.GuildMember.IsMuted">IsMuted</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsMuted { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsMuted { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -389,7 +383,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -403,12 +397,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_IsPending_" data-uid="Remora.Discord.API.Objects.GuildMember.IsPending*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_IsPending" data-uid="Remora.Discord.API.Objects.GuildMember.IsPending">IsPending</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool?&gt; IsPending { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool?&gt; IsPending { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -420,7 +413,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Boolean</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -434,12 +427,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_JoinedAt_" data-uid="Remora.Discord.API.Objects.GuildMember.JoinedAt*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_JoinedAt" data-uid="Remora.Discord.API.Objects.GuildMember.JoinedAt">JoinedAt</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DateTimeOffset JoinedAt { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public DateTimeOffset JoinedAt { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -451,7 +443,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.DateTimeOffset</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -465,12 +457,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_Nickname_" data-uid="Remora.Discord.API.Objects.GuildMember.Nickname*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_Nickname" data-uid="Remora.Discord.API.Objects.GuildMember.Nickname">Nickname</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Nickname { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string?&gt; Nickname { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -482,7 +473,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -496,12 +487,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_Permissions_" data-uid="Remora.Discord.API.Objects.GuildMember.Permissions*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_Permissions" data-uid="Remora.Discord.API.Objects.GuildMember.Permissions">Permissions</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; Permissions { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IDiscordPermissionSet&gt; Permissions { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -513,7 +503,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -527,12 +517,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_PremiumSince_" data-uid="Remora.Discord.API.Objects.GuildMember.PremiumSince*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_PremiumSince" data-uid="Remora.Discord.API.Objects.GuildMember.PremiumSince">PremiumSince</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset?&gt; PremiumSince { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset?&gt; PremiumSince { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -544,7 +533,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -558,12 +547,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_Roles_" data-uid="Remora.Discord.API.Objects.GuildMember.Roles*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_Roles" data-uid="Remora.Discord.API.Objects.GuildMember.Roles">Roles</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;Snowflake&gt; Roles { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;Snowflake&gt; Roles { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -575,7 +563,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -589,12 +577,11 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
   </span>
   <a id="Remora_Discord_API_Objects_GuildMember_User_" data-uid="Remora.Discord.API.Objects.GuildMember.User*"></a>
   <h4 id="Remora_Discord_API_Objects_GuildMember_User" data-uid="Remora.Discord.API.Objects.GuildMember.User">User</h4>
-  <div class="markdown level1 summary"><p>Represents information about a guild member.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IUser&gt; User { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IUser&gt; User { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -606,7 +593,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -619,7 +606,7 @@ public class GuildMember : IGuildMember, IPartialGuildMember, IEquatable&lt;Guil
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialGuildMember.html">IPartialGuildMember</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

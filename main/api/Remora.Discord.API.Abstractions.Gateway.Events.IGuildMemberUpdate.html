@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents a user being updated in the guild.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.html">Remora.Discord.API.Abstractions.Gateway.Events</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.html">Gateway</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.html">Events</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Gateway_Events_IGuildMemberUpdate_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -128,7 +128,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IImageHash&gt; Avatar { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">Optional&lt;IImageHash?&gt; Avatar { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -140,7 +140,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -154,7 +154,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
   </span>
   <a id="Remora_Discord_API_Abstractions_Gateway_Events_IGuildMemberUpdate_CommunicationDisabledUntil_" data-uid="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberUpdate.CommunicationDisabledUntil*"></a>
   <h4 id="Remora_Discord_API_Abstractions_Gateway_Events_IGuildMemberUpdate_CommunicationDisabledUntil" data-uid="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberUpdate.CommunicationDisabledUntil">CommunicationDisabledUntil</h4>
-  <div class="markdown level1 summary"><p>Gets the <span class="xref">System.DateTimeOffset</span> until the user has communication disabled.</p>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a> until the user has communication disabled.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -171,7 +171,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -233,7 +233,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -264,7 +264,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -295,7 +295,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -326,7 +326,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -345,7 +345,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; Nickname { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">Optional&lt;string?&gt; Nickname { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -357,7 +357,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -388,7 +388,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -419,7 +419,7 @@ public interface IGuildMemberUpdate : IGatewayEvent, IGatewayPayloadData</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>

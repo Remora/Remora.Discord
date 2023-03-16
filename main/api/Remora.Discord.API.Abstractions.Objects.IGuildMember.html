@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents information about a guild member.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Abstractions.Objects.html">Remora.Discord.API.Abstractions.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -128,7 +128,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IImageHash&gt; Avatar { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">Optional&lt;IImageHash?&gt; Avatar { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -140,7 +140,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -154,7 +154,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_CommunicationDisabledUntil_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.CommunicationDisabledUntil*"></a>
   <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_CommunicationDisabledUntil" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.CommunicationDisabledUntil">CommunicationDisabledUntil</h4>
-  <div class="markdown level1 summary"><p>Gets the <span class="xref">System.DateTimeOffset</span> until the user has communication disabled.</p>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a> until the user has communication disabled.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -171,7 +171,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -233,7 +233,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -264,7 +264,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -295,7 +295,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Boolean</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -326,7 +326,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.DateTimeOffset</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -345,7 +345,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; Nickname { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">Optional&lt;string?&gt; Nickname { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -357,7 +357,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -388,7 +388,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -419,7 +419,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -450,7 +450,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -481,381 +481,7 @@ public interface IGuildMember : IPartialGuildMember</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="eii">Explicit Interface Implementations
-</h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Avatar.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23Avatar%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L103">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Avatar_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Avatar*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Avatar" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Avatar">IPartialGuildMember.Avatar</h4>
-  <div class="markdown level1 summary"><p>Gets the member's guild avatar hash.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IImageHash&gt; IPartialGuildMember.Avatar { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_CommunicationDisabledUntil.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23CommunicationDisabledUntil%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L130">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_CommunicationDisabledUntil_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#CommunicationDisabledUntil*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_CommunicationDisabledUntil" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#CommunicationDisabledUntil">IPartialGuildMember.CommunicationDisabledUntil</h4>
-  <div class="markdown level1 summary"><p>Gets the <span class="xref">System.DateTimeOffset</span> until the user has communication disabled.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;DateTimeOffset?&gt; IPartialGuildMember.CommunicationDisabledUntil { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Flags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23Flags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L121">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Flags_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Flags*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Flags" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Flags">IPartialGuildMember.Flags</h4>
-  <div class="markdown level1 summary"><p>Gets the flags set on the member.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;GuildMemberFlags&gt; IPartialGuildMember.Flags { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildMemberFlags.html">GuildMemberFlags</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsDeafened.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23IsDeafened%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L115">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsDeafened_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#IsDeafened*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsDeafened" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#IsDeafened">IPartialGuildMember.IsDeafened</h4>
-  <div class="markdown level1 summary"><p>Gets a value indicating whether the user is deafened in voice channels.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;bool&gt; IPartialGuildMember.IsDeafened { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsMuted.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23IsMuted%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L118">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsMuted_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#IsMuted*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsMuted" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#IsMuted">IPartialGuildMember.IsMuted</h4>
-  <div class="markdown level1 summary"><p>Gets a value indicating whether the user is muted in voice channels.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;bool&gt; IPartialGuildMember.IsMuted { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsPending.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23IsPending%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L124">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsPending_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#IsPending*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_IsPending" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#IsPending">IPartialGuildMember.IsPending</h4>
-  <div class="markdown level1 summary"><p>Gets a value indicating whether the user has passed the guild membership screening requirements.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;bool?&gt; IPartialGuildMember.IsPending { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Boolean</span>&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_JoinedAt.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23JoinedAt%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L109">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_JoinedAt_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#JoinedAt*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_JoinedAt" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#JoinedAt">IPartialGuildMember.JoinedAt</h4>
-  <div class="markdown level1 summary"><p>Gets when the user joined the guild.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;DateTimeOffset&gt; IPartialGuildMember.JoinedAt { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Nickname.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23Nickname%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L100">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Nickname_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Nickname*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Nickname" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Nickname">IPartialGuildMember.Nickname</h4>
-  <div class="markdown level1 summary"><p>Gets the user's guild nickname.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;string&gt; IPartialGuildMember.Nickname { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Permissions.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23Permissions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L127">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Permissions_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Permissions*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Permissions" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Permissions">IPartialGuildMember.Permissions</h4>
-  <div class="markdown level1 summary"><p>Gets the total permissions of the member in a channel, including overrides.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IDiscordPermissionSet&gt; IPartialGuildMember.Permissions { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet.html">IDiscordPermissionSet</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_PremiumSince.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23PremiumSince%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L112">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_PremiumSince_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#PremiumSince*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_PremiumSince" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#PremiumSince">IPartialGuildMember.PremiumSince</h4>
-  <div class="markdown level1 summary"><p>Gets when the user started boosting the guild.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;DateTimeOffset?&gt; IPartialGuildMember.PremiumSince { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Roles.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23Roles%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L106">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Roles_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Roles*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_Roles" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#Roles">IPartialGuildMember.Roles</h4>
-  <div class="markdown level1 summary"><p>Gets the roles the user has.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; IPartialGuildMember.Roles { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_User.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora%23Discord%23API%23Abstractions%23Objects%23IPartialGuildMember%23User%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Guilds/IGuildMember.cs/#L97">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_User_" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#User*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Objects_IGuildMember_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember_User" data-uid="Remora.Discord.API.Abstractions.Objects.IGuildMember.Remora#Discord#API#Abstractions#Objects#IPartialGuildMember#User">IPartialGuildMember.User</h4>
-  <div class="markdown level1 summary"><p>Gets the user this guild member represents.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IUser&gt; IPartialGuildMember.User { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>

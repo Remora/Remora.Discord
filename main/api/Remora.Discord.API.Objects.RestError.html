@@ -107,44 +107,44 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">RestError</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRestError.html">IRestError</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.RestError.html">RestError</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.RestError.html">RestError</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_RestError_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
+public record RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
   </div>
   <h5 id="Remora_Discord_API_Objects_RestError_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This is a combination of the &quot;normal&quot; REST error and the rate limiting error.</p>
@@ -159,9 +159,8 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Errors/RestError.cs/#L35">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_RestError__ctor_" data-uid="Remora.Discord.API.Objects.RestError.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_RestError__ctor_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Results_DiscordError__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_OneOf_OneOf_Remora_Discord_API_Abstractions_Objects_IPropertyErrorDetails_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IErrorDetails_____System_String_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Single__" data-uid="Remora.Discord.API.Objects.RestError.#ctor(Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Results.DiscordError},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,OneOf.OneOf{Remora.Discord.API.Abstractions.Objects.IPropertyErrorDetails,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IErrorDetails}}}},System.String,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Single})">RestError(Optional&lt;DiscordError&gt;, Optional&lt;IReadOnlyDictionary&lt;String, OneOf&lt;IPropertyErrorDetails, IReadOnlyList&lt;IErrorDetails&gt;&gt;&gt;&gt;, String, Optional&lt;Boolean&gt;, Optional&lt;Single&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents an error reported by the REST API.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_RestError__ctor_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Results_DiscordError__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_OneOf_OneOf_Remora_Discord_API_Abstractions_Objects_IPropertyErrorDetails_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IErrorDetails_____System_String_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Single__" data-uid="Remora.Discord.API.Objects.RestError.#ctor(Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Results.DiscordError},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,OneOf.OneOf{Remora.Discord.API.Abstractions.Objects.IPropertyErrorDetails,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IErrorDetails}}}},System.String,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Single})">RestError(Optional&lt;DiscordError&gt;, Optional&lt;IReadOnlyDictionary&lt;string, OneOf&lt;IPropertyErrorDetails, IReadOnlyList&lt;IErrorDetails&gt;&gt;&gt;&gt;, string, Optional&lt;bool&gt;, Optional&lt;float&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
@@ -178,27 +177,27 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Results.DiscordError.html">DiscordError</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Results.DiscordError.html">DiscordError</a>&gt;</td>
         <td><span class="parametername">Code</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">OneOf.OneOf</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPropertyErrorDetails.html">IPropertyErrorDetails</a>, <span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IErrorDetails.html">IErrorDetails</a>&gt;&gt;&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPropertyErrorDetails.html">IPropertyErrorDetails</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IErrorDetails.html">IErrorDetails</a>&gt;&gt;&gt;&gt;</td>
         <td><span class="parametername">Errors</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Message</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsGlobal</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Single</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
         <td><span class="parametername">RetryAfter</span></td>
         <td></td>
       </tr>
@@ -218,12 +217,11 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_RestError_Code_" data-uid="Remora.Discord.API.Objects.RestError.Code*"></a>
   <h4 id="Remora_Discord_API_Objects_RestError_Code" data-uid="Remora.Discord.API.Objects.RestError.Code">Code</h4>
-  <div class="markdown level1 summary"><p>Represents an error reported by the REST API.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;DiscordError&gt; Code { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;DiscordError&gt; Code { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -235,7 +233,7 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Results.DiscordError.html">DiscordError</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Results.DiscordError.html">DiscordError</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -252,12 +250,11 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_RestError_Errors_" data-uid="Remora.Discord.API.Objects.RestError.Errors*"></a>
   <h4 id="Remora_Discord_API_Objects_RestError_Errors" data-uid="Remora.Discord.API.Objects.RestError.Errors">Errors</h4>
-  <div class="markdown level1 summary"><p>Represents an error reported by the REST API.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyDictionary&lt;string, OneOf&lt;IPropertyErrorDetails, IReadOnlyList&lt;IErrorDetails&gt;&gt;&gt;&gt; Errors { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyDictionary&lt;string, OneOf&lt;IPropertyErrorDetails, IReadOnlyList&lt;IErrorDetails&gt;&gt;&gt;&gt; Errors { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -269,7 +266,7 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">OneOf.OneOf</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPropertyErrorDetails.html">IPropertyErrorDetails</a>, <span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IErrorDetails.html">IErrorDetails</a>&gt;&gt;&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPropertyErrorDetails.html">IPropertyErrorDetails</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IErrorDetails.html">IErrorDetails</a>&gt;&gt;&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -286,12 +283,11 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_RestError_IsGlobal_" data-uid="Remora.Discord.API.Objects.RestError.IsGlobal*"></a>
   <h4 id="Remora_Discord_API_Objects_RestError_IsGlobal" data-uid="Remora.Discord.API.Objects.RestError.IsGlobal">IsGlobal</h4>
-  <div class="markdown level1 summary"><p>Represents an error reported by the REST API.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsGlobal { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsGlobal { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -303,7 +299,7 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -320,12 +316,11 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_RestError_Message_" data-uid="Remora.Discord.API.Objects.RestError.Message*"></a>
   <h4 id="Remora_Discord_API_Objects_RestError_Message" data-uid="Remora.Discord.API.Objects.RestError.Message">Message</h4>
-  <div class="markdown level1 summary"><p>Represents an error reported by the REST API.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Message { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Message { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -337,7 +332,7 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -354,12 +349,11 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
   </span>
   <a id="Remora_Discord_API_Objects_RestError_RetryAfter_" data-uid="Remora.Discord.API.Objects.RestError.RetryAfter*"></a>
   <h4 id="Remora_Discord_API_Objects_RestError_RetryAfter" data-uid="Remora.Discord.API.Objects.RestError.RetryAfter">RetryAfter</h4>
-  <div class="markdown level1 summary"><p>Represents an error reported by the REST API.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;float&gt; RetryAfter { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;float&gt; RetryAfter { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -371,7 +365,7 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Single</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -384,7 +378,7 @@ public class RestError : IRestError, IEquatable&lt;RestError&gt;</code></pre>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRestError.html">IRestError</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

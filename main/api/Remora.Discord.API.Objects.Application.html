@@ -107,45 +107,45 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">Application</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplication.html">IApplication</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialApplication.html">IPartialApplication</a></div>
-    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Remora.Discord.API.Objects.Application.html">Application</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.Application.html">Application</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Objects.html">Remora.Discord.API.Objects</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_Objects_Application_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class Application : IApplication, IPartialApplication, IEquatable&lt;Application&gt;</code></pre>
+public record Application : IApplication, IPartialApplication, IEquatable&lt;Application&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -157,13 +157,12 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Applications/Application.cs/#L34">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_Application__ctor_" data-uid="Remora.Discord.API.Objects.Application.#ctor*"></a>
-  <h4 id="Remora_Discord_API_Objects_Application__ctor_Remora_Rest_Core_Snowflake_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_System_String_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___System_Boolean_System_Boolean_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPartialUser__System_String_Remora_Discord_API_Abstractions_Objects_ITeam_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_ApplicationFlags__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IApplicationInstallParameters__Remora_Rest_Core_Optional_System_Uri__Remora_Rest_Core_Optional_System_Uri__" data-uid="Remora.Discord.API.Objects.Application.#ctor(Remora.Rest.Core.Snowflake,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,System.String,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},System.Boolean,System.Boolean,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPartialUser},System.String,Remora.Discord.API.Abstractions.Objects.ITeam,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.ApplicationFlags},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IApplicationInstallParameters},Remora.Rest.Core.Optional{System.Uri},Remora.Rest.Core.Optional{System.Uri})">Application(Snowflake, String, IImageHash, String, Optional&lt;IReadOnlyList&lt;String&gt;&gt;, Boolean, Boolean, Optional&lt;String&gt;, Optional&lt;String&gt;, Optional&lt;IPartialUser&gt;, String, ITeam, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;String&gt;, Optional&lt;IImageHash&gt;, Optional&lt;ApplicationFlags&gt;, Optional&lt;IReadOnlyList&lt;String&gt;&gt;, Optional&lt;IApplicationInstallParameters&gt;, Optional&lt;Uri&gt;, Optional&lt;Uri&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <h4 id="Remora_Discord_API_Objects_Application__ctor_Remora_Rest_Core_Snowflake_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_System_String_Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___System_Boolean_System_Boolean_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPartialUser__System_String_Remora_Discord_API_Abstractions_Objects_ITeam_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_ApplicationFlags__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_System_String___Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IApplicationInstallParameters__Remora_Rest_Core_Optional_System_Uri__Remora_Rest_Core_Optional_System_Uri__" data-uid="Remora.Discord.API.Objects.Application.#ctor(Remora.Rest.Core.Snowflake,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,System.String,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},System.Boolean,System.Boolean,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPartialUser},System.String,Remora.Discord.API.Abstractions.Objects.ITeam,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.ApplicationFlags},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.String}},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IApplicationInstallParameters},Remora.Rest.Core.Optional{System.Uri},Remora.Rest.Core.Optional{System.Uri})">Application(Snowflake, string, IImageHash?, string, Optional&lt;IReadOnlyList&lt;string&gt;&gt;, bool, bool, Optional&lt;string&gt;, Optional&lt;string&gt;, Optional&lt;IPartialUser&gt;, string, ITeam?, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;string&gt;, Optional&lt;IImageHash&gt;, Optional&lt;ApplicationFlags&gt;, Optional&lt;IReadOnlyList&lt;string&gt;&gt;, Optional&lt;IApplicationInstallParameters&gt;, Optional&lt;Uri&gt;, Optional&lt;Uri&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Application(Snowflake ID, string Name, IImageHash Icon, string Description, Optional&lt;IReadOnlyList&lt;string&gt;&gt; RPCOrigins, bool IsBotPublic, bool DoesBotRequireCodeGrant, Optional&lt;string&gt; TermsOfServiceURL, Optional&lt;string&gt; PrivacyPolicyURL, Optional&lt;IPartialUser&gt; Owner, string VerifyKey, ITeam Team, Optional&lt;Snowflake&gt; GuildID = default(Optional&lt;Snowflake&gt;), Optional&lt;Snowflake&gt; PrimarySKUID = default(Optional&lt;Snowflake&gt;), Optional&lt;string&gt; Slug = default(Optional&lt;string&gt;), Optional&lt;IImageHash&gt; CoverImage = default(Optional&lt;IImageHash&gt;), Optional&lt;ApplicationFlags&gt; Flags = default(Optional&lt;ApplicationFlags&gt;), Optional&lt;IReadOnlyList&lt;string&gt;&gt; Tags = default(Optional&lt;IReadOnlyList&lt;string&gt;&gt;), Optional&lt;IApplicationInstallParameters&gt; InstallParams = default(Optional&lt;IApplicationInstallParameters&gt;), Optional&lt;Uri&gt; CustomInstallUrl = default(Optional&lt;Uri&gt;), Optional&lt;Uri&gt; RoleConnectionsVerificationUrl = default(Optional&lt;Uri&gt;))</code></pre>
+    <pre><code class="lang-csharp hljs">public Application(Snowflake ID, string Name, IImageHash? Icon, string Description, Optional&lt;IReadOnlyList&lt;string&gt;&gt; RPCOrigins, bool IsBotPublic, bool DoesBotRequireCodeGrant, Optional&lt;string&gt; TermsOfServiceURL, Optional&lt;string&gt; PrivacyPolicyURL, Optional&lt;IPartialUser&gt; Owner, string VerifyKey, ITeam? Team, Optional&lt;Snowflake&gt; GuildID = default, Optional&lt;Snowflake&gt; PrimarySKUID = default, Optional&lt;string&gt; Slug = default, Optional&lt;IImageHash&gt; CoverImage = default, Optional&lt;ApplicationFlags&gt; Flags = default, Optional&lt;IReadOnlyList&lt;string&gt;&gt; Tags = default, Optional&lt;IApplicationInstallParameters&gt; InstallParams = default, Optional&lt;Uri&gt; CustomInstallUrl = default, Optional&lt;Uri&gt; RoleConnectionsVerificationUrl = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -181,7 +180,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Name</span></td>
         <td></td>
       </tr>
@@ -191,42 +190,42 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Description</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">RPCOrigins</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsBotPublic</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">DoesBotRequireCodeGrant</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">TermsOfServiceURL</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">PrivacyPolicyURL</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialUser.html">IPartialUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialUser.html">IPartialUser</a>&gt;</td>
         <td><span class="parametername">Owner</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">VerifyKey</span></td>
         <td></td>
       </tr>
@@ -236,47 +235,47 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">GuildID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">PrimarySKUID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td><span class="parametername">Slug</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td><span class="parametername">CoverImage</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ApplicationFlags.html">ApplicationFlags</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ApplicationFlags.html">ApplicationFlags</a>&gt;</td>
         <td><span class="parametername">Flags</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td><span class="parametername">Tags</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationInstallParameters.html">IApplicationInstallParameters</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationInstallParameters.html">IApplicationInstallParameters</a>&gt;</td>
         <td><span class="parametername">InstallParams</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Uri</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a>&gt;</td>
         <td><span class="parametername">CustomInstallUrl</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Uri</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a>&gt;</td>
         <td><span class="parametername">RoleConnectionsVerificationUrl</span></td>
         <td></td>
       </tr>
@@ -293,12 +292,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_CoverImage_" data-uid="Remora.Discord.API.Objects.Application.CoverImage*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_CoverImage" data-uid="Remora.Discord.API.Objects.Application.CoverImage">CoverImage</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash&gt; CoverImage { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash&gt; CoverImage { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -310,7 +308,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -324,12 +322,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_CustomInstallUrl_" data-uid="Remora.Discord.API.Objects.Application.CustomInstallUrl*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_CustomInstallUrl" data-uid="Remora.Discord.API.Objects.Application.CustomInstallUrl">CustomInstallUrl</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Uri&gt; CustomInstallUrl { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Uri&gt; CustomInstallUrl { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -341,7 +338,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Uri</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -355,12 +352,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_Description_" data-uid="Remora.Discord.API.Objects.Application.Description*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_Description" data-uid="Remora.Discord.API.Objects.Application.Description">Description</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Description { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Description { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -372,7 +368,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -386,12 +382,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_DoesBotRequireCodeGrant_" data-uid="Remora.Discord.API.Objects.Application.DoesBotRequireCodeGrant*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_DoesBotRequireCodeGrant" data-uid="Remora.Discord.API.Objects.Application.DoesBotRequireCodeGrant">DoesBotRequireCodeGrant</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool DoesBotRequireCodeGrant { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool DoesBotRequireCodeGrant { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -403,7 +398,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -417,12 +412,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_Flags_" data-uid="Remora.Discord.API.Objects.Application.Flags*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_Flags" data-uid="Remora.Discord.API.Objects.Application.Flags">Flags</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;ApplicationFlags&gt; Flags { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;ApplicationFlags&gt; Flags { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -434,7 +428,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ApplicationFlags.html">ApplicationFlags</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ApplicationFlags.html">ApplicationFlags</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -448,12 +442,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_GuildID_" data-uid="Remora.Discord.API.Objects.Application.GuildID*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_GuildID" data-uid="Remora.Discord.API.Objects.Application.GuildID">GuildID</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; GuildID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; GuildID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -465,7 +458,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -479,12 +472,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_Icon_" data-uid="Remora.Discord.API.Objects.Application.Icon*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_Icon" data-uid="Remora.Discord.API.Objects.Application.Icon">Icon</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IImageHash Icon { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IImageHash? Icon { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -510,12 +502,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_ID_" data-uid="Remora.Discord.API.Objects.Application.ID*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_ID" data-uid="Remora.Discord.API.Objects.Application.ID">ID</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Snowflake ID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -541,12 +532,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_InstallParams_" data-uid="Remora.Discord.API.Objects.Application.InstallParams*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_InstallParams" data-uid="Remora.Discord.API.Objects.Application.InstallParams">InstallParams</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IApplicationInstallParameters&gt; InstallParams { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IApplicationInstallParameters&gt; InstallParams { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -558,7 +548,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationInstallParameters.html">IApplicationInstallParameters</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationInstallParameters.html">IApplicationInstallParameters</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -572,12 +562,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_IsBotPublic_" data-uid="Remora.Discord.API.Objects.Application.IsBotPublic*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_IsBotPublic" data-uid="Remora.Discord.API.Objects.Application.IsBotPublic">IsBotPublic</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsBotPublic { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsBotPublic { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -589,7 +578,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -603,12 +592,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_Name_" data-uid="Remora.Discord.API.Objects.Application.Name*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_Name" data-uid="Remora.Discord.API.Objects.Application.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Name { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -620,7 +608,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -634,12 +622,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_Owner_" data-uid="Remora.Discord.API.Objects.Application.Owner*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_Owner" data-uid="Remora.Discord.API.Objects.Application.Owner">Owner</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IPartialUser&gt; Owner { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IPartialUser&gt; Owner { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -651,7 +638,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialUser.html">IPartialUser</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialUser.html">IPartialUser</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -665,12 +652,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_PrimarySKUID_" data-uid="Remora.Discord.API.Objects.Application.PrimarySKUID*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_PrimarySKUID" data-uid="Remora.Discord.API.Objects.Application.PrimarySKUID">PrimarySKUID</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; PrimarySKUID { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; PrimarySKUID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -682,7 +668,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -696,12 +682,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_PrivacyPolicyURL_" data-uid="Remora.Discord.API.Objects.Application.PrivacyPolicyURL*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_PrivacyPolicyURL" data-uid="Remora.Discord.API.Objects.Application.PrivacyPolicyURL">PrivacyPolicyURL</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; PrivacyPolicyURL { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; PrivacyPolicyURL { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -713,7 +698,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -727,12 +712,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_RoleConnectionsVerificationUrl_" data-uid="Remora.Discord.API.Objects.Application.RoleConnectionsVerificationUrl*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_RoleConnectionsVerificationUrl" data-uid="Remora.Discord.API.Objects.Application.RoleConnectionsVerificationUrl">RoleConnectionsVerificationUrl</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Uri&gt; RoleConnectionsVerificationUrl { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;Uri&gt; RoleConnectionsVerificationUrl { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -744,7 +728,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Uri</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uri">Uri</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -758,12 +742,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_RPCOrigins_" data-uid="Remora.Discord.API.Objects.Application.RPCOrigins*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_RPCOrigins" data-uid="Remora.Discord.API.Objects.Application.RPCOrigins">RPCOrigins</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; RPCOrigins { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; RPCOrigins { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -775,7 +758,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -789,12 +772,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_Slug_" data-uid="Remora.Discord.API.Objects.Application.Slug*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_Slug" data-uid="Remora.Discord.API.Objects.Application.Slug">Slug</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Slug { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Slug { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -806,7 +788,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -820,12 +802,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_Tags_" data-uid="Remora.Discord.API.Objects.Application.Tags*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_Tags" data-uid="Remora.Discord.API.Objects.Application.Tags">Tags</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; Tags { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;string&gt;&gt; Tags { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -837,7 +818,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -851,12 +832,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_Team_" data-uid="Remora.Discord.API.Objects.Application.Team*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_Team" data-uid="Remora.Discord.API.Objects.Application.Team">Team</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ITeam Team { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ITeam? Team { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -882,12 +862,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_TermsOfServiceURL_" data-uid="Remora.Discord.API.Objects.Application.TermsOfServiceURL*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_TermsOfServiceURL" data-uid="Remora.Discord.API.Objects.Application.TermsOfServiceURL">TermsOfServiceURL</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; TermsOfServiceURL { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; TermsOfServiceURL { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -899,7 +878,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -913,12 +892,11 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
   </span>
   <a id="Remora_Discord_API_Objects_Application_VerifyKey_" data-uid="Remora.Discord.API.Objects.Application.VerifyKey*"></a>
   <h4 id="Remora_Discord_API_Objects_Application_VerifyKey" data-uid="Remora.Discord.API.Objects.Application.VerifyKey">VerifyKey</h4>
-  <div class="markdown level1 summary"><p>Represents information about an OAuth2 application.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string VerifyKey { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string VerifyKey { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -930,7 +908,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -943,7 +921,7 @@ public class Application : IApplication, IPartialApplication, IEquatable&lt;Appl
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialApplication.html">IPartialApplication</a>
   </div>
   <div>
-      <span class="xref">System.IEquatable&lt;T&gt;</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
               

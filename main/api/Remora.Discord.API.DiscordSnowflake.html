@@ -107,34 +107,34 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><span class="xref">DiscordSnowflake</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetHashCode()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
     </div>
     <div>
-      <span class="xref">System.Object.GetType()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">object.GetType()</a>
     </div>
     <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">System.Object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.html">Remora.Discord.API</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.dll</h6>
   <h5 id="Remora_Discord_API_DiscordSnowflake_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -151,7 +151,7 @@ public static class DiscordSnowflake</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/DiscordSnowflake.cs/#L40">View Source</a>
   </span>
   <a id="Remora_Discord_API_DiscordSnowflake_New_" data-uid="Remora.Discord.API.DiscordSnowflake.New*"></a>
-  <h4 id="Remora_Discord_API_DiscordSnowflake_New_System_UInt64_" data-uid="Remora.Discord.API.DiscordSnowflake.New(System.UInt64)">New(UInt64)</h4>
+  <h4 id="Remora_Discord_API_DiscordSnowflake_New_System_UInt64_" data-uid="Remora.Discord.API.DiscordSnowflake.New(System.UInt64)">New(ulong)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of a Snowflake with the Discord epoch.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -170,7 +170,7 @@ public static class DiscordSnowflake</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt64</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">ulong</a></td>
         <td><span class="parametername">value</span></td>
         <td><p>The snowflake value.</p>
 </td>
@@ -201,9 +201,8 @@ public static class DiscordSnowflake</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/DiscordSnowflake.cs/#L44">View Source</a>
   </span>
   <a id="Remora_Discord_API_DiscordSnowflake_TryParse_" data-uid="Remora.Discord.API.DiscordSnowflake.TryParse*"></a>
-  <h4 id="Remora_Discord_API_DiscordSnowflake_TryParse_System_String_System_Nullable_Remora_Rest_Core_Snowflake___" data-uid="Remora.Discord.API.DiscordSnowflake.TryParse(System.String,System.Nullable{Remora.Rest.Core.Snowflake}@)">TryParse(String, out Nullable&lt;Snowflake&gt;)</h4>
-  <div class="markdown level1 summary"><p>Contains methods for initializing a <span class="xref">Remora.Rest.Core.Snowflake</span> with the <a class="xref" href="Remora.Discord.API.Constants.html#Remora_Discord_API_Constants_DiscordEpoch">DiscordEpoch</a>.</p>
-</div>
+  <h4 id="Remora_Discord_API_DiscordSnowflake_TryParse_System_String_System_Nullable_Remora_Rest_Core_Snowflake___" data-uid="Remora.Discord.API.DiscordSnowflake.TryParse(System.String,System.Nullable{Remora.Rest.Core.Snowflake}@)">TryParse(string, out Snowflake?)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
@@ -220,12 +219,12 @@ public static class DiscordSnowflake</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">value</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span>?</td>
         <td><span class="parametername">result</span></td>
         <td></td>
       </tr>
@@ -241,7 +240,7 @@ public static class DiscordSnowflake</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>

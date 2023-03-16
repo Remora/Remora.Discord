@@ -105,7 +105,7 @@
   <div class="markdown level0 summary"><p>Represents the Discord Audit Log API.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.Discord.API.Abstractions.Rest.html">Remora.Discord.API.Abstractions.Rest</a></h6>
+  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Rest.html">Rest</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAuditLogAPI_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -122,13 +122,13 @@ public interface IDiscordRestAuditLogAPI</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestAuditLogAPI.cs/#L49">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAuditLogAPI_GetGuildAuditLogAsync_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAuditLogAPI.GetGuildAuditLogAsync*"></a>
-  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAuditLogAPI_GetGuildAuditLogAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_AuditLogEvent__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Byte__System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAuditLogAPI.GetGuildAuditLogAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.AuditLogEvent},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Byte},System.Threading.CancellationToken)">GetGuildAuditLogAsync(Snowflake, Optional&lt;Snowflake&gt;, Optional&lt;AuditLogEvent&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Byte&gt;, CancellationToken)</h4>
+  <h4 id="Remora_Discord_API_Abstractions_Rest_IDiscordRestAuditLogAPI_GetGuildAuditLogAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_AuditLogEvent__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Byte__System_Threading_CancellationToken_" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestAuditLogAPI.GetGuildAuditLogAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.AuditLogEvent},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Byte},System.Threading.CancellationToken)">GetGuildAuditLogAsync(Snowflake, Optional&lt;Snowflake&gt;, Optional&lt;AuditLogEvent&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;byte&gt;, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Gets an audit log page for the given guild.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IAuditLog&gt;&gt; GetGuildAuditLogAsync(Snowflake guildID, Optional&lt;Snowflake&gt; userID = default(Optional&lt;Snowflake&gt;), Optional&lt;AuditLogEvent&gt; actionType = default(Optional&lt;AuditLogEvent&gt;), Optional&lt;Snowflake&gt; before = default(Optional&lt;Snowflake&gt;), Optional&lt;Snowflake&gt; after = default(Optional&lt;Snowflake&gt;), Optional&lt;byte&gt; limit = default(Optional&lt;byte&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IAuditLog&gt;&gt; GetGuildAuditLogAsync(Snowflake guildID, Optional&lt;Snowflake&gt; userID = default, Optional&lt;AuditLogEvent&gt; actionType = default, Optional&lt;Snowflake&gt; before = default, Optional&lt;Snowflake&gt; after = default, Optional&lt;byte&gt; limit = default, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -147,37 +147,37 @@ public interface IDiscordRestAuditLogAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">userID</span></td>
         <td><p>The ID of the user to filter on.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AuditLogEvent.html">AuditLogEvent</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.AuditLogEvent.html">AuditLogEvent</a>&gt;</td>
         <td><span class="parametername">actionType</span></td>
         <td><p>The action type to filter on.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">before</span></td>
         <td><p>The ID of the audit log entry to limit searches before.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td><span class="parametername">after</span></td>
         <td><p>The ID of the audit log entry to limit searches after.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional</span>&lt;<span class="xref">System.Byte</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
         <td><span class="parametername">limit</span></td>
         <td><p>The number of log entries to limit the request to.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">ct</span></td>
         <td><p>The cancellation token for this operation.</p>
 </td>
@@ -194,7 +194,7 @@ public interface IDiscordRestAuditLogAPI</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Remora.Results.Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAuditLog.html">IAuditLog</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAuditLog.html">IAuditLog</a>&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
 </td>
       </tr>
