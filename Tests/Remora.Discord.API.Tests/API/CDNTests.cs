@@ -798,6 +798,42 @@ public class CDNTests
     }
 
     /// <summary>
+    /// Tests the <see cref="CDN.GetStorePageAssetUrl(IApplication, string, Optional{CDNImageFormat}, Optional{ushort})"/>
+    /// method and its overloads.
+    /// </summary>
+    public class GetStorePageAssetUrl : CDNTestBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetStorePageAssetUrl"/> class.
+        /// </summary>
+        public GetStorePageAssetUrl()
+            : base
+            (
+                new Uri("https://cdn.discordapp.com/app-assets/0/store/1"),
+                new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+            )
+        {
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<Result<Uri>> GetImageUris
+        (
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var applicationID = DiscordSnowflake.New(0);
+
+            var mockedApplication = new Mock<IApplication>();
+            mockedApplication.SetupGet(g => g.ID).Returns(applicationID);
+
+            var application = mockedApplication.Object;
+            yield return CDN.GetStorePageAssetUrl(application, "1", imageFormat, imageSize);
+            yield return CDN.GetStorePageAssetUrl(applicationID, "1", imageFormat, imageSize);
+        }
+    }
+
+    /// <summary>
     /// Tests the <see cref="CDN.GetApplicationCoverUrl(IApplication, Optional{CDNImageFormat}, Optional{ushort})"/>
     /// method and its overloads.
     /// </summary>

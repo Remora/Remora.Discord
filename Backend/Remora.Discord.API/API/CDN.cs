@@ -981,6 +981,72 @@ public static class CDN
     }
 
     /// <summary>
+    /// Gets the CDN URI of the given application's store page's icon.
+    /// </summary>
+    /// <param name="application">The application.</param>
+    /// <param name="assetID">The ID of the asset.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetStorePageAssetUrl
+    (
+        IApplication application,
+        string assetID,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    ) => GetStorePageAssetUrl(application.ID, assetID, imageFormat, imageSize);
+
+    /// <summary>
+    /// Gets the CDN URI of the given application's store page asset..
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="assetID">The ID of the asset.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetStorePageAssetUrl
+    (
+        Snowflake applicationID,
+        string assetID,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        var formatValidation = ValidateOrDefaultImageFormat
+        (
+            imageFormat,
+            CDNImageFormat.PNG,
+            CDNImageFormat.JPEG,
+            CDNImageFormat.WebP
+        );
+
+        if (!formatValidation.IsSuccess)
+        {
+            return Result<Uri>.FromError(formatValidation);
+        }
+
+        var format = formatValidation.Entity;
+
+        var checkImageSize = CheckImageSize(imageSize);
+        if (!checkImageSize.IsSuccess)
+        {
+            return Result<Uri>.FromError(checkImageSize);
+        }
+
+        var ub = new UriBuilder(Constants.CDNBaseURL)
+        {
+            Path = $"app-assets/{applicationID}/store/{assetID}.{format.ToFileExtension()}"
+        };
+
+        if (imageSize.TryGet(out var size))
+        {
+            ub.Query = $"size={size}";
+        }
+
+        return ub.Uri;
+    }
+
+    /// <summary>
     /// Gets the CDN URI of the given sticker pack's banner.
     /// </summary>
     /// <param name="stickerPack">The sticker pack.</param>
