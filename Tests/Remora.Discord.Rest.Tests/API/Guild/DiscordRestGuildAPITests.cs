@@ -650,8 +650,8 @@ public class DiscordRestGuildAPITests
             var rateLimitPerUser = 10;
             var position = 1;
             var permissionOverwrites = new List<IPermissionOverwrite>();
-            var parentId = DiscordSnowflake.New(1);
-            var nsfw = true;
+            var parentID = DiscordSnowflake.New(1);
+            var isNsfw = true;
             var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
             var reason = "test";
 
@@ -671,8 +671,8 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                 .WithProperty("position", p => p.Is(position))
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
-                                .WithProperty("parent_id", p => p.Is(parentId.ToString()))
-                                .WithProperty("nsfw", p => p.Is(nsfw))
+                                .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                .WithProperty("nsfw", p => p.Is(isNsfw))
                                 .WithProperty
                                 (
                                     "default_auto_archive_duration",
@@ -683,19 +683,149 @@ public class DiscordRestGuildAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
             );
 
-            var result = await api.CreateGuildChannelAsync
+            var result = await api.CreateGuildTextChannelAsync
             (
                 guildId,
                 name,
-                type,
                 topic,
-                rateLimitPerUser: rateLimitPerUser,
-                position: position,
-                permissionOverwrites: permissionOverwrites,
-                parentID: parentId,
-                isNsfw: nsfw,
-                defaultAutoArchiveDuration: defaultAutoArchiveDuration,
-                reason: reason
+                rateLimitPerUser,
+                position,
+                permissionOverwrites,
+                parentID,
+                isNsfw,
+                defaultAutoArchiveDuration,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsAnnouncementRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var name = "dd";
+            var type = ChannelType.GuildAnnouncement;
+            var bitrate = 2;
+            var position = 1;
+            var permissionOverwrites = new List<IPermissionOverwrite>();
+            var parentID = DiscordSnowflake.New(1);
+            var isNsfw = true;
+            var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("bitrate", p => p.Is(bitrate))
+                                .WithProperty("position", p => p.Is(position))
+                                .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                .WithProperty("nsfw", p => p.Is(isNsfw))
+                                .WithProperty
+                                (
+                                    "default_auto_archive_duration",
+                                    p => p.Is((int)defaultAutoArchiveDuration)
+                                )
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.CreateGuildAnnouncementChannelAsync
+            (
+                guildId,
+                name,
+                bitrate,
+                position,
+                permissionOverwrites,
+                parentID,
+                isNsfw,
+                defaultAutoArchiveDuration,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsForumRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var name = "dd";
+            var type = ChannelType.GuildForum;
+            var topic = "aaa";
+            var position = 1;
+            var permissionOverwrites = new List<IPermissionOverwrite>();
+            var parentID = DiscordSnowflake.New(1);
+            var isNsfw = true;
+            var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var defaultReactionEmoji = new DefaultReaction(EmojiName: "booga");
+            var availableTags = Array.Empty<IForumTag>();
+            var defaultSortOrder = SortOrder.CreationDate;
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("topic", p => p.Is(topic))
+                                .WithProperty("position", p => p.Is(position))
+                                .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                .WithProperty("nsfw", p => p.Is(isNsfw))
+                                .WithProperty
+                                (
+                                    "default_auto_archive_duration",
+                                    p => p.Is((int)defaultAutoArchiveDuration)
+                                )
+                                .WithProperty("default_reaction_emoji", p => p.IsObject())
+                                .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.CreateGuildForumChannelAsync
+            (
+                guildId,
+                name,
+                topic,
+                position,
+                permissionOverwrites,
+                parentID,
+                isNsfw,
+                defaultAutoArchiveDuration,
+                defaultReactionEmoji,
+                availableTags,
+                defaultSortOrder,
+                reason
             );
 
             ResultAssert.Successful(result);
@@ -711,13 +841,12 @@ public class DiscordRestGuildAPITests
             var guildId = DiscordSnowflake.New(0);
             var name = "dd";
             var type = ChannelType.GuildVoice;
-            var topic = "ggg";
             var bitrate = 4600;
             var userLimit = 10;
             var position = 1;
             var permissionOverwrites = new List<IPermissionOverwrite>();
-            var parentId = DiscordSnowflake.New(1);
-            var nsfw = true;
+            var parentID = DiscordSnowflake.New(1);
+            var isNsfw = true;
             var rtcRegion = "abcd";
             var videoQualityMode = VideoQualityMode.Full;
             var reason = "test";
@@ -734,13 +863,12 @@ public class DiscordRestGuildAPITests
                             o => o
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("type", p => p.Is((int)type))
-                                .WithProperty("topic", p => p.Is(topic))
                                 .WithProperty("bitrate", p => p.Is(bitrate))
                                 .WithProperty("user_limit", p => p.Is(userLimit))
                                 .WithProperty("position", p => p.Is(position))
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
-                                .WithProperty("parent_id", p => p.Is(parentId.ToString()))
-                                .WithProperty("nsfw", p => p.Is(nsfw))
+                                .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                .WithProperty("nsfw", p => p.Is(isNsfw))
                                 .WithProperty("rtc_region", p => p.Is(rtcRegion))
                                 .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                         )
@@ -748,21 +876,82 @@ public class DiscordRestGuildAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
             );
 
-            var result = await api.CreateGuildChannelAsync
+            var result = await api.CreateGuildVoiceChannelAsync
             (
                 guildId,
                 name,
-                type,
-                topic,
                 bitrate,
                 userLimit,
-                position: position,
-                permissionOverwrites: permissionOverwrites,
-                parentID: parentId,
-                isNsfw: nsfw,
-                rtcRegion: rtcRegion,
-                videoQualityMode: videoQualityMode,
-                reason: reason
+                position,
+                permissionOverwrites,
+                parentID,
+                isNsfw,
+                rtcRegion,
+                videoQualityMode,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsStageRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var name = "dd";
+            var type = ChannelType.GuildStageVoice;
+            var bitrate = 4600;
+            var userLimit = 10;
+            var position = 1;
+            var permissionOverwrites = new List<IPermissionOverwrite>();
+            var parentID = DiscordSnowflake.New(1);
+            var isNsfw = true;
+            var rtcRegion = "abcd";
+            var videoQualityMode = VideoQualityMode.Full;
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("bitrate", p => p.Is(bitrate))
+                                .WithProperty("user_limit", p => p.Is(userLimit))
+                                .WithProperty("position", p => p.Is(position))
+                                .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                .WithProperty("nsfw", p => p.Is(isNsfw))
+                                .WithProperty("rtc_region", p => p.Is(rtcRegion))
+                                .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.CreateGuildStageChannelAsync
+            (
+                guildId,
+                name,
+                bitrate,
+                userLimit,
+                position,
+                permissionOverwrites,
+                parentID,
+                isNsfw,
+                rtcRegion,
+                videoQualityMode,
+                reason
             );
 
             ResultAssert.Successful(result);

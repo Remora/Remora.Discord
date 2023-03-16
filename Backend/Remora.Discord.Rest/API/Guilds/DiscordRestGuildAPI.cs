@@ -353,6 +353,162 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildTextChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildText,
+        topic: topic,
+        rateLimitPerUser: rateLimitPerUser,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildAnnouncementChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildAnnouncement,
+        bitrate: bitrate,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildForumChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
+        Optional<SortOrder?> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildForum,
+        topic: topic,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultReactionEmoji: defaultReactionEmoji,
+        availableTags: availableTags,
+        defaultSortOrder: defaultSortOrder,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildVoiceChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildVoice,
+        bitrate: bitrate,
+        userLimit: userLimit,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        rtcRegion: rtcRegion,
+        videoQualityMode: videoQualityMode,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildStageChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildStageVoice,
+        bitrate: bitrate,
+        userLimit: userLimit,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        rtcRegion: rtcRegion,
+        videoQualityMode: videoQualityMode,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
     public virtual Task<Result> ModifyGuildChannelPositionsAsync
     (
         Snowflake guildID,

@@ -227,6 +227,162 @@ public interface IDiscordRestGuildAPI
     );
 
     /// <summary>
+    /// Creates a new text channel for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="name">The name of the new channel.</param>
+    /// <param name="topic">The topic of the new channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
+    /// <param name="position">The sorting position of the new channel.</param>
+    /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
+    /// <param name="parentID">The ID of the parent category of the new channel.</param>
+    /// <param name="isNsfw">Whether the new channel is NSFW.</param>
+    /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> CreateGuildTextChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Creates a new announcement channel for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="name">The name of the new channel.</param>
+    /// <param name="bitrate">The bitrate of the new channel, if it is a voice channel.</param>
+    /// <param name="position">The sorting position of the new channel.</param>
+    /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
+    /// <param name="parentID">The ID of the parent category of the new channel.</param>
+    /// <param name="isNsfw">Whether the new channel is NSFW.</param>
+    /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> CreateGuildAnnouncementChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Creates a new forum channel for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="name">The name of the new channel.</param>
+    /// <param name="topic">The topic of the new channel.</param>
+    /// <param name="position">The sorting position of the new channel.</param>
+    /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
+    /// <param name="parentID">The ID of the parent category of the new channel.</param>
+    /// <param name="isNsfw">Whether the new channel is NSFW.</param>
+    /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
+    /// <param name="defaultReactionEmoji">The default emoji to show in reaction buttons of forum posts.</param>
+    /// <param name="availableTags">The tags that can be used in a forum channel.</param>
+    /// <param name="defaultSortOrder">The default sort order of posts.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> CreateGuildForumChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
+        Optional<SortOrder?> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Creates a new voice channel for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="name">The name of the new channel.</param>
+    /// <param name="bitrate">The bitrate of the new channel, if it is a voice channel.</param>
+    /// <param name="userLimit">The maximum number of users in the channel, if it is a voice channel.</param>
+    /// <param name="position">The sorting position of the new channel.</param>
+    /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
+    /// <param name="parentID">The ID of the parent category of the new channel.</param>
+    /// <param name="isNsfw">Whether the new channel is NSFW.</param>
+    /// <param name="rtcRegion">The ID of the voice region of the voice or stage channel.</param>
+    /// <param name="videoQualityMode">The video quality mode of the voice channel.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> CreateGuildVoiceChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Creates a new stage channel for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="name">The name of the new channel.</param>
+    /// <param name="bitrate">The bitrate of the new channel, if it is a voice channel.</param>
+    /// <param name="userLimit">The maximum number of users in the channel, if it is a voice channel.</param>
+    /// <param name="position">The sorting position of the new channel.</param>
+    /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
+    /// <param name="parentID">The ID of the parent category of the new channel.</param>
+    /// <param name="isNsfw">Whether the new channel is NSFW.</param>
+    /// <param name="rtcRegion">The ID of the voice region of the voice or stage channel.</param>
+    /// <param name="videoQualityMode">The video quality mode of the voice channel.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> CreateGuildStageChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Modifies the positions of a set of channels in the guild.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
