@@ -44,6 +44,7 @@ namespace Remora.Discord.Commands.Feedback.Services;
 /// </summary>
 [PublicAPI]
 public class FeedbackService
+    : IFeedbackService
 {
     private readonly ContextInjectionService _contextInjection;
     private readonly IDiscordRestChannelAPI _channelAPI;
