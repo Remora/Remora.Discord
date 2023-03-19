@@ -337,7 +337,7 @@ public enum DiscordError
     MaxGuildRolesReached = 30005,
 
     /// <summary>
-    /// Maximum number of webhooks reached (10).
+    /// Maximum number of webhooks reached (15).
     /// </summary>
     MaxWebhooksReached = 30007,
 
