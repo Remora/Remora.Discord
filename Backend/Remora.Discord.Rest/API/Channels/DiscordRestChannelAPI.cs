@@ -763,12 +763,12 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         CancellationToken ct = default
     )
     {
-        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !components.HasValue)
+        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !components.HasValue && !flags.HasValue)
         {
             return new InvalidOperationError
             (
-                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(components)}, or {nameof(embeds)} "
-                + "is required."
+                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(components)}, {nameof(embeds)}, "
+                + $"or {nameof(flags)} is required."
             );
         }
 

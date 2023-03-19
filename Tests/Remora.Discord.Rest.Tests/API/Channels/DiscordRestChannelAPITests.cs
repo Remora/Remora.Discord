@@ -1780,6 +1780,45 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        public async Task PerformsFlagsOnlyRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var messageId = DiscordSnowflake.New(1);
+            var flags = MessageFlags.SuppressEmbeds;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                    )
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("flags", p => p.Is((int)flags))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.EditMessageAsync
+            (
+                channelId,
+                messageId,
+                flags: flags
+            );
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
         public async Task PerformsNullableRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
