@@ -1,26 +1,24 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2023.1</VersionPrefix>
+        <VersionPrefix>2023.2</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Fix dependency injection exception for PaginationInteractions
-            Fix comment on (I)InteractionCommandContext
-            Fuck it, get rid of receive/send retries.
-            Remove the timeout policies from payload reception.
-            Don't log the exception message manually; let the logging system handle it.
-            Support GIF stickers.
-            BREAKING: Implement support for thread member pagination.
-            BREAKING: Fix optionality of IsEnabled.
-            BREAKING: Add additional role tags.
-            BREAKING: Implement role subscriptions.
-            BREAKING: Implement new error code and more error fields.
-            Implement support for AUDIT_LOG_ENTRY_CREATE.
-            Add new error code.
-            Add new error.
-            Add new message type.
-            BREAKING: Implement support for thread member pagination.
-            BREAKING: Implement "after" for audit log retrieval.
+            Update dependencies.
+            Add missing message flags
+            BREAKING: Implement guild member flags
+            Add new error codes.
+            Fix spelling error.
+            BREAKING: Add new channel field.
+            BREAKING: Update stage channel fields and permissions.
+            Add new message types.
+            BREAKING: Implement support for custom messages on action metadata.
+            BREAKING: Implement convenience methods based on parameter categorization.
+            BREAKING: Fix role permission computation
+            Implement access to store page assets.
+            Allow editing messages with just `flags`.
+            Implement a service that makes permission computation less of a hassle.
+            Reduce instance-level state in the gateway client.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

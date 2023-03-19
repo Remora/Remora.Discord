@@ -1,11 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>4.4.5</VersionPrefix>
+        <VersionPrefix>4.4.6</VersionPrefix>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Re-type IMessageComponentData.cs#Values to an optional list of strings
         </PackageReleaseNotes>
     </PropertyGroup>
 

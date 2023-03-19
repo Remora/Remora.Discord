@@ -1,13 +1,11 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>11.0.5</VersionPrefix>
+        <VersionPrefix>11.0.6</VersionPrefix>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Fuck it, get rid of receive/send retries.
-            Remove the timeout policies from payload reception.
-            Don't log the exception message manually; let the logging system handle it.
+            Reduce instance-level state in the gateway client.
         </PackageReleaseNotes>
     </PropertyGroup>
 

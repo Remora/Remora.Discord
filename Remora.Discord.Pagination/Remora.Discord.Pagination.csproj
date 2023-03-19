@@ -1,11 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>3.0.15</VersionPrefix>
+        <VersionPrefix>3.0.16</VersionPrefix>
         <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Fix dependency injection exception for PaginationInteractions
         </PackageReleaseNotes>
     </PropertyGroup>
 
