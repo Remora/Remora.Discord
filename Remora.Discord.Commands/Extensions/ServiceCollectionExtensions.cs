@@ -246,7 +246,8 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.TryAddSingleton<ExecutionEventCollectorService>();
 
-        serviceCollection.TryAddScoped<IFeedbackService, FeedbackService>();
+        serviceCollection.TryAddScoped<FeedbackService>();
+        serviceCollection.TryAddScoped<IFeedbackService>(s => s.GetRequiredService<FeedbackService>());
         serviceCollection.AddSingleton(FeedbackTheme.DiscordLight);
         serviceCollection.AddSingleton(FeedbackTheme.DiscordDark);
 
