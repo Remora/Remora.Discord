@@ -25,28 +25,410 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Feedback.Messages;
+using Remora.Discord.Commands.Feedback.Themes;
 using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Feedback.Services;
 
 /// <summary>
-///     Handles sending formatted messages to the users.
+/// Handles sending formatted messages to the users.
 /// </summary>
 public interface IFeedbackService
 {
     /// <summary>
-    ///     Sends a feedback message with the given content and color in the current context, optionally mentioning a target
-    ///     user.
+    /// Gets the theme used by the feedback service.
     /// </summary>
-    /// <param name="contents">The content of the feedback message.</param>
-    /// <param name="color">The color of the feedback message embed.</param>
-    /// <param name="target">The optional target user to mention in the feedback message.</param>
-    /// <param name="options">Optional custom message options.</param>
-    /// <param name="ct">Optional CancellationToken to cancel the operation.</param>
-    /// <returns>A Result containing a list of sent messages, or an error if the operation failed.</returns>
-    Task<Result<IReadOnlyList<IMessage>>> SendContextualContentAsync(
+    IFeedbackTheme Theme { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the service, in the context of an interaction, has edited the original
+    /// message.
+    /// </summary>
+    /// <remarks>This method always returns false in a message context.</remarks>
+    bool HasEditedOriginalMessage { get; }
+
+    /// <summary>
+    /// Send an informational message.
+    /// </summary>
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendInfoAsync
+    (
+        Snowflake channel,
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send an informational message wherever is most appropriate to the current context.
+    /// </summary>
+    /// <remarks>
+    /// This method will either create a followup message (if the context is an interaction) or a normal channel
+    /// message.
+    /// </remarks>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendContextualInfoAsync
+    (
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send an informational message to the given user as a direct message.
+    /// </summary>
+    /// <param name="user">The user to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendPrivateInfoAsync
+    (
+        Snowflake user,
+        string contents,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a positive, successful message.
+    /// </summary>
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendSuccessAsync
+    (
+        Snowflake channel,
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a positive, successful message wherever is most appropriate to the current context.
+    /// </summary>
+    /// <remarks>
+    /// This method will either create a followup message (if the context is an interaction) or a normal channel
+    /// message.
+    /// </remarks>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendContextualSuccessAsync
+    (
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a positive, successful message to the given user as a direct message.
+    /// </summary>
+    /// <param name="user">The user to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendPrivateSuccessAsync
+    (
+        Snowflake user,
+        string contents,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a neutral message.
+    /// </summary>
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendNeutralAsync
+    (
+        Snowflake channel,
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a neutral message wherever is most appropriate to the current context.
+    /// </summary>
+    /// <remarks>
+    /// This method will either create a followup message (if the context is an interaction) or a normal channel
+    /// message.
+    /// </remarks>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendContextualNeutralAsync
+    (
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a neutral message to the given user as a direct message.
+    /// </summary>
+    /// <param name="user">The user to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendPrivateNeutralAsync
+    (
+        Snowflake user,
+        string contents,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a warning message.
+    /// </summary>
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendWarningAsync
+    (
+        Snowflake channel,
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a warning message wherever is most appropriate to the current context.
+    /// </summary>
+    /// <remarks>
+    /// This method will either create a followup message (if the context is an interaction) or a normal channel
+    /// message.
+    /// </remarks>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendContextualWarningAsync
+    (
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a warning message to the given user as a direct message.
+    /// </summary>
+    /// <param name="user">The user to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendPrivateWarningAsync
+    (
+        Snowflake user,
+        string contents,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a negative error message.
+    /// </summary>
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendErrorAsync
+    (
+        Snowflake channel,
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a negative error message wherever is most appropriate to the current context.
+    /// </summary>
+    /// <remarks>
+    /// This method will either create a followup message (if the context is an interaction) or a normal channel
+    /// message.
+    /// </remarks>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendContextualErrorAsync
+    (
+        string contents,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a negative error message to the given user as a direct message.
+    /// </summary>
+    /// <param name="user">The user to send the message to.</param>
+    /// <param name="contents">The contents of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendPrivateErrorAsync
+    (
+        Snowflake user,
+        string contents,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a message.
+    /// </summary>
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="message">The message to send.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendMessageAsync
+    (
+        Snowflake channel,
+        FeedbackMessage message,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a contextual message.
+    /// </summary>
+    /// <param name="message">The message to send.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendContextualMessageAsync
+    (
+        FeedbackMessage message,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Send a private message.
+    /// </summary>
+    /// <param name="user">The user to send the message to.</param>
+    /// <param name="message">The message to send.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendPrivateMessageAsync
+    (
+        Snowflake user,
+        FeedbackMessage message,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Sends the given embed to the given channel.
+    /// </summary>
+    /// <param name="channel">The channel to send the embed to.</param>
+    /// <param name="embed">The embed.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IMessage>> SendEmbedAsync
+    (
+        Snowflake channel,
+        Embed embed,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Sends the given embed to current context.
+    /// </summary>
+    /// <param name="embed">The embed.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IMessage>> SendContextualEmbedAsync
+    (
+        Embed embed,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Sends the given embed to the given user in their private DM channel.
+    /// </summary>
+    /// <param name="user">The ID of the user to send the embed to.</param>
+    /// <param name="embed">The embed.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IMessage>> SendPrivateEmbedAsync
+    (
+        Snowflake user,
+        Embed embed,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Sends the given string as one or more sequential embeds, chunked into sets of 1024 characters.
+    /// </summary>
+    /// <param name="channel">The channel to send the embed to.</param>
+    /// <param name="contents">The contents to send.</param>
+    /// <param name="color">The embed colour.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendContentAsync
+    (
+        Snowflake channel,
         string contents,
         Color color,
         Snowflake? target = null,
@@ -55,15 +437,35 @@ public interface IFeedbackService
     );
 
     /// <summary>
-    ///     Sends a feedback message with the given content and color to the specified user via direct message.
+    /// Sends the given string as one or more sequential embeds, chunked into sets of 1024 characters.
     /// </summary>
-    /// <param name="user">The target user to receive the private message.</param>
-    /// <param name="contents">The content of the feedback message.</param>
-    /// <param name="color">The color of the feedback message embed.</param>
-    /// <param name="options">Optional custom message options.</param>
-    /// <param name="ct">Optional CancellationToken to cancel the operation.</param>
-    /// <returns>A Result containing a list of sent messages, or an error if the operation failed.</returns>
-    Task<Result<IReadOnlyList<IMessage>>> SendPrivateContentAsync(
+    /// <param name="contents">The contents to send.</param>
+    /// <param name="color">The embed colour.</param>
+    /// <param name="target">The target user to mention, if any.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendContextualContentAsync
+    (
+        string contents,
+        Color color,
+        Snowflake? target = null,
+        FeedbackMessageOptions? options = null,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Sends the given string as one or more sequential embeds to the given user over DM, chunked into sets of 1024
+    /// characters.
+    /// </summary>
+    /// <param name="user">The ID of the user to send the content to.</param>
+    /// <param name="contents">The contents to send.</param>
+    /// <param name="color">The embed colour.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result<IReadOnlyList<IMessage>>> SendPrivateContentAsync
+    (
         Snowflake user,
         string contents,
         Color color,
@@ -72,15 +474,16 @@ public interface IFeedbackService
     );
 
     /// <summary>
-    ///     Sends a message to the specified channel with optional content, embeds, and custom options.
+    /// Sends an unformatted message.
     /// </summary>
-    /// <param name="channel">The target channel to send the message.</param>
-    /// <param name="content">Optional content of the message.</param>
-    /// <param name="embeds">Optional list of embeds to include in the message.</param>
-    /// <param name="options">Optional custom message options.</param>
-    /// <param name="ct">Optional CancellationToken to cancel the operation.</param>
-    /// <returns>A Result containing the sent message, or an error if the operation failed.</returns>
-    Task<Result<IMessage>> SendAsync(
+    /// <param name="channel">The channel to send the message to.</param>
+    /// <param name="content">The content of the message.</param>
+    /// <param name="embeds">The embeds of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The created message.</returns>
+    Task<Result<IMessage>> SendAsync
+    (
         Snowflake channel,
         Optional<string> content = default,
         Optional<IReadOnlyList<IEmbed>> embeds = default,
@@ -89,14 +492,15 @@ public interface IFeedbackService
     );
 
     /// <summary>
-    ///     Sends a contextual message with optional content, embeds, and custom options.
+    /// Sends an unformatted message to the current context.
     /// </summary>
-    /// <param name="content">Optional content of the message.</param>
-    /// <param name="embeds">Optional list of embeds to include in the message.</param>
-    /// <param name="options">Optional custom message options.</param>
-    /// <param name="ct">Optional CancellationToken to cancel the operation.</param>
-    /// <returns>A Result containing the sent message, or an error if the operation failed.</returns>
-    Task<Result<IMessage>> SendContextualAsync(
+    /// <param name="content">The content of the message.</param>
+    /// <param name="embeds">The embeds of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The created message.</returns>
+    Task<Result<IMessage>> SendContextualAsync
+    (
         Optional<string> content = default,
         Optional<IReadOnlyList<IEmbed>> embeds = default,
         FeedbackMessageOptions? options = null,
@@ -104,15 +508,16 @@ public interface IFeedbackService
     );
 
     /// <summary>
-    ///     Sends a private message to the specified user with optional content, embeds, and custom options.
+    /// Sends an unformatted message to the given user in their private DM channel.
     /// </summary>
-    /// <param name="user">The target user to receive the private message.</param>
-    /// <param name="content">Optional content of the message.</param>
-    /// <param name="embeds">Optional list of embeds to include in the message.</param>
-    /// <param name="options">Optional custom message options.</param>
-    /// <param name="ct">Optional CancellationToken to cancel the operation.</param>
-    /// <returns>A Result containing the sent message, or an error if the operation failed.</returns>
-    Task<Result<IMessage>> SendPrivateAsync(
+    /// <param name="user">The user to send the message to.</param>
+    /// <param name="content">The content of the message.</param>
+    /// <param name="embeds">The embeds of the message.</param>
+    /// <param name="options">The message options to use.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The created message.</returns>
+    Task<Result<IMessage>> SendPrivateAsync
+    (
         Snowflake user,
         Optional<string> content = default,
         Optional<IReadOnlyList<IEmbed>> embeds = default,
@@ -121,8 +526,8 @@ public interface IFeedbackService
     );
 
     /// <summary>
-    ///     Checks if the current context is an InteractionContext.
+    /// Determines whether the feedback service has access to an interaction context.
     /// </summary>
-    /// <returns>True if the current context is an InteractionContext, false otherwise.</returns>
+    /// <returns>true if the feedback service has access to an interaction context; otherwise, false.</returns>
     bool HasInteractionContext();
 }
