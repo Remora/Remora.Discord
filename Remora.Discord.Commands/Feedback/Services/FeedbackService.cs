@@ -39,9 +39,7 @@ using Remora.Results;
 
 namespace Remora.Discord.Commands.Feedback.Services;
 
-/// <summary>
-/// Handles sending formatted messages to the users.
-/// </summary>
+/// <inheritdoc />
 [PublicAPI]
 public class FeedbackService
     : IFeedbackService

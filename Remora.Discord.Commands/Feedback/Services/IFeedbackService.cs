@@ -32,7 +32,7 @@ using Remora.Results;
 namespace Remora.Discord.Commands.Feedback.Services;
 
 /// <summary>
-///     Interface for a service that sends feedback messages to users.
+///     Handles sending formatted messages to the users.
 /// </summary>
 public interface IFeedbackService
 {
