@@ -58,6 +58,7 @@
     "template": [
       "default",
       "templates/discordfx/discordfx",
+      "templates/shortanchor/templates",
       "templates/custom_template"
     ],
     "postProcessors": [],
