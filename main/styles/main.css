@@ -253,3 +253,21 @@ article li > ul
     background-repeat: no-repeat;
     background: url(down-arrow.svg);
 }
+
+/* Style Mermaid diagrams */
+:root {
+    --mermaid-bg-color: #18191c
+}
+
+pre:has(code.lang-mermaid),
+code.lang-mermaid {
+    background-color: unset;
+    padding: unset;
+    border-radius: unset;
+}
+
+/* code.lang-mermaid svg {
+    background-color: var(--mermaid-bg-color);
+    padding: 8px;
+    border-radius: 4px;
+} */
