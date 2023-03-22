@@ -158,8 +158,8 @@ reflect reality. Normally, this isn't a problem, but be aware of it and program 
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Extensions/Services/PermissionComputationService.cs/#L51">View Source</a>
   </span>
-  <a id="Remora_Discord_Extensions_Services_PermissionComputationService__ctor_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.#ctor*"></a>
-  <h4 id="Remora_Discord_Extensions_Services_PermissionComputationService__ctor_Remora_Discord_Commands_Services_ContextInjectionService_Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_Remora_Discord_API_Abstractions_Rest_IDiscordRestChannelAPI_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.#ctor(Remora.Discord.Commands.Services.ContextInjectionService,Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI,Remora.Discord.API.Abstractions.Rest.IDiscordRestChannelAPI)">PermissionComputationService(ContextInjectionService, IDiscordRestGuildAPI, IDiscordRestChannelAPI)</h4>
+  <a id="Remora_Discord_Extensions_Services_PermissionComputationService" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.#ctor*"></a>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.#ctor(Remora.Discord.Commands.Services.ContextInjectionService,Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI,Remora.Discord.API.Abstractions.Rest.IDiscordRestChannelAPI)">PermissionComputationService(ContextInjectionService, IDiscordRestGuildAPI, IDiscordRestChannelAPI)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Remora.Discord.Extensions.Services.PermissionComputationService.html">PermissionComputationService</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -197,7 +197,7 @@ reflect reality. Normally, this isn't a problem, but be aware of it and program 
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Extensions_Services_PermissionComputationService__ctor_Remora_Discord_Commands_Services_ContextInjectionService_Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_Remora_Discord_API_Abstractions_Rest_IDiscordRestChannelAPI__remarks">Remarks</h5>
+  <h5 id="_ctor_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Note that since this service typically accesses data via the Discord API in order to gather enough information to
 perform its calculations, caching could result in it taking some time for the values produced by this service to
 reflect reality. Normally, this isn't a problem, but be aware of it and program accordingly.</p>
@@ -211,8 +211,8 @@ reflect reality. Normally, this isn't a problem, but be aware of it and program 
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Extensions/Services/PermissionComputationService.cs/#L107">View Source</a>
   </span>
-  <a id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeContextualMemberPermissions_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeContextualMemberPermissions*"></a>
-  <h4 id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeContextualMemberPermissions_Remora_Rest_Core_Snowflake_System_Boolean_System_Threading_CancellationToken_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeContextualMemberPermissions(Remora.Rest.Core.Snowflake,System.Boolean,System.Threading.CancellationToken)">ComputeContextualMemberPermissions(Snowflake, bool, CancellationToken)</h4>
+  <a id="Remora_Discord_Extensions_Services_PermissionComputationService" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeContextualMemberPermissions*"></a>
+  <h4 id="ComputeContextualMemberPermissions_1" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeContextualMemberPermissions(Remora.Rest.Core.Snowflake,System.Boolean,System.Threading.CancellationToken)">ComputeContextualMemberPermissions(Snowflake, bool, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Computes the effective permissions for the user with the given ID in the context of the current operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -266,7 +266,7 @@ reflect reality. Normally, this isn't a problem, but be aware of it and program 
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeContextualMemberPermissions_Remora_Rest_Core_Snowflake_System_Boolean_System_Threading_CancellationToken__remarks">Remarks</h5>
+  <h5 id="ComputeContextualMemberPermissions_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method uses the guild and channel ID from an available <a class="xref" href="Remora.Discord.Commands.Contexts.IOperationContext.html">IOperationContext</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -292,8 +292,8 @@ reflect reality. Normally, this isn't a problem, but be aware of it and program 
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Extensions/Services/PermissionComputationService.cs/#L172">View Source</a>
   </span>
-  <a id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeContextualRolePermissions_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeContextualRolePermissions*"></a>
-  <h4 id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeContextualRolePermissions_Remora_Rest_Core_Snowflake_System_Boolean_System_Threading_CancellationToken_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeContextualRolePermissions(Remora.Rest.Core.Snowflake,System.Boolean,System.Threading.CancellationToken)">ComputeContextualRolePermissions(Snowflake, bool, CancellationToken)</h4>
+  <a id="Remora_Discord_Extensions_Services_PermissionComputationService" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeContextualRolePermissions*"></a>
+  <h4 id="ComputeContextualRolePermissions_1" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeContextualRolePermissions(Remora.Rest.Core.Snowflake,System.Boolean,System.Threading.CancellationToken)">ComputeContextualRolePermissions(Snowflake, bool, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Computes the effective permissions for the role with the given ID in the context of the current operation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -347,7 +347,7 @@ reflect reality. Normally, this isn't a problem, but be aware of it and program 
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeContextualRolePermissions_Remora_Rest_Core_Snowflake_System_Boolean_System_Threading_CancellationToken__remarks">Remarks</h5>
+  <h5 id="ComputeContextualRolePermissions_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method uses the guild and channel ID from an available <a class="xref" href="Remora.Discord.Commands.Contexts.IOperationContext.html">IOperationContext</a>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -373,8 +373,8 @@ reflect reality. Normally, this isn't a problem, but be aware of it and program 
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Extensions/Services/PermissionComputationService.cs/#L64">View Source</a>
   </span>
-  <a id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeMemberPermissions_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeMemberPermissions*"></a>
-  <h4 id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeMemberPermissions_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_System_Nullable_Remora_Rest_Core_Snowflake__System_Threading_CancellationToken_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeMemberPermissions(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,System.Nullable{Remora.Rest.Core.Snowflake},System.Threading.CancellationToken)">ComputeMemberPermissions(Snowflake, Snowflake, Snowflake?, CancellationToken)</h4>
+  <a id="Remora_Discord_Extensions_Services_PermissionComputationService" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeMemberPermissions*"></a>
+  <h4 id="ComputeMemberPermissions_1" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeMemberPermissions(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,System.Nullable{Remora.Rest.Core.Snowflake},System.Threading.CancellationToken)">ComputeMemberPermissions(Snowflake, Snowflake, Snowflake?, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Computes the effective permissions for the user with the given ID.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -434,7 +434,7 @@ reflect reality. Normally, this isn't a problem, but be aware of it and program 
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeMemberPermissions_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_System_Nullable_Remora_Rest_Core_Snowflake__System_Threading_CancellationToken__remarks">Remarks</h5>
+  <h5 id="ComputeMemberPermissions_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p><code data-dev-comment-type="paramref" class="paramref">channelID</code> controls whether permission overwrite in any particular channel are taken into
 account. If it is omitted, the computed permissions are valid anywhere in the server where a permission
 overwrite does not otherwise modify the permissions.</p>
@@ -448,8 +448,8 @@ parameter to an appropriate value.</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Extensions/Services/PermissionComputationService.cs/#L135">View Source</a>
   </span>
-  <a id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeRolePermissions_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeRolePermissions*"></a>
-  <h4 id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeRolePermissions_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_System_Nullable_Remora_Rest_Core_Snowflake__System_Threading_CancellationToken_" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeRolePermissions(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,System.Nullable{Remora.Rest.Core.Snowflake},System.Threading.CancellationToken)">ComputeRolePermissions(Snowflake, Snowflake, Snowflake?, CancellationToken)</h4>
+  <a id="Remora_Discord_Extensions_Services_PermissionComputationService" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeRolePermissions*"></a>
+  <h4 id="ComputeRolePermissions_1" data-uid="Remora.Discord.Extensions.Services.PermissionComputationService.ComputeRolePermissions(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,System.Nullable{Remora.Rest.Core.Snowflake},System.Threading.CancellationToken)">ComputeRolePermissions(Snowflake, Snowflake, Snowflake?, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Computes the effective permissions for the role with the given ID.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -509,7 +509,7 @@ parameter to an appropriate value.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Extensions_Services_PermissionComputationService_ComputeRolePermissions_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_System_Nullable_Remora_Rest_Core_Snowflake__System_Threading_CancellationToken__remarks">Remarks</h5>
+  <h5 id="ComputeRolePermissions_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p><code data-dev-comment-type="paramref" class="paramref">channelID</code> controls whether permission overwrite in any particular channel are taken into
 account. If it is omitted, the computed permissions are valid anywhere in the server where a permission
 overwrite does not otherwise modify the permissions.</p>

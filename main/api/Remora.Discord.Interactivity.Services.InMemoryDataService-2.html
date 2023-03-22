@@ -180,8 +180,8 @@ type such as classes, structures, or records. If the data type implements <a cla
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L49">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_Instance_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.Instance*"></a>
-  <h4 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_Instance" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.Instance">Instance</h4>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.Instance*"></a>
+  <h4 id="Instance" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.Instance">Instance</h4>
   <div class="markdown level1 summary"><p>Gets the singleton instance of this service.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -204,7 +204,7 @@ type such as classes, structures, or records. If the data type implements <a cla
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_Instance_remarks">Remarks</h5>
+  <h5 id="Instance_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
 type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
 <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>
@@ -218,8 +218,8 @@ type such as classes, structures, or records. If the data type implements <a cla
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L289">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_DisposeAsync_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.DisposeAsync*"></a>
-  <h4 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_DisposeAsync" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.DisposeAsync">DisposeAsync()</h4>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.DisposeAsync*"></a>
+  <h4 id="DisposeAsync" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.DisposeAsync">DisposeAsync()</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -241,7 +241,7 @@ type such as classes, structures, or records. If the data type implements <a cla
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_DisposeAsync_remarks">Remarks</h5>
+  <h5 id="DisposeAsync_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
 type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
 <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>
@@ -253,8 +253,8 @@ type such as classes, structures, or records. If the data type implements <a cla
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L88">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_LeaseDataAsync_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.LeaseDataAsync*"></a>
-  <h4 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_LeaseDataAsync__0_System_Threading_CancellationToken_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.LeaseDataAsync(`0,System.Threading.CancellationToken)">LeaseDataAsync(TKey, CancellationToken)</h4>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.LeaseDataAsync*"></a>
+  <h4 id="LeaseDataAsync_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.LeaseDataAsync(`0,System.Threading.CancellationToken)">LeaseDataAsync(TKey, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Leases the data associated with the given key, blocking until a lock can be taken on the data object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -302,7 +302,7 @@ type such as classes, structures, or records. If the data type implements <a cla
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_LeaseDataAsync__0_System_Threading_CancellationToken__remarks">Remarks</h5>
+  <h5 id="LeaseDataAsync_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The semaphore returned by this method has the lock held on it and must be released once the caller is done with
 the object.</p>
 </div>
@@ -313,8 +313,8 @@ the object.</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L116">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_RentDataAsync_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.RentDataAsync*"></a>
-  <h4 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_RentDataAsync__0_System_Threading_CancellationToken_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.RentDataAsync(`0,System.Threading.CancellationToken)">RentDataAsync(TKey, CancellationToken)</h4>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.RentDataAsync*"></a>
+  <h4 id="RentDataAsync_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.RentDataAsync(`0,System.Threading.CancellationToken)">RentDataAsync(TKey, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Rents the data associated with the given key, blocking until a lock can be taken on the data object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -363,7 +363,7 @@ public Task&lt;Result&lt;(SemaphoreSlim Semaphore, TData Data)&gt;&gt; RentDataA
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_RentDataAsync__0_System_Threading_CancellationToken__remarks">Remarks</h5>
+  <h5 id="RentDataAsync_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The semaphore returned by this method has the lock held on it and must be released once the caller is done with
 the object.</p>
 </div>
@@ -374,8 +374,8 @@ the object.</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L68">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryAddData_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryAddData*"></a>
-  <h4 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryAddData__0__1_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryAddData(`0,`1)">TryAddData(TKey, TData)</h4>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryAddData*"></a>
+  <h4 id="TryAddData_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryAddData(`0,`1)">TryAddData(TKey, TData)</h4>
   <div class="markdown level1 summary"><p>Inserts a new data object into the service.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -423,7 +423,7 @@ the object.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryAddData__0__1__remarks">Remarks</h5>
+  <h5 id="TryAddData_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>After inserting the value, any further access to the data is invalid. If you come from a C++ or Rust background,
 consider the value as having been moved into this method.</p>
 </div>
@@ -434,8 +434,8 @@ consider the value as having been moved into this method.</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L145">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryRemoveData_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveData*"></a>
-  <h4 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryRemoveData__0_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveData(`0)">TryRemoveData(TKey)</h4>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveData*"></a>
+  <h4 id="TryRemoveData_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveData(`0)">TryRemoveData(TKey)</h4>
   <div class="markdown level1 summary"><p>Removes the data associated with the given key. This method does nothing if no data is associated with
 the given key.</p>
 </div>
@@ -478,7 +478,7 @@ the given key.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryRemoveData__0__remarks">Remarks</h5>
+  <h5 id="TryRemoveData_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
 type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
 <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>
@@ -490,8 +490,8 @@ type such as classes, structures, or records. If the data type implements <a cla
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L190">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryRemoveDataAsync_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveDataAsync*"></a>
-  <h4 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryRemoveDataAsync__0_" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveDataAsync(`0)">TryRemoveDataAsync(TKey)</h4>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveDataAsync*"></a>
+  <h4 id="TryRemoveDataAsync_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveDataAsync(`0)">TryRemoveDataAsync(TKey)</h4>
   <div class="markdown level1 summary"><p>Removes the data associated with the given key. This method does nothing if no data is associated with
 the given key.</p>
 </div>
@@ -534,7 +534,7 @@ the given key.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryRemoveDataAsync__0__remarks">Remarks</h5>
+  <h5 id="TryRemoveDataAsync_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
 type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
 <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>

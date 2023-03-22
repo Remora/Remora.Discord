@@ -150,8 +150,8 @@ public static class ServiceCollectionExtensions</code></pre>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching.Redis/Extensions/ServiceCollectionExtensions.cs/#L65">View Source</a>
   </span>
-  <a id="Remora_Discord_Caching_Redis_Extensions_ServiceCollectionExtensions_AddDiscordRedisCaching_" data-uid="Remora.Discord.Caching.Redis.Extensions.ServiceCollectionExtensions.AddDiscordRedisCaching*"></a>
-  <h4 id="Remora_Discord_Caching_Redis_Extensions_ServiceCollectionExtensions_AddDiscordRedisCaching_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Microsoft_Extensions_Caching_StackExchangeRedis_RedisCacheOptions__" data-uid="Remora.Discord.Caching.Redis.Extensions.ServiceCollectionExtensions.AddDiscordRedisCaching(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.Caching.StackExchangeRedis.RedisCacheOptions})">AddDiscordRedisCaching(IServiceCollection, Action&lt;RedisCacheOptions&gt;?)</h4>
+  <a id="Remora_Discord_Caching_Redis_Extensions_ServiceCollectionExtensions" data-uid="Remora.Discord.Caching.Redis.Extensions.ServiceCollectionExtensions.AddDiscordRedisCaching*"></a>
+  <h4 id="AddDiscordRedisCaching_1" data-uid="Remora.Discord.Caching.Redis.Extensions.ServiceCollectionExtensions.AddDiscordRedisCaching(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.Caching.StackExchangeRedis.RedisCacheOptions})">AddDiscordRedisCaching(IServiceCollection, Action&lt;RedisCacheOptions&gt;?)</h4>
   <div class="markdown level1 summary"><p>Adds a redis-backed caching implementations of various API types, overriding the normally non-caching versions.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -200,7 +200,7 @@ default connection of localhost:6379 will be used.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Caching_Redis_Extensions_ServiceCollectionExtensions_AddDiscordRedisCaching_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Microsoft_Extensions_Caching_StackExchangeRedis_RedisCacheOptions___remarks">Remarks</h5>
+  <h5 id="AddDiscordRedisCaching_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The cache uses a run-of-the-mill <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.caching.distributed.idistributedcache">IDistributedCache</a>. Cache entry options for any cached type can be
 configured using <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptions-1">IOptions&lt;TOptions&gt;</a>.</p>
 <p>When choosing a cache implementation, it should be noted that choosing this will override the backing store for

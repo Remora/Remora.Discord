@@ -150,8 +150,8 @@ public class DiscordGatewayClientOptions</code></pre>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L90">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_CommandBurstRate_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.CommandBurstRate*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_CommandBurstRate" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.CommandBurstRate">CommandBurstRate</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.CommandBurstRate*"></a>
+  <h4 id="CommandBurstRate" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.CommandBurstRate">CommandBurstRate</h4>
   <div class="markdown level1 summary"><p>Gets or sets the number of commands that may be sent as a burst within the gateway's rate limit window. A burst
 of 60, for example, would allow 60 commands to be sent within the first time slot in the window while the
 remaining commands allowed within the window would be evenly spaced across the remaining slots.</p>
@@ -176,7 +176,7 @@ remaining commands allowed within the window would be evenly spaced across the r
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_CommandBurstRate_remarks">Remarks</h5>
+  <h5 id="CommandBurstRate_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The default value is relatively conservative, and can most likely be increased to at least 100. You should,
 however, avoid setting this at or near the actual rate limit.</p>
 </div>
@@ -187,8 +187,8 @@ however, avoid setting this at or near the actual rate limit.</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L53">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_ConnectionProperties_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.ConnectionProperties*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_ConnectionProperties" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.ConnectionProperties">ConnectionProperties</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.ConnectionProperties*"></a>
+  <h4 id="ConnectionProperties" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.ConnectionProperties">ConnectionProperties</h4>
   <div class="markdown level1 summary"><p>Gets or sets the connection properties that identify the connecting client or library code. By default,
 this is the information about Remora.Discord itself. You may, optionally, override this to present your
 own information.</p>
@@ -220,8 +220,8 @@ own information.</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L104">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_HeartbeatHeadroom_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.HeartbeatHeadroom*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_HeartbeatHeadroom" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.HeartbeatHeadroom">HeartbeatHeadroom</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.HeartbeatHeadroom*"></a>
+  <h4 id="HeartbeatHeadroom" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.HeartbeatHeadroom">HeartbeatHeadroom</h4>
   <div class="markdown level1 summary"><p>Gets or sets the number of extra rate limit slots that should be taken up by the heartbeat function (beyond the
 ones strictly required based on the heartbeat interval and rate limit window).</p>
 <p>For example, if the rate limit window is 60 seconds, and the heartbeat interval is 2 seconds, the number of
@@ -258,11 +258,11 @@ arbitrarily picked, but should suffice for most use cases.</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L41">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_HeartbeatSafetyMargin_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.HeartbeatSafetyMargin*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_HeartbeatSafetyMargin" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.HeartbeatSafetyMargin">HeartbeatSafetyMargin</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.HeartbeatSafetyMargin*"></a>
+  <h4 id="HeartbeatSafetyMargin" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.HeartbeatSafetyMargin">HeartbeatSafetyMargin</h4>
   <div class="markdown level1 summary"><p>Gets or sets the safety margin for the heartbeat interval. The client will aim to send a heartbeat within
 this time before the actual interval. The actual safety margin will never exceed 10% of the total interval,
-and will never be less than <a class="xref" href="Remora.Discord.Gateway.DiscordGatewayClientOptions.html#Remora_Discord_Gateway_DiscordGatewayClientOptions_MinimumSafetyMargin">MinimumSafetyMargin</a>.</p>
+and will never be less than <a class="xref" href="Remora.Discord.Gateway.DiscordGatewayClientOptions.html#MinimumSafetyMargin">MinimumSafetyMargin</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -291,8 +291,8 @@ and will never be less than <a class="xref" href="Remora.Discord.Gateway.Discord
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L79">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_Intents_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.Intents*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_Intents" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.Intents">Intents</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.Intents*"></a>
+  <h4 id="Intents" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.Intents">Intents</h4>
   <div class="markdown level1 summary"><p>Gets or sets the gateway intents to subscribe to. By default, this is a limited set of intents (guilds and
 their messages).</p>
 </div>
@@ -323,8 +323,8 @@ their messages).</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L62">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_LargeThreshold_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.LargeThreshold*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_LargeThreshold" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.LargeThreshold">LargeThreshold</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.LargeThreshold*"></a>
+  <h4 id="LargeThreshold" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.LargeThreshold">LargeThreshold</h4>
   <div class="markdown level1 summary"><p>Gets or sets the large threshold for the gateway.
 For guilds with members that exceed the threshold, offline members will be omitted.</p>
 </div>
@@ -348,7 +348,7 @@ For guilds with members that exceed the threshold, offline members will be omitt
       </tr>
     </tbody>
   </table>
-  <h5 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_LargeThreshold_remarks">Remarks</h5>
+  <h5 id="LargeThreshold_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Defaults to 50, max of 250.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -358,8 +358,8 @@ For guilds with members that exceed the threshold, offline members will be omitt
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L46">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_MinimumSafetyMargin_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.MinimumSafetyMargin*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_MinimumSafetyMargin" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.MinimumSafetyMargin">MinimumSafetyMargin</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.MinimumSafetyMargin*"></a>
+  <h4 id="MinimumSafetyMargin" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.MinimumSafetyMargin">MinimumSafetyMargin</h4>
   <div class="markdown level1 summary"><p>Gets or sets the minimum safety margin.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -389,8 +389,8 @@ For guilds with members that exceed the threshold, offline members will be omitt
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L73">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_Presence_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.Presence*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_Presence" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.Presence">Presence</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.Presence*"></a>
+  <h4 id="Presence" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.Presence">Presence</h4>
   <div class="markdown level1 summary"><p>Gets or sets the initial presence when the bot connects.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -420,8 +420,8 @@ For guilds with members that exceed the threshold, offline members will be omitt
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L68">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_ShardIdentification_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.ShardIdentification*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_ShardIdentification" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.ShardIdentification">ShardIdentification</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.ShardIdentification*"></a>
+  <h4 id="ShardIdentification" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.ShardIdentification">ShardIdentification</h4>
   <div class="markdown level1 summary"><p>Gets or sets the shard identification information. This is used to connect the client as a sharded
 connection, where events are distributed over a set of active connections.</p>
 </div>
@@ -454,8 +454,8 @@ connection, where events are distributed over a set of active connections.</p>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClientOptions.cs/#L111">View Source</a>
   </span>
-  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions_GetTrueHeartbeatSafetyMargin_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.GetTrueHeartbeatSafetyMargin*"></a>
-  <h4 id="Remora_Discord_Gateway_DiscordGatewayClientOptions_GetTrueHeartbeatSafetyMargin_System_TimeSpan_" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.GetTrueHeartbeatSafetyMargin(System.TimeSpan)">GetTrueHeartbeatSafetyMargin(TimeSpan)</h4>
+  <a id="Remora_Discord_Gateway_DiscordGatewayClientOptions" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.GetTrueHeartbeatSafetyMargin*"></a>
+  <h4 id="GetTrueHeartbeatSafetyMargin_1" data-uid="Remora.Discord.Gateway.DiscordGatewayClientOptions.GetTrueHeartbeatSafetyMargin(System.TimeSpan)">GetTrueHeartbeatSafetyMargin(TimeSpan)</h4>
   <div class="markdown level1 summary"><p>Calculates the true heartbeat safety margin, based on the heartbeat interval.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
