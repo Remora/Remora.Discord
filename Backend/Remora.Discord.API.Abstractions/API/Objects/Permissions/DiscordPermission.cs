@@ -188,9 +188,9 @@ public enum DiscordPermission
     ManageWebhooks = 29,
 
     /// <summary>
-    /// Allows management and editing of emojis and stickers.
+    /// Allows management and editing of emojis, stickers, and soundboard sounds.
     /// </summary>
-    ManageEmojisAndStickers = 30,
+    ManageGuildExpressions = 30,
 
     /// <summary>
     /// Allows usage of slash commands.
@@ -241,5 +241,15 @@ public enum DiscordPermission
     /// Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from
     /// speaking in voice and stage channels.
     /// </summary>
-    ModerateMembers = 40
+    ModerateMembers = 40,
+
+    /// <summary>
+    /// Allows for viewing role subscription insights.
+    /// </summary>
+    ViewCreatorMonetizationAnalytics = 41,
+
+    /// <summary>
+    /// Allows for using soundboard in a voice channel.
+    /// </summary>
+    UseSoundboard = 42
 }

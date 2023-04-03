@@ -104,5 +104,8 @@ public enum DiscordVoicePermission
     UseExternalStickers = DiscordPermission.UseExternalStickers,
 
     /// <inheritdoc cref="DiscordPermission.UseEmbeddedActivities"/>
-    UseEmbeddedActivities = DiscordPermission.UseEmbeddedActivities
+    UseEmbeddedActivities = DiscordPermission.UseEmbeddedActivities,
+
+    /// <inheritdoc cref="DiscordPermission.UseSoundboard"/>
+    UseSoundboard = DiscordPermission.UseSoundboard
 }
