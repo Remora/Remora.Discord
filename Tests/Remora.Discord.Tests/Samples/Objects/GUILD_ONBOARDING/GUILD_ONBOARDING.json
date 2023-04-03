@@ -1,0 +1,47 @@
+{
+  "guild_id": "999999999999999999",
+  "prompts": [
+    {
+      "id": "999999999999999999",
+      "title": "none",
+      "options": [
+        {
+          "id": "999999999999999999",
+          "title": "none",
+          "description": "",
+          "emoji": {
+            "id": "999999999999999999",
+            "name": "none",
+            "animated": false
+          },
+          "role_ids": [],
+          "channel_ids": [
+            "999999999999999999"
+          ]
+        },
+        {
+          "id": "999999999999999999",
+          "title": "none",
+          "description": "none",
+          "emoji": {
+            "id": null,
+            "name": "😀",
+            "animated": false
+          },
+          "role_ids": [
+            "999999999999999999"
+          ],
+          "channel_ids": []
+        }
+      ],
+      "single_select": false,
+      "required": false,
+      "in_onboarding": true,
+      "type": 0
+    }
+  ],
+  "default_channel_ids": [
+    "999999999999999999"
+  ],
+  "enabled": true
+}

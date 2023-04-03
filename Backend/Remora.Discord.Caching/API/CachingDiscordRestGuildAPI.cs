@@ -1094,6 +1094,33 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
     }
 
     /// <inheritdoc />
+    public async Task<Result<IGuildOnboarding>> GetGuildOnboardingAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        var key = new KeyHelpers.GuildOnboardingCacheKey(guildID);
+        var cacheResult = await _cacheService.TryGetValueAsync<IGuildOnboarding>(key, ct);
+
+        if (cacheResult.IsSuccess)
+        {
+            return cacheResult;
+        }
+
+        var getResult = await _actual.GetGuildOnboardingAsync(guildID, ct);
+        if (!getResult.IsSuccess)
+        {
+            return getResult;
+        }
+
+        var guildOnboarding = getResult.Entity;
+        await _cacheService.CacheAsync(key, guildOnboarding, ct);
+
+        return getResult;
+    }
+
+    /// <inheritdoc />
     public async Task<Result<IReadOnlyList<IGuildMember>>> SearchGuildMembersAsync
     (
         Snowflake guildID,

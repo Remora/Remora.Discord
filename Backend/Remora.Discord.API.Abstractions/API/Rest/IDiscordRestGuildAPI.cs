@@ -978,6 +978,18 @@ public interface IDiscordRestGuildAPI
     );
 
     /// <summary>
+    /// Gets the guild's onboarding flow.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IGuildOnboarding>> GetGuildOnboardingAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Modifies the voice state of the current user.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>

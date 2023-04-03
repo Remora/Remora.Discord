@@ -1,0 +1,14 @@
+{
+  "id": "999999999999999999",
+  "title": "none",
+  "description": null,
+  "emoji": {
+    "id": "999999999999999999",
+    "name": "none",
+    "animated": false
+  },
+  "role_ids": [],
+  "channel_ids": [
+    "999999999999999999"
+  ]
+}

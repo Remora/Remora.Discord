@@ -1374,6 +1374,21 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc/>
+    public virtual Task<Result<IGuildOnboarding>> GetGuildOnboardingAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IGuildOnboarding>
+        (
+            $"guilds/{guildID}/onboarding",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc/>
     public virtual Task<Result> ModifyCurrentUserVoiceStateAsync
     (
         Snowflake guildID,
