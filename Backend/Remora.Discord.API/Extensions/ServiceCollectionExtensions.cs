@@ -668,6 +668,18 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IWelcomeScreen, WelcomeScreen>();
         options.AddDataObjectConverter<IWelcomeScreenChannel, WelcomeScreenChannel>();
         options.AddDataObjectConverter<IGuildThreadQueryResponse, GuildThreadQueryResponse>();
+        options.AddDataObjectConverter<IGuildOnboarding, GuildOnboarding>()
+            .WithPropertyName(o => o.DefaultChannelIDs, "default_channel_ids")
+            .WithPropertyName(o => o.IsEnabled, "enabled");
+
+        options.AddDataObjectConverter<IOnboardingPrompt, OnboardingPrompt>()
+            .WithPropertyName(p => p.IsSingleSelect, "single_select")
+            .WithPropertyName(p => p.IsRequired, "required")
+            .WithPropertyName(p => p.IsInOnboarding, "in_onboarding");
+
+        options.AddDataObjectConverter<IPromptOption, PromptOption>()
+            .WithPropertyName(o => o.ChannelIDs, "channel_ids")
+            .WithPropertyName(o => o.RoleIDs, "role_ids");
 
         return options;
     }
