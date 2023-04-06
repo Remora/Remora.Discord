@@ -849,6 +849,11 @@ public enum DiscordError
     UploadedFileNotFound = 50146,
 
     /// <summary>
+    /// Cannot delete guild subscription integration.
+    /// </summary>
+    CannotDeleteGuildSubscriptionIntegration = 50163,
+
+    /// <summary>
     /// You do not have permission to send this sticker.
     /// </summary>
     MissingPermissionToSendSticker = 50600,
