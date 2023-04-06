@@ -79,9 +79,14 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
             return new ArgumentOutOfRangeError(nameof(name), "Names must be between 1 and 80 characters");
         }
 
-        if (name.Equals("clyde", StringComparison.InvariantCultureIgnoreCase))
+        if (name.Contains("clyde", StringComparison.InvariantCultureIgnoreCase))
         {
-            return new NotSupportedError("Names cannot be \"clyde\".");
+            return new NotSupportedError("Names cannot contain \"clyde\".");
+        }
+
+        if (name.Contains("discord", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return new NotSupportedError("Names cannot contain \"discord\".");
         }
 
         var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
