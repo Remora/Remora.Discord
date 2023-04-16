@@ -30,6 +30,8 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.HighPerformance;
+using CommunityToolkit.HighPerformance.Buffers;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -227,47 +229,40 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
         await using var memoryStream = new MemoryStream();
 
-        var buffer = ArrayPool<byte>.Shared.Rent(4096);
+        using var bufferWriter = new ArrayPoolBufferWriter<byte>(); // Backed by the ArrayPool; the only allocation is the class itself
 
-        try
+        var buffer = bufferWriter.GetMemory(4096);
+
+        ValueWebSocketReceiveResult result;
+
+        do
         {
-            WebSocketReceiveResult result;
+            result = await _clientWebSocket.ReceiveAsync(buffer, ct);
 
-            do
+            if (_clientWebSocket.CloseStatus.HasValue)
             {
-                result = await _clientWebSocket.ReceiveAsync(buffer, ct);
-
-                if (result.CloseStatus.HasValue)
+                if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
                 {
-                    if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)result.CloseStatus))
-                    {
-                        return new GatewayDiscordError((GatewayCloseStatus)result.CloseStatus);
-                    }
-
-                    return new GatewayWebSocketError(result.CloseStatus.Value);
+                    return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus);
                 }
 
-                await memoryStream.WriteAsync(buffer.AsMemory(0, result.Count), ct);
-            }
-            while (!result.EndOfMessage);
-
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
-            if (payload is null)
-            {
-                return new NotSupportedError
-                (
-                    "The received payload deserialized as a null value."
-                );
+                return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
             }
 
-            return Result<IPayload>.FromSuccess(payload);
+            bufferWriter.Advance(result.Count);
         }
-        finally
+        while (!result.EndOfMessage);
+
+        var payload = JsonSerializer.Deserialize<IPayload>(bufferWriter.WrittenSpan, _jsonOptions);
+        if (payload is null)
         {
-            ArrayPool<byte>.Shared.Return(buffer);
+            return new NotSupportedError
+            (
+                "The received payload deserialized as a null value."
+            );
         }
+
+        return Result<IPayload>.FromSuccess(payload);
     }
 
     /// <inheritdoc/>
