@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="CommunityToolkit.HighPerformance" />
       <PackageReference Include="Remora.Extensions.Options.Immutable" />
       <PackageReference Include="System.Threading.Channels" />
     </ItemGroup>
