@@ -227,8 +227,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The socket was not open.");
         }
 
-        await using var memoryStream = new MemoryStream();
-
         using var bufferWriter = new ArrayPoolBufferWriter<byte>(); // Backed by the ArrayPool; the only allocation is the class itself
 
         var buffer = bufferWriter.GetMemory(4096);
