@@ -229,12 +229,11 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
         using var bufferWriter = new ArrayPoolBufferWriter<byte>(); // Backed by the ArrayPool; the only allocation is the class itself
 
-        var buffer = bufferWriter.GetMemory(4096);
-
         ValueWebSocketReceiveResult result;
 
         do
         {
+            var buffer = bufferWriter.GetMemory(4096);
             result = await _clientWebSocket.ReceiveAsync(buffer, ct);
 
             if (_clientWebSocket.CloseStatus.HasValue)
