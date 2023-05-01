@@ -849,9 +849,34 @@ public enum DiscordError
     UploadedFileNotFound = 50146,
 
     /// <summary>
-    /// Cannot delete guild subscription integration.
+    /// Additional attachments are not possible for voice messages.
+    /// </summary>
+    VoiceMessagesDoNotSupportAdditionalContent = 50159,
+
+    /// <summary>
+    /// Voice messages must have an audio attachment.
+    /// </summary>
+    VoiceMessagesMustHaveASingleAudioAttachment = 50160,
+
+    /// <summary>
+    /// Voice messages must have additional data attached to the object.
+    /// </summary>
+    VoiceMessagesMustHaveSupportingMetadata = 50161,
+
+    /// <summary>
+    /// Voice messages cannot be edited.
+    /// </summary>
+    VoiceMessagesCannotBeEdited = 50162,
+
+    /// <summary>
+    /// Guild integrations that come from subscriptions cannot be deleted.
     /// </summary>
     CannotDeleteGuildSubscriptionIntegration = 50163,
+
+    /// <summary>
+    /// Voice messages cannot be sent in this channel.
+    /// </summary>
+    YouCannotSendVoiceMessagesInThisChannel = 50173,
 
     /// <summary>
     /// You do not have permission to send this sticker.

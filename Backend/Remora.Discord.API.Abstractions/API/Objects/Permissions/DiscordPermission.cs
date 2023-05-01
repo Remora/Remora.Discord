@@ -251,5 +251,10 @@ public enum DiscordPermission
     /// <summary>
     /// Allows for using soundboard in a voice channel.
     /// </summary>
-    UseSoundboard = 42
+    UseSoundboard = 42,
+
+    /// <summary>
+    /// Allows for sending voice messages.
+    /// </summary>
+    SendVoiceMessages = 46
 }

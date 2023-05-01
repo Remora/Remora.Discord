@@ -107,5 +107,8 @@ public enum DiscordVoicePermission
     UseEmbeddedActivities = DiscordPermission.UseEmbeddedActivities,
 
     /// <inheritdoc cref="DiscordPermission.UseSoundboard"/>
-    UseSoundboard = DiscordPermission.UseSoundboard
+    UseSoundboard = DiscordPermission.UseSoundboard,
+
+    /// <inheritdoc cref="DiscordPermission.SendVoiceMessages"/>
+    SendVoiceMessages = DiscordPermission.SendVoiceMessages
 }

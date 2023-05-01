@@ -87,4 +87,9 @@ public enum MessageFlags
     /// The message will generate a mention, but will not trigger push notifications.
     /// </summary>
     SuppressNotifications = 1 << 12,
+
+    /// <summary>
+    /// The message is a voice message.
+    /// </summary>
+    IsVoiceMessage = 1 << 13
 }

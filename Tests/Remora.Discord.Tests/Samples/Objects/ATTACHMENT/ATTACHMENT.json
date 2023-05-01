@@ -8,5 +8,7 @@
   "proxy_url": "https://www.example.org",
   "height": 1,
   "width": 1,
-  "ephemeral": true
+  "ephemeral": true,
+  "duration_secs": 10,
+  "waveform": "bm9uZQ=="
 }

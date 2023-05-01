@@ -761,7 +761,9 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddMessageObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IAttachment, Attachment>()
-            .WithPropertyName(a => a.IsEphemeral, "ephemeral");
+            .WithPropertyName(a => a.IsEphemeral, "ephemeral")
+            .WithPropertyName(a => a.Duration, "duration_secs")
+            .WithPropertyConverter(a => a.Duration, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IPartialAttachment, PartialAttachment>()
             .WithPropertyName(a => a.IsEphemeral, "ephemeral");

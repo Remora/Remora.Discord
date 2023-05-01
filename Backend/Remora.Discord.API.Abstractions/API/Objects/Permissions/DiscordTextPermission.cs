@@ -89,5 +89,8 @@ public enum DiscordTextPermission
     UseExternalStickers = DiscordPermission.UseExternalStickers,
 
     /// <inheritdoc cref="DiscordPermission.SendMessagesInThreads"/>
-    SendMessagesInThreads = DiscordPermission.SendMessagesInThreads
+    SendMessagesInThreads = DiscordPermission.SendMessagesInThreads,
+
+    /// <inheritdoc cref="DiscordPermission.SendVoiceMessages"/>
+    SendVoiceMessages = DiscordPermission.SendVoiceMessages
 }

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -58,4 +59,10 @@ public interface IPartialAttachment
 
     /// <inheritdoc cref="IAttachment.IsEphemeral"/>
     Optional<bool> IsEphemeral { get; }
+
+    /// <inheritdoc cref="IAttachment.Duration"/>
+    Optional<TimeSpan> Duration { get; }
+
+    /// <inheritdoc cref="IAttachment.Waveform"/>
+    Optional<byte[]> Waveform { get; }
 }
