@@ -169,7 +169,7 @@ public enum DiscordError</code></pre>
       </tr>
       <tr>
         <td id="CannotDeleteGuildSubscriptionIntegration">CannotDeleteGuildSubscriptionIntegration</td>
-        <td><p>Cannot delete guild subscription integration.</p>
+        <td><p>Guild integrations that come from subscriptions cannot be deleted.</p>
 </td>
       </tr>
       <tr>
@@ -1055,6 +1055,26 @@ delete.</p>
 </td>
       </tr>
       <tr>
+        <td id="VoiceMessagesCannotBeEdited">VoiceMessagesCannotBeEdited</td>
+        <td><p>Voice messages cannot be edited.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="VoiceMessagesDoNotSupportAdditionalContent">VoiceMessagesDoNotSupportAdditionalContent</td>
+        <td><p>Additional attachments are not possible for voice messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="VoiceMessagesMustHaveASingleAudioAttachment">VoiceMessagesMustHaveASingleAudioAttachment</td>
+        <td><p>Voice messages must have an audio attachment.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="VoiceMessagesMustHaveSupportingMetadata">VoiceMessagesMustHaveSupportingMetadata</td>
+        <td><p>Voice messages must have additional data attached to the object.</p>
+</td>
+      </tr>
+      <tr>
         <td id="WebhooksCannotHaveBothThreadNameAndID">WebhooksCannotHaveBothThreadNameAndID</td>
         <td><p>Webhook messages sent in forums cannot have both a thread name and an ID.</p>
 </td>
@@ -1077,6 +1097,11 @@ delete.</p>
       <tr>
         <td id="WriteRateLimitHit">WriteRateLimitHit</td>
         <td><p>The channel you are writing to has hit the write rate limit.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="YouCannotSendVoiceMessagesInThisChannel">YouCannotSendVoiceMessagesInThisChannel</td>
+        <td><p>Voice messages cannot be sent in this channel.</p>
 </td>
       </tr>
     </tbody>
