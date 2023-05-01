@@ -55,6 +55,7 @@
     "preferred_locale": "en-US",
     "public_updates_channel_id": "999999999999999999",
     "max_video_channel_users": 1,
+    "max_stage_video_channel_users": 1,
     "approximate_member_count": 1,
     "approximate_presence_count": 1,
     "welcome_screen": {

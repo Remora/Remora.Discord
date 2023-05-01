@@ -68,6 +68,7 @@ public record PartialGuild
     Optional<string> PreferredLocale = default,
     Optional<Snowflake?> PublicUpdatesChannelID = default,
     Optional<int> MaxVideoChannelUsers = default,
+    Optional<int> MaxStageVideoChannelUsers = default,
     Optional<int> ApproximateMemberCount = default,
     Optional<int> ApproximatePresenceCount = default,
     Optional<IWelcomeScreen> WelcomeScreen = default,

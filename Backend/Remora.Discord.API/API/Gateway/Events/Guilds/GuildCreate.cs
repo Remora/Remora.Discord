@@ -72,6 +72,7 @@ public record GuildCreate(OneOf<IGuildCreate.IAvailableGuild, IUnavailableGuild>
         string PreferredLocale,
         Snowflake? PublicUpdatesChannelID,
         Optional<int> MaxVideoChannelUsers,
+        Optional<int> MaxStageVideoChannelUsers,
         Optional<int> ApproximateMemberCount,
         Optional<int> ApproximatePresenceCount,
         Optional<IWelcomeScreen> WelcomeScreen,

@@ -209,6 +209,11 @@ public interface IGuild : IPartialGuild
     new Optional<int> MaxVideoChannelUsers { get; }
 
     /// <summary>
+    /// Gets the maximum number of users in a video stage channel.
+    /// </summary>
+    new Optional<int> MaxStageVideoChannelUsers { get; }
+
+    /// <summary>
     /// Gets the approximate number of members in the guild.
     /// </summary>
     new Optional<int> ApproximateMemberCount { get; }
@@ -339,6 +344,9 @@ public interface IGuild : IPartialGuild
 
     /// <inheritdoc/>
     Optional<int> IPartialGuild.MaxVideoChannelUsers => this.MaxVideoChannelUsers;
+
+    /// <inheritdoc/>
+    Optional<int> IPartialGuild.MaxStageVideoChannelUsers => this.MaxStageVideoChannelUsers;
 
     /// <inheritdoc/>
     Optional<int> IPartialGuild.ApproximateMemberCount => this.ApproximateMemberCount;
