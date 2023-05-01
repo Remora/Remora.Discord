@@ -39,6 +39,7 @@ public record InteractionCreate
     InteractionType Type,
     Optional<OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>> Data,
     Optional<Snowflake> GuildID,
+    Optional<IPartialChannel> Channel,
     Optional<Snowflake> ChannelID,
     Optional<IGuildMember> Member,
     Optional<IUser> User,

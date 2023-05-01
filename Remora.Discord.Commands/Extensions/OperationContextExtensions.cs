@@ -125,7 +125,7 @@ public static class OperationContextExtensions
         {
             case IInteractionContext interactionCommandContext:
             {
-                if (interactionCommandContext.Interaction.ChannelID.TryGet(out var id))
+                if (interactionCommandContext.Interaction.Channel.TryGet(out var channel) && channel.ID.TryGet(out var id))
                 {
                     channelID = id;
                     return true;

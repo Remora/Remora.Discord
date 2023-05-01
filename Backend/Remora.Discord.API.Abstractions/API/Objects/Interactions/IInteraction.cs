@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Rest.Core;
@@ -58,8 +59,18 @@ public interface IInteraction
     Optional<Snowflake> GuildID { get; }
 
     /// <summary>
+    /// Gets the channel associated with the interaction.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="IPartialChannel.ID"/> and <see cref="IPartialChannel.Type"/> are guaranteed to be present in this
+    /// object.
+    /// </remarks>
+    Optional<IPartialChannel> Channel { get; }
+
+    /// <summary>
     /// Gets the ID of the channel the interaction was sent from.
     /// </summary>
+    [Obsolete("Use Channel instead.")]
     Optional<Snowflake> ChannelID { get; }
 
     /// <summary>
