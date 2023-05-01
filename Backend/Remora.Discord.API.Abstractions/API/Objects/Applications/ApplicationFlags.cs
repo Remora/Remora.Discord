@@ -32,6 +32,11 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public enum ApplicationFlags
 {
     /// <summary>
+    /// The application uses the auto moderation API.
+    /// </summary>
+    ApplicationAutoModerationRuleCreateBadge = 1 << 6,
+
+    /// <summary>
     /// The application is allowed to receive presence information over the gateway.
     /// </summary>
     GatewayPresence = 1 << 12,
