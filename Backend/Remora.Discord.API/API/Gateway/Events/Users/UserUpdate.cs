@@ -34,6 +34,7 @@ public record UserUpdate
 (
     Snowflake ID,
     string Username,
+    string GlobalName,
     ushort Discriminator,
     IImageHash? Avatar,
     Optional<bool> IsBot = default,

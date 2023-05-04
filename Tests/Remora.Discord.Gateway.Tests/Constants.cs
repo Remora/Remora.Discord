@@ -37,7 +37,8 @@ public static class Constants
     public static IUser BotUser { get; } = new User
     (
         DiscordSnowflake.New(0),
-        "mock-bot",
+        "mock_bot",
+        "Mock Bot",
         0,
         null
     );

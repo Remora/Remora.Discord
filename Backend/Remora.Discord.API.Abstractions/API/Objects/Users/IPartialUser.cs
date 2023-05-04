@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
@@ -38,7 +39,11 @@ public interface IPartialUser
     /// <inheritdoc cref="IUser.Username" />
     Optional<string> Username { get; }
 
+    /// <inheritdoc cref="IUser.GlobalName" />
+    Optional<string> GlobalName { get; }
+
     /// <inheritdoc cref="IUser.Discriminator" />
+    [Obsolete("Discord has deprecated the discriminator field.")]
     Optional<ushort> Discriminator { get; }
 
     /// <inheritdoc cref="IUser.Avatar" />

@@ -38,13 +38,19 @@ public interface IUser : IPartialUser
     new Snowflake ID { get; }
 
     /// <summary>
-    /// Gets the username of the user. This is not a unique value.
+    /// Gets the username of the user. This is a unique value.
     /// </summary>
     new string Username { get; }
 
     /// <summary>
+    /// Gets the global name of the user. This is not a unique value.
+    /// </summary>
+    new string GlobalName { get; }
+
+    /// <summary>
     /// Gets the user's 4-digit discord tag.
     /// </summary>
+    /// <remarks>Discord no longer uses discriminators, and migrated users will simply have '0' as their discriminator.</remarks>
     new ushort Discriminator { get; }
 
     /// <summary>
@@ -113,6 +119,9 @@ public interface IUser : IPartialUser
 
     /// <inheritdoc/>
     Optional<string> IPartialUser.Username => this.Username;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialUser.GlobalName => this.GlobalName;
 
     /// <inheritdoc/>
     Optional<ushort> IPartialUser.Discriminator => this.Discriminator;
