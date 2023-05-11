@@ -38,6 +38,7 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
 using Remora.Rest.Core;
@@ -53,6 +54,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     private readonly ContextInjectionService _contextInjection;
     private readonly IDiscordRestInteractionAPI _interactionAPI;
     private readonly IServiceProvider _services;
+    private readonly InteractionResponderOptions _interactionOptions;
     private readonly InteractivityResponderOptions _options;
     private readonly ExecutionEventCollectorService _eventCollector;
     private readonly CommandService _commandService;
@@ -64,6 +66,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     /// Initializes a new instance of the <see cref="InteractivityResponder"/> class.
     /// </summary>
     /// <param name="commandService">The command service.</param>
+    /// <param name="interactionOptions">The interaction responder options.</param>
     /// <param name="options">The responder options.</param>
     /// <param name="interactionAPI">The interaction API.</param>
     /// <param name="services">The available services.</param>
@@ -74,6 +77,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     public InteractivityResponder
     (
         CommandService commandService,
+        IOptions<InteractionResponderOptions> interactionOptions,
         IOptions<InteractivityResponderOptions> options,
         IDiscordRestInteractionAPI interactionAPI,
         IServiceProvider services,
@@ -88,6 +92,8 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         _eventCollector = eventCollector;
         _interactionAPI = interactionAPI;
         _commandService = commandService;
+
+        _interactionOptions = interactionOptions.Value;
         _options = options.Value;
 
         _tokenizerOptions = tokenizerOptions.Value;
@@ -403,6 +409,21 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         if (shouldSendResponse)
         {
             var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
+
+            var ephemeralAttribute = preparedCommand.Command.Node
+                .FindCustomAttributeOnLocalTree<EphemeralAttribute>();
+
+            var sendEphemeral = (ephemeralAttribute is null && _interactionOptions.UseEphemeralResponses) ||
+                                ephemeralAttribute?.IsEphemeral == true;
+
+            if (sendEphemeral)
+            {
+                response = response with
+                {
+                    Data = new(new InteractionMessageCallbackData(Flags: MessageFlags.Ephemeral))
+                };
+            }
+
             var createResponse = await _interactionAPI.CreateInteractionResponseAsync
             (
                 commandContext.Interaction.ID,
@@ -417,7 +438,10 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             }
 
             operationContext.HasRespondedToInteraction = true;
+            operationContext.IsOriginalEphemeral = sendEphemeral;
+
             commandContext.HasRespondedToInteraction = true;
+            commandContext.IsOriginalEphemeral = sendEphemeral;
         }
 
         // Run any user-provided pre-execution events
