@@ -237,7 +237,10 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             }
 
             operationContext.HasRespondedToInteraction = true;
+            operationContext.IsOriginalEphemeral = sendEphemeral;
+
             commandContext.HasRespondedToInteraction = true;
+            commandContext.IsOriginalEphemeral = sendEphemeral;
         }
 
         // Run any user-provided pre-execution events

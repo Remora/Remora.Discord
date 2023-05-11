@@ -32,8 +32,9 @@ namespace Remora.Discord.Commands.Contexts;
 [PublicAPI]
 public record InteractionContext(IInteraction Interaction) : IInteractionContext
 {
-    /// <summary>
-    /// Gets or sets a value indicating whether the interaction has been responded to.
-    /// </summary>
+    /// <inheritdoc />
     public bool HasRespondedToInteraction { get; set; }
+
+    /// <inheritdoc />
+    public bool IsOriginalEphemeral { get; set; }
 }
