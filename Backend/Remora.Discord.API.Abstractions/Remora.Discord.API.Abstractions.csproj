@@ -1,18 +1,15 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>77.0.0</VersionPrefix>
+        <VersionPrefix>78.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-          Add missing message flags
-          BREAKING: Implement guild member flags
-          Add new error codes.
-          Fix spelling error.
-          BREAKING: Add new channel field.
-          BREAKING: Update stage channel fields and permissions.
-          Add new message types.
-          BREAKING: Implement support for custom messages on action metadata.
-          BREAKING: Implement convenience methods based on parameter categorization.
+          Add new error code
+          BREAKING: Implement onboarding
+          BREAKING: Implement support for voice messages.
+          BREAKING: Mark ChannelID as deprecated and replace it with Channel.
+          BREKAING: Implement max stage video users.
+          Add new application flag.
         </PackageReleaseNotes>
     </PropertyGroup>
 

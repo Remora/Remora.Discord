@@ -1,11 +1,11 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>11.0.6</VersionPrefix>
+        <VersionPrefix>11.0.7</VersionPrefix>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Reduce instance-level state in the gateway client.
+            feat: Use ArrayPoolBufferWriter
         </PackageReleaseNotes>
     </PropertyGroup>
 
