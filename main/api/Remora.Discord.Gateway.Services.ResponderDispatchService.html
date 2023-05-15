@@ -113,6 +113,7 @@
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
+    <div><a class="xref" href="Remora.Discord.Gateway.Services.IResponderDispatchService.html">IResponderDispatchService</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -143,7 +144,7 @@
   <h5 id="Remora_Discord_Gateway_Services_ResponderDispatchService_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class ResponderDispatchService : IAsyncDisposable</code></pre>
+public class ResponderDispatchService : IAsyncDisposable, IResponderDispatchService</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -152,7 +153,7 @@ public class ResponderDispatchService : IAsyncDisposable</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_Services_ResponderDispatchService__ctor_System_IServiceProvider_Remora_Discord_Gateway_Services_IResponderTypeRepository_Microsoft_Extensions_Logging_ILogger_Remora_Discord_Gateway_Services_ResponderDispatchService__Microsoft_Extensions_Options_IOptions_Remora_Discord_Gateway_ResponderDispatchOptions__.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.Services.ResponderDispatchService.%23ctor(System.IServiceProvider%2CRemora.Discord.Gateway.Services.IResponderTypeRepository%2CMicrosoft.Extensions.Logging.ILogger%7BRemora.Discord.Gateway.Services.ResponderDispatchService%7D%2CMicrosoft.Extensions.Options.IOptions%7BRemora.Discord.Gateway.ResponderDispatchOptions%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/Services/ResponderDispatchService.cs/#L70">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/Services/ResponderDispatchService.cs/#L68">View Source</a>
   </span>
   <a id="Remora_Discord_Gateway_Services_ResponderDispatchService" data-uid="Remora.Discord.Gateway.Services.ResponderDispatchService.#ctor*"></a>
   <h4 id="_ctor_1" data-uid="Remora.Discord.Gateway.Services.ResponderDispatchService.#ctor(System.IServiceProvider,Remora.Discord.Gateway.Services.IResponderTypeRepository,Microsoft.Extensions.Logging.ILogger{Remora.Discord.Gateway.Services.ResponderDispatchService},Microsoft.Extensions.Options.IOptions{Remora.Discord.Gateway.ResponderDispatchOptions})">ResponderDispatchService(IServiceProvider, IResponderTypeRepository, ILogger&lt;ResponderDispatchService&gt;, IOptions&lt;ResponderDispatchOptions&gt;)</h4>
@@ -206,7 +207,7 @@ public class ResponderDispatchService : IAsyncDisposable</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_Services_ResponderDispatchService_DispatchAsync_Remora_Discord_API_Abstractions_Gateway_IPayload_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.Services.ResponderDispatchService.DispatchAsync(Remora.Discord.API.Abstractions.Gateway.IPayload%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/Services/ResponderDispatchService.cs/#L119">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/Services/ResponderDispatchService.cs/#L117">View Source</a>
   </span>
   <a id="Remora_Discord_Gateway_Services_ResponderDispatchService" data-uid="Remora.Discord.Gateway.Services.ResponderDispatchService.DispatchAsync*"></a>
   <h4 id="DispatchAsync_1" data-uid="Remora.Discord.Gateway.Services.ResponderDispatchService.DispatchAsync(Remora.Discord.API.Abstractions.Gateway.IPayload,System.Threading.CancellationToken)">DispatchAsync(IPayload, CancellationToken)</h4>
@@ -265,7 +266,7 @@ to any instantiated responders.</p>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_Services_ResponderDispatchService_DisposeAsync.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.Services.ResponderDispatchService.DisposeAsync%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/Services/ResponderDispatchService.cs/#L419">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/Services/ResponderDispatchService.cs/#L417">View Source</a>
   </span>
   <a id="Remora_Discord_Gateway_Services_ResponderDispatchService" data-uid="Remora.Discord.Gateway.Services.ResponderDispatchService.DisposeAsync*"></a>
   <h4 id="DisposeAsync" data-uid="Remora.Discord.Gateway.Services.ResponderDispatchService.DisposeAsync">DisposeAsync()</h4>
@@ -293,6 +294,9 @@ to any instantiated responders.</p>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">System.IAsyncDisposable</a>
+  </div>
+  <div>
+      <a class="xref" href="Remora.Discord.Gateway.Services.IResponderDispatchService.html">IResponderDispatchService</a>
   </div>
 </article>
               
