@@ -39,11 +39,9 @@ using Remora.Results;
 
 namespace Remora.Discord.Gateway.Services;
 
-/// <summary>
-/// Manages dispatch and processing of gateway payloads.
-/// </summary>
+/// <inheritdoc cref="IResponderDispatchService"/>
 [PublicAPI]
-public class ResponderDispatchService : IAsyncDisposable
+public class ResponderDispatchService : IAsyncDisposable, IResponderDispatchService
 {
     private readonly IServiceProvider _services;
     private readonly ResponderDispatchOptions _options;

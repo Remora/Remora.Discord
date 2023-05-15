@@ -26,7 +26,7 @@ using Remora.Discord.Gateway.Services;
 namespace Remora.Discord.Gateway;
 
 /// <summary>
-///  Represents options related to <see cref="ResponderDispatchService"/>.
+///  Represents options related to <see cref="IResponderDispatchService"/>.
 /// </summary>
 /// <param name="MaxItems">How many items can be queued for dispatch at any given time.</param>
 [PublicAPI]
