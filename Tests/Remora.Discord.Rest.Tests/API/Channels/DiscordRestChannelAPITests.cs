@@ -280,6 +280,7 @@ public class DiscordRestChannelAPITests
             var name = "brr";
             var position = 1;
             var isNsfw = true;
+            var rateLimitPerUser = 10;
             var bitrate = 8000;
             var userLimit = 10;
             var permissionOverwrites = new List<PermissionOverwrite>();
@@ -303,6 +304,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("position", p => p.Is(position))
                                     .WithProperty("nsfw", p => p.Is(isNsfw))
                                     .WithProperty("bitrate", p => p.Is(bitrate))
+                                    .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                     .WithProperty("user_limit", p => p.Is(userLimit))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
@@ -319,6 +321,7 @@ public class DiscordRestChannelAPITests
                 name,
                 position,
                 isNsfw,
+                rateLimitPerUser,
                 bitrate,
                 userLimit,
                 permissionOverwrites,
@@ -342,6 +345,7 @@ public class DiscordRestChannelAPITests
             var name = "brr";
             var position = 1;
             var isNsfw = true;
+            var rateLimitPerUser = 10;
             var bitrate = 8000;
             var userLimit = 10;
             var permissionOverwrites = new List<PermissionOverwrite>();
@@ -364,6 +368,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("position", p => p.Is(position))
                                     .WithProperty("nsfw", p => p.Is(isNsfw))
+                                    .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                     .WithProperty("bitrate", p => p.Is(bitrate))
                                     .WithProperty("user_limit", p => p.Is(userLimit))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
@@ -381,6 +386,7 @@ public class DiscordRestChannelAPITests
                 name,
                 position,
                 isNsfw,
+                rateLimitPerUser,
                 bitrate,
                 userLimit,
                 permissionOverwrites,

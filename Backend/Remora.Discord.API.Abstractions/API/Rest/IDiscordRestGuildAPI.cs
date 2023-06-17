@@ -329,6 +329,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="name">The name of the new channel.</param>
     /// <param name="bitrate">The bitrate of the new channel, if it is a voice channel.</param>
     /// <param name="userLimit">The maximum number of users in the channel, if it is a voice channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
     /// <param name="position">The sorting position of the new channel.</param>
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
@@ -344,6 +345,7 @@ public interface IDiscordRestGuildAPI
         string name,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
@@ -361,6 +363,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="name">The name of the new channel.</param>
     /// <param name="bitrate">The bitrate of the new channel, if it is a voice channel.</param>
     /// <param name="userLimit">The maximum number of users in the channel, if it is a voice channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
     /// <param name="position">The sorting position of the new channel.</param>
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
@@ -376,6 +379,7 @@ public interface IDiscordRestGuildAPI
         string name,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,

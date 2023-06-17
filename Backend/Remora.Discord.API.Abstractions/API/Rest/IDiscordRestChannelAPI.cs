@@ -190,6 +190,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="name">The new name of the channel.</param>
     /// <param name="position">The new position of the channel in the listing.</param>
     /// <param name="isNsfw">The new NSFW status of the channel.</param>
+    /// <param name="rateLimitPerUser">The new rate limit per user.</param>
     /// <param name="bitrate">The new bitrate.</param>
     /// <param name="userLimit">The new user limit.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
@@ -205,6 +206,7 @@ public interface IDiscordRestChannelAPI
         Optional<string> name = default,
         Optional<int?> position = default,
         Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
@@ -222,6 +224,7 @@ public interface IDiscordRestChannelAPI
     /// <param name="name">The new name of the channel.</param>
     /// <param name="position">The new position of the channel in the listing.</param>
     /// <param name="isNsfw">The new NSFW status of the channel.</param>
+    /// <param name="rateLimitPerUser">The new rate limit per user.</param>
     /// <param name="bitrate">The new bitrate.</param>
     /// <param name="userLimit">The new user limit.</param>
     /// <param name="permissionOverwrites">The new permission overwrites.</param>
@@ -237,6 +240,7 @@ public interface IDiscordRestChannelAPI
         Optional<string> name = default,
         Optional<int?> position = default,
         Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
