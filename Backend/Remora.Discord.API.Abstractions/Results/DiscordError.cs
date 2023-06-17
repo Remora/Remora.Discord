@@ -824,6 +824,11 @@ public enum DiscordError
     InvalidJSONInRequestBody = 50109,
 
     /// <summary>
+    /// The specified owner cannot be a pending member.
+    /// </summary>
+    OwnerCannotBePendingMember = 50131,
+
+    /// <summary>
     /// The ownership of the object cannot be transferred to a bot user.
     /// </summary>
     OwnershipCannotBeTransferredToBotUser = 50132,
