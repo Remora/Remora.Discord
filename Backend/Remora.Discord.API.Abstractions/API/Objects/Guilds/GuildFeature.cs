@@ -126,6 +126,11 @@ public enum GuildFeature
     PreviewEnabled,
 
     /// <summary>
+    /// The guild has disabled alerts for join raids in the configured safety alerts channel.
+    /// </summary>
+    RaidAlertsDisabled,
+
+    /// <summary>
     /// The guild is able to set role icons.
     /// </summary>
     RoleIcons,

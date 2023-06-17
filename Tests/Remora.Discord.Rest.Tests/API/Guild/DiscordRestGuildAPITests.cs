@@ -346,6 +346,7 @@ public class DiscordRestGuildAPITests
             var features = Array.Empty<GuildFeature>();
             var description = "aaa";
             var isPremiumProgressBarEnabled = true;
+            var safetyAlertsChannel = DiscordSnowflake.New(5);
             var reason = "test";
 
             var api = CreateAPI
@@ -381,6 +382,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("features", p => p.IsArray())
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("premium_progress_bar_enabled", p => p.Is(isPremiumProgressBarEnabled))
+                                .WithProperty("safety_alerts_channel_id", p => p.Is(safetyAlertsChannel.ToString()))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
@@ -408,6 +410,7 @@ public class DiscordRestGuildAPITests
                 features,
                 description,
                 isPremiumProgressBarEnabled,
+                safetyAlertsChannel,
                 reason
             );
 
@@ -436,6 +439,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("icon", p => p.IsNull())
                                 .WithProperty("splash", p => p.IsNull())
                                 .WithProperty("banner", p => p.IsNull())
+                                .WithProperty("safety_alerts_channel_id", p => p.IsNull())
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
@@ -447,7 +451,8 @@ public class DiscordRestGuildAPITests
                 name,
                 icon: null,
                 banner: null,
-                splash: null
+                splash: null,
+                safetyAlertsChannelID: null
             );
 
             ResultAssert.Successful(result);
@@ -843,6 +848,7 @@ public class DiscordRestGuildAPITests
             var type = ChannelType.GuildVoice;
             var bitrate = 4600;
             var userLimit = 10;
+            var rateLimitPerUser = 10;
             var position = 1;
             var permissionOverwrites = new List<IPermissionOverwrite>();
             var parentID = DiscordSnowflake.New(1);
@@ -865,6 +871,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("bitrate", p => p.Is(bitrate))
                                 .WithProperty("user_limit", p => p.Is(userLimit))
+                                .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                 .WithProperty("position", p => p.Is(position))
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("parent_id", p => p.Is(parentID.ToString()))
@@ -882,6 +889,7 @@ public class DiscordRestGuildAPITests
                 name,
                 bitrate,
                 userLimit,
+                rateLimitPerUser,
                 position,
                 permissionOverwrites,
                 parentID,
@@ -906,6 +914,7 @@ public class DiscordRestGuildAPITests
             var type = ChannelType.GuildStageVoice;
             var bitrate = 4600;
             var userLimit = 10;
+            var rateLimitPerUser = 10;
             var position = 1;
             var permissionOverwrites = new List<IPermissionOverwrite>();
             var parentID = DiscordSnowflake.New(1);
@@ -928,6 +937,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("bitrate", p => p.Is(bitrate))
                                 .WithProperty("user_limit", p => p.Is(userLimit))
+                                .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                 .WithProperty("position", p => p.Is(position))
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("parent_id", p => p.Is(parentID.ToString()))
@@ -945,6 +955,7 @@ public class DiscordRestGuildAPITests
                 name,
                 bitrate,
                 userLimit,
+                rateLimitPerUser,
                 position,
                 permissionOverwrites,
                 parentID,

@@ -40,6 +40,7 @@ public static class Constants
         "mock_bot",
         "Mock Bot",
         0,
+        "mock-bot",
         null
     );
 

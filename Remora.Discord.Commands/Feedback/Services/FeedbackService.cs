@@ -48,12 +48,6 @@ public class FeedbackService : IFeedbackService
     private readonly IDiscordRestUserAPI _userAPI;
     private readonly IDiscordRestInteractionAPI _interactionAPI;
 
-    /// <summary>
-    /// Holds a value indicating whether the original message was ephemeral; if so, followup messages should also
-    /// be ephemeral.
-    /// </summary>
-    private bool _isOriginalEphemeral;
-
     /// <inheritdoc />
     public IFeedbackTheme Theme { get; }
 
@@ -422,7 +416,7 @@ public class FeedbackService : IFeedbackService
             case InteractionContext interactionContext:
             {
                 var messageFlags = options?.MessageFlags ?? default;
-                if (this.HasEditedOriginalMessage && _isOriginalEphemeral)
+                if (interactionContext.IsOriginalEphemeral)
                 {
                     messageFlags = messageFlags.HasValue
                         ? messageFlags.Value | MessageFlags.Ephemeral
@@ -534,8 +528,6 @@ public class FeedbackService : IFeedbackService
             return Result<IMessage>.FromSuccess(message);
         }
 
-        _isOriginalEphemeral = message.Flags.TryGet(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
-
         this.HasEditedOriginalMessage = true;
         return Result<IMessage>.FromSuccess(message);
     }
@@ -583,9 +575,6 @@ public class FeedbackService : IFeedbackService
         {
             return result;
         }
-
-        var message = result.Entity;
-        _isOriginalEphemeral = message.Flags.TryGet(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
 
         this.HasEditedOriginalMessage = true;
         return result;

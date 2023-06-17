@@ -78,4 +78,9 @@ public interface IAutoModerationTriggerMetadata
     /// Max 50.
     /// </remarks>
     Optional<byte> MentionTotalLimit { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether to automatically detect mention raids.
+    /// </summary>
+    Optional<bool> MentionRaidProtectionEnabled { get; }
 }

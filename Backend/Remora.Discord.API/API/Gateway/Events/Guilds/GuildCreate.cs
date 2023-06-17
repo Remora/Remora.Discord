@@ -79,6 +79,7 @@ public record GuildCreate(OneOf<IGuildCreate.IAvailableGuild, IUnavailableGuild>
         GuildNSFWLevel NSFWLevel,
         Optional<IReadOnlyList<ISticker>> Stickers,
         bool IsPremiumProgressBarEnabled,
+        Snowflake? SafetyAlertsChannelID,
         DateTimeOffset JoinedAt,
         bool IsLarge,
         Optional<bool> IsUnavailable,

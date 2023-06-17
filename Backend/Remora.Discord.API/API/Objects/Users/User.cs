@@ -37,6 +37,7 @@ public record User
     string Username,
     string GlobalName,
     ushort Discriminator,
+    string? GlobalName,
     IImageHash? Avatar,
     Optional<bool> IsBot = default,
     Optional<bool> IsSystem = default,

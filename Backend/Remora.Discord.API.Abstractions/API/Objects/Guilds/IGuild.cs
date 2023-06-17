@@ -243,6 +243,11 @@ public interface IGuild : IPartialGuild
     /// </summary>
     new bool IsPremiumProgressBarEnabled { get; }
 
+    /// <summary>
+    /// Gets the ID of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
+    /// </summary>
+    new Snowflake? SafetyAlertsChannelID { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialGuild.ID => this.ID;
 
@@ -365,4 +370,7 @@ public interface IGuild : IPartialGuild
 
     /// <inheritdoc/>
     Optional<bool> IPartialGuild.IsPremiumProgressBarEnabled => this.IsPremiumProgressBarEnabled;
+
+    /// <inheritdoc/>
+    Optional<Snowflake?> IPartialGuild.SafetyAlertsChannelID => this.SafetyAlertsChannelID;
 }

@@ -49,6 +49,7 @@
     "public_updates_channel_id": "999999999999999999",
     "nsfw_level": 0,
     "premium_progress_bar_enabled": true,
+    "safety_alerts_channel_id": "999999999999999999",
     "joined_at": "1970-01-01T00:00:00.000000+00:00",
     "large": true,
     "member_count": 1,

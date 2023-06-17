@@ -183,6 +183,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<IReadOnlyList<GuildFeature>> features = default,
         Optional<string?> description = default,
         Optional<bool> isPremiumProgressBarEnabled = default,
+        Optional<Snowflake?> safetyAlertsChannelID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -209,6 +210,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             features,
             description,
             isPremiumProgressBarEnabled,
+            safetyAlertsChannelID,
             reason,
             ct
         );
@@ -436,6 +438,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         string name,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
@@ -451,6 +454,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         ChannelType.GuildVoice,
         bitrate: bitrate,
         userLimit: userLimit,
+        rateLimitPerUser: rateLimitPerUser,
         position: position,
         permissionOverwrites: permissionOverwrites,
         parentID: parentID,
@@ -468,6 +472,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         string name,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
@@ -483,6 +488,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         ChannelType.GuildStageVoice,
         bitrate: bitrate,
         userLimit: userLimit,
+        rateLimitPerUser: rateLimitPerUser,
         position: position,
         permissionOverwrites: permissionOverwrites,
         parentID: parentID,

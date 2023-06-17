@@ -824,6 +824,11 @@ public enum DiscordError
     InvalidJSONInRequestBody = 50109,
 
     /// <summary>
+    /// The specified owner cannot be a pending member.
+    /// </summary>
+    OwnerCannotBePendingMember = 50131,
+
+    /// <summary>
     /// The ownership of the object cannot be transferred to a bot user.
     /// </summary>
     OwnershipCannotBeTransferredToBotUser = 50132,
@@ -877,6 +882,11 @@ public enum DiscordError
     /// Voice messages cannot be sent in this channel.
     /// </summary>
     YouCannotSendVoiceMessagesInThisChannel = 50173,
+
+    /// <summary>
+    /// The given user must be verified first.
+    /// </summary>
+    TheUserMustFirstBeVerified = 50178,
 
     /// <summary>
     /// You do not have permission to send this sticker.

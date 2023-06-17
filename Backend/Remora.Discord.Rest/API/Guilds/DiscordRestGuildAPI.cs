@@ -191,6 +191,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<GuildFeature>> features = default,
         Optional<string?> description = default,
         Optional<bool> isPremiumProgressBarEnabled = default,
+        Optional<Snowflake?> safetyAlertsChannelID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -263,6 +264,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("features", features, this.JsonOptions);
                         json.Write("description", description, this.JsonOptions);
                         json.Write("premium_progress_bar_enabled", isPremiumProgressBarEnabled, this.JsonOptions);
+                        json.Write("safety_alerts_channel_id", safetyAlertsChannelID, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -451,6 +453,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         string name,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
@@ -466,6 +469,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         ChannelType.GuildVoice,
         bitrate: bitrate,
         userLimit: userLimit,
+        rateLimitPerUser: rateLimitPerUser,
         position: position,
         permissionOverwrites: permissionOverwrites,
         parentID: parentID,
@@ -483,6 +487,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         string name,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
@@ -498,6 +503,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         ChannelType.GuildStageVoice,
         bitrate: bitrate,
         userLimit: userLimit,
+        rateLimitPerUser: rateLimitPerUser,
         position: position,
         permissionOverwrites: permissionOverwrites,
         parentID: parentID,

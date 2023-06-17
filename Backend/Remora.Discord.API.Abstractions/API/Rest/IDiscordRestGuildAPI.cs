@@ -131,6 +131,9 @@ public interface IDiscordRestGuildAPI
     /// <param name="features">The new guild features.</param>
     /// <param name="description">The new description.</param>
     /// <param name="isPremiumProgressBarEnabled">Whether the guild has the boost progress bar enabled.</param>
+    /// <param name="safetyAlertsChannelID">
+    /// The ID of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -156,6 +159,7 @@ public interface IDiscordRestGuildAPI
         Optional<IReadOnlyList<GuildFeature>> features = default,
         Optional<string?> description = default,
         Optional<bool> isPremiumProgressBarEnabled = default,
+        Optional<Snowflake?> safetyAlertsChannelID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -325,6 +329,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="name">The name of the new channel.</param>
     /// <param name="bitrate">The bitrate of the new channel, if it is a voice channel.</param>
     /// <param name="userLimit">The maximum number of users in the channel, if it is a voice channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
     /// <param name="position">The sorting position of the new channel.</param>
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
@@ -340,6 +345,7 @@ public interface IDiscordRestGuildAPI
         string name,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
@@ -357,6 +363,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="name">The name of the new channel.</param>
     /// <param name="bitrate">The bitrate of the new channel, if it is a voice channel.</param>
     /// <param name="userLimit">The maximum number of users in the channel, if it is a voice channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
     /// <param name="position">The sorting position of the new channel.</param>
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
@@ -372,6 +379,7 @@ public interface IDiscordRestGuildAPI
         string name,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,

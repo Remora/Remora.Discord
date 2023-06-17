@@ -65,7 +65,7 @@ public class DiscordGatewayClient : IDisposable
     private readonly ITokenStore _tokenStore;
     private readonly Random _random;
 
-    private readonly ResponderDispatchService _responderDispatch;
+    private readonly IResponderDispatchService _responderDispatch;
 
     /// <summary>
     /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
@@ -134,7 +134,7 @@ public class DiscordGatewayClient : IDisposable
         Random random,
         ILogger<DiscordGatewayClient> log,
         IServiceProvider services,
-        ResponderDispatchService responderDispatch
+        IResponderDispatchService responderDispatch
     )
     {
         _gatewayAPI = gatewayAPI;

@@ -254,6 +254,11 @@ public enum DiscordPermission
     UseSoundboard = 42,
 
     /// <summary>
+    /// Allows the usage of custom soundboard sounds from other servers.
+    /// </summary>
+    UseExternalSounds = 45,
+
+    /// <summary>
     /// Allows for sending voice messages.
     /// </summary>
     SendVoiceMessages = 46

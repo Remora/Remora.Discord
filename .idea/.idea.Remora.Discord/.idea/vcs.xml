@@ -14,5 +14,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/docfx/docfx_project/templates/discordfx" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/docfx/docfx_project/templates/shortanchor" vcs="Git" />
   </component>
 </project>

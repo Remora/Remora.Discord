@@ -39,11 +39,9 @@ using Remora.Results;
 
 namespace Remora.Discord.Gateway.Services;
 
-/// <summary>
-/// Manages dispatch and processing of gateway payloads.
-/// </summary>
+/// <inheritdoc cref="IResponderDispatchService"/>
 [PublicAPI]
-public class ResponderDispatchService : IAsyncDisposable
+public class ResponderDispatchService : IAsyncDisposable, IResponderDispatchService
 {
     private readonly IServiceProvider _services;
     private readonly ResponderDispatchOptions _options;
@@ -51,12 +49,17 @@ public class ResponderDispatchService : IAsyncDisposable
     private readonly IResponderTypeRepository _responderTypeRepository;
 
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
-    private readonly Dictionary<Type, Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>> _cachedDispatchDelegates;
-    private readonly CancellationTokenSource _dispatchCancellationSource;
+    private readonly Dictionary<Type, Func<IPayload, Task<IReadOnlyList<Result>>>> _cachedDispatchDelegates;
     private readonly Task _dispatcher;
     private readonly Task _finalizer;
     private readonly Channel<IPayload> _payloadsToDispatch;
     private readonly Channel<Task<IReadOnlyList<Result>>> _respondersToFinalize;
+
+    /// <summary>
+    /// Holds the token source used to get tokens for running responders. Execution of the dispatch service's own tasks
+    /// is controlled via the channels.
+    /// </summary>
+    private readonly CancellationTokenSource _responderCancellationSource;
 
     private bool _isDisposed;
 
@@ -83,7 +86,7 @@ public class ResponderDispatchService : IAsyncDisposable
         _cachedInterfaceTypeArguments = new();
         _cachedDispatchDelegates = new();
 
-        _dispatchCancellationSource = new();
+        _responderCancellationSource = new();
         _payloadsToDispatch = Channel.CreateBounded<IPayload>
         (
             new BoundedChannelOptions((int)_options.MaxItems)
@@ -101,8 +104,8 @@ public class ResponderDispatchService : IAsyncDisposable
             }
         );
 
-        _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
-        _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
+        _dispatcher = Task.Run(DispatcherTaskAsync, CancellationToken.None);
+        _finalizer = Task.Run(FinalizerTaskAsync, CancellationToken.None);
     }
 
     /// <summary>
@@ -140,31 +143,24 @@ public class ResponderDispatchService : IAsyncDisposable
     /// </summary>
     private async Task DispatcherTaskAsync()
     {
-        while (!_dispatchCancellationSource.Token.IsCancellationRequested)
+        try
         {
-            var payload = await _payloadsToDispatch.Reader.ReadAsync(_dispatchCancellationSource.Token);
-            var dispatch = UnwrapAndDispatchEvent(payload, _dispatchCancellationSource.Token);
-            if (!dispatch.IsSuccess)
+            while (await _payloadsToDispatch.Reader.WaitToReadAsync())
             {
-                _log.LogWarning("Failed to dispatch payload: {Reason}", dispatch.Error.Message);
-                continue;
-            }
+                var payload = await _payloadsToDispatch.Reader.ReadAsync();
+                var dispatch = UnwrapAndDispatchEvent(payload);
+                if (!dispatch.IsSuccess)
+                {
+                    _log.LogWarning("Failed to dispatch payload: {Reason}", dispatch.Error.Message);
+                    continue;
+                }
 
-            await _respondersToFinalize.Writer.WriteAsync(dispatch.Entity, _dispatchCancellationSource.Token);
+                await _respondersToFinalize.Writer.WriteAsync(dispatch.Entity);
+            }
         }
-
-        // Finish up remaining dispatches
-        await _payloadsToDispatch.Reader.Completion;
-        await foreach (var payload in _payloadsToDispatch.Reader.ReadAllAsync())
+        catch (Exception ex) when (ex is OperationCanceledException or ChannelClosedException)
         {
-            var dispatch = UnwrapAndDispatchEvent(payload, _dispatchCancellationSource.Token);
-            if (!dispatch.IsSuccess)
-            {
-                _log.LogWarning("Failed to dispatch payload: {Reason}", dispatch.Error.Message);
-                continue;
-            }
-
-            await _respondersToFinalize.Writer.WriteAsync(dispatch.Entity, _dispatchCancellationSource.Token);
+            // this is fine, no further incoming payloads to accept
         }
 
         _respondersToFinalize.Writer.Complete();
@@ -175,7 +171,7 @@ public class ResponderDispatchService : IAsyncDisposable
     /// </summary>
     private async Task FinalizerTaskAsync()
     {
-        if (_dispatchCancellationSource is null)
+        if (_responderCancellationSource is null)
         {
             throw new InvalidOperationException();
         }
@@ -185,34 +181,39 @@ public class ResponderDispatchService : IAsyncDisposable
             throw new InvalidOperationException();
         }
 
-        while (!_dispatchCancellationSource.Token.IsCancellationRequested)
+        try
         {
-            var responderResults = await _respondersToFinalize.Reader.ReadAsync
-            (
-                _dispatchCancellationSource.Token
-            );
-
-            if (!responderResults.IsCompleted)
+            while (await _respondersToFinalize.Reader.WaitToReadAsync())
             {
-                var timeout = Task.Delay(TimeSpan.FromMilliseconds(10));
-
-                var finishedTask = await Task.WhenAny(responderResults, timeout);
-                if (finishedTask == timeout)
+                var responderResults = await _respondersToFinalize.Reader.ReadAsync();
+                if (!responderResults.IsCompleted)
                 {
-                    // This responder is taking too long... put it back on the channel and look at some other stuff
-                    // in the meantime.
-                    await _respondersToFinalize.Writer.WriteAsync(responderResults, _dispatchCancellationSource.Token);
-                    continue;
+                    var timeout = Task.Delay(TimeSpan.FromMilliseconds(10));
+
+                    var finishedTask = await Task.WhenAny(responderResults, timeout);
+                    if (finishedTask == timeout)
+                    {
+                        // This responder is taking too long... put it back on the channel and look at some other stuff
+                        // in the meantime.
+                        try
+                        {
+                            await _respondersToFinalize.Writer.WriteAsync(responderResults);
+                            continue;
+                        }
+                        catch (ChannelClosedException)
+                        {
+                            // Okay, we can't put it back on, so we'll just drop out and await it. It should be the last
+                            // item in the pipe anyway
+                        }
+                    }
                 }
+
+                FinalizeResponderDispatch(await responderResults);
             }
-
-            FinalizeResponderDispatch(await responderResults);
         }
-
-        await _respondersToFinalize.Reader.Completion;
-        await foreach (var responderResults in _respondersToFinalize.Reader.ReadAllAsync())
+        catch (Exception ex) when (ex is OperationCanceledException or ChannelClosedException)
         {
-            FinalizeResponderDispatch(await responderResults);
+            // this is fine, nothing further to do
         }
     }
 
@@ -220,8 +221,7 @@ public class ResponderDispatchService : IAsyncDisposable
     /// Unwraps the given payload into its typed representation, dispatching all events for it.
     /// </summary>
     /// <param name="payload">The payload.</param>
-    /// <param name="ct">The cancellation token for the dispatched event.</param>
-    private Result<Task<IReadOnlyList<Result>>> UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
+    private Result<Task<IReadOnlyList<Result>>> UnwrapAndDispatchEvent(IPayload payload)
     {
         var payloadType = payload.GetType();
 
@@ -271,15 +271,14 @@ public class ResponderDispatchService : IAsyncDisposable
                 throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEventAsync));
             }
 
-            var delegateType = typeof(Func<,,>).MakeGenericType
+            var delegateType = typeof(Func<,>).MakeGenericType
             (
                 typeof(IPayload<>).MakeGenericType(interfaceArgument),
-                typeof(CancellationToken),
                 typeof(Task<IReadOnlyList<Result>>)
             );
 
             // Naughty unsafe cast, because we know we're calling it with compatible types in this method
-            dispatchDelegate = Unsafe.As<Func<IPayload, CancellationToken, Task<IReadOnlyList<Result>>>>
+            dispatchDelegate = Unsafe.As<Func<IPayload, Task<IReadOnlyList<Result>>>>
             (
                 dispatchMethod
                 .MakeGenericMethod(interfaceArgument)
@@ -289,7 +288,9 @@ public class ResponderDispatchService : IAsyncDisposable
             _cachedDispatchDelegates.Add(interfaceArgument, dispatchDelegate);
         }
 
-        var responderTask = Task.Run(() => dispatchDelegate(payload, ct), ct);
+        // Don't use the cancellation token here; we want the task to always run and let the responder decide when to
+        // actually cancel
+        var responderTask = Task.Run(() => dispatchDelegate(payload), CancellationToken.None);
 
         return responderTask;
     }
@@ -298,13 +299,8 @@ public class ResponderDispatchService : IAsyncDisposable
     /// Dispatches the given event to all relevant gateway event responders.
     /// </summary>
     /// <param name="gatewayEvent">The event to dispatch.</param>
-    /// <param name="ct">The cancellation token to use.</param>
     /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
-    private async Task<IReadOnlyList<Result>> DispatchEventAsync<TGatewayEvent>
-    (
-        IPayload<TGatewayEvent> gatewayEvent,
-        CancellationToken ct = default
-    )
+    private async Task<IReadOnlyList<Result>> DispatchEventAsync<TGatewayEvent>(IPayload<TGatewayEvent> gatewayEvent)
         where TGatewayEvent : IGatewayEvent
     {
         // Batch up the responders according to their groups
@@ -331,7 +327,7 @@ public class ResponderDispatchService : IAsyncDisposable
                             var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider
                                 .GetRequiredService(rt);
 
-                            return await responder.RespondAsync(gatewayEvent.Data, ct);
+                            return await responder.RespondAsync(gatewayEvent.Data, _responderCancellationSource.Token);
                         }
                         catch (Exception e)
                         {
@@ -425,26 +421,15 @@ public class ResponderDispatchService : IAsyncDisposable
 
         GC.SuppressFinalize(this);
 
-        // Stop!
-        _dispatchCancellationSource.Cancel();
+        // Signal running responders that they should cancel
+        _responderCancellationSource.Cancel();
+
+        // Prevent further payloads from being written, signalling the readers that they should terminate
         _payloadsToDispatch.Writer.Complete();
 
-        // Wait for everything to actually stop...
-        try
-        {
-            await _dispatcher;
-        }
-        catch (OperationCanceledException)
-        {
-        }
-
-        try
-        {
-            await _finalizer;
-        }
-        catch (OperationCanceledException)
-        {
-        }
+        // Wait for everything to actually stop
+        await _dispatcher;
+        await _finalizer;
 
         _isDisposed = true;
     }

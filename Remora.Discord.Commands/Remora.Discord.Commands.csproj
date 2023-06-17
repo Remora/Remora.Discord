@@ -1,11 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>26.2.3</VersionPrefix>
+        <VersionPrefix>27.0.0</VersionPrefix>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Fix role permission computation
+            feat: implement abstraction level for feedback service
+            BREAKING: Move ephemerality tracking to the response tracking API.
         </PackageReleaseNotes>
     </PropertyGroup>
 

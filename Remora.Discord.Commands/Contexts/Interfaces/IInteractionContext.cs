@@ -37,6 +37,11 @@ public interface IInteractionContext : IOperationContext
     bool HasRespondedToInteraction { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the original response was ephemeral.
+    /// </summary>
+    bool IsOriginalEphemeral { get; set; }
+
+    /// <summary>
     /// Gets the interaction.
     /// </summary>
     IInteraction Interaction { get; }
