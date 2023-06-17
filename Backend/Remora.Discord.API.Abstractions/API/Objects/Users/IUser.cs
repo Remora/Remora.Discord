@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
@@ -40,12 +41,21 @@ public interface IUser : IPartialUser
     /// <summary>
     /// Gets the username of the user. This is not a unique value.
     /// </summary>
+    /// <remarks>
+    /// Discord is currently migrating to a new username system. When the migration is complete, this field will be
+    /// unique across the platform.
+    /// </remarks>
     new string Username { get; }
 
     /// <summary>
     /// Gets the user's 4-digit discord tag.
     /// </summary>
     new ushort Discriminator { get; }
+
+    /// <summary>
+    /// Gets the user's display name, if it is set. For bots, this is the application name.
+    /// </summary>
+    new string? GlobalName { get; }
 
     /// <summary>
     /// Gets the user's avatar hash.
@@ -116,6 +126,9 @@ public interface IUser : IPartialUser
 
     /// <inheritdoc/>
     Optional<ushort> IPartialUser.Discriminator => this.Discriminator;
+
+    /// <inheritdoc/>
+    Optional<string?> IPartialUser.GlobalName => this.GlobalName;
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialUser.Avatar => new(this.Avatar);

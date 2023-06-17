@@ -36,6 +36,7 @@ public record PartialUser
     Optional<Snowflake> ID = default,
     Optional<string> Username = default,
     Optional<ushort> Discriminator = default,
+    Optional<string?> GlobalName = default,
     Optional<IImageHash?> Avatar = default,
     Optional<bool> IsBot = default,
     Optional<bool> IsSystem = default,
