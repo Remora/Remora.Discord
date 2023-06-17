@@ -48,6 +48,12 @@ public interface IUser : IPartialUser
     new string Username { get; }
 
     /// <summary>
+    /// Gets the user's 4-digit discord tag.
+    /// </summary>
+    /// <remarks>Discord no longer uses discriminators, and migrated users will simply have '0' as their discriminator.</remarks>
+    new ushort Discriminator { get; }
+
+    /// <summary>
     /// Gets the user's display name, if it is set. For bots, this is the application name.
     /// </summary>
     new string? GlobalName { get; }
