@@ -74,5 +74,6 @@ public record PartialGuild
     Optional<IWelcomeScreen> WelcomeScreen = default,
     Optional<GuildNSFWLevel> NSFWLevel = default,
     Optional<IReadOnlyList<ISticker>> Stickers = default,
-    Optional<bool> IsPremiumProgressBarEnabled = default
+    Optional<bool> IsPremiumProgressBarEnabled = default,
+    Optional<Snowflake?> SafetyAlertsChannelID = default
 ) : IPartialGuild;

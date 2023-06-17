@@ -35,5 +35,6 @@ public record AutoModerationTriggerMetadata
     Optional<IReadOnlyList<string>> RegexPatterns = default,
     Optional<IReadOnlyList<AutoModerationKeywordPresetType>> Presets = default,
     Optional<IReadOnlyList<string>> AllowList = default,
-    Optional<byte> MentionTotalLimit = default
+    Optional<byte> MentionTotalLimit = default,
+    Optional<bool> MentionRaidProtectionEnabled = default
 ) : IAutoModerationTriggerMetadata;

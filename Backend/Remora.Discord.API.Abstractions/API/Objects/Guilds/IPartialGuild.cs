@@ -155,4 +155,7 @@ public interface IPartialGuild
 
     /// <inheritdoc cref="IGuild.IsPremiumProgressBarEnabled"/>
     Optional<bool> IsPremiumProgressBarEnabled { get; }
+
+    /// <inheritdoc cref="IGuild.SafetyAlertsChannelID"/>
+    Optional<Snowflake?> SafetyAlertsChannelID { get; }
 }

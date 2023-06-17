@@ -73,5 +73,6 @@ public record GuildUpdate
     Optional<IWelcomeScreen> WelcomeScreen,
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<ISticker>> Stickers,
-    bool IsPremiumProgressBarEnabled
+    bool IsPremiumProgressBarEnabled,
+    Snowflake? SafetyAlertsChannelID
 ) : IGuildUpdate;

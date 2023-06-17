@@ -183,6 +183,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<IReadOnlyList<GuildFeature>> features = default,
         Optional<string?> description = default,
         Optional<bool> isPremiumProgressBarEnabled = default,
+        Optional<Snowflake?> safetyAlertsChannelID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -209,6 +210,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             features,
             description,
             isPremiumProgressBarEnabled,
+            safetyAlertsChannelID,
             reason,
             ct
         );

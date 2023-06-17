@@ -11,5 +11,6 @@
   "allow_list": [
     "none"
   ],
-  "mention_total_limit": 1
+  "mention_total_limit": 1,
+  "mention_raid_protection_enabled": true
 }

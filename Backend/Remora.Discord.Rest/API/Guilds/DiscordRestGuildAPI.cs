@@ -191,6 +191,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<GuildFeature>> features = default,
         Optional<string?> description = default,
         Optional<bool> isPremiumProgressBarEnabled = default,
+        Optional<Snowflake?> safetyAlertsChannelID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -263,6 +264,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("features", features, this.JsonOptions);
                         json.Write("description", description, this.JsonOptions);
                         json.Write("premium_progress_bar_enabled", isPremiumProgressBarEnabled, this.JsonOptions);
+                        json.Write("safety_alerts_channel_id", safetyAlertsChannelID, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),

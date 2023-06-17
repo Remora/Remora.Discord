@@ -73,6 +73,7 @@
       }
     ],
     "premium_progress_bar_enabled": true,
+    "safety_alerts_channel_id": null,
     "joined_at": "1970-01-01T00:00:00.000000+00:00",
     "large": true,
     "unavailable": true,

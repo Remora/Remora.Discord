@@ -131,6 +131,9 @@ public interface IDiscordRestGuildAPI
     /// <param name="features">The new guild features.</param>
     /// <param name="description">The new description.</param>
     /// <param name="isPremiumProgressBarEnabled">Whether the guild has the boost progress bar enabled.</param>
+    /// <param name="safetyAlertsChannelID">
+    /// The ID of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -156,6 +159,7 @@ public interface IDiscordRestGuildAPI
         Optional<IReadOnlyList<GuildFeature>> features = default,
         Optional<string?> description = default,
         Optional<bool> isPremiumProgressBarEnabled = default,
+        Optional<Snowflake?> safetyAlertsChannelID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
