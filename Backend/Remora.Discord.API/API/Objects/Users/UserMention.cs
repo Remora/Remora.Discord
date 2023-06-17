@@ -33,7 +33,6 @@ public record UserMention
 (
     Snowflake ID,
     string Username,
-    string GlobalName,
     ushort Discriminator,
     string? GlobalName,
     IImageHash? Avatar,
@@ -53,7 +52,6 @@ public record UserMention
 (
     ID,
     Username,
-    GlobalName,
     Discriminator,
     GlobalName,
     Avatar,

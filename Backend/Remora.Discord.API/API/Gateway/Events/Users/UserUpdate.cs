@@ -34,7 +34,6 @@ public record UserUpdate
 (
     Snowflake ID,
     string Username,
-    string GlobalName,
     ushort Discriminator,
     string? GlobalName,
     IImageHash? Avatar,

@@ -35,7 +35,6 @@ public record User
 (
     Snowflake ID,
     string Username,
-    string GlobalName,
     ushort Discriminator,
     string? GlobalName,
     IImageHash? Avatar,
