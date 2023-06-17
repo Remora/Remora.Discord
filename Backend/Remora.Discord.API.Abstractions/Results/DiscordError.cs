@@ -884,6 +884,11 @@ public enum DiscordError
     YouCannotSendVoiceMessagesInThisChannel = 50173,
 
     /// <summary>
+    /// The given user must be verified first.
+    /// </summary>
+    TheUserMustFirstBeVerified = 50178,
+
+    /// <summary>
     /// You do not have permission to send this sticker.
     /// </summary>
     MissingPermissionToSendSticker = 50600,
