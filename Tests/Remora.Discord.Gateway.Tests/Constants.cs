@@ -38,7 +38,6 @@ public static class Constants
     (
         DiscordSnowflake.New(0),
         "mock_bot",
-        "Mock Bot",
         0,
         "mock-bot",
         null
