@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Remora.Discord.Commands.Contexts;
 using Remora.Rest.Core;
@@ -39,9 +38,9 @@ public static class OperationContextExtensions
     /// <param name="context">The context.</param>
     /// <param name="userID">The ID of the user.</param>
     /// <returns>true if an ID was extracted; otherwise, false.</returns>
-    public static bool TryGetUserID(this IOperationContext context, [NotNullWhen(true)] out Snowflake? userID)
+    public static bool TryGetUserID(this IOperationContext context, out Snowflake userID)
     {
-        userID = null;
+        userID = default;
 
         switch (context)
         {
@@ -80,9 +79,9 @@ public static class OperationContextExtensions
     /// <param name="context">The context.</param>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>true if an ID was extracted; otherwise, false.</returns>
-    public static bool TryGetGuildID(this IOperationContext context, [NotNullWhen(true)] out Snowflake? guildID)
+    public static bool TryGetGuildID(this IOperationContext context, out Snowflake guildID)
     {
-        guildID = null;
+        guildID = default;
 
         switch (context)
         {
@@ -117,9 +116,9 @@ public static class OperationContextExtensions
     /// <param name="context">The context.</param>
     /// <param name="channelID">The ID of the channel.</param>
     /// <returns>true if an ID was extracted; otherwise, false.</returns>
-    public static bool TryGetChannelID(this IOperationContext context, [NotNullWhen(true)] out Snowflake? channelID)
+    public static bool TryGetChannelID(this IOperationContext context, out Snowflake channelID)
     {
-        channelID = null;
+        channelID = default;
 
         switch (context)
         {

@@ -100,7 +100,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
             return new ParsingError<IEmoji>(value, "No matching emoji found.");
         }
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return Result<IEmoji>.FromError(getGuild);

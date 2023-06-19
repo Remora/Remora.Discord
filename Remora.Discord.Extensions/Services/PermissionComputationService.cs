@@ -128,7 +128,7 @@ public class PermissionComputationService : IPermissionComputationService
             throw new InvalidOperationException("Contextual permission computation requires an available channel ID.");
         }
 
-        return ComputeMemberPermissions(userID, guildID.Value, channelID, ct);
+        return ComputeMemberPermissions(userID, guildID, channelID, ct);
     }
 
     /// <inheritdoc/>
@@ -193,6 +193,6 @@ public class PermissionComputationService : IPermissionComputationService
             throw new InvalidOperationException("Contextual permission computation requires an available channel ID.");
         }
 
-        return ComputeRolePermissions(roleID, guildID.Value, channelID, ct);
+        return ComputeRolePermissions(roleID, guildID, channelID, ct);
     }
 }

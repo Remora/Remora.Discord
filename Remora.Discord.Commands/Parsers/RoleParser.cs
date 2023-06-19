@@ -78,7 +78,7 @@ public class RoleParser : AbstractTypeParser<IRole>, ITypeParser<IPartialRole>
             return new InvalidOperationError("Roles cannot be parsed outside of guild channels.");
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
             return Result<IRole>.FromError(getRoles);

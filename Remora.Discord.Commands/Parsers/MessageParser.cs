@@ -77,7 +77,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
                 return new ParsingError<IMessage>(value, "Messages can only be parsed by ID in channels.");
             }
 
-            return await _channelAPI.GetChannelMessageAsync(channelID.Value, messageID.Value, ct);
+            return await _channelAPI.GetChannelMessageAsync(channelID, messageID.Value, ct);
         }
 
         var messageLinkMatch = _messageLinkRegex.Match(value);

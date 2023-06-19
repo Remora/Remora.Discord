@@ -88,7 +88,7 @@ public class InteractiveCommands : CommandGroup
 
         return await _feedback.SendContextualPaginatedMessageAsync
         (
-            userID.Value,
+            userID,
             pages,
             ct: this.CancellationToken
         );

@@ -68,7 +68,7 @@ public class RequireContextCondition : ICondition<RequireContextAttribute>
             );
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
+        var getChannel = await _channelAPI.GetChannelAsync(channelID, ct);
         if (!getChannel.IsSuccess)
         {
             return (Result)getChannel;
