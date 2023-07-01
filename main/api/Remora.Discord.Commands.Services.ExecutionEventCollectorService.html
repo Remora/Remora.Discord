@@ -148,7 +148,7 @@ public class ExecutionEventCollectorService</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Commands_Services_ExecutionEventCollectorService_RunPostExecutionEvents_System_IServiceProvider_Remora_Discord_Commands_Contexts_ICommandContext_Remora_Results_IResult_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPostExecutionEvents(System.IServiceProvider%2CRemora.Discord.Commands.Contexts.ICommandContext%2CRemora.Results.IResult%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Commands/Services/Execution/ExecutionEventCollectorService.cs/#L116">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Commands/Services/Execution/ExecutionEventCollectorService.cs/#L125">View Source</a>
   </span>
   <a id="Remora_Discord_Commands_Services_ExecutionEventCollectorService" data-uid="Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPostExecutionEvents*"></a>
   <h4 id="RunPostExecutionEvents_1" data-uid="Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPostExecutionEvents(System.IServiceProvider,Remora.Discord.Commands.Contexts.ICommandContext,Remora.Results.IResult,System.Threading.CancellationToken)">RunPostExecutionEvents(IServiceProvider, ICommandContext, IResult, CancellationToken)</h4>
@@ -211,12 +211,15 @@ public class ExecutionEventCollectorService</code></pre>
       </tr>
     </tbody>
   </table>
+  <h5 id="RunPostExecutionEvents_1_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If no post-execution events are registered, this method will just return the original result.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Commands_Services_ExecutionEventCollectorService_RunPreExecutionEvents_System_IServiceProvider_Remora_Discord_Commands_Contexts_ICommandContext_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPreExecutionEvents(System.IServiceProvider%2CRemora.Discord.Commands.Contexts.ICommandContext%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Commands/Services/Execution/ExecutionEventCollectorService.cs/#L83">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Commands/Services/Execution/ExecutionEventCollectorService.cs/#L91">View Source</a>
   </span>
   <a id="Remora_Discord_Commands_Services_ExecutionEventCollectorService" data-uid="Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPreExecutionEvents*"></a>
   <h4 id="RunPreExecutionEvents_1" data-uid="Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPreExecutionEvents(System.IServiceProvider,Remora.Discord.Commands.Contexts.ICommandContext,System.Threading.CancellationToken)">RunPreExecutionEvents(IServiceProvider, ICommandContext, CancellationToken)</h4>
@@ -278,7 +281,7 @@ public class ExecutionEventCollectorService</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Commands_Services_ExecutionEventCollectorService_RunPreparationErrorEvents_System_IServiceProvider_Remora_Discord_Commands_Contexts_IOperationContext_Remora_Results_IResult_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPreparationErrorEvents(System.IServiceProvider%2CRemora.Discord.Commands.Contexts.IOperationContext%2CRemora.Results.IResult%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Commands/Services/Execution/ExecutionEventCollectorService.cs/#L49">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Commands/Services/Execution/ExecutionEventCollectorService.cs/#L50">View Source</a>
   </span>
   <a id="Remora_Discord_Commands_Services_ExecutionEventCollectorService" data-uid="Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPreparationErrorEvents*"></a>
   <h4 id="RunPreparationErrorEvents_1" data-uid="Remora.Discord.Commands.Services.ExecutionEventCollectorService.RunPreparationErrorEvents(System.IServiceProvider,Remora.Discord.Commands.Contexts.IOperationContext,Remora.Results.IResult,System.Threading.CancellationToken)">RunPreparationErrorEvents(IServiceProvider, IOperationContext, IResult, CancellationToken)</h4>
@@ -341,6 +344,9 @@ public class ExecutionEventCollectorService</code></pre>
       </tr>
     </tbody>
   </table>
+  <h5 id="RunPreparationErrorEvents_1_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If no error events are registered, this method will just return the original result.</p>
+</div>
 </article>
               
                 </div>
