@@ -167,11 +167,13 @@ public class InteractionResponder : IResponder<IInteractionCreate>
                 ct
             );
 
-            if (!preparationError.IsSuccess)
+            // check if the result has changed, since the error events might change the outcome
+            if (!preparationError.IsSuccess && !Equals(preparationError.Error, prepareCommand.Error))
             {
                 return preparationError;
             }
 
+            // eat the error if it's not a developer problem
             if (prepareCommand.Error.IsUserOrEnvironmentError())
             {
                 // We've done our part and notified whoever might be interested; job well done

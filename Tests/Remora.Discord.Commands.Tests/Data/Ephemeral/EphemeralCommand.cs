@@ -37,19 +37,19 @@ public class EphemeralCommand : CommandGroup
     [Ephemeral]
     public Task<Result> A()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Result.FromSuccess());
     }
 
     [Command("b")]
     public Task<Result> B()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Result.FromSuccess());
     }
 
     [Command("c")]
     [Ephemeral(false)]
     public Task<Result> C()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Result.FromSuccess());
     }
 }
