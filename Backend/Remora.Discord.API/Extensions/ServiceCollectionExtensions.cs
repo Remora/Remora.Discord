@@ -545,7 +545,8 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IPartialChannel, PartialChannel>()
             .WithPropertyName(c => c.IsNsfw, "nsfw")
             .WithPropertyName(c => c.IsManaged, "managed")
-            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
+            .WithPropertyConverter(c => c.DefaultThreadRateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IChannelMention, ChannelMention>();
         options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
@@ -766,7 +767,9 @@ public static class ServiceCollectionExtensions
             .WithPropertyConverter(a => a.Duration, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IPartialAttachment, PartialAttachment>()
-            .WithPropertyName(a => a.IsEphemeral, "ephemeral");
+            .WithPropertyName(a => a.IsEphemeral, "ephemeral")
+            .WithPropertyName(a => a.Duration, "duration_secs")
+            .WithPropertyConverter(a => a.Duration, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IEmbed, Embed>()
             .WithPropertyConverter(e => e.Type, new StringEnumConverter<EmbedType>(new SnakeCaseNamingPolicy()))
