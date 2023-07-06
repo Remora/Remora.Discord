@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
@@ -40,7 +39,6 @@ public interface IPartialUser
     Optional<string> Username { get; }
 
     /// <inheritdoc cref="IUser.Discriminator" />
-    [Obsolete("Users are being migrated to pomelo. This field is zero except for bot accounts.")]
     Optional<ushort> Discriminator { get; }
 
     /// <inheritdoc cref="IUser.GlobalName" />
