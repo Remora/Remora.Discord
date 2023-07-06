@@ -531,7 +531,7 @@ public static class CDN
             return Result<Uri>.FromError(checkImageSize);
         }
 
-        var valueModulus = userDiscriminatorOrID.Match(t0 => (ushort)(t0.Value >> 22) % 5, t1 => t1 % 5);
+        var valueModulus = userDiscriminatorOrID.Match(t0 => (ushort)(t0.Value >> 22) % 6, t1 => t1 % 5);
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
             Path = $"embed/avatars/{valueModulus}.{format.ToFileExtension()}"
