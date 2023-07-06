@@ -39,7 +39,7 @@ public interface IUser : IPartialUser
     new Snowflake ID { get; }
 
     /// <summary>
-    /// Gets the username of the user. This is a unique value.
+    /// Gets the username of the user. This is a unique value for users, but not for bots.
     /// </summary>
     /// <remarks>
     /// Discord is currently migrating to a new username system. When the migration is complete, this field will be
