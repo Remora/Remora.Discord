@@ -48,5 +48,6 @@ public record PartialUser
     Optional<string?> Email = default,
     Optional<UserFlags> Flags = default,
     Optional<PremiumType> PremiumType = default,
-    Optional<UserFlags> PublicFlags = default
+    Optional<UserFlags> PublicFlags = default,
+    Optional<IImageHash?> AvatarDecoration = default
 ) : IPartialUser;

@@ -118,6 +118,11 @@ public interface IUser : IPartialUser
     /// </summary>
     new Optional<UserFlags> PublicFlags { get; }
 
+    /// <summary>
+    /// Gets the user's avatar decoration.
+    /// </summary>
+    new Optional<IImageHash?> AvatarDecoration { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialUser.ID => this.ID;
 
@@ -165,4 +170,7 @@ public interface IUser : IPartialUser
 
     /// <inheritdoc/>
     Optional<UserFlags> IPartialUser.PublicFlags => this.PublicFlags;
+
+    /// <inheritdoc/>
+    Optional<IImageHash?> IPartialUser.AvatarDecoration => this.AvatarDecoration;
 }

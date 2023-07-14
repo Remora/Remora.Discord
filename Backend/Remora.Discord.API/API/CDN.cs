@@ -708,6 +708,82 @@ public static class CDN
     }
 
     /// <summary>
+    /// Gets the CDN URI of the given user's avatar decoration.
+    /// </summary>
+    /// <param name="user">The user.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetUserAvatarDecorationUrl
+    (
+        IUser user,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        if (!user.AvatarDecoration.IsDefined(out var avatarDecoration))
+        {
+            return new ImageNotFoundError();
+        }
+
+        // Prefer the animated version, if available
+        if (avatarDecoration.HasGif && !imageFormat.HasValue)
+        {
+            imageFormat = CDNImageFormat.GIF;
+        }
+
+        return GetUserAvatarDecorationUrl(user.ID, avatarDecoration, imageFormat, imageSize);
+    }
+
+    /// <summary>
+    /// Gets the CDN URI of the given user's avatar decoration.
+    /// </summary>
+    /// <param name="userID">The ID of the user.</param>
+    /// <param name="avatarDecorationHash">The image hash of the user's avatar decoration.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetUserAvatarDecorationUrl
+    (
+        Snowflake userID,
+        IImageHash avatarDecorationHash,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        var formatValidation = ValidateOrDefaultImageFormat
+        (
+            imageFormat,
+            CDNImageFormat.PNG
+        );
+
+        if (!formatValidation.IsSuccess)
+        {
+            return Result<Uri>.FromError(formatValidation);
+        }
+
+        var format = formatValidation.Entity;
+
+        var checkImageSize = CheckImageSize(imageSize);
+        if (!checkImageSize.IsSuccess)
+        {
+            return Result<Uri>.FromError(checkImageSize);
+        }
+
+        var ub = new UriBuilder(Constants.CDNBaseURL)
+        {
+            Path = $"avatar-decorations/{userID}/{avatarDecorationHash.Value}.{format.ToFileExtension()}"
+        };
+
+        if (imageSize.TryGet(out var size))
+        {
+            ub.Query = $"size={size}";
+        }
+
+        return ub.Uri;
+    }
+
+    /// <summary>
     /// Gets the CDN URI of the given application's icon.
     /// </summary>
     /// <param name="application">The application.</param>
