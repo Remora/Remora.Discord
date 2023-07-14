@@ -1021,5 +1021,15 @@ public enum DiscordError
     /// <summary>
     /// Webhook services cannot be used in forum channels.
     /// </summary>
-    WebhookServicesCannotBeUsedInForumChannels = 220004
+    WebhookServicesCannotBeUsedInForumChannels = 220004,
+
+    /// <summary>
+    /// Onboarding cannot be enabled while requirements are not met.
+    /// </summary>
+    CannotEnableOnboarding = 350000,
+
+    /// <summary>
+    /// Onboarding cannot be updated while requirements are not met.
+    /// </summary>
+    CannotUpdateOnboarding = 350001
 }

@@ -43,5 +43,6 @@
   "default_channel_ids": [
     "999999999999999999"
   ],
-  "enabled": true
+  "enabled": true,
+  "mode": 0
 }

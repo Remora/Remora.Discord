@@ -2900,6 +2900,67 @@ public class DiscordRestGuildAPITests
     }
 
     /// <summary>
+    /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildOnboardingAsync"/> method.
+    /// </summary>
+    public class ModifyGuildOnboardingAsync : RestAPITestBase<IDiscordRestGuildAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildOnboardingAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildOnboardingAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var prompts = Array.Empty<IOnboardingPrompt>();
+            var defaultChannelIDs = Array.Empty<Snowflake>();
+            var isEnabled = true;
+            var mode = GuildOnboardingMode.Default;
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/onboarding")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("prompts", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("default_channel_ids", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("enabled", p => p.Is(isEnabled))
+                                .WithProperty("mode", p => p.Is((int)mode))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildOnboarding)])
+            );
+
+            var result = await api.ModifyGuildOnboardingAsync
+            (
+                guildId,
+                prompts,
+                defaultChannelIDs,
+                isEnabled,
+                mode,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
     /// Tests the <see cref="DiscordRestGuildAPI.ModifyCurrentUserVoiceStateAsync"/> method.
     /// </summary>
     public class UpdateCurrentUserVoiceStateAsync : RestAPITestBase<IDiscordRestGuildAPI>

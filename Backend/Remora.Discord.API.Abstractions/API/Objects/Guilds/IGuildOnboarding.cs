@@ -51,4 +51,9 @@ public interface IGuildOnboarding
     /// Gets a value indicating whether onboarding is enabled in the guild.
     /// </summary>
     bool IsEnabled { get; }
+
+    /// <summary>
+    /// Gets the current onboarding mode.
+    /// </summary>
+    GuildOnboardingMode Mode { get; }
 }

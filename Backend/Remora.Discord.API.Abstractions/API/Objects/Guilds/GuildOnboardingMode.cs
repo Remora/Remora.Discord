@@ -1,5 +1,5 @@
 //
-//  GuildOnboarding.cs
+//  GuildOnboardingMode.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IGuildOnboarding" />
+/// <summary>
+/// Enumerates various onboarding modes.
+/// </summary>
 [PublicAPI]
-public record GuildOnboarding
-(
-    Snowflake GuildID,
-    IReadOnlyList<IOnboardingPrompt> Prompts,
-    IReadOnlyList<Snowflake> DefaultChannelIDs,
-    bool IsEnabled,
-    GuildOnboardingMode Mode
-) : IGuildOnboarding;
+public enum GuildOnboardingMode
+{
+    /// <summary>
+    /// Counts only default channels towards constraints.
+    /// </summary>
+    Default = 0,
+
+    /// <summary>
+    /// Counts default channels and questions towards constraints.
+    /// </summary>
+    Advanced = 1
+}

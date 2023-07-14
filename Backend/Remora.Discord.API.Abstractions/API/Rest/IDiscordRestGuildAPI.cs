@@ -998,6 +998,28 @@ public interface IDiscordRestGuildAPI
     );
 
     /// <summary>
+    /// Modifies the guild's onboarding flow.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="prompts">The prompts shown during onboarding.</param>
+    /// <param name="defaultChannelIDs">Channel IDs that members get opted into automatically.</param>
+    /// <param name="isEnabled">Whether onboarding is enabled.</param>
+    /// <param name="mode">The onboarding mode.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The new onboarding configuration.</returns>
+    Task<Result<IGuildOnboarding>> ModifyGuildOnboardingAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<IOnboardingPrompt> prompts,
+        IReadOnlyList<Snowflake> defaultChannelIDs,
+        bool isEnabled,
+        GuildOnboardingMode mode,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Modifies the voice state of the current user.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>

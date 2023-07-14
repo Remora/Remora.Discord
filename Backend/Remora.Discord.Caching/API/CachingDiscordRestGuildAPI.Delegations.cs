@@ -204,6 +204,21 @@ public partial class CachingDiscordRestGuildAPI
         return _actual.ModifyGuildWelcomeScreenAsync(guildID, isEnabled, welcomeChannels, description, reason, ct);
     }
 
+    /// <inheritdoc/>
+    public Task<Result<IGuildOnboarding>> ModifyGuildOnboardingAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<IOnboardingPrompt> prompts,
+        IReadOnlyList<Snowflake> defaultChannelIDs,
+        bool isEnabled,
+        GuildOnboardingMode mode,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ModifyGuildOnboardingAsync(guildID, prompts, defaultChannelIDs, isEnabled, mode, reason, ct);
+    }
+
     /// <inheritdoc />
     public Task<Result> ModifyCurrentUserVoiceStateAsync
     (

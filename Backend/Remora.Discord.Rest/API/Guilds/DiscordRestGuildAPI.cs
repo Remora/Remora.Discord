@@ -1422,6 +1422,38 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<IGuildOnboarding>> ModifyGuildOnboardingAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<IOnboardingPrompt> prompts,
+        IReadOnlyList<Snowflake> defaultChannelIDs,
+        bool isEnabled,
+        GuildOnboardingMode mode,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync<IGuildOnboarding>
+        (
+            $"guilds/{guildID}/onboarding",
+            b => b
+                .AddAuditLogReason(reason)
+                .WithJson
+                (
+                    json =>
+                    {
+                        json.Write("prompts", prompts, this.JsonOptions);
+                        json.Write("default_channel_ids", defaultChannelIDs, this.JsonOptions);
+                        json.Write("enabled", isEnabled, this.JsonOptions);
+                        json.Write("mode", mode, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
     public virtual Task<Result<IVoiceState>> ModifyUserVoiceStateAsync
     (
         Snowflake guildID,
