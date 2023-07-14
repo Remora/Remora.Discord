@@ -239,6 +239,7 @@ public class DiscordRestUserAPITests
             var before = DiscordSnowflake.New(0);
             var after = DiscordSnowflake.New(1);
             var limit = 10;
+            var withCounts = true;
 
             var api = CreateAPI
             (
@@ -250,13 +251,14 @@ public class DiscordRestUserAPITests
                         {
                             new KeyValuePair<string, string>("before", before.ToString()),
                             new KeyValuePair<string, string>("after", after.ToString()),
-                            new KeyValuePair<string, string>("limit", limit.ToString())
+                            new KeyValuePair<string, string>("limit", limit.ToString()),
+                            new KeyValuePair<string, string>("with_counts", withCounts.ToString())
                         }
                     )
                     .Respond("application/json", "[]")
             );
 
-            var result = await api.GetCurrentUserGuildsAsync(before, after, limit);
+            var result = await api.GetCurrentUserGuildsAsync(before, after, limit, withCounts);
             ResultAssert.Successful(result);
         }
 

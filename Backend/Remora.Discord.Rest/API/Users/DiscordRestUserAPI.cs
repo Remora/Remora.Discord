@@ -123,6 +123,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
         Optional<Snowflake> before = default,
         Optional<Snowflake> after = default,
         Optional<int> limit = default,
+        Optional<bool> withCounts = default,
         CancellationToken ct = default
     )
     {
@@ -153,6 +154,11 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
                 if (limit.TryGet(out var realLimit))
                 {
                     b.AddQueryParameter("limit", realLimit.ToString());
+                }
+
+                if (withCounts.TryGet(out var realWithCounts))
+                {
+                    b.AddQueryParameter("with_counts", realWithCounts.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
