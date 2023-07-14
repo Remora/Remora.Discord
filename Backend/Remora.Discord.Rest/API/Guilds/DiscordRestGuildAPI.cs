@@ -318,6 +318,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
+        Optional<ForumLayout?> defaultForumLayout = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -347,6 +348,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("default_reaction_emoji", defaultReactionEmoji, this.JsonOptions);
                         json.Write("available_tags", availableTags, this.JsonOptions);
                         json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
+                        json.Write("default_forum_layout", defaultForumLayout, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -426,6 +428,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
+        Optional<ForumLayout?> defaultForumLayout = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -442,6 +445,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         defaultReactionEmoji: defaultReactionEmoji,
         availableTags: availableTags,
         defaultSortOrder: defaultSortOrder,
+        defaultForumLayout: defaultForumLayout,
         reason: reason,
         ct: ct
     );

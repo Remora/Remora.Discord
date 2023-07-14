@@ -300,6 +300,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
+        Optional<ForumLayout?> defaultForumLayout = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -323,6 +324,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             defaultReactionEmoji,
             availableTags,
             defaultSortOrder,
+            defaultForumLayout,
             reason,
             ct
         );
@@ -411,6 +413,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
+        Optional<ForumLayout?> defaultForumLayout = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -427,6 +430,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         defaultReactionEmoji: defaultReactionEmoji,
         availableTags: availableTags,
         defaultSortOrder: defaultSortOrder,
+        defaultForumLayout: defaultForumLayout,
         reason: reason,
         ct: ct
     );

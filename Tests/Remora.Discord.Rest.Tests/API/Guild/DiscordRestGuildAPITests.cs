@@ -785,6 +785,7 @@ public class DiscordRestGuildAPITests
             var defaultReactionEmoji = new DefaultReaction(EmojiName: "booga");
             var availableTags = Array.Empty<IForumTag>();
             var defaultSortOrder = SortOrder.CreationDate;
+            var defaultLayout = ForumLayout.GalleryView;
             var reason = "test";
 
             var api = CreateAPI
@@ -812,6 +813,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("default_reaction_emoji", p => p.IsObject())
                                 .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
+                                .WithProperty("default_forum_layout", p => p.Is((int)defaultLayout))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -830,6 +832,7 @@ public class DiscordRestGuildAPITests
                 defaultReactionEmoji,
                 availableTags,
                 defaultSortOrder,
+                defaultLayout,
                 reason
             );
 
@@ -1025,7 +1028,8 @@ public class DiscordRestGuildAPITests
                 defaultAutoArchiveDuration: null,
                 defaultReactionEmoji: null,
                 availableTags: null,
-                defaultSortOrder: null
+                defaultSortOrder: null,
+                defaultForumLayout: null
             );
 
             ResultAssert.Successful(result);
