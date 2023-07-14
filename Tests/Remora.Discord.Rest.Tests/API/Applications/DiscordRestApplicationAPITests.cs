@@ -2407,4 +2407,43 @@ public class DiscordRestApplicationAPITests
             ResultAssert.Unsuccessful(result);
         }
     }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetCurrentApplicationAsync"/> method.
+    /// </summary>
+    public class GetCurrentApplicationAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCurrentApplicationAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetCurrentApplicationAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}applications/@me"
+                    )
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
+            );
+
+            var result = await api.GetCurrentApplicationAsync();
+
+            ResultAssert.Successful(result);
+        }
+    }
 }

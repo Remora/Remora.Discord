@@ -34,10 +34,12 @@
     "owner_user_id": "999999999999999999"
   },
   "guild_id": "999999999999999999",
+  "guild": { },
   "primary_sku_id": "999999999999999999",
   "slug": "test",
   "cover_image": "68b329da9893e34099c7d8ad5cb9c940",
   "flags": 0,
+  "approximate_guild_count": 0,
   "tags": [
     "none"
   ],

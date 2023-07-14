@@ -72,6 +72,9 @@ public interface IPartialApplication
     /// <inheritdoc cref="IApplication.GuildID" />
     Optional<Snowflake> GuildID { get; }
 
+    /// <inheritdoc cref="IApplication.Guild" />
+    Optional<IPartialGuild> Guild { get; }
+
     /// <inheritdoc cref="IApplication.PrimarySKUID" />
     Optional<Snowflake> PrimarySKUID { get; }
 
@@ -83,6 +86,9 @@ public interface IPartialApplication
 
     /// <inheritdoc cref="IApplication.Flags" />
     Optional<ApplicationFlags> Flags { get; }
+
+    /// <inheritdoc cref="IApplication.ApproximateGuildCount" />
+    Optional<int> ApproximateGuildCount { get; }
 
     /// <inheritdoc cref="IApplication.Tags" />
     Optional<IReadOnlyList<string>> Tags { get; }

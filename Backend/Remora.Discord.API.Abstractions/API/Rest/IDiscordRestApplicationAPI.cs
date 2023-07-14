@@ -372,4 +372,11 @@ public interface IDiscordRestApplicationAPI
         IReadOnlyList<IApplicationRoleConnectionMetadata> records,
         CancellationToken ct = default
     );
+
+    /// <summary>
+    /// Gets the application object associated with the requesting user.
+    /// </summary>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The application object.</returns>
+    Task<Result<IApplication>> GetCurrentApplicationAsync(CancellationToken ct = default);
 }

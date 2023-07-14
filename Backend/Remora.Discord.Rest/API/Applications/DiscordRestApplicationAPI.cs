@@ -640,4 +640,15 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
             ct: ct
         );
     }
+
+    /// <inheritdoc />
+    public Task<Result<IApplication>> GetCurrentApplicationAsync(CancellationToken ct = default)
+    {
+        return this.RestHttpClient.GetAsync<IApplication>
+        (
+            "applications/@me",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
 }
