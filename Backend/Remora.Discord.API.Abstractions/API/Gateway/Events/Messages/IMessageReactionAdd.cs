@@ -61,4 +61,9 @@ public interface IMessageReactionAdd : IGatewayEvent
     /// Gets the emoji.
     /// </summary>
     IPartialEmoji Emoji { get; }
+
+    /// <summary>
+    /// Gets the ID of the user who authored the message.
+    /// </summary>
+    Optional<Snowflake> MessageAuthorID { get; }
 }

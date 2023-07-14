@@ -16,6 +16,7 @@
       "mute": true,
       "flags": 1
     },
-    "emoji": { }
+    "emoji": { },
+    "message_author_id": "999999999999999999"
   }
 }
