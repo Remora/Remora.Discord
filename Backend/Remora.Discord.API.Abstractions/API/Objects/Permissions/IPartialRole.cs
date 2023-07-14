@@ -64,4 +64,7 @@ public interface IPartialRole
 
     /// <inheritdoc cref="IRole.Tags" />
     Optional<IRoleTags> Tags { get; }
+
+    /// <inheritdoc cref="IRole.Flags" />
+    Optional<RoleFlags> Flags { get; }
 }

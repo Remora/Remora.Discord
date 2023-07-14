@@ -12,7 +12,8 @@
       "position": 1,
       "permissions": "0",
       "managed": true,
-      "mentionable": true
+      "mentionable": true,
+      "flags": 0
     }
   }
 }

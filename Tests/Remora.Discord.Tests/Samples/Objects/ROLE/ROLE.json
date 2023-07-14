@@ -9,5 +9,6 @@
   "permissions": "0",
   "managed": true,
   "mentionable": true,
-  "tags": { }
+  "tags": { },
+  "flags": 0
 }

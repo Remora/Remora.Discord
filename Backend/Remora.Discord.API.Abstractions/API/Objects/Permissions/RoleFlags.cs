@@ -1,5 +1,5 @@
 //
-//  PartialRole.cs
+//  RoleFlags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Drawing;
+using System;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IPartialRole" />
+/// <summary>
+/// Enumerates various flags that can be applied to a role.
+/// </summary>
 [PublicAPI]
-public record PartialRole
-(
-    Optional<Snowflake> ID = default,
-    Optional<string> Name = default,
-    Optional<Color> Colour = default,
-    Optional<bool> IsHoisted = default,
-    Optional<IImageHash?> Icon = default,
-    Optional<string?> UnicodeEmoji = default,
-    Optional<int> Position = default,
-    Optional<IDiscordPermissionSet> Permissions = default,
-    Optional<bool> IsManaged = default,
-    Optional<bool> IsMentionable = default,
-    Optional<IRoleTags> Tags = default,
-    Optional<RoleFlags> Flags = default
-) : IPartialRole;
+[Flags]
+public enum RoleFlags
+{
+    /// <summary>
+    /// No flags are applied.
+    /// </summary>
+    None = 0,
+
+    /// <summary>
+    /// The role can be selected by members in an onboarding prompt.
+    /// </summary>
+    InPrompt = 1 << 0
+}

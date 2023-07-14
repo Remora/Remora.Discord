@@ -35,7 +35,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": false,
-        "permissions": "372624976"
+        "permissions": "372624976",
+        "flags": 0
       },
       {
         "id": 2,
@@ -46,7 +47,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": false,
-        "permissions": "372624976"
+        "permissions": "372624976",
+        "flags": 0
       },
       {
         "id": 3,
@@ -57,7 +59,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": false,
-        "permissions": "372624976"
+        "permissions": "372624976",
+        "flags": 0
       },
       {
         "id": 4,
@@ -68,7 +71,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": false,
-        "permissions": "372624976"
+        "permissions": "372624976",
+        "flags": 0
       },
       {
         "id": 5,
@@ -79,7 +83,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": true,
-        "permissions": "372624976"
+        "permissions": "372624976",
+        "flags": 0
       },
       {
         "id": 6,
@@ -90,7 +95,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": true,
-        "permissions": "372624976"
+        "permissions": "372624976",
+        "flags": 0
       },
       {
         "id": 7,
@@ -101,7 +107,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": true,
-        "permissions": "372624976"
+        "permissions": "372624976",
+        "flags": 0
       },
       {
         "id": 8,
@@ -112,7 +119,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": false,
-        "permissions": "372624976"
+        "permissions": "372624976",
+        "flags": 0
       },
       {
         "id": 9,
@@ -123,7 +131,8 @@
         "unicode_emoji": null,
         "position": 1,
         "mentionable": false,
-        "permissions": "2146959351"
+        "permissions": "2146959351",
+        "flags": 0
       }
     ],
     "channels": [

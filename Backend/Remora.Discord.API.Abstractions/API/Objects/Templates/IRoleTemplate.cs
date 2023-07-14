@@ -63,4 +63,7 @@ public interface IRoleTemplate
 
     /// <inheritdoc cref="IRole.Name"/>
     Optional<IRoleTags> Tags { get; }
+
+    /// <inheritdoc cref="IRole.Name"/>
+    RoleFlags Flags { get; }
 }
