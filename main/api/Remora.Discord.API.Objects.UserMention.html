@@ -108,12 +108,10 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-    <div class="level1"><a class="xref" href="Remora.Discord.API.Objects.User.html">User</a></div>
-    <div class="level2"><span class="xref">UserMention</span></div>
+    <div class="level1"><span class="xref">UserMention</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.User.html">User</a>&gt;</div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUserMention.html">IUserMention</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialUser.html">IPartialUser</a></div>
@@ -121,54 +119,6 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#ID">User.ID</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#Username">User.Username</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#Discriminator">User.Discriminator</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#GlobalName">User.GlobalName</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#Avatar">User.Avatar</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#IsBot">User.IsBot</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#IsSystem">User.IsSystem</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#IsMFAEnabled">User.IsMFAEnabled</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#Banner">User.Banner</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#AccentColour">User.AccentColour</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#Locale">User.Locale</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#IsVerified">User.IsVerified</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#Email">User.Email</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#Flags">User.Flags</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#PremiumType">User.PremiumType</a>
-    </div>
-    <div>
-      <a class="xref" href="Remora.Discord.API.Objects.User.html#PublicFlags">User.PublicFlags</a>
-    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
@@ -196,24 +146,24 @@
   <h5 id="Remora_Discord_API_Objects_UserMention_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public record UserMention : User, IEquatable&lt;User&gt;, IUserMention, IUser, IPartialUser, IEquatable&lt;UserMention&gt;</code></pre>
+public record UserMention : IUserMention, IUser, IPartialUser, IEquatable&lt;UserMention&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention__ctor_Remora_Rest_Core_Snowflake_System_String_System_UInt16_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_System_Nullable_System_Drawing_Color___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_UserFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_PremiumType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_UserFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.%23ctor(Remora.Rest.Core.Snowflake%2CSystem.String%2CSystem.UInt16%2CSystem.String%2CRemora.Discord.API.Abstractions.Objects.IImageHash%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Drawing.Color%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.UserFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.PremiumType%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.UserFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IPartialGuildMember%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention__ctor_Remora_Rest_Core_Snowflake_System_String_System_UInt16_System_String_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_System_Nullable_System_Drawing_Color___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_UserFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_PremiumType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_UserFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.%23ctor(Remora.Rest.Core.Snowflake%2CSystem.String%2CSystem.UInt16%2CSystem.String%2CRemora.Discord.API.Abstractions.Objects.IImageHash%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Drawing.Color%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.UserFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.PremiumType%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.UserFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IPartialGuildMember%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.UserMention.#ctor(Remora.Rest.Core.Snowflake,System.String,System.UInt16,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{System.Nullable{System.Drawing.Color}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.UserFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.PremiumType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.UserFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPartialGuildMember})">UserMention(Snowflake, string, ushort, string?, IImageHash?, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;IImageHash?&gt;, Optional&lt;Color?&gt;, Optional&lt;string&gt;, Optional&lt;bool&gt;, Optional&lt;string?&gt;, Optional&lt;UserFlags&gt;, Optional&lt;PremiumType&gt;, Optional&lt;UserFlags&gt;, Optional&lt;IPartialGuildMember&gt;)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.UserMention.#ctor(Remora.Rest.Core.Snowflake,System.String,System.UInt16,System.String,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{System.Nullable{System.Drawing.Color}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.UserFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.PremiumType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.UserFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPartialGuildMember},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash})">UserMention(Snowflake, string, ushort, string?, IImageHash?, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;IImageHash?&gt;, Optional&lt;Color?&gt;, Optional&lt;string&gt;, Optional&lt;bool&gt;, Optional&lt;string?&gt;, Optional&lt;UserFlags&gt;, Optional&lt;PremiumType&gt;, Optional&lt;UserFlags&gt;, Optional&lt;IPartialGuildMember&gt;, Optional&lt;IImageHash?&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public UserMention(Snowflake ID, string Username, ushort Discriminator, string? GlobalName, IImageHash? Avatar, Optional&lt;bool&gt; IsBot = default, Optional&lt;bool&gt; IsSystem = default, Optional&lt;bool&gt; IsMFAEnabled = default, Optional&lt;IImageHash?&gt; Banner = default, Optional&lt;Color?&gt; AccentColour = default, Optional&lt;string&gt; Locale = default, Optional&lt;bool&gt; IsVerified = default, Optional&lt;string?&gt; Email = default, Optional&lt;UserFlags&gt; Flags = default, Optional&lt;PremiumType&gt; PremiumType = default, Optional&lt;UserFlags&gt; PublicFlags = default, Optional&lt;IPartialGuildMember&gt; Member = default)</code></pre>
+    <pre><code class="lang-csharp hljs">public UserMention(Snowflake ID, string Username, ushort Discriminator, string? GlobalName, IImageHash? Avatar, Optional&lt;bool&gt; IsBot = default, Optional&lt;bool&gt; IsSystem = default, Optional&lt;bool&gt; IsMFAEnabled = default, Optional&lt;IImageHash?&gt; Banner = default, Optional&lt;Color?&gt; AccentColour = default, Optional&lt;string&gt; Locale = default, Optional&lt;bool&gt; IsVerified = default, Optional&lt;string?&gt; Email = default, Optional&lt;UserFlags&gt; Flags = default, Optional&lt;PremiumType&gt; PremiumType = default, Optional&lt;UserFlags&gt; PublicFlags = default, Optional&lt;IPartialGuildMember&gt; Member = default, Optional&lt;IImageHash?&gt; AvatarDecoration = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -310,10 +260,435 @@ public record UserMention : User, IEquatable&lt;User&gt;, IUserMention, IUser, I
         <td><span class="parametername">Member</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td><span class="parametername">AvatarDecoration</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
 </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_AccentColour.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.AccentColour%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L43">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.AccentColour*"></a>
+  <h4 id="AccentColour" data-uid="Remora.Discord.API.Objects.UserMention.AccentColour">AccentColour</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;Color?&gt; AccentColour { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.drawing.color">Color</a>?&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_Avatar.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.Avatar%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L38">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.Avatar*"></a>
+  <h4 id="Avatar" data-uid="Remora.Discord.API.Objects.UserMention.Avatar">Avatar</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IImageHash? Avatar { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_AvatarDecoration.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.AvatarDecoration%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L51">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.AvatarDecoration*"></a>
+  <h4 id="AvatarDecoration" data-uid="Remora.Discord.API.Objects.UserMention.AvatarDecoration">AvatarDecoration</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash?&gt; AvatarDecoration { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_Banner.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.Banner%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L42">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.Banner*"></a>
+  <h4 id="Banner" data-uid="Remora.Discord.API.Objects.UserMention.Banner">Banner</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;IImageHash?&gt; Banner { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_Discriminator.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.Discriminator%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L36">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.Discriminator*"></a>
+  <h4 id="Discriminator" data-uid="Remora.Discord.API.Objects.UserMention.Discriminator">Discriminator</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort Discriminator { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint16">ushort</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_Email.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.Email%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L46">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.Email*"></a>
+  <h4 id="Email" data-uid="Remora.Discord.API.Objects.UserMention.Email">Email</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;string?&gt; Email { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_Flags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.Flags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L47">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.Flags*"></a>
+  <h4 id="Flags" data-uid="Remora.Discord.API.Objects.UserMention.Flags">Flags</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;UserFlags&gt; Flags { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.UserFlags.html">UserFlags</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_GlobalName.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.GlobalName%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L37">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.GlobalName*"></a>
+  <h4 id="GlobalName" data-uid="Remora.Discord.API.Objects.UserMention.GlobalName">GlobalName</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? GlobalName { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_ID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.ID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L34">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.ID*"></a>
+  <h4 id="ID" data-uid="Remora.Discord.API.Objects.UserMention.ID">ID</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_IsBot.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.IsBot%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L39">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.IsBot*"></a>
+  <h4 id="IsBot" data-uid="Remora.Discord.API.Objects.UserMention.IsBot">IsBot</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsBot { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_IsMFAEnabled.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.IsMFAEnabled%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L41">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.IsMFAEnabled*"></a>
+  <h4 id="IsMFAEnabled" data-uid="Remora.Discord.API.Objects.UserMention.IsMFAEnabled">IsMFAEnabled</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsMFAEnabled { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_IsSystem.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.IsSystem%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L40">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.IsSystem*"></a>
+  <h4 id="IsSystem" data-uid="Remora.Discord.API.Objects.UserMention.IsSystem">IsSystem</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsSystem { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_IsVerified.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.IsVerified%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L45">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.IsVerified*"></a>
+  <h4 id="IsVerified" data-uid="Remora.Discord.API.Objects.UserMention.IsVerified">IsVerified</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsVerified { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_Locale.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.Locale%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L44">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.Locale*"></a>
+  <h4 id="Locale" data-uid="Remora.Discord.API.Objects.UserMention.Locale">Locale</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Locale { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_Member.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.Member%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -344,10 +719,97 @@ public record UserMention : User, IEquatable&lt;User&gt;, IUserMention, IUser, I
       </tr>
     </tbody>
   </table>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_PremiumType.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.PremiumType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L48">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.PremiumType*"></a>
+  <h4 id="PremiumType" data-uid="Remora.Discord.API.Objects.UserMention.PremiumType">PremiumType</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;PremiumType&gt; PremiumType { get; init; }</code></pre>
   </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.PremiumType.html">PremiumType</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_PublicFlags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.PublicFlags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L49">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.PublicFlags*"></a>
+  <h4 id="PublicFlags" data-uid="Remora.Discord.API.Objects.UserMention.PublicFlags">PublicFlags</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;UserFlags&gt; PublicFlags { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.UserFlags.html">UserFlags</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_UserMention_Username.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.UserMention.Username%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/UserMention.cs/#L35">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_UserMention" data-uid="Remora.Discord.API.Objects.UserMention.Username*"></a>
+  <h4 id="Username" data-uid="Remora.Discord.API.Objects.UserMention.Username">Username</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Username { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUserMention.html">IUserMention</a>
   </div>
