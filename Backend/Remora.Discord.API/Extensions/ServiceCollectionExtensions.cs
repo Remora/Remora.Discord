@@ -474,6 +474,7 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IActivity, Activity>()
             .WithPropertyConverter(a => a.CreatedAt, new UnixMillisecondsDateTimeOffsetConverter());
+
         options.AddDataObjectConverter<IActivityAssets, ActivityAssets>();
         options.AddDataObjectConverter<IActivityButton, ActivityButton>();
         options.AddDataObjectConverter<IActivityEmoji, ActivityEmoji>();
@@ -969,6 +970,7 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IRestError, RestError>()
             .WithPropertyName(e => e.IsGlobal, "global");
+
         options.AddDataObjectConverter<IErrorDetails, ErrorDetails>();
 
         return options;
@@ -1027,10 +1029,12 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>()
             .WithPropertyName(d => d.IsNsfw, "nsfw");
+
         options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
             .WithPropertyName(o => o.IsDefault, "default")
             .WithPropertyName(o => o.IsRequired, "required")
             .WithPropertyName(o => o.EnableAutocomplete, "autocomplete");
+
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
         options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>()
@@ -1078,6 +1082,7 @@ public static class ServiceCollectionExtensions
             IPartialGuildApplicationCommandPermissions,
             PartialGuildApplicationCommandPermissions
         >();
+
         options.AddDataObjectConverter<IApplicationCommandPermissions, ApplicationCommandPermissions>()
             .WithPropertyName(p => p.HasPermission, "permission");
 
@@ -1086,12 +1091,14 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>()
             .IncludeWhenSerializing(c => c.Type);
+
         options.AddDataObjectConverter<IPartialActionRowComponent, PartialActionRowComponent>()
             .IncludeWhenSerializing(c => c.Type);
 
         options.AddDataObjectConverter<IButtonComponent, ButtonComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialButtonComponent, PartialButtonComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
@@ -1099,30 +1106,39 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IStringSelectComponent, StringSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IUserSelectComponent, UserSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IRoleSelectComponent, RoleSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IMentionableSelectComponent, MentionableSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IChannelSelectComponent, ChannelSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialStringSelectComponent, PartialStringSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialUserSelectComponent, PartialUserSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialRoleSelectComponent, PartialRoleSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialMentionableSelectComponent, PartialMentionableSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialChannelSelectComponent, PartialChannelSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
@@ -1130,12 +1146,14 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<ITextInputComponent, TextInputComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(i => i.IsRequired, "required");
+
         options.AddDataObjectConverter<IPartialTextInputComponent, PartialTextInputComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(i => i.IsRequired, "required");
 
         options.AddDataObjectConverter<ISelectOption, SelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
+
         options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 

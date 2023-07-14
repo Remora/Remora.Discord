@@ -23,6 +23,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Errors;
 using Remora.Discord.API.Extensions;
@@ -493,19 +494,20 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        return GetDefaultUserAvatarUrl(user.Discriminator, imageFormat, imageSize);
+        return GetDefaultUserAvatarUrl(user.ID, imageFormat, imageSize);
     }
 
     /// <summary>
     /// Gets the CDN URI of the given user's default avatar.
     /// </summary>
-    /// <param name="userDiscriminator">The user's discriminator.</param>
+    /// <param name="userDiscriminatorOrID">The user's discriminator, or their ID.</param>
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
+    /// <remarks>The ID of the user should be preferred, as any migrated accounts will have a discriminator of 0, and the result will be wrong.</remarks>
     public static Result<Uri> GetDefaultUserAvatarUrl
     (
-        ushort userDiscriminator,
+        OneOf<Snowflake, ushort> userDiscriminatorOrID,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
     )
@@ -529,10 +531,10 @@ public static class CDN
             return Result<Uri>.FromError(checkImageSize);
         }
 
-        var discriminatorModulus = userDiscriminator % 5;
+        var valueModulus = userDiscriminatorOrID.Match(t0 => (ushort)(t0.Value >> 22) % 6, t1 => t1 % 5);
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
-            Path = $"embed/avatars/{discriminatorModulus}.{format.ToFileExtension()}"
+            Path = $"embed/avatars/{valueModulus}.{format.ToFileExtension()}"
         };
 
         if (imageSize.TryGet(out var size))

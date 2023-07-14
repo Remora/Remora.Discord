@@ -38,7 +38,7 @@ public interface IUser : IPartialUser
     new Snowflake ID { get; }
 
     /// <summary>
-    /// Gets the username of the user. This is not a unique value.
+    /// Gets the username of the user. This is a unique value for users, but not for bots.
     /// </summary>
     /// <remarks>
     /// Discord is currently migrating to a new username system. When the migration is complete, this field will be
@@ -49,6 +49,7 @@ public interface IUser : IPartialUser
     /// <summary>
     /// Gets the user's 4-digit discord tag.
     /// </summary>
+    /// <remarks>Discord no longer uses discriminators, and migrated users will simply have '0' as their discriminator.</remarks>
     new ushort Discriminator { get; }
 
     /// <summary>
