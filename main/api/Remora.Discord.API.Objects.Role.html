@@ -151,18 +151,18 @@ public record Role : IRole, IPartialRole, IEquatable&lt;Role&gt;</code></pre>
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_Role__ctor_Remora_Rest_Core_Snowflake_System_String_System_Drawing_Color_System_Boolean_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_System_String__System_Int32_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet_System_Boolean_System_Boolean_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IRoleTags__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.Role.%23ctor(Remora.Rest.Core.Snowflake%2CSystem.String%2CSystem.Drawing.Color%2CSystem.Boolean%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Int32%2CRemora.Discord.API.Abstractions.Objects.IDiscordPermissionSet%2CSystem.Boolean%2CSystem.Boolean%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IRoleTags%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_Role__ctor_Remora_Rest_Core_Snowflake_System_String_System_Drawing_Color_System_Boolean_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_System_String__System_Int32_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet_System_Boolean_System_Boolean_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IRoleTags__Remora_Discord_API_Abstractions_Objects_RoleFlags_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.Role.%23ctor(Remora.Rest.Core.Snowflake%2CSystem.String%2CSystem.Drawing.Color%2CSystem.Boolean%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Int32%2CRemora.Discord.API.Abstractions.Objects.IDiscordPermissionSet%2CSystem.Boolean%2CSystem.Boolean%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IRoleTags%7D%2CRemora.Discord.API.Abstractions.Objects.RoleFlags)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Permissions/Role.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_Role" data-uid="Remora.Discord.API.Objects.Role.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.Role.#ctor(Remora.Rest.Core.Snowflake,System.String,System.Drawing.Color,System.Boolean,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{System.String},System.Int32,Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet,System.Boolean,System.Boolean,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IRoleTags})">Role(Snowflake, string, Color, bool, Optional&lt;IImageHash?&gt;, Optional&lt;string?&gt;, int, IDiscordPermissionSet, bool, bool, Optional&lt;IRoleTags&gt;)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.Role.#ctor(Remora.Rest.Core.Snowflake,System.String,System.Drawing.Color,System.Boolean,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{System.String},System.Int32,Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet,System.Boolean,System.Boolean,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IRoleTags},Remora.Discord.API.Abstractions.Objects.RoleFlags)">Role(Snowflake, string, Color, bool, Optional&lt;IImageHash?&gt;, Optional&lt;string?&gt;, int, IDiscordPermissionSet, bool, bool, Optional&lt;IRoleTags&gt;, RoleFlags)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Role(Snowflake ID, string Name, Color Colour, bool IsHoisted, Optional&lt;IImageHash?&gt; Icon, Optional&lt;string?&gt; UnicodeEmoji, int Position, IDiscordPermissionSet Permissions, bool IsManaged, bool IsMentionable, Optional&lt;IRoleTags&gt; Tags = default)</code></pre>
+    <pre><code class="lang-csharp hljs">public Role(Snowflake ID, string Name, Color Colour, bool IsHoisted, Optional&lt;IImageHash?&gt; Icon, Optional&lt;string?&gt; UnicodeEmoji, int Position, IDiscordPermissionSet Permissions, bool IsManaged, bool IsMentionable, Optional&lt;IRoleTags&gt; Tags, RoleFlags Flags)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -229,6 +229,11 @@ public record Role : IRole, IPartialRole, IEquatable&lt;Role&gt;</code></pre>
         <td><span class="parametername">Tags</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.RoleFlags.html">RoleFlags</a></td>
+        <td><span class="parametername">Flags</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
@@ -259,6 +264,36 @@ public record Role : IRole, IPartialRole, IEquatable&lt;Role&gt;</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.drawing.color">Color</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_Role_Flags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.Role.Flags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Permissions/Role.cs/#L47">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_Role" data-uid="Remora.Discord.API.Objects.Role.Flags*"></a>
+  <h4 id="Flags" data-uid="Remora.Discord.API.Objects.Role.Flags">Flags</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RoleFlags Flags { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.RoleFlags.html">RoleFlags</a></td>
         <td></td>
       </tr>
     </tbody>

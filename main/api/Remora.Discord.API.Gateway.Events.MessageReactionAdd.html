@@ -152,18 +152,18 @@ public record MessageReactionAdd : IMessageReactionAdd, IGatewayEvent, IGatewayP
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageReactionAdd__ctor_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IGuildMember__Remora_Discord_API_Abstractions_Objects_IPartialEmoji_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageReactionAdd.%23ctor(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IGuildMember%7D%2CRemora.Discord.API.Abstractions.Objects.IPartialEmoji)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageReactionAdd__ctor_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IGuildMember__Remora_Discord_API_Abstractions_Objects_IPartialEmoji_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageReactionAdd.%23ctor(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IGuildMember%7D%2CRemora.Discord.API.Abstractions.Objects.IPartialEmoji%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Messages/MessageReactionAdd.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Events_MessageReactionAdd" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionAdd.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionAdd.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember},Remora.Discord.API.Abstractions.Objects.IPartialEmoji)">MessageReactionAdd(Snowflake, Snowflake, Snowflake, Optional&lt;Snowflake&gt;, Optional&lt;IGuildMember&gt;, IPartialEmoji)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionAdd.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember},Remora.Discord.API.Abstractions.Objects.IPartialEmoji,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake})">MessageReactionAdd(Snowflake, Snowflake, Snowflake, Optional&lt;Snowflake&gt;, Optional&lt;IGuildMember&gt;, IPartialEmoji, Optional&lt;Snowflake&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MessageReactionAdd(Snowflake UserID, Snowflake ChannelID, Snowflake MessageID, Optional&lt;Snowflake&gt; GuildID, Optional&lt;IGuildMember&gt; Member, IPartialEmoji Emoji)</code></pre>
+    <pre><code class="lang-csharp hljs">public MessageReactionAdd(Snowflake UserID, Snowflake ChannelID, Snowflake MessageID, Optional&lt;Snowflake&gt; GuildID, Optional&lt;IGuildMember&gt; Member, IPartialEmoji Emoji, Optional&lt;Snowflake&gt; MessageAuthorID)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -203,6 +203,11 @@ public record MessageReactionAdd : IMessageReactionAdd, IGatewayEvent, IGatewayP
       <tr>
         <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialEmoji.html">IPartialEmoji</a></td>
         <td><span class="parametername">Emoji</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
+        <td><span class="parametername">MessageAuthorID</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -325,6 +330,36 @@ public record MessageReactionAdd : IMessageReactionAdd, IGatewayEvent, IGatewayP
     <tbody>
       <tr>
         <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IGuildMember.html">IGuildMember</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageReactionAdd_MessageAuthorID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageReactionAdd.MessageAuthorID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Messages/MessageReactionAdd.cs/#L42">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Gateway_Events_MessageReactionAdd" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionAdd.MessageAuthorID*"></a>
+  <h4 id="MessageAuthorID" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionAdd.MessageAuthorID">MessageAuthorID</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; MessageAuthorID { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">Remora.Rest.Core.Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>

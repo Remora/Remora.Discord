@@ -150,18 +150,18 @@ public record GuildOnboarding : IGuildOnboarding, IEquatable&lt;GuildOnboarding&
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_GuildOnboarding__ctor_Remora_Rest_Core_Snowflake_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IOnboardingPrompt__System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake__System_Boolean_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.GuildOnboarding.%23ctor(Remora.Rest.Core.Snowflake%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IOnboardingPrompt%7D%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Rest.Core.Snowflake%7D%2CSystem.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_GuildOnboarding__ctor_Remora_Rest_Core_Snowflake_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IOnboardingPrompt__System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake__System_Boolean_Remora_Discord_API_Abstractions_Objects_GuildOnboardingMode_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.GuildOnboarding.%23ctor(Remora.Rest.Core.Snowflake%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IOnboardingPrompt%7D%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Rest.Core.Snowflake%7D%2CSystem.Boolean%2CRemora.Discord.API.Abstractions.Objects.GuildOnboardingMode)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Guilds/GuildOnboarding.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_GuildOnboarding" data-uid="Remora.Discord.API.Objects.GuildOnboarding.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.GuildOnboarding.#ctor(Remora.Rest.Core.Snowflake,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IOnboardingPrompt},System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake},System.Boolean)">GuildOnboarding(Snowflake, IReadOnlyList&lt;IOnboardingPrompt&gt;, IReadOnlyList&lt;Snowflake&gt;, bool)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.GuildOnboarding.#ctor(Remora.Rest.Core.Snowflake,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IOnboardingPrompt},System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake},System.Boolean,Remora.Discord.API.Abstractions.Objects.GuildOnboardingMode)">GuildOnboarding(Snowflake, IReadOnlyList&lt;IOnboardingPrompt&gt;, IReadOnlyList&lt;Snowflake&gt;, bool, GuildOnboardingMode)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GuildOnboarding(Snowflake GuildID, IReadOnlyList&lt;IOnboardingPrompt&gt; Prompts, IReadOnlyList&lt;Snowflake&gt; DefaultChannelIDs, bool IsEnabled)</code></pre>
+    <pre><code class="lang-csharp hljs">public GuildOnboarding(Snowflake GuildID, IReadOnlyList&lt;IOnboardingPrompt&gt; Prompts, IReadOnlyList&lt;Snowflake&gt; DefaultChannelIDs, bool IsEnabled, GuildOnboardingMode Mode)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -191,6 +191,11 @@ public record GuildOnboarding : IGuildOnboarding, IEquatable&lt;GuildOnboarding&
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsEnabled</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildOnboardingMode.html">GuildOnboardingMode</a></td>
+        <td><span class="parametername">Mode</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -283,6 +288,36 @@ public record GuildOnboarding : IGuildOnboarding, IEquatable&lt;GuildOnboarding&
     <tbody>
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_GuildOnboarding_Mode.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.GuildOnboarding.Mode%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Guilds/GuildOnboarding.cs/#L38">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_GuildOnboarding" data-uid="Remora.Discord.API.Objects.GuildOnboarding.Mode*"></a>
+  <h4 id="Mode" data-uid="Remora.Discord.API.Objects.GuildOnboarding.Mode">Mode</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GuildOnboardingMode Mode { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.GuildOnboardingMode.html">GuildOnboardingMode</a></td>
         <td></td>
       </tr>
     </tbody>
