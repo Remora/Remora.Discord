@@ -238,6 +238,9 @@ public interface IPartialUser</code></pre>
       </tr>
     </tbody>
   </table>
+  <h5 id="Discriminator_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Discord no longer uses discriminators, and migrated users will simply have '0' as their discriminator.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IPartialUser_Email.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IPartialUser.Email%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -589,7 +592,7 @@ system).</p>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IPartialUser" data-uid="Remora.Discord.API.Abstractions.Objects.IPartialUser.Username*"></a>
   <h4 id="Username" data-uid="Remora.Discord.API.Abstractions.Objects.IPartialUser.Username">Username</h4>
-  <div class="markdown level1 summary"><p>Gets the username of the user. This is not a unique value.</p>
+  <div class="markdown level1 summary"><p>Gets the username of the user. This is a unique value for users, but not for bots.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
