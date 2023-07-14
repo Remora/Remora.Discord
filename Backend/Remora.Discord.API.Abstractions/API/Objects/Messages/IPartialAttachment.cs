@@ -65,4 +65,7 @@ public interface IPartialAttachment
 
     /// <inheritdoc cref="IAttachment.Waveform"/>
     Optional<byte[]> Waveform { get; }
+
+    /// <inheritdoc cref="IAttachment.Flags"/>
+    Optional<AttachmentFlags> Flags { get; }
 }

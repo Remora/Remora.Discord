@@ -44,5 +44,6 @@ public record Attachment
     Optional<int?> Width,
     Optional<bool> IsEphemeral,
     Optional<TimeSpan> Duration,
-    Optional<byte[]> Waveform
+    Optional<byte[]> Waveform,
+    Optional<AttachmentFlags> Flags
 ) : IAttachment;

@@ -1,5 +1,5 @@
 //
-//  PartialAttachment.cs
+//  AttachmentFlags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,28 +22,18 @@
 
 using System;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IPartialAttachment" />
+/// <summary>
+/// Enumerates various flags applied to an attachment.
+/// </summary>
 [PublicAPI]
-public record PartialAttachment
-(
-    Optional<Snowflake> ID = default,
-    Optional<string> Filename = default,
-    Optional<string> Description = default,
-    Optional<string> ContentType = default,
-    Optional<int> Size = default,
-    Optional<string> Url = default,
-    Optional<string> ProxyUrl = default,
-    Optional<int?> Height = default,
-    Optional<int?> Width = default,
-    Optional<bool> IsEphemeral = default,
-    Optional<TimeSpan> Duration = default,
-    Optional<byte[]> Waveform = default,
-    Optional<AttachmentFlags> Flags = default
-) : IPartialAttachment;
+[Flags]
+public enum AttachmentFlags
+{
+    /// <summary>
+    /// The attachment has been edited using the remix feature.
+    /// </summary>
+    IsRemix = 1 << 2
+}

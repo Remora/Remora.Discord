@@ -10,5 +10,6 @@
   "width": 1,
   "ephemeral": true,
   "duration_secs": 10,
-  "waveform": "bm9uZQ=="
+  "waveform": "bm9uZQ==",
+  "flags": 0
 }

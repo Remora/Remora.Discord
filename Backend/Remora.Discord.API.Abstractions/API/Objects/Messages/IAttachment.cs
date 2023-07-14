@@ -94,6 +94,11 @@ public interface IAttachment : IPartialAttachment
     /// </summary>
     new Optional<byte[]> Waveform { get; }
 
+    /// <summary>
+    /// Gets the flags applied to the attachment.
+    /// </summary>
+    new Optional<AttachmentFlags> Flags { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialAttachment.ID => this.ID;
 
@@ -129,4 +134,7 @@ public interface IAttachment : IPartialAttachment
 
     /// <inheritdoc/>
     Optional<byte[]> IPartialAttachment.Waveform => this.Waveform;
+
+    /// <inheritdoc/>
+    Optional<AttachmentFlags> IPartialAttachment.Flags => this.Flags;
 }
