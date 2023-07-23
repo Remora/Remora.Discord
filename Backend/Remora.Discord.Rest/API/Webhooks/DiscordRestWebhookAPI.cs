@@ -317,6 +317,11 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                     b.AddQueryParameter("wait", realShouldWait.ToString());
                 }
 
+                if (threadID.TryGet(out var realThreadID))
+                {
+                    b.AddQueryParameter("thread_id", realThreadID.ToString());
+                }
+
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
                 if (attachments.TryGet(out var realAttachments))
                 {
@@ -354,7 +359,6 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("tts", isTTS, this.JsonOptions);
                             json.Write("embeds", embeds, this.JsonOptions);
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("thread_id", threadID, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
