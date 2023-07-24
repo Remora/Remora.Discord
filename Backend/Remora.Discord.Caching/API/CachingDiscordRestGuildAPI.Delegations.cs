@@ -26,6 +26,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -38,10 +39,7 @@ public partial class CachingDiscordRestGuildAPI
     public Task<Result> ModifyGuildChannelPositionsAsync
     (
         Snowflake guildID,
-        IReadOnlyList
-        <
-            (Snowflake ChannelID, int? Position, bool? LockPermissions, Snowflake? ParentID)
-        > positionModifications,
+        IReadOnlyList<IChannelPositionModification> positionModifications,
         CancellationToken ct = default
     )
     {

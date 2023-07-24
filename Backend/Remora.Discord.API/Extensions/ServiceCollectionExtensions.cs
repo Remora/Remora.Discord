@@ -28,6 +28,7 @@ using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.API.Gateway.Bidirectional;
@@ -36,6 +37,7 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
+using Remora.Discord.API.Rest;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
 using Remora.Rest.Extensions;
@@ -570,6 +572,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IPartialForumTag, PartialForumTag>()
             .WithPropertyName(t => t.IsModerated, "moderated");
+
+        // REST-related types not strictly defined by Discord
+        options.AddDataObjectConverter<IChannelPositionModification, ChannelPositionModification>();
 
         return options;
     }

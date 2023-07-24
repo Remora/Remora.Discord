@@ -31,6 +31,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
+using Remora.Discord.API.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
@@ -1058,20 +1059,12 @@ public class DiscordRestGuildAPITests
         public async Task PerformsRequestCorrectly()
         {
             var guildId = DiscordSnowflake.New(0);
-            var swaps = new List
-            <
-                (
-                Snowflake ChannelID,
-                int? Position,
-                bool? LockPermissions,
-                Snowflake? ParentID
-                )
-            >
+            var swaps = new List<ChannelPositionModification>
             {
-                (DiscordSnowflake.New(1), 1, false, DiscordSnowflake.New(0)),
-                (DiscordSnowflake.New(2), 2, false, DiscordSnowflake.New(0)),
-                (DiscordSnowflake.New(3), 3, false, DiscordSnowflake.New(0)),
-                (DiscordSnowflake.New(4), 4, false, DiscordSnowflake.New(0))
+                new(DiscordSnowflake.New(1), 1, false, DiscordSnowflake.New(0)),
+                new(DiscordSnowflake.New(2), 2, false, DiscordSnowflake.New(0)),
+                new(DiscordSnowflake.New(3), 3, false, DiscordSnowflake.New(0)),
+                new(DiscordSnowflake.New(4), 4, false, DiscordSnowflake.New(0))
             };
 
             var api = CreateAPI
@@ -1150,20 +1143,12 @@ public class DiscordRestGuildAPITests
         public async Task PerformsNullableRequestCorrectly()
         {
             var guildId = DiscordSnowflake.New(0);
-            var swaps = new List
-            <
-                (
-                Snowflake ChannelID,
-                int? Position,
-                bool? LockPermissions,
-                Snowflake? ParentID
-                )
-            >
+            var swaps = new List<ChannelPositionModification>
             {
-                (DiscordSnowflake.New(1), null, null, null),
-                (DiscordSnowflake.New(2), null, null, null),
-                (DiscordSnowflake.New(3), null, null, null),
-                (DiscordSnowflake.New(4), null, null, null)
+                new(DiscordSnowflake.New(1), null, null, null),
+                new(DiscordSnowflake.New(2), null, null, null),
+                new(DiscordSnowflake.New(3), null, null, null),
+                new(DiscordSnowflake.New(4), null, null, null)
             };
 
             var api = CreateAPI
@@ -1222,6 +1207,90 @@ public class DiscordRestGuildAPITests
                                             .WithProperty("position", p => p.IsNull())
                                             .WithProperty("lock_permissions", p => p.IsNull())
                                             .WithProperty("parent_id", p => p.IsNull())
+                                    )
+                                )
+                        )
+                    )
+                    .Respond(HttpStatusCode.NoContent)
+            );
+
+            var result = await api.ModifyGuildChannelPositionsAsync(guildId, swaps);
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsEmptyRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var swaps = new List<ChannelPositionModification>
+            {
+                new(DiscordSnowflake.New(1), default, default, default),
+                new(DiscordSnowflake.New(2), default, default, default),
+                new(DiscordSnowflake.New(3), default, default, default),
+                new(DiscordSnowflake.New(4), default, default, default)
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .WithJson
+                    (
+                        j => j.IsArray
+                        (
+                            a => a
+                                .WithCount(swaps.Count)
+                                .WithElement
+                                (
+                                    0,
+                                    e => e.IsObject
+                                    (
+                                        o => o
+                                            .WithProperty("id", p => p.Is(1.ToString()))
+                                            .WithoutProperty("position")
+                                            .WithoutProperty("lock_permissions")
+                                            .WithoutProperty("parent_id")
+                                    )
+                                )
+                                .WithElement
+                                (
+                                    1,
+                                    e => e.IsObject
+                                    (
+                                        o => o
+                                            .WithProperty("id", p => p.Is(2.ToString()))
+                                            .WithoutProperty("position")
+                                            .WithoutProperty("lock_permissions")
+                                            .WithoutProperty("parent_id")
+                                    )
+                                )
+                                .WithElement
+                                (
+                                    2,
+                                    e => e.IsObject
+                                    (
+                                        o => o
+                                            .WithProperty("id", p => p.Is(3.ToString()))
+                                            .WithoutProperty("position")
+                                            .WithoutProperty("lock_permissions")
+                                            .WithoutProperty("parent_id")
+                                    )
+                                )
+                                .WithElement
+                                (
+                                    3,
+                                    e => e.IsObject
+                                    (
+                                        o => o
+                                            .WithProperty("id", p => p.Is(4.ToString()))
+                                            .WithoutProperty("position")
+                                            .WithoutProperty("lock_permissions")
+                                            .WithoutProperty("parent_id")
                                     )
                                 )
                         )

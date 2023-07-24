@@ -522,15 +522,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     public virtual Task<Result> ModifyGuildChannelPositionsAsync
     (
         Snowflake guildID,
-        IReadOnlyList
-        <
-            (
-            Snowflake ChannelID,
-            int? Position,
-            bool? LockPermissions,
-            Snowflake? ParentID
-            )
-        > positionModifications,
+        IReadOnlyList<IChannelPositionModification> positionModifications,
         CancellationToken ct = default
     )
     {
@@ -542,41 +534,9 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        foreach (var (channelID, position, lockPermissions, parentID) in positionModifications)
-                        {
-                            json.WriteStartObject();
-                            {
-                                json.WriteString("id", channelID.ToString());
-                                if (position is null)
-                                {
-                                    json.WriteNull("position");
-                                }
-                                else
-                                {
-                                    json.WriteNumber("position", position.Value);
-                                }
-
-                                if (lockPermissions is null)
-                                {
-                                    json.WriteNull("lock_permissions");
-                                }
-                                else
-                                {
-                                    json.WriteBoolean("lock_permissions", lockPermissions.Value);
-                                }
-
-                                if (parentID is null)
-                                {
-                                    json.WriteNull("parent_id");
-                                }
-                                else
-                                {
-                                    json.WriteString("parent_id", parentID.Value.ToString());
-                                }
-                            }
-                            json.WriteEndObject();
-                        }
-                    }
+                        json.WriteRawValue(JsonSerializer.Serialize(positionModifications, this.JsonOptions));
+                    },
+                    withStartEndMarkers: false
                 )
                 .WithRateLimitContext(this.RateLimitCache),
             ct

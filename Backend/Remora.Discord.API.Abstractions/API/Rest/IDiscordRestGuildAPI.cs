@@ -404,15 +404,7 @@ public interface IDiscordRestGuildAPI
     Task<Result> ModifyGuildChannelPositionsAsync
     (
         Snowflake guildID,
-        IReadOnlyList
-        <
-            (
-            Snowflake ChannelID,
-            int? Position,
-            bool? LockPermissions,
-            Snowflake? ParentID
-            )
-        > positionModifications,
+        IReadOnlyList<IChannelPositionModification> positionModifications,
         CancellationToken ct = default
     );
 
