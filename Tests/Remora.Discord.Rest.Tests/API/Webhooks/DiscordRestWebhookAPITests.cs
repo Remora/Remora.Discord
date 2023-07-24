@@ -816,8 +816,11 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
-                    .WithQueryString("thread_id", threadID.ToString())
+                    .WithExactQueryString(new Dictionary<string, string>
+                    {
+                        { "wait", shouldWait.ToString() },
+                        { "thread_id", threadID.ToString() },
+                    })
                     .WithJson
                     (
                         j => j.IsObject
