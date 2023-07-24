@@ -3338,6 +3338,17 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Rest.IChannelPositionModification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Rest.IChannelPositionModification.html",
+          "hash": "rumqcbEckrk08wEF3jAXhFt6namq+ml0yF50WvvdvNo="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestApplicationAPI.yml",
       "output": {
         ".html": {
@@ -3408,7 +3419,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.html",
-          "hash": "y/Vahcw0H0hDQsidR2357fqJy8LMBRO7UgYR7TZMLcs="
+          "hash": "DRjUzbbXlXTj8vTrFKSSVtXQjYF8sDhKWYwt5FkO5ic="
         }
       },
       "version": ""
@@ -3529,7 +3540,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Rest.html",
-          "hash": "QSm7rDheg0BAmSgC3yM5go8+k2S9ls3Y3mWa23k4tQM="
+          "hash": "zODXGDTXlIBNWMnRD+2VISXjea+OAGrGMIGQdeGiBvA="
         }
       },
       "version": ""
@@ -3980,7 +3991,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Extensions.ServiceCollectionExtensions.html",
-          "hash": "HcOHaStZ7qfY6gHF+6hmWm0557fH0prEe5uu2Tf5g28="
+          "hash": "BpJsN2d0Dj52k2S/C+QMMb3HWEV5ilAukEvvYxuLJJQ="
         }
       },
       "version": ""
@@ -6528,6 +6539,28 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Rest.ChannelPositionModification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Rest.ChannelPositionModification.html",
+          "hash": "w9WMBegLatXLQ3bzZKre4KX1rwWWnz4nv1YZwlZZjig="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Rest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Rest.html",
+          "hash": "ImYQbeA9cUMLphySZ1l8YcHDg9neHEoHdvbQWjgE0JM="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.VoiceGateway.Commands.VoiceHeartbeat.yml",
       "output": {
         ".html": {
@@ -6752,7 +6785,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestGuildAPI.html",
-          "hash": "8OUjBXOUTJxCelblhjmq34JOgLlzXC3c+fQypO5ru6w="
+          "hash": "MpnzcsNcUR/nTe1GpYwH622wlShepMfhujTjFHxw9hA="
         }
       },
       "version": ""
@@ -9612,7 +9645,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Rest.API.DiscordRestGuildAPI.html",
-          "hash": "lYSxQMcfOFizjHNzSQx2ZMMdY3qSpxkb280Mle0V7v0="
+          "hash": "fHKXqcTLiOuoqRCzOkw3clAGFj6xBVw8fAiowG/eBtg="
         }
       },
       "version": ""
@@ -9909,7 +9942,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "3emi7EhzkjdCJ25JsVXYopV3zRM5mE+jMOvnAz1bQto="
+          "hash": "ioQPWQBhQTkFOw5Xw2FsHZvp3Pa+XQG1l8Ili//IWXs="
         }
       },
       "version": ""
