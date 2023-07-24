@@ -1229,10 +1229,10 @@ public class DiscordRestGuildAPITests
             var guildId = DiscordSnowflake.New(0);
             var swaps = new List<ChannelPositionModification>
             {
-                new(DiscordSnowflake.New(1), default, default, default),
-                new(DiscordSnowflake.New(2), default, default, default),
-                new(DiscordSnowflake.New(3), default, default, default),
-                new(DiscordSnowflake.New(4), default, default, default)
+                new(DiscordSnowflake.New(1)),
+                new(DiscordSnowflake.New(2)),
+                new(DiscordSnowflake.New(3)),
+                new(DiscordSnowflake.New(4))
             };
 
             var api = CreateAPI
