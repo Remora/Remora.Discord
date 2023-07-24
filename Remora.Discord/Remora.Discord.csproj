@@ -1,23 +1,29 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2023.3</VersionPrefix>
+        <VersionPrefix>2023.4</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Support Ephemeral for interactivity groups.
-            feat: implement abstraction level for feedback service
-            BREAKING: Move ephemerality tracking to the response tracking API.
-            Webhook name "discord" is not allowed
-            BREAKING: Implement onboarding
-            Add new permissions
-            feat: Use ArrayPoolBufferWriter
-            BREAKING: Implement support for voice messages.
-            BREAKING: Mark ChannelID as deprecated and replace it with Channel.
-            BREAKING: Implement max stage video users.
-            Add new application flag.
-            BREAKING: Move ephemerality tracking to the response tracking API.
-            Support Ephemeral for interactivity groups.
+            Add external sound permission.
+            Add several new error codes.
+            BREAKING: Add defaultForumLayout parameter.
+            BREAKING: Add more audit log events.
+            BREAKING: Add RateLimitPerUser to Voice and Stage channels.
+            BREAKING: Change Snowflakes in TryGet methods to non-nullable.
+            BREAKING: Implement approximate guild count and partial guild.
+            BREAKING: Implement attachment flags.
+            BREAKING: Implement avatar decorations.
+            BREAKING: Implement MessageAuthorID.
+            BREAKING: Implement new username field.
+            BREAKING: Implement onboarding mode.
+            BREAKING: Implement role flags.
+            BREAKING: Implement support for join and mention raid protection.
+            BREAKING: Implement with_counts for user guild endpoint.
+            Correct cancellation token usage.
+            Ensure results aren't swallowed when no events are registered.
+            Extract dispatch API to an interface.
+            Fix conversion discrepancies between partial and nonpartial type.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

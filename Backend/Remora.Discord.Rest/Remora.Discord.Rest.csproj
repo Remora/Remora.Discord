@@ -1,12 +1,16 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>47.1.0</VersionPrefix>
+        <VersionPrefix>48.0.0</VersionPrefix>
         <Description>Remora.Discord's implementation of Discord's REST API</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Webhook name "discord" is not allowed
-            Implement onboarding
+            BREAKING: Implement support for join and mention raid protection
+            BREAKING: Add RateLimitPerUser to Voice and Stage channels.
+            Implement onboarding mode.
+            BREAKING: Add defaultForumLayout parameter.
+            Implement approximate guild cound and partial guild.
+            BREAKING: Implement with_counts for user guild endpoint.
         </PackageReleaseNotes>
     </PropertyGroup>
 

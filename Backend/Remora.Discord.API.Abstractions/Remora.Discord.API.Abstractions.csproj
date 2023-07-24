@@ -1,15 +1,23 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>78.0.0</VersionPrefix>
+        <VersionPrefix>79.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-          Add new error code
-          BREAKING: Implement onboarding
-          BREAKING: Implement support for voice messages.
-          BREAKING: Mark ChannelID as deprecated and replace it with Channel.
-          BREKAING: Implement max stage video users.
-          Add new application flag.
+          BREAKING: Implement support for join and mention raid protection.
+          Add external sound permission.
+          Add several new error codes.
+          BREAKING: Add RateLimitPerUser to Voice and Stage channels.
+          BREAKING: Implement new username field.
+          BREAKING: Implement role flags.
+          BREAKING: Implement attachment flags.
+          BREAKING: Implement onboarding mode.
+          BREAKING: Implement MessageAuthorID.
+          BREAKING: Add more audit log events.
+          BREAKING: Add defaultForumLayout parameter.
+          BREAKING: Implement approximate guild count and partial guild.
+          BREAKING: Implement avatar decorations.
+          BREAKING: Implement with_counts for user guild endpoint.
         </PackageReleaseNotes>
     </PropertyGroup>
 
