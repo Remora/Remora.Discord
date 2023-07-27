@@ -69,7 +69,7 @@ public class DiscordRestInviteAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}invites/{inviteCode}")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {

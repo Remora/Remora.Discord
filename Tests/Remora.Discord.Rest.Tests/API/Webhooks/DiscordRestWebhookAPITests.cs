@@ -32,6 +32,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -757,7 +758,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
                         j => j.IsObject
@@ -880,7 +881,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
                         j => j.IsObject
@@ -938,7 +939,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
                         j => j.IsObject
@@ -1253,7 +1254,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .WithQueryString("thread_id", threadID.ToString())
+                    .WithExactQueryString("thread_id", threadID.ToString())
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
             );
 
@@ -1565,7 +1566,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
-                    .WithQueryString("thread_id", threadID.ToString())
+                    .WithExactQueryString("thread_id", threadID.ToString())
                     .Respond(HttpStatusCode.NoContent)
             );
 
@@ -1616,7 +1617,7 @@ public class DiscordRestWebhookAPITests
                         $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
                     .WithNoContent()
-                    .WithQueryString("thread_id", threadID.ToString())
+                    .WithExactQueryString("thread_id", threadID.ToString())
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
             );
 

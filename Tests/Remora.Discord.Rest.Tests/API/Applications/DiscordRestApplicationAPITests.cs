@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -73,7 +74,7 @@ public class DiscordRestApplicationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                    .WithQueryString("with_localizations", withLocalizations.ToString())
+                    .WithExactQueryString("with_localizations", withLocalizations.ToString())
                     .WithHeaders(Constants.LocaleHeaderName, locale)
                     .WithNoContent()
                     .Respond("application/json", "[ ]")
@@ -997,7 +998,7 @@ public class DiscordRestApplicationAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
-                    .WithQueryString("with_localizations", withLocalizations.ToString())
+                    .WithExactQueryString("with_localizations", withLocalizations.ToString())
                     .WithHeaders(Constants.LocaleHeaderName, locale)
                     .WithNoContent()
                     .Respond("application/json", "[ ]")

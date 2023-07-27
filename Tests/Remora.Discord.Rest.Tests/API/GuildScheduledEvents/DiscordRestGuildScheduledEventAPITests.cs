@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -72,7 +73,7 @@ public class DiscordRestGuildScheduledEventAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events")
-                    .WithQueryString("with_user_count", withUserCount.ToString())
+                    .WithExactQueryString("with_user_count", withUserCount.ToString())
                     .Respond("application/json", "[]")
             );
 
@@ -194,7 +195,7 @@ public class DiscordRestGuildScheduledEventAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}")
-                    .WithQueryString("with_user_count", withCounts.ToString())
+                    .WithExactQueryString("with_user_count", withCounts.ToString())
                     .WithNoContent()
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
             );
@@ -362,7 +363,7 @@ public class DiscordRestGuildScheduledEventAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}/users")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {

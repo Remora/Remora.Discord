@@ -36,6 +36,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Extensions;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Core;
@@ -772,7 +773,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -802,7 +803,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -832,7 +833,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -932,7 +933,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .WithQueryString(expectedQueryStringParameters)
+                    .WithExactQueryString(expectedQueryStringParameters)
                     .Respond("application/json", "[ ]")
             );
 
@@ -1563,7 +1564,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
                     )
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -3379,7 +3380,7 @@ public class DiscordRestChannelAPITests
                         $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
                     )
                     .WithNoContent()
-                    .WithQueryString("with_member", withMember.ToString())
+                    .WithExactQueryString("with_member", withMember.ToString())
                     .Respond("application/json", SampleRepository.Samples[typeof(IThreadMember)])
             );
 
@@ -3423,7 +3424,7 @@ public class DiscordRestChannelAPITests
                         $"{Constants.BaseURL}channels/{channelId}/thread-members"
                     )
                     .WithNoContent()
-                    .WithQueryString(new KeyValuePair<string, string>[]
+                    .WithExactQueryString(new KeyValuePair<string, string>[]
                     {
                         new("with_member", withMember.ToString()),
                         new("after", after.ToString()),
@@ -3470,7 +3471,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelID}/threads/archived/public"
                     )
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -3520,7 +3521,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelID}/threads/archived/private"
                     )
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -3570,7 +3571,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelID}/users/@me/threads/archived/private"
                     )
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {

@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Core;
@@ -241,7 +242,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}")
-                    .WithQueryString("with_counts", withCounts.ToString())
+                    .WithExactQueryString("with_counts", withCounts.ToString())
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
             );
 
@@ -1370,7 +1371,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/members")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -1416,7 +1417,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/members/search")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -1841,7 +1842,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/bans")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -2424,7 +2425,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/prune")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -2822,7 +2823,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget.png")
-                    .WithQueryString("style", widgetStyle.ToString().ToLowerInvariant())
+                    .WithExactQueryString("style", widgetStyle.ToString().ToLowerInvariant())
                     .Respond("image/png", new MemoryStream())
             );
 

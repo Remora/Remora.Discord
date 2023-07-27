@@ -76,7 +76,7 @@ public class DiscordRestAuditLogAPITests
                 b =>
                     b.Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/*/audit-logs")
                         .WithAuthentication()
-                        .WithQueryString
+                        .WithExactQueryString
                         (
                             new[]
                             {

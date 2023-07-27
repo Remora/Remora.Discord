@@ -245,7 +245,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
