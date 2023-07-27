@@ -816,7 +816,11 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithExactQueryString(new Dictionary<string, string>
+                    {
+                        { "wait", shouldWait.ToString() },
+                        { "thread_id", threadID.ToString() },
+                    })
                     .WithJson
                     (
                         j => j.IsObject
@@ -827,7 +831,6 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar_url", p => p.Is(avatarUrl))
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
-                                .WithProperty("thread_id", p => p.Is(threadID.ToString()))
                                 .WithProperty("components", p => p.IsArray())
                                 .WithProperty("flags", p => p.Is((int)flags))
                         )
