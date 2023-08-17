@@ -1,5 +1,5 @@
 //
-//  ITokenStore.cs
+//  AsyncTokenStore.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.Rest;
@@ -28,15 +29,22 @@ namespace Remora.Discord.Rest;
 /// Represents a storage class for a single token.
 /// </summary>
 [PublicAPI]
-public interface ITokenStore
+public class AsyncTokenStore : IAsyncTokenStore
 {
-    /// <summary>
-    /// Gets the token.
-    /// </summary>
-    string Token { get; }
+    /// <inheritdoc />
+    public Task<string> Token { get; }
+
+    /// <inheritdoc />
+    public DiscordTokenType TokenType { get; }
 
     /// <summary>
-    /// Gets the type of the token.
+    /// Initializes a new instance of the <see cref="AsyncTokenStore"/> class.
     /// </summary>
-    DiscordTokenType TokenType { get; }
+    /// <param name="token">The task which resolves into the token to store.</param>
+    /// <param name="tokenType">The type of token to store.</param>
+    public AsyncTokenStore(Task<string> token, DiscordTokenType tokenType)
+    {
+        this.Token = token;
+        this.TokenType = tokenType;
+    }
 }

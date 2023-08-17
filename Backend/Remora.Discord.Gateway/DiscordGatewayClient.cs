@@ -62,7 +62,7 @@ public class DiscordGatewayClient : IDisposable
 
     private readonly IDiscordRestGatewayAPI _gatewayAPI;
     private readonly DiscordGatewayClientOptions _gatewayOptions;
-    private readonly ITokenStore _tokenStore;
+    private readonly IAsyncTokenStore _tokenStore;
     private readonly Random _random;
 
     private readonly IResponderDispatchService _responderDispatch;
@@ -130,7 +130,7 @@ public class DiscordGatewayClient : IDisposable
         IDiscordRestGatewayAPI gatewayAPI,
         IPayloadTransportService transportService,
         IOptions<DiscordGatewayClientOptions> gatewayOptions,
-        ITokenStore tokenStore,
+        IAsyncTokenStore tokenStore,
         Random random,
         ILogger<DiscordGatewayClient> log,
         IServiceProvider services,
@@ -705,7 +705,7 @@ public class DiscordGatewayClient : IDisposable
             (
                 new Identify
                 (
-                    _tokenStore.Token,
+                    await _tokenStore.Token,
                     _gatewayOptions.ConnectionProperties,
                     false,
                     _gatewayOptions.LargeThreshold,
@@ -811,7 +811,7 @@ public class DiscordGatewayClient : IDisposable
             (
                 new Resume
                 (
-                    _tokenStore.Token,
+                    await _tokenStore.Token,
                     _sessionInformation.SessionID,
                     _sessionInformation.SequenceNumber
                 )

@@ -69,6 +69,33 @@ public static class ServiceCollectionExtensions
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
+        return serviceCollection
+            .AddDiscordRest(
+                ctx =>
+                {
+                    var (token, type) = tokenFactory(ctx);
+                    return (Task.FromResult(token), type);
+                },
+                buildClient
+            );
+    }
+
+    /// <summary>
+    /// Adds the services required for Discord's REST API.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="tokenFactory">
+    /// A function that creates or retrieves the authorization token and its token type.
+    /// </param>
+    /// <param name="buildClient">Extra client building operations.</param>
+    /// <returns>The service collection, with the services added.</returns>
+    public static IServiceCollection AddDiscordRest
+    (
+        this IServiceCollection serviceCollection,
+        Func<IServiceProvider, (Task<string> Token, DiscordTokenType TokenType)> tokenFactory,
+        Action<IHttpClientBuilder>? buildClient = null
+    )
+    {
         serviceCollection.AddMemoryCache();
 
         serviceCollection.TryAddSingleton<MemoryCacheProvider>();
@@ -77,10 +104,10 @@ public static class ServiceCollectionExtensions
         serviceCollection.ConfigureDiscordJsonConverters();
 
         serviceCollection
-            .AddSingleton<ITokenStore>(serviceProvider =>
+            .AddSingleton<IAsyncTokenStore>(serviceProvider =>
             {
                 var (token, tokenType) = tokenFactory(serviceProvider);
-                return new TokenStore(token, tokenType);
+                return new AsyncTokenStore(token, tokenType);
             })
             .AddTransient<TokenAuthorizationHandler>();
 
