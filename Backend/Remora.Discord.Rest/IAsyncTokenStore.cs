@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
@@ -34,8 +35,9 @@ public interface IAsyncTokenStore
     /// <summary>
     /// Gets the token.
     /// </summary>
+    /// <param name="cancellationToken">A cancellation token to cancel operation.</param>
     /// <returns>The token's value.</returns>
-    ValueTask<string> GetTokenAsync();
+    ValueTask<string> GetTokenAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Gets the type of the token.

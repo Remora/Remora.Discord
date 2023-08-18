@@ -44,7 +44,7 @@ public class StaticTokenStoreTests
         {
             var tokenStore = new StaticTokenStore("Hello world!", DiscordTokenType.Bearer);
 
-            Assert.Equal("Hello world!", await tokenStore.GetTokenAsync());
+            Assert.Equal("Hello world!", await tokenStore.GetTokenAsync(default));
         }
     }
 

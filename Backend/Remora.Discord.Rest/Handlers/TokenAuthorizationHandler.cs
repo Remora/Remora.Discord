@@ -53,7 +53,7 @@ internal class TokenAuthorizationHandler : DelegatingHandler
         CancellationToken cancellationToken
     )
     {
-        var token = await _tokenStore.GetTokenAsync();
+        var token = await _tokenStore.GetTokenAsync(cancellationToken);
         var tokenType = _tokenStore.TokenType;
 
         if (string.IsNullOrWhiteSpace(token))

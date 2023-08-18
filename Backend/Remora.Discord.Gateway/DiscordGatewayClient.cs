@@ -705,7 +705,7 @@ public class DiscordGatewayClient : IDisposable
             (
                 new Identify
                 (
-                    await _tokenStore.GetTokenAsync(),
+                    await _tokenStore.GetTokenAsync(ct),
                     _gatewayOptions.ConnectionProperties,
                     false,
                     _gatewayOptions.LargeThreshold,
@@ -811,7 +811,7 @@ public class DiscordGatewayClient : IDisposable
             (
                 new Resume
                 (
-                    await _tokenStore.GetTokenAsync(),
+                    await _tokenStore.GetTokenAsync(ct),
                     _sessionInformation.SessionID,
                     _sessionInformation.SequenceNumber
                 )

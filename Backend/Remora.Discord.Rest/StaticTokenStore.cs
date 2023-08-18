@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
@@ -34,7 +35,7 @@ public class StaticTokenStore : IAsyncTokenStore
     private readonly ValueTask<string> _token;
 
     /// <inheritdoc />
-    public ValueTask<string> GetTokenAsync() => _token;
+    public ValueTask<string> GetTokenAsync(CancellationToken cancellationToken) => _token;
 
     /// <inheritdoc />
     public DiscordTokenType TokenType { get; }
