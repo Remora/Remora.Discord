@@ -1,5 +1,5 @@
 //
-//  IAsyncTokenStore.cs
+//  LazyTokenStore.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,34 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.Rest;
 
 /// <summary>
-/// Represents a storage class for a single token.
+/// Represents a storage class for a token fetched asynchronously.
 /// </summary>
 [PublicAPI]
-public interface IAsyncTokenStore
+public class LazyTokenStore : IAsyncTokenStore
 {
-    /// <summary>
-    /// Gets the token.
-    /// </summary>
-    /// <returns>The token's value.</returns>
-    ValueTask<string> GetTokenAsync();
+    private readonly Lazy<ValueTask<string>> _token;
+
+    /// <inheritdoc />
+    public async ValueTask<string> GetTokenAsync() => await _token.Value;
+
+    /// <inheritdoc />
+    public DiscordTokenType TokenType { get; }
 
     /// <summary>
-    /// Gets the type of the token.
+    /// Initializes a new instance of the <see cref="LazyTokenStore"/> class.
     /// </summary>
-    DiscordTokenType TokenType { get; }
+    /// <param name="func">A func that returns a task resolving to the token.</param>
+    /// <param name="tokenType">The type of token to store.</param>
+    public LazyTokenStore(Func<ValueTask<string>> func, DiscordTokenType tokenType)
+    {
+        _token = new(func);
+        this.TokenType = tokenType;
+    }
 }

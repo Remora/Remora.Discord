@@ -1,5 +1,5 @@
 //
-//  TokenStoreTests.cs
+//  StaticTokenStoreTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,9 +30,9 @@ using Xunit;
 namespace Remora.Discord.Tests.Tests.Core;
 
 /// <summary>
-/// Tests the <see cref="AsyncTokenStore"/> class.
+/// Tests the <see cref="StaticTokenStore"/> class.
 /// </summary>
-public class TokenStoreTests
+public class StaticTokenStoreTests
 {
     /// <summary>
     /// Tests the <see cref="Token"/> property.
@@ -42,9 +42,9 @@ public class TokenStoreTests
         [Fact]
         public async Task ReturnsCorrectValue()
         {
-            var tokenStore = new AsyncTokenStore(Task.FromResult("Hello world!"), DiscordTokenType.Bearer);
+            var tokenStore = new StaticTokenStore("Hello world!", DiscordTokenType.Bearer);
 
-            Assert.Equal("Hello world!", await tokenStore.Token);
+            Assert.Equal("Hello world!", await tokenStore.GetTokenAsync());
         }
     }
 
@@ -56,7 +56,7 @@ public class TokenStoreTests
         [Fact]
         public void ReturnsCorrectValueForBotTokenType()
         {
-            var tokenStore = new AsyncTokenStore(Task.FromResult("Hello world!"), DiscordTokenType.Bot);
+            var tokenStore = new StaticTokenStore("Hello world!", DiscordTokenType.Bot);
 
             Assert.Equal(DiscordTokenType.Bot, tokenStore.TokenType);
         }
@@ -64,7 +64,7 @@ public class TokenStoreTests
         [Fact]
         public void ReturnsCorrectValueForBearerTokenType()
         {
-            var tokenStore = new AsyncTokenStore(Task.FromResult("Hello world!"), DiscordTokenType.Bearer);
+            var tokenStore = new StaticTokenStore("Hello world!", DiscordTokenType.Bearer);
 
             Assert.Equal(DiscordTokenType.Bearer, tokenStore.TokenType);
         }

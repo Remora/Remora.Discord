@@ -24,7 +24,6 @@ using System;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text.Json;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -59,33 +58,27 @@ public static class ServiceCollectionExtensions
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
-        return serviceCollection
-            .AddDiscordGateway(
-                ctx => Task.FromResult(tokenFactory(ctx)),
-                buildClient
-            );
+        serviceCollection.AddSingleton<IAsyncTokenStore>(ctx => new StaticTokenStore(
+            tokenFactory(ctx),
+            DiscordTokenType.Bot
+        ));
+
+        return serviceCollection.AddDiscordGateway(buildClient);
     }
 
     /// <summary>
     /// Adds services required by the Discord Gateway system.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
-    /// <param name="tokenFactory">A function that retrieves the bot token.</param>
     /// <param name="buildClient">Extra options to configure the rest client.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordGateway
     (
         this IServiceCollection serviceCollection,
-        Func<IServiceProvider, Task<string>> tokenFactory,
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
-        serviceCollection
-            .AddDiscordRest
-            (
-                s => (tokenFactory(s), DiscordTokenType.Bot),
-                buildClient
-            );
+        serviceCollection.AddDiscordRest(buildClient);
 
         serviceCollection.TryAddSingleton<Random>();
         serviceCollection.TryAddSingleton<IResponderDispatchService, ResponderDispatchService>();

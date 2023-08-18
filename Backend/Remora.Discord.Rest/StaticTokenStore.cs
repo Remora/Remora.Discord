@@ -1,5 +1,5 @@
 //
-//  AsyncTokenStore.cs
+//  StaticTokenStore.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,25 +26,27 @@ using JetBrains.Annotations;
 namespace Remora.Discord.Rest;
 
 /// <summary>
-/// Represents a storage class for a single token.
+/// Represents a storage class for a static token.
 /// </summary>
 [PublicAPI]
-public class AsyncTokenStore : IAsyncTokenStore
+public class StaticTokenStore : IAsyncTokenStore
 {
+    private readonly ValueTask<string> _token;
+
     /// <inheritdoc />
-    public Task<string> Token { get; }
+    public ValueTask<string> GetTokenAsync() => _token;
 
     /// <inheritdoc />
     public DiscordTokenType TokenType { get; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AsyncTokenStore"/> class.
+    /// Initializes a new instance of the <see cref="StaticTokenStore"/> class.
     /// </summary>
-    /// <param name="token">The task which resolves into the token to store.</param>
+    /// <param name="token">The token to store.</param>
     /// <param name="tokenType">The type of token to store.</param>
-    public AsyncTokenStore(Task<string> token, DiscordTokenType tokenType)
+    public StaticTokenStore(string token, DiscordTokenType tokenType)
     {
-        this.Token = token;
+        _token = new(token);
         this.TokenType = tokenType;
     }
 }
