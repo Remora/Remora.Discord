@@ -149,19 +149,19 @@ public class DiscordGatewayClient : IDisposable</code></pre>
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_DiscordGatewayClient__ctor_Remora_Discord_API_Abstractions_Rest_IDiscordRestGatewayAPI_Remora_Discord_Gateway_Transport_IPayloadTransportService_Microsoft_Extensions_Options_IOptions_Remora_Discord_Gateway_DiscordGatewayClientOptions__Remora_Discord_Rest_ITokenStore_System_Random_Microsoft_Extensions_Logging_ILogger_Remora_Discord_Gateway_DiscordGatewayClient__System_IServiceProvider_Remora_Discord_Gateway_Services_IResponderDispatchService_.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.DiscordGatewayClient.%23ctor(Remora.Discord.API.Abstractions.Rest.IDiscordRestGatewayAPI%2CRemora.Discord.Gateway.Transport.IPayloadTransportService%2CMicrosoft.Extensions.Options.IOptions%7BRemora.Discord.Gateway.DiscordGatewayClientOptions%7D%2CRemora.Discord.Rest.ITokenStore%2CSystem.Random%2CMicrosoft.Extensions.Logging.ILogger%7BRemora.Discord.Gateway.DiscordGatewayClient%7D%2CSystem.IServiceProvider%2CRemora.Discord.Gateway.Services.IResponderDispatchService)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Gateway_DiscordGatewayClient__ctor_Remora_Discord_API_Abstractions_Rest_IDiscordRestGatewayAPI_Remora_Discord_Gateway_Transport_IPayloadTransportService_Microsoft_Extensions_Options_IOptions_Remora_Discord_Gateway_DiscordGatewayClientOptions__Remora_Discord_Rest_IAsyncTokenStore_System_Random_Microsoft_Extensions_Logging_ILogger_Remora_Discord_Gateway_DiscordGatewayClient__System_IServiceProvider_Remora_Discord_Gateway_Services_IResponderDispatchService_.md&amp;value=---%0Auid%3A%20Remora.Discord.Gateway.DiscordGatewayClient.%23ctor(Remora.Discord.API.Abstractions.Rest.IDiscordRestGatewayAPI%2CRemora.Discord.Gateway.Transport.IPayloadTransportService%2CMicrosoft.Extensions.Options.IOptions%7BRemora.Discord.Gateway.DiscordGatewayClientOptions%7D%2CRemora.Discord.Rest.IAsyncTokenStore%2CSystem.Random%2CMicrosoft.Extensions.Logging.ILogger%7BRemora.Discord.Gateway.DiscordGatewayClient%7D%2CSystem.IServiceProvider%2CRemora.Discord.Gateway.Services.IResponderDispatchService)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Gateway/DiscordGatewayClient.cs/#L128">View Source</a>
   </span>
   <a id="Remora_Discord_Gateway_DiscordGatewayClient" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.#ctor(Remora.Discord.API.Abstractions.Rest.IDiscordRestGatewayAPI,Remora.Discord.Gateway.Transport.IPayloadTransportService,Microsoft.Extensions.Options.IOptions{Remora.Discord.Gateway.DiscordGatewayClientOptions},Remora.Discord.Rest.ITokenStore,System.Random,Microsoft.Extensions.Logging.ILogger{Remora.Discord.Gateway.DiscordGatewayClient},System.IServiceProvider,Remora.Discord.Gateway.Services.IResponderDispatchService)">DiscordGatewayClient(IDiscordRestGatewayAPI, IPayloadTransportService, IOptions&lt;DiscordGatewayClientOptions&gt;, ITokenStore, Random, ILogger&lt;DiscordGatewayClient&gt;, IServiceProvider, IResponderDispatchService)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.Gateway.DiscordGatewayClient.#ctor(Remora.Discord.API.Abstractions.Rest.IDiscordRestGatewayAPI,Remora.Discord.Gateway.Transport.IPayloadTransportService,Microsoft.Extensions.Options.IOptions{Remora.Discord.Gateway.DiscordGatewayClientOptions},Remora.Discord.Rest.IAsyncTokenStore,System.Random,Microsoft.Extensions.Logging.ILogger{Remora.Discord.Gateway.DiscordGatewayClient},System.IServiceProvider,Remora.Discord.Gateway.Services.IResponderDispatchService)">DiscordGatewayClient(IDiscordRestGatewayAPI, IPayloadTransportService, IOptions&lt;DiscordGatewayClientOptions&gt;, IAsyncTokenStore, Random, ILogger&lt;DiscordGatewayClient&gt;, IServiceProvider, IResponderDispatchService)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Remora.Discord.Gateway.DiscordGatewayClient.html">DiscordGatewayClient</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DiscordGatewayClient(IDiscordRestGatewayAPI gatewayAPI, IPayloadTransportService transportService, IOptions&lt;DiscordGatewayClientOptions&gt; gatewayOptions, ITokenStore tokenStore, Random random, ILogger&lt;DiscordGatewayClient&gt; log, IServiceProvider services, IResponderDispatchService responderDispatch)</code></pre>
+    <pre><code class="lang-csharp hljs">public DiscordGatewayClient(IDiscordRestGatewayAPI gatewayAPI, IPayloadTransportService transportService, IOptions&lt;DiscordGatewayClientOptions&gt; gatewayOptions, IAsyncTokenStore tokenStore, Random random, ILogger&lt;DiscordGatewayClient&gt; log, IServiceProvider services, IResponderDispatchService responderDispatch)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -192,7 +192,7 @@ public class DiscordGatewayClient : IDisposable</code></pre>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Remora.Discord.Rest.ITokenStore.html">ITokenStore</a></td>
+        <td><a class="xref" href="Remora.Discord.Rest.IAsyncTokenStore.html">IAsyncTokenStore</a></td>
         <td><span class="parametername">tokenStore</span></td>
         <td><p>The token store.</p>
 </td>
