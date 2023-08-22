@@ -69,12 +69,11 @@ public static class ServiceCollectionExtensions
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
-        serviceCollection.AddSingleton<IAsyncTokenStore>(
-            ctx =>
-            {
-                var (token, type) = tokenFactory(ctx);
-                return new StaticTokenStore(token, type);
-            });
+        serviceCollection.AddSingleton<IAsyncTokenStore>(ctx =>
+        {
+            var (token, type) = tokenFactory(ctx);
+            return new StaticTokenStore(token, type);
+        });
 
         return serviceCollection.AddDiscordRest(buildClient);
     }

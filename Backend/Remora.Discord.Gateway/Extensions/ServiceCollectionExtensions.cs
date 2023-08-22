@@ -58,10 +58,10 @@ public static class ServiceCollectionExtensions
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
-        serviceCollection.AddSingleton<IAsyncTokenStore>(ctx => new StaticTokenStore(
-            tokenFactory(ctx),
-            DiscordTokenType.Bot
-        ));
+        serviceCollection.AddSingleton<IAsyncTokenStore>
+        (
+            ctx => new StaticTokenStore(tokenFactory(ctx), DiscordTokenType.Bot)
+        );
 
         return serviceCollection.AddDiscordGateway(buildClient);
     }

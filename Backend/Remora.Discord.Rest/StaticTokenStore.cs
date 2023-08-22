@@ -32,10 +32,10 @@ namespace Remora.Discord.Rest;
 [PublicAPI]
 public class StaticTokenStore : IAsyncTokenStore
 {
-    private readonly ValueTask<string> _token;
+    private readonly string _token;
 
     /// <inheritdoc />
-    public ValueTask<string> GetTokenAsync(CancellationToken cancellationToken) => _token;
+    public ValueTask<string> GetTokenAsync(CancellationToken cancellationToken) => new(_token);
 
     /// <inheritdoc />
     public DiscordTokenType TokenType { get; }
@@ -47,7 +47,7 @@ public class StaticTokenStore : IAsyncTokenStore
     /// <param name="tokenType">The type of token to store.</param>
     public StaticTokenStore(string token, DiscordTokenType tokenType)
     {
-        _token = new(token);
+        _token = token;
         this.TokenType = tokenType;
     }
 }
