@@ -109,6 +109,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<SortOrder> defaultSortOrder = default,
         Optional<ForumLayout> defaultForumLayout = default,
+        Optional<string?> status = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -155,6 +156,11 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             return Result<IChannel>.FromError(packImage);
         }
 
+        if (status is { HasValue: true, Value: { Length: > 500 } })
+        {
+            return new ArgumentOutOfRangeError(nameof(status), "The status must between 0 and 500 characters.");
+        }
+
         Optional<string> base64EncodedIcon = packImage.Entity!;
 
         return await this.RestHttpClient.PatchAsync<IChannel>
@@ -196,6 +202,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("applied_tags", appliedTags, this.JsonOptions);
                         json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
                         json.Write("default_forum_layout", defaultForumLayout, this.JsonOptions);
+                        json.Write("status", status, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -263,6 +270,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string?> status = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -280,6 +288,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             parentID: parentID,
             rtcRegion: rtcRegion,
             videoQualityMode: videoQualityMode,
+            status: status,
             reason: reason,
             ct: ct
         );

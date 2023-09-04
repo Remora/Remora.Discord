@@ -95,6 +95,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<Snowflake?> parentId = default,
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string?> status = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -112,6 +113,7 @@ public partial class CachingDiscordRestChannelAPI
             parentId,
             rtcRegion,
             videoQualityMode,
+            status,
             reason,
             ct
         );
