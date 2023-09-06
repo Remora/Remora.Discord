@@ -36,6 +36,18 @@ namespace Remora.Discord.Caching.API;
 public partial class CachingDiscordRestChannelAPI
 {
     /// <inheritdoc />
+    public Task<Result> SetVoiceChannelStatusAsync
+    (
+        Snowflake channelID,
+        Optional<string> status,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.SetVoiceChannelStatusAsync(channelID, status, reason, ct);
+    }
+
+    /// <inheritdoc />
     public Task<Result<IChannel>> ModifyGroupDMChannelAsync
     (
         Snowflake channelID,
@@ -95,7 +107,6 @@ public partial class CachingDiscordRestChannelAPI
         Optional<Snowflake?> parentId = default,
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
-        Optional<string?> status = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -113,7 +124,6 @@ public partial class CachingDiscordRestChannelAPI
             parentId,
             rtcRegion,
             videoQualityMode,
-            status,
             reason,
             ct
         );

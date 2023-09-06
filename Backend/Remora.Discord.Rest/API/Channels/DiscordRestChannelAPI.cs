@@ -81,6 +81,23 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
+    public virtual Task<Result> SetVoiceChannelStatusAsync
+    (
+        Snowflake channelID,
+        Optional<string> status,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync
+        (
+            $"channels/{channelID}/voice-status",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
     public virtual async Task<Result<IChannel>> ModifyChannelAsync
     (
         Snowflake channelID,
@@ -270,7 +287,6 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
-        Optional<string?> status = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -288,7 +304,6 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             parentID: parentID,
             rtcRegion: rtcRegion,
             videoQualityMode: videoQualityMode,
-            status: status,
             reason: reason,
             ct: ct
         );

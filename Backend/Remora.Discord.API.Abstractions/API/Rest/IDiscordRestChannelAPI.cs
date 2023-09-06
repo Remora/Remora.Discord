@@ -48,6 +48,22 @@ public interface IDiscordRestChannelAPI
     Task<Result<IChannel>> GetChannelAsync(Snowflake channelID, CancellationToken ct = default);
 
     /// <summary>
+    /// Sets the status of a given voice channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the channel.</param>
+    /// <param name="status">The status to set.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result that may or not have succeeded.</returns>
+    Task<Result> SetVoiceChannelStatusAsync
+    (
+        Snowflake channelID,
+        Optional<string> status,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Modifies the given channel.
     /// </summary>
     /// <remarks>
@@ -199,7 +215,6 @@ public interface IDiscordRestChannelAPI
     /// <param name="parentID">The new parent category ID.</param>
     /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
     /// <param name="videoQualityMode">The new video quality mode.</param>
-    /// <param name="status">The new status for the channel.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -216,7 +231,6 @@ public interface IDiscordRestChannelAPI
         Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
-        Optional<string?> status = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
