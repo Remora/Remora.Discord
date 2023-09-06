@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// <summary>
 /// Represents an update to the respective voice channel.
 /// </summary>
-public interface IVoiceChannelStatusUpdate
+public interface IVoiceChannelStatusUpdate : IGatewayEvent
 {
     /// <summary>
     /// Gets the ID of the channel being updated.
