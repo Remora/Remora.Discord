@@ -117,7 +117,6 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<SortOrder> defaultSortOrder = default,
         Optional<ForumLayout> defaultForumLayout = default,
-        Optional<string?> status = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )

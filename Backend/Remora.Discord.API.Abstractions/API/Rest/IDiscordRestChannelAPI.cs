@@ -107,7 +107,6 @@ public interface IDiscordRestChannelAPI
     /// <param name="appliedTags">The tags applied to the thread.</param>
     /// <param name="defaultSortOrder">The default sort order of posts.</param>
     /// <param name="defaultForumLayout">The default layout of posts in a forum.</param>
-    /// <param name="status">The new status of the voice channel.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -139,7 +138,6 @@ public interface IDiscordRestChannelAPI
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         Optional<SortOrder> defaultSortOrder = default,
         Optional<ForumLayout> defaultForumLayout = default,
-        Optional<string?> status = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
