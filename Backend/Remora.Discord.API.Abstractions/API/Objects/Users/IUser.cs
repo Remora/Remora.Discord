@@ -57,7 +57,7 @@ public interface IUser : IPartialUser
     /// </summary>
     /// <remarks>
     /// Intentionally not implemented as this field is not present in Discord's OpenAPI specification.
-    /// Despite being documented, it is not fully implemented and is not returned by many endpoints
+    /// Despite being documented, it is not fully implemented and is not returned by many endpoints.
     /// </remarks>
     // new string? GlobalName { get; }
 
