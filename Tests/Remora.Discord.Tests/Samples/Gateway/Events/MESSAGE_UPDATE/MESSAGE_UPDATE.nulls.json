@@ -8,7 +8,6 @@
     "author": {
       "username": "none",
       "discriminator": "9999",
-      "global_name": "none",
       "id": "999999999999999999",
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
@@ -66,7 +65,6 @@
       "user": {
         "username": "none",
         "discriminator": "9999",
-        "global_name": "none",
         "id": "999999999999999999",
         "avatar": "68b329da9893e34099c7d8ad5cb9c940"
       }
@@ -95,7 +93,6 @@
         "id": "999999999999999999",
         "username": "none",
         "discriminator": "9999",
-        "global_name": "none",
         "avatar": "68b329da9893e34099c7d8ad5cb9c940",
         "member": {}
       }
