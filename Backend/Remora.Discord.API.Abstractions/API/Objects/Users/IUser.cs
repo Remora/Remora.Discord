@@ -55,7 +55,11 @@ public interface IUser : IPartialUser
     /// <summary>
     /// Gets the user's display name, if it is set. For bots, this is the application name.
     /// </summary>
-    new string? GlobalName { get; }
+    /// <remarks>
+    /// Intentionally not implemented as this field is not present in Discord's OpenAPI specification.
+    /// Despite being documented, it is not fully implemented and is not returned by many endpoints
+    /// </remarks>
+    // new string? GlobalName { get; }
 
     /// <summary>
     /// Gets the user's avatar hash.
@@ -133,7 +137,7 @@ public interface IUser : IPartialUser
     Optional<ushort> IPartialUser.Discriminator => this.Discriminator;
 
     /// <inheritdoc/>
-    Optional<string?> IPartialUser.GlobalName => this.GlobalName;
+    // Optional<string?> IPartialUser.GlobalName => this.GlobalName;
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialUser.Avatar => new(this.Avatar);

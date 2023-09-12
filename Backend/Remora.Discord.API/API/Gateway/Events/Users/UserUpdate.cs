@@ -35,7 +35,8 @@ public record UserUpdate
     Snowflake ID,
     string Username,
     ushort Discriminator,
-    string? GlobalName,
+    // GlobalName is not present in the OpenAPI spec, only in documentation and is not returned by all endpoints
+    // Optional<string?> GlobalName,
     IImageHash? Avatar,
     Optional<bool> IsBot = default,
     Optional<bool> IsSystem = default,
