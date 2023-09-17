@@ -296,6 +296,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="name">The name of the new channel.</param>
     /// <param name="topic">The topic of the new channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
     /// <param name="position">The sorting position of the new channel.</param>
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
@@ -313,6 +314,7 @@ public interface IDiscordRestGuildAPI
         Snowflake guildID,
         string name,
         Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,

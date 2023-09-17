@@ -779,6 +779,7 @@ public class DiscordRestGuildAPITests
             var name = "dd";
             var type = ChannelType.GuildForum;
             var topic = "aaa";
+            var rateLimitPerUser = 10;
             var position = 1;
             var permissionOverwrites = new List<IPermissionOverwrite>();
             var parentID = DiscordSnowflake.New(1);
@@ -803,6 +804,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("topic", p => p.Is(topic))
+                                .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                 .WithProperty("position", p => p.Is(position))
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("parent_id", p => p.Is(parentID.ToString()))
@@ -826,6 +828,7 @@ public class DiscordRestGuildAPITests
                 guildId,
                 name,
                 topic,
+                rateLimitPerUser,
                 position,
                 permissionOverwrites,
                 parentID,
