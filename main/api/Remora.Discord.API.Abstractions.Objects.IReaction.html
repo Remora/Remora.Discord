@@ -116,14 +116,45 @@ public interface IReaction</code></pre>
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IReaction_BurstColours.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IReaction.BurstColours%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L63">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Abstractions_Objects_IReaction" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.BurstColours*"></a>
+  <h4 id="BurstColours" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.BurstColours">BurstColours</h4>
+  <div class="markdown level1 summary"><p>Gets the colors used for the super reaction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;Color&gt; BurstColours { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.drawing.color">Color</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IReaction_Count.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IReaction.Count%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L36">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L38">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IReaction" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.Count*"></a>
   <h4 id="Count" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.Count">Count</h4>
-  <div class="markdown level1 summary"><p>Gets the number of times this emoji has been used to react.</p>
+  <div class="markdown level1 summary"><p>Gets the total number of times this emoji has been used to react, including burst (super) reactions.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -147,10 +178,41 @@ public interface IReaction</code></pre>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IReaction_CountDetails.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IReaction.CountDetails%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L43">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Abstractions_Objects_IReaction" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.CountDetails*"></a>
+  <h4 id="CountDetails" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.CountDetails">CountDetails</h4>
+  <div class="markdown level1 summary"><p>Gets detailed information about the reaction counts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReactionCountDetails CountDetails { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IReactionCountDetails.html">IReactionCountDetails</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IReaction_Emoji.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IReaction.Emoji%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L46">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L58">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IReaction" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.Emoji*"></a>
   <h4 id="Emoji" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.Emoji">Emoji</h4>
@@ -178,14 +240,45 @@ public interface IReaction</code></pre>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IReaction_HasCurrentUserBurstReacted.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IReaction.HasCurrentUserBurstReacted%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L53">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Abstractions_Objects_IReaction" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.HasCurrentUserBurstReacted*"></a>
+  <h4 id="HasCurrentUserBurstReacted" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.HasCurrentUserBurstReacted">HasCurrentUserBurstReacted</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current user has added a burst (super) reaction using this emoji.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool HasCurrentUserBurstReacted { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">bool</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IReaction_HasCurrentUserReacted.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IReaction.HasCurrentUserReacted%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L41">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Reactions/IReaction.cs/#L48">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IReaction" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.HasCurrentUserReacted*"></a>
   <h4 id="HasCurrentUserReacted" data-uid="Remora.Discord.API.Abstractions.Objects.IReaction.HasCurrentUserReacted">HasCurrentUserReacted</h4>
-  <div class="markdown level1 summary"><p>Gets a value indicating whether the current user has reacted using this emoji.</p>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current user has added a reaction using this emoji.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -202,7 +295,7 @@ public interface IReaction</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="xref">bool</span></td>
         <td></td>
       </tr>
     </tbody>
