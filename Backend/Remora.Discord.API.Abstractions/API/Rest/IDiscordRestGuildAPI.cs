@@ -329,6 +329,40 @@ public interface IDiscordRestGuildAPI
     );
 
     /// <summary>
+    /// Creates a new forum channel for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="name">The name of the new channel.</param>
+    /// <param name="topic">The topic of the new channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
+    /// <param name="position">The sorting position of the new channel.</param>
+    /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
+    /// <param name="parentID">The ID of the parent category of the new channel.</param>
+    /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
+    /// <param name="defaultReactionEmoji">The default emoji to show in reaction buttons of forum posts.</param>
+    /// <param name="availableTags">The tags that can be used in a forum channel.</param>
+    /// <param name="defaultSortOrder">The default sort order of posts.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> CreateGuildMediaChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
+        Optional<SortOrder?> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Creates a new voice channel for the guild.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>

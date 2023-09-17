@@ -438,6 +438,40 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
     );
 
     /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildMediaChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
+        Optional<SortOrder?> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildMedia,
+        topic: topic,
+        rateLimitPerUser: rateLimitPerUser,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultReactionEmoji: defaultReactionEmoji,
+        availableTags: availableTags,
+        defaultSortOrder: defaultSortOrder,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
     public Task<Result<IChannel>> CreateGuildVoiceChannelAsync
     (
         Snowflake guildID,

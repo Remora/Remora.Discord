@@ -849,6 +849,76 @@ public class DiscordRestGuildAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        public async Task PerformsMediaRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var name = "dd";
+            var type = ChannelType.GuildMedia;
+            var topic = "aaa";
+            var rateLimitPerUser = 10;
+            var position = 1;
+            var permissionOverwrites = new List<IPermissionOverwrite>();
+            var parentID = DiscordSnowflake.New(1);
+            var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var defaultReactionEmoji = new DefaultReaction(EmojiName: "booga");
+            var availableTags = Array.Empty<IForumTag>();
+            var defaultSortOrder = SortOrder.CreationDate;
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("topic", p => p.Is(topic))
+                                .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
+                                .WithProperty("position", p => p.Is(position))
+                                .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                .WithProperty
+                                (
+                                    "default_auto_archive_duration",
+                                    p => p.Is((int)defaultAutoArchiveDuration)
+                                )
+                                .WithProperty("default_reaction_emoji", p => p.IsObject())
+                                .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.CreateGuildMediaChannelAsync
+            (
+                guildId,
+                name,
+                topic,
+                rateLimitPerUser,
+                position,
+                permissionOverwrites,
+                parentID,
+                defaultAutoArchiveDuration,
+                defaultReactionEmoji,
+                availableTags,
+                defaultSortOrder,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
         public async Task PerformsVoiceRequestCorrectly()
         {
             var guildId = DiscordSnowflake.New(0);

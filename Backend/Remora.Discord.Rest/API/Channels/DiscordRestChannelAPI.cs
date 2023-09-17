@@ -429,6 +429,48 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         );
     }
 
+    /// <inheritdoc/>
+    public Task<Result<IChannel>> ModifyMediaChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<SortOrder> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            position: position,
+            topic: topic,
+            isNsfw: isNsfw,
+            rateLimitPerUser: rateLimitPerUser,
+            permissionOverwrites: permissionOverwrites,
+            parentID: parentID,
+            defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+            flags: flags,
+            availableTags: availableTags,
+            defaultReactionEmoji: defaultReactionEmoji,
+            defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+            defaultSortOrder: defaultSortOrder,
+            reason: reason,
+            ct: ct
+        );
+    }
+
     /// <inheritdoc />
     public virtual Task<Result> DeleteChannelAsync
     (

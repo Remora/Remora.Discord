@@ -553,6 +553,88 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        public async Task PerformsMediaChannelRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var name = "brr";
+            var position = 1;
+            var topic = "wooga";
+            var isNsfw = true;
+            var rateLimitPerUser = 10;
+            var permissionOverwrites = new List<PermissionOverwrite>();
+            var parentID = new Snowflake(1);
+            var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var flags = ChannelFlags.RequireTag;
+            var availableTags = new List<IForumTag>();
+            var defaultReactionEmoji = new DefaultReaction(new Snowflake(1));
+            var defaultThreadRateLimitPerUser = 2;
+            var defaultSortOrder = SortOrder.CreationDate;
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j
+                            .IsObject
+                            (
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("position", p => p.Is(position))
+                                    .WithProperty("topic", p => p.Is(topic))
+                                    .WithProperty("nsfw", p => p.Is(isNsfw))
+                                    .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
+                                    .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                    .WithProperty
+                                    (
+                                        "default_auto_archive_duration",
+                                        p => p.Is((int)defaultAutoArchiveDuration)
+                                    )
+                                    .WithProperty("flags", p => p.Is((int)flags))
+                                    .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("default_reaction_emoji", p => p.IsObject())
+                                    .WithProperty
+                                    (
+                                        "default_thread_rate_limit_per_user",
+                                        p => p.Is(defaultThreadRateLimitPerUser)
+                                    )
+                                    .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
+                            )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.ModifyMediaChannelAsync
+            (
+                channelId,
+                name,
+                position,
+                topic,
+                isNsfw,
+                rateLimitPerUser,
+                permissionOverwrites,
+                parentID,
+                defaultAutoArchiveDuration,
+                flags,
+                availableTags,
+                defaultReactionEmoji,
+                defaultThreadRateLimitPerUser,
+                defaultSortOrder,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
         public async Task PerformsNullableRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
