@@ -875,7 +875,12 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddReactionObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IReaction, Reaction>()
-            .WithPropertyName(r => r.HasCurrentUserReacted, "me");
+            .WithPropertyName(r => r.HasCurrentUserReacted, "me")
+            .WithPropertyName(r => r.HasCurrentUserBurstReacted, "me_burst")
+            .WithPropertyName(r => r.BurstColours, "burst_colors")
+            .WithPropertyConverter(r => r.BurstColours, new HexCodeColourConverter());
+
+        options.AddDataObjectConverter<IReactionCountDetails, ReactionCountDetails>();
 
         return options;
     }

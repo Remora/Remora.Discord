@@ -1,5 +1,5 @@
 //
-//  Reaction.cs
+//  ReactionCountDetailsTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using System.Drawing;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Tests.TestBases;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Tests.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IReaction" />
-[PublicAPI]
-public record Reaction
-(
-    int Count,
-    IReactionCountDetails CountDetails,
-    bool HasCurrentUserReacted,
-    bool HasCurrentUserBurstReacted,
-    IPartialEmoji Emoji,
-    IReadOnlyList<Color> BurstColours
-) : IReaction;
+/// <inheritdoc />
+public class ReactionCountDetailsTests : ObjectTestBase<IReactionCountDetails>
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ReactionCountDetailsTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public ReactionCountDetailsTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+}

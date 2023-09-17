@@ -1,5 +1,5 @@
 //
-//  Reaction.cs
+//  ReactionCountDetails.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IReaction" />
+/// <inheritdoc />
 [PublicAPI]
-public record Reaction
-(
-    int Count,
-    IReactionCountDetails CountDetails,
-    bool HasCurrentUserReacted,
-    bool HasCurrentUserBurstReacted,
-    IPartialEmoji Emoji,
-    IReadOnlyList<Color> BurstColours
-) : IReaction;
+public record ReactionCountDetails(int Burst, int Normal) : IReactionCountDetails;

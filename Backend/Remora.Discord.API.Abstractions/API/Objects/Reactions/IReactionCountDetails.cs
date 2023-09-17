@@ -1,5 +1,5 @@
 //
-//  Reaction.cs
+//  IReactionCountDetails.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using System.Drawing;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IReaction" />
+/// <summary>
+/// Represents detailed information about a reaction count.
+/// </summary>
 [PublicAPI]
-public record Reaction
-(
-    int Count,
-    IReactionCountDetails CountDetails,
-    bool HasCurrentUserReacted,
-    bool HasCurrentUserBurstReacted,
-    IPartialEmoji Emoji,
-    IReadOnlyList<Color> BurstColours
-) : IReaction;
+public interface IReactionCountDetails
+{
+    /// <summary>
+    /// Gets the number of burst (super) reactions that have been made with the associated emoji.
+    /// </summary>
+    int Burst { get; }
+
+    /// <summary>
+    /// Gets the number of normal reactions that have been made with the associated emoji.
+    /// </summary>
+    int Normal { get; }
+}
