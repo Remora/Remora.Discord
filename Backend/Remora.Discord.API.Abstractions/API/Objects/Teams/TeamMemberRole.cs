@@ -1,5 +1,5 @@
 //
-//  ITeamMember.cs
+//  TeamMemberRole.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,40 +20,36 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Rest.Core;
-
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a Discord developer team member.
+/// Enumerates various roles a team member can have.
 /// </summary>
-[PublicAPI]
-public interface ITeamMember
+public enum TeamMemberRole
 {
     /// <summary>
-    /// Gets the user's membership state on the team.
+    ///  Owners are the most permissible role, and can take destructive, irreversible actions like deleting team-owned
+    /// apps or the team itself. Teams are limited to 1 owner.
     /// </summary>
-    MembershipState MembershipState { get; }
+    Owner,
 
     /// <summary>
-    /// Gets the permissions of the member. Currently, always '[ "*" ]'.
+    /// Admins have similar access as owners, except they cannot take destructive actions on the team or team-owned
+    /// apps.
     /// </summary>
-    IReadOnlyList<string> Permissions { get; }
+    Admin,
 
     /// <summary>
-    /// Gets the ID of the parent team of which the user is a member.
+    ///  Developers can access information about team-owned apps, like the client secret or public key. They can also
+    /// take limited actions on team-owned apps, like configuring interaction endpoints or resetting the bot token.
+    /// Members with the Developer role *cannot* manage the team or its members, or take destructive actions on
+    /// team-owned apps.
     /// </summary>
-    Snowflake TeamID { get; }
+    Developer,
 
     /// <summary>
-    /// Gets the user that's part of the team.
+    /// Read-only members can access information about a team and any team-owned apps. Some examples include getting the
+    /// IDs of applications and exporting payout records.
     /// </summary>
-    IPartialUser User { get; }
-
-    /// <summary>
-    /// Gets the user's role.
-    /// </summary>
-    TeamMemberRole Role { get; }
+    ReadOnly
 }

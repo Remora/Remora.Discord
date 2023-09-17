@@ -1197,7 +1197,8 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddTeamObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<ITeam, Team>();
-        options.AddDataObjectConverter<ITeamMember, TeamMember>();
+        options.AddDataObjectConverter<ITeamMember, TeamMember>()
+            .WithPropertyConverter(m => m.Role, new StringEnumConverter<TeamMemberRole>(new SnakeCaseNamingPolicy()));
 
         return options;
     }
