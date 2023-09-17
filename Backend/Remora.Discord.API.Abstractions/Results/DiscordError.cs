@@ -909,6 +909,11 @@ public enum DiscordError
     ReactionBlocked = 90001,
 
     /// <summary>
+    /// The user cannot use burst (super) reactions.
+    /// </summary>
+    UserCannotUseBurstReactions = 90002,
+
+    /// <summary>
     /// The application isn't available yet. Try again later.
     /// </summary>
     ApplicationNotYetAvailable = 110001,
