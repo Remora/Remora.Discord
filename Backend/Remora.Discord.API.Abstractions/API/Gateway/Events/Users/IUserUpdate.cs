@@ -28,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// <summary>
 /// Represents an update to a user.
 /// </summary>
+/// <inheritdoc cref="IUser" path="/remarks"/>
 [PublicAPI]
 public interface IUserUpdate : IGatewayEvent, IUser
 {

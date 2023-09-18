@@ -28,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a user mention.
 /// </summary>
+/// <inheritdoc cref="IUser" path="/remarks"/>
 [PublicAPI]
 public interface IUserMention : IUser
 {
