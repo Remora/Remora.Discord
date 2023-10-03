@@ -28,6 +28,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -182,7 +183,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         }
 
         // Send the whole payload as one chunk
-        await _clientWebSocket.SendAsync(bufferWriter.GetMemory(), WebSocketMessageType.Text, true, ct);
+        await _clientWebSocket.SendAsync(bufferWriter.WrittenMemory, WebSocketMessageType.Text, true, ct);
 
         if (!_clientWebSocket.CloseStatus.HasValue)
         {
