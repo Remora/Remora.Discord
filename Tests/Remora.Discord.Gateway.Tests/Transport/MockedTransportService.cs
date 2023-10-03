@@ -183,7 +183,7 @@ public class MockedTransportService : IPayloadTransportService
     }
 
     /// <inheritdoc />
-    public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
+    public async ValueTask<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
     {
         try
         {
@@ -295,7 +295,7 @@ public class MockedTransportService : IPayloadTransportService
     }
 
     /// <inheritdoc />
-    public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
+    public async ValueTask<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
     {
         while (!ct.IsCancellationRequested)
         {

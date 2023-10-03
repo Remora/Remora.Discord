@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.WebSockets;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -150,7 +151,10 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     }
 
     /// <inheritdoc />
-    public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
+    #if NET6_0_OR_GREATER
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
+    #endif
+    public async ValueTask<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
     {
         if (_clientWebSocket is null)
         {
@@ -175,7 +179,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         }
 
         // Send the whole payload as one chunk
-        await _clientWebSocket.SendAsync(bufferWriter.DangerousGetArray(), WebSocketMessageType.Text, true, ct);
+        await _clientWebSocket.SendAsync(bufferWriter.GetMemory(), WebSocketMessageType.Text, true, ct);
 
         if (!_clientWebSocket.CloseStatus.HasValue)
         {
@@ -191,7 +195,10 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     }
 
     /// <inheritdoc />
-    public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
+    #if NET6_0_OR_GREATER
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
+    #endif
+    public async ValueTask<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
     {
         if (_clientWebSocket is null)
         {
