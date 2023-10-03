@@ -171,6 +171,10 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         // if it isn't, the writer resizes the array, which is rare, and a cost we're
         // fine with eating.
         using var bufferWriter = new ArrayPoolBufferWriter<byte>(128);
+
+        // `SkipValidation = !Debugger.IsAttached` is to replicate what STJ does internally;
+        // it's worth noting however that STJ uses #if !DEBUG, while we simply check if
+        // there's a debugger, which is good enough.
         await using var writer = new Utf8JsonWriter(bufferWriter, new JsonWriterOptions { Encoder = _jsonOptions.Encoder, Indented = false, SkipValidation = !Debugger.IsAttached });
         JsonSerializer.Serialize(writer, payload, _jsonOptions);
 
