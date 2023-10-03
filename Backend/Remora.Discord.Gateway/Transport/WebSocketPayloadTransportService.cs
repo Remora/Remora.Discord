@@ -166,7 +166,10 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The socket was not open.");
         }
 
-        using var bufferWriter = new ArrayPoolBufferWriter<byte>();
+        // Most common case is heartbeat ({"op":1"}), so this is more than enough
+        // if it isn't, the writer resizes the array, which is rare, and a cost we're
+        // fine with eating.
+        using var bufferWriter = new ArrayPoolBufferWriter<byte>(128);
         await using var writer = new Utf8JsonWriter(bufferWriter, new JsonWriterOptions { Encoder = _jsonOptions.Encoder, Indented = false, SkipValidation = !Debugger.IsAttached });
         JsonSerializer.Serialize(writer, payload, _jsonOptions);
 
