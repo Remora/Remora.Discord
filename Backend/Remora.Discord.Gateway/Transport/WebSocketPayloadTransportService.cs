@@ -23,6 +23,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.WebSockets;
@@ -161,56 +162,32 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The socket was not open.");
         }
 
-        await using var memoryStream = new MemoryStream();
+        using var bufferWriter = new ArrayPoolBufferWriter<byte>();
+        await using var writer = new Utf8JsonWriter(bufferWriter, new JsonWriterOptions { Encoder = _jsonOptions.Encoder, Indented = false, SkipValidation = !Debugger.IsAttached });
+        JsonSerializer.Serialize(writer, payload, _jsonOptions);
 
-        byte[]? buffer = null;
-        try
+        if (bufferWriter.WrittenSpan.Length > 4096)
         {
-            await JsonSerializer.SerializeAsync(memoryStream, payload, _jsonOptions, ct);
-
-            if (memoryStream.Length > 4096)
-            {
-                return new NotSupportedError
-                (
-                    "The payload was too large to be accepted by the gateway."
-                );
-            }
-
-            buffer = ArrayPool<byte>.Shared.Rent((int)memoryStream.Length);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            // Copy the data
-            var copiedBytes = 0;
-            while (copiedBytes < memoryStream.Length)
-            {
-                var bufferSegment = new ArraySegment<byte>(buffer, copiedBytes, (int)memoryStream.Length - copiedBytes);
-                copiedBytes += await memoryStream.ReadAsync(bufferSegment, ct);
-            }
-
-            // Send the whole payload as one chunk
-            var segment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
-
-            await _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
-
-            if (_clientWebSocket.CloseStatus.HasValue)
-            {
-                if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
-                {
-                    return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus);
-                }
-
-                return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
-            }
-        }
-        finally
-        {
-            if (buffer is not null)
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            return new NotSupportedError
+            (
+                "The payload was too large to be accepted by the gateway."
+            );
         }
 
-        return Result.FromSuccess();
+        // Send the whole payload as one chunk
+        await _clientWebSocket.SendAsync(bufferWriter.DangerousGetArray(), WebSocketMessageType.Text, true, ct);
+
+        if (!_clientWebSocket.CloseStatus.HasValue)
+        {
+            return Result.FromSuccess();
+        }
+
+        if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
+        {
+            return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus);
+        }
+
+        return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
     }
 
     /// <inheritdoc />
