@@ -984,7 +984,7 @@ public class DiscordGatewayClient : IDisposable
                     {
                         sendResult = await rateLimitPolicy.ExecuteAsync
                         (
-                            () => _transportService.SendPayloadAsync(userPayload, disconnectRequested)
+                            () => _transportService.SendPayloadAsync(userPayload, disconnectRequested).AsTask()
                         );
 
                         if (sendResult.IsSuccess)

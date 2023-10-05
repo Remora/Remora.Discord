@@ -23,9 +23,12 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.WebSockets;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -149,7 +152,10 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     }
 
     /// <inheritdoc />
-    public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
+    #if NET6_0_OR_GREATER
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
+    #endif
+    public async ValueTask<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
     {
         if (_clientWebSocket is null)
         {
@@ -161,60 +167,46 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The socket was not open.");
         }
 
-        await using var memoryStream = new MemoryStream();
+        // Most common case is heartbeat ({"op":1"}), so this is more than enough
+        // if it isn't, the writer resizes the array, which is rare, and a cost we're
+        // fine with eating.
+        using var bufferWriter = new ArrayPoolBufferWriter<byte>(128);
 
-        byte[]? buffer = null;
-        try
+        // `SkipValidation = !Debugger.IsAttached` is to replicate what STJ does internally;
+        // it's worth noting however that STJ uses #if !DEBUG, while we simply check if
+        // there's a debugger, which is good enough.
+        await using var writer = new Utf8JsonWriter(bufferWriter, new JsonWriterOptions { Encoder = _jsonOptions.Encoder, Indented = false, SkipValidation = !Debugger.IsAttached });
+        JsonSerializer.Serialize(writer, payload, _jsonOptions);
+
+        if (bufferWriter.WrittenSpan.Length > 4096)
         {
-            await JsonSerializer.SerializeAsync(memoryStream, payload, _jsonOptions, ct);
-
-            if (memoryStream.Length > 4096)
-            {
-                return new NotSupportedError
-                (
-                    "The payload was too large to be accepted by the gateway."
-                );
-            }
-
-            buffer = ArrayPool<byte>.Shared.Rent((int)memoryStream.Length);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            // Copy the data
-            var copiedBytes = 0;
-            while (copiedBytes < memoryStream.Length)
-            {
-                var bufferSegment = new ArraySegment<byte>(buffer, copiedBytes, (int)memoryStream.Length - copiedBytes);
-                copiedBytes += await memoryStream.ReadAsync(bufferSegment, ct);
-            }
-
-            // Send the whole payload as one chunk
-            var segment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
-
-            await _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
-
-            if (_clientWebSocket.CloseStatus.HasValue)
-            {
-                if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
-                {
-                    return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus);
-                }
-
-                return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
-            }
-        }
-        finally
-        {
-            if (buffer is not null)
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            return new NotSupportedError
+            (
+                "The payload was too large to be accepted by the gateway."
+            );
         }
 
-        return Result.FromSuccess();
+        // Send the whole payload as one chunk
+        await _clientWebSocket.SendAsync(bufferWriter.WrittenMemory, WebSocketMessageType.Text, true, ct);
+
+        if (!_clientWebSocket.CloseStatus.HasValue)
+        {
+            return Result.FromSuccess();
+        }
+
+        if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
+        {
+            return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus);
+        }
+
+        return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
     }
 
     /// <inheritdoc />
-    public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
+    #if NET6_0_OR_GREATER
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
+    #endif
+    public async ValueTask<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
     {
         if (_clientWebSocket is null)
         {
