@@ -305,7 +305,7 @@ minimum.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IPayload&gt;&gt; ReceivePayloadAsync(CancellationToken ct = default)</code></pre>
+    <pre><code class="lang-csharp hljs">ValueTask&lt;Result&lt;IPayload&gt;&gt; ReceivePayloadAsync(CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -335,7 +335,7 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IPayload.html">IPayload</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1">ValueTask</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IPayload.html">IPayload</a>&gt;&gt;</td>
         <td><p>A receive result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -358,7 +358,7 @@ minimum.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; SendPayloadAsync(IPayload payload, CancellationToken ct = default)</code></pre>
+    <pre><code class="lang-csharp hljs">ValueTask&lt;Result&gt; SendPayloadAsync(IPayload payload, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -394,7 +394,7 @@ minimum.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1">ValueTask</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A send result which may or may not have succeeded.</p>
 </td>
       </tr>
