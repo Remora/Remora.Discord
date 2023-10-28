@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Developer Documentation
-    url: https://nihlus.github.io/Remora.Discord/
+    url: https://remora.github.io/Remora.Discord/
     about: Need documentation and examples for the API? Head over to Discord's developer documentation.
   - name: Discord Server
     url: https://discord.gg/dyYmwashVs
