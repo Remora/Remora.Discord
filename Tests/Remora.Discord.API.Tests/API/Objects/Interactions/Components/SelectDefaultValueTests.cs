@@ -1,5 +1,5 @@
 //
-//  SelectDefaultValue.cs
+//  SelectDefaultValueTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,12 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Tests.Objects;
 
 /// <inheritdoc />
-[PublicAPI]
-public record SelectDefaultValue(Snowflake ID, string Type) : ISelectDefaultValue;
+public class SelectDefaultValueTests : ObjectTestBase<ISelectDefaultValue>
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SelectDefaultValueTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public SelectDefaultValueTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+}
