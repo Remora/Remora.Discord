@@ -21,14 +21,13 @@
 //
 
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Net.Http;
 using System.Net.WebSockets;
+#if NET6_0_OR_GREATER
 using System.Runtime.CompilerServices;
-using System.Text;
+#endif
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
