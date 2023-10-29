@@ -660,6 +660,7 @@ public class DiscordRestGuildAPITests
             var parentID = DiscordSnowflake.New(1);
             var isNsfw = true;
             var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var defaultThreadRateLimitPerUser = 20;
             var reason = "test";
 
             var api = CreateAPI
@@ -685,6 +686,7 @@ public class DiscordRestGuildAPITests
                                     "default_auto_archive_duration",
                                     p => p.Is((int)defaultAutoArchiveDuration)
                                 )
+                                .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -701,6 +703,7 @@ public class DiscordRestGuildAPITests
                 parentID,
                 isNsfw,
                 defaultAutoArchiveDuration,
+                defaultThreadRateLimitPerUser,
                 reason
             );
 
@@ -723,6 +726,7 @@ public class DiscordRestGuildAPITests
             var parentID = DiscordSnowflake.New(1);
             var isNsfw = true;
             var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var defaultThreadRateLimitPerUser = 20;
             var reason = "test";
 
             var api = CreateAPI
@@ -747,6 +751,7 @@ public class DiscordRestGuildAPITests
                                     "default_auto_archive_duration",
                                     p => p.Is((int)defaultAutoArchiveDuration)
                                 )
+                                .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -762,6 +767,7 @@ public class DiscordRestGuildAPITests
                 parentID,
                 isNsfw,
                 defaultAutoArchiveDuration,
+                defaultThreadRateLimitPerUser,
                 reason
             );
 
@@ -789,6 +795,7 @@ public class DiscordRestGuildAPITests
             var availableTags = Array.Empty<IForumTag>();
             var defaultSortOrder = SortOrder.CreationDate;
             var defaultLayout = ForumLayout.GalleryView;
+            var defaultThreadRateLimitPerUser = 20;
             var reason = "test";
 
             var api = CreateAPI
@@ -818,6 +825,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
                                 .WithProperty("default_forum_layout", p => p.Is((int)defaultLayout))
+                                .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -838,6 +846,7 @@ public class DiscordRestGuildAPITests
                 availableTags,
                 defaultSortOrder,
                 defaultLayout,
+                defaultThreadRateLimitPerUser,
                 reason
             );
 
@@ -863,6 +872,7 @@ public class DiscordRestGuildAPITests
             var defaultReactionEmoji = new DefaultReaction(EmojiName: "booga");
             var availableTags = Array.Empty<IForumTag>();
             var defaultSortOrder = SortOrder.CreationDate;
+            var defaultThreadRateLimitPerUser = 20;
             var reason = "test";
 
             var api = CreateAPI
@@ -890,6 +900,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("default_reaction_emoji", p => p.IsObject())
                                 .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
+                                .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -908,6 +919,7 @@ public class DiscordRestGuildAPITests
                 defaultReactionEmoji,
                 availableTags,
                 defaultSortOrder,
+                defaultThreadRateLimitPerUser,
                 reason
             );
 

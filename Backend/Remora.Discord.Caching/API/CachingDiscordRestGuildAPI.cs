@@ -301,6 +301,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -325,6 +326,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
             availableTags,
             defaultSortOrder,
             defaultForumLayout,
+            defaultThreadRateLimitPerUser,
             reason,
             ct
         );
@@ -353,6 +355,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<Snowflake?> parentID = default,
         Optional<bool?> isNsfw = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -367,6 +370,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         parentID: parentID,
         isNsfw: isNsfw,
         defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -382,6 +386,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<Snowflake?> parentID = default,
         Optional<bool?> isNsfw = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -395,6 +400,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         parentID: parentID,
         isNsfw: isNsfw,
         defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -415,6 +421,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -433,6 +440,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         availableTags: availableTags,
         defaultSortOrder: defaultSortOrder,
         defaultForumLayout: defaultForumLayout,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -451,6 +459,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -467,6 +476,7 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
         defaultReactionEmoji: defaultReactionEmoji,
         availableTags: availableTags,
         defaultSortOrder: defaultSortOrder,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );

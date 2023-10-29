@@ -319,6 +319,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -349,6 +350,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("available_tags", availableTags, this.JsonOptions);
                         json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
                         json.Write("default_forum_layout", defaultForumLayout, this.JsonOptions);
+                        json.Write("default_thread_rate_limit_per_user", defaultThreadRateLimitPerUser, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -368,6 +370,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<Snowflake?> parentID = default,
         Optional<bool?> isNsfw = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -382,6 +385,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         parentID: parentID,
         isNsfw: isNsfw,
         defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -397,6 +401,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<Snowflake?> parentID = default,
         Optional<bool?> isNsfw = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -410,6 +415,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         parentID: parentID,
         isNsfw: isNsfw,
         defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -430,6 +436,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -448,6 +455,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         availableTags: availableTags,
         defaultSortOrder: defaultSortOrder,
         defaultForumLayout: defaultForumLayout,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -466,6 +474,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -482,6 +491,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         defaultReactionEmoji: defaultReactionEmoji,
         availableTags: availableTags,
         defaultSortOrder: defaultSortOrder,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
