@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a partial default value for a select menu.
 /// </summary>
+[PublicAPI]
 public interface IPartialSelectDefaultValue
 {
     /// <inheritdoc cref="ISelectDefaultValue.ID"/>
