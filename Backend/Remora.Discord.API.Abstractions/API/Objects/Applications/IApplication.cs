@@ -69,6 +69,11 @@ public interface IApplication : IPartialApplication
     new bool DoesBotRequireCodeGrant { get; }
 
     /// <summary>
+    /// Gets the user object for the bot user associated with the application.
+    /// </summary>
+    new Optional<IPartialUser> Bot { get; }
+
+    /// <summary>
     /// Gets the URL to the application's terms of service.
     /// </summary>
     new Optional<string> TermsOfServiceURL { get; }
@@ -129,6 +134,23 @@ public interface IApplication : IPartialApplication
     new Optional<int> ApproximateGuildCount { get; }
 
     /// <summary>
+    /// Gets the redirect URIs for the application.
+    /// </summary>
+    new Optional<IReadOnlyList<Uri>> RedirectUris { get; }
+
+    /// <summary>
+    /// Gets the interaction endpoint URL for the application.
+    /// </summary>
+    new Optional<Uri> InteractionsEndpointUrl { get; }
+
+    /// <summary>
+    /// Gets the application's role connection verification entry point,
+    /// which when configured will render the app as a verification method
+    /// in the guild role verification configuration.
+    /// </summary>
+    new Optional<Uri> RoleConnectionsVerificationUrl { get; }
+
+    /// <summary>
     /// Gets up to 5 tags describing the content and functionality of the application.
     /// </summary>
     new Optional<IReadOnlyList<string>> Tags { get; }
@@ -142,13 +164,6 @@ public interface IApplication : IPartialApplication
     /// Gets the application's default custom authorization link.
     /// </summary>
     new Optional<Uri> CustomInstallUrl { get; }
-
-    /// <summary>
-    /// Gets the application's role connection verification entry point,
-    /// which when configured will render the app as a verification method
-    /// in the guild role verification configuration.
-    /// </summary>
-    new Optional<Uri> RoleConnectionsVerificationUrl { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.ID => this.ID;
@@ -170,6 +185,9 @@ public interface IApplication : IPartialApplication
 
     /// <inheritdoc/>
     Optional<bool> IPartialApplication.DoesBotRequireCodeGrant => this.DoesBotRequireCodeGrant;
+
+    /// <inheritdoc/>
+    Optional<IPartialUser> IPartialApplication.Bot => this.Bot;
 
     /// <inheritdoc/>
     Optional<string> IPartialApplication.TermsOfServiceURL => this.TermsOfServiceURL;
@@ -208,6 +226,15 @@ public interface IApplication : IPartialApplication
     Optional<int> IPartialApplication.ApproximateGuildCount => this.ApproximateGuildCount;
 
     /// <inheritdoc/>
+    Optional<IReadOnlyList<Uri>> IPartialApplication.RedirectUris => this.RedirectUris;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.InteractionsEndpointUrl => this.InteractionsEndpointUrl;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.RoleConnectionsVerificationUrl => this.RoleConnectionsVerificationUrl;
+
+    /// <inheritdoc/>
     Optional<IReadOnlyList<string>> IPartialApplication.Tags => this.Tags;
 
     /// <inheritdoc/>
@@ -215,7 +242,4 @@ public interface IApplication : IPartialApplication
 
     /// <inheritdoc/>
     Optional<Uri> IPartialApplication.CustomInstallUrl => this.CustomInstallUrl;
-
-    /// <inheritdoc/>
-    Optional<Uri> IPartialApplication.RoleConnectionsVerificationUrl => this.RoleConnectionsVerificationUrl;
 }

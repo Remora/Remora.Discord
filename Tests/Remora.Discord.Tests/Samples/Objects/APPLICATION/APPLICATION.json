@@ -8,6 +8,7 @@
   ],
   "bot_public": true,
   "bot_require_code_grant": true,
+  "bot": {},
   "terms_of_service_url": "https://www.example.org",
   "privacy_policy_url": "https://www.example.org",
   "owner": {},
@@ -41,6 +42,11 @@
   "cover_image": "68b329da9893e34099c7d8ad5cb9c940",
   "flags": 0,
   "approximate_guild_count": 0,
+  "redirect_uris": [
+    "https://www.example.org"
+  ],
+  "interactions_endpoint_url": "https://www.example.org",
+  "role_connections_verification_url": "https://www.example.org",
   "tags": [
     "none"
   ],
@@ -50,6 +56,5 @@
     ],
     "permissions": "0"
   },
-  "custom_install_url": "https://www.example.org",
-  "role_connections_verification_url": "https://www.example.org"
+  "custom_install_url": "https://www.example.org"
 }

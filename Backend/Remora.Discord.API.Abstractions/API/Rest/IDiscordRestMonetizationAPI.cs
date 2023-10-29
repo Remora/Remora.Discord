@@ -49,7 +49,7 @@ public interface IDiscordRestMonetizationAPI
     /// <param name="excludeEnded">Whether to exclude expired entitlements.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The entitlements.</returns>
-    public Task<Result<IReadOnlyList<IEntitlement>>> ListEntitlementsAsync
+    Task<Result<IReadOnlyList<IEntitlement>>> ListEntitlementsAsync
     (
         Snowflake applicationID,
         Optional<Snowflake> userID = default,
@@ -71,7 +71,7 @@ public interface IDiscordRestMonetizationAPI
     /// <param name="ownerType">The type of the owner.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The test entitlement.</returns>
-    public Task<Result<IPartialEntitlement>> CreateTestEntitlementAsync
+    Task<Result<IPartialEntitlement>> CreateTestEntitlementAsync
     (
         Snowflake applicationID,
         Snowflake skuID,
@@ -87,7 +87,7 @@ public interface IDiscordRestMonetizationAPI
     /// <param name="entitlementID">The ID of the entitlement.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A value representing the result of the operation.</returns>
-    public Task<Result> DeleteTestEntitlementAsync
+    Task<Result> DeleteTestEntitlementAsync
     (
         Snowflake applicationID,
         Snowflake entitlementID,
@@ -100,5 +100,5 @@ public interface IDiscordRestMonetizationAPI
     /// <param name="applicationID">The ID of the application.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The SKUs.</returns>
-    public Task<Result<IReadOnlyList<ISKU>>> ListSKUsAsync(Snowflake applicationID, CancellationToken ct = default);
+    Task<Result<IReadOnlyList<ISKU>>> ListSKUsAsync(Snowflake applicationID, CancellationToken ct = default);
 }

@@ -41,6 +41,7 @@ public record PartialApplication
     Optional<IReadOnlyList<string>> RPCOrigins = default,
     Optional<bool> IsBotPublic = default,
     Optional<bool> DoesBotRequireCodeGrant = default,
+    Optional<IPartialUser> Bot = default,
     Optional<string> TermsOfServiceURL = default,
     Optional<string> PrivacyPolicyURL = default,
     Optional<IPartialUser> Owner = default,
@@ -53,8 +54,10 @@ public record PartialApplication
     Optional<IImageHash> CoverImage = default,
     Optional<ApplicationFlags> Flags = default,
     Optional<int> ApproximateGuildCount = default,
+    Optional<IReadOnlyList<Uri>> RedirectUris = default,
+    Optional<Uri> InteractionsEndpointUrl = default,
+    Optional<Uri> RoleConnectionsVerificationUrl = default,
     Optional<IReadOnlyList<string>> Tags = default,
     Optional<IApplicationInstallParameters> InstallParams = default,
-    Optional<Uri> CustomInstallUrl = default,
-    Optional<Uri> RoleConnectionsVerificationUrl = default
+    Optional<Uri> CustomInstallUrl = default
 ) : IPartialApplication;

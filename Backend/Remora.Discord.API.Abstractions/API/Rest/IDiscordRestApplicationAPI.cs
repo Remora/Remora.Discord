@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -379,4 +381,32 @@ public interface IDiscordRestApplicationAPI
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The application object.</returns>
     Task<Result<IApplication>> GetCurrentApplicationAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Edit properties of the application associated with the requesting bot user.
+    /// </summary>
+    /// <param name="customInstallUrl">The default custom authorization URL of the app.</param>
+    /// <param name="description">The description of the app.</param>
+    /// <param name="roleConnectionsVerificationUrl">The role connections verification URL of the app.</param>
+    /// <param name="installParams">The settings for the app's in-app authorization.</param>
+    /// <param name="flags">The new flags.</param>
+    /// <param name="icon">The new icon.</param>
+    /// <param name="coverImage">The new cover image.</param>
+    /// <param name="interactionsEndpointUrl">The new interactions endpoint URL.</param>
+    /// <param name="tags">The new tags.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The updated application.</returns>
+    Task<Result<IApplication>> EditCurrentApplicationAsync
+    (
+        Optional<Uri> customInstallUrl = default,
+        Optional<string> description = default,
+        Optional<Uri> roleConnectionsVerificationUrl = default,
+        Optional<IApplicationInstallParameters> installParams = default,
+        Optional<ApplicationFlags> flags = default,
+        Optional<Stream> icon = default,
+        Optional<Stream> coverImage = default,
+        Optional<Uri> interactionsEndpointUrl = default,
+        Optional<IReadOnlyList<string>> tags = default,
+        CancellationToken ct = default
+    );
 }

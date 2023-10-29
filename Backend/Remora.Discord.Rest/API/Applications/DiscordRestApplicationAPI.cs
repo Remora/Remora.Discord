@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -30,6 +32,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Discord.Rest.Extensions;
+using Remora.Discord.Rest.Utility;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
@@ -648,6 +651,69 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         (
             "applications/@me",
             b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IApplication>> EditCurrentApplicationAsync
+    (
+        Optional<Uri> customInstallUrl = default,
+        Optional<string> description = default,
+        Optional<Uri> roleConnectionsVerificationUrl = default,
+        Optional<IApplicationInstallParameters> installParams = default,
+        Optional<ApplicationFlags> flags = default,
+        Optional<Stream> icon = default,
+        Optional<Stream> coverImage = default,
+        Optional<Uri> interactionsEndpointUrl = default,
+        Optional<IReadOnlyList<string>> tags = default,
+        CancellationToken ct = default
+    )
+    {
+        var packIcon = await ImagePacker.PackImageAsync(icon!, ct);
+        if (!packIcon.IsSuccess)
+        {
+            return Result<IApplication>.FromError(packIcon);
+        }
+
+        Optional<string> base64EncodedIcon = packIcon.Entity!;
+
+        var packCover = await ImagePacker.PackImageAsync(coverImage!, ct);
+        if (!packCover.IsSuccess)
+        {
+            return Result<IApplication>.FromError(packCover);
+        }
+
+        Optional<string> base64EncodedCover = packCover.Entity!;
+
+        return await this.RestHttpClient.PatchAsync<IApplication>
+        (
+            "applications/@me",
+            b =>
+            {
+                b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("custom_install_url", customInstallUrl, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
+                        json.Write
+                        (
+                            "role_connections_verification_url",
+                            roleConnectionsVerificationUrl,
+                            this.JsonOptions
+                        );
+                        json.Write("install_params", installParams, this.JsonOptions);
+                        json.Write("flags", flags, this.JsonOptions);
+                        json.Write("icon", base64EncodedIcon, this.JsonOptions);
+                        json.Write("cover_image", base64EncodedCover, this.JsonOptions);
+                        json.Write("interactions_endpoint_url", interactionsEndpointUrl, this.JsonOptions);
+                        json.Write("tags", tags, this.JsonOptions);
+                    }
+                );
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
