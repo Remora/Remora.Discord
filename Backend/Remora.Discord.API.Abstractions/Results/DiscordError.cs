@@ -567,6 +567,11 @@ public enum DiscordError
     TagRequired = 40067,
 
     /// <summary>
+    /// An entitlement has already been granted for this resource.
+    /// </summary>
+    EntitlementAlreadyGranted = 40074,
+
+    /// <summary>
     /// Missing access.
     /// </summary>
     MissingAccess = 50001,
@@ -742,6 +747,11 @@ public enum DiscordError
     /// Some guild is invalid.
     /// </summary>
     InvalidGuild = 50055,
+
+    /// <summary>
+    /// The SKU is invalid.
+    /// </summary>
+    InvalidSKU = 50057,
 
     /// <summary>
     /// The request origin is invalid.
