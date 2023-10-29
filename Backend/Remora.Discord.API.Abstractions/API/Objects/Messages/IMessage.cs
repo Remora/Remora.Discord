@@ -188,6 +188,11 @@ public interface IMessage : IPartialMessage
     /// </summary>
     new Optional<int> Position { get; }
 
+    /// <summary>
+    /// Gets data for users, members, channels, and roles in the message's auto-populated select menus.
+    /// </summary>
+    new Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
 
@@ -274,4 +279,7 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<int> IPartialMessage.Position => this.Position;
+
+    /// <inheritdoc/>
+    Optional<IApplicationCommandInteractionDataResolved> IPartialMessage.Resolved => this.Resolved;
 }

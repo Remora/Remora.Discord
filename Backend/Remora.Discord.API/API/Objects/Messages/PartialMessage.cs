@@ -62,5 +62,6 @@ public record PartialMessage
     Optional<IChannel> Thread = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
     Optional<IReadOnlyList<IStickerItem>> StickerItems = default,
-    Optional<int> Position = default
+    Optional<int> Position = default,
+    Optional<IApplicationCommandInteractionDataResolved> Resolved = default
 ) : IPartialMessage;

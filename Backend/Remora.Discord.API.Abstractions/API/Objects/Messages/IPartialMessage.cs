@@ -119,4 +119,7 @@ public interface IPartialMessage
 
     /// <inheritdoc cref="IMessage.Position" />
     Optional<int> Position { get; }
+
+    /// <inheritdoc cref="IMessage.Resolved" />
+    Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
 }
