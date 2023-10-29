@@ -29,7 +29,7 @@
         "value_pattern": "^\"[a-zA-Z0-9]+\"$",
         "replacement": "\"123456\""
     },
-    "^(((user)?name)|nick|description|content|label|summary|topic|small_text|large_text|state|details|buttons|tags|custom_id|placeholder|title)$": {
+    "^(((user)?name)|nick|description|content|label|summary|topic|small_text|large_text|state|details|buttons|tags|custom_id|placeholder|title|slug)$": {
         "priority": 0,
         "value_pattern": "^\".+\"$",
         "replacement": "\"none\""

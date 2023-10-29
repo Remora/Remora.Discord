@@ -53,6 +53,15 @@
     },
     "app_permissions": "0",
     "locale": "en-GB",
-    "guild_locale": "en-GB"
+    "guild_locale": "en-GB",
+    "entitlements": [
+      {
+        "id": "999999999999999999",
+        "sku_id": "999999999999999999",
+        "application_id": "999999999999999999",
+        "type": 8,
+        "deleted": false
+      }
+    ]
   }
 }

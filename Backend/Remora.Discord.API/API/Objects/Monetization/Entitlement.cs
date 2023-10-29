@@ -1,5 +1,5 @@
 //
-//  InteractionCreate.cs
+//  Entitlement.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,35 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
+using System;
 using JetBrains.Annotations;
-using OneOf;
-using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Objects;
 
-namespace Remora.Discord.API.Gateway.Events;
-
-/// <inheritdoc cref="IInteractionCreate" />
+/// <inheritdoc />
 [PublicAPI]
-public record InteractionCreate
+public record Entitlement
 (
     Snowflake ID,
+    Snowflake SKUID,
     Snowflake ApplicationID,
-    InteractionType Type,
-    Optional<OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>> Data,
-    Optional<Snowflake> GuildID,
-    Optional<IPartialChannel> Channel,
-    Optional<Snowflake> ChannelID,
-    Optional<IGuildMember> Member,
-    Optional<IUser> User,
-    string Token,
-    int Version,
-    Optional<IMessage> Message,
-    Optional<IDiscordPermissionSet> AppPermissions,
-    Optional<string> Locale,
-    Optional<string> GuildLocale,
-    IReadOnlyList<IEntitlement> Entitlements
-) : IInteractionCreate;
+    Optional<Snowflake> UserID,
+    EntitlementType Type,
+    bool IsDeleted,
+    Optional<DateTimeOffset> StartsAt = default,
+    Optional<DateTimeOffset> EndsAt = default,
+    Optional<Snowflake> GuildID = default
+) : IEntitlement;

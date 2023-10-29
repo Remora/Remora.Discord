@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Rest.Core;
@@ -116,4 +117,9 @@ public interface IInteraction
     /// Gets the locale of the guild the interaction was sent from.
     /// </summary>
     Optional<string> GuildLocale { get; }
+
+    /// <summary>
+    /// Gets, for monetized apps, any entitlements for the invoking user.
+    /// </summary>
+    IReadOnlyList<IEntitlement> Entitlements { get; }
 }

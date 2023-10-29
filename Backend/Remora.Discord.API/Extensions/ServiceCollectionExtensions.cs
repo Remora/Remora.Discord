@@ -114,7 +114,8 @@ public static class ServiceCollectionExtensions
                         .AddTeamObjectConverters()
                         .AddStageInstanceObjectConverters()
                         .AddStickerObjectConverters()
-                        .AddApplicationRoleConnectionObjectConverters();
+                        .AddApplicationRoleConnectionObjectConverters()
+                        .AddMonetizationConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
                     options.AddConverter<PropertyErrorDetailsConverter>();
@@ -415,6 +416,19 @@ public static class ServiceCollectionExtensions
 
         // Application commands
         options.AddDataObjectConverter<IApplicationCommandPermissionsUpdate, ApplicationCommandPermissionsUpdate>();
+
+        // Monetization
+        options.AddDataObjectConverter<IEntitlementCreate, EntitlementCreate>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted");
+
+        options.AddDataObjectConverter<IEntitlementUpdate, EntitlementUpdate>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted");
+
+        options.AddDataObjectConverter<IEntitlementDelete, EntitlementDelete>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted");
 
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -1206,6 +1220,25 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<ITeam, Team>();
         options.AddDataObjectConverter<ITeamMember, TeamMember>()
             .WithPropertyConverter(m => m.Role, new StringEnumConverter<TeamMemberRole>(new SnakeCaseNamingPolicy()));
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle monetization objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddMonetizationConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IEntitlement, Entitlement>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted");
+        options.AddDataObjectConverter<IPartialEntitlement, PartialEntitlement>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted");
+
+        options.AddDataObjectConverter<ISKU, SKU>();
 
         return options;
     }
