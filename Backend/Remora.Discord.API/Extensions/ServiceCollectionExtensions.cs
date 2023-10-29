@@ -1167,6 +1167,8 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 
+        options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
+
         return options;
     }
 

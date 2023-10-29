@@ -1,5 +1,5 @@
 //
-//  UserSelectComponent.cs
+//  ISelectDefaultValue.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IUserSelectComponent" />
-[PublicAPI]
-public record UserSelectComponent
-(
-    string CustomID,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<ISelectDefaultValue>> DefaultValues = default
-) : IUserSelectComponent
+/// <summary>
+/// Represents a default value for a select menu.
+/// </summary>
+public interface ISelectDefaultValue : IPartialSelectDefaultValue
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.UserSelect;
+    /// <summary>
+    /// Gets the ID of the default entity (user, role, or channel).
+    /// </summary>
+    new Snowflake ID { get; }
+
+    /// <summary>
+    /// Gets the type of value that <see cref="ID"/> represents. Can be one of "user", "role", or "channel".
+    /// </summary>
+    new string Type { get; }
+
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialSelectDefaultValue.ID => this.ID;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialSelectDefaultValue.Type => this.Type;
 }

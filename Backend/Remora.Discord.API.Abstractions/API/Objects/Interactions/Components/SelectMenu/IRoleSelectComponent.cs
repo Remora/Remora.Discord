@@ -28,6 +28,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a dropdown of selectable roles.
 /// </summary>
 [PublicAPI]
-public interface IRoleSelectComponent : ISelectMenuComponent, IPartialRoleSelectComponent
+public interface IRoleSelectComponent : IMentionableSelectComponent, IPartialRoleSelectComponent
 {
 }

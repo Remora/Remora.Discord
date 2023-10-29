@@ -1,5 +1,5 @@
 //
-//  UserSelectComponent.cs
+//  IPartialSelectDefaultValue.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IUserSelectComponent" />
-[PublicAPI]
-public record UserSelectComponent
-(
-    string CustomID,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<ISelectDefaultValue>> DefaultValues = default
-) : IUserSelectComponent
+/// <summary>
+/// Represents a partial default value for a select menu.
+/// </summary>
+public interface IPartialSelectDefaultValue
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.UserSelect;
+    /// <inheritdoc cref="ISelectDefaultValue.ID"/>
+    Optional<Snowflake> ID { get; }
+
+    /// <inheritdoc cref="ISelectDefaultValue.Type"/>
+    Optional<string> Type { get; }
 }
