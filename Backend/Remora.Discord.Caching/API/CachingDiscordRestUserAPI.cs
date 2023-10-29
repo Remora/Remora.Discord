@@ -133,7 +133,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
     }
 
     /// <inheritdoc />
-    public async Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    public async Task<Result<IReadOnlyList<IConnection>>> GetCurrentUserConnectionsAsync
     (
         CancellationToken ct = default
     )
@@ -146,7 +146,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
             return cacheResult;
         }
 
-        var getUserConnections = await _actual.GetUserConnectionsAsync(ct);
+        var getUserConnections = await _actual.GetCurrentUserConnectionsAsync(ct);
         if (!getUserConnections.IsSuccess)
         {
             return getUserConnections;
@@ -246,7 +246,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
     }
 
     /// <inheritdoc />
-    public async Task<Result<IApplicationRoleConnection>> GetUserApplicationRoleConnectionAsync
+    public async Task<Result<IApplicationRoleConnection>> GetCurrentUserApplicationRoleConnectionAsync
     (
         Snowflake applicationID,
         CancellationToken ct = default
@@ -260,7 +260,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
             return cacheResult;
         }
 
-        var getUserApplicationRoleConnection = await _actual.GetUserApplicationRoleConnectionAsync
+        var getUserApplicationRoleConnection = await _actual.GetCurrentUserApplicationRoleConnectionAsync
         (
             applicationID,
             ct
@@ -277,7 +277,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
     }
 
     /// <inheritdoc />
-    public async Task<Result<IApplicationRoleConnection>> UpdateUserApplicationRoleConnectionAsync
+    public async Task<Result<IApplicationRoleConnection>> UpdateCurrentUserApplicationRoleConnectionAsync
     (
         Snowflake applicationID,
         Optional<string> platformName = default,
@@ -286,7 +286,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
         CancellationToken ct = default
     )
     {
-        var result = await _actual.UpdateUserApplicationRoleConnectionAsync
+        var result = await _actual.UpdateCurrentUserApplicationRoleConnectionAsync
         (
             applicationID,
             platformName,
