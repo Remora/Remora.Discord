@@ -131,7 +131,7 @@
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.Rest.html">Rest</a>.<a class="xref" href="Remora.Discord.Rest.Extensions.html">Extensions</a></h6>
@@ -199,6 +199,87 @@ public static class RestRequestBuilderExtensions</code></pre>
       </tr>
     </tbody>
   </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Rest_Extensions_RestRequestBuilderExtensions_AddQueryParameter__1_Remora_Rest_RestRequestBuilder_System_String_Remora_Rest_Core_Optional___0__.md&amp;value=---%0Auid%3A%20Remora.Discord.Rest.Extensions.RestRequestBuilderExtensions.AddQueryParameter%60%601(Remora.Rest.RestRequestBuilder%2CSystem.String%2CRemora.Rest.Core.Optional%7B%60%600%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Rest/Extensions/RestRequestBuilderExtensions.cs/#L107">View Source</a>
+  </span>
+  <a id="Remora_Discord_Rest_Extensions_RestRequestBuilderExtensions" data-uid="Remora.Discord.Rest.Extensions.RestRequestBuilderExtensions.AddQueryParameter*"></a>
+  <h4 id="AddQueryParameter__1_1" data-uid="Remora.Discord.Rest.Extensions.RestRequestBuilderExtensions.AddQueryParameter``1(Remora.Rest.RestRequestBuilder,System.String,Remora.Rest.Core.Optional{``0})">AddQueryParameter&lt;T&gt;(RestRequestBuilder, string, Optional&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Adds the given optional value as a query string parameter if the optional contains a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RestRequestBuilder AddQueryParameter&lt;T&gt;(this RestRequestBuilder builder, string name, Optional&lt;T&gt; value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.RestRequestBuilder</span></td>
+        <td><span class="parametername">builder</span></td>
+        <td><p>The request builder.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the parameter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;T&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.RestRequestBuilder</span></td>
+        <td><p>The builder.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the underlying value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="AddQueryParameter__1_1_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The value will be added as its string representation as returned by <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">ToString()</a>.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Rest_Extensions_RestRequestBuilderExtensions_SkipAuthorization_Remora_Rest_RestRequestBuilder_.md&amp;value=---%0Auid%3A%20Remora.Discord.Rest.Extensions.RestRequestBuilderExtensions.SkipAuthorization(Remora.Rest.RestRequestBuilder)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>

@@ -172,6 +172,66 @@ public interface IDiscordRestUserAPI</code></pre>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetCurrentUserApplicationRoleConnectionAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestUserAPI.cs/#L155">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserApplicationRoleConnectionAsync*"></a>
+  <h4 id="GetCurrentUserApplicationRoleConnectionAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetCurrentUserApplicationRoleConnectionAsync(Snowflake, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets the application role connection for the user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IApplicationRoleConnection&gt;&gt; GetCurrentUserApplicationRoleConnectionAsync(Snowflake applicationID, CancellationToken ct = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Snowflake</span></td>
+        <td><span class="parametername">applicationID</span></td>
+        <td><p>The ID of the application.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">ct</span></td>
+        <td><p>The cancellation token for this operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationRoleConnection.html">IApplicationRoleConnection</a>&gt;&gt;</td>
+        <td><p>A retrieval result which may or may not have succeeded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GetCurrentUserApplicationRoleConnectionAsync_1_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Requires an OAuth2 access token with role_connections.write scope for the specified
+<code data-dev-comment-type="paramref" class="paramref">applicationID</code>.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetCurrentUserAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
@@ -220,6 +280,59 @@ public interface IDiscordRestUserAPI</code></pre>
       </tr>
     </tbody>
   </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetCurrentUserConnectionsAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserConnectionsAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestUserAPI.cs/#L140">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserConnectionsAsync*"></a>
+  <h4 id="GetCurrentUserConnectionsAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserConnectionsAsync(System.Threading.CancellationToken)">GetCurrentUserConnectionsAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a list of connection objects.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IConnection&gt;&gt;&gt; GetCurrentUserConnectionsAsync(CancellationToken ct = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">ct</span></td>
+        <td><p>The cancellation token for this operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IConnection.html">IConnection</a>&gt;&gt;&gt;</td>
+        <td><p>A retrieval result which may or may not have succeeded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GetCurrentUserConnectionsAsync_1_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Requires the &quot;connections&quot; OAuth&quot; scope.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetCurrentUserGuildMemberAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetCurrentUserGuildMemberAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -355,66 +468,6 @@ public interface IDiscordRestUserAPI</code></pre>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetUserApplicationRoleConnectionAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestUserAPI.cs/#L155">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetUserApplicationRoleConnectionAsync*"></a>
-  <h4 id="GetUserApplicationRoleConnectionAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetUserApplicationRoleConnectionAsync(Snowflake, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Gets the application role connection for the user.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IApplicationRoleConnection&gt;&gt; GetUserApplicationRoleConnectionAsync(Snowflake applicationID, CancellationToken ct = default)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Remora.Rest.Core.Snowflake</span></td>
-        <td><span class="parametername">applicationID</span></td>
-        <td><p>The ID of the application.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
-        <td><span class="parametername">ct</span></td>
-        <td><p>The cancellation token for this operation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IApplicationRoleConnection.html">IApplicationRoleConnection</a>&gt;&gt;</td>
-        <td><p>A retrieval result which may or may not have succeeded.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="GetUserApplicationRoleConnectionAsync_1_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Requires an OAuth2 access token with role_connections.write scope for the specified
-<code data-dev-comment-type="paramref" class="paramref">applicationID</code>.</p>
-</div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetUserAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetUserAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
@@ -469,59 +522,6 @@ public interface IDiscordRestUserAPI</code></pre>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetUserConnectionsAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetUserConnectionsAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestUserAPI.cs/#L140">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetUserConnectionsAsync*"></a>
-  <h4 id="GetUserConnectionsAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetUserConnectionsAsync(System.Threading.CancellationToken)">GetUserConnectionsAsync(CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Gets a list of connection objects.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IReadOnlyList&lt;IConnection&gt;&gt;&gt; GetUserConnectionsAsync(CancellationToken ct = default)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
-        <td><span class="parametername">ct</span></td>
-        <td><p>The cancellation token for this operation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IConnection.html">IConnection</a>&gt;&gt;&gt;</td>
-        <td><p>A retrieval result which may or may not have succeeded.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="GetUserConnectionsAsync_1_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Requires the &quot;connections&quot; OAuth&quot; scope.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_GetUserDMsAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.GetUserDMsAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -661,7 +661,7 @@ public interface IDiscordRestUserAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.IO.Stream</span>&gt;</td>
         <td><span class="parametername">avatar</span></td>
         <td><p>The new avatar.</p>
 </td>
@@ -696,19 +696,19 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_UpdateUserApplicationRoleConnectionAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyDictionary%7BSystem.String%2CSystem.String%7D%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI_UpdateCurrentUserApplicationRoleConnectionAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateCurrentUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyDictionary%7BSystem.String%2CSystem.String%7D%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestUserAPI.cs/#L177">View Source</a>
   </span>
-  <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateUserApplicationRoleConnectionAsync*"></a>
-  <h4 id="UpdateUserApplicationRoleConnectionAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}},System.Threading.CancellationToken)">UpdateUserApplicationRoleConnectionAsync(Snowflake, Optional&lt;string&gt;, Optional&lt;string&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt;, CancellationToken)</h4>
+  <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestUserAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateCurrentUserApplicationRoleConnectionAsync*"></a>
+  <h4 id="UpdateCurrentUserApplicationRoleConnectionAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI.UpdateCurrentUserApplicationRoleConnectionAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}},System.Threading.CancellationToken)">UpdateCurrentUserApplicationRoleConnectionAsync(Snowflake, Optional&lt;string&gt;, Optional&lt;string&gt;, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt;, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Updates and returns the application role connection for the user.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IApplicationRoleConnection&gt;&gt; UpdateUserApplicationRoleConnectionAsync(Snowflake applicationID, Optional&lt;string&gt; platformName = default, Optional&lt;string&gt; platformUsername = default, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt; metadata = default, CancellationToken ct = default)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IApplicationRoleConnection&gt;&gt; UpdateCurrentUserApplicationRoleConnectionAsync(Snowflake applicationID, Optional&lt;string&gt; platformName = default, Optional&lt;string&gt; platformUsername = default, Optional&lt;IReadOnlyDictionary&lt;string, string&gt;&gt; metadata = default, CancellationToken ct = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -769,7 +769,7 @@ the user on the platform a bot has connected.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="UpdateUserApplicationRoleConnectionAsync_1_remarks">Remarks</h5>
+  <h5 id="UpdateCurrentUserApplicationRoleConnectionAsync_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Requires an OAuth2 access token with role_connections.write scope for the specified
 <code data-dev-comment-type="paramref" class="paramref">applicationID</code>.</p>
 </div>

@@ -113,9 +113,11 @@
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRoleSelectComponent.html">IRoleSelectComponent</a></div>
+    <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMentionableSelectComponent.html">IMentionableSelectComponent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISelectMenuComponent.html">ISelectMenuComponent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponent.html">IMessageComponent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialRoleSelectComponent.html">IPartialRoleSelectComponent</a></div>
+    <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialMentionableSelectComponent.html">IPartialMentionableSelectComponent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialSelectMenuComponent.html">IPartialSelectMenuComponent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialMessageComponent.html">IPartialMessageComponent</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Remora.Discord.API.Objects.RoleSelectComponent.html">RoleSelectComponent</a>&gt;</div>
@@ -141,7 +143,7 @@
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <span class="xref">object.ToString()</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Objects.html">Objects</a></h6>
@@ -149,24 +151,24 @@
   <h5 id="Remora_Discord_API_Objects_RoleSelectComponent_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, IMessageComponent, IPartialRoleSelectComponent, IPartialSelectMenuComponent, IPartialMessageComponent, IEquatable&lt;RoleSelectComponent&gt;</code></pre>
+public record RoleSelectComponent : IRoleSelectComponent, IMentionableSelectComponent, ISelectMenuComponent, IMessageComponent, IPartialRoleSelectComponent, IPartialMentionableSelectComponent, IPartialSelectMenuComponent, IPartialMessageComponent, IEquatable&lt;RoleSelectComponent&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent__ctor_System_String_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Boolean__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.%23ctor(System.String%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent__ctor_System_String_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_ISelectDefaultValue___.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.%23ctor(System.String%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.ISelectDefaultValue%7D%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L30">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_RoleSelectComponent" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.#ctor(System.String,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Boolean})">RoleSelectComponent(string, Optional&lt;string&gt;, Optional&lt;int&gt;, Optional&lt;int&gt;, Optional&lt;bool&gt;)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.#ctor(System.String,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.ISelectDefaultValue}})">RoleSelectComponent(string, Optional&lt;string&gt;, Optional&lt;int&gt;, Optional&lt;int&gt;, Optional&lt;bool&gt;, Optional&lt;IReadOnlyList&lt;ISelectDefaultValue&gt;&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RoleSelectComponent(string CustomID, Optional&lt;string&gt; Placeholder = default, Optional&lt;int&gt; MinValues = default, Optional&lt;int&gt; MaxValues = default, Optional&lt;bool&gt; IsDisabled = default)</code></pre>
+    <pre><code class="lang-csharp hljs">public RoleSelectComponent(string CustomID, Optional&lt;string&gt; Placeholder = default, Optional&lt;int&gt; MinValues = default, Optional&lt;int&gt; MaxValues = default, Optional&lt;bool&gt; IsDisabled = default, Optional&lt;IReadOnlyList&lt;ISelectDefaultValue&gt;&gt; DefaultValues = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -203,6 +205,11 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
         <td><span class="parametername">IsDisabled</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISelectDefaultValue.html">ISelectDefaultValue</a>&gt;&gt;</td>
+        <td><span class="parametername">DefaultValues</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
@@ -212,7 +219,7 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent_CustomID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.CustomID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L33">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L34">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_RoleSelectComponent" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.CustomID*"></a>
   <h4 id="CustomID" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.CustomID">CustomID</h4>
@@ -239,10 +246,40 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent_DefaultValues.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.DefaultValues%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L39">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_RoleSelectComponent" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.DefaultValues*"></a>
+  <h4 id="DefaultValues" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.DefaultValues">DefaultValues</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;ISelectDefaultValue&gt;&gt; DefaultValues { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISelectDefaultValue.html">ISelectDefaultValue</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent_IsDisabled.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.IsDisabled%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L37">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L38">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_RoleSelectComponent" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.IsDisabled*"></a>
   <h4 id="IsDisabled" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.IsDisabled">IsDisabled</h4>
@@ -272,7 +309,7 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent_MaxValues.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.MaxValues%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L36">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L37">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_RoleSelectComponent" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.MaxValues*"></a>
   <h4 id="MaxValues" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.MaxValues">MaxValues</h4>
@@ -302,7 +339,7 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent_MinValues.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.MinValues%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L35">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L36">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_RoleSelectComponent" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.MinValues*"></a>
   <h4 id="MinValues" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.MinValues">MinValues</h4>
@@ -332,7 +369,7 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent_Placeholder.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.Placeholder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L34">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L35">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_RoleSelectComponent" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.Placeholder*"></a>
   <h4 id="Placeholder" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.Placeholder">Placeholder</h4>
@@ -362,7 +399,7 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_RoleSelectComponent_Type.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.RoleSelectComponent.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L41">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/SelectMenu/RoleSelectComponent.cs/#L43">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_RoleSelectComponent" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.Type*"></a>
   <h4 id="Type" data-uid="Remora.Discord.API.Objects.RoleSelectComponent.Type">Type</h4>
@@ -393,6 +430,9 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IRoleSelectComponent.html">IRoleSelectComponent</a>
   </div>
   <div>
+      <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMentionableSelectComponent.html">IMentionableSelectComponent</a>
+  </div>
+  <div>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISelectMenuComponent.html">ISelectMenuComponent</a>
   </div>
   <div>
@@ -400,6 +440,9 @@ public record RoleSelectComponent : IRoleSelectComponent, ISelectMenuComponent, 
   </div>
   <div>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialRoleSelectComponent.html">IPartialRoleSelectComponent</a>
+  </div>
+  <div>
+      <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialMentionableSelectComponent.html">IPartialMentionableSelectComponent</a>
   </div>
   <div>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialSelectMenuComponent.html">IPartialSelectMenuComponent</a>
