@@ -1,10 +1,11 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>3.0.18</VersionPrefix>
+        <VersionPrefix>3.0.19</VersionPrefix>
         <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
+            Allow only the source user to paginate through message.
         </PackageReleaseNotes>
     </PropertyGroup>
 

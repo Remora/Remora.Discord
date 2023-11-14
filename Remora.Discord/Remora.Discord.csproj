@@ -1,29 +1,32 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2023.4</VersionPrefix>
+        <VersionPrefix>2023.5</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Add external sound permission.
-            Add several new error codes.
-            BREAKING: Add defaultForumLayout parameter.
-            BREAKING: Add more audit log events.
-            BREAKING: Add RateLimitPerUser to Voice and Stage channels.
-            BREAKING: Change Snowflakes in TryGet methods to non-nullable.
-            BREAKING: Implement approximate guild count and partial guild.
-            BREAKING: Implement attachment flags.
-            BREAKING: Implement avatar decorations.
-            BREAKING: Implement MessageAuthorID.
-            BREAKING: Implement new username field.
-            BREAKING: Implement onboarding mode.
-            BREAKING: Implement role flags.
-            BREAKING: Implement support for join and mention raid protection.
-            BREAKING: Implement with_counts for user guild endpoint.
-            Correct cancellation token usage.
-            Ensure results aren't swallowed when no events are registered.
-            Extract dispatch API to an interface.
-            Fix conversion discrepancies between partial and nonpartial type.
+            Add missing error codes.
+            Allow only the source user to paginate through message.
+            BREAKING: Add guild_scheduled_event_id field to stage instance creation.
+            BREAKING: Add missing parameter for guild forum endpoints.
+            BREAKING: Add missing resolved field.
+            BREAKING: Add support for IntegrationType in audit log entries.
+            BREAKING: Add support for team roles.
+            BREAKING: Allow storing async tokens.
+            BREAKING: Implement application editing.
+            BREAKING: Implement default thread rate limits.
+            BREAKING: Implement default values for select menus.
+            BREAKING: Implement initial support for media channels.
+            BREAKING: Implement support for monetized apps.
+            BREAKING: Implement support for super reactions.
+            BREAKING: Refactor ModifyGuildChannelPositionsAsync.
+            BREAKING: Remove GlobalName.
+            BREAKING: Update endpoint names.
+            Implement support for guild navigation links.
+            Implement support for monetized apps.
+            perf: Initialize reasonable starting buffer size.
+            perf: Use pooled backing array for JSON Serialization.
+            perf: Use ValueTask when possible.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

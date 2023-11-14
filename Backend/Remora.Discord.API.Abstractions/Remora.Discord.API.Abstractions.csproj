@@ -1,23 +1,27 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>79.0.0</VersionPrefix>
+        <VersionPrefix>80.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-          BREAKING: Implement support for join and mention raid protection.
-          Add external sound permission.
-          Add several new error codes.
-          BREAKING: Add RateLimitPerUser to Voice and Stage channels.
-          BREAKING: Implement new username field.
-          BREAKING: Implement role flags.
-          BREAKING: Implement attachment flags.
-          BREAKING: Implement onboarding mode.
-          BREAKING: Implement MessageAuthorID.
-          BREAKING: Add more audit log events.
-          BREAKING: Add defaultForumLayout parameter.
-          BREAKING: Implement approximate guild count and partial guild.
-          BREAKING: Implement avatar decorations.
-          BREAKING: Implement with_counts for user guild endpoint.
+          Update dependencies.
+          BREAKING: Refactor ModifyGuildChannelPositionsAsync.
+          BREAKING: Remove GlobalName.
+          BREAKING: Add support for team roles.
+          BREAKING: Add support for IntegrationType in audit log entries.
+          Implement support for guild navigation links.
+          BREAKING: Implement support for super reactions.
+          Add missing error code.
+          BREAKING: Add missing parameter for guild forum endpoints.
+          BREAKING: Implement initial support for media channels.
+          BREAKING: Implement default thread rate limits.
+          BREAKING: Implement default values for select menus.
+          BREAKING: Implement support for monetized apps.
+          BREAKING: Add guild_scheduled_event_id field to stage instance creation.
+          BREAKING: Update endpoint names.
+          BREAKING: Implement application editing.
+          Add missing error codes.
+          BREAKING: Add missing resolved field.
         </PackageReleaseNotes>
     </PropertyGroup>
 
