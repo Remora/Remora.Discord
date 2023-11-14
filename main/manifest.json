@@ -1560,7 +1560,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption.html",
-          "hash": "ttgQCzEV6em3a6kK8XSjPAliGIUygEno7M3vMicS43k="
+          "hash": "kvW1DzX4YxAmUV27pneq+WDR2YV16KqPJYN9ZIQ7YLE="
         }
       },
       "version": ""
@@ -3804,7 +3804,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.VoiceGateway.Commands.IVoiceSpeakingCommand.html",
-          "hash": "beuW37XNNW/bNBk0RHZDikedesLXU6KBP3sJbq9G2/k="
+          "hash": "5lbi2HOtfE2ETOr89CdEwR8RWziwSYC0sj3DI/B7fvc="
         }
       },
       "version": ""
@@ -3870,7 +3870,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.VoiceGateway.Events.IVoiceReady.html",
-          "hash": "2OGgcrE9ccQC4x6p4k7NHfm7fh8r6DGZCq7BwE113sk="
+          "hash": "EI0tURoVKSFuQwcNwy3Z1CQcP6EaVtyriSCk4c8Fxh8="
         }
       },
       "version": ""
@@ -3903,7 +3903,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.VoiceGateway.Events.IVoiceSpeakingEvent.html",
-          "hash": "N5fZ14SUoWPNbHDA2bRpXcjCng1jcp1uGlmgmchafds="
+          "hash": "p5bGLqlSSUO5y0xjvL1vAyrUWBjfVipN6k2/UHwR2G4="
         }
       },
       "version": ""
@@ -5278,7 +5278,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.ApplicationCommandOption.html",
-          "hash": "d9QsyRixa8JqU+849zR8oRwoog2Vll7D99AGQ1fTsTA="
+          "hash": "QYG3W20/7LFVWemGZXiRNjGPkV1Jj2QtqBGNVz/ODz4="
         }
       },
       "version": ""
@@ -6884,7 +6884,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.VoiceGateway.Commands.VoiceSpeakingCommand.html",
-          "hash": "jVJ/67Hbf6arXHb1OWrfiNQfE3R0TvIxBQp8RJ2keA4="
+          "hash": "2AH3NyZ/+j9/DNiUJxtYOa+Sb1QHM/UNjndrHoN76cg="
         }
       },
       "version": ""
@@ -6939,7 +6939,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.VoiceGateway.Events.VoiceReady.html",
-          "hash": "DLCP8CdA5Hx11vYJwBOHP+oGX7vaEsu7RIsOuc8EKH0="
+          "hash": "vdHmgXY7iaojEuaaE8d2iZUKjUIA9UB8xIPUU3rD3BY="
         }
       },
       "version": ""
@@ -6972,7 +6972,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.VoiceGateway.Events.VoiceSpeakingEvent.html",
-          "hash": "bHK2XG5P/bHjz76OXKcgecBAlxIsgNtWu5wMt0IK1ZY="
+          "hash": "942fFcC8y5/6FIvsM26niETwpqCgDzl+AlVqq1x6MQ0="
         }
       },
       "version": ""
@@ -7027,7 +7027,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestChannelAPI.html",
-          "hash": "7xK3ISGVkY/nwaR+RHQMZ0Tcu2OXqFe7CS3ZbQYLNRU="
+          "hash": "Kl38AawskfoYF7I2nN3uXwvlBb/sGeBLcViJJ/SPrYk="
         }
       },
       "version": ""
@@ -7038,7 +7038,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestEmojiAPI.html",
-          "hash": "n49RgySba45+iP0gXmSmINXDS/9X6AvrNFYaKIuGNzM="
+          "hash": "lZxWkbS3mhO209F2PxTZ8tcitMi4yv6YQWr8FyzJSp0="
         }
       },
       "version": ""
@@ -7049,7 +7049,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestGuildAPI.html",
-          "hash": "sGeRW3ru0nshhsi5crvTuWEMuBSmoEODvXoGSPipTiQ="
+          "hash": "FH1mU7q7r/4SSUZr6FizLLOXXPW50oh+SfZHrGlUs7E="
         }
       },
       "version": ""
@@ -7060,7 +7060,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestInteractionAPI.html",
-          "hash": "h98vukMozHCqAXJNs7C4aHtjQW/MH8k5/SeNL0JAS/g="
+          "hash": "qnfMG2v9lNsF3bqmKvNDyFS5y3W9fo4jsA0ZxN8oCn0="
         }
       },
       "version": ""
@@ -7071,7 +7071,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestInviteAPI.html",
-          "hash": "iGVFJ5GVNuzk9pvC44uiv3E3wRycDivA3SvrPbTYH0o="
+          "hash": "5cr2/7ZNT+1zZszXc/98K9SLn8JE6kCUzNQ88shBJB0="
         }
       },
       "version": ""
@@ -7082,7 +7082,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestOAuth2API.html",
-          "hash": "Yclb6YxCZ/Wz6jjMReb/WToFPOaS8sYBz0a0S0lM8E4="
+          "hash": "NIvbb0uOEZlIWDDf7KXGpfwBelfmJywLsyQ+LZsan/8="
         }
       },
       "version": ""
@@ -7093,7 +7093,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestTemplateAPI.html",
-          "hash": "0yo2ExCphf6hjMY2iYh90MvuH/l9t4WN5YIPdd20AYo="
+          "hash": "u16Ie+OXFCAclIS3SHxUnK31PMhAx5xV6lsEQJAhs5o="
         }
       },
       "version": ""
@@ -7104,7 +7104,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestUserAPI.html",
-          "hash": "iDB+BwI1ZKM6rBBWkukSlvUVauuDQK2kbBtXKcg7DSI="
+          "hash": "FojbhJXR2X1nP9KFD2gWKJelpdsxvMTAWofKPGnz/S8="
         }
       },
       "version": ""
@@ -7115,7 +7115,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestVoiceAPI.html",
-          "hash": "zYotllm2QrRAtn0m0iopc82GiYi4xtm0fgwzGhhoOAw="
+          "hash": "9JnbsnfURXL6gvnDa6iVoXaJfYXyOK62vfdVmwn72fE="
         }
       },
       "version": ""
@@ -7126,7 +7126,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.API.CachingDiscordRestWebhookAPI.html",
-          "hash": "bP0ODw7g6WsiLhvkuwJbU7Fr1Ax5ioU20GnjRKi/GCo="
+          "hash": "srlGsrFMblVryEGeQaSM5DehtTcTGxJeoiex/6PVAmg="
         }
       },
       "version": ""
@@ -7753,7 +7753,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Caching.Redis.Extensions.ServiceCollectionExtensions.html",
-          "hash": "2EMXr6vr+Mpt1vRK4zk431KWKGRWSsk4myDdMLLSzb8="
+          "hash": "TTMEU6H2eLbTjRm1mzq2Xy5qsFR4QG7NOe2eyyuGCrc="
         }
       },
       "version": ""
@@ -7885,7 +7885,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.AutocompleteAttribute.html",
-          "hash": "I3fAw9X3bN01Fz9gyabU28N/GkskGLIUfmQ3VlKuGNw="
+          "hash": "u+FpxP1QCwA7BGTT6xqCEu81SqsbBZqK0lv+rITuzGE="
         }
       },
       "version": ""
@@ -7896,7 +7896,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.AutocompleteProviderAttribute.html",
-          "hash": "j24bejQcZJwYPwA6Qh64Icnouf/zDM/HUqAqWngBXBw="
+          "hash": "02MX9QSk/UKz0B2pwbNIFuinmctcnScz1BZpWw89iy8="
         }
       },
       "version": ""
@@ -7907,7 +7907,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.ChannelTypesAttribute.html",
-          "hash": "LjXGa3y8TKn7IU9Yng0Rv6e9gy5MQkSsKPbkxDuAu+4="
+          "hash": "d/23nmIURcKYBQjusExM26G/164G6T993sbptMuHe94="
         }
       },
       "version": ""
@@ -7918,7 +7918,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.CommandTypeAttribute.html",
-          "hash": "HYfyaFR2lCz27O3Dn3BeRf4SmXE28VqZtjghG0K23uY="
+          "hash": "J1hhFMyIlidYwdoe59/1kuM9kyg4bg+OsU2vPCS6Des="
         }
       },
       "version": ""
@@ -7929,7 +7929,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.DiscordDefaultDMPermissionAttribute.html",
-          "hash": "q+/G374G0zpXt61l07Xg/wGhW98JDC/tfKcJ9z9qPqA="
+          "hash": "Tox/iJbOhP/MPZ3J1joKxYB7pn9Q+belJOLAMHdxdXo="
         }
       },
       "version": ""
@@ -7940,7 +7940,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.DiscordDefaultMemberPermissionsAttribute.html",
-          "hash": "4OeTzgcIlQVoAJ4beYS3hY3XnVhB1IRCBqYHmRwClp0="
+          "hash": "ZE/7CX7LcfhNPY4Yp6OUI4lD9bR4ku1cNcrsuaWpV6U="
         }
       },
       "version": ""
@@ -7951,7 +7951,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.DiscordNsfwAttribute.html",
-          "hash": "dZggtOCOlU0EkOGOtbnW2bsXBs238I8wew6sVQJoM/E="
+          "hash": "j4jPvK8rBejxSB0nFbrUtd6kMpDedXsI6OLAzmbCY+g="
         }
       },
       "version": ""
@@ -7962,7 +7962,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.DiscordTypeHintAttribute.html",
-          "hash": "IfxbV4stAx6jK/1z/4IcfWu5O4wh9wVOTQaXsaBx3Xg="
+          "hash": "EWwTgDGj7chtaTa6iYx4MfSfl3k6gj8Ytde3Ywb3Sjc="
         }
       },
       "version": ""
@@ -7973,7 +7973,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.EphemeralAttribute.html",
-          "hash": "4uXjP5cF+oH4SF39sKWUlf4ebsOCDPNNlL9v+MhEtOg="
+          "hash": "MGkBRZmzGKmku0fUpjRNE5DKrLxaNFlI2qjRTB/Gj70="
         }
       },
       "version": ""
@@ -7984,7 +7984,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.ExcludeFromChoicesAttribute.html",
-          "hash": "LHXpRwKvX5Dutk79XZvhwe61PGNwjGFqu9C9dsvBoJE="
+          "hash": "da9Jqa2l6t3K59vfpydP7sxgbLpl769qT0Un0QGhOkA="
         }
       },
       "version": ""
@@ -7995,7 +7995,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.ExcludeFromSlashCommandsAttribute.html",
-          "hash": "MmS6nNktzmuvoetC2z2MfXRsKj4OixX63aSSH7BZaM0="
+          "hash": "692uriggTvPyBAeMgI/zUO3MwFS5Kjlp0S5FTalup6o="
         }
       },
       "version": ""
@@ -8006,7 +8006,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.MaxValueAttribute.html",
-          "hash": "aqGQrs2kcGwvTdq5jbhAt0Z4Gjzh8c0taE8Om8hB3k0="
+          "hash": "bdTxPSOQZNmAjM91a1E7SQFomUI1usqI0V9S4BfWLGI="
         }
       },
       "version": ""
@@ -8017,7 +8017,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.MinValueAttribute.html",
-          "hash": "zbgjENAFegkqxKAxp6jHG3iJgDAWdhn5k1oGAUsykb0="
+          "hash": "88rrBaBfNoih+XfhRRLVYFAKDYmTLXYpOkHJKJREMG4="
         }
       },
       "version": ""
@@ -8028,7 +8028,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Attributes.SuppressInteractionResponseAttribute.html",
-          "hash": "J9/MqJPlvc+rEYX2W4DZtRNiHYC5lLui+FrwfrkqwfU="
+          "hash": "hKhH6AubuzbYzKe/akPCE3MqaqZbdj3jLTNT6l6MotQ="
         }
       },
       "version": ""
@@ -8127,7 +8127,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Conditions.RequireBotDiscordPermissionsAttribute.html",
-          "hash": "8gF3njfxzd7+0LTSSPP+YjZfvnttxvuBnQ0BvD/ji+4="
+          "hash": "96gf/g184gamnUYNxQRd1WxENUkOIpO8LGoWpp9kELI="
         }
       },
       "version": ""
@@ -8149,7 +8149,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Conditions.RequireContextAttribute.html",
-          "hash": "Y5yZqn1CGwGA+NUCjiVEiGNJ69PZMRSN5ypuWZt1u0Y="
+          "hash": "0cdJjr9QUkXK/hhKsGwf908Li1lx+ugjqSCenqEYnfQ="
         }
       },
       "version": ""
@@ -8171,7 +8171,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Conditions.RequireDiscordPermissionAttribute.html",
-          "hash": "NxLcNeEf2lJlx6xHusYQmOjPSJjVCqlU4o76lD9+9BA="
+          "hash": "qxNwoEKr3umD03W139wq9bLmpvE9/n9cosSOWljyjs0="
         }
       },
       "version": ""
@@ -8193,7 +8193,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Conditions.RequireOwnerAttribute.html",
-          "hash": "80vz/gqK+IpMameVkmDzVhfagphD+Se4iFsJC80nlnM="
+          "hash": "L6zUPRhVWc8e0je1QctcqUdp3SvhOb4CXQuKka1abEE="
         }
       },
       "version": ""
@@ -8446,7 +8446,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Commands.Extensions.ServiceCollectionExtensions.html",
-          "hash": "VE0fdau2dpJ0VZUj2a2cMdJMXpaFMwNfNW/JqGkrcdc="
+          "hash": "scrlWKAA34AWSJyqnBLVwKq8jBZX/gTUBEaVWeIDUSs="
         }
       },
       "version": ""
@@ -8974,7 +8974,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Extensions.Attributes.ResponderAttribute.html",
-          "hash": "Hgz4zspjkMUz9GB2it70GBVJY56mDdcm2W1TQRIQQq0="
+          "hash": "OCJf55H8We/33SF37oCtvcPk4MPvWUPetFmvrV2kdbY="
         }
       },
       "version": ""
@@ -9293,7 +9293,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Gateway.Extensions.ServiceCollectionExtensions.html",
-          "hash": "SJtwaorjlBxDYm3FeKiBs6UDkV4vZt0ggZDvQ5l3rag="
+          "hash": "fU8aDbphyXOSTwDxa8MqAErTlrg3fFzjcGdRza+L1Wo="
         }
       },
       "version": ""
@@ -9348,7 +9348,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Gateway.ResponderDispatchOptions.html",
-          "hash": "NNPTqCp2NUo1wn2QDWDJjNti5wUMd0B115gQ4cvbKHM="
+          "hash": "AtkjNy5pfkJk+OUFJr3dhxOtEIWwXW+mz4WUMNk2erU="
         }
       },
       "version": ""
@@ -9436,7 +9436,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Gateway.Results.WebSocketError.html",
-          "hash": "9X97ectMyKszsYtw99UeLjv+B9DURiigZuBBhXbEn/Q="
+          "hash": "wuwjrU6hfe2cRUoP5VEe9wKiJEfR4pCIX8gUaurjfVQ="
         }
       },
       "version": ""
@@ -9557,7 +9557,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Hosting.Extensions.HostBuilderExtensions.html",
-          "hash": "sX08j7vI5Zn+2ROSV/W8uLZS7K8tSM7dr4VTN4/oQUU="
+          "hash": "49/Xhj7q/MtZiPtcHEzGJu8ah2fjy5q9DYarQwz5jcY="
         }
       },
       "version": ""
@@ -9568,7 +9568,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Hosting.Extensions.html",
-          "hash": "LYRiUv0vvT2COElVj7yp83qLifc8+J/VbyCWvcwmgio="
+          "hash": "fhQrsb4yBn3ZV/wsqKeTaoY1CJBfTUVWiPb5lr54xu4="
         }
       },
       "version": ""
@@ -9623,7 +9623,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Interactivity.ButtonAttribute.html",
-          "hash": "ZeIIni5456CVfl4ZE80elsP2o4jimi2lMR2yzbP/E9w="
+          "hash": "VtacMUuzGDMxatdeVeH/oW5ii4eHb7f97rcXbmZ/rvk="
         }
       },
       "version": ""
@@ -9700,7 +9700,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Interactivity.ModalAttribute.html",
-          "hash": "aYhEVoJzRpi9CLqZSS73NBa+upsI2ZahyLeamIuOj1A="
+          "hash": "E+dS2V+UE/76KWkE3GPnfuRnJAKIUoohwx7CoFDs3tY="
         }
       },
       "version": ""
@@ -9711,7 +9711,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Interactivity.SelectMenuAttribute.html",
-          "hash": "nG3rgva6leLJoNIMu9IOn7N2Wz3RGLCCl/ngBA+/Sss="
+          "hash": "8TRJrazXqmWOucS4m+2RPVdTIUV/e0mB4bsVAEGgrc0="
         }
       },
       "version": ""
@@ -9733,7 +9733,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Interactivity.Services.InMemoryDataService-2.html",
-          "hash": "0RW7vBuYzpSLyQrmo36KOC4V4TI3euGrCTMduXC4b+k="
+          "hash": "TkW92dPGFYOPSeZcroLAS6JE4MezBpEF9Kh/q662cEY="
         }
       },
       "version": ""
@@ -9810,7 +9810,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Pagination.PageFactory.html",
-          "hash": "820fYwNCcm2IXvHg/PYyFSLJpb/dsEv+cceOlVnCAYs="
+          "hash": "DklChce6VElqsFkiGjY/mzCqUqijKFlrhRDLbuxBXzQ="
         }
       },
       "version": ""
@@ -9854,7 +9854,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Rest.API.AbstractDiscordRestAPI.html",
-          "hash": "588zHSGwHlqUg/wV0/t9gEtKx3JcBXYn8ObOPE8bv1Q="
+          "hash": "YPmSvsenoyAOJlFl2zjIu/4QHGuGtQDucGBy+L+C6z8="
         }
       },
       "version": ""
@@ -10140,7 +10140,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Rest.Extensions.ServiceCollectionExtensions.html",
-          "hash": "bKTg25X6Ekvut3+1pt+reKz9lFA6B4W/xmr3djgr0HA="
+          "hash": "KgmjUP8xLOIz3m/hFq2KQaHahtK/WF2fs8Y4YQCD7Kc="
         }
       },
       "version": ""
