@@ -238,7 +238,11 @@ public class DiscordGatewayClient : IDisposable
 
                 // Something has gone wrong. Close the socket, and handle it
                 // Terminate the send and receive tasks
+                #if NET8_0_OR_GREATER
+                await _disconnectRequestedSource.CancelAsync();
+                #else
                 _disconnectRequestedSource.Cancel();
+                #endif
 
                 // The results of the send and receive tasks are discarded here, because the iteration result will
                 // contain whichever of them failed if any of them did
@@ -656,7 +660,11 @@ public class DiscordGatewayClient : IDisposable
         }
 
         // Terminate the send and receive tasks
+        #if NET8_0_OR_GREATER
+        await _disconnectRequestedSource.CancelAsync();
+        #else
         _disconnectRequestedSource.Cancel();
+        #endif
 
         // The results of the send and receive tasks are discarded here, because we know that it's going to be a
         // cancellation
