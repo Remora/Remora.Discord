@@ -113,7 +113,7 @@ public class MockedTransportService : IPayloadTransportService
                     }
                     case EventMatch.Fail:
                     {
-                        throw new TrueException("An event in a sequence failed.", null);
+                        throw TrueException.ForNonTrueValue("An event in a sequence failed.", null);
                     }
                     case EventMatch.Ignore:
                     {
@@ -148,7 +148,7 @@ public class MockedTransportService : IPayloadTransportService
                         }
                         case EventMatch.Fail:
                         {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
+                            throw TrueException.ForNonTrueValue("An event in a continuous sequence failed.", null);
                         }
                         case EventMatch.Ignore:
                         {
@@ -165,7 +165,7 @@ public class MockedTransportService : IPayloadTransportService
             var remainingSequences = _sequences.Except(_finishedSequences).ToList();
             if (remainingSequences.Count == 0)
             {
-                _finisher.Cancel();
+                await _finisher.CancelAsync();
             }
 
             if (!sequenceAdvanced)
@@ -215,7 +215,7 @@ public class MockedTransportService : IPayloadTransportService
                     }
                     case EventMatch.Fail:
                     {
-                        throw new TrueException("An event in a sequence failed.", null);
+                        throw TrueException.ForNonTrueValue("An event in a sequence failed.", null);
                     }
                     case EventMatch.Ignore:
                     {
@@ -255,7 +255,7 @@ public class MockedTransportService : IPayloadTransportService
                         }
                         case EventMatch.Fail:
                         {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
+                            throw TrueException.ForNonTrueValue("An event in a continuous sequence failed.", null);
                         }
                         case EventMatch.Ignore:
                         {
@@ -272,13 +272,13 @@ public class MockedTransportService : IPayloadTransportService
 
             if (!hadExpectedEvent && !_serviceOptions.IgnoreUnexpected)
             {
-                throw new IsTypeException("[sequence]", payload.GetType().ToString());
+                throw IsTypeException.ForMismatchedType("[sequence]", payload.GetType().ToString());
             }
 
             var remainingSequences = _sequences.Except(_finishedSequences).ToList();
             if (remainingSequences.Count == 0)
             {
-                _finisher.Cancel();
+                await _finisher.CancelAsync();
             }
 
             if (!sequenceAdvanced)
@@ -362,7 +362,7 @@ public class MockedTransportService : IPayloadTransportService
                 var remainingSequences = _sequences.Except(_finishedSequences).ToList();
                 if (remainingSequences.Count == 0)
                 {
-                    _finisher.Cancel();
+                    await _finisher.CancelAsync();
                 }
 
                 if (!sequenceAdvanced)
@@ -421,7 +421,7 @@ public class MockedTransportService : IPayloadTransportService
                     }
                     case EventMatch.Fail:
                     {
-                        throw new TrueException("An event in a sequence failed.", null);
+                        throw TrueException.ForNonTrueValue("An event in a sequence failed.", null);
                     }
                     case EventMatch.Ignore:
                     {
@@ -456,7 +456,7 @@ public class MockedTransportService : IPayloadTransportService
                         }
                         case EventMatch.Fail:
                         {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
+                            throw TrueException.ForNonTrueValue("An event in a continuous sequence failed.", null);
                         }
                         case EventMatch.Ignore:
                         {
@@ -473,7 +473,7 @@ public class MockedTransportService : IPayloadTransportService
             var remainingSequences = _sequences.Except(_finishedSequences).ToList();
             if (remainingSequences.Count == 0)
             {
-                _finisher.Cancel();
+                await _finisher.CancelAsync();
             }
 
             if (!sequenceAdvanced)
