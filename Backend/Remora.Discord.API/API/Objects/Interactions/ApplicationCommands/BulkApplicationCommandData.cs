@@ -42,5 +42,6 @@ public record BulkApplicationCommandData
     Optional<bool> DMPermission = default,
     Optional<bool> IsNsfw = default,
     Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes = default,
-    Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes = default
+    Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes = default,
+    Optional<IInteractionCallbackHint> InteractionCallbackHint = default
 ) : IBulkApplicationCommandData;

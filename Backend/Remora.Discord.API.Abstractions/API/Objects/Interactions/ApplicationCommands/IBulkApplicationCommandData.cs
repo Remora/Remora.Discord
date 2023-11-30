@@ -67,4 +67,7 @@ public interface IBulkApplicationCommandData
 
     /// <inheritdoc cref="IApplicationCommand.AllowedContextTypes"/>
     Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.InteractionCallbackHint"/>
+    Optional<IInteractionCallbackHint> InteractionCallbackHint { get; }
 }
