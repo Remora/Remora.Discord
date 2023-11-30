@@ -122,4 +122,9 @@ public interface IInteraction
     /// Gets, for monetized apps, any entitlements for the invoking user.
     /// </summary>
     IReadOnlyList<IEntitlement> Entitlements { get; }
+
+    /// <summary>
+    /// Gets the authorizing integration owners, that is, the entity that has the integration installed.
+    /// </summary>
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners { get; }
 }
