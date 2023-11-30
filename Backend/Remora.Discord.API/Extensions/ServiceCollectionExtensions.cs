@@ -1064,7 +1064,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
         options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>()
-            .WithPropertyName(d => d.IsNsfw, "nsfw");
+            .WithPropertyName(d => d.IsNsfw, "nsfw")
+            .WithPropertyName(d => d.AllowedContextTypes, "contexts")
+            .WithPropertyName(d => d.AllowedIntegrationTypes, "integration_types");
 
         options.AddDataObjectConverter
             <
