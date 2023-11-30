@@ -1052,7 +1052,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>()
-            .WithPropertyName(d => d.IsNsfw, "nsfw");
+            .WithPropertyName(d => d.IsNsfw, "nsfw")
+            .WithPropertyName(d => d.AllowedContextTypes, "contexts")
+            .WithPropertyName(d => d.AllowedIntegrationTypes, "integration_types");
 
         options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
             .WithPropertyName(o => o.IsDefault, "default")
