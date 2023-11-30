@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
@@ -33,10 +34,10 @@ namespace Remora.Discord.Commands.Attributes;
 /// <param name="AllowedContexts">The contexts the command can be invoked.</param>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class AllowedContextsAttribute(IReadOnlyList<ApplicationCommandContextType> allowedContexts) : Attribute
+public class AllowedContextsAttribute(params ApplicationCommandContextType[] allowedContexts) : Attribute
 {
     /// <summary>
     /// Gets a value specifying the allowed contexts.
     /// </summary>
-    public IReadOnlyList<ApplicationCommandContextType> AllowedContexts { get; } = allowedContexts;
+    public IReadOnlyList<ApplicationCommandContextType> AllowedContexts { get; } = allowedContexts.ToArray();
 }
