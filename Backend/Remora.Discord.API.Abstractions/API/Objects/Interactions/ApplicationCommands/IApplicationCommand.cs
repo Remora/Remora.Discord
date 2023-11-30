@@ -114,4 +114,14 @@ public interface IApplicationCommand
     /// Gets a value indicating whether this command is age-restricted.
     /// </summary>
     Optional<bool> IsNsfw { get; }
+
+    /// <summary>
+    /// Gets a value indicating the contexts in which this command can be installed.
+    /// </summary>
+    Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes { get; }
+
+    /// <summary>
+    /// Gets a value indicating the contexts in which this command can be invoked.
+    /// </summary>
+    Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes { get; }
 }
