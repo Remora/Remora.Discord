@@ -50,5 +50,6 @@ public record InteractionCreate
     Optional<IDiscordPermissionSet> AppPermissions,
     Optional<string> Locale,
     Optional<string> GuildLocale,
-    IReadOnlyList<IEntitlement> Entitlements
+    IReadOnlyList<IEntitlement> Entitlements,
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners
 ) : IInteractionCreate;
