@@ -195,7 +195,8 @@ public class EarlyCacheResponder :
                 gatewayEvent.IsMuted.TryGet(out var isMuted) ? isMuted : cachedInstance.IsMuted,
                 default, // TODO: this is probably on this event, but Discord hasn't documented it
                 gatewayEvent.IsPending.TryGet(out var isPending) ? isPending : cachedInstance.IsPending,
-                cachedInstance.Permissions
+                cachedInstance.Permissions,
+                gatewayEvent.CommunicationDisabledUntil
             );
         }
         else if (gatewayEvent.JoinedAt.HasValue)
@@ -211,7 +212,9 @@ public class EarlyCacheResponder :
                 gatewayEvent.IsDeafened.TryGet(out var isDeafened) && isDeafened,
                 gatewayEvent.IsMuted.TryGet(out var isMuted) && isMuted,
                 default, // TODO: this is probably on this event, but Discord hasn't documented it
-                gatewayEvent.IsPending.TryGet(out var isPending) && isPending
+                gatewayEvent.IsPending.TryGet(out var isPending) && isPending,
+                default,
+                gatewayEvent.CommunicationDisabledUntil
             );
         }
         else
