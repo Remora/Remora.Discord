@@ -201,7 +201,7 @@ default connection of localhost:6379 will be used.</p>
     </tbody>
   </table>
   <h5 id="AddDiscordRedisCaching_1_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The cache uses a run-of-the-mill <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.caching.distributed.idistributedcache">IDistributedCache</a>. Cache entry options for any cached type can be
+  <div class="markdown level1 remarks"><p>The cache uses a run-of-the-mill <span class="xref">Microsoft.Extensions.Caching.Distributed.IDistributedCache</span>. Cache entry options for any cached type can be
 configured using <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptions-1">IOptions&lt;TOptions&gt;</a>.</p>
 <p>When choosing a cache implementation, it should be noted that choosing this will override the backing store for
 caching REST clients and responders.</p>
