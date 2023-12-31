@@ -29,9 +29,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a Discord user.
 /// </summary>
-/// <remarks>
-/// global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.
-/// </remarks>
 [PublicAPI]
 public interface IUser : IPartialUser
 {
@@ -54,6 +51,11 @@ public interface IUser : IPartialUser
     /// </summary>
     /// <remarks>Discord no longer uses discriminators, and migrated users will simply have '0' as their discriminator.</remarks>
     new ushort Discriminator { get; }
+
+    /// <summary>
+    /// Gets the user's display name, if it is set. For bots, this is the application name.
+    /// </summary>
+    new Optional<string?> GlobalName { get; }
 
     /// <summary>
     /// Gets the user's avatar hash.
@@ -129,6 +131,9 @@ public interface IUser : IPartialUser
 
     /// <inheritdoc/>
     Optional<ushort> IPartialUser.Discriminator => this.Discriminator;
+
+    /// <inheritdoc/>
+    Optional<string?> IPartialUser.GlobalName => this.GlobalName;
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialUser.Avatar => new(this.Avatar);

@@ -6,6 +6,7 @@
     "id": "999999999999999999",
     "username": "none",
     "discriminator": "9999",
+    "global_name": null,
     "avatar": null,
     "bot": true,
     "system": true,

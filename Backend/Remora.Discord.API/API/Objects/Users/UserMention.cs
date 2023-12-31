@@ -34,6 +34,7 @@ public record UserMention
     Snowflake ID,
     string Username,
     ushort Discriminator,
+    Optional<string?> GlobalName,
     IImageHash? Avatar,
     Optional<bool> IsBot = default,
     Optional<bool> IsSystem = default,
