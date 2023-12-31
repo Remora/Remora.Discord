@@ -29,7 +29,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a partial Discord user.
 /// </summary>
-/// <inheritdoc cref="IUser" path="/remarks"/>
 [PublicAPI]
 public interface IPartialUser
 {
@@ -41,6 +40,9 @@ public interface IPartialUser
 
     /// <inheritdoc cref="IUser.Discriminator" />
     Optional<ushort> Discriminator { get; }
+
+    /// <inheritdoc cref="IUser.GlobalName" />
+    Optional<string?> GlobalName { get; }
 
     /// <inheritdoc cref="IUser.Avatar" />
     Optional<IImageHash?> Avatar { get; }
