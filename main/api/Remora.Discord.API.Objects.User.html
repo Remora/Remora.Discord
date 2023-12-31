@@ -147,25 +147,22 @@
     <pre><code class="lang-csharp hljs">[PublicAPI]
 public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
   </div>
-  <h5 id="Remora_Discord_API_Objects_User_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <h3 id="constructors">Constructors
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User__ctor_Remora_Rest_Core_Snowflake_System_String_System_UInt16_Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_System_Nullable_System_Drawing_Color___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_UserFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_PremiumType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_UserFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.%23ctor(Remora.Rest.Core.Snowflake%2CSystem.String%2CSystem.UInt16%2CRemora.Discord.API.Abstractions.Objects.IImageHash%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Drawing.Color%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.UserFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.PremiumType%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.UserFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User__ctor_Remora_Rest_Core_Snowflake_System_String_System_UInt16_Remora_Rest_Core_Optional_System_String__Remora_Discord_API_Abstractions_Objects_IImageHash_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__Remora_Rest_Core_Optional_System_Nullable_System_Drawing_Color___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_UserFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_PremiumType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_UserFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IImageHash__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.%23ctor(Remora.Rest.Core.Snowflake%2CSystem.String%2CSystem.UInt16%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Discord.API.Abstractions.Objects.IImageHash%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Drawing.Color%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.UserFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.PremiumType%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.UserFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IImageHash%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.User.#ctor(Remora.Rest.Core.Snowflake,System.String,System.UInt16,Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{System.Nullable{System.Drawing.Color}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.UserFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.PremiumType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.UserFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash})">User(Snowflake, string, ushort, IImageHash?, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;IImageHash?&gt;, Optional&lt;Color?&gt;, Optional&lt;string&gt;, Optional&lt;bool&gt;, Optional&lt;string?&gt;, Optional&lt;UserFlags&gt;, Optional&lt;PremiumType&gt;, Optional&lt;UserFlags&gt;, Optional&lt;IImageHash?&gt;)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.User.#ctor(Remora.Rest.Core.Snowflake,System.String,System.UInt16,Remora.Rest.Core.Optional{System.String},Remora.Discord.API.Abstractions.Objects.IImageHash,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash},Remora.Rest.Core.Optional{System.Nullable{System.Drawing.Color}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.UserFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.PremiumType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.UserFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IImageHash})">User(Snowflake, string, ushort, Optional&lt;string?&gt;, IImageHash?, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;IImageHash?&gt;, Optional&lt;Color?&gt;, Optional&lt;string&gt;, Optional&lt;bool&gt;, Optional&lt;string?&gt;, Optional&lt;UserFlags&gt;, Optional&lt;PremiumType&gt;, Optional&lt;UserFlags&gt;, Optional&lt;IImageHash?&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public User(Snowflake ID, string Username, ushort Discriminator, IImageHash? Avatar, Optional&lt;bool&gt; IsBot = default, Optional&lt;bool&gt; IsSystem = default, Optional&lt;bool&gt; IsMFAEnabled = default, Optional&lt;IImageHash?&gt; Banner = default, Optional&lt;Color?&gt; AccentColour = default, Optional&lt;string&gt; Locale = default, Optional&lt;bool&gt; IsVerified = default, Optional&lt;string?&gt; Email = default, Optional&lt;UserFlags&gt; Flags = default, Optional&lt;PremiumType&gt; PremiumType = default, Optional&lt;UserFlags&gt; PublicFlags = default, Optional&lt;IImageHash?&gt; AvatarDecoration = default)</code></pre>
+    <pre><code class="lang-csharp hljs">public User(Snowflake ID, string Username, ushort Discriminator, Optional&lt;string?&gt; GlobalName, IImageHash? Avatar, Optional&lt;bool&gt; IsBot = default, Optional&lt;bool&gt; IsSystem = default, Optional&lt;bool&gt; IsMFAEnabled = default, Optional&lt;IImageHash?&gt; Banner = default, Optional&lt;Color?&gt; AccentColour = default, Optional&lt;string&gt; Locale = default, Optional&lt;bool&gt; IsVerified = default, Optional&lt;string?&gt; Email = default, Optional&lt;UserFlags&gt; Flags = default, Optional&lt;PremiumType&gt; PremiumType = default, Optional&lt;UserFlags&gt; PublicFlags = default, Optional&lt;IImageHash?&gt; AvatarDecoration = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -193,22 +190,27 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
         <td></td>
       </tr>
       <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td><span class="parametername">GlobalName</span></td>
+        <td></td>
+      </tr>
+      <tr>
         <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IImageHash.html">IImageHash</a></td>
         <td><span class="parametername">Avatar</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">bool</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsBot</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">bool</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsSystem</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">bool</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsMFAEnabled</span></td>
         <td></td>
       </tr>
@@ -228,7 +230,7 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">bool</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><span class="parametername">IsVerified</span></td>
         <td></td>
       </tr>
@@ -259,9 +261,6 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="_ctor_1_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <h3 id="properties">Properties
 </h3>
   <span class="small pull-right mobile-hide">
@@ -269,7 +268,7 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_AccentColour.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.AccentColour%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L44">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L45">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.AccentColour*"></a>
   <h4 id="AccentColour" data-uid="Remora.Discord.API.Objects.User.AccentColour">AccentColour</h4>
@@ -294,15 +293,12 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="AccentColour_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_Avatar.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.Avatar%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L39">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L40">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.Avatar*"></a>
   <h4 id="Avatar" data-uid="Remora.Discord.API.Objects.User.Avatar">Avatar</h4>
@@ -327,15 +323,12 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Avatar_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_AvatarDecoration.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.AvatarDecoration%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L51">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L52">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.AvatarDecoration*"></a>
   <h4 id="AvatarDecoration" data-uid="Remora.Discord.API.Objects.User.AvatarDecoration">AvatarDecoration</h4>
@@ -360,15 +353,12 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="AvatarDecoration_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_Banner.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.Banner%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L43">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L44">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.Banner*"></a>
   <h4 id="Banner" data-uid="Remora.Discord.API.Objects.User.Banner">Banner</h4>
@@ -393,9 +383,6 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Banner_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_Discriminator.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.Discriminator%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -426,15 +413,12 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Discriminator_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_Email.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.Email%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L47">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L48">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.Email*"></a>
   <h4 id="Email" data-uid="Remora.Discord.API.Objects.User.Email">Email</h4>
@@ -459,15 +443,12 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Email_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_Flags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.Flags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L48">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L49">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.Flags*"></a>
   <h4 id="Flags" data-uid="Remora.Discord.API.Objects.User.Flags">Flags</h4>
@@ -492,9 +473,36 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Flags_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_GlobalName.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.GlobalName%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L39">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.GlobalName*"></a>
+  <h4 id="GlobalName" data-uid="Remora.Discord.API.Objects.User.GlobalName">GlobalName</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;string?&gt; GlobalName { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_ID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.ID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -525,15 +533,12 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="ID_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_IsBot.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.IsBot%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L40">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L41">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.IsBot*"></a>
   <h4 id="IsBot" data-uid="Remora.Discord.API.Objects.User.IsBot">IsBot</h4>
@@ -553,20 +558,17 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">bool</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="IsBot_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_IsMFAEnabled.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.IsMFAEnabled%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L42">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L43">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.IsMFAEnabled*"></a>
   <h4 id="IsMFAEnabled" data-uid="Remora.Discord.API.Objects.User.IsMFAEnabled">IsMFAEnabled</h4>
@@ -586,20 +588,17 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">bool</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="IsMFAEnabled_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_IsSystem.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.IsSystem%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L41">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L42">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.IsSystem*"></a>
   <h4 id="IsSystem" data-uid="Remora.Discord.API.Objects.User.IsSystem">IsSystem</h4>
@@ -619,20 +618,17 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">bool</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="IsSystem_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_IsVerified.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.IsVerified%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L46">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L47">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.IsVerified*"></a>
   <h4 id="IsVerified" data-uid="Remora.Discord.API.Objects.User.IsVerified">IsVerified</h4>
@@ -652,20 +648,17 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">bool</span>&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="IsVerified_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_Locale.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.Locale%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L45">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L46">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.Locale*"></a>
   <h4 id="Locale" data-uid="Remora.Discord.API.Objects.User.Locale">Locale</h4>
@@ -690,15 +683,12 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Locale_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_PremiumType.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.PremiumType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L49">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L50">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.PremiumType*"></a>
   <h4 id="PremiumType" data-uid="Remora.Discord.API.Objects.User.PremiumType">PremiumType</h4>
@@ -723,15 +713,12 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="PremiumType_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_PublicFlags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.PublicFlags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L50">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Users/User.cs/#L51">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_User" data-uid="Remora.Discord.API.Objects.User.PublicFlags*"></a>
   <h4 id="PublicFlags" data-uid="Remora.Discord.API.Objects.User.PublicFlags">PublicFlags</h4>
@@ -756,9 +743,6 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="PublicFlags_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_User_Username.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.User.Username%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
@@ -789,9 +773,6 @@ public record User : IUser, IPartialUser, IEquatable&lt;User&gt;</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 id="Username_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>global_name intentionally not implemented as this field is not present in Discord's OpenAPI specification, despite being documented.</p>
-</div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>
