@@ -254,6 +254,11 @@ public enum DiscordPermission
     UseSoundboard = 42,
 
     /// <summary>
+    /// Allows for creating emojis, stickers, and soundboard sounds, independently of managing them.
+    /// </summary>
+    CreateGuildExpressions = 43,
+
+    /// <summary>
     /// Allows the usage of custom soundboard sounds from other servers.
     /// </summary>
     UseExternalSounds = 45,
@@ -261,5 +266,15 @@ public enum DiscordPermission
     /// <summary>
     /// Allows for sending voice messages.
     /// </summary>
-    SendVoiceMessages = 46
+    SendVoiceMessages = 46,
+
+    /// <summary>
+    /// Allows for interaction with Clyde (AI).
+    /// </summary>
+    UseClydeAi = 47,
+
+    /// <summary>
+    /// Allows for setting the status of a voice channel.
+    /// </summary>
+    SetVoiceChannelStatus = 48
 }
