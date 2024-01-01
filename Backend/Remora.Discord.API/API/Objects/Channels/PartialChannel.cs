@@ -68,5 +68,6 @@ public record PartialChannel
     Optional<IDefaultReaction?> DefaultReactionEmoji = default,
     Optional<TimeSpan> DefaultThreadRateLimitPerUser = default,
     Optional<SortOrder?> DefaultSortOrder = default,
-    Optional<ForumLayout> DefaultForumLayout = default
+    Optional<ForumLayout> DefaultForumLayout = default,
+    Optional<string?> Status = default
 ) : IPartialChannel;

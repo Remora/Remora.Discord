@@ -48,6 +48,22 @@ public interface IDiscordRestChannelAPI
     Task<Result<IChannel>> GetChannelAsync(Snowflake channelID, CancellationToken ct = default);
 
     /// <summary>
+    /// Sets the status of a given voice channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the channel.</param>
+    /// <param name="status">The status to set.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result that may or not have succeeded.</returns>
+    Task<Result> SetVoiceChannelStatusAsync
+    (
+        Snowflake channelID,
+        Optional<string> status,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Modifies the given channel.
     /// </summary>
     /// <remarks>

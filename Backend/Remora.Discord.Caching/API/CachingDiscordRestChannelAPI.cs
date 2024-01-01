@@ -149,6 +149,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
             appliedTags,
             defaultSortOrder,
             defaultForumLayout,
+            status,
             reason,
             ct
         );
