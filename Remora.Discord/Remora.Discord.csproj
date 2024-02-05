@@ -1,32 +1,17 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2023.5</VersionPrefix>
+        <VersionPrefix>2024.1</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Add missing error codes.
-            Allow only the source user to paginate through message.
-            BREAKING: Add guild_scheduled_event_id field to stage instance creation.
-            BREAKING: Add missing parameter for guild forum endpoints.
-            BREAKING: Add missing resolved field.
-            BREAKING: Add support for IntegrationType in audit log entries.
-            BREAKING: Add support for team roles.
-            BREAKING: Allow storing async tokens.
-            BREAKING: Implement application editing.
-            BREAKING: Implement default thread rate limits.
-            BREAKING: Implement default values for select menus.
-            BREAKING: Implement initial support for media channels.
-            BREAKING: Implement support for monetized apps.
-            BREAKING: Implement support for super reactions.
-            BREAKING: Refactor ModifyGuildChannelPositionsAsync.
-            BREAKING: Remove GlobalName.
-            BREAKING: Update endpoint names.
-            Implement support for guild navigation links.
-            Implement support for monetized apps.
-            perf: Initialize reasonable starting buffer size.
-            perf: Use pooled backing array for JSON Serialization.
-            perf: Use ValueTask when possible.
+            Use async overloads when building for .NET 8.
+            fix: do not use IsDefined when updating cached nullable properties
+            fix: fill CommunicationDisabledUntil property from new object when updating cached GuildMember
+            BREAKING: Revert "Remove global_name from User objects"
+            BREAKING: fix: wrap GlobalName in Optional
+            Update permissions.
+            BREAKING: Implement applied tags for webhooks.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

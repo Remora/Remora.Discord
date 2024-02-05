@@ -1,14 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>12.0.0</VersionPrefix>
+        <VersionPrefix>12.0.1</VersionPrefix>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            BREAKING: Allow storing async tokens.
-            perf: Use pooled backing array for JSON Serialization.
-            perf: Initialize reasonable starting buffer size.
-            perf: Use ValueTask when possible.
+            Use async overloads when building for .NET 8.
         </PackageReleaseNotes>
     </PropertyGroup>
 
