@@ -199,7 +199,7 @@ public static class CommandTreeExtensions
             }
 
             // Translate from options to bulk data
-            var (commandType, directMessagePermission, defaultMemberPermissions, isNsfw, allowedInstalls, allowedContexts, callbackHint) = GetNodeMetadata(node);
+            var (commandType, directMessagePermission, defaultMemberPermissions, isNsfw, allowedInstalls, allowedContexts) = GetNodeMetadata(node);
 
             var localizedNames = localizationProvider.GetStrings(option.Name);
             var localizedDescriptions = localizationProvider.GetStrings(option.Description);
@@ -219,8 +219,7 @@ public static class CommandTreeExtensions
                     directMessagePermission,
                     isNsfw,
                     allowedInstalls,
-                    allowedContexts,
-                    callbackHint
+                    allowedContexts
                 )
             );
         }
@@ -246,7 +245,6 @@ public static class CommandTreeExtensions
         Optional<bool> isNsfw = default;
         Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default;
         Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default;
-        Optional<IInteractionCallbackHint> interactionCallbackHint = default;
 
         switch (node)
         {
@@ -396,16 +394,6 @@ public static class CommandTreeExtensions
                     );
                 }
 
-                if (callbackHints.SingleOrDefault() is { } hintData)
-                {
-                    interactionCallbackHint = new InteractionCallbackHint
-                    (
-                        hintData.AllowedCallbackTypes,
-                        hintData.Ephemerality,
-                        hintData.RequiredPermissions
-                    );
-                }
-
                 break;
             }
             case CommandNode commandNode:
@@ -465,21 +453,11 @@ public static class CommandTreeExtensions
                     commandNode.GroupType.GetCustomAttribute<InteractionCallbackHintAttribute>() ??
                     commandNode.CommandMethod.GetCustomAttribute<InteractionCallbackHintAttribute>();
 
-                if (callbackHintAttribute is not null)
-                {
-                    interactionCallbackHint = new InteractionCallbackHint
-                    (
-                        callbackHintAttribute.AllowedCallbackTypes,
-                        callbackHintAttribute.Ephemerality,
-                        callbackHintAttribute.RequiredPermissions
-                    );
-                }
-
                 break;
             }
         }
 
-        return new(commandType, directMessagePermission, defaultMemberPermissions, isNsfw, allowedIntegrationTypes, allowedContextTypes, interactionCallbackHint);
+        return new(commandType, directMessagePermission, defaultMemberPermissions, isNsfw, allowedIntegrationTypes, allowedContextTypes);
     }
 
     private static IApplicationCommandOption? TranslateCommandNode
@@ -1162,7 +1140,6 @@ public static class CommandTreeExtensions
     /// <param name="IsNsfw">The age restriction requested for the node.</param>
     /// <param name="AllowedIntegrationTypes">The integration types allowed for the node.</param>
     /// <param name="AllowedContextTypes">The context types allowed for the node.</param>
-    /// <param name="InteractionCallbackHint">The interaction callback hint for the node.</param>
     private sealed record TopLevelMetadata
     (
         Optional<ApplicationCommandType> CommandType,
@@ -1170,7 +1147,6 @@ public static class CommandTreeExtensions
         IDiscordPermissionSet? DefaultMemberPermission,
         Optional<bool> IsNsfw,
         Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes,
-        Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes,
-        Optional<IInteractionCallbackHint> InteractionCallbackHint
+        Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes
     );
 }
