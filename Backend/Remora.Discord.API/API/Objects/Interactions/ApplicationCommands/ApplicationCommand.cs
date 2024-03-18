@@ -49,6 +49,5 @@ public record ApplicationCommand
     Optional<bool> DMPermission = default,
     Optional<bool> IsNsfw = default,
     Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes = default,
-    Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes = default,
-    Optional<IInteractionCallbackHint> InteractionCallbackHint = default
+    Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes = default
 ) : IApplicationCommand;
