@@ -168,7 +168,7 @@ public interface IApplication : IPartialApplication
     /// <summary>
     /// Gets the application's integration type configurations.
     /// </summary>
-    new IReadOnlyDictionary<ApplicationIntegrationType, Optional<IApplicationIntegrationTypeConfiguration>> IntegrationTypeConfigurations { get; }
+    new IReadOnlyDictionary<ApplicationIntegrationType, Optional<IApplicationIntegrationTypeConfig>> IntegrationTypesConfig { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.ID => this.ID;
@@ -249,5 +249,5 @@ public interface IApplication : IPartialApplication
     Optional<Uri> IPartialApplication.CustomInstallUrl => this.CustomInstallUrl;
 
     /// <inheritdoc/>
-    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Optional<IApplicationIntegrationTypeConfiguration>>> IPartialApplication.IntegrationTypeConfigurations => new(this.IntegrationTypeConfigurations);
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Optional<IApplicationIntegrationTypeConfig>>> IPartialApplication.IntegrationTypesConfig => new(this.IntegrationTypesConfig);
 }
