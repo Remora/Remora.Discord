@@ -56,5 +56,6 @@
     ],
     "permissions": "0"
   },
-  "custom_install_url": "https://www.example.org"
+  "custom_install_url": "https://www.example.org",
+  "integration_types_config": { "0": null, "1": null }
 }
