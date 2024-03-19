@@ -59,5 +59,6 @@ public record PartialApplication
     Optional<Uri> RoleConnectionsVerificationUrl = default,
     Optional<IReadOnlyList<string>> Tags = default,
     Optional<IApplicationInstallParameters> InstallParams = default,
-    Optional<Uri> CustomInstallUrl = default
+    Optional<Uri> CustomInstallUrl = default,
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?>> IntegrationTypesConfig = default
 ) : IPartialApplication;

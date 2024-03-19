@@ -47,6 +47,7 @@ public record Application
     Optional<IPartialUser> Owner,
     string VerifyKey,
     ITeam? Team,
+    IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?> IntegrationTypesConfig,
     Optional<Snowflake> GuildID = default,
     Optional<IPartialGuild> Guild = default,
     Optional<Snowflake> PrimarySKUID = default,
