@@ -1,7 +1,7 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>1.1.6</VersionPrefix>
+        <VersionPrefix>1.1.7</VersionPrefix>
         <Description>Redis-based cache provider for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.

@@ -120,6 +120,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
         Optional<string> threadName = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         CancellationToken ct = default
     )
     {
@@ -139,6 +140,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             attachments,
             flags,
             threadName,
+            appliedTags,
             ct
         );
 

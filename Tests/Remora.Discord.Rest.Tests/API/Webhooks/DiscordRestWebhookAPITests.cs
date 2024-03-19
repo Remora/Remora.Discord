@@ -35,6 +35,7 @@ using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
@@ -753,6 +754,7 @@ public class DiscordRestWebhookAPITests
             var allowedMentions = new AllowedMentions();
             var components = new List<IMessageComponent>();
             var flags = MessageFlags.SuppressEmbeds;
+            var tags = new List<Snowflake>();
 
             var api = CreateAPI
             (
@@ -771,6 +773,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                                 .WithProperty("components", p => p.IsArray())
                                 .WithProperty("flags", p => p.Is((int)flags))
+                                .WithProperty("applied_tags", p => p.IsArray())
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -787,7 +790,8 @@ public class DiscordRestWebhookAPITests
                 tts,
                 allowedMentions: allowedMentions,
                 components: components,
-                flags: flags
+                flags: flags,
+                appliedTags: tags
             );
 
             ResultAssert.Successful(result);

@@ -5,13 +5,12 @@
 //
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Extensions.Extensions;
 using Remora.Discord.Hosting.Extensions;
 
 namespace Remora.Discord.Samples.LoadRespondersFromAssembly;
@@ -52,14 +51,7 @@ public class Program
         (
             (_, services) =>
             {
-                var responderTypes = typeof(Program).Assembly
-                    .GetExportedTypes()
-                    .Where(t => t.IsResponder());
-
-                foreach (var responderType in responderTypes)
-                {
-                    services.AddResponder(responderType);
-                }
+                services.AddRespondersFromAssembly(typeof(Program).Assembly);
             }
         )
         .ConfigureLogging

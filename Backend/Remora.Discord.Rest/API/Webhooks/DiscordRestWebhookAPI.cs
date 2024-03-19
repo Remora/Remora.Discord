@@ -304,6 +304,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
         Optional<string> threadName = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
         CancellationToken ct = default
     )
     {
@@ -363,6 +364,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
                             json.Write("thread_name", threadName, this.JsonOptions);
+                            json.Write("applied_tags", appliedTags, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);
