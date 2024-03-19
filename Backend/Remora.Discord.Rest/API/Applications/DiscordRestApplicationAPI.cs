@@ -103,6 +103,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
     {
@@ -151,6 +153,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
+                        json.Write("contexts", allowedContextTypes, this.JsonOptions);
+                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -230,6 +234,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
     {
@@ -267,6 +273,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
+                        json.Write("contexts", allowedContextTypes, this.JsonOptions);
+                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -379,6 +387,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
     {
@@ -426,6 +436,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
+                        json.Write("contexts", allowedContextTypes, this.JsonOptions);
+                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -463,6 +475,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
     {
@@ -498,6 +512,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
+                        json.Write("contexts", allowedContextTypes, this.JsonOptions);
+                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
