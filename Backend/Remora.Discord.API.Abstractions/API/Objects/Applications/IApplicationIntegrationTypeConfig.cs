@@ -1,5 +1,5 @@
 //
-//  IApplicationIntegrationTypeConfiguration.cs
+//  IApplicationIntegrationTypeConfig.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,7 +25,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// The integration type configuration for an application.
 /// </summary>
-public interface IApplicationIntegrationTypeConfiguration
+public interface IApplicationIntegrationTypeConfig
 {
     /// <summary>
     /// Gets the OAuth2 install parameters for the integration type.
