@@ -103,7 +103,7 @@ public interface IInteraction
     /// <summary>
     /// Gets the computed permissions for the application in the context of the interaction's execution.
     /// </summary>
-    Optional<IDiscordPermissionSet> AppPermissions { get; }
+    IDiscordPermissionSet AppPermissions { get; }
 
     /// <summary>
     /// Gets the locale of the invoking user.
@@ -124,7 +124,21 @@ public interface IInteraction
     IReadOnlyList<IEntitlement> Entitlements { get; }
 
     /// <summary>
-    /// Gets the authorizing integration owners, that is, the entity that has the integration installed.
+    /// Gets the context of the interaction.
     /// </summary>
+    Optional<InteractionContextType> Context { get; }
+
+    /// <summary>
+    /// Gets the integrations that authorized the interaction.
+    /// </summary>
+    /// <remarks>
+    /// This is a mapping of the integration type to the ID of its resource.
+    /// <para>
+    /// The dictionary contains the following, given the circumstances: <br/>
+    /// - If the integration is installed to a user, a key of <see cref="ApplicationIntegrationType.UserInstallable"/> and the value is the user ID. <br/>
+    /// - If the integration is installed to a guild, a key of <see cref="ApplicationIntegrationType.GuildInstallable"/> and the value is the guild ID.
+    /// If the interaction is sent outside the context of a guild, the value is always zero.<br/>
+    /// </para>
+    /// </remarks>
     Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners { get; }
 }

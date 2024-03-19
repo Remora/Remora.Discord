@@ -47,9 +47,10 @@ public record InteractionCreate
     string Token,
     int Version,
     Optional<IMessage> Message,
-    Optional<IDiscordPermissionSet> AppPermissions,
+    IDiscordPermissionSet AppPermissions,
     Optional<string> Locale,
     Optional<string> GuildLocale,
     IReadOnlyList<IEntitlement> Entitlements,
+    Optional<InteractionContextType> Context,
     Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners
 ) : IInteractionCreate;
