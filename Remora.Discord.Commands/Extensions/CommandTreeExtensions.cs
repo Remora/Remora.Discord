@@ -375,25 +375,6 @@ public static class CommandTreeExtensions
                     t => t.GetCustomAttribute<DiscordInstallContextAttribute>()
                 );
 
-                var callbackHintAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<InteractionCallbackHintAttribute>()
-                );
-
-                var callbackHints = callbackHintAttributes
-                    .Where(attribute => attribute is not null)
-                    .ToArray();
-
-                if (callbackHints.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        $"In a set of groups with the same name, only one may be marked with an callback hint attribute, but "
-                        + $"{callbackHints.Length} were found.",
-                        node
-                    );
-                }
-
                 break;
             }
             case CommandNode commandNode:
@@ -448,10 +429,6 @@ public static class CommandTreeExtensions
                 {
                     allowedIntegrationTypes = integrationAttribute.InstallTypes.AsOptional();
                 }
-
-                var callbackHintAttribute =
-                    commandNode.GroupType.GetCustomAttribute<InteractionCallbackHintAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<InteractionCallbackHintAttribute>();
 
                 break;
             }
