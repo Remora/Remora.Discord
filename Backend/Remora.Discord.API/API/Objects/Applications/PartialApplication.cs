@@ -60,5 +60,5 @@ public record PartialApplication
     Optional<IReadOnlyList<string>> Tags = default,
     Optional<IApplicationInstallParameters> InstallParams = default,
     Optional<Uri> CustomInstallUrl = default,
-    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Optional<IApplicationIntegrationTypeConfig>>> IntegrationTypesConfig = default
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?>> IntegrationTypesConfig = default
 ) : IPartialApplication;
