@@ -30,10 +30,10 @@ public enum ApplicationIntegrationType
     /// <summary>
     /// Specifies that the integration can be installed on a guild.
     /// </summary>
-    GuildInstallable,
+    GuildInstallable = 0,
 
     /// <summary>
     /// Specifies that the integration can be installed on a user.
     /// </summary>
-    UserInstallable
+    UserInstallable = 1,
 }
