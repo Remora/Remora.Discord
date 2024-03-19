@@ -89,7 +89,7 @@ public interface IDiscordRestApplicationAPI
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
         Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
-        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -151,7 +151,7 @@ public interface IDiscordRestApplicationAPI
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
         Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
-        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -222,7 +222,7 @@ public interface IDiscordRestApplicationAPI
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool> isNsfw = default,
         Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
-        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -291,7 +291,7 @@ public interface IDiscordRestApplicationAPI
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool> isNsfw = default,
         Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
-        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
