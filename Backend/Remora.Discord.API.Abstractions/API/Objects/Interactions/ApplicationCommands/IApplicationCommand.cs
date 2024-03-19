@@ -123,5 +123,5 @@ public interface IApplicationCommand
     /// <summary>
     /// Gets a value indicating the contexts in which this command can be invoked.
     /// </summary>
-    Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes { get; }
+    Optional<IReadOnlyList<InteractionContextType>> AllowedContextTypes { get; }
 }

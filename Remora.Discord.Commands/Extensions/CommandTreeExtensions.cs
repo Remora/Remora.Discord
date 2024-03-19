@@ -244,7 +244,7 @@ public static class CommandTreeExtensions
         IDiscordPermissionSet? defaultMemberPermissions = default;
         Optional<bool> isNsfw = default;
         Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default;
-        Optional<IReadOnlyList<ApplicationCommandContextType>> allowedContextTypes = default;
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default;
 
         switch (node)
         {
@@ -1147,6 +1147,6 @@ public static class CommandTreeExtensions
         IDiscordPermissionSet? DefaultMemberPermission,
         Optional<bool> IsNsfw,
         Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes,
-        Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes
+        Optional<IReadOnlyList<InteractionContextType>> AllowedContextTypes
     );
 }

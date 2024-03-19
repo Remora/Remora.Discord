@@ -66,5 +66,5 @@ public interface IBulkApplicationCommandData
     Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes { get; }
 
     /// <inheritdoc cref="IApplicationCommand.AllowedContextTypes"/>
-    Optional<IReadOnlyList<ApplicationCommandContextType>> AllowedContextTypes { get; }
+    Optional<IReadOnlyList<InteractionContextType>> AllowedContextTypes { get; }
 }
