@@ -28,5 +28,8 @@
     "name": "none",
     "owner_user_id": "999999999999999999"
   },
-  "integration_types_config": { "0": null, "1": null }
+  "integration_types_config": {
+    "0": { "scopes": [ "bot", "application.commands" ], "permissions": "0"},
+    "1": { "scopes": [ "application.commands"] }
+  }
 }
