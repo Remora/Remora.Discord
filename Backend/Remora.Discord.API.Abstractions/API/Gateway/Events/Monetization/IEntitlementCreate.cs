@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents a user's initial subscription to an SKU.
 /// </summary>
 [PublicAPI]
-public interface IEntitlementCreate : IEntitlement, IGatewayEvent
-{
-}
+public interface IEntitlementCreate : IEntitlement, IGatewayEvent;

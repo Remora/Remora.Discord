@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents a renewal of a user's entitlement to an SKU.
 /// </summary>
 [PublicAPI]
-public interface IEntitlementUpdate : IEntitlement, IGatewayEvent
-{
-}
+public interface IEntitlementUpdate : IEntitlement, IGatewayEvent;

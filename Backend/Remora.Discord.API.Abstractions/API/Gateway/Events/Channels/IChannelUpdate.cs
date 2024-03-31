@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents the update of a channel.
 /// </summary>
 [PublicAPI]
-public interface IChannelUpdate : IGatewayEvent, IChannel
-{
-}
+public interface IChannelUpdate : IGatewayEvent, IChannel;

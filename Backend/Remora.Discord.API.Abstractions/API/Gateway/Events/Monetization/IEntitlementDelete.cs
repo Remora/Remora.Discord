@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents a removal of an entitlement from a user.
 /// </summary>
 [PublicAPI]
-public interface IEntitlementDelete : IEntitlement, IGatewayEvent
-{
-}
+public interface IEntitlementDelete : IEntitlement, IGatewayEvent;

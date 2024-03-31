@@ -28,6 +28,4 @@ namespace Remora.Discord.API.Abstractions.VoiceGateway;
 /// Represents a marker interface for voice gateway payload data.
 /// </summary>
 [PublicAPI]
-public interface IVoiceGatewayPayloadData
-{
-}
+public interface IVoiceGatewayPayloadData;
