@@ -33,6 +33,6 @@
   "role_connections_verification_url": "https://www.example.org",
   "integration_types_config": {
     "0": { "oauth2_install_params": { "scopes": [ "bot", "application.commands" ], "permissions": "0"} },
-    "1": { "oauth2_install_params": {"scopes": [ "application.commands"] } }
+    "1": { "oauth2_install_params": { "scopes": [ "application.commands" ], "permissions": "0" } }
   }
 }

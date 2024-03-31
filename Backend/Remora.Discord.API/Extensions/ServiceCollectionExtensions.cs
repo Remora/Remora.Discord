@@ -1214,6 +1214,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IApplicationIntegrationTypeConfig, ApplicationIntegrationTypeConfig>()
                .WithPropertyName(a => a.OAuth2InstallParams, "oauth2_install_params");
 
+        options.AddDataObjectConverter<IApplicationOAuth2InstallParams, ApplicationOAuth2InstallParams>();
         return options;
     }
 

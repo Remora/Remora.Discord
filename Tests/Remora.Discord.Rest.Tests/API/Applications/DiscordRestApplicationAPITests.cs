@@ -2542,12 +2542,11 @@ public class DiscordRestApplicationAPITests
                                 )
                                 .WithProperty
                                 (
-                                    "integration_types",
-                                    p => p.IsArray
+                                    "integration_types_config",
+                                    p => p.IsObject
                                     (
-                                        a => a
-                                            .WithElement(0, e => e.Is((int)ApplicationIntegrationType.UserInstallable))
-                                            .WithElement(1, e => e.Is((int)ApplicationIntegrationType.GuildInstallable))
+                                        j => j.WithProperty("0", e => e.IsObject())
+                                            .WithProperty("1", e => e.IsObject())
                                     )
                                 )
                         )
