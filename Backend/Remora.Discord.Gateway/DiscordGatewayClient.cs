@@ -566,6 +566,18 @@ public class DiscordGatewayClient : IDisposable
 
                 if (receiveHello.Entity is not IPayload<IHello> hello)
                 {
+                    if (receiveHello.Entity is IPayload<IReconnect> reconnect)
+                    {
+                        // Discord may spit out a reconnect if the node is we're connecting while the gateway node is
+                        // shutting down, but before the node is labeled as unavailable.
+                        return new GatewayError
+                        (
+                            "The gateway requested a reconnect.",
+                            false,
+                            false
+                        );
+                    }
+
                     // Not receiving a hello is a non-recoverable error
                     return new GatewayError
                     (
