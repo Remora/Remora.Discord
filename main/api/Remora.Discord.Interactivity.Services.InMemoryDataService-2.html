@@ -112,7 +112,7 @@
   </div>
   <div class="implements">
     <h5>Implements</h5>
-    <div><span class="xref">System.IAsyncDisposable</span></div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -120,7 +120,7 @@
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+      <span class="xref">object.Equals(object, object)</span>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">object.GetHashCode()</a>
@@ -135,7 +135,7 @@
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">object.ToString()</a>
+      <span class="xref">object.ToString()</span>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.Interactivity.html">Interactivity</a>.<a class="xref" href="Remora.Discord.Interactivity.Services.html">Services</a></h6>
@@ -168,8 +168,8 @@ public class InMemoryDataService&lt;TKey, TData&gt; : IAsyncDisposable where TKe
   </table>
   <h5 id="Remora_Discord_Interactivity_Services_InMemoryDataService_2_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
-type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
-<span class="xref">System.IAsyncDisposable</span>, the instance will also be disposed upon removal.</p>
+type such as classes, structures, or records. If the data type implements <span class="xref">System.IDisposable</span> or
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>
 </div>
   <h3 id="properties">Properties
 </h3>
@@ -206,8 +206,8 @@ type such as classes, structures, or records. If the data type implements <a cla
   </table>
   <h5 id="Instance_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
-type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
-<span class="xref">System.IAsyncDisposable</span>, the instance will also be disposed upon removal.</p>
+type such as classes, structures, or records. If the data type implements <span class="xref">System.IDisposable</span> or
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>
 </div>
   <h3 id="methods">Methods
 </h3>
@@ -243,8 +243,8 @@ type such as classes, structures, or records. If the data type implements <a cla
   </table>
   <h5 id="DisposeAsync_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
-type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
-<span class="xref">System.IAsyncDisposable</span>, the instance will also be disposed upon removal.</p>
+type such as classes, structures, or records. If the data type implements <span class="xref">System.IDisposable</span> or
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
@@ -296,7 +296,7 @@ type such as classes, structures, or records. If the data type implements <a cla
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.Interactivity.Services.DataLease-2.html">DataLease</a>&lt;TKey, TData&gt;&gt;&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.Interactivity.Services.DataLease-2.html">DataLease</a>&lt;TKey, TData&gt;&gt;&gt;</td>
         <td><p>The data and semaphore associated with the data or a <span class="xref">Remora.Results.NotFoundError</span>.</p>
 </td>
       </tr>
@@ -357,7 +357,7 @@ public Task&lt;Result&lt;(SemaphoreSlim Semaphore, TData Data)&gt;&gt; RentDataA
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;(<span class="xref">SemaphoreSlim</span> <span class="xref">Semaphore</span>, TData <span class="xref">Data</span>)&gt;&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.semaphoreslim">SemaphoreSlim</a> <span class="xref">Semaphore</span>, TData <span class="xref">Data</span>)&gt;&gt;</td>
         <td><p>The data and semaphore associated with the data or a <span class="xref">Remora.Results.NotFoundError</span>.</p>
 </td>
       </tr>
@@ -480,8 +480,8 @@ the given key.</p>
   </table>
   <h5 id="TryRemoveData_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
-type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
-<span class="xref">System.IAsyncDisposable</span>, the instance will also be disposed upon removal.</p>
+type such as classes, structures, or records. If the data type implements <span class="xref">System.IDisposable</span> or
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
@@ -536,12 +536,12 @@ the given key.</p>
   </table>
   <h5 id="TryRemoveDataAsync_1_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>While <code data-dev-comment-type="typeparamref" class="typeparamref">TKey</code> should be a simple dictionary key, <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code> may be any complex
-type such as classes, structures, or records. If the data type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> or
-<span class="xref">System.IAsyncDisposable</span>, the instance will also be disposed upon removal.</p>
+type such as classes, structures, or records. If the data type implements <span class="xref">System.IDisposable</span> or
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>, the instance will also be disposed upon removal.</p>
 </div>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">System.IAsyncDisposable</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">System.IAsyncDisposable</a>
   </div>
 </article>
               

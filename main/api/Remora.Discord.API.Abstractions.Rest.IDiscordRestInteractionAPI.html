@@ -165,7 +165,7 @@ public interface IDiscordRestInteractionAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;&gt;</td>
         <td><span class="parametername">embeds</span></td>
         <td><p>The embeds in the message.</p>
 </td>
@@ -177,13 +177,13 @@ public interface IDiscordRestInteractionAPI</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponent.html">IMessageComponent</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponent.html">IMessageComponent</a>&gt;&gt;</td>
         <td><span class="parametername">components</span></td>
         <td><p>The components that should be included with the message.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialAttachment.html">IPartialAttachment</a>&gt;&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialAttachment.html">IPartialAttachment</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">attachments</span></td>
         <td><p>The attachments to associate with the response. Each file may be a new file in the form of
 <a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, or an existing one that should be retained in the form of a
@@ -215,7 +215,7 @@ mentioned in this parameter will be deleted.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
         <td><p>A result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -272,7 +272,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialAttachment.html">IPartialAttachment</a>&gt;&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialAttachment.html">IPartialAttachment</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">attachments</span></td>
         <td><p>The attachments to associate with the response. Each file may be a new file in the form of
 <a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, or an existing one that should be retained in the form of a
@@ -298,7 +298,7 @@ this parameter will be deleted.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A creation result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -370,7 +370,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A modification result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -432,7 +432,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result</span>&gt;</td>
         <td><p>A deletion result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -489,7 +489,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;&gt;</td>
         <td><span class="parametername">embeds</span></td>
         <td><p>The new embeds, if any.</p>
 </td>
@@ -501,13 +501,13 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponent.html">IMessageComponent</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponent.html">IMessageComponent</a>&gt;&gt;</td>
         <td><span class="parametername">components</span></td>
         <td><p>The components, if any.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialAttachment.html">IPartialAttachment</a>&gt;&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialAttachment.html">IPartialAttachment</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">attachments</span></td>
         <td><p>The attachments to associate with the response. Each file may be a new file in the form of
 <a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, or an existing one that should be retained in the form of a
@@ -533,7 +533,7 @@ mentioned in this parameter will be deleted.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
         <td><p>A modification result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -588,7 +588,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;&gt;</td>
         <td><span class="parametername">embeds</span></td>
         <td><p>The new embeds, if any.</p>
 </td>
@@ -600,13 +600,13 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponent.html">IMessageComponent</a>&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageComponent.html">IMessageComponent</a>&gt;&gt;</td>
         <td><span class="parametername">components</span></td>
         <td><p>The components, if any.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialAttachment.html">IPartialAttachment</a>&gt;&gt;&gt;</td>
+        <td><span class="xref">Remora.Rest.Core.Optional&lt;TValue&gt;</span>&lt;<span class="xref">System.Collections.Generic.IReadOnlyList&lt;T&gt;</span>&lt;<span class="xref">OneOf.OneOf&lt;T0, T1&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialAttachment.html">IPartialAttachment</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">attachments</span></td>
         <td><p>The attachments to associate with the response. Each file may be a new file in the form of
 <a class="xref" href="Remora.Discord.API.Abstractions.Rest.FileData.html">FileData</a>, or an existing one that should be retained in the form of a
@@ -632,7 +632,7 @@ mentioned in this parameter will be deleted.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
         <td><p>A modification result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -704,7 +704,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
         <td><p>A result which may or may not have succeeded.</p>
 </td>
       </tr>
@@ -766,7 +766,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task&lt;TResult&gt;</span>&lt;<span class="xref">Remora.Results.Result&lt;TEntity&gt;</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>&gt;&gt;</td>
         <td><p>A result which may or may not have succeeded.</p>
 </td>
       </tr>
