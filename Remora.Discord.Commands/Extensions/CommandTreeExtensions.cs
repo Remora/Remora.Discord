@@ -351,29 +351,31 @@ public static class CommandTreeExtensions
                     allowedContextTypes = context.AllowedContexts.AsOptional();
                 }
 
-                var integrationAttributes = groupNode.GroupTypes.Select
+                var installAttributes = groupNode.GroupTypes.Select
                 (
                     t => t.GetCustomAttribute<DiscordInstallContextAttribute>()
                 );
 
-                var integrations = integrationAttributes
+                var installs = installAttributes
                     .Where(attribute => attribute is not null)
                     .ToArray();
 
-                if (integrations.Length > 1)
+                if (installs.Length > 1)
                 {
                     throw new InvalidNodeException
                     (
-                        $"In a set of groups with the same name, only one may be marked with an integration attribute, but "
-                        + $"{integrations.Length} were found.",
+                        $"In a set of groups with the same name, only one may be marked with an install attribute, "
+                      + $"but {installs.Length} were found.",
                         node
                     );
                 }
 
-                var integrationsAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordInstallContextAttribute>()
-                );
+                var install = installs.SingleOrDefault();
+
+                if (install is not null)
+                {
+                    allowedIntegrationTypes = install.InstallTypes.AsOptional();
+                }
 
                 break;
             }
