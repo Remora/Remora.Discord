@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents metadata related to a message component interaction.
 /// </summary>
+[PublicAPI]
 public interface IMessageComponentInteractionMetadata : IMessageInteractionMetadata
 {
     /// <summary>

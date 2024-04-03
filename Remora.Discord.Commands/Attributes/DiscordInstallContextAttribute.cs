@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Attributes;
@@ -30,6 +31,8 @@ namespace Remora.Discord.Commands.Attributes;
 /// Specifies that the command is valid to install in the given contexts.
 /// </summary>
 /// <param name="installTypes">The contexts that the command can be installed into.</param>
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class DiscordInstallContextAttribute(params ApplicationIntegrationType[] installTypes) : Attribute
 {
     /// <summary>

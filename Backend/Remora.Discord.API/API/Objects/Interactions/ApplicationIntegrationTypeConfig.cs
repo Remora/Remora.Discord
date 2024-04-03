@@ -20,9 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IApplicationIntegrationTypeConfig"/>
+[PublicAPI]
 public record ApplicationIntegrationTypeConfig(IApplicationOAuth2InstallParams OAuth2InstallParams) : IApplicationIntegrationTypeConfig;

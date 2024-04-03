@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -28,6 +29,7 @@ using Remora.Rest.Core;
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IModalSubmitInteractionMetadata"/>
+[PublicAPI]
 public record ModalSubmitInteractionMetadata
 (
     Snowflake ID,

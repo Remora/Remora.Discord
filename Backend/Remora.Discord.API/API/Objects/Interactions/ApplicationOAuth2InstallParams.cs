@@ -21,9 +21,11 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IApplicationOAuth2InstallParams"/>
+[PublicAPI]
 public record ApplicationOAuth2InstallParams(IDiscordPermissionSet Permissions, IReadOnlyList<string> Scopes) : IApplicationOAuth2InstallParams;

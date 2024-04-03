@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Represents the OAuth2 install parameters for an application.
 /// </summary>
+[PublicAPI]
 public interface IApplicationOAuth2InstallParams
 {
     /// <summary>

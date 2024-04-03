@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using OneOf;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents metadata related to a modal submit interaction.
 /// </summary>
+[PublicAPI]
 public interface IModalSubmitInteractionMetadata : IMessageInteractionMetadata
 {
     /// <summary>

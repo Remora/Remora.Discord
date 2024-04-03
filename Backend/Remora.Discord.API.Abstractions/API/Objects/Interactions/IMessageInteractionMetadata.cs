@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents the metadata of an application command interaction.
 /// </summary>
+[PublicAPI]
 public interface IMessageInteractionMetadata
 {
     /// <summary>
