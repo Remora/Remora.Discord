@@ -48,6 +48,6 @@ public record ApplicationCommand
     IDiscordPermissionSet? DefaultMemberPermissions = default,
     Optional<bool> DMPermission = default,
     Optional<bool> IsNsfw = default,
-    Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes = default,
-    Optional<IReadOnlyList<InteractionContextType>> AllowedContextTypes = default
+    Optional<IReadOnlyList<ApplicationIntegrationType>> IntegrationTypes = default,
+    Optional<IReadOnlyList<InteractionContextType>> Contexts = default
 ) : IApplicationCommand;

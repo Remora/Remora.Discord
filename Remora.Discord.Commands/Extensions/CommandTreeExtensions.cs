@@ -348,7 +348,7 @@ public static class CommandTreeExtensions
 
                 if (context is not null)
                 {
-                    allowedContextTypes = context.AllowedContexts.AsOptional();
+                    allowedContextTypes = context.Contexts.AsOptional();
                 }
 
                 var installAttributes = groupNode.GroupTypes.Select
@@ -420,7 +420,7 @@ public static class CommandTreeExtensions
 
                 if (contextsAttribute is not null)
                 {
-                    allowedContextTypes = contextsAttribute.AllowedContexts.AsOptional();
+                    allowedContextTypes = contextsAttribute.Contexts.AsOptional();
                 }
 
                 var integrationAttribute =

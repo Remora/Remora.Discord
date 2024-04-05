@@ -118,10 +118,10 @@ public interface IApplicationCommand
     /// <summary>
     /// Gets a value indicating the contexts in which this command can be installed.
     /// </summary>
-    Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes { get; }
+    Optional<IReadOnlyList<ApplicationIntegrationType>> IntegrationTypes { get; }
 
     /// <summary>
     /// Gets a value indicating the contexts in which this command can be invoked.
     /// </summary>
-    Optional<IReadOnlyList<InteractionContextType>> AllowedContextTypes { get; }
+    Optional<IReadOnlyList<InteractionContextType>> Contexts { get; }
 }

@@ -31,13 +31,13 @@ namespace Remora.Discord.Commands.Attributes;
 /// <summary>
 /// Defines the contexts in which a command can be invoked.
 /// </summary>
-/// <param name="allowedContexts">The contexts the command can be invoked.</param>
+/// <param name="contexts">The contexts the command can be invoked.</param>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class AllowedContextsAttribute(params InteractionContextType[] allowedContexts) : Attribute
+public class AllowedContextsAttribute(params InteractionContextType[] contexts) : Attribute
 {
     /// <summary>
     /// Gets a value specifying the allowed contexts.
     /// </summary>
-    public IReadOnlyList<InteractionContextType> AllowedContexts { get; } = allowedContexts.ToArray();
+    public IReadOnlyList<InteractionContextType> Contexts { get; } = contexts.ToArray();
 }
