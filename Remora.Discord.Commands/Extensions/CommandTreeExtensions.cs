@@ -199,7 +199,7 @@ public static class CommandTreeExtensions
             }
 
             // Translate from options to bulk data
-            var (commandType, directMessagePermission, defaultMemberPermissions, isNsfw) = GetNodeMetadata(node);
+            var (commandType, directMessagePermission, defaultMemberPermissions, isNsfw, allowedInstalls, allowedContexts) = GetNodeMetadata(node);
 
             var localizedNames = localizationProvider.GetStrings(option.Name);
             var localizedDescriptions = localizationProvider.GetStrings(option.Description);
@@ -217,7 +217,9 @@ public static class CommandTreeExtensions
                     localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
                     defaultMemberPermissions,
                     directMessagePermission,
-                    isNsfw
+                    isNsfw,
+                    allowedInstalls,
+                    allowedContexts
                 )
             );
         }
@@ -241,6 +243,8 @@ public static class CommandTreeExtensions
         Optional<bool> directMessagePermission = default;
         IDiscordPermissionSet? defaultMemberPermissions = default;
         Optional<bool> isNsfw = default;
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default;
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default;
 
         switch (node)
         {
@@ -321,6 +325,58 @@ public static class CommandTreeExtensions
                     isNsfw = nsfwAttribute.IsNsfw;
                 }
 
+                var contextsAttributes = groupNode.GroupTypes.Select
+                (
+                    t => t.GetCustomAttribute<AllowedContextsAttribute>()
+                );
+
+                var contexts = contextsAttributes
+                    .Where(attribute => attribute is not null)
+                    .ToArray();
+
+                if (contexts.Length > 1)
+                {
+                    throw new InvalidNodeException
+                    (
+                        $"In a set of groups with the same name, only one may be marked with a context attribute, but "
+                        + $"{contexts.Length} were found.",
+                        node
+                    );
+                }
+
+                var context = contexts.SingleOrDefault();
+
+                if (context is not null)
+                {
+                    allowedContextTypes = context.Contexts.AsOptional();
+                }
+
+                var installAttributes = groupNode.GroupTypes.Select
+                (
+                    t => t.GetCustomAttribute<DiscordInstallContextAttribute>()
+                );
+
+                var installs = installAttributes
+                    .Where(attribute => attribute is not null)
+                    .ToArray();
+
+                if (installs.Length > 1)
+                {
+                    throw new InvalidNodeException
+                    (
+                        $"In a set of groups with the same name, only one may be marked with an install attribute, "
+                      + $"but {installs.Length} were found.",
+                        node
+                    );
+                }
+
+                var install = installs.SingleOrDefault();
+
+                if (install is not null)
+                {
+                    allowedIntegrationTypes = install.InstallTypes.AsOptional();
+                }
+
                 break;
             }
             case CommandNode commandNode:
@@ -358,11 +414,29 @@ public static class CommandTreeExtensions
                     isNsfw = nsfwAttribute.IsNsfw;
                 }
 
+                var contextsAttribute =
+                    commandNode.GroupType.GetCustomAttribute<AllowedContextsAttribute>() ??
+                    commandNode.CommandMethod.GetCustomAttribute<AllowedContextsAttribute>();
+
+                if (contextsAttribute is not null)
+                {
+                    allowedContextTypes = contextsAttribute.Contexts.AsOptional();
+                }
+
+                var integrationAttribute =
+                    commandNode.GroupType.GetCustomAttribute<DiscordInstallContextAttribute>() ??
+                    commandNode.CommandMethod.GetCustomAttribute<DiscordInstallContextAttribute>();
+
+                if (integrationAttribute is not null)
+                {
+                    allowedIntegrationTypes = integrationAttribute.InstallTypes.AsOptional();
+                }
+
                 break;
             }
         }
 
-        return new(commandType, directMessagePermission, defaultMemberPermissions, isNsfw);
+        return new(commandType, directMessagePermission, defaultMemberPermissions, isNsfw, allowedIntegrationTypes, allowedContextTypes);
     }
 
     private static IApplicationCommandOption? TranslateCommandNode
@@ -1043,11 +1117,15 @@ public static class CommandTreeExtensions
     /// <param name="DirectMessagePermission">The DM permission requested for the node.</param>
     /// <param name="DefaultMemberPermission">The default member permission requested for the node.</param>
     /// <param name="IsNsfw">The age restriction requested for the node.</param>
+    /// <param name="AllowedIntegrationTypes">The integration types allowed for the node.</param>
+    /// <param name="AllowedContextTypes">The context types allowed for the node.</param>
     private sealed record TopLevelMetadata
     (
         Optional<ApplicationCommandType> CommandType,
         Optional<bool> DirectMessagePermission,
         IDiscordPermissionSet? DefaultMemberPermission,
-        Optional<bool> IsNsfw
+        Optional<bool> IsNsfw,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes,
+        Optional<IReadOnlyList<InteractionContextType>> AllowedContextTypes
     );
 }

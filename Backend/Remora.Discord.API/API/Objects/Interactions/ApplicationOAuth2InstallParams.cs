@@ -1,5 +1,5 @@
 //
-//  Interaction.cs
+//  ApplicationOAuth2InstallParams.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,34 +22,10 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
-
-#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IInteraction" />
+/// <inheritdoc cref="IApplicationOAuth2InstallParams"/>
 [PublicAPI]
-public record Interaction
-(
-    Snowflake ID,
-    Snowflake ApplicationID,
-    InteractionType Type,
-    Optional<OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>> Data,
-    Optional<Snowflake> GuildID,
-    Optional<IPartialChannel> Channel,
-    Optional<Snowflake> ChannelID,
-    Optional<IGuildMember> Member,
-    Optional<IUser> User,
-    string Token,
-    int Version,
-    Optional<IMessage> Message,
-    IDiscordPermissionSet AppPermissions,
-    Optional<string> Locale,
-    Optional<string> GuildLocale,
-    IReadOnlyList<IEntitlement> Entitlements,
-    Optional<InteractionContextType> Context,
-    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners
-) : IInteraction;
+public record ApplicationOAuth2InstallParams(IDiscordPermissionSet Permissions, IReadOnlyList<string> Scopes) : IApplicationOAuth2InstallParams;

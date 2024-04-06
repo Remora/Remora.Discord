@@ -1,5 +1,5 @@
 //
-//  Interaction.cs
+//  DiscordInstallContextAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,36 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.Commands.Attributes;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IInteraction" />
+/// <summary>
+/// Specifies that the command is valid to install in the given contexts.
+/// </summary>
+/// <param name="installTypes">The contexts that the command can be installed into.</param>
 [PublicAPI]
-public record Interaction
-(
-    Snowflake ID,
-    Snowflake ApplicationID,
-    InteractionType Type,
-    Optional<OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>> Data,
-    Optional<Snowflake> GuildID,
-    Optional<IPartialChannel> Channel,
-    Optional<Snowflake> ChannelID,
-    Optional<IGuildMember> Member,
-    Optional<IUser> User,
-    string Token,
-    int Version,
-    Optional<IMessage> Message,
-    IDiscordPermissionSet AppPermissions,
-    Optional<string> Locale,
-    Optional<string> GuildLocale,
-    IReadOnlyList<IEntitlement> Entitlements,
-    Optional<InteractionContextType> Context,
-    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners
-) : IInteraction;
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class DiscordInstallContextAttribute(params ApplicationIntegrationType[] installTypes) : Attribute
+{
+    /// <summary>
+    /// Gets a value specifying the contexts that the command can be installed into.
+    /// </summary>
+    public IReadOnlyList<ApplicationIntegrationType> InstallTypes { get; } = installTypes;
+}

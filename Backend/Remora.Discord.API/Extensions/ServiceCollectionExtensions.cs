@@ -1052,7 +1052,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>()
-            .WithPropertyName(d => d.IsNsfw, "nsfw");
+               .WithPropertyName(d => d.IsNsfw, "nsfw");
 
         options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
             .WithPropertyName(o => o.IsDefault, "default")
@@ -1061,8 +1061,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
+
         options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>()
-            .WithPropertyName(d => d.IsNsfw, "nsfw");
+               .WithPropertyName(d => d.IsNsfw, "nsfw");
 
         options.AddDataObjectConverter
             <
@@ -1207,6 +1208,12 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>();
 
+        options.AddDataObjectConverter<IApplicationIntegrationTypeConfig, ApplicationIntegrationTypeConfig>()
+               .WithPropertyName(a => a.OAuth2InstallParams, "oauth2_install_params");
+
+        options.AddDataObjectConverter<IApplicationOAuth2InstallParams, ApplicationOAuth2InstallParams>();
+
+        options.Converters.Insert(0, new StringEnumConverter<ApplicationIntegrationType>(options.PropertyNamingPolicy, true));
         return options;
     }
 

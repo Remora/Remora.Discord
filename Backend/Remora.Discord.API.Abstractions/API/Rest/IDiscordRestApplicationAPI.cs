@@ -72,6 +72,8 @@ public interface IDiscordRestApplicationAPI
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="dmPermission">Whether this command is executable in DMs.</param>
     /// <param name="isNsfw">Whether the command is age-restricted.</param>
+    /// <param name="allowedIntegrationTypes">The installation contexts the command can be installed to.</param>
+    /// <param name="allowedContextTypes">The contexts in which the command is allowed to be run in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
@@ -86,6 +88,8 @@ public interface IDiscordRestApplicationAPI
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -130,6 +134,8 @@ public interface IDiscordRestApplicationAPI
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="dmPermission">Whether this command is executable in DMs.</param>
     /// <param name="isNsfw">Whether this command is age-restricted.</param>
+    /// <param name="allowedIntegrationTypes">The installation contexts the command can be installed to.</param>
+    /// <param name="allowedContextTypes">The contexts in which the command is allowed to be run in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
@@ -144,6 +150,8 @@ public interface IDiscordRestApplicationAPI
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -197,6 +205,8 @@ public interface IDiscordRestApplicationAPI
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="isNsfw">Whether the command is age-restricted.</param>
+    /// <param name="allowedIntegrationTypes">The installation contexts the command can be installed to.</param>
+    /// <param name="allowedContextTypes">The contexts in which the command is allowed to be run in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
@@ -211,6 +221,8 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -259,6 +271,8 @@ public interface IDiscordRestApplicationAPI
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="isNsfw">Whether this command is age-restricted.</param>
+    /// <param name="allowedIntegrationTypes">The installation contexts the command can be installed to.</param>
+    /// <param name="allowedContextTypes">The contexts in which the command is allowed to be run in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     /// <remarks>
@@ -276,6 +290,8 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -394,6 +410,7 @@ public interface IDiscordRestApplicationAPI
     /// <param name="coverImage">The new cover image.</param>
     /// <param name="interactionsEndpointUrl">The new interactions endpoint URL.</param>
     /// <param name="tags">The new tags.</param>
+    /// <param name="integrationTypes">The new integration types.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The updated application.</returns>
     Task<Result<IApplication>> EditCurrentApplicationAsync
@@ -407,6 +424,7 @@ public interface IDiscordRestApplicationAPI
         Optional<Stream> coverImage = default,
         Optional<Uri> interactionsEndpointUrl = default,
         Optional<IReadOnlyList<string>> tags = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
         CancellationToken ct = default
     );
 }

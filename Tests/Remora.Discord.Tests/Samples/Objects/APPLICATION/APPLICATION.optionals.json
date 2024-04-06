@@ -27,5 +27,9 @@
     ],
     "name": "none",
     "owner_user_id": "999999999999999999"
+  },
+  "integration_types_config": {
+    "0": { "oauth2_install_params": { "scopes": [ "bot", "application.commands" ], "permissions": "0" } },
+    "1": { "oauth2_install_params": { "scopes": [ "application.commands" ], "permissions": "0" } }
   }
 }

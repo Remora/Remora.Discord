@@ -2495,6 +2495,12 @@ public class DiscordRestApplicationAPITests
             var interactionsEndpointUrl = new Uri("https://example.org/interact");
             var tags = new[] { "ooga", "booga" };
 
+            var integrationTypes = new[]
+            {
+                ApplicationIntegrationType.UserInstallable,
+                ApplicationIntegrationType.GuildInstallable
+            };
+
             var api = CreateAPI
             (
                 b => b
@@ -2534,6 +2540,16 @@ public class DiscordRestApplicationAPITests
                                             .WithElement(1, e => e.Is("booga"))
                                     )
                                 )
+                                .WithProperty
+                                (
+                                    "integration_types",
+                                    p => p.IsArray
+                                    (
+                                        a => a.WithCount(2)
+                                              .WithElement(0, e => e.Is("1"))
+                                              .WithElement(1, e => e.Is("0"))
+                                    )
+                                )
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
@@ -2549,7 +2565,8 @@ public class DiscordRestApplicationAPITests
                 icon,
                 cover,
                 interactionsEndpointUrl,
-                tags
+                tags,
+                integrationTypes
             );
 
             ResultAssert.Successful(result);

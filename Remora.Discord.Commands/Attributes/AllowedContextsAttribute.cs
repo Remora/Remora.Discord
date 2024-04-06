@@ -1,5 +1,5 @@
 //
-//  Interaction.cs
+//  AllowedContextsAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,36 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.Commands.Attributes;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IInteraction" />
+/// <summary>
+/// Defines the contexts in which a command can be invoked.
+/// </summary>
+/// <param name="contexts">The contexts the command can be invoked.</param>
 [PublicAPI]
-public record Interaction
-(
-    Snowflake ID,
-    Snowflake ApplicationID,
-    InteractionType Type,
-    Optional<OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>> Data,
-    Optional<Snowflake> GuildID,
-    Optional<IPartialChannel> Channel,
-    Optional<Snowflake> ChannelID,
-    Optional<IGuildMember> Member,
-    Optional<IUser> User,
-    string Token,
-    int Version,
-    Optional<IMessage> Message,
-    IDiscordPermissionSet AppPermissions,
-    Optional<string> Locale,
-    Optional<string> GuildLocale,
-    IReadOnlyList<IEntitlement> Entitlements,
-    Optional<InteractionContextType> Context,
-    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners
-) : IInteraction;
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class AllowedContextsAttribute(params InteractionContextType[] contexts) : Attribute
+{
+    /// <summary>
+    /// Gets a value specifying the allowed contexts.
+    /// </summary>
+    public IReadOnlyList<InteractionContextType> Contexts { get; } = contexts.ToArray();
+}

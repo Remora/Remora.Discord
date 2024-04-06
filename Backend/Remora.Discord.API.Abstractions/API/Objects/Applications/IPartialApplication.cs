@@ -110,4 +110,7 @@ public interface IPartialApplication
 
     /// <inheritdoc cref="IApplication.CustomInstallUrl" />
     Optional<Uri> CustomInstallUrl { get; }
+
+    /// <inheritdoc cref="IApplication.IntegrationTypesConfig" />
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?>> IntegrationTypesConfig { get; }
 }
