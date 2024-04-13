@@ -6,11 +6,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Enum DiscordError
- | Remora.Discord </title>
+    <title>Enum DiscordError | Remora.Discord </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Enum DiscordError
- | Remora.Discord ">
+    <meta name="title" content="Enum DiscordError | Remora.Discord ">
     <meta name="generator" content="docfx ">
   
     <link rel="shortcut icon" href="../images/1f988.svg">
@@ -100,12 +98,13 @@
                     <article class="content wrap" id="_content" data-uid="Remora.Discord.API.Abstractions.Results.DiscordError">
 
 
-  <h1 id="Remora_Discord_API_Abstractions_Results_DiscordError" data-uid="Remora.Discord.API.Abstractions.Results.DiscordError" class="text-break">Enum DiscordError
-</h1>
+
+
+  <h1 id="Remora_Discord_API_Abstractions_Results_DiscordError" data-uid="Remora.Discord.API.Abstractions.Results.DiscordError" class="text-break">Enum DiscordError</h1>
   <div class="markdown level0 summary"><p>Enumerates the various Discord error codes.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <span class="xref">Remora</span>.<span class="xref">Discord</span>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Results.html">Results</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Remora.html">Remora</a>.<a class="xref" href="Remora.Discord.html">Discord</a>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Results.html">Results</a></h6>
   <h6><strong>Assembly</strong>: Remora.Discord.API.Abstractions.dll</h6>
   <h5 id="Remora_Discord_API_Abstractions_Results_DiscordError_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -114,14 +113,14 @@ public enum DiscordError</code></pre>
   </div>
   <h3 id="fields">Fields
 </h3>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-condensed">
     <thead>
       <tr>
         <th>Name</th>
         <th>Description</th>
       </tr>
     <thead>
-    <tbody>
+    </thead></thead><tbody>
       <tr>
         <td id="ApplicationActionUnauthorized">ApplicationActionUnauthorized</td>
         <td><p>You are not allowed to perform that operation on this application.</p>
@@ -253,13 +252,13 @@ public enum DiscordError</code></pre>
 </td>
       </tr>
       <tr>
-        <td id="ChannelsForGuildAreTooLarge">ChannelsForGuildAreTooLarge</td>
-        <td><p>The channels for the guild are too large.</p>
+        <td id="ChannelVerificationLevelTooHighForAccess">ChannelVerificationLevelTooHighForAccess</td>
+        <td><p>Channel verification level is too high for you to gain access.</p>
 </td>
       </tr>
       <tr>
-        <td id="ChannelVerificationLevelTooHighForAccess">ChannelVerificationLevelTooHighForAccess</td>
-        <td><p>Channel verification level is too high for you to gain access.</p>
+        <td id="ChannelsForGuildAreTooLarge">ChannelsForGuildAreTooLarge</td>
+        <td><p>The channels for the guild are too large.</p>
 </td>
       </tr>
       <tr>
@@ -343,6 +342,11 @@ public enum DiscordError</code></pre>
 </td>
       </tr>
       <tr>
+        <td id="InvalidAPIVersion">InvalidAPIVersion</td>
+        <td><p>Invalid API version provided.</p>
+</td>
+      </tr>
+      <tr>
         <td id="InvalidAccountType">InvalidAccountType</td>
         <td><p>Invalid account type.</p>
 </td>
@@ -350,11 +354,6 @@ public enum DiscordError</code></pre>
       <tr>
         <td id="InvalidActivityAction">InvalidActivityAction</td>
         <td><p>The activity action is invalid.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="InvalidAPIVersion">InvalidAPIVersion</td>
-        <td><p>Invalid API version provided.</p>
 </td>
       </tr>
       <tr>
@@ -379,23 +378,23 @@ Content-Type provided.</p>
 </td>
       </tr>
       <tr>
-        <td id="InvalidJsonForUploadedLottieFile">InvalidJsonForUploadedLottieFile</td>
-        <td><p>The JSON in the uploaded Lottie-format file was invalid.</p>
-</td>
-      </tr>
-      <tr>
         <td id="InvalidJSONInRequestBody">InvalidJSONInRequestBody</td>
         <td><p>The request body contains invalid JSON.</p>
 </td>
       </tr>
       <tr>
-        <td id="InvalidMessageType">InvalidMessageType</td>
-        <td><p>Some message type is invalid.</p>
+        <td id="InvalidJsonForUploadedLottieFile">InvalidJsonForUploadedLottieFile</td>
+        <td><p>The JSON in the uploaded Lottie-format file was invalid.</p>
 </td>
       </tr>
       <tr>
         <td id="InvalidMFALevel">InvalidMFALevel</td>
         <td><p>The provided MFA level was invalid.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="InvalidMessageType">InvalidMessageType</td>
+        <td><p>Some message type is invalid.</p>
 </td>
       </tr>
       <tr>
@@ -504,31 +503,6 @@ Content-Type provided.</p>
 </td>
       </tr>
       <tr>
-        <td id="MaximumNumberOfApplicationCommandsReached">MaximumNumberOfApplicationCommandsReached</td>
-        <td><p>The maximum number of registered application commands has been reached.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="MaximumNumberOfChannelPermissionOverwritesReached">MaximumNumberOfChannelPermissionOverwritesReached</td>
-        <td><p>The maximum number of channel permission overwrites has been reached (1000).</p>
-</td>
-      </tr>
-      <tr>
-        <td id="MaximumNumberOfGroupDMsReached">MaximumNumberOfGroupDMsReached</td>
-        <td><p>Maximum number of group DMs has been reached (10).</p>
-</td>
-      </tr>
-      <tr>
-        <td id="MaximumNumberOfPremiumEmojisReached">MaximumNumberOfPremiumEmojisReached</td>
-        <td><p>The maximum number of premium emojis has been reached (25).</p>
-</td>
-      </tr>
-      <tr>
-        <td id="MaximumNumberOfWebhooksPerGuildReached">MaximumNumberOfWebhooksPerGuildReached</td>
-        <td><p>The maximum number of webhooks per guild has been reached (1000).</p>
-</td>
-      </tr>
-      <tr>
         <td id="MaxNumberOfAnnouncementThreadsReached">MaxNumberOfAnnouncementThreadsReached</td>
         <td><p>The maximum number of announcement threads has been reached.</p>
 </td>
@@ -624,6 +598,31 @@ Content-Type provided.</p>
 </td>
       </tr>
       <tr>
+        <td id="MaximumNumberOfApplicationCommandsReached">MaximumNumberOfApplicationCommandsReached</td>
+        <td><p>The maximum number of registered application commands has been reached.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="MaximumNumberOfChannelPermissionOverwritesReached">MaximumNumberOfChannelPermissionOverwritesReached</td>
+        <td><p>The maximum number of channel permission overwrites has been reached (1000).</p>
+</td>
+      </tr>
+      <tr>
+        <td id="MaximumNumberOfGroupDMsReached">MaximumNumberOfGroupDMsReached</td>
+        <td><p>Maximum number of group DMs has been reached (10).</p>
+</td>
+      </tr>
+      <tr>
+        <td id="MaximumNumberOfPremiumEmojisReached">MaximumNumberOfPremiumEmojisReached</td>
+        <td><p>The maximum number of premium emojis has been reached (25).</p>
+</td>
+      </tr>
+      <tr>
+        <td id="MaximumNumberOfWebhooksPerGuildReached">MaximumNumberOfWebhooksPerGuildReached</td>
+        <td><p>The maximum number of webhooks per guild has been reached (1000).</p>
+</td>
+      </tr>
+      <tr>
         <td id="MessageAlreadyCrossposted">MessageAlreadyCrossposted</td>
         <td><p>This message has already been crossposted.</p>
 </td>
@@ -669,11 +668,6 @@ Content-Type provided.</p>
 </td>
       </tr>
       <tr>
-        <td id="NoteTooLong">NoteTooLong</td>
-        <td><p>Note was too long.</p>
-</td>
-      </tr>
-      <tr>
         <td id="NoUnmoderatedTagsAvailable">NoUnmoderatedTagsAvailable</td>
         <td><p>There are no tags available that can be set by non-moderators.</p>
 </td>
@@ -681,6 +675,11 @@ Content-Type provided.</p>
       <tr>
         <td id="NoUserWithTag">NoUserWithTag</td>
         <td><p>No user with that tag exists.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="NoteTooLong">NoteTooLong</td>
+        <td><p>Note was too long.</p>
 </td>
       </tr>
       <tr>
@@ -995,13 +994,13 @@ delete.</p>
 </td>
       </tr>
       <tr>
-        <td id="UnknownSession">UnknownSession</td>
-        <td><p>Unknown session.</p>
+        <td id="UnknownSKU">UnknownSKU</td>
+        <td><p>Unknown stock keeping unit.</p>
 </td>
       </tr>
       <tr>
-        <td id="UnknownSKU">UnknownSKU</td>
-        <td><p>Unknown stock keeping unit.</p>
+        <td id="UnknownSession">UnknownSession</td>
+        <td><p>Unknown session.</p>
 </td>
       </tr>
       <tr>
@@ -1110,8 +1109,8 @@ delete.</p>
 </td>
       </tr>
       <tr>
-        <td id="WebhooksCannotHaveBothThreadNameAndID">WebhooksCannotHaveBothThreadNameAndID</td>
-        <td><p>Webhook messages sent in forums cannot have both a thread name and an ID.</p>
+        <td id="WebhookServicesCannotBeUsedInForumChannels">WebhookServicesCannotBeUsedInForumChannels</td>
+        <td><p>Webhook services cannot be used in forum channels.</p>
 </td>
       </tr>
       <tr>
@@ -1120,8 +1119,8 @@ delete.</p>
 </td>
       </tr>
       <tr>
-        <td id="WebhookServicesCannotBeUsedInForumChannels">WebhookServicesCannotBeUsedInForumChannels</td>
-        <td><p>Webhook services cannot be used in forum channels.</p>
+        <td id="WebhooksCannotHaveBothThreadNameAndID">WebhooksCannotHaveBothThreadNameAndID</td>
+        <td><p>Webhook messages sent in forums cannot have both a thread name and an ID.</p>
 </td>
       </tr>
       <tr>
@@ -1140,7 +1139,7 @@ delete.</p>
 </td>
       </tr>
     </tbody>
-  </thead></thead></table>
+  </table>
 </article>
               
                 </div>
