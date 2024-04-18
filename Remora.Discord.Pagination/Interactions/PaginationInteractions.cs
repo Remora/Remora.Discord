@@ -176,13 +176,7 @@ internal class PaginationInteractions : InteractionGroup
             return Result.FromSuccess();
         }
 
-        return (Result)await _feedback.SendContextualInfoAsync
-        (
-            lease.Data.Appearance.HelpText,
-            lease.Data.SourceUserID,
-            new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
-            this.CancellationToken
-        );
+        return (Result)await _feedback.SendContextualEmbedAsync(lease.Data.Appearance.HelpEmbed, ct: this.CancellationToken);
     }
 
     private async Task<Result> UpdateAsync(Action<PaginatedMessageData> action, CancellationToken ct)
