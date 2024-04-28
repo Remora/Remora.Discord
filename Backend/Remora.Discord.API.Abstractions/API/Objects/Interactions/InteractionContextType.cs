@@ -33,15 +33,15 @@ public enum InteractionContextType
     /// <summary>
     /// The interaction was executed in the context of a guild.
     /// </summary>
-    Guild = 1,
+    Guild = 0,
 
     /// <summary>
     /// The interaction was executed in the context of a direct message to the bot associated with the application.
     /// </summary>
-    BotDM = 2,
+    BotDM = 1,
 
     /// <summary>
     /// The interaction was executed in the context of a direct message or group direct message.
     /// </summary>
-    PrivateChannel = 3,
+    PrivateChannel = 2,
 }
