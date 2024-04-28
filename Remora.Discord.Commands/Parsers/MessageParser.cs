@@ -38,10 +38,10 @@ using Remora.Results;
 namespace Remora.Discord.Commands.Parsers;
 
 /// <summary>
-/// Parses instances of <see cref="IMessage"/> and <see cref="IPartialMessage"/> from command-line inputs.
+/// Parses instances of <see cref="IMessage"/> from command-line inputs.
 /// </summary>
 [PublicAPI]
-public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialMessage>
+public class MessageParser : AbstractTypeParser<IMessage>
 {
     private static readonly Regex _messageLinkRegex = new
     (
@@ -99,66 +99,5 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
         }
 
         return await _channelAPI.GetChannelMessageAsync(channelId.Value, messageId.Value, ct);
-    }
-
-    /// <inheritdoc/>
-    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync
-    (
-        IReadOnlyList<string> tokens,
-        CancellationToken ct
-    )
-    {
-        return (await (this as ITypeParser<IMessage>).TryParseAsync(tokens, ct)).Map(a => a as IPartialMessage);
-    }
-
-    /// <inheritdoc/>
-    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync
-    (
-        string token,
-        CancellationToken ct
-    )
-    {
-        _ = DiscordSnowflake.TryParse(token.Unmention(), out var messageID);
-        if (messageID is null)
-        {
-            var messageLinkMatch = _messageLinkRegex.Match(token);
-            if (!messageLinkMatch.Success)
-            {
-                return new ParsingError<IPartialMessage>(token, "Unrecognized input format.");
-            }
-
-            var messageIdRaw = messageLinkMatch.Groups["message_id"].Value;
-            if (!DiscordSnowflake.TryParse(messageIdRaw, out messageID))
-            {
-                return new ParsingError<IPartialMessage>(token, "Unrecognized input format.");
-            }
-        }
-
-        var resolvedMessage = GetResolvedMessageOrDefault(messageID.Value);
-        return resolvedMessage is null
-            ? (await (this as ITypeParser<IMessage>).TryParseAsync(token, ct)).Map(a => a as IPartialMessage)
-            : Result<IPartialMessage>.FromSuccess(resolvedMessage);
-    }
-
-    private IPartialMessage? GetResolvedMessageOrDefault(Snowflake messageID)
-    {
-        if (_context is not IInteractionContext interactionContext)
-        {
-            return null;
-        }
-
-        if (!interactionContext.Interaction.Data.TryGet(out var data))
-        {
-            return null;
-        }
-
-        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.TryGet(out var resolved) || !resolved.Messages.TryGet(out var messages))
-        {
-            return null;
-        }
-
-        _ = messages.TryGetValue(messageID, out var message);
-        return message;
     }
 }
