@@ -55,7 +55,7 @@ public static class CommandTreeExtensions
     private const int _maxGroupCommands = 25;
     private const int _maxChoiceValues = 25;
     private const int _maxCommandParameters = 25;
-    private const int _maxCommandStringifiedLength = 4000;
+    private const int _maxCommandStringifiedLength = 8000;
     private const int _maxCommandDescriptionLength = 100;
     private const int _maxTreeDepth = 3; // Top level is a depth of 1
 
