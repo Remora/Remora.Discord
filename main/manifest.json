@@ -8024,6 +8024,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.Commands.Parsers.PartialMessageParser.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.Commands.Parsers.PartialMessageParser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.Commands.Parsers.RoleParser.yml",
       "output": {
         ".html": {
