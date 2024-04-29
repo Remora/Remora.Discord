@@ -410,7 +410,7 @@ public interface IDiscordRestApplicationAPI
     /// <param name="coverImage">The new cover image.</param>
     /// <param name="interactionsEndpointUrl">The new interactions endpoint URL.</param>
     /// <param name="tags">The new tags.</param>
-    /// <param name="integrationTypes">The new integration types.</param>
+    /// <param name="integrationTypeConfig">The new integration types.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The updated application.</returns>
     Task<Result<IApplication>> EditCurrentApplicationAsync
@@ -424,7 +424,7 @@ public interface IDiscordRestApplicationAPI
         Optional<Stream> coverImage = default,
         Optional<Uri> interactionsEndpointUrl = default,
         Optional<IReadOnlyList<string>> tags = default,
-        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
+        Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>> integrationTypeConfig = default,
         CancellationToken ct = default
     );
 }

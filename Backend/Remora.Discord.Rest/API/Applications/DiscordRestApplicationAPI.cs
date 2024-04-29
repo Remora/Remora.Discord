@@ -234,7 +234,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
-        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypesConfig = default,
         Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
@@ -274,7 +274,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
                         json.Write("contexts", allowedContextTypes, this.JsonOptions);
-                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
+                        json.Write("integration_types_config", integrationTypesConfig, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -683,7 +683,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<Stream> coverImage = default,
         Optional<Uri> interactionsEndpointUrl = default,
         Optional<IReadOnlyList<string>> tags = default,
-        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
+        Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>> integrationTypes = default,
         CancellationToken ct = default
     )
     {
