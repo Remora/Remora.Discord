@@ -1107,6 +1107,7 @@ public class DiscordRestChannelAPITests
             var tts = false;
             var allowedMentions = new AllowedMentions();
             var flags = MessageFlags.SuppressEmbeds;
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1122,6 +1123,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                                 .WithProperty("flags", p => p.Is((int)flags))
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1134,7 +1136,8 @@ public class DiscordRestChannelAPITests
                 nonce,
                 tts,
                 allowedMentions: allowedMentions,
-                flags: flags
+                flags: flags,
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1153,6 +1156,7 @@ public class DiscordRestChannelAPITests
             var nonce = "aasda";
             var tts = false;
             var allowedMentions = new AllowedMentions();
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1167,6 +1171,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("nonce", p => p.Is(nonce))
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1178,7 +1183,8 @@ public class DiscordRestChannelAPITests
                 nonce: nonce,
                 isTTS: tts,
                 embeds: embeds,
-                allowedMentions: allowedMentions
+                allowedMentions: allowedMentions,
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1198,6 +1204,7 @@ public class DiscordRestChannelAPITests
             var tts = false;
             var allowedMentions = new AllowedMentions();
             var components = new List<IMessageComponent>();
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1213,6 +1220,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                                 .WithProperty("components", p => p.IsArray())
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1225,7 +1233,8 @@ public class DiscordRestChannelAPITests
                 isTTS: tts,
                 embeds: embeds,
                 allowedMentions: allowedMentions,
-                components: components
+                components: components,
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1247,6 +1256,7 @@ public class DiscordRestChannelAPITests
 
             var nonce = "aasda";
             var tts = false;
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1279,6 +1289,7 @@ public class DiscordRestChannelAPITests
                                             )
                                     )
                                 )
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1289,7 +1300,8 @@ public class DiscordRestChannelAPITests
                 channelId,
                 nonce: nonce,
                 isTTS: tts,
-                attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
+                attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) },
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1315,6 +1327,7 @@ public class DiscordRestChannelAPITests
 
             var nonce = "aasda";
             var tts = false;
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1359,6 +1372,7 @@ public class DiscordRestChannelAPITests
                                             )
                                     )
                                 )
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1373,7 +1387,8 @@ public class DiscordRestChannelAPITests
                 {
                     new FileData(fileName1, file1, description1),
                     new FileData(fileName2, file2, description2)
-                }
+                },
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1396,6 +1411,7 @@ public class DiscordRestChannelAPITests
 
             var nonce = "aasda";
             var tts = false;
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1437,6 +1453,7 @@ public class DiscordRestChannelAPITests
                                             )
                                     )
                                 )
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1451,7 +1468,8 @@ public class DiscordRestChannelAPITests
                 {
                     new FileData(fileName, file, description),
                     new PartialAttachment(DiscordSnowflake.New(999))
-                }
+                },
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);

@@ -492,6 +492,7 @@ public interface IDiscordRestChannelAPI
     /// mentioned in this parameter will be deleted.
     /// </param>
     /// <param name="flags">The message flags.</param>
+    /// <param name="enforceNonce">Indicates whether messages should be deduplicated using the passed nonce.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IMessage>> CreateMessageAsync
@@ -507,6 +508,7 @@ public interface IDiscordRestChannelAPI
         Optional<IReadOnlyList<Snowflake>> stickerIDs = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<bool> enforceNonce = default,
         CancellationToken ct = default
     );
 
