@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a dropdown of selectable channels.
 /// </summary>
 [PublicAPI]
-public interface IChannelSelectComponent : ISelectMenuComponent, IPartialChannelSelectComponent
+public interface IChannelSelectComponent : IMentionableSelectComponent, IPartialChannelSelectComponent
 {
     /// <summary>
     /// Gets the channel types to show on a <see cref="ComponentType.ChannelSelect"/> component.

@@ -89,5 +89,10 @@ public enum ChannelType
     /// <summary>
     /// A channel that can only contain threads.
     /// </summary>
-    GuildForum = 15
+    GuildForum = 15,
+
+    /// <summary>
+    /// A channel that can only contain threads, similar to <see cref="GuildForum"/>.
+    /// </summary>
+    GuildMedia = 16
 }

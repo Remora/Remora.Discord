@@ -44,6 +44,7 @@ public interface IDiscordRestStageInstanceAPI
     /// <param name="sendStartNotification">
     /// Indicates whether @everyone should be notified that a stage instance has started.
     /// </param>
+    /// <param name="guildScheduledEventID">The scheduled event associated with this stage instance.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
@@ -53,6 +54,7 @@ public interface IDiscordRestStageInstanceAPI
         string topic,
         Optional<StagePrivacyLevel> privacyLevel = default,
         Optional<bool> sendStartNotification = default,
+        Optional<Snowflake> guildScheduledEventID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

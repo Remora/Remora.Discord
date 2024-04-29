@@ -94,7 +94,7 @@ public class MessageParserTests
         var tryParse = await _parser.TryParseAsync(messageID.ToString());
         ResultAssert.Successful(tryParse);
 
-        _channelAPIMock.Verify(_ => _
+        _channelAPIMock.Verify(c => c
             .GetChannelMessageAsync
             (
                 It.IsAny<Snowflake>(),
@@ -124,7 +124,7 @@ public class MessageParserTests
         var tryParse = await _parser.TryParseAsync(value);
         ResultAssert.Successful(tryParse);
 
-        _channelAPIMock.Verify(_ => _
+        _channelAPIMock.Verify(c => c
             .GetChannelMessageAsync
             (
                 It.Is<Snowflake>(s => s == channelID),

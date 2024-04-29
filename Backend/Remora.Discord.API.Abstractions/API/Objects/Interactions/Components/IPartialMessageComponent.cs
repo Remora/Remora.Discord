@@ -28,6 +28,4 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents the base type for all partial components. This is a marker interface with no real functionality.
 /// </summary>
 [PublicAPI]
-public interface IPartialMessageComponent
-{
-}
+public interface IPartialMessageComponent;

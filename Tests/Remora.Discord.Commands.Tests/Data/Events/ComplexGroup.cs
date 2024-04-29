@@ -56,9 +56,7 @@ public class ComplexGroup : CommandGroup
 /// <summary>
 /// Marks a command as always failing no matter what.
 /// </summary>
-public class AlwaysFailConditionAttribute : ConditionAttribute
-{
-}
+public class AlwaysFailConditionAttribute : ConditionAttribute;
 
 /// <summary>
 /// Always fails no matter what.

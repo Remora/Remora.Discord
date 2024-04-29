@@ -8,5 +8,11 @@
   "placeholder": "none",
   "min_values": 1,
   "max_values": 3,
-  "disabled": true
+  "disabled": true,
+  "default_values": [
+    {
+      "id": "999999999999999999",
+      "type": "channel"
+    }
+  ]
 }

@@ -567,6 +567,11 @@ public enum DiscordError
     TagRequired = 40067,
 
     /// <summary>
+    /// An entitlement has already been granted for this resource.
+    /// </summary>
+    EntitlementAlreadyGranted = 40074,
+
+    /// <summary>
     /// Missing access.
     /// </summary>
     MissingAccess = 50001,
@@ -744,6 +749,11 @@ public enum DiscordError
     InvalidGuild = 50055,
 
     /// <summary>
+    /// The SKU is invalid.
+    /// </summary>
+    InvalidSKU = 50057,
+
+    /// <summary>
     /// The request origin is invalid.
     /// </summary>
     InvalidRequestOrigin = 50067,
@@ -907,6 +917,11 @@ public enum DiscordError
     /// Reaction was blocked.
     /// </summary>
     ReactionBlocked = 90001,
+
+    /// <summary>
+    /// The user cannot use burst (super) reactions.
+    /// </summary>
+    UserCannotUseBurstReactions = 90002,
 
     /// <summary>
     /// The application isn't available yet. Try again later.

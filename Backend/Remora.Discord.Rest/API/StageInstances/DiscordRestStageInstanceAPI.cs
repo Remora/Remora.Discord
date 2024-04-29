@@ -62,6 +62,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
         string topic,
         Optional<StagePrivacyLevel> privacyLevel = default,
         Optional<bool> sendStartNotification = default,
+        Optional<Snowflake> guildScheduledEventID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -79,6 +80,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
                         json.Write("topic", topic, this.JsonOptions);
                         json.Write("privacy_level", privacyLevel, this.JsonOptions);
                         json.Write("send_start_notification", sendStartNotification, this.JsonOptions);
+                        json.Write("guild_scheduled_event_id", guildScheduledEventID, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),

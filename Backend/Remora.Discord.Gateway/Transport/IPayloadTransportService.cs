@@ -66,7 +66,7 @@ public interface IPayloadTransportService
     /// <param name="payload">The payload.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A send result which may or may not have succeeded.</returns>
-    Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default);
+    ValueTask<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default);
 
     /// <summary>
     /// Asynchronously receives a payload.
@@ -76,7 +76,7 @@ public interface IPayloadTransportService
     /// </remarks>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A receive result which may or may not have succeeded.</returns>
-    Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default);
+    ValueTask<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default);
 
     /// <summary>
     /// Disconnects from the transport endpoint.

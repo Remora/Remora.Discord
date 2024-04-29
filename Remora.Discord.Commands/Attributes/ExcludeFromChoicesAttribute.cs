@@ -30,6 +30,4 @@ namespace Remora.Discord.Commands.Attributes;
 /// </summary>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Field)]
-public class ExcludeFromChoicesAttribute : Attribute
-{
-}
+public class ExcludeFromChoicesAttribute : Attribute;

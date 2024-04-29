@@ -30,6 +30,4 @@ namespace Remora.Discord.Commands.Attributes;
 /// </summary>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Parameter)]
-public class AutocompleteAttribute : Attribute
-{
-}
+public class AutocompleteAttribute : Attribute;

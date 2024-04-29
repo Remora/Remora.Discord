@@ -141,7 +141,7 @@ public class AnsiStringBuilder
     /// </summary>
     private sealed class StyleState
     {
-        private const char EscapeChar = '\u001b';
+        private const char _escapeChar = '\u001b';
 
         private bool _hasChanged;
         private bool _isBold;
@@ -246,7 +246,7 @@ public class AnsiStringBuilder
 
             _hasChanged = false;
 
-            stringBuilder.Append($"{EscapeChar}[{AnsiStyle.Reset}");
+            stringBuilder.Append($"{_escapeChar}[{AnsiStyle.Reset}");
 
             if (this.IsBold)
             {

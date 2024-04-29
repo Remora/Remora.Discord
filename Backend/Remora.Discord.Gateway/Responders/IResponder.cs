@@ -35,9 +35,7 @@ namespace Remora.Discord.Gateway.Responders;
 /// Represents a marker interface for event responders.
 /// </summary>
 [PublicAPI]
-public interface IResponder
-{
-}
+public interface IResponder;
 
 /// <summary>
 /// Represents a type that can respond to certain gateway events.

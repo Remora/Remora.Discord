@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents a deletion of a stage instance.
 /// </summary>
 [PublicAPI]
-public interface IStageInstanceDelete : IStageInstance, IGatewayEvent
-{
-}
+public interface IStageInstanceDelete : IStageInstance, IGatewayEvent;

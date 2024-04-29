@@ -59,7 +59,7 @@ public class MockedTransportSequenceBuilder
 
                     if (connectionUri != u)
                     {
-                        throw new EqualException(connectionUri, u);
+                        throw EqualException.ForMismatchedValues(connectionUri, u);
                     }
 
                     return EventMatch.Pass;
@@ -106,7 +106,7 @@ public class MockedTransportSequenceBuilder
                             ? p.GetType().GetGenericArguments()[0].Name
                             : p.GetType().Name;
 
-                        throw new IsTypeException(typeof(TExpected).Name, actualTypename);
+                        throw IsTypeException.ForMismatchedType(typeof(TExpected).Name, actualTypename);
                     }
 
                     if (expectation is null)

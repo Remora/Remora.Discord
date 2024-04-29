@@ -50,6 +50,13 @@ internal class DiscriminatorConverter : JsonConverter<ushort>
     /// <inheritdoc />
     public override void Write(Utf8JsonWriter writer, ushort value, JsonSerializerOptions options)
     {
+        if (value is 0)
+        {
+            // zeroes should not be padded
+            writer.WriteStringValue($"{value}");
+            return;
+        }
+
         writer.WriteStringValue($"{value:D4}");
     }
 }

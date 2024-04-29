@@ -72,5 +72,10 @@ public enum InteractionCallbackType
     /// <remarks>
     /// Only relevant for component-based interactions and application commands.
     /// </remarks>
-    Modal = 9
+    Modal = 9,
+
+    /// <summary>
+    /// Respond to an interaction with an upgrade button. Only available for apps with monetization enabled.
+    /// </summary>
+    PremiumRequired = 10
 }

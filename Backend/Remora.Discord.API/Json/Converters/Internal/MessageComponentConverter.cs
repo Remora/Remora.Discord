@@ -124,14 +124,14 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 JsonSerializer.Serialize(writer, roleSelect, options);
                 break;
             }
-            case IMentionableSelectComponent mentionableSelect:
-            {
-                JsonSerializer.Serialize(writer, mentionableSelect, options);
-                break;
-            }
             case IChannelSelectComponent channelSelect:
             {
                 JsonSerializer.Serialize(writer, channelSelect, options);
+                break;
+            }
+            case IMentionableSelectComponent mentionableSelect:
+            {
+                JsonSerializer.Serialize(writer, mentionableSelect, options);
                 break;
             }
             default:

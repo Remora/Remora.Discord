@@ -9,5 +9,6 @@
     "members_removed": "1",
     "message_id": "999999999999999999",
     "role_name": "none",
-    "type": "1"
+    "type": "1",
+    "integration_type": "twitch"
 }

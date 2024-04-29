@@ -30,6 +30,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 /// Represents a heartbeat acknowledgement. This interface defines no data.
 /// </summary>
 [PublicAPI]
-public interface IHeartbeatAcknowledge : IGatewayEvent, IGatewayCommand
-{
-}
+public interface IHeartbeatAcknowledge : IGatewayEvent, IGatewayCommand;

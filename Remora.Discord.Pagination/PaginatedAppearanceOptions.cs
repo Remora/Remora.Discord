@@ -39,8 +39,8 @@ public sealed record PaginatedAppearanceOptions
     ButtonComponent Last,
     ButtonComponent Close,
     ButtonComponent Help,
-    string FooterFormat = "Page {0}/{1}",
-    string HelpText = "This is a paginated message. Use the buttons to change page."
+    Embed HelpEmbed,
+    string FooterFormat = "Page {0}/{1}"
 )
 {
     /// <summary>
@@ -83,6 +83,11 @@ public sealed record PaginatedAppearanceOptions
             ButtonComponentStyle.Secondary,
             Emoji: new PartialEmoji(Name: "ℹ"),
             Label: nameof(Help)
+        ),
+        new Embed
+        (
+            Title: "Pagination Help",
+            Description: "Use the buttons below to navigate the pages."
         )
     );
 

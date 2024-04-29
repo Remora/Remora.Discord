@@ -28,6 +28,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents an event that marks the completion of a session resumption.
 /// </summary>
 [PublicAPI]
-public interface IResumed : IGatewayEvent
-{
-}
+public interface IResumed : IGatewayEvent;

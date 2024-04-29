@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Sent when a scheduled event is updated.
 /// </summary>
 [PublicAPI]
-public interface IGuildScheduledEventUpdate : IGatewayEvent, IGuildScheduledEvent
-{
-}
+public interface IGuildScheduledEventUpdate : IGatewayEvent, IGuildScheduledEvent;

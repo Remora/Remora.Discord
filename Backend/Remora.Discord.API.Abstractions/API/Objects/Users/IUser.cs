@@ -55,7 +55,7 @@ public interface IUser : IPartialUser
     /// <summary>
     /// Gets the user's display name, if it is set. For bots, this is the application name.
     /// </summary>
-    new string? GlobalName { get; }
+    new Optional<string?> GlobalName { get; }
 
     /// <summary>
     /// Gets the user's avatar hash.

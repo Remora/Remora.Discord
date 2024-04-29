@@ -1,12 +1,11 @@
 # Based on an issue template from the Discord API documentation.
 name: Bug Report
 description: A bug has been found in the library
-title: "[Bug]: "
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
-      value: "Before opening a new issue, please search existing issues:  https://github.com/Nihlus/Remora.Discord/issues"
+      value: "Before opening a new issue, please search existing issues: https://github.com/Remora/Remora.Discord/issues?q=is%3Aissue+label%3Abug"
   - type: textarea
     id: description
     attributes:

@@ -422,7 +422,11 @@ public class ResponderDispatchService : IAsyncDisposable, IResponderDispatchServ
         GC.SuppressFinalize(this);
 
         // Signal running responders that they should cancel
+        #if NET8_0_OR_GREATER
+        await _responderCancellationSource.CancelAsync();
+        #else
         _responderCancellationSource.Cancel();
+        #endif
 
         // Prevent further payloads from being written, signalling the readers that they should terminate
         _payloadsToDispatch.Writer.Complete();

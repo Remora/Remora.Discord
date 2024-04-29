@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -119,4 +120,10 @@ public interface IPartialMessage
 
     /// <inheritdoc cref="IMessage.Position" />
     Optional<int> Position { get; }
+
+    /// <inheritdoc cref="IMessage.Resolved" />
+    Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+
+    /// <inheritdoc cref="IMessage.InteractionMetadata"/>
+    Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> InteractionMetadata { get; }
 }

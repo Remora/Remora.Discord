@@ -31,7 +31,7 @@ namespace Remora.Discord.Extensions.Tests;
 /// </summary>
 public class AnsiStringBuilderTests
 {
-    private const char AnsiEscapeChar = '\u001b';
+    private const char _ansiEscapeChar = '\u001b';
 
     /// <summary>
     /// Tests to see if the <see cref="AnsiStringBuilder.Bold"/> method bolds the input text.
@@ -42,7 +42,7 @@ public class AnsiStringBuilderTests
     [InlineData("Remora.Discord")]
     public void BoldDefaultSuccess(string data)
     {
-        var expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}m{data}";
+        var expected = $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}m{data}";
         var actual = new AnsiStringBuilder().Bold().Append(data).Build();
         Assert.Equal(expected, actual);
     }
@@ -57,8 +57,8 @@ public class AnsiStringBuilderTests
     [InlineData("Remora.Discord", 7)]
     public void BoldLeadingCharsSuccess(string data, int charCount)
     {
-        var expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}m{data.Remove(charCount)}" +
-                       $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
+        var expected = $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}m{data.Remove(charCount)}" +
+                       $"{_ansiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
         var actual = new AnsiStringBuilder().Bold().Append(data.Remove(charCount))
                                             .Bold(false).Append(data[charCount..])
                                             .Build();
@@ -74,7 +74,7 @@ public class AnsiStringBuilderTests
     [InlineData("Remora.Discord")]
     public void UnderlineDefaultSuccess(string data)
     {
-        var expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}m{data}";
+        var expected = $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}m{data}";
         var actual = new AnsiStringBuilder().Underline().Append(data).Build();
         Assert.Equal(expected, actual);
     }
@@ -89,8 +89,8 @@ public class AnsiStringBuilderTests
     [InlineData("Remora.Discord", 7)]
     public void UnderlineLeadingCharsSuccess(string data, int charCount)
     {
-        var expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}m{data.Remove(charCount)}" +
-                       $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
+        var expected = $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}m{data.Remove(charCount)}" +
+                       $"{_ansiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
         var actual = new AnsiStringBuilder().Underline().Append(data.Remove(charCount))
                                             .Underline(false).Append(data[charCount..])
                                             .Build();
@@ -114,7 +114,7 @@ public class AnsiStringBuilderTests
             // Foreground color None has some special handling
             var expected = foregroundColor is AnsiForegroundColor.None
                 ? $"{data}"
-                : $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}m{data}";
+                : $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}m{data}";
 
             var actual = new AnsiStringBuilder().Foreground(foregroundColor).Append(data).Build();
             Assert.Equal(expected, actual);
@@ -145,8 +145,8 @@ public class AnsiStringBuilderTests
             }
             else
             {
-                expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}m{data.Remove(charCount)}" +
-                           $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
+                expected = $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}m{data.Remove(charCount)}" +
+                           $"{_ansiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
             }
 
             var actual = new AnsiStringBuilder().Foreground(foregroundColor).Append(data.Remove(charCount))
@@ -173,7 +173,7 @@ public class AnsiStringBuilderTests
             // Background color None has some special handling
             var expected = backgroundColor is AnsiBackgroundColor.None
                 ? $"{data}"
-                : $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}m{data}";
+                : $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}m{data}";
 
             var actual = new AnsiStringBuilder().Background(backgroundColor).Append(data).Build();
             Assert.Equal(expected, actual);
@@ -204,8 +204,8 @@ public class AnsiStringBuilderTests
             }
             else
             {
-                expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}m{data.Remove(charCount)}" +
-                           $"{AnsiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
+                expected = $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}m{data.Remove(charCount)}" +
+                           $"{_ansiEscapeChar}[{AnsiStyle.Reset}m{data[charCount..]}";
             }
 
             var actual = new AnsiStringBuilder().Background(backgroundColor).Append(data.Remove(charCount))
@@ -223,11 +223,11 @@ public class AnsiStringBuilderTests
     public void MixBoldAndUnderlineSuccess()
     {
         var expected = "Does " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}mbold{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}mbold{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " and " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}munderline{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}munderline{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold};{AnsiStyle.Underline}mmix{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold};{AnsiStyle.Underline}mmix{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             "?";
 
         var actual = new AnsiStringBuilder()
@@ -260,11 +260,11 @@ public class AnsiStringBuilderTests
     )
     {
         var expected = "Does " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}mforeground{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}mforeground{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " and " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}mbackground{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}mbackground{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor};{(int)foregroundColor}mmix{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor};{(int)foregroundColor}mmix{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             "?";
 
         var actual = new AnsiStringBuilder()
@@ -294,17 +294,17 @@ public class AnsiStringBuilderTests
     public void MixAllSuccess(AnsiForegroundColor foregroundColor, AnsiBackgroundColor backgroundColor)
     {
         var expected = "Does " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}mbold{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}mbold{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " and " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}munderline{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}munderline{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " and " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}mforeground{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)foregroundColor}mforeground{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " and " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}mbackground{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)backgroundColor}mbackground{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold};{AnsiStyle.Underline};{(int)backgroundColor};{(int)foregroundColor}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold};{AnsiStyle.Underline};{(int)backgroundColor};{(int)foregroundColor}m" +
             "mix" +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             "?";
 
         var actual = new AnsiStringBuilder()
@@ -332,17 +332,17 @@ public class AnsiStringBuilderTests
     [Fact]
     public void ResetSuccess()
     {
-        var expected = $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}mBold{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+        var expected = $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold}mBold{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " and " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}munderlined{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline}munderlined{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             " " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold};{AnsiStyle.Underline}mcombined{AnsiEscapeChar}[{AnsiStyle.Reset}m" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold};{AnsiStyle.Underline}mcombined{_ansiEscapeChar}[{AnsiStyle.Reset}m" +
             "!\n" +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)AnsiForegroundColor.Red}mShould " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{(int)AnsiBackgroundColor.Base0};{(int)AnsiForegroundColor.Red}mreset " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline};{(int)AnsiBackgroundColor.Base0};{(int)AnsiForegroundColor.Red}malso " +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold};{AnsiStyle.Underline};{(int)AnsiBackgroundColor.Base0};{(int)AnsiForegroundColor.Red}mcolors" +
-            $"{AnsiEscapeChar}[{AnsiStyle.Reset}m!";
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)AnsiForegroundColor.Red}mShould " +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{(int)AnsiBackgroundColor.Base0};{(int)AnsiForegroundColor.Red}mreset " +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Underline};{(int)AnsiBackgroundColor.Base0};{(int)AnsiForegroundColor.Red}malso " +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset};{AnsiStyle.Bold};{AnsiStyle.Underline};{(int)AnsiBackgroundColor.Base0};{(int)AnsiForegroundColor.Red}mcolors" +
+            $"{_ansiEscapeChar}[{AnsiStyle.Reset}m!";
 
         var actual = new AnsiStringBuilder()
             .Bold().Append("Bold").Reset()

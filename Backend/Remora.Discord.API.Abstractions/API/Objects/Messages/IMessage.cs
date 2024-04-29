@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -188,6 +189,16 @@ public interface IMessage : IPartialMessage
     /// </summary>
     new Optional<int> Position { get; }
 
+    /// <summary>
+    /// Gets data for users, members, channels, and roles in the message's auto-populated select menus.
+    /// </summary>
+    new Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+
+    /// <summary>
+    /// Gets the metadata of the interaction, if any.
+    /// </summary>
+    new Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> InteractionMetadata { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
 
@@ -274,4 +285,10 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<int> IPartialMessage.Position => this.Position;
+
+    /// <inheritdoc/>
+    Optional<IApplicationCommandInteractionDataResolved> IPartialMessage.Resolved => this.Resolved;
+
+    /// <inheritdoc/>
+    Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
 }

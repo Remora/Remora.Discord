@@ -8,7 +8,6 @@
     "author": {
       "username": "none",
       "discriminator": "9999",
-      "global_name": "none",
       "id": "999999999999999999",
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
@@ -43,8 +42,17 @@
     "reactions": [
       {
         "count": 1,
+        "count_details": {
+          "burst": 1,
+          "normal": 2
+        },
         "me": true,
-        "emoji": {}
+        "me_burst": true,
+        "emoji": { },
+        "burst_colors": [
+          "#ffffff",
+          "#e30f8a"
+        ]
       }
     ],
     "nonce": "none",
@@ -66,7 +74,6 @@
       "user": {
         "username": "none",
         "discriminator": "9999",
-        "global_name": "none",
         "id": "999999999999999999",
         "avatar": "68b329da9893e34099c7d8ad5cb9c940"
       }
@@ -95,7 +102,6 @@
         "id": "999999999999999999",
         "username": "none",
         "discriminator": "9999",
-        "global_name": "none",
         "avatar": "68b329da9893e34099c7d8ad5cb9c940",
         "member": {}
       }

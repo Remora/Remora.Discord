@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents the creation of a stage instance.
 /// </summary>
 [PublicAPI]
-public interface IStageInstanceCreate : IStageInstance, IGatewayEvent
-{
-}
+public interface IStageInstanceCreate : IStageInstance, IGatewayEvent;

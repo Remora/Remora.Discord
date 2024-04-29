@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -31,17 +33,32 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IReaction
 {
     /// <summary>
-    /// Gets the number of times this emoji has been used to react.
+    /// Gets the total number of times this emoji has been used to react, including burst (super) reactions.
     /// </summary>
     int Count { get; }
 
     /// <summary>
-    /// Gets a value indicating whether the current user has reacted using this emoji.
+    /// Gets detailed information about the reaction counts.
+    /// </summary>
+    IReactionCountDetails CountDetails { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the current user has added a reaction using this emoji.
     /// </summary>
     bool HasCurrentUserReacted { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the current user has added a burst (super) reaction using this emoji.
+    /// </summary>
+    bool HasCurrentUserBurstReacted { get; }
 
     /// <summary>
     /// Gets the partial emoji information.
     /// </summary>
     IPartialEmoji Emoji { get; }
+
+    /// <summary>
+    /// Gets the colors used for the super reaction.
+    /// </summary>
+    IReadOnlyList<Color> BurstColours { get; }
 }

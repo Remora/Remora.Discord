@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
@@ -44,8 +45,11 @@ public record Interaction
     Optional<IUser> User,
     string Token,
     int Version,
-    Optional<IMessage> Message = default,
-    Optional<IDiscordPermissionSet> AppPermissions = default,
-    Optional<string> Locale = default,
-    Optional<string> GuildLocale = default
+    Optional<IMessage> Message,
+    IDiscordPermissionSet AppPermissions,
+    Optional<string> Locale,
+    Optional<string> GuildLocale,
+    IReadOnlyList<IEntitlement> Entitlements,
+    Optional<InteractionContextType> Context,
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners
 ) : IInteraction;

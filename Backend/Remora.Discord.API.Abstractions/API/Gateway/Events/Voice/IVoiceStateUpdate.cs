@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents an update to a user's voice state.
 /// </summary>
 [PublicAPI]
-public interface IVoiceStateUpdate : IGatewayEvent, IVoiceState
-{
-}
+public interface IVoiceStateUpdate : IGatewayEvent, IVoiceState;

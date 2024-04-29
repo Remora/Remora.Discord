@@ -28,6 +28,4 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a partial dropdown of selectable users.
 /// </summary>
 [PublicAPI]
-public interface IPartialUserSelectComponent : IPartialSelectMenuComponent
-{
-}
+public interface IPartialUserSelectComponent : IPartialMentionableSelectComponent;

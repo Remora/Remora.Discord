@@ -39,5 +39,10 @@ public enum ChannelFlags
     /// <summary>
     /// The forum requires a tag to be specified when creating a thread.
     /// </summary>
-    RequireTag = 1 << 4
+    RequireTag = 1 << 4,
+
+    /// <summary>
+    /// Hides the embedded media download options. Available only for <see cref="ChannelType.GuildMedia"/>.
+    /// </summary>
+    HideMediaDownloadOptions = 1 << 15
 }

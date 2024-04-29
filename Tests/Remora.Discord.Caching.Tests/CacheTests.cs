@@ -44,9 +44,7 @@ public class CacheTests
     /// A test fixture for caching.
     /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public class Fixture
-    {
-    }
+    public class Fixture;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CacheTests"/> class.

@@ -42,5 +42,6 @@ public record OptionalAuditEntryInfo
     Optional<string> MembersRemoved = default,
     Optional<Snowflake> MessageID = default,
     Optional<string> RoleName = default,
-    Optional<PermissionOverwriteType> Type = default
+    Optional<PermissionOverwriteType> Type = default,
+    Optional<string> IntegrationType = default
 ) : IOptionalAuditEntryInfo;

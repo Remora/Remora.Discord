@@ -28,6 +28,4 @@ namespace Remora.Discord.API.Abstractions.Gateway;
 /// Represents a marker interface for gateway payload data.
 /// </summary>
 [PublicAPI]
-public interface IGatewayPayloadData
-{
-}
+public interface IGatewayPayloadData;

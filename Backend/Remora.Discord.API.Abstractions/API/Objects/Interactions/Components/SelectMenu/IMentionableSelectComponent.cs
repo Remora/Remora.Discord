@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -30,4 +32,12 @@ namespace Remora.Discord.API.Abstractions.Objects;
 [PublicAPI]
 public interface IMentionableSelectComponent : ISelectMenuComponent, IPartialMentionableSelectComponent
 {
+    /// <summary>
+    /// Gets the default values for auto-populated select menu components.
+    /// </summary>
+    new Optional<IReadOnlyList<ISelectDefaultValue>> DefaultValues { get; }
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IPartialSelectDefaultValue>> IPartialMentionableSelectComponent.DefaultValues
+        => this.DefaultValues.Map<IReadOnlyList<IPartialSelectDefaultValue>>(v => v);
 }

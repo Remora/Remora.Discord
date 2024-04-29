@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents the creation of an audit log entry.
 /// </summary>
 [PublicAPI]
-public interface IGuildAuditLogEntryCreate : IGatewayEvent, IAuditLogEntry
-{
-}
+public interface IGuildAuditLogEntryCreate : IGatewayEvent, IAuditLogEntry;

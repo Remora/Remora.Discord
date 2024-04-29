@@ -711,6 +711,76 @@ public class DiscordGatewayClientTests
         ResultAssert.Successful(runResult);
     }
 
+    /// <summary>
+    /// Tests whether the client can reconnect after being sent a Reconnect instead of Hello.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanReconnectAfterReconnectInsteadOfHelloAsync()
+    {
+        var tokenSource = new CancellationTokenSource();
+        var transportMock = new MockedTransportServiceBuilder(_testOutput)
+            .WithTimeout(TimeSpan.FromSeconds(30))
+            .Sequence
+            (
+                s => s
+                    .ExpectConnection
+                    (
+                        new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json")
+                    )
+                    .Send(new Reconnect())
+                    .ExpectDisconnect()
+                    .ExpectConnection
+                    (
+                        new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json")
+                    )
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            new List<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            Constants.MockResumeGatewayUrl,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+            )
+            .Continuously
+            (
+                c => c
+                    .Expect<IHeartbeat>()
+                    .Send<HeartbeatAcknowledge>()
+            )
+            .Finish(tokenSource)
+            .Build();
+
+        var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
+
+        var services = new ServiceCollection()
+            .AddDiscordGateway(_ => Constants.MockToken)
+            .Replace(transportMockDescriptor)
+            .Replace(CreateMockedGatewayAPI())
+            .AddSingleton<IResponderTypeRepository, ResponderService>()
+            .BuildServiceProvider(true);
+
+        var client = services.GetRequiredService<DiscordGatewayClient>();
+        var runResult = await client.RunAsync(tokenSource.Token);
+
+        ResultAssert.Successful(runResult);
+    }
+
     private static ServiceDescriptor CreateMockedGatewayAPI()
     {
         var gatewayAPIMock = new Mock<IDiscordRestGatewayAPI>();

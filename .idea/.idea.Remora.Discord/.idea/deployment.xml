@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData">
+    <serverData>
+      <paths name="Pi Zero W (040e170f-4c34-4959-9435-ef80696e2888)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/.run" web="/" />
+            <mapping local="$PROJECT_DIR$/docs" web="/" />
+            <mapping local="$PROJECT_DIR$/.github" web="/" />
+            <mapping local="$PROJECT_DIR$/docfx" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

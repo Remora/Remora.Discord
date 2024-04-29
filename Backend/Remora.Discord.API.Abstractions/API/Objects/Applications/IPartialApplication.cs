@@ -54,6 +54,9 @@ public interface IPartialApplication
     /// <inheritdoc cref="IApplication.DoesBotRequireCodeGrant" />
     Optional<bool> DoesBotRequireCodeGrant { get; }
 
+    /// <inheritdoc cref="IApplication.Bot"/>
+    Optional<IPartialUser> Bot { get; }
+
     /// <inheritdoc cref="IApplication.TermsOfServiceURL" />
     Optional<string> TermsOfServiceURL { get; }
 
@@ -90,6 +93,15 @@ public interface IPartialApplication
     /// <inheritdoc cref="IApplication.ApproximateGuildCount" />
     Optional<int> ApproximateGuildCount { get; }
 
+    /// <inheritdoc cref="IApplication.RedirectUris" />
+    Optional<IReadOnlyList<Uri>> RedirectUris { get; }
+
+    /// <inheritdoc cref="IApplication.InteractionsEndpointUrl" />
+    Optional<Uri> InteractionsEndpointUrl { get; }
+
+    /// <inheritdoc cref="IApplication.RoleConnectionsVerificationUrl" />
+    Optional<Uri> RoleConnectionsVerificationUrl { get; }
+
     /// <inheritdoc cref="IApplication.Tags" />
     Optional<IReadOnlyList<string>> Tags { get; }
 
@@ -99,6 +111,6 @@ public interface IPartialApplication
     /// <inheritdoc cref="IApplication.CustomInstallUrl" />
     Optional<Uri> CustomInstallUrl { get; }
 
-    /// <inheritdoc cref="IApplication.RoleConnectionsVerificationUrl" />
-    Optional<Uri> RoleConnectionsVerificationUrl { get; }
+    /// <inheritdoc cref="IApplication.IntegrationTypesConfig" />
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?>> IntegrationTypesConfig { get; }
 }

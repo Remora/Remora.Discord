@@ -29,6 +29,4 @@ namespace Remora.Discord.Interactivity;
 /// Represents the base type for command groups that handle Discord's message component interactions.
 /// </summary>
 [PublicAPI]
-public abstract class InteractionGroup : CommandGroup
-{
-}
+public abstract class InteractionGroup : CommandGroup;

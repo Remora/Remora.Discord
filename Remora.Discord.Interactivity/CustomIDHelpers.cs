@@ -38,7 +38,7 @@ public static class CustomIDHelpers
     /// Gets the name used to build IDs for select menu components.
     /// This may include text, role, channel etc. select menus.
     /// </summary>
-    private const string SelectComponentName = "select-menu";
+    private const string _selectComponentName = "select-menu";
 
     /// <summary>
     /// Creates an ID string that can be used with button components.
@@ -98,7 +98,7 @@ public static class CustomIDHelpers
     /// </param>
     /// <returns>The custom ID.</returns>
     public static string CreateSelectMenuID(string name)
-        => FormatID(SelectComponentName, name, null, Array.Empty<string>());
+        => FormatID(_selectComponentName, name, null, Array.Empty<string>());
 
     /// <summary>
     /// Creates an ID string with state information that can be used with select menu components.
@@ -109,7 +109,7 @@ public static class CustomIDHelpers
     /// <param name="state">The state value passed with the custom ID.</param>
     /// <returns>The custom ID.</returns>
     public static string CreateSelectMenuIDWithState(string name, string state)
-        => FormatID(SelectComponentName, name, state, Array.Empty<string>());
+        => FormatID(_selectComponentName, name, state, Array.Empty<string>());
 
     /// <summary>
     /// Creates an ID string that can be used with select menu components.
@@ -123,7 +123,7 @@ public static class CustomIDHelpers
     /// </param>
     /// <returns>The custom ID.</returns>
     public static string CreateSelectMenuID(string name, params string[] path)
-        => FormatID(SelectComponentName, name, null, path);
+        => FormatID(_selectComponentName, name, null, path);
 
     /// <summary>
     /// Creates an ID string with state information that can be used with select menu components.
@@ -138,7 +138,7 @@ public static class CustomIDHelpers
     /// </param>
     /// <returns>The custom ID.</returns>
     public static string CreateSelectMenuIDWithState(string name, string state, params string[] path)
-        => FormatID(SelectComponentName, name, state, path);
+        => FormatID(_selectComponentName, name, state, path);
 
     /// <summary>
     /// Creates an ID string that can be used with modals.

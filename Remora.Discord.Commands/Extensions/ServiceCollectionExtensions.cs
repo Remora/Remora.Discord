@@ -237,6 +237,7 @@ public static class ServiceCollectionExtensions
             .AddParser<EmojiParser>()
             .AddParser<GuildMemberParser>()
             .AddParser<MessageParser>()
+            .AddParser<PartialMessageParser>()
             .AddParser<RoleParser>()
             .AddParser<UserParser>();
 

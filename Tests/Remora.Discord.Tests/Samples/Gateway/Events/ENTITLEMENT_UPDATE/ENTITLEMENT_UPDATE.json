@@ -1,0 +1,12 @@
+{
+  "t": "ENTITLEMENT_UPDATE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "sku_id": "999999999999999999",
+    "application_id": "999999999999999999",
+    "type": 8,
+    "deleted": false
+  }
+}
