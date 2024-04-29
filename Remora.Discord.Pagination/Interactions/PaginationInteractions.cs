@@ -175,13 +175,11 @@ internal class PaginationInteractions : InteractionGroup
         {
             return Result.FromSuccess();
         }
-
-        return (Result)await _feedback.SendContextualInfoAsync
+        return (Result)await _feedback.SendContextualEmbedAsync
         (
-            lease.Data.Appearance.HelpText,
-            lease.Data.SourceUserID,
+            lease.Data.Appearance.HelpEmbed,
             new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
-            this.CancellationToken
+            ct: this.CancellationToken
         );
     }
 
