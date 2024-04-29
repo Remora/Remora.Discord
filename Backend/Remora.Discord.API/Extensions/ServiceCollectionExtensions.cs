@@ -1184,6 +1184,10 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
 
+        options.AddDataObjectConverter<IModalSubmitInteractionMetadata, ModalSubmitInteractionMetadata>();
+        options.AddDataObjectConverter<IMessageComponentInteractionMetadata, MessageComponentInteractionMetadata>();
+        options.AddDataObjectConverter<IApplicationCommandInteractionMetadata, ApplicationCommandInteractionMetadata>();
+
         return options;
     }
 
