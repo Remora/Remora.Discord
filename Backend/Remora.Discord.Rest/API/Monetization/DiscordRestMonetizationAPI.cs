@@ -85,6 +85,19 @@ public class DiscordRestMonetizationAPI : AbstractDiscordRestAPI, IDiscordRestMo
     );
 
     /// <inheritdoc />
+    public Task<Result> ConsumeEntitlementAsync
+    (
+        Snowflake applicationID,
+        Snowflake entitlementID,
+        CancellationToken ct = default
+    ) => this.RestHttpClient.PostAsync
+    (
+        $"applications/{applicationID}/entitlements/{entitlementID}/consume",
+        b => b.WithRateLimitContext(this.RateLimitCache),
+        ct: ct
+    );
+
+    /// <inheritdoc />
     public Task<Result<IPartialEntitlement>> CreateTestEntitlementAsync
     (
         Snowflake applicationID,

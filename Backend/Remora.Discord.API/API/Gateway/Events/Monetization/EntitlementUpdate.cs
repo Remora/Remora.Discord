@@ -40,5 +40,6 @@ public record EntitlementUpdate
     bool IsDeleted,
     Optional<DateTimeOffset> StartsAt = default,
     Optional<DateTimeOffset> EndsAt = default,
-    Optional<Snowflake> GuildID = default
+    Optional<Snowflake> GuildID = default,
+    Optional<bool> IsConsumed = default
 ) : IEntitlementUpdate;

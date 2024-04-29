@@ -420,15 +420,18 @@ public static class ServiceCollectionExtensions
         // Monetization
         options.AddDataObjectConverter<IEntitlementCreate, EntitlementCreate>()
             .WithPropertyName(e => e.SKUID, "sku_id")
-            .WithPropertyName(e => e.IsDeleted, "deleted");
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
 
         options.AddDataObjectConverter<IEntitlementUpdate, EntitlementUpdate>()
             .WithPropertyName(e => e.SKUID, "sku_id")
-            .WithPropertyName(e => e.IsDeleted, "deleted");
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
 
         options.AddDataObjectConverter<IEntitlementDelete, EntitlementDelete>()
             .WithPropertyName(e => e.SKUID, "sku_id")
-            .WithPropertyName(e => e.IsDeleted, "deleted");
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
 
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -1240,10 +1243,12 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IEntitlement, Entitlement>()
             .WithPropertyName(e => e.SKUID, "sku_id")
-            .WithPropertyName(e => e.IsDeleted, "deleted");
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
         options.AddDataObjectConverter<IPartialEntitlement, PartialEntitlement>()
             .WithPropertyName(e => e.SKUID, "sku_id")
-            .WithPropertyName(e => e.IsDeleted, "deleted");
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
 
         options.AddDataObjectConverter<ISKU, SKU>();
 

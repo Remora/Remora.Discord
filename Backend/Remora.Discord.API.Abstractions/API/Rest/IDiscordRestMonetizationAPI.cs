@@ -63,6 +63,20 @@ public interface IDiscordRestMonetizationAPI
     );
 
     /// <summary>
+    /// Marks the given one-time purchase item as consumed.
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="entitlementID">The ID of the entitlement.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A value representing the result of the operation.</returns>
+    Task<Result> ConsumeEntitlementAsync
+    (
+        Snowflake applicationID,
+        Snowflake entitlementID,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Creates a test entitlement to a given SKU for a given guild or user.
     /// </summary>
     /// <param name="applicationID">The ID of the application.</param>

@@ -39,5 +39,6 @@ public record PartialEntitlement
     Optional<bool> IsDeleted = default,
     Optional<DateTimeOffset> StartsAt = default,
     Optional<DateTimeOffset> EndsAt = default,
-    Optional<Snowflake> GuildID = default
+    Optional<Snowflake> GuildID = default,
+    Optional<bool> IsConsumed = default
 ) : IPartialEntitlement;
