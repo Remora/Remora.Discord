@@ -249,7 +249,8 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
     /// <inheritdoc />
     public async Task<Result<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
     (
-        Snowflake guildID, CancellationToken ct = default
+        Snowflake guildID,
+        CancellationToken ct = default
     )
     {
         var key = new KeyHelpers.GuildWebhooksCacheKey(guildID);

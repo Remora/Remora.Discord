@@ -152,7 +152,7 @@ public interface IMessage : IPartialMessage
     /// <summary>
     /// Gets the message reference. Sent with cross-posted messages.
     /// </summary>
-    new Optional<IMessageReference> MessageReference { get;  }
+    new Optional<IMessageReference> MessageReference { get; }
 
     /// <summary>
     /// Gets a set of bitwise flags describing extra features of the message.

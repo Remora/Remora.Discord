@@ -98,7 +98,7 @@ public interface IPartialMessage
     Optional<Snowflake> ApplicationID { get; }
 
     /// <inheritdoc cref="IMessage.MessageReference" />
-    Optional<IMessageReference> MessageReference { get;  }
+    Optional<IMessageReference> MessageReference { get; }
 
     /// <inheritdoc cref="IMessage.Flags" />
     Optional<MessageFlags> Flags { get; }

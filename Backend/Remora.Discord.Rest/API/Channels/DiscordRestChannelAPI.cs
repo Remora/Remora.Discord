@@ -499,7 +499,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     )
     {
         var hasAny = around.HasValue || before.HasValue || after.HasValue;
-        var hasStrictlyOne = (around.HasValue ^ before.HasValue ^ after.HasValue)
+        var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue
                              && !(around.HasValue && before.HasValue && after.HasValue);
 
         if (hasAny && !hasStrictlyOne)
