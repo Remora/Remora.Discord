@@ -683,7 +683,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<Stream> coverImage = default,
         Optional<Uri> interactionsEndpointUrl = default,
         Optional<IReadOnlyList<string>> tags = default,
-        Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>> integrationTypes = default,
+        Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>> integrationTypesConfig = default,
         CancellationToken ct = default
     )
     {
@@ -726,7 +726,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("cover_image", base64EncodedCover, this.JsonOptions);
                         json.Write("interactions_endpoint_url", interactionsEndpointUrl, this.JsonOptions);
                         json.Write("tags", tags, this.JsonOptions);
-                        json.Write("integration_types", integrationTypes, this.JsonOptions);
+                        json.Write("integration_types_config", integrationTypesConfig, this.JsonOptions);
                     }
                 );
 
