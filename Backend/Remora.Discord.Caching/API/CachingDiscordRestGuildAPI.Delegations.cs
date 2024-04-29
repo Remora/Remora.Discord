@@ -128,6 +128,19 @@ public partial class CachingDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<IBulkBanResponse>> BulkGuildBanAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<Snowflake> userIDs,
+        Optional<int> deleteMessageSeconds = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.BulkGuildBanAsync(guildID, userIDs, deleteMessageSeconds, reason, ct);
+    }
+
+    /// <inheritdoc />
     public Task<Result<MultiFactorAuthenticationLevel>> ModifyGuildMFALevelAsync
     (
         Snowflake guildID,

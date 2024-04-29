@@ -724,6 +724,26 @@ public interface IDiscordRestGuildAPI
     );
 
     /// <summary>
+    /// Bans up to 200 users from the given guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="userIDs">The IDs of the users to ban.</param>
+    /// <param name="deleteMessageSeconds">
+    /// The number of seconds to delete messages for (0-604800). Defaults to 0.
+    /// </param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The bulk banning response.</returns>
+    Task<Result<IBulkBanResponse>> BulkGuildBanAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<Snowflake> userIDs,
+        Optional<int> deleteMessageSeconds = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Gets the roles in the guild.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>

@@ -126,6 +126,9 @@
       <Compile Update="API\Objects\Interactions\IModalSubmitInteractionMetadata.cs">
         <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Rest\IBulkBanResponse.cs">
+        <DependentUpon>IDiscordRestGuildAPI.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

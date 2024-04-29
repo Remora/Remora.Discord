@@ -705,6 +705,8 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(o => o.ChannelIDs, "channel_ids")
             .WithPropertyName(o => o.RoleIDs, "role_ids");
 
+        options.AddDataObjectConverter<IBulkBanResponse, BulkBanResponse>();
+
         return options;
     }
 

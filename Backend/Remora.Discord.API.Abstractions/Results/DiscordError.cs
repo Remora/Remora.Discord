@@ -1046,5 +1046,10 @@ public enum DiscordError
     /// <summary>
     /// Onboarding cannot be updated while requirements are not met.
     /// </summary>
-    CannotUpdateOnboarding = 350001
+    CannotUpdateOnboarding = 350001,
+
+    /// <summary>
+    /// Failed to bulk ban the given set of users.
+    /// </summary>
+    FailedToBanUsers = 500000
 }

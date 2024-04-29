@@ -914,6 +914,33 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<IBulkBanResponse>> BulkGuildBanAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<Snowflake> userIDs,
+        Optional<int> deleteMessageSeconds = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IBulkBanResponse>
+        (
+            $"guilds/{guildID}/bulk-ban",
+            b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("user_ids", userIDs, this.JsonOptions);
+                        json.Write("delete_message_seconds", deleteMessageSeconds, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache)
+                .AddAuditLogReason(reason),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
     public virtual Task<Result<IReadOnlyList<IRole>>> GetGuildRolesAsync
     (
         Snowflake guildID,
