@@ -230,7 +230,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    public virtual Task<Result<IReadOnlyList<IConnection>>> GetCurrentUserConnectionsAsync
     (
         CancellationToken ct = default
     )
@@ -244,7 +244,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IApplicationRoleConnection>> GetUserApplicationRoleConnectionAsync
+    public virtual Task<Result<IApplicationRoleConnection>> GetCurrentUserApplicationRoleConnectionAsync
     (
         Snowflake applicationID,
         CancellationToken ct = default
@@ -259,7 +259,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public virtual async Task<Result<IApplicationRoleConnection>> UpdateUserApplicationRoleConnectionAsync
+    public virtual async Task<Result<IApplicationRoleConnection>> UpdateCurrentUserApplicationRoleConnectionAsync
     (
         Snowflake applicationID,
         Optional<string> platformName = default,

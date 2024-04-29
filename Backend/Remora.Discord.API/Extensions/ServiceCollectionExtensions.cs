@@ -114,7 +114,8 @@ public static class ServiceCollectionExtensions
                         .AddTeamObjectConverters()
                         .AddStageInstanceObjectConverters()
                         .AddStickerObjectConverters()
-                        .AddApplicationRoleConnectionObjectConverters();
+                        .AddApplicationRoleConnectionObjectConverters()
+                        .AddMonetizationConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
                     options.AddConverter<PropertyErrorDetailsConverter>();
@@ -416,6 +417,22 @@ public static class ServiceCollectionExtensions
         // Application commands
         options.AddDataObjectConverter<IApplicationCommandPermissionsUpdate, ApplicationCommandPermissionsUpdate>();
 
+        // Monetization
+        options.AddDataObjectConverter<IEntitlementCreate, EntitlementCreate>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        options.AddDataObjectConverter<IEntitlementUpdate, EntitlementUpdate>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        options.AddDataObjectConverter<IEntitlementDelete, EntitlementDelete>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -688,6 +705,8 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(o => o.ChannelIDs, "channel_ids")
             .WithPropertyName(o => o.RoleIDs, "role_ids");
 
+        options.AddDataObjectConverter<IBulkBanResponse, BulkBanResponse>();
+
         return options;
     }
 
@@ -875,7 +894,12 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddReactionObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IReaction, Reaction>()
-            .WithPropertyName(r => r.HasCurrentUserReacted, "me");
+            .WithPropertyName(r => r.HasCurrentUserReacted, "me")
+            .WithPropertyName(r => r.HasCurrentUserBurstReacted, "me_burst")
+            .WithPropertyName(r => r.BurstColours, "burst_colors")
+            .WithPropertyConverter(r => r.BurstColours, new HexCodeColourConverter());
+
+        options.AddDataObjectConverter<IReactionCountDetails, ReactionCountDetails>();
 
         return options;
     }
@@ -1033,7 +1057,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>()
-            .WithPropertyName(d => d.IsNsfw, "nsfw");
+               .WithPropertyName(d => d.IsNsfw, "nsfw");
 
         options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
             .WithPropertyName(o => o.IsDefault, "default")
@@ -1042,8 +1066,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
+
         options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>()
-            .WithPropertyName(d => d.IsNsfw, "nsfw");
+               .WithPropertyName(d => d.IsNsfw, "nsfw");
 
         options.AddDataObjectConverter
             <
@@ -1162,6 +1187,8 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 
+        options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
+
         return options;
     }
 
@@ -1186,6 +1213,12 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>();
 
+        options.AddDataObjectConverter<IApplicationIntegrationTypeConfig, ApplicationIntegrationTypeConfig>()
+               .WithPropertyName(a => a.OAuth2InstallParams, "oauth2_install_params");
+
+        options.AddDataObjectConverter<IApplicationOAuth2InstallParams, ApplicationOAuth2InstallParams>();
+
+        options.Converters.Insert(0, new StringEnumConverter<ApplicationIntegrationType>(options.PropertyNamingPolicy, true));
         return options;
     }
 
@@ -1197,7 +1230,29 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddTeamObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<ITeam, Team>();
-        options.AddDataObjectConverter<ITeamMember, TeamMember>();
+        options.AddDataObjectConverter<ITeamMember, TeamMember>()
+            .WithPropertyConverter(m => m.Role, new StringEnumConverter<TeamMemberRole>(new SnakeCaseNamingPolicy()));
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle monetization objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddMonetizationConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IEntitlement, Entitlement>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+        options.AddDataObjectConverter<IPartialEntitlement, PartialEntitlement>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        options.AddDataObjectConverter<ISKU, SKU>();
 
         return options;
     }

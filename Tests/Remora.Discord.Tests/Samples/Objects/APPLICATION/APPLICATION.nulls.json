@@ -14,9 +14,9 @@
   "verify_key": "none",
   "team": null,
   "guild_id": "999999999999999999",
-  "guild": { },
+  "guild": {},
   "primary_sku_id": "999999999999999999",
-  "slug": "test",
+  "slug": "none",
   "cover_image": "68b329da9893e34099c7d8ad5cb9c940",
   "flags": 0,
   "approximate_guild_count": 0,
@@ -30,5 +30,9 @@
     "permissions": "0"
   },
   "custom_install_url": "https://www.example.org",
-  "role_connections_verification_url": "https://www.example.org"
+  "role_connections_verification_url": "https://www.example.org",
+  "integration_types_config": {
+    "0": { "oauth2_install_params": { "scopes": [ "bot", "application.commands" ], "permissions": "0"} },
+    "1": { "oauth2_install_params": { "scopes": [ "application.commands" ], "permissions": "0" } }
+  }
 }

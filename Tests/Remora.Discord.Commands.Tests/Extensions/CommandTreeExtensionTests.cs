@@ -1743,10 +1743,13 @@ public class CommandTreeExtensionTests
                     string.Empty,
                     new[]
                     {
-                        new ApplicationCommandOption(SubCommandGroup, subGroupNode.Key, string.Empty, Options: new[]
-                        {
-                            new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty)
-                        })
+                        new ApplicationCommandOption
+                        (
+                            SubCommandGroup,
+                            subGroupNode.Key,
+                            string.Empty,
+                            Options: new[] { new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty) }
+                        )
                     },
                     default
                 )
@@ -1802,11 +1805,17 @@ public class CommandTreeExtensionTests
                     string.Empty,
                     new[]
                     {
-                        new ApplicationCommandOption(SubCommandGroup, subGroupNode.Key, string.Empty, Options: new[]
-                        {
-                            new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty),
-                            new ApplicationCommandOption(SubCommand, commandNodeD.Key, string.Empty)
-                        }),
+                        new ApplicationCommandOption
+                        (
+                            SubCommandGroup,
+                            subGroupNode.Key,
+                            string.Empty,
+                            Options: new[]
+                            {
+                                new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty),
+                                new ApplicationCommandOption(SubCommand, commandNodeD.Key, string.Empty)
+                            }
+                        ),
                         new ApplicationCommandOption(SubCommand, commandNodeE.Key, string.Empty),
                         new ApplicationCommandOption(SubCommand, commandNodeF.Key, string.Empty)
                     },

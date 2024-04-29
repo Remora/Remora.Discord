@@ -44,5 +44,5 @@ public interface IApplicationCommandPermissions
     /// <summary>
     /// Gets a value indicating whether the referenced entity has permission to use the command.
     /// </summary>
-    bool HasPermission { get;  }
+    bool HasPermission { get; }
 }

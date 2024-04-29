@@ -402,8 +402,8 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
         var shouldSendResponse =
         !(
-            suppressResponseAttribute?.Suppress ?? _options.SuppressAutomaticResponses ||
-            commandContext.HasRespondedToInteraction
+            suppressResponseAttribute?.Suppress ??
+            (_options.SuppressAutomaticResponses || commandContext.HasRespondedToInteraction)
         );
 
         if (shouldSendResponse)

@@ -1,23 +1,13 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>79.0.0</VersionPrefix>
+        <VersionPrefix>81.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-          BREAKING: Implement support for join and mention raid protection.
-          Add external sound permission.
-          Add several new error codes.
-          BREAKING: Add RateLimitPerUser to Voice and Stage channels.
-          BREAKING: Implement new username field.
-          BREAKING: Implement role flags.
-          BREAKING: Implement attachment flags.
-          BREAKING: Implement onboarding mode.
-          BREAKING: Implement MessageAuthorID.
-          BREAKING: Add more audit log events.
-          BREAKING: Add defaultForumLayout parameter.
-          BREAKING: Implement approximate guild count and partial guild.
-          BREAKING: Implement avatar decorations.
-          BREAKING: Implement with_counts for user guild endpoint.
+          BREAKING: Revert "Remove global_name from User objects"
+          BREAKING: fix: wrap GlobalName in Optional
+          Update permissions.
+          BREAKING: Implement applied tags for webhooks.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -125,6 +115,18 @@
         <DependentUpon>IMessage.cs</DependentUpon>
       </Compile>
       <Compile Update="API\Rest\IChannelPositionModification.cs">
+        <DependentUpon>IDiscordRestGuildAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\IMessageComponentInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\IApplicationCommandInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\IModalSubmitInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Rest\IBulkBanResponse.cs">
         <DependentUpon>IDiscordRestGuildAPI.cs</DependentUpon>
       </Compile>
     </ItemGroup>

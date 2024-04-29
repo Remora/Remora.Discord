@@ -28,6 +28,4 @@ namespace Remora.Discord.Gateway.Tests.Transport.Events;
 /// Represents a marker interface for events.
 /// </summary>
 [PublicAPI]
-public interface IEvent
-{
-}
+public interface IEvent;

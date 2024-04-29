@@ -7,6 +7,16 @@
     "application_id": "999999999999999999",
     "type": 2,
     "token": "none",
-    "version": 1
+    "version": 1,
+    "app_permissions": "180224",
+    "entitlements": [
+      {
+        "id": "999999999999999999",
+        "sku_id": "999999999999999999",
+        "application_id": "999999999999999999",
+        "type": 8,
+        "deleted": false
+      }
+    ]
   }
 }

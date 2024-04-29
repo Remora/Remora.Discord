@@ -92,4 +92,25 @@ public static class RestRequestBuilderExtensions
 
         return builder;
     }
+
+    /// <summary>
+    /// Adds the given optional value as a query string parameter if the optional contains a value.
+    /// </summary>
+    /// <remarks>
+    /// The value will be added as its string representation as returned by <see cref="object.ToString"/>.
+    /// </remarks>
+    /// <param name="builder">The request builder.</param>
+    /// <param name="name">The name of the parameter.</param>
+    /// <param name="value">The value.</param>
+    /// <typeparam name="T">The type of the underlying value.</typeparam>
+    /// <returns>The builder.</returns>
+    public static RestRequestBuilder AddQueryParameter<T>
+    (
+        this RestRequestBuilder builder,
+        string name,
+        Optional<T> value
+    )
+        => value.HasValue
+            ? builder.AddQueryParameter(name, value.Value?.ToString() ?? string.Empty)
+            : builder;
 }

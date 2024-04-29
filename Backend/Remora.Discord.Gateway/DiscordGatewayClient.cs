@@ -238,7 +238,11 @@ public class DiscordGatewayClient : IDisposable
 
                 // Something has gone wrong. Close the socket, and handle it
                 // Terminate the send and receive tasks
+                #if NET8_0_OR_GREATER
+                await _disconnectRequestedSource.CancelAsync();
+                #else
                 _disconnectRequestedSource.Cancel();
+                #endif
 
                 // The results of the send and receive tasks are discarded here, because the iteration result will
                 // contain whichever of them failed if any of them did
@@ -562,6 +566,18 @@ public class DiscordGatewayClient : IDisposable
 
                 if (receiveHello.Entity is not IPayload<IHello> hello)
                 {
+                    if (receiveHello.Entity is IPayload<IReconnect>)
+                    {
+                        // Discord may spit out a reconnect if the node is we're connecting while the gateway node is
+                        // shutting down, but before the node is labeled as unavailable.
+                        return new GatewayError
+                        (
+                            "The gateway requested a reconnect.",
+                            false,
+                            false
+                        );
+                    }
+
                     // Not receiving a hello is a non-recoverable error
                     return new GatewayError
                     (
@@ -656,7 +672,11 @@ public class DiscordGatewayClient : IDisposable
         }
 
         // Terminate the send and receive tasks
+        #if NET8_0_OR_GREATER
+        await _disconnectRequestedSource.CancelAsync();
+        #else
         _disconnectRequestedSource.Cancel();
+        #endif
 
         // The results of the send and receive tasks are discarded here, because we know that it's going to be a
         // cancellation
@@ -984,7 +1004,7 @@ public class DiscordGatewayClient : IDisposable
                     {
                         sendResult = await rateLimitPolicy.ExecuteAsync
                         (
-                            () => _transportService.SendPayloadAsync(userPayload, disconnectRequested)
+                            () => _transportService.SendPayloadAsync(userPayload, disconnectRequested).AsTask()
                         );
 
                         if (sendResult.IsSuccess)

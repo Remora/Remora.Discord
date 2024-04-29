@@ -660,6 +660,7 @@ public class DiscordRestGuildAPITests
             var parentID = DiscordSnowflake.New(1);
             var isNsfw = true;
             var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var defaultThreadRateLimitPerUser = 20;
             var reason = "test";
 
             var api = CreateAPI
@@ -685,6 +686,7 @@ public class DiscordRestGuildAPITests
                                     "default_auto_archive_duration",
                                     p => p.Is((int)defaultAutoArchiveDuration)
                                 )
+                                .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -701,6 +703,7 @@ public class DiscordRestGuildAPITests
                 parentID,
                 isNsfw,
                 defaultAutoArchiveDuration,
+                defaultThreadRateLimitPerUser,
                 reason
             );
 
@@ -723,6 +726,7 @@ public class DiscordRestGuildAPITests
             var parentID = DiscordSnowflake.New(1);
             var isNsfw = true;
             var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var defaultThreadRateLimitPerUser = 20;
             var reason = "test";
 
             var api = CreateAPI
@@ -747,6 +751,7 @@ public class DiscordRestGuildAPITests
                                     "default_auto_archive_duration",
                                     p => p.Is((int)defaultAutoArchiveDuration)
                                 )
+                                .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -762,6 +767,7 @@ public class DiscordRestGuildAPITests
                 parentID,
                 isNsfw,
                 defaultAutoArchiveDuration,
+                defaultThreadRateLimitPerUser,
                 reason
             );
 
@@ -779,6 +785,7 @@ public class DiscordRestGuildAPITests
             var name = "dd";
             var type = ChannelType.GuildForum;
             var topic = "aaa";
+            var rateLimitPerUser = 10;
             var position = 1;
             var permissionOverwrites = new List<IPermissionOverwrite>();
             var parentID = DiscordSnowflake.New(1);
@@ -788,6 +795,7 @@ public class DiscordRestGuildAPITests
             var availableTags = Array.Empty<IForumTag>();
             var defaultSortOrder = SortOrder.CreationDate;
             var defaultLayout = ForumLayout.GalleryView;
+            var defaultThreadRateLimitPerUser = 20;
             var reason = "test";
 
             var api = CreateAPI
@@ -803,6 +811,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("type", p => p.Is((int)type))
                                 .WithProperty("topic", p => p.Is(topic))
+                                .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                 .WithProperty("position", p => p.Is(position))
                                 .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("parent_id", p => p.Is(parentID.ToString()))
@@ -816,6 +825,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
                                 .WithProperty("default_forum_layout", p => p.Is((int)defaultLayout))
+                                .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -826,6 +836,7 @@ public class DiscordRestGuildAPITests
                 guildId,
                 name,
                 topic,
+                rateLimitPerUser,
                 position,
                 permissionOverwrites,
                 parentID,
@@ -835,6 +846,80 @@ public class DiscordRestGuildAPITests
                 availableTags,
                 defaultSortOrder,
                 defaultLayout,
+                defaultThreadRateLimitPerUser,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsMediaRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var name = "dd";
+            var type = ChannelType.GuildMedia;
+            var topic = "aaa";
+            var rateLimitPerUser = 10;
+            var position = 1;
+            var permissionOverwrites = new List<IPermissionOverwrite>();
+            var parentID = DiscordSnowflake.New(1);
+            var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var defaultReactionEmoji = new DefaultReaction(EmojiName: "booga");
+            var availableTags = Array.Empty<IForumTag>();
+            var defaultSortOrder = SortOrder.CreationDate;
+            var defaultThreadRateLimitPerUser = 20;
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("topic", p => p.Is(topic))
+                                .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
+                                .WithProperty("position", p => p.Is(position))
+                                .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                .WithProperty
+                                (
+                                    "default_auto_archive_duration",
+                                    p => p.Is((int)defaultAutoArchiveDuration)
+                                )
+                                .WithProperty("default_reaction_emoji", p => p.IsObject())
+                                .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
+                                .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
+                                .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.CreateGuildMediaChannelAsync
+            (
+                guildId,
+                name,
+                topic,
+                rateLimitPerUser,
+                position,
+                permissionOverwrites,
+                parentID,
+                defaultAutoArchiveDuration,
+                defaultReactionEmoji,
+                availableTags,
+                defaultSortOrder,
+                defaultThreadRateLimitPerUser,
                 reason
             );
 
@@ -1998,6 +2083,61 @@ public class DiscordRestGuildAPITests
             (
                 guildId,
                 userId,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestGuildAPI.BulkGuildBanAsync"/> method.
+    /// </summary>
+    public class BulkGuildBanAsync : RestAPITestBase<IDiscordRestGuildAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BulkGuildBanAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public BulkGuildBanAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var userIds = new[] { DiscordSnowflake.New(1) };
+            var deleteMessageSeconds = 864000;
+            var reason = "ddd";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/bulk-ban")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("user_ids", p => p.IsArray(a => a.WithElement(0, e => e.Is(userIds[0]))))
+                                .WithProperty("delete_message_seconds", p => p.Is(deleteMessageSeconds))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IBulkBanResponse)])
+            );
+
+            var result = await api.BulkGuildBanAsync
+            (
+                guildId,
+                userIds,
+                deleteMessageSeconds,
                 reason
             );
 

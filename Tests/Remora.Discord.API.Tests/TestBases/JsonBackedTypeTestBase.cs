@@ -184,6 +184,4 @@ public class JsonBackedTypeTestFixture
 /// Defines a test collection for JSON-backed type tests.
 /// </summary>
 [CollectionDefinition("JSON-backed type tests")]
-public class JsonBackedTypeTestCollection : ICollectionFixture<JsonBackedTypeTestFixture>
-{
-}
+public class JsonBackedTypeTestCollection : ICollectionFixture<JsonBackedTypeTestFixture>;

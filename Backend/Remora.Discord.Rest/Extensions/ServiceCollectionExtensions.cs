@@ -218,6 +218,13 @@ public static class ServiceCollectionExtensions
             s.GetRequiredService<ICacheProvider>()
         ));
 
+        serviceCollection.TryAddTransient<IDiscordRestMonetizationAPI>(s => new DiscordRestMonetizationAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ICacheProvider>()
+        ));
+
         var rateLimitPolicy = DiscordRateLimitPolicy.Create();
         var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
         var clientBuilder = serviceCollection

@@ -151,7 +151,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>, ITypeParser<IPartialEmoji
             return false;
         }
 
-        emoji = new Emoji(emojiID, inputParts[^2], IsAnimated: inputParts is["a", _, _]);
+        emoji = new Emoji(emojiID, inputParts[^2], IsAnimated: inputParts is ["a", _, _]);
         return true;
     }
 

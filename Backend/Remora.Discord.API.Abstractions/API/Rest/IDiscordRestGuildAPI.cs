@@ -205,6 +205,9 @@ public interface IDiscordRestGuildAPI
     /// <param name="availableTags">The tags that can be used in a forum channel.</param>
     /// <param name="defaultSortOrder">The default sort order of posts.</param>
     /// <param name="defaultForumLayout">The default layout of forums.</param>
+    /// <param name="defaultThreadRateLimitPerUser">
+    /// The initial rate limit per user to set on newly created threads in a channel.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -228,6 +231,7 @@ public interface IDiscordRestGuildAPI
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -244,6 +248,9 @@ public interface IDiscordRestGuildAPI
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
     /// <param name="isNsfw">Whether the new channel is NSFW.</param>
     /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
+    /// <param name="defaultThreadRateLimitPerUser">
+    /// The initial rate limit per user to set on newly created threads in a channel.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -258,6 +265,7 @@ public interface IDiscordRestGuildAPI
         Optional<Snowflake?> parentID = default,
         Optional<bool?> isNsfw = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -273,6 +281,9 @@ public interface IDiscordRestGuildAPI
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
     /// <param name="isNsfw">Whether the new channel is NSFW.</param>
     /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
+    /// <param name="defaultThreadRateLimitPerUser">
+    /// The initial rate limit per user to set on newly created threads in a channel.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -286,6 +297,7 @@ public interface IDiscordRestGuildAPI
         Optional<Snowflake?> parentID = default,
         Optional<bool?> isNsfw = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -296,6 +308,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="name">The name of the new channel.</param>
     /// <param name="topic">The topic of the new channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
     /// <param name="position">The sorting position of the new channel.</param>
     /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
     /// <param name="parentID">The ID of the parent category of the new channel.</param>
@@ -305,6 +318,9 @@ public interface IDiscordRestGuildAPI
     /// <param name="availableTags">The tags that can be used in a forum channel.</param>
     /// <param name="defaultSortOrder">The default sort order of posts.</param>
     /// <param name="defaultForumLayout">The default layout of forums.</param>
+    /// <param name="defaultThreadRateLimitPerUser">
+    /// The initial rate limit per user to set on newly created threads in a channel.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -313,6 +329,7 @@ public interface IDiscordRestGuildAPI
         Snowflake guildID,
         string name,
         Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
@@ -322,6 +339,45 @@ public interface IDiscordRestGuildAPI
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Creates a new forum channel for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="name">The name of the new channel.</param>
+    /// <param name="topic">The topic of the new channel.</param>
+    /// <param name="rateLimitPerUser">The number of seconds a user has to wait between messages.</param>
+    /// <param name="position">The sorting position of the new channel.</param>
+    /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
+    /// <param name="parentID">The ID of the parent category of the new channel.</param>
+    /// <param name="defaultAutoArchiveDuration">The default auto archival duration for threads.</param>
+    /// <param name="defaultReactionEmoji">The default emoji to show in reaction buttons of forum posts.</param>
+    /// <param name="availableTags">The tags that can be used in a forum channel.</param>
+    /// <param name="defaultSortOrder">The default sort order of posts.</param>
+    /// <param name="defaultThreadRateLimitPerUser">
+    /// The initial rate limit per user to set on newly created threads in a channel.
+    /// </param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> CreateGuildMediaChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
+        Optional<SortOrder?> defaultSortOrder = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
@@ -663,6 +719,26 @@ public interface IDiscordRestGuildAPI
     (
         Snowflake guildID,
         Snowflake userID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Bans up to 200 users from the given guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="userIDs">The IDs of the users to ban.</param>
+    /// <param name="deleteMessageSeconds">
+    /// The number of seconds to delete messages for (0-604800). Defaults to 0.
+    /// </param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The bulk banning response.</returns>
+    Task<Result<IBulkBanResponse>> BulkGuildBanAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<Snowflake> userIDs,
+        Optional<int> deleteMessageSeconds = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

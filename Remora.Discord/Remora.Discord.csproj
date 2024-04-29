@@ -1,29 +1,17 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2023.4</VersionPrefix>
+        <VersionPrefix>2024.1</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Add external sound permission.
-            Add several new error codes.
-            BREAKING: Add defaultForumLayout parameter.
-            BREAKING: Add more audit log events.
-            BREAKING: Add RateLimitPerUser to Voice and Stage channels.
-            BREAKING: Change Snowflakes in TryGet methods to non-nullable.
-            BREAKING: Implement approximate guild count and partial guild.
-            BREAKING: Implement attachment flags.
-            BREAKING: Implement avatar decorations.
-            BREAKING: Implement MessageAuthorID.
-            BREAKING: Implement new username field.
-            BREAKING: Implement onboarding mode.
-            BREAKING: Implement role flags.
-            BREAKING: Implement support for join and mention raid protection.
-            BREAKING: Implement with_counts for user guild endpoint.
-            Correct cancellation token usage.
-            Ensure results aren't swallowed when no events are registered.
-            Extract dispatch API to an interface.
-            Fix conversion discrepancies between partial and nonpartial type.
+            Use async overloads when building for .NET 8.
+            fix: do not use IsDefined when updating cached nullable properties
+            fix: fill CommunicationDisabledUntil property from new object when updating cached GuildMember
+            BREAKING: Revert "Remove global_name from User objects"
+            BREAKING: fix: wrap GlobalName in Optional
+            Update permissions.
+            BREAKING: Implement applied tags for webhooks.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
