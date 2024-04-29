@@ -40,7 +40,7 @@ public interface IMessageInteractionMetadata
     /// <summary>
     /// Gets the ID of the user who triggered the interaction.
     /// </summary>
-    Snowflake UserID { get; }
+    IUser User { get; }
 
     /// <summary>
     /// Gets the type of the interaction.

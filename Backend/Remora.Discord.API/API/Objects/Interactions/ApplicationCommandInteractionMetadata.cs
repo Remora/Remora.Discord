@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Objects;
 public record ApplicationCommandInteractionMetadata
 (
     Snowflake ID,
-    Snowflake UserID,
+    IUser User,
     InteractionType Type,
     Optional<Snowflake> OriginalResponseMessageID,
     IReadOnlyDictionary<ApplicationIntegrationType, Snowflake> AuthorizingIntegrationOwners,
