@@ -286,7 +286,7 @@ public interface IDiscordRestGuildAPI</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_BeginGuildPruneAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.BeginGuildPruneAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Rest.Core.Snowflake%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L878">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L898">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.BeginGuildPruneAsync*"></a>
   <h4 id="BeginGuildPruneAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.BeginGuildPruneAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">BeginGuildPruneAsync(Snowflake, Optional&lt;int&gt;, Optional&lt;bool&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -357,6 +357,80 @@ public interface IDiscordRestGuildAPI</code></pre>
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPruneCount.html">IPruneCount</a>&gt;&gt;</td>
         <td><p>A retrieval result which may or may not have succeeded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_BulkGuildBanAsync_Remora_Rest_Core_Snowflake_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.BulkGuildBanAsync(Remora.Rest.Core.Snowflake%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L737">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.BulkGuildBanAsync*"></a>
+  <h4 id="BulkGuildBanAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.BulkGuildBanAsync(Remora.Rest.Core.Snowflake,System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">BulkGuildBanAsync(Snowflake, IReadOnlyList&lt;Snowflake&gt;, Optional&lt;int&gt;, Optional&lt;string&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Bans up to 200 users from the given guild.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Result&lt;IBulkBanResponse&gt;&gt; BulkGuildBanAsync(Snowflake guildID, IReadOnlyList&lt;Snowflake&gt; userIDs, Optional&lt;int&gt; deleteMessageSeconds = default, Optional&lt;string&gt; reason = default, CancellationToken ct = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Snowflake</span></td>
+        <td><span class="parametername">guildID</span></td>
+        <td><p>The ID of the guild.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Snowflake</span>&gt;</td>
+        <td><span class="parametername">userIDs</span></td>
+        <td><p>The IDs of the users to ban.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td><span class="parametername">deleteMessageSeconds</span></td>
+        <td><p>The number of seconds to delete messages for (0-604800). Defaults to 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td><span class="parametername">reason</span></td>
+        <td><p>The reason to mark the action in the audit log with.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">ct</span></td>
+        <td><p>The cancellation token for this operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Result</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Rest.IBulkBanResponse.html">IBulkBanResponse</a>&gt;&gt;</td>
+        <td><p>The bulk banning response.</p>
 </td>
       </tr>
     </tbody>
@@ -1108,7 +1182,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_CreateGuildRoleAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__Remora_Rest_Core_Optional_System_Drawing_Color__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_IO_Stream__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.CreateGuildRoleAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IDiscordPermissionSet%7D%2CRemora.Rest.Core.Optional%7BSystem.Drawing.Color%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.IO.Stream%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L756">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L776">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.CreateGuildRoleAsync*"></a>
   <h4 id="CreateGuildRoleAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.CreateGuildRoleAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},Remora.Rest.Core.Optional{System.Drawing.Color},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.IO.Stream},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">CreateGuildRoleAsync(Snowflake, Optional&lt;string&gt;, Optional&lt;IDiscordPermissionSet&gt;, Optional&lt;Color&gt;, Optional&lt;bool&gt;, Optional&lt;Stream?&gt;, Optional&lt;string?&gt;, Optional&lt;bool&gt;, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -1632,7 +1706,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_DeleteGuildIntegrationAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.DeleteGuildIntegrationAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L932">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L952">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.DeleteGuildIntegrationAsync*"></a>
   <h4 id="DeleteGuildIntegrationAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.DeleteGuildIntegrationAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">DeleteGuildIntegrationAsync(Snowflake, Snowflake, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -1700,7 +1774,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_DeleteGuildRoleAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.DeleteGuildRoleAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L844">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L864">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.DeleteGuildRoleAsync*"></a>
   <h4 id="DeleteGuildRoleAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.DeleteGuildRoleAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">DeleteGuildRoleAsync(Snowflake, Snowflake, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -2024,7 +2098,7 @@ Discord accepts both at the same time.</p>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildIntegrationsAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildIntegrationsAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L918">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L938">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildIntegrationsAsync*"></a>
   <h4 id="GetGuildIntegrationsAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildIntegrationsAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildIntegrationsAsync(Snowflake, CancellationToken)</h4>
@@ -2080,7 +2154,7 @@ Discord accepts both at the same time.</p>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildInvitesAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildInvitesAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L906">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L926">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildInvitesAsync*"></a>
   <h4 id="GetGuildInvitesAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildInvitesAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildInvitesAsync(Snowflake, CancellationToken)</h4>
@@ -2198,7 +2272,7 @@ Discord accepts both at the same time.</p>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildOnboardingAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildOnboardingAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1046">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1066">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildOnboardingAsync*"></a>
   <h4 id="GetGuildOnboardingAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildOnboardingAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildOnboardingAsync(Snowflake, CancellationToken)</h4>
@@ -2313,7 +2387,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildPruneCountAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildPruneCountAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Rest.Core.Snowflake%7D%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L860">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L880">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildPruneCountAsync*"></a>
   <h4 id="GetGuildPruneCountAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildPruneCountAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},System.Threading.CancellationToken)">GetGuildPruneCountAsync(Snowflake, Optional&lt;int&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, CancellationToken)</h4>
@@ -2381,7 +2455,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildRolesAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildRolesAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L732">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L752">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildRolesAsync*"></a>
   <h4 id="GetGuildRolesAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildRolesAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildRolesAsync(Snowflake, CancellationToken)</h4>
@@ -2437,7 +2511,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildVanityUrlAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildVanityUrlAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L988">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1008">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildVanityUrlAsync*"></a>
   <h4 id="GetGuildVanityUrlAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildVanityUrlAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildVanityUrlAsync(Snowflake, CancellationToken)</h4>
@@ -2493,7 +2567,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildVoiceRegionsAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildVoiceRegionsAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L894">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L914">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildVoiceRegionsAsync*"></a>
   <h4 id="GetGuildVoiceRegionsAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildVoiceRegionsAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildVoiceRegionsAsync(Snowflake, CancellationToken)</h4>
@@ -2549,7 +2623,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildWelcomeScreenAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWelcomeScreenAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1014">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1034">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWelcomeScreenAsync*"></a>
   <h4 id="GetGuildWelcomeScreenAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWelcomeScreenAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildWelcomeScreenAsync(Snowflake, CancellationToken)</h4>
@@ -2605,7 +2679,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildWidgetAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L976">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L996">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetAsync*"></a>
   <h4 id="GetGuildWidgetAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildWidgetAsync(Snowflake, CancellationToken)</h4>
@@ -2661,7 +2735,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildWidgetImageAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_WidgetImageStyle__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetImageAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.WidgetImageStyle%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1001">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1021">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetImageAsync*"></a>
   <h4 id="GetGuildWidgetImageAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetImageAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.WidgetImageStyle},System.Threading.CancellationToken)">GetGuildWidgetImageAsync(Snowflake, Optional&lt;WidgetImageStyle&gt;, CancellationToken)</h4>
@@ -2723,7 +2797,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_GetGuildWidgetSettingsAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetSettingsAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L946">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L966">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetSettingsAsync*"></a>
   <h4 id="GetGuildWidgetSettingsAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.GetGuildWidgetSettingsAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">GetGuildWidgetSettingsAsync(Snowflake, CancellationToken)</h4>
@@ -2971,7 +3045,7 @@ This is only for public guilds.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_ModifyCurrentUserVoiceStateAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_System_DateTimeOffset___System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyCurrentUserVoiceStateAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.DateTimeOffset%7D%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1083">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1103">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyCurrentUserVoiceStateAsync*"></a>
   <h4 id="ModifyCurrentUserVoiceStateAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyCurrentUserVoiceStateAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{System.DateTimeOffset}},System.Threading.CancellationToken)">ModifyCurrentUserVoiceStateAsync(Snowflake, Snowflake, Optional&lt;bool&gt;, Optional&lt;DateTimeOffset?&gt;, CancellationToken)</h4>
@@ -3293,7 +3367,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_ModifyGuildMFALevelAsync_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_MultiFactorAuthenticationLevel_Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildMFALevelAsync(Remora.Rest.Core.Snowflake%2CRemora.Discord.API.Abstractions.Objects.MultiFactorAuthenticationLevel%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L828">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L848">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildMFALevelAsync*"></a>
   <h4 id="ModifyGuildMFALevelAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildMFALevelAsync(Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.MultiFactorAuthenticationLevel,Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">ModifyGuildMFALevelAsync(Snowflake, MultiFactorAuthenticationLevel, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -3471,7 +3545,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_ModifyGuildOnboardingAsync_Remora_Rest_Core_Snowflake_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IOnboardingPrompt__System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake__System_Boolean_Remora_Discord_API_Abstractions_Objects_GuildOnboardingMode_Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildOnboardingAsync(Remora.Rest.Core.Snowflake%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IOnboardingPrompt%7D%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Rest.Core.Snowflake%7D%2CSystem.Boolean%2CRemora.Discord.API.Abstractions.Objects.GuildOnboardingMode%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1063">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1083">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildOnboardingAsync*"></a>
   <h4 id="ModifyGuildOnboardingAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildOnboardingAsync(Remora.Rest.Core.Snowflake,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IOnboardingPrompt},System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake},System.Boolean,Remora.Discord.API.Abstractions.Objects.GuildOnboardingMode,Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">ModifyGuildOnboardingAsync(Snowflake, IReadOnlyList&lt;IOnboardingPrompt&gt;, IReadOnlyList&lt;Snowflake&gt;, bool, GuildOnboardingMode, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -3557,7 +3631,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_ModifyGuildRoleAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IDiscordPermissionSet__Remora_Rest_Core_Optional_System_Nullable_System_Drawing_Color___Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_System_IO_Stream__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildRoleAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IDiscordPermissionSet%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Drawing.Color%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Boolean%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.IO.Stream%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Boolean%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L805">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L825">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildRoleAsync*"></a>
   <h4 id="ModifyGuildRoleAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildRoleAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IDiscordPermissionSet},Remora.Rest.Core.Optional{System.Nullable{System.Drawing.Color}},Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{System.IO.Stream},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">ModifyGuildRoleAsync(Snowflake, Snowflake, Optional&lt;string?&gt;, Optional&lt;IDiscordPermissionSet?&gt;, Optional&lt;Color?&gt;, Optional&lt;bool?&gt;, Optional&lt;Stream?&gt;, Optional&lt;string?&gt;, Optional&lt;bool?&gt;, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -3671,7 +3745,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_ModifyGuildRolePositionsAsync_Remora_Rest_Core_Snowflake_System_Collections_Generic_IReadOnlyList_System_ValueTuple_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_Nullable_System_Int32_____Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildRolePositionsAsync(Remora.Rest.Core.Snowflake%2CSystem.Collections.Generic.IReadOnlyList%7BSystem.ValueTuple%7BRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Int32%7D%7D%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L778">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L798">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildRolePositionsAsync*"></a>
   <h4 id="ModifyGuildRolePositionsAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildRolePositionsAsync(Remora.Rest.Core.Snowflake,System.Collections.Generic.IReadOnlyList{System.ValueTuple{Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.Nullable{System.Int32}}}},Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">ModifyGuildRolePositionsAsync(Snowflake, IReadOnlyList&lt;(Snowflake RoleID, Optional&lt;int?&gt; Position)&gt;, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -3739,7 +3813,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_ModifyGuildWelcomeScreenAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_Nullable_System_Boolean___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IWelcomeScreenChannel___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildWelcomeScreenAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.Boolean%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IWelcomeScreenChannel%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1030">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1050">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildWelcomeScreenAsync*"></a>
   <h4 id="ModifyGuildWelcomeScreenAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildWelcomeScreenAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.Nullable{System.Boolean}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IWelcomeScreenChannel}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">ModifyGuildWelcomeScreenAsync(Snowflake, Optional&lt;bool?&gt;, Optional&lt;IReadOnlyList&lt;IWelcomeScreenChannel&gt;?&gt;, Optional&lt;string?&gt;, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -3819,7 +3893,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_ModifyGuildWidgetAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Nullable_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildWidgetAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BRemora.Rest.Core.Snowflake%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L961">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L981">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildWidgetAsync*"></a>
   <h4 id="ModifyGuildWidgetAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyGuildWidgetAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Nullable{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.String},System.Threading.CancellationToken)">ModifyGuildWidgetAsync(Snowflake, Optional&lt;bool&gt;, Optional&lt;Snowflake?&gt;, Optional&lt;string&gt;, CancellationToken)</h4>
@@ -3893,7 +3967,7 @@ afterwards, ensure that what you pass is a copy that the method can take ownersh
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI_ModifyUserVoiceStateAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_System_Nullable_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Boolean__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyUserVoiceStateAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CSystem.Nullable%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1101">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestGuildAPI.cs/#L1121">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestGuildAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyUserVoiceStateAsync*"></a>
   <h4 id="ModifyUserVoiceStateAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI.ModifyUserVoiceStateAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,System.Nullable{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Boolean},System.Threading.CancellationToken)">ModifyUserVoiceStateAsync(Snowflake, Snowflake, Snowflake?, Optional&lt;bool&gt;, CancellationToken)</h4>

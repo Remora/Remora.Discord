@@ -114,10 +114,72 @@ public interface IDiscordRestMonetizationAPI</code></pre>
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestMonetizationAPI_ConsumeEntitlementAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.ConsumeEntitlementAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestMonetizationAPI.cs/#L72">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestMonetizationAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.ConsumeEntitlementAsync*"></a>
+  <h4 id="ConsumeEntitlementAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.ConsumeEntitlementAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">ConsumeEntitlementAsync(Snowflake, Snowflake, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Marks the given one-time purchase item as consumed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; ConsumeEntitlementAsync(Snowflake applicationID, Snowflake entitlementID, CancellationToken ct = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Snowflake</span></td>
+        <td><span class="parametername">applicationID</span></td>
+        <td><p>The ID of the application.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Snowflake</span></td>
+        <td><span class="parametername">entitlementID</span></td>
+        <td><p>The ID of the entitlement.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">ct</span></td>
+        <td><p>The cancellation token for this operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Result</span>&gt;</td>
+        <td><p>A value representing the result of the operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestMonetizationAPI_CreateTestEntitlementAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_EntitlementOwnerType_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.CreateTestEntitlementAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Discord.API.Abstractions.Objects.EntitlementOwnerType%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestMonetizationAPI.cs/#L74">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestMonetizationAPI.cs/#L88">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestMonetizationAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.CreateTestEntitlementAsync*"></a>
   <h4 id="CreateTestEntitlementAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.CreateTestEntitlementAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.EntitlementOwnerType,System.Threading.CancellationToken)">CreateTestEntitlementAsync(Snowflake, Snowflake, Snowflake, EntitlementOwnerType, CancellationToken)</h4>
@@ -191,7 +253,7 @@ public interface IDiscordRestMonetizationAPI</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestMonetizationAPI_DeleteTestEntitlementAsync_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.DeleteTestEntitlementAsync(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestMonetizationAPI.cs/#L90">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestMonetizationAPI.cs/#L104">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestMonetizationAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.DeleteTestEntitlementAsync*"></a>
   <h4 id="DeleteTestEntitlementAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.DeleteTestEntitlementAsync(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">DeleteTestEntitlementAsync(Snowflake, Snowflake, CancellationToken)</h4>
@@ -351,7 +413,7 @@ public interface IDiscordRestMonetizationAPI</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Rest_IDiscordRestMonetizationAPI_ListSKUsAsync_Remora_Rest_Core_Snowflake_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.ListSKUsAsync(Remora.Rest.Core.Snowflake%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestMonetizationAPI.cs/#L103">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Rest/IDiscordRestMonetizationAPI.cs/#L117">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Rest_IDiscordRestMonetizationAPI" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.ListSKUsAsync*"></a>
   <h4 id="ListSKUsAsync_1" data-uid="Remora.Discord.API.Abstractions.Rest.IDiscordRestMonetizationAPI.ListSKUsAsync(Remora.Rest.Core.Snowflake,System.Threading.CancellationToken)">ListSKUsAsync(Snowflake, CancellationToken)</h4>

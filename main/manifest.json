@@ -3254,6 +3254,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Rest.IBulkBanResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Rest.IBulkBanResponse.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Rest.IChannelPositionModification.yml",
       "output": {
         ".html": {
@@ -6308,6 +6318,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Payload-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Rest.BulkBanResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Rest.BulkBanResponse.html"
         }
       },
       "version": ""
