@@ -493,6 +493,7 @@ public interface IDiscordRestChannelAPI
     /// </param>
     /// <param name="flags">The message flags.</param>
     /// <param name="enforceNonce">Indicates whether messages should be deduplicated using the passed nonce.</param>
+    /// <param name="poll">The poll of the message.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IMessage>> CreateMessageAsync
@@ -509,6 +510,7 @@ public interface IDiscordRestChannelAPI
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
         Optional<bool> enforceNonce = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     );
 

@@ -65,5 +65,6 @@ public record Message
     Optional<IReadOnlyList<IStickerItem>> StickerItems = default,
     Optional<int> Position = default,
     Optional<IApplicationCommandInteractionDataResolved> Resolved = default,
-    Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> InteractionMetadata = default
+    Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> InteractionMetadata = default,
+    Optional<IPoll> Poll = default
 ) : IMessage;
