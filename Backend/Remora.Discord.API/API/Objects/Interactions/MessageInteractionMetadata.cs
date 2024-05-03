@@ -1,5 +1,5 @@
 //
-//  IApplicationCommandInteractionMetadata.cs
+//  MessageInteractionMetadata.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,18 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects;
+namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents metadata related to application commands.
-/// </summary>
+/// <inheritdoc cref="IMessageInteractionMetadata"/>
 [PublicAPI]
-public interface IApplicationCommandInteractionMetadata : IMessageInteractionMetadata
-{
-    /// <summary>
-    /// Gets the name of the command.
-    /// </summary>
-    string Name { get; }
-}
+public record MessageInteractionMetadata
+(
+    Snowflake ID,
+    IUser User,
+    Optional<string> Name,
+    Optional<Snowflake> OriginalResponseMessageID,
+    Optional<Snowflake> InteractedMessageID,
+    InteractionType Type,
+    IReadOnlyDictionary<ApplicationIntegrationType, Snowflake> AuthorizingIntegrationOwners,
+    Optional<IMessageInteractionMetadata> TriggeringInteractionMetadata
+) : IMessageInteractionMetadata;

@@ -197,7 +197,7 @@ public interface IMessage : IPartialMessage
     /// <summary>
     /// Gets the metadata of the interaction, if any.
     /// </summary>
-    new Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> InteractionMetadata { get; }
+    new Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
@@ -290,5 +290,5 @@ public interface IMessage : IPartialMessage
     Optional<IApplicationCommandInteractionDataResolved> IPartialMessage.Resolved => this.Resolved;
 
     /// <inheritdoc/>
-    Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
+    Optional<IMessageInteractionMetadata> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
 }

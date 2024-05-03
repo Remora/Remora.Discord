@@ -43,6 +43,11 @@ public interface IMessageInteractionMetadata
     IUser User { get; }
 
     /// <summary>
+    /// Gets the name of the command.
+    /// </summary>
+    Optional<string> Name { get; }
+
+    /// <summary>
     /// Gets the type of the interaction.
     /// </summary>
     InteractionType Type { get; }
@@ -51,6 +56,11 @@ public interface IMessageInteractionMetadata
     /// Gets the ID of the original response message. Only applicable to followup messages.
     /// </summary>
     Optional<Snowflake> OriginalResponseMessageID { get; }
+
+    /// <summary>
+    /// Gets the ID of the message containing the interactive component; only applicable to component interactions.
+    /// </summary>
+    Optional<Snowflake> InteractedMessageID { get; }
 
     /// <summary>
     /// Gets the integrations that authorized the interaction.
@@ -65,4 +75,9 @@ public interface IMessageInteractionMetadata
     /// </para>
     /// </remarks>
     IReadOnlyDictionary<ApplicationIntegrationType, Snowflake> AuthorizingIntegrationOwners { get; }
+
+    /// <summary>
+    /// Gets the interaction metadata responsible, if this is a response to a modal.
+    /// </summary>
+    Optional<IMessageInteractionMetadata> TriggeringInteractionMetadata { get; }
 }
