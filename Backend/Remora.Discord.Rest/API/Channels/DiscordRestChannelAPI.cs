@@ -499,7 +499,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     )
     {
         var hasAny = around.HasValue || before.HasValue || after.HasValue;
-        var hasStrictlyOne = (around.HasValue ^ before.HasValue ^ after.HasValue)
+        var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue
                              && !(around.HasValue && before.HasValue && after.HasValue);
 
         if (hasAny && !hasStrictlyOne)
@@ -580,6 +580,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<IReadOnlyList<Snowflake>> stickerIDs = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<bool> enforceNonce = default,
         CancellationToken ct = default
     )
     {
@@ -649,6 +650,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             json.Write("sticker_ids", stickerIDs, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
+                            json.Write("enforce_nonce", enforceNonce, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);

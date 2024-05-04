@@ -111,7 +111,7 @@ public class HttpCatCommands : CommandGroup
     [Description("Posts a cat image that matches the provided channel.")]
     public Task<IResult> PostChannelHttpCatAsync
     (
-        [Description("The channel to cattify")][ChannelTypes(ChannelType.GuildText)] IChannel channel
+        [Description("The channel to cattify")] [ChannelTypes(ChannelType.GuildText)] IChannel channel
     )
     {
         var values = Enum.GetValues<HttpStatusCode>();

@@ -2091,6 +2091,61 @@ public class DiscordRestGuildAPITests
     }
 
     /// <summary>
+    /// Tests the <see cref="DiscordRestGuildAPI.BulkGuildBanAsync"/> method.
+    /// </summary>
+    public class BulkGuildBanAsync : RestAPITestBase<IDiscordRestGuildAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BulkGuildBanAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public BulkGuildBanAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var userIds = new[] { DiscordSnowflake.New(1) };
+            var deleteMessageSeconds = 864000;
+            var reason = "ddd";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/bulk-ban")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("user_ids", p => p.IsArray(a => a.WithElement(0, e => e.Is(userIds[0]))))
+                                .WithProperty("delete_message_seconds", p => p.Is(deleteMessageSeconds))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IBulkBanResponse)])
+            );
+
+            var result = await api.BulkGuildBanAsync
+            (
+                guildId,
+                userIds,
+                deleteMessageSeconds,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
     /// Tests the <see cref="DiscordRestGuildAPI.GetGuildRolesAsync"/> method.
     /// </summary>
     public class GetGuildRolesAsync : RestAPITestBase<IDiscordRestGuildAPI>

@@ -385,7 +385,9 @@ internal class PayloadConverter : JsonConverter<IPayload?>
         {
             eventData = JsonSerializer.Deserialize
             (
-                dataProperty.GetRawText(), eventType, options
+                dataProperty.GetRawText(),
+                eventType,
+                options
             );
         }
         catch

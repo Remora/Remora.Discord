@@ -1,5 +1,5 @@
 //
-//  PartialEntitlement.cs
+//  GuildScheduledEventUserRemoveTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Tests.Gateway.Events;
 
-/// <inheritdoc />
-[PublicAPI]
-public record PartialEntitlement
-(
-    Optional<Snowflake> ID = default,
-    Optional<Snowflake> SKUID = default,
-    Optional<Snowflake> ApplicationID = default,
-    Optional<Snowflake> UserID = default,
-    Optional<EntitlementType> Type = default,
-    Optional<bool> IsDeleted = default,
-    Optional<DateTimeOffset> StartsAt = default,
-    Optional<DateTimeOffset> EndsAt = default,
-    Optional<Snowflake> GuildID = default,
-    Optional<bool> IsConsumed = default
-) : IPartialEntitlement;
+/// <summary>
+/// Tests the Hello event.
+/// </summary>
+public class GuildScheduledEventUserRemoveTests : GatewayEventTestBase<IGuildScheduledEventUserRemove>
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GuildScheduledEventUserRemoveTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public GuildScheduledEventUserRemoveTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+}

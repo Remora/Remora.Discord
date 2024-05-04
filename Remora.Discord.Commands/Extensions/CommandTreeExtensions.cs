@@ -55,7 +55,7 @@ public static class CommandTreeExtensions
     private const int _maxGroupCommands = 25;
     private const int _maxChoiceValues = 25;
     private const int _maxCommandParameters = 25;
-    private const int _maxCommandStringifiedLength = 4000;
+    private const int _maxCommandStringifiedLength = 8000;
     private const int _maxCommandDescriptionLength = 100;
     private const int _maxTreeDepth = 3; // Top level is a depth of 1
 
@@ -239,204 +239,220 @@ public static class CommandTreeExtensions
 
     private static TopLevelMetadata GetNodeMetadata(IChildNode node)
     {
-        Optional<ApplicationCommandType> commandType = default;
-        Optional<bool> directMessagePermission = default;
-        IDiscordPermissionSet? defaultMemberPermissions = default;
-        Optional<bool> isNsfw = default;
-        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default;
-        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default;
-
-        switch (node)
+        return node switch
         {
-            case GroupNode groupNode:
-            {
-                var memberPermissionAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
+            GroupNode groupNode => GetGroupNodeMetadata(node, groupNode),
+            CommandNode commandNode => GetCommandNodeMetadata(commandNode),
+            _ => new(default, default, default, default, default, default)
+        };
+    }
 
-                if (memberPermissionAttributes.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        "In a set of groups with the same name, only one may be marked with a default " +
-                        $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
-                        node
-                    );
-                }
+    private static TopLevelMetadata GetCommandNodeMetadata(CommandNode commandNode)
+    {
+        var commandType = commandNode.GetCommandType();
 
-                var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
+        IDiscordPermissionSet? defaultMemberPermissions = null;
+        var memberPermissionsAttribute =
+            commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
+            commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
 
-                if (defaultMemberPermissionsAttribute is not null)
-                {
-                    defaultMemberPermissions = new DiscordPermissionSet
-                    (
-                        defaultMemberPermissionsAttribute.Permissions.ToArray()
-                    );
-                }
-
-                var directMessagePermissionAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
-
-                if (directMessagePermissionAttributes.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        "In a set of groups with the same name, only one may be marked with a default " +
-                        $"DM permissions attribute, but {directMessagePermissionAttributes.Length} were found.",
-                        node
-                    );
-                }
-
-                var directMessagePermissionAttribute = directMessagePermissionAttributes.SingleOrDefault();
-
-                if (directMessagePermissionAttribute is not null)
-                {
-                    directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
-                }
-
-                var isNsfwAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordNsfwAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
-
-                if (isNsfwAttributes.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        $"In a set of groups with the same name, only one may be marked with a NSFW attribute, but "
-                        + $"{isNsfwAttributes.Length} were found.",
-                        node
-                    );
-                }
-
-                var nsfwAttribute = isNsfwAttributes.SingleOrDefault();
-
-                if (nsfwAttribute is not null)
-                {
-                    isNsfw = nsfwAttribute.IsNsfw;
-                }
-
-                var contextsAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<AllowedContextsAttribute>()
-                );
-
-                var contexts = contextsAttributes
-                    .Where(attribute => attribute is not null)
-                    .ToArray();
-
-                if (contexts.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        $"In a set of groups with the same name, only one may be marked with a context attribute, but "
-                        + $"{contexts.Length} were found.",
-                        node
-                    );
-                }
-
-                var context = contexts.SingleOrDefault();
-
-                if (context is not null)
-                {
-                    allowedContextTypes = context.Contexts.AsOptional();
-                }
-
-                var installAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordInstallContextAttribute>()
-                );
-
-                var installs = installAttributes
-                    .Where(attribute => attribute is not null)
-                    .ToArray();
-
-                if (installs.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        $"In a set of groups with the same name, only one may be marked with an install attribute, "
-                      + $"but {installs.Length} were found.",
-                        node
-                    );
-                }
-
-                var install = installs.SingleOrDefault();
-
-                if (install is not null)
-                {
-                    allowedIntegrationTypes = install.InstallTypes.AsOptional();
-                }
-
-                break;
-            }
-            case CommandNode commandNode:
-            {
-                commandType = commandNode.GetCommandType();
-
-                // Top-level command outside of a group
-                var memberPermissionsAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
-
-                if (memberPermissionsAttribute is not null)
-                {
-                    defaultMemberPermissions = new DiscordPermissionSet
-                    (
-                        memberPermissionsAttribute.Permissions.ToArray()
-                    );
-                }
-
-                var directMessagePermissionAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
-
-                if (directMessagePermissionAttribute is not null)
-                {
-                    directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
-                }
-
-                var nsfwAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordNsfwAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordNsfwAttribute>();
-
-                if (nsfwAttribute is not null)
-                {
-                    isNsfw = nsfwAttribute.IsNsfw;
-                }
-
-                var contextsAttribute =
-                    commandNode.GroupType.GetCustomAttribute<AllowedContextsAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<AllowedContextsAttribute>();
-
-                if (contextsAttribute is not null)
-                {
-                    allowedContextTypes = contextsAttribute.Contexts.AsOptional();
-                }
-
-                var integrationAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordInstallContextAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordInstallContextAttribute>();
-
-                if (integrationAttribute is not null)
-                {
-                    allowedIntegrationTypes = integrationAttribute.InstallTypes.AsOptional();
-                }
-
-                break;
-            }
+        if (memberPermissionsAttribute is not null)
+        {
+            defaultMemberPermissions = new DiscordPermissionSet
+            (
+                memberPermissionsAttribute.Permissions.ToArray()
+            );
         }
 
-        return new(commandType, directMessagePermission, defaultMemberPermissions, isNsfw, allowedIntegrationTypes, allowedContextTypes);
+        var directMessagePermission = default(Optional<bool>);
+        var directMessagePermissionAttribute =
+            commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
+            commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
+
+        if (directMessagePermissionAttribute is not null)
+        {
+            directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+        }
+
+        var isNsfw = default(Optional<bool>);
+        var nsfwAttribute =
+            commandNode.GroupType.GetCustomAttribute<DiscordNsfwAttribute>() ??
+            commandNode.CommandMethod.GetCustomAttribute<DiscordNsfwAttribute>();
+
+        if (nsfwAttribute is not null)
+        {
+            isNsfw = nsfwAttribute.IsNsfw;
+        }
+
+        var allowedContextTypes = default(Optional<IReadOnlyList<InteractionContextType>>);
+        var contextsAttribute =
+            commandNode.GroupType.GetCustomAttribute<AllowedContextsAttribute>() ??
+            commandNode.CommandMethod.GetCustomAttribute<AllowedContextsAttribute>();
+
+        if (contextsAttribute is not null)
+        {
+            allowedContextTypes = contextsAttribute.Contexts.AsOptional();
+        }
+
+        var allowedIntegrationTypes = default(Optional<IReadOnlyList<ApplicationIntegrationType>>);
+        var integrationAttribute =
+            commandNode.GroupType.GetCustomAttribute<DiscordInstallContextAttribute>() ??
+            commandNode.CommandMethod.GetCustomAttribute<DiscordInstallContextAttribute>();
+
+        if (integrationAttribute is not null)
+        {
+            allowedIntegrationTypes = integrationAttribute.InstallTypes.AsOptional();
+        }
+
+        return new
+        (
+            commandType,
+            directMessagePermission,
+            defaultMemberPermissions,
+            isNsfw,
+            allowedIntegrationTypes,
+            allowedContextTypes
+        );
+    }
+
+    private static TopLevelMetadata GetGroupNodeMetadata(IChildNode node, GroupNode groupNode)
+    {
+        var memberPermissionAttributes = groupNode.GroupTypes.Select
+            (
+                t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
+            )
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (memberPermissionAttributes.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                "In a set of groups with the same name, only one may be marked with a default " +
+                $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                node
+            );
+        }
+
+        IDiscordPermissionSet? defaultMemberPermissions = null;
+        var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
+        if (defaultMemberPermissionsAttribute is not null)
+        {
+            defaultMemberPermissions = new DiscordPermissionSet
+            (
+                defaultMemberPermissionsAttribute.Permissions.ToArray()
+            );
+        }
+
+        var directMessagePermission = default(Optional<bool>);
+        var directMessagePermissionAttributes = groupNode.GroupTypes.Select
+            (
+                t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
+            )
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (directMessagePermissionAttributes.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                "In a set of groups with the same name, only one may be marked with a default " +
+                $"DM permissions attribute, but {directMessagePermissionAttributes.Length} were found.",
+                node
+            );
+        }
+
+        var directMessagePermissionAttribute = directMessagePermissionAttributes.SingleOrDefault();
+        if (directMessagePermissionAttribute is not null)
+        {
+            directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+        }
+
+        var isNsfw = default(Optional<bool>);
+        var isNsfwAttributes = groupNode.GroupTypes.Select
+            (
+                t => t.GetCustomAttribute<DiscordNsfwAttribute>()
+            )
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (isNsfwAttributes.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                $"In a set of groups with the same name, only one may be marked with a NSFW attribute, but "
+                + $"{isNsfwAttributes.Length} were found.",
+                node
+            );
+        }
+
+        var nsfwAttribute = isNsfwAttributes.SingleOrDefault();
+        if (nsfwAttribute is not null)
+        {
+            isNsfw = nsfwAttribute.IsNsfw;
+        }
+
+        var allowedContextTypes = default(Optional<IReadOnlyList<InteractionContextType>>);
+        var contextsAttributes = groupNode.GroupTypes.Select
+        (
+            t => t.GetCustomAttribute<AllowedContextsAttribute>()
+        );
+
+        var contexts = contextsAttributes
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (contexts.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                $"In a set of groups with the same name, only one may be marked with a context attribute, but "
+                + $"{contexts.Length} were found.",
+                node
+            );
+        }
+
+        var context = contexts.SingleOrDefault();
+        if (context is not null)
+        {
+            allowedContextTypes = context.Contexts.AsOptional();
+        }
+
+        var allowedIntegrationTypes = default(Optional<IReadOnlyList<ApplicationIntegrationType>>);
+        var installAttributes = groupNode.GroupTypes.Select
+        (
+            t => t.GetCustomAttribute<DiscordInstallContextAttribute>()
+        );
+
+        var installs = installAttributes
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (installs.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                $"In a set of groups with the same name, only one may be marked with an install attribute, "
+                + $"but {installs.Length} were found.",
+                node
+            );
+        }
+
+        var install = installs.SingleOrDefault();
+        if (install is not null)
+        {
+            allowedIntegrationTypes = install.InstallTypes.AsOptional();
+        }
+
+        return new
+        (
+            default,
+            directMessagePermission,
+            defaultMemberPermissions,
+            isNsfw,
+            allowedIntegrationTypes,
+            allowedContextTypes
+        );
     }
 
     private static IApplicationCommandOption? TranslateCommandNode

@@ -954,7 +954,8 @@ public class DiscordRestApplicationAPITests
                 b => b
                     .Expect
                     (
-                        HttpMethod.Delete, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}"
+                        HttpMethod.Delete,
+                        $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}"
                     )
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)

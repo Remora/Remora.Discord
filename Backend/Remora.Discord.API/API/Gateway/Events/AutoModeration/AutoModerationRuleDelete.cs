@@ -57,4 +57,5 @@ public record AutoModerationRuleDelete
     IsEnabled,
     ExemptRoles,
     ExemptChannels
-), IAutoModerationRuleDelete;
+),
+IAutoModerationRuleDelete;

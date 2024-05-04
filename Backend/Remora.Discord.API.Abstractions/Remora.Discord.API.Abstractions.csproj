@@ -117,6 +117,9 @@
       <Compile Update="API\Rest\IChannelPositionModification.cs">
         <DependentUpon>IDiscordRestGuildAPI.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Rest\IBulkBanResponse.cs">
+        <DependentUpon>IDiscordRestGuildAPI.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

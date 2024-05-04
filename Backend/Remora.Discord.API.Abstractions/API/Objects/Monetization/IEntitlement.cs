@@ -77,6 +77,11 @@ public interface IEntitlement : IPartialEntitlement
     /// </summary>
     new Optional<Snowflake> GuildID { get; }
 
+    /// <summary>
+    /// Gets a value indicating whether the entitlement has been consumed.
+    /// </summary>
+    new Optional<bool> IsConsumed { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialEntitlement.ID => this.ID;
 
@@ -84,13 +89,10 @@ public interface IEntitlement : IPartialEntitlement
     Optional<Snowflake> IPartialEntitlement.SKUID => this.SKUID;
 
     /// <inheritdoc/>
-    Optional<Snowflake> IPartialEntitlement.UserID => this.UserID;
-
-    /// <inheritdoc/>
-    Optional<Snowflake> IPartialEntitlement.GuildID => this.GuildID;
-
-    /// <inheritdoc/>
     Optional<Snowflake> IPartialEntitlement.ApplicationID => this.ApplicationID;
+
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialEntitlement.UserID => this.UserID;
 
     /// <inheritdoc/>
     Optional<EntitlementType> IPartialEntitlement.Type => this.Type;
@@ -103,4 +105,10 @@ public interface IEntitlement : IPartialEntitlement
 
     /// <inheritdoc/>
     Optional<DateTimeOffset> IPartialEntitlement.EndsAt => this.EndsAt;
+
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialEntitlement.GuildID => this.GuildID;
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialEntitlement.IsConsumed => this.IsConsumed;
 }

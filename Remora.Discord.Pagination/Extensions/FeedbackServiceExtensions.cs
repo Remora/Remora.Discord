@@ -93,7 +93,7 @@ public static class FeedbackServiceExtensions
         var send = await feedback.SendEmbedAsync
         (
             channel,
-            pages[0] with { Footer = new EmbedFooter($"Page 1/{pages.Count}") },
+            data.GetCurrentPage(),
             options,
             ct
         );
@@ -160,7 +160,7 @@ public static class FeedbackServiceExtensions
 
         var send = await feedback.SendContextualEmbedAsync
         (
-            pages[0] with { Footer = new EmbedFooter($"Page 1/{pages.Count}") },
+            data.GetCurrentPage(),
             options,
             ct
         );
@@ -226,7 +226,7 @@ public static class FeedbackServiceExtensions
         var send = await feedback.SendPrivateEmbedAsync
         (
             user,
-            pages[0] with { Footer = new EmbedFooter($"Page 1/{pages.Count}") },
+            data.GetCurrentPage(),
             options,
             ct
         );

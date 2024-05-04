@@ -1,5 +1,5 @@
 //
-//  PartialEntitlement.cs
+//  BulkBanResponse.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Rest;
 
 /// <inheritdoc />
 [PublicAPI]
-public record PartialEntitlement
+public record BulkBanResponse
 (
-    Optional<Snowflake> ID = default,
-    Optional<Snowflake> SKUID = default,
-    Optional<Snowflake> ApplicationID = default,
-    Optional<Snowflake> UserID = default,
-    Optional<EntitlementType> Type = default,
-    Optional<bool> IsDeleted = default,
-    Optional<DateTimeOffset> StartsAt = default,
-    Optional<DateTimeOffset> EndsAt = default,
-    Optional<Snowflake> GuildID = default,
-    Optional<bool> IsConsumed = default
-) : IPartialEntitlement;
+    IReadOnlyList<Snowflake> BannedUsers,
+    IReadOnlyList<Snowflake> FailedUsers
+) : IBulkBanResponse;

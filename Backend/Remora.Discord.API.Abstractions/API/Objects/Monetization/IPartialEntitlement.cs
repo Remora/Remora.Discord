@@ -58,4 +58,7 @@ public interface IPartialEntitlement
 
     /// <inheritdoc cref="IEntitlement.GuildID"/>
     Optional<Snowflake> GuildID { get; }
+
+    /// <inheritdoc cref="IEntitlement.IsConsumed"/>
+    Optional<bool> IsConsumed { get; }
 }

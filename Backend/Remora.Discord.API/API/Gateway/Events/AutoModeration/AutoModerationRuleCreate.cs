@@ -57,4 +57,5 @@ public record AutoModerationRuleCreate
     IsEnabled,
     ExemptRoles,
     ExemptChannels
-), IAutoModerationRuleCreate;
+),
+IAutoModerationRuleCreate;
