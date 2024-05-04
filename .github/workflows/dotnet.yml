@@ -7,6 +7,9 @@ env:
   GITHUB_FEED: https://nuget.pkg.github.com/Remora
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+permissions:
+  pull-requests: write
+
 on:
   push:
     branches: [ main ]
