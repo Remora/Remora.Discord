@@ -1203,10 +1203,9 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddOAuth2ObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IApplication, Application>()
-            .WithPropertyName(a => a.IsBotPublic, "bot_public")
-            .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
-            .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id")
-            .WithPropertyConverter(a => a.IntegrationTypesConfig, new IntegrationTypeConfigConverter());
+               .WithPropertyName(a => a.IsBotPublic, "bot_public")
+               .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
+               .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
 
         options.AddDataObjectConverter<IPartialApplication, PartialApplication>()
             .WithPropertyName(a => a.IsBotPublic, "bot_public")
@@ -1222,7 +1221,7 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IApplicationOAuth2InstallParams, ApplicationOAuth2InstallParams>();
 
-        //options.Converters.Insert(0, new JsonNumberEnumConverter<ApplicationIntegrationType>());
+        options.Converters.Insert(0, new IntegrationTypeConfigConverter());
         return options;
     }
 
