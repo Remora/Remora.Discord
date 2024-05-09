@@ -21,6 +21,7 @@
 //
 
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -1204,7 +1205,8 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IApplication, Application>()
             .WithPropertyName(a => a.IsBotPublic, "bot_public")
             .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
-            .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+            .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id")
+            .WithPropertyConverter(a => a.IntegrationTypesConfig, new IntegrationTypeConfigConverter());
 
         options.AddDataObjectConverter<IPartialApplication, PartialApplication>()
             .WithPropertyName(a => a.IsBotPublic, "bot_public")
@@ -1220,7 +1222,7 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IApplicationOAuth2InstallParams, ApplicationOAuth2InstallParams>();
 
-        options.Converters.Insert(0, new StringEnumConverter<ApplicationIntegrationType>(options.PropertyNamingPolicy, true));
+        //options.Converters.Insert(0, new JsonNumberEnumConverter<ApplicationIntegrationType>());
         return options;
     }
 
