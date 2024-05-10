@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -33,5 +34,5 @@ public interface IApplicationIntegrationTypeConfig
     /// <summary>
     /// Gets the OAuth2 install parameters for the integration type.
     /// </summary>
-    public IApplicationOAuth2InstallParams OAuth2InstallParams { get; }
+    public Optional<IApplicationOAuth2InstallParams> OAuth2InstallParams { get; }
 }
