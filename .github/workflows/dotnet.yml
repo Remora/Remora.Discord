@@ -10,6 +10,7 @@ env:
 permissions:
   pull-requests: write
   contents: write
+  packages: write
 
 on:
   push:
