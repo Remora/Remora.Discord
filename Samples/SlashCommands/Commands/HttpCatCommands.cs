@@ -11,10 +11,8 @@ using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
-using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
@@ -31,9 +29,7 @@ public class HttpCatCommands : CommandGroup
     /// Initializes a new instance of the <see cref="HttpCatCommands"/> class.
     /// </summary>
     /// <param name="feedbackService">The feedback service.</param>
-    /// <param name="interactions">The interactions API.</param>
-    /// <param name="context">The context.</param>
-    public HttpCatCommands(FeedbackService feedbackService, IDiscordRestInteractionAPI interactions, IInteractionContext context)
+    public HttpCatCommands(FeedbackService feedbackService)
     {
         _feedbackService = feedbackService;
     }

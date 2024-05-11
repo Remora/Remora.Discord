@@ -1050,7 +1050,7 @@ public static class ServiceCollectionExtensions
                .WithPropertyConverter
                (
                    i => i.AuthorizingIntegrationOwners,
-                   new EnumKeyDictionaryConverterFactory()
+                   new EnumIntKeyDictionaryConverterFactory()
                );
         options.AddDataObjectConverter
             <
@@ -1197,7 +1197,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
 
         options.AddDataObjectConverter<IMessageInteractionMetadata, MessageInteractionMetadata>()
-               .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumKeyDictionaryConverterFactory());
+               .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
 
         return options;
     }
@@ -1213,7 +1213,7 @@ public static class ServiceCollectionExtensions
                .WithPropertyName(a => a.IsBotPublic, "bot_public")
                .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
                .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id")
-               .WithPropertyConverter(a => a.IntegrationTypesConfig, new EnumKeyDictionaryConverterFactory());
+               .WithPropertyConverter(a => a.IntegrationTypesConfig, new EnumIntKeyDictionaryConverterFactory());
 
         options.AddDataObjectConverter<IPartialApplication, PartialApplication>()
             .WithPropertyName(a => a.IsBotPublic, "bot_public")
@@ -1229,7 +1229,7 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IApplicationOAuth2InstallParams, ApplicationOAuth2InstallParams>();
 
-        options.Converters.Insert(0, new EnumKeyDictionaryConverterFactory.EnumKeyDictionaryConverterInner<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>(options));
+        options.Converters.Insert(0, new EnumIntKeyDictionaryConverterFactory.EnumKeyDictionaryConverterInner<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>(options));
 
         return options;
     }

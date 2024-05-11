@@ -1,5 +1,5 @@
 //
-//  EnumKeyDictionaryConverterFactory.cs
+//  EnumIntKeyDictionaryConverterFactory.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Json;
 /// <summary>
 /// Creates a JSON converter for dictionaries with enum keys.
 /// </summary>
-internal class EnumKeyDictionaryConverterFactory : JsonConverterFactory
+internal class EnumIntKeyDictionaryConverterFactory : JsonConverterFactory
 {
     /// <inheritdoc />
     public override bool CanConvert(Type typeToConvert)
