@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
@@ -29,7 +31,9 @@ public class HttpCatCommands : CommandGroup
     /// Initializes a new instance of the <see cref="HttpCatCommands"/> class.
     /// </summary>
     /// <param name="feedbackService">The feedback service.</param>
-    public HttpCatCommands(FeedbackService feedbackService)
+    /// <param name="interactions">The interactions API.</param>
+    /// <param name="context">The context.</param>
+    public HttpCatCommands(FeedbackService feedbackService, IDiscordRestInteractionAPI interactions, IInteractionContext context)
     {
         _feedbackService = feedbackService;
     }
@@ -120,6 +124,17 @@ public class HttpCatCommands : CommandGroup
         var code = values[index];
         return PostHttpCatAsync((int)code);
     }
+
+    /// <inheritdoc cref="PostUserHttpCatAsync"/>
+    /// <remarks>
+    /// This method differs in the fact that it is installable to a user's account, rather than a guild.
+    /// </remarks>
+    [Command("user-cat-dm")]
+    [AllowedContexts(InteractionContextType.PrivateChannel)]
+    [DiscordInstallContext(ApplicationIntegrationType.UserInstallable)]
+    [Description("Posts a cat image that matches the user, usable exclusively in DMs.")]
+    public Task<IResult> PostUserHttpCatDMAsync([Description("The user to cattify")] IPartialUser catUser)
+        => PostUserHttpCatAsync(catUser);
 
     private static ulong Map(ulong value, ulong fromSource, ulong toSource, ulong fromTarget, ulong toTarget)
     {
