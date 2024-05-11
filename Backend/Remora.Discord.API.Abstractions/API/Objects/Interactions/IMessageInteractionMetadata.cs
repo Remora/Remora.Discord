@@ -43,11 +43,6 @@ public interface IMessageInteractionMetadata
     IUser User { get; }
 
     /// <summary>
-    /// Gets the name of the command.
-    /// </summary>
-    Optional<string> Name { get; }
-
-    /// <summary>
     /// Gets the type of the interaction.
     /// </summary>
     InteractionType Type { get; }

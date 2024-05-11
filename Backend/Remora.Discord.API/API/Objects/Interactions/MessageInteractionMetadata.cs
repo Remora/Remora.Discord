@@ -33,7 +33,6 @@ public record MessageInteractionMetadata
 (
     Snowflake ID,
     IUser User,
-    Optional<string> Name,
     Optional<Snowflake> OriginalResponseMessageID,
     Optional<Snowflake> InteractedMessageID,
     InteractionType Type,
