@@ -28,5 +28,7 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IApplicationIntegrationTypeConfig"/>
 [PublicAPI]
-public record ApplicationIntegrationTypeConfig(Optional<IApplicationOAuth2InstallParams> OAuth2InstallParams)
-    : IApplicationIntegrationTypeConfig;
+public record ApplicationIntegrationTypeConfig
+(
+    Optional<IApplicationOAuth2InstallParams> OAuth2InstallParams
+) : IApplicationIntegrationTypeConfig;
