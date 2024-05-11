@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Json;
 /// <summary>
 /// Creates a JSON converter for dictionaries with enum keys.
 /// </summary>
-public class EnumKeyDictionaryConverterFactory : JsonConverterFactory
+internal class EnumKeyDictionaryConverterFactory : JsonConverterFactory
 {
     /// <inheritdoc />
     public override bool CanConvert(Type typeToConvert)
