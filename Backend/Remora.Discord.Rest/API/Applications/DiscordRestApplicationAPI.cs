@@ -726,7 +726,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("cover_image", base64EncodedCover, this.JsonOptions);
                         json.Write("interactions_endpoint_url", interactionsEndpointUrl, this.JsonOptions);
                         json.Write("tags", tags, this.JsonOptions);
-                        json.Write("integration_types", integrationTypesConfig, this.JsonOptions);
+                        json.Write("integration_types_config", integrationTypesConfig, this.JsonOptions);
                     }
                 );
 
