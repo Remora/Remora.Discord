@@ -41,6 +41,7 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.API.Rest;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
+using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Rest.Json;
 using Remora.Rest.Json.Policies;
@@ -1227,6 +1228,8 @@ public static class ServiceCollectionExtensions
                .WithPropertyName(a => a.OAuth2InstallParams, "oauth2_install_params");
 
         options.AddDataObjectConverter<IApplicationOAuth2InstallParams, ApplicationOAuth2InstallParams>();
+
+        options.Converters.Insert(0, new EnumKeyDictionaryConverterFactory.EnumKeyDictionaryConverterInner<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>(options));
 
         return options;
     }

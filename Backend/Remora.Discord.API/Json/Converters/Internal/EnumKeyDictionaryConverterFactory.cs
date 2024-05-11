@@ -50,18 +50,24 @@ public class EnumKeyDictionaryConverterFactory : JsonConverterFactory
                options
            );
 
-    private class EnumKeyDictionaryConverterInner<TEnumKey, TValue> : JsonConverter<IReadOnlyDictionary<TEnumKey, TValue>>
+    /// <inheritdoc />
+    internal class EnumKeyDictionaryConverterInner<TEnumKey, TValue> : JsonConverter<IReadOnlyDictionary<TEnumKey, TValue>>
         where TEnumKey : struct, Enum
     {
         private readonly JsonConverter<TValue> _valueConverter;
         private readonly JsonConverter<TEnumKey> _keyConverter;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnumKeyDictionaryConverterInner{TEnumKey, TValue}"/> class.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
         public EnumKeyDictionaryConverterInner(JsonSerializerOptions options)
         {
             _valueConverter = (JsonConverter<TValue>)options.GetConverter(typeof(TValue));
             _keyConverter = new StringEnumConverter<TEnumKey>(asInteger: true);
         }
 
+        /// <inheritdoc />
         public override IReadOnlyDictionary<TEnumKey, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -104,6 +110,7 @@ public class EnumKeyDictionaryConverterFactory : JsonConverterFactory
             return result;
         }
 
+        /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, IReadOnlyDictionary<TEnumKey, TValue> value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
