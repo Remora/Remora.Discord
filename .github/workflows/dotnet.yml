@@ -11,6 +11,7 @@ permissions:
   pull-requests: write
   contents: write
   packages: write
+  security-events: write
 
 on:
   push:
@@ -61,11 +62,10 @@ jobs:
           output: both
           thresholds: '60 80'
 
-      - name: Add Coverage PR Comment
-        uses: marocchino/sticky-pull-request-comment@v2
+      - uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
         with:
-          recreate: true
+          name: coverage
           path: code-coverage-results.md
 
       - name: Package
@@ -90,9 +90,6 @@ jobs:
         with:
           name: docfx-site
           path: docfx/docfx_project/_site/
-
-    permissions:
-      security-events: write
 
   publish_docs:
     name: Publish Documentation
