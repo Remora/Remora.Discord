@@ -199,5 +199,19 @@ public enum GatewayIntents
     /// Subscribes to the following events:
     ///     - AUTO_MODERATION_ACTION_EXECUTION
     /// </summary>
-    AutoModerationExecution = 1 << 21
+    AutoModerationExecution = 1 << 21,
+
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - MESSAGE_POLL_VOTE_ADD
+    ///     - MESSAGE_POLL_VOTE_REMOVE
+    /// </summary>
+    GuildMessagePolls = 1 << 24,
+
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - MESSAGE_POLL_VOTE_ADD
+    ///     - MESSAGE_POLL_VOTE_REMOVE
+    /// </summary>
+    DirectMessagePolls = 1 << 25,
 }

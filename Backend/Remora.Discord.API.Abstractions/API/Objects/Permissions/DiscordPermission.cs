@@ -272,5 +272,10 @@ public enum DiscordPermission
     /// <summary>
     /// Allows for sending voice messages.
     /// </summary>
-    SendVoiceMessages = 46
+    SendVoiceMessages = 46,
+
+    /// <summary>
+    /// Allows for sending polls.
+    /// </summary>
+    SendPolls = 49,
 }

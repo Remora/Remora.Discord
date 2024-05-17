@@ -92,5 +92,8 @@ public enum DiscordTextPermission
     SendMessagesInThreads = DiscordPermission.SendMessagesInThreads,
 
     /// <inheritdoc cref="DiscordPermission.SendVoiceMessages"/>
-    SendVoiceMessages = DiscordPermission.SendVoiceMessages
+    SendVoiceMessages = DiscordPermission.SendVoiceMessages,
+
+    /// <inheritdoc cref="DiscordPermission.SendPolls"/>
+    SendPolls = DiscordPermission.SendPolls,
 }

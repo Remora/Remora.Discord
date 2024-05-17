@@ -1190,6 +1190,51 @@ public class DiscordRestWebhookAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        public async Task PerformsPollRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
+
+            var poll = new PollCreateRequest
+            (
+                new PollMedia("abc"),
+                new[]
+                {
+                    new PollAnswer(new PollMedia("xyz"))
+                },
+                5,
+                true
+            );
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o.WithProperty("poll", p => p.IsObject())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                poll: poll
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
         public async Task PerformsNullReturnRequestCorrectly()
         {
             var webhookId = DiscordSnowflake.New(0);

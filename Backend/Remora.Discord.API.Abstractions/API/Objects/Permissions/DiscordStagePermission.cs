@@ -98,5 +98,8 @@ public enum DiscordStagePermission
     UseExternalStickers = DiscordPermission.UseExternalStickers,
 
     /// <inheritdoc cref="DiscordPermission.SendVoiceMessages"/>
-    SendVoiceMessages = DiscordPermission.SendVoiceMessages
+    SendVoiceMessages = DiscordPermission.SendVoiceMessages,
+
+    /// <inheritdoc cref="DiscordPermission.SendPolls"/>
+    SendPolls = DiscordPermission.SendPolls,
 }

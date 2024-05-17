@@ -1051,5 +1051,35 @@ public enum DiscordError
     /// <summary>
     /// Failed to bulk ban the given set of users.
     /// </summary>
-    FailedToBanUsers = 500000
+    FailedToBanUsers = 500000,
+
+    /// <summary>
+    /// Poll voting is blocked.
+    /// </summary>
+    PollVotingBlocked = 520000,
+
+    /// <summary>
+    /// Poll has expired.
+    /// </summary>
+    PollExpired = 520001,
+
+    /// <summary>
+    /// Invalid channel type for poll creation.
+    /// </summary>
+    InvalidChannelTypeForPollCreation = 520002,
+
+    /// <summary>
+    /// Poll message cannot be edited.
+    /// </summary>
+    CannotEditAPollMessage = 520003,
+
+    /// <summary>
+    /// The emoji included in the poll cannot be used.
+    /// </summary>
+    CannotUseAnEmojiIncludedWithThePoll = 520004,
+
+    /// <summary>
+    /// A non-poll message cannot expire.
+    /// </summary>
+    CannotExpireANonPollMessage = 520006,
 }

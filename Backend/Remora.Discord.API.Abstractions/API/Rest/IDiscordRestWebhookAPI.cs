@@ -226,6 +226,7 @@ public interface IDiscordRestWebhookAPI
     /// <param name="flags">The message flags.</param>
     /// <param name="threadName">The name of the forum thread to create.</param>
     /// <param name="appliedTags">The tags to apply to the thread (requires the webhook channel to be a forum or media channel).</param>
+    /// <param name="poll">The poll of the message.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>
     /// A result which may or may not have succeeded. The returned message is null if <paramref name="shouldWait"/>
@@ -248,6 +249,7 @@ public interface IDiscordRestWebhookAPI
         Optional<MessageFlags> flags = default,
         Optional<string> threadName = default,
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     );
 

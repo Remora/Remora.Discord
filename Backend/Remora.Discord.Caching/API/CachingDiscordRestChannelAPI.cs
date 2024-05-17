@@ -228,6 +228,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
         Optional<bool> enforceNonce = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -245,6 +246,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
             attachments,
             flags,
             enforceNonce,
+            poll,
             ct
         );
 
