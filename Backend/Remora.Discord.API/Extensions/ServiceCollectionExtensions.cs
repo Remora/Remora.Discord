@@ -21,7 +21,6 @@
 //
 
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -41,7 +40,6 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.API.Rest;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
-using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Rest.Json;
 using Remora.Rest.Json.Policies;
