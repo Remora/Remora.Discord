@@ -1444,16 +1444,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionMetadata.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionMetadata.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationCommandOption.yml",
       "output": {
         ".html": {
@@ -2154,16 +2144,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageComponentInteractionMetadata.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageComponentInteractionMetadata.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageInteraction.yml",
       "output": {
         ".html": {
@@ -2198,16 +2178,6 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IModalSubmitData.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IModalSubmitInteractionMetadata.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IModalSubmitInteractionMetadata.html"
         }
       },
       "version": ""
@@ -5014,16 +4984,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Remora.Discord.API.Objects.ApplicationCommandInteractionMetadata.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Remora.Discord.API.Objects.ApplicationCommandInteractionMetadata.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Objects.ApplicationCommandOption.yml",
       "output": {
         ".html": {
@@ -5714,20 +5674,20 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Remora.Discord.API.Objects.MessageComponentInteractionMetadata.yml",
+      "source_relative_path": "api/Remora.Discord.API.Objects.MessageInteraction.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Remora.Discord.API.Objects.MessageComponentInteractionMetadata.html"
+          "relative_path": "api/Remora.Discord.API.Objects.MessageInteraction.html"
         }
       },
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Remora.Discord.API.Objects.MessageInteraction.yml",
+      "source_relative_path": "api/Remora.Discord.API.Objects.MessageInteractionMetadata.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Remora.Discord.API.Objects.MessageInteraction.html"
+          "relative_path": "api/Remora.Discord.API.Objects.MessageInteractionMetadata.html"
         }
       },
       "version": ""
@@ -5748,16 +5708,6 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.ModalSubmitData.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Remora.Discord.API.Objects.ModalSubmitInteractionMetadata.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Remora.Discord.API.Objects.ModalSubmitInteractionMetadata.html"
         }
       },
       "version": ""
