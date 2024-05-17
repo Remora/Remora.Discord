@@ -19,6 +19,8 @@ jobs:
         with:
           name: coverage
           path: code-coverage-results.md
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
