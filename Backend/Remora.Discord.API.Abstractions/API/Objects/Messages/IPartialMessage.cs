@@ -125,7 +125,7 @@ public interface IPartialMessage
     Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
 
     /// <inheritdoc cref="IMessage.InteractionMetadata"/>
-    Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> InteractionMetadata { get; }
+    Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
 
     /// <inheritdoc cref="IMessage.Poll"/>
     Optional<IPoll> Poll { get; }

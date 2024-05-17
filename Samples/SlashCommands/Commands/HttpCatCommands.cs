@@ -121,6 +121,17 @@ public class HttpCatCommands : CommandGroup
         return PostHttpCatAsync((int)code);
     }
 
+    /// <inheritdoc cref="PostUserHttpCatAsync"/>
+    /// <remarks>
+    /// This method differs in the fact that it is installable to a user's account, rather than a guild.
+    /// </remarks>
+    [Command("user-cat-dm")]
+    [AllowedContexts(InteractionContextType.PrivateChannel)]
+    [DiscordInstallContext(ApplicationIntegrationType.UserInstallable)]
+    [Description("Posts a cat image that matches the user, usable exclusively in DMs.")]
+    public Task<IResult> PostUserHttpCatDMAsync([Description("The user to cattify")] IPartialUser catUser)
+        => PostUserHttpCatAsync(catUser);
+
     private static ulong Map(ulong value, ulong fromSource, ulong toSource, ulong fromTarget, ulong toTarget)
     {
         return ((value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget)) + fromTarget;

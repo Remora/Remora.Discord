@@ -197,7 +197,7 @@ public interface IMessage : IPartialMessage
     /// <summary>
     /// Gets the metadata of the interaction, if any.
     /// </summary>
-    new Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> InteractionMetadata { get; }
+    new Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
 
     /// <summary>
     /// Gets the poll sent with the message, if any.
@@ -295,7 +295,7 @@ public interface IMessage : IPartialMessage
     Optional<IApplicationCommandInteractionDataResolved> IPartialMessage.Resolved => this.Resolved;
 
     /// <inheritdoc/>
-    Optional<OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata, IModalSubmitInteractionMetadata>> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
+    Optional<IMessageInteractionMetadata> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
 
     /// <inheritdoc/>
     Optional<IPoll> IPartialMessage.Poll => this.Poll;

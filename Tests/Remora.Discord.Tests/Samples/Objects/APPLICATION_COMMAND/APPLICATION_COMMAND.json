@@ -21,5 +21,7 @@
   "default_member_permissions": "0",
   "dm_permission": true,
   "nsfw": true,
-  "version": "999999999999999999"
+  "version": "999999999999999999",
+  "integration_types": [0, 1],
+  "contexts": [0, 1, 2]
 }

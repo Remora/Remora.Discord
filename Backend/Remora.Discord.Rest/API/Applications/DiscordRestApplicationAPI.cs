@@ -103,7 +103,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
-        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
         Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
@@ -154,7 +154,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
                         json.Write("contexts", allowedContextTypes, this.JsonOptions);
-                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
+                        json.Write("integration_types", integrationTypes, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -234,7 +234,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
         Optional<bool> isNsfw = default,
-        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
         Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
@@ -274,7 +274,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("dm_permission", dmPermission, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
                         json.Write("contexts", allowedContextTypes, this.JsonOptions);
-                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
+                        json.Write("integration_types", integrationTypes, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -387,7 +387,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool> isNsfw = default,
-        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
         Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
@@ -437,7 +437,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
                         json.Write("contexts", allowedContextTypes, this.JsonOptions);
-                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
+                        json.Write("integration_types", integrationTypes, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -475,7 +475,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool> isNsfw = default,
-        Optional<IReadOnlyList<ApplicationIntegrationType>> allowedIntegrationTypes = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
         Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     )
@@ -513,7 +513,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("default_member_permissions", defaultMemberPermissions, this.JsonOptions);
                         json.Write("nsfw", isNsfw, this.JsonOptions);
                         json.Write("contexts", allowedContextTypes, this.JsonOptions);
-                        json.Write("integration_types", allowedIntegrationTypes, this.JsonOptions);
+                        json.Write("integration_types", integrationTypes, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -683,7 +683,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<Stream> coverImage = default,
         Optional<Uri> interactionsEndpointUrl = default,
         Optional<IReadOnlyList<string>> tags = default,
-        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
+        Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>> integrationTypesConfig = default,
         CancellationToken ct = default
     )
     {
@@ -726,7 +726,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("cover_image", base64EncodedCover, this.JsonOptions);
                         json.Write("interactions_endpoint_url", interactionsEndpointUrl, this.JsonOptions);
                         json.Write("tags", tags, this.JsonOptions);
-                        json.Write("integration_types", integrationTypes, this.JsonOptions);
+                        json.Write("integration_types_config", integrationTypesConfig, this.JsonOptions);
                     }
                 );
 

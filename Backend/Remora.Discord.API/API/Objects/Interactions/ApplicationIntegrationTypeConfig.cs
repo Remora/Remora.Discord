@@ -22,9 +22,13 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IApplicationIntegrationTypeConfig"/>
 [PublicAPI]
-public record ApplicationIntegrationTypeConfig(IApplicationOAuth2InstallParams OAuth2InstallParams) : IApplicationIntegrationTypeConfig;
+public record ApplicationIntegrationTypeConfig
+(
+    Optional<IApplicationOAuth2InstallParams> OAuth2InstallParams
+) : IApplicationIntegrationTypeConfig;

@@ -1,5 +1,5 @@
 //
-//  ModalSubmitInteractionMetadata.cs
+//  MessageInteractionMetadataTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Tests.Objects;
 
-/// <inheritdoc cref="IModalSubmitInteractionMetadata"/>
-[PublicAPI]
-public record ModalSubmitInteractionMetadata
-(
-    Snowflake ID,
-    Snowflake UserID,
-    InteractionType Type,
-    Optional<Snowflake> OriginalResponseMessageID,
-    IReadOnlyDictionary<ApplicationIntegrationType, Snowflake> AuthorizingIntegrationOwners,
-    OneOf<IApplicationCommandInteractionMetadata, IMessageComponentInteractionMetadata> TriggeringInteractionMetadata
-) : IModalSubmitInteractionMetadata;
+/// <inheritdoc />
+public class MessageInteractionMetadataTests : ObjectTestBase<IMessageInteractionMetadata>
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MessageInteractionMetadataTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public MessageInteractionMetadataTests(JsonBackedTypeTestFixture fixture)
+    : base(fixture)
+    {
+    }
+}

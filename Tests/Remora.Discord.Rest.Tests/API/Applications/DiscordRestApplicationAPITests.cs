@@ -2496,10 +2496,10 @@ public class DiscordRestApplicationAPITests
             var interactionsEndpointUrl = new Uri("https://example.org/interact");
             var tags = new[] { "ooga", "booga" };
 
-            var integrationTypes = new[]
+            var integrationTypes = new Dictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>
             {
-                ApplicationIntegrationType.UserInstallable,
-                ApplicationIntegrationType.GuildInstallable
+                { ApplicationIntegrationType.GuildInstallable, new ApplicationIntegrationTypeConfig(new ApplicationOAuth2InstallParams(DiscordPermissionSet.Empty, Array.Empty<string>())) },
+                { ApplicationIntegrationType.UserInstallable, new ApplicationIntegrationTypeConfig(new ApplicationOAuth2InstallParams(DiscordPermissionSet.Empty, Array.Empty<string>())) },
             };
 
             var api = CreateAPI
@@ -2543,12 +2543,11 @@ public class DiscordRestApplicationAPITests
                                 )
                                 .WithProperty
                                 (
-                                    "integration_types",
-                                    p => p.IsArray
+                                    "integration_types_config",
+                                    p => p.IsObject
                                     (
-                                        a => a.WithCount(2)
-                                              .WithElement(0, e => e.Is("1"))
-                                              .WithElement(1, e => e.Is("0"))
+                                        a => a.WithProperty("0", p => p.IsObject())
+                                              .WithProperty("1", p => p.IsObject())
                                     )
                                 )
                         )
