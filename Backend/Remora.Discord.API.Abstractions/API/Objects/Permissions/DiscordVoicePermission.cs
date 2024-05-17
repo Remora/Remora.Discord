@@ -113,5 +113,8 @@ public enum DiscordVoicePermission
     UseExternalSounds = DiscordPermission.UseExternalSounds,
 
     /// <inheritdoc cref="DiscordPermission.SendVoiceMessages"/>
-    SendVoiceMessages = DiscordPermission.SendVoiceMessages
+    SendVoiceMessages = DiscordPermission.SendVoiceMessages,
+
+    /// <inheritdoc cref="DiscordPermission.SendPolls"/>
+    SendPolls = DiscordPermission.SendPolls,
 }

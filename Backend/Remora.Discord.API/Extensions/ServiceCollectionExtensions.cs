@@ -117,7 +117,8 @@ public static class ServiceCollectionExtensions
                         .AddStageInstanceObjectConverters()
                         .AddStickerObjectConverters()
                         .AddApplicationRoleConnectionObjectConverters()
-                        .AddMonetizationConverters();
+                        .AddMonetizationConverters()
+                        .AddPollObjectConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
                     options.AddConverter<PropertyErrorDetailsConverter>();
@@ -434,6 +435,10 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(e => e.SKUID, "sku_id")
             .WithPropertyName(e => e.IsDeleted, "deleted")
             .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        // Polls
+        options.AddDataObjectConverter<IMessagePollVoteAdd, MessagePollVoteAdd>();
+        options.AddDataObjectConverter<IMessagePollVoteRemove, MessagePollVoteRemove>();
 
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -1314,6 +1319,35 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IApplicationRoleConnectionMetadata, ApplicationRoleConnectionMetadata>();
         options.AddDataObjectConverter<IApplicationRoleConnection, ApplicationRoleConnection>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle poll objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddPollObjectConverters
+    (
+        this JsonSerializerOptions options
+    )
+    {
+        options.AddDataObjectConverter<IPoll, Poll>()
+            .WithPropertyName(p => p.IsMultiselectAllowed, "allow_multiselect");
+
+        options.AddDataObjectConverter<IPollAnswer, PollAnswer>();
+
+        options.AddDataObjectConverter<IPollAnswerCount, PollAnswerCount>()
+            .WithPropertyName(p => p.HasCurrentUserVoted, "me_voted");
+
+        options.AddDataObjectConverter<IPollAnswerVoters, PollAnswerVoters>();
+
+        options.AddDataObjectConverter<IPollCreateRequest, PollCreateRequest>()
+            .WithPropertyName(p => p.IsMultiselectAllowed, "allow_multiselect");
+
+        options.AddDataObjectConverter<IPollMedia, PollMedia>();
+        options.AddDataObjectConverter<IPollResults, PollResults>();
 
         return options;
     }

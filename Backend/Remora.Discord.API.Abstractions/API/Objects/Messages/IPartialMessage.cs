@@ -126,4 +126,7 @@ public interface IPartialMessage
 
     /// <inheritdoc cref="IMessage.InteractionMetadata"/>
     Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
+
+    /// <inheritdoc cref="IMessage.Poll"/>
+    Optional<IPoll> Poll { get; }
 }

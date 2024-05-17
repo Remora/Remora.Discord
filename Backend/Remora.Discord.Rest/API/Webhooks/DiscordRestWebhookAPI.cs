@@ -305,6 +305,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<MessageFlags> flags = default,
         Optional<string> threadName = default,
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -365,6 +366,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("flags", flags, this.JsonOptions);
                             json.Write("thread_name", threadName, this.JsonOptions);
                             json.Write("applied_tags", appliedTags, this.JsonOptions);
+                            json.Write("poll", poll, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);

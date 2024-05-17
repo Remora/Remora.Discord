@@ -121,6 +121,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         Optional<MessageFlags> flags = default,
         Optional<string> threadName = default,
         Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -141,6 +142,7 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             flags,
             threadName,
             appliedTags,
+            poll,
             ct
         );
 

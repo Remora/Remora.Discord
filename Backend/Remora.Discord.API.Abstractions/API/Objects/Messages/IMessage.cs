@@ -199,6 +199,11 @@ public interface IMessage : IPartialMessage
     /// </summary>
     new Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
 
+    /// <summary>
+    /// Gets the poll sent with the message, if any.
+    /// </summary>
+    new Optional<IPoll> Poll { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
 
@@ -291,4 +296,7 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<IMessageInteractionMetadata> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
+
+    /// <inheritdoc/>
+    Optional<IPoll> IPartialMessage.Poll => this.Poll;
 }
