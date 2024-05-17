@@ -604,6 +604,26 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IMessagePollVoteAdd.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IMessagePollVoteAdd.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IMessagePollVoteRemove.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IMessagePollVoteRemove.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.yml",
       "output": {
         ".html": {
@@ -2544,6 +2564,76 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPoll.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPoll.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollAnswer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollAnswer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollAnswerCount.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollAnswerCount.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollAnswerVoters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollAnswerVoters.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollCreateRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollCreateRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollMedia.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollMedia.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollResults.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPollResults.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IPresence.yml",
       "output": {
         ".html": {
@@ -3034,6 +3124,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.PollLayoutType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.PollLayoutType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.PremiumTier.yml",
       "output": {
         ".html": {
@@ -3388,6 +3488,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestOAuth2API.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestPollAPI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestPollAPI.html"
         }
       },
       "version": ""
@@ -4538,6 +4648,26 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Gateway.Events.MessageDeleteBulk.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Gateway.Events.MessagePollVoteAdd.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Gateway.Events.MessagePollVoteAdd.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Gateway.Events.MessagePollVoteRemove.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Gateway.Events.MessagePollVoteRemove.html"
         }
       },
       "version": ""
@@ -5948,6 +6078,76 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.PermissionOverwriteTemplate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.Poll.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.Poll.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.PollAnswer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.PollAnswer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.PollAnswerCount.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.PollAnswerCount.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.PollAnswerVoters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.PollAnswerVoters.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.PollCreateRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.PollCreateRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.PollMedia.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.PollMedia.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.PollResults.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.PollResults.html"
         }
       },
       "version": ""
@@ -9258,6 +9458,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Rest.API.DiscordRestOAuth2API.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.Rest.API.DiscordRestPollAPI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.Rest.API.DiscordRestPollAPI.html"
         }
       },
       "version": ""
