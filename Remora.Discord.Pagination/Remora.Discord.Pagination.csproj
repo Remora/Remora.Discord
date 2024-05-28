@@ -1,10 +1,13 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>3.0.20</VersionPrefix>
+        <VersionPrefix>4.0.0</VersionPrefix>
         <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
+            BREAKING: Change help text in pagination to a full embed.
+            Make help text embeds ephemeral by default.
+            Fix that the initial message in the pagination doesn't use the footer format.
         </PackageReleaseNotes>
     </PropertyGroup>
 

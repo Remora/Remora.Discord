@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>5.3.4</VersionPrefix>
+        <VersionPrefix>5.3.5</VersionPrefix>
         <Description>Utilities and components which extend upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
             Update dependencies.
