@@ -38,6 +38,88 @@ namespace Remora.Discord.API.Abstractions.Rest;
 public interface IDiscordRestEmojiAPI
 {
     /// <summary>
+    /// Gets a list of emojis for the given application.
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IEmoji>>> ListApplicationEmojisAync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets the emoji on the given application with the given ID.
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="emojiID">The ID of the emoji.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IEmoji>> GetApplicationEmojiAsync
+    (
+        Snowflake applicationID,
+        Snowflake emojiID,
+        CancellationToken ct = default
+    );
+    
+    /// <summary>
+    /// Creates a new emoji for the given application with the given parameters.
+    /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="name">The name of the new emoji.</param>
+    /// <param name="image">The image data.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IEmoji>> CreateApplicationEmojiAsync
+    (
+        Snowflake applicationID,
+        string name,
+        Stream image,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Modifies the given emoji.
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="emojiID">The ID of the emoji.</param>
+    /// <param name="name">The new name of the emoji.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<IEmoji>> ModifyApplicationEmojiAsync
+    (
+        Snowflake applicationID,
+        Snowflake emojiID,
+        Optional<string> name = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Deletes the given emoji.
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="emojiID">The ID of the emoji.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A deletion result which may or may not have succeeded.</returns>
+    Task<Result> DeleteApplicationEmojiAsync
+    (
+        Snowflake applicationID,
+        Snowflake emojiID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Gets a list of emojis for the given guild.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
@@ -56,8 +138,7 @@ public interface IDiscordRestEmojiAPI
     /// <param name="emojiID">The ID of the emoji.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IEmoji>> GetGuildEmojiAsync
-    (
+    Task<Result<IEmoji>> GetGuildEmojiAsync(
         Snowflake guildID,
         Snowflake emojiID,
         CancellationToken ct = default
