@@ -42,7 +42,7 @@ public interface IInviteWithMetadata : IInvite
     /// <summary>
     /// Gets the duration (in seconds) after which the invite expires.
     /// </summary>
-    int MaxAge { get; }
+    TimeSpan MaxAge { get; }
 
     /// <summary>
     /// Gets a value indicating whether this invite only grants temporary membership.

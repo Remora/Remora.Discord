@@ -34,7 +34,7 @@ public record InviteWithMetadata
     IPartialChannel? Channel,
     int Uses,
     int MaxUses,
-    int MaxAge,
+    TimeSpan MaxAge,
     bool IsTemporary,
     DateTimeOffset CreatedAt,
     Optional<IUser> Inviter = default,
