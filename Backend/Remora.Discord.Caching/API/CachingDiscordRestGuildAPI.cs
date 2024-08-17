@@ -1005,14 +1005,14 @@ public partial class CachingDiscordRestGuildAPI : IDiscordRestGuildAPI, IRestCus
     }
 
     /// <inheritdoc />
-    public async Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+    public async Task<Result<IReadOnlyList<IInviteWithMetadata>>> GetGuildInvitesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
         var collectionKey = new KeyHelpers.GuildInvitesCacheKey(guildID);
-        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IInvite>>(collectionKey, ct);
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IInviteWithMetadata>>(collectionKey, ct);
 
         if (cacheResult.IsSuccess)
         {
