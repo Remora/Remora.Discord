@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Remora.Commands.Extensions;
@@ -47,17 +48,23 @@ public static class ParameterShapeExtensions
     /// <returns>The actual type.</returns>
     public static Type GetActualParameterType(this IParameterShape shape, bool unwrapCollections = false)
     {
+        var parameterType = shape.Parameter.ParameterType;
+
         // IsCollection loves to inexplicably return false for IReadOnlyList<T> and friends, so we'll just do it manually
-        if (unwrapCollections && (shape.Parameter.ParameterType.IsArray || shape.Parameter.ParameterType.GetInterface(nameof(IEnumerable)) is not null))
+        if
+        (
+            unwrapCollections &&
+            parameterType != typeof(string) &&
+            (parameterType.IsArray || parameterType.GetInterface(nameof(IEnumerable)) is not null)
+        )
         {
-            return shape.Parameter.ParameterType.IsArray
-                ? shape.Parameter.ParameterType.GetElementType()!
-                : shape.Parameter.ParameterType.GetGenericArguments()[0];
+            return parameterType.IsArray
+                ? parameterType.GetElementType()!
+                : parameterType.GetGenericArguments()[0];
         }
 
         // Unwrap the parameter type if it's a Nullable<T> or Optional<T>
         // TODO: Maybe more cases?
-        var parameterType = shape.Parameter.ParameterType;
         return parameterType.IsNullable() || parameterType.IsOptional()
             ? parameterType.GetGenericArguments().Single()
             : parameterType;
