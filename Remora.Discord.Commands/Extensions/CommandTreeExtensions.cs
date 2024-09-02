@@ -37,7 +37,9 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Services;
 using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
+using RangeAttribute = Remora.Commands.Attributes.RangeAttribute;
 
 namespace Remora.Discord.Commands.Extensions;
 
@@ -712,15 +714,15 @@ public static class CommandTreeExtensions
                         parameter
                     );
                 }
-                case NamedCollectionParameterShape or PositionalCollectionParameterShape:
-                {
-                    throw new UnsupportedParameterFeatureException
-                    (
-                        "Collection parameters are not supported in slash commands.",
-                        command,
-                        parameter
-                    );
-                }
+                // case NamedCollectionParameterShape or PositionalCollectionParameterShape:
+                // {
+                //     throw new UnsupportedParameterFeatureException
+                //     (
+                //         "Collection parameters are not supported in slash commands.",
+                //         command,
+                //         parameter
+                //     );
+                // }
             }
 
             var actualParameterType = parameter.GetActualParameterType();
@@ -739,26 +741,60 @@ public static class CommandTreeExtensions
 
             var (channelTypes, minValue, maxValue, minLength, maxLength) = GetParameterConstraints(command, parameter);
 
-            var parameterOption = new ApplicationCommandOption
-            (
-                parameter.GetDiscordType(),
-                name,
-                parameter.Description,
-                default,
-                !parameter.IsOmissible(),
-                choices,
-                ChannelTypes: channelTypes,
-                EnableAutocomplete: enableAutocomplete,
-                MinValue: minValue,
-                MaxValue: maxValue,
-                NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
-                DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
-                MinLength: minLength,
-                MaxLength: maxLength
-            );
+            if (parameter is not (NamedCollectionParameterShape or PositionalCollectionParameterShape))
+            {
+                var parameterOption = new ApplicationCommandOption
+                (
+                    parameter.GetDiscordType(),
+                    name,
+                    parameter.Description,
+                    default,
+                    !parameter.IsOmissible(),
+                    choices,
+                    ChannelTypes: channelTypes,
+                    EnableAutocomplete: enableAutocomplete,
+                    MinValue: minValue,
+                    MaxValue: maxValue,
+                    NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+                    DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
+                    MinLength: minLength,
+                    MaxLength: maxLength
+                );
 
-            parameterOptions.Add(parameterOption);
+                parameterOptions.Add(parameterOption);
+
+                continue;
+            }
+
+            // Collection parameters
+            var rangeAttribute = parameter.Parameter.GetCustomAttribute<RangeAttribute>();
+            var (minElements, maxElements) = (rangeAttribute?.GetMin() ?? 1, rangeAttribute?.GetMax());
+
+            for (ulong i = 0; i < (maxElements ?? minElements); i++)
+            {
+                var parameterOption = new ApplicationCommandOption
+                (
+                    parameter.GetDiscordType(),
+                    $"{name}__{i + 1}",
+                    parameter.Description,
+                    default,
+                    i < minElements && !parameter.IsOmissible(),
+                    choices,
+                    ChannelTypes: channelTypes,
+                    EnableAutocomplete: enableAutocomplete,
+                    MinValue: minValue,
+                    MaxValue: maxValue,
+                    NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+                    DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
+                    MinLength: minLength,
+                    MaxLength: maxLength
+                );
+
+                parameterOptions.Add(parameterOption);
+            }
         }
+
+        parameterOptions = parameterOptions.OrderByDescending(p => p.IsRequired.OrDefault(true)).ToList();
 
         if (parameterOptions.Count > _maxCommandParameters)
         {

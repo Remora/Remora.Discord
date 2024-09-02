@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections;
 using System.Linq;
 using JetBrains.Annotations;
 using Remora.Commands.Extensions;
@@ -42,9 +43,18 @@ public static class ParameterShapeExtensions
     /// Gets the actual underlying type of the parameter, unwrapping things like nullables and optionals.
     /// </summary>
     /// <param name="shape">The parameter shape.</param>
+    /// <param name="unwrapCollections">Whether to unwrap collections as well.</param>
     /// <returns>The actual type.</returns>
-    public static Type GetActualParameterType(this IParameterShape shape)
+    public static Type GetActualParameterType(this IParameterShape shape, bool unwrapCollections = false)
     {
+        // IsCollection loves to inexplicably return false for IReadOnlyList<T> and friends, so we'll just do it manually
+        if (unwrapCollections && (shape.Parameter.ParameterType.IsArray || shape.Parameter.ParameterType.GetInterface(nameof(IEnumerable)) is not null))
+        {
+            return shape.Parameter.ParameterType.IsArray
+                ? shape.Parameter.ParameterType.GetElementType()!
+                : shape.Parameter.ParameterType.GetGenericArguments()[0];
+        }
+
         // Unwrap the parameter type if it's a Nullable<T> or Optional<T>
         // TODO: Maybe more cases?
         var parameterType = shape.Parameter.ParameterType;
@@ -66,7 +76,7 @@ public static class ParameterShapeExtensions
             return (ApplicationCommandOptionType)typeHint.TypeHint;
         }
 
-        return shape.GetActualParameterType() switch
+        return shape.GetActualParameterType(true) switch
         {
             var t when t == typeof(bool) => ApplicationCommandOptionType.Boolean,
             var t when typeof(IPartialRole).IsAssignableFrom(t) => Role,
