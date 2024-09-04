@@ -50,24 +50,29 @@ public static class ParameterShapeExtensions
     {
         var parameterType = shape.Parameter.ParameterType;
 
-        // IsCollection loves to inexplicably return false for IReadOnlyList<T> and friends, so we'll just do it manually
-        if
-        (
-            unwrapCollections &&
-            parameterType != typeof(string) &&
-            (parameterType.IsArray || parameterType.GetInterface(nameof(IEnumerable)) is not null)
-        )
-        {
-            return parameterType.IsArray
-                ? parameterType.GetElementType()!
-                : parameterType.GetGenericArguments()[0];
-        }
-
         // Unwrap the parameter type if it's a Nullable<T> or Optional<T>
         // TODO: Maybe more cases?
-        return parameterType.IsNullable() || parameterType.IsOptional()
+        parameterType = parameterType.IsNullable() || parameterType.IsOptional()
             ? parameterType.GetGenericArguments().Single()
             : parameterType;
+
+        // IsCollection loves to inexplicably return false for IReadOnlyList<T> and friends, so we'll just do it manually
+        if (!unwrapCollections || parameterType == typeof(string))
+        {
+            return parameterType;
+        }
+
+        var interfaces = parameterType.GetInterfaces();
+        var collectionTypes = interfaces
+                              .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                              .ToList();
+
+        return collectionTypes.Count switch
+        {
+            0 => parameterType,
+            1 => collectionTypes[0].GetGenericArguments()[0],
+            _ => throw new InvalidOperationException($"{parameterType.Name} has multiple implementations for IEnumerable<>, which is ambiguous.")
+        };
     }
 
     /// <summary>
