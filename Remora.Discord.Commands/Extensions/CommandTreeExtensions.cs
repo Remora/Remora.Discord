@@ -714,15 +714,6 @@ public static class CommandTreeExtensions
                         parameter
                     );
                 }
-                // case NamedCollectionParameterShape or PositionalCollectionParameterShape:
-                // {
-                //     throw new UnsupportedParameterFeatureException
-                //     (
-                //         "Collection parameters are not supported in slash commands.",
-                //         command,
-                //         parameter
-                //     );
-                // }
             }
 
             var actualParameterType = parameter.GetActualParameterType();
