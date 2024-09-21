@@ -209,7 +209,7 @@ type such as classes, structures, or records. If the data type implements <a cla
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Interactivity_Services_InMemoryDataService_2_DisposeAsync.md&amp;value=---%0Auid%3A%20Remora.Discord.Interactivity.Services.InMemoryDataService%602.DisposeAsync%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L289">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L259">View Source</a>
   </span>
   <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.DisposeAsync*"></a>
   <h4 id="DisposeAsync" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.DisposeAsync">DisposeAsync()</h4>
@@ -298,67 +298,6 @@ the object.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Interactivity_Services_InMemoryDataService_2_RentDataAsync__0_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Interactivity.Services.InMemoryDataService%602.RentDataAsync(%600%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L116">View Source</a>
-  </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.RentDataAsync*"></a>
-  <h4 id="RentDataAsync_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.RentDataAsync(`0,System.Threading.CancellationToken)">RentDataAsync(TKey, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Rents the data associated with the given key, blocking until a lock can be taken on the data object.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Obsolete(&quot;Use LeaseDataAsync instead.&quot;, true)]
-public Task&lt;Result&lt;(SemaphoreSlim Semaphore, TData Data)&gt;&gt; RentDataAsync(TKey key, CancellationToken ct = default)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TKey</span></td>
-        <td><span class="parametername">key</span></td>
-        <td><p>The key the data object is associated with.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
-        <td><span class="parametername">ct</span></td>
-        <td><p>The cancellation token for this operation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Result</span>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.semaphoreslim">SemaphoreSlim</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.threading.semaphoreslim,-1-.semaphore">Semaphore</a>, TData <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.threading.semaphoreslim,-1-.data">Data</a>)&gt;&gt;</td>
-        <td><p>The data and semaphore associated with the data or a <span class="xref">Remora.Results.NotFoundError</span>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="RentDataAsync_1_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The semaphore returned by this method has the lock held on it and must be released once the caller is done with
-the object.</p>
-</div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryAddData__0__1_.md&amp;value=---%0Auid%3A%20Remora.Discord.Interactivity.Services.InMemoryDataService%602.TryAddData(%600%2C%601)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
@@ -419,20 +358,19 @@ consider the value as having been moved into this method.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryRemoveData__0_.md&amp;value=---%0Auid%3A%20Remora.Discord.Interactivity.Services.InMemoryDataService%602.TryRemoveData(%600)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryDeleteData_Remora_Discord_Interactivity_Services_DataLease__0__1__.md&amp;value=---%0Auid%3A%20Remora.Discord.Interactivity.Services.InMemoryDataService%602.TryDeleteData(Remora.Discord.Interactivity.Services.DataLease%7B%600%2C%601%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L145">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L118">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveData*"></a>
-  <h4 id="TryRemoveData_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveData(`0)">TryRemoveData(TKey)</h4>
-  <div class="markdown level1 summary"><p>Removes the data associated with the given key. This method does nothing if no data is associated with
-the given key.</p>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryDeleteData*"></a>
+  <h4 id="TryDeleteData_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryDeleteData(Remora.Discord.Interactivity.Services.DataLease{`0,`1})">TryDeleteData(DataLease&lt;TKey, TData&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deletes the data associated with the given lease.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryRemoveData(TKey key)</code></pre>
+    <pre><code class="lang-csharp hljs">public bool TryDeleteData(DataLease&lt;TKey, TData&gt; lease)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -445,9 +383,9 @@ the given key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TKey</span></td>
-        <td><span class="parametername">key</span></td>
-        <td><p>The key the data object is associated with.</p>
+        <td><a class="xref" href="Remora.Discord.Interactivity.Services.DataLease-2.html">DataLease</a>&lt;TKey, TData&gt;</td>
+        <td><span class="parametername">lease</span></td>
+        <td><p>The lease you have on the data object.</p>
 </td>
       </tr>
     </tbody>
@@ -470,20 +408,19 @@ the given key.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryRemoveDataAsync__0_.md&amp;value=---%0Auid%3A%20Remora.Discord.Interactivity.Services.InMemoryDataService%602.TryRemoveDataAsync(%600)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Interactivity_Services_InMemoryDataService_2_TryDeleteDataAsync_Remora_Discord_Interactivity_Services_DataLease__0__1__.md&amp;value=---%0Auid%3A%20Remora.Discord.Interactivity.Services.InMemoryDataService%602.TryDeleteDataAsync(Remora.Discord.Interactivity.Services.DataLease%7B%600%2C%601%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L190">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Interactivity/Services/InMemoryDataService.cs/#L152">View Source</a>
   </span>
-  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveDataAsync*"></a>
-  <h4 id="TryRemoveDataAsync_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryRemoveDataAsync(`0)">TryRemoveDataAsync(TKey)</h4>
-  <div class="markdown level1 summary"><p>Removes the data associated with the given key. This method does nothing if no data is associated with
-the given key.</p>
+  <a id="Remora_Discord_Interactivity_Services_InMemoryDataService_2" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryDeleteDataAsync*"></a>
+  <h4 id="TryDeleteDataAsync_1" data-uid="Remora.Discord.Interactivity.Services.InMemoryDataService`2.TryDeleteDataAsync(Remora.Discord.Interactivity.Services.DataLease{`0,`1})">TryDeleteDataAsync(DataLease&lt;TKey, TData&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deletes the data associated with the given lease.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ValueTask&lt;bool&gt; TryRemoveDataAsync(TKey key)</code></pre>
+    <pre><code class="lang-csharp hljs">public Task&lt;bool&gt; TryDeleteDataAsync(DataLease&lt;TKey, TData&gt; lease)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -496,9 +433,9 @@ the given key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TKey</span></td>
-        <td><span class="parametername">key</span></td>
-        <td><p>The key the data object is associated with.</p>
+        <td><a class="xref" href="Remora.Discord.Interactivity.Services.DataLease-2.html">DataLease</a>&lt;TKey, TData&gt;</td>
+        <td><span class="parametername">lease</span></td>
+        <td><p>The lease you have on the data object.</p>
 </td>
       </tr>
     </tbody>
@@ -513,7 +450,7 @@ the given key.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1">ValueTask</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
         <td><p>true if the data was successfully removed; otherwise, false.</p>
 </td>
       </tr>
