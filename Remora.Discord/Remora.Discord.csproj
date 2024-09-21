@@ -1,21 +1,11 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2024.2</VersionPrefix>
+        <VersionPrefix>2024.3</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            BREAKING: Change help text in pagination to a full embed.
-            BREAKING: Implement bulk banning endpoint.
-            BREAKING: Implement support for nonce enforcement.
-            BREAKING: Implement support for one-time purchases.
-            BREAKING: Implement support for polls.
-            BREAKING: Implement support for user applications.
-            Fix that the initial message in the pagination doesn't use the footer format.
-            Handle reconnection requests on connect.
-            Implement support for parsing partial messages.
-            Make help text embeds ephemeral by default.
-            Update maximum command length.
+            BREAKING: Rework deletion logic for data leases to prevent deadlocks.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
