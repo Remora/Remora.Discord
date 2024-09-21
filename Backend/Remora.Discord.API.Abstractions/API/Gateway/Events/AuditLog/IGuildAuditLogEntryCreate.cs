@@ -22,6 +22,7 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events;
 
@@ -29,4 +30,10 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents the creation of an audit log entry.
 /// </summary>
 [PublicAPI]
-public interface IGuildAuditLogEntryCreate : IGatewayEvent, IAuditLogEntry;
+public interface IGuildAuditLogEntryCreate : IGatewayEvent, IAuditLogEntry
+{
+    /// <summary>
+    /// Gets the ID of the guild the audit log entry is from.
+    /// </summary>
+    Snowflake GuildID { get; }
+}
