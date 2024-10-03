@@ -2094,6 +2094,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IInviteWithMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IInviteWithMetadata.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMentionableSelectComponent.yml",
       "output": {
         ".html": {
@@ -5628,6 +5638,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.Invite.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.InviteWithMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.InviteWithMetadata.html"
         }
       },
       "version": ""
