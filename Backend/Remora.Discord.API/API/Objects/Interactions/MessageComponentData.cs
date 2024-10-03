@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -34,5 +35,5 @@ public record MessageComponentData
     string CustomID,
     ComponentType ComponentType,
     Optional<IApplicationCommandInteractionDataResolved> Resolved,
-    Optional<IReadOnlyList<string>> Values
+    Optional<OneOf<IReadOnlyList<Snowflake>, IReadOnlyList<string>>> Values
 ) : IMessageComponentData;
