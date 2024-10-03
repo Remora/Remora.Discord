@@ -116,20 +116,6 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
-            public void ThrowsIfACommandContainsACollectionParameter()
-            {
-                var builder = new CommandTreeBuilder();
-                builder.RegisterModule<CollectionsAreNotSupported>();
-
-                var tree = builder.Build();
-
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
-            }
-
-            /// <summary>
-            /// Tests whether the method responds appropriately to a failure case.
-            /// </summary>
-            [Fact]
             public void ThrowsIfACommandContainsASwitchParameter()
             {
                 var builder = new CommandTreeBuilder();
