@@ -1229,13 +1229,13 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+    public virtual Task<Result<IReadOnlyList<IInviteWithMetadata>>> GetGuildInvitesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IInviteWithMetadata>>
         (
             $"guilds/{guildID}/invites",
             b => b.WithRateLimitContext(this.RateLimitCache),

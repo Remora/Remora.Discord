@@ -923,7 +923,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+    Task<Result<IReadOnlyList<IInviteWithMetadata>>> GetGuildInvitesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default

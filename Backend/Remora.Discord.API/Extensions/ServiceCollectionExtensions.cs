@@ -780,6 +780,9 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IInvite, Invite>();
         options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
+        options.AddDataObjectConverter<IInviteWithMetadata, InviteWithMetadata>()
+            .WithPropertyName(i => i.IsTemporary, "temporary")
+            .WithPropertyConverter(i => i.MaxAge, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         return options;
     }
