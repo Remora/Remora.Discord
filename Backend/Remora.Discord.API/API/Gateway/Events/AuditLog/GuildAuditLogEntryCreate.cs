@@ -32,6 +32,7 @@ namespace Remora.Discord.API.Gateway.Events;
 [PublicAPI]
 public record GuildAuditLogEntryCreate
 (
+    Snowflake GuildID,
     string? TargetID,
     Optional<IReadOnlyList<IAuditLogChange>> Changes,
     Snowflake? UserID,
