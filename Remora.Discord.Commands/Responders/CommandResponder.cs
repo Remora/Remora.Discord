@@ -128,7 +128,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         CancellationToken ct = default
     )
     {
-        if (!gatewayEvent.Content.TryGet(out var content))
+        if (string.IsNullOrEmpty(gatewayEvent.Content))
         {
             return Result.FromSuccess();
         }
@@ -150,7 +150,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             return Result.FromSuccess();
         }
 
-        if (gatewayEvent.EditedTimestamp.IsDefined(out var edited))
+        if (gatewayEvent.EditedTimestamp is { } edited)
         {
             // Check if the edit happened in the last three seconds; if so, we'll assume this isn't some other
             // change made to the message object
@@ -166,7 +166,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             return Result.FromSuccess();
         }
 
-        return await ExecuteCommandAsync(content, context, ct);
+        return await ExecuteCommandAsync(gatewayEvent.Content, context, ct);
     }
 
     /// <summary>
