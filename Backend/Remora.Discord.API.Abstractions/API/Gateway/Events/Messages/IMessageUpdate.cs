@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents the creation of a message.
 /// </summary>
 [PublicAPI]
-public interface IMessageUpdate : IPartialMessage, IGatewayEvent
+public interface IMessageUpdate : IMessage, IGatewayEvent
 {
     /// <summary>
     /// Gets the ID of the guild the message was sent in.
@@ -48,8 +48,11 @@ public interface IMessageUpdate : IPartialMessage, IGatewayEvent
     /// <summary>
     /// Gets a list of users mentioned in the message.
     /// </summary>
-    new Optional<IReadOnlyList<IUserMention>> Mentions { get; }
+    new IReadOnlyList<IUserMention> Mentions { get; }
 
     /// <inheritdoc/>
-    Optional<IReadOnlyList<IUser>> IPartialMessage.Mentions => this.Mentions.Map<IReadOnlyList<IUser>>(u => u);
+    IReadOnlyList<IUser> IMessage.Mentions => this.Mentions;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IUser>> IPartialMessage.Mentions => this.Mentions.AsOptional().Map<IReadOnlyList<IUser>>(u => u);
 }
