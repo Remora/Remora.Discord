@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using OneOf;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a webhook event.
 /// </summary>
+[PublicAPI]
 public interface IWebhookEvent
 {
     /// <summary>
