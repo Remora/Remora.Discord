@@ -1404,6 +1404,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationAuthorizedWebhookEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationAuthorizedWebhookEvent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationCommand.yml",
       "output": {
         ".html": {
@@ -2954,6 +2964,26 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IWebhookEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IWebhookEvent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IWebhookEventPayload.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IWebhookEventPayload.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IWelcomeScreen.yml",
       "output": {
         ".html": {
@@ -3288,6 +3318,26 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Objects.VideoQualityMode.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.WebhookEventPayloadType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.WebhookEventPayloadType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.WebhookEventType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.WebhookEventType.html"
         }
       },
       "version": ""
@@ -4954,6 +5004,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.ApplicationAuthorizedWebhookEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.ApplicationAuthorizedWebhookEvent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Objects.ApplicationCommand.yml",
       "output": {
         ".html": {
@@ -6448,6 +6508,26 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.Webhook.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.WebhookEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.WebhookEvent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.WebhookEventPayload.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.WebhookEventPayload.html"
         }
       },
       "version": ""
