@@ -36,7 +36,7 @@ public record MessageUpdate
 (
     Optional<Snowflake> GuildID,
     Optional<IPartialGuildMember> Member,
-    IReadOnlyList<IUser> Mentions,
+    IReadOnlyList<IUserMention> Mentions,
     Snowflake ID,
     Snowflake ChannelID,
     IUser Author,
