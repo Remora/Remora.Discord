@@ -44,15 +44,4 @@ public interface IMessageUpdate : IMessage, IGatewayEvent
     /// without requiring bots to keep member state in memory.
     /// </summary>
     Optional<IPartialGuildMember> Member { get; }
-
-    /// <summary>
-    /// Gets a list of users mentioned in the message.
-    /// </summary>
-    new IReadOnlyList<IUserMention> Mentions { get; }
-
-    /// <inheritdoc/>
-    IReadOnlyList<IUser> IMessage.Mentions => this.Mentions;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IUser>> IPartialMessage.Mentions => this.Mentions.AsOptional().Map<IReadOnlyList<IUser>>(u => u);
 }
