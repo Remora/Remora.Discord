@@ -111,6 +111,7 @@
   <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate.html">IMessageUpdate</a></div>
+    <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialMessage.html">IPartialMessage</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGatewayEvent.html">IGatewayEvent</a></div>
     <div><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.IGatewayPayloadData.html">IGatewayPayloadData</a></div>
@@ -145,25 +146,25 @@
   <h5 id="Remora_Discord_API_Gateway_Events_MessageUpdate_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public record MessageUpdate : IMessageUpdate, IPartialMessage, IGatewayEvent, IGatewayPayloadData, IEquatable&lt;MessageUpdate&gt;</code></pre>
+public record MessageUpdate : IMessageUpdate, IMessage, IPartialMessage, IGatewayEvent, IGatewayPayloadData, IEquatable&lt;MessageUpdate&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageUpdate__ctor_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IUserMention___Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IUser__Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_DateTimeOffset__Remora_Rest_Core_Optional_System_Nullable_System_DateTimeOffset___Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IChannelMention___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IAttachment___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IEmbed___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IReaction___Remora_Rest_Core_Optional_System_String__Remora_Rest_Core_Optional_System_Boolean__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_MessageType__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessageActivity__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPartialApplication__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessageReference__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_MessageFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessage__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessageInteraction__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IChannel__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IMessageComponent___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IStickerItem___Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IApplicationCommandInteractionDataResolved__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPoll__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageUpdate.%23ctor(Remora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IPartialGuildMember%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IUserMention%7D%7D%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IUser%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.DateTimeOffset%7D%2CRemora.Rest.Core.Optional%7BSystem.Nullable%7BSystem.DateTimeOffset%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Rest.Core.Snowflake%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IChannelMention%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IAttachment%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IEmbed%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IReaction%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CRemora.Rest.Core.Optional%7BSystem.Boolean%7D%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.MessageType%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessageActivity%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IPartialApplication%7D%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessageReference%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.MessageFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessage%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessageInteraction%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IChannel%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IMessageComponent%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IStickerItem%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataResolved%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IPoll%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageUpdate__ctor_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPartialGuildMember__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IUserMention__Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Discord_API_Abstractions_Objects_IUser_System_String_System_DateTimeOffset_System_Nullable_System_DateTimeOffset__System_Boolean_System_Boolean_System_Collections_Generic_IReadOnlyList_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IChannelMention___System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IAttachment__System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IEmbed__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IReaction___Remora_Rest_Core_Optional_System_String__System_Boolean_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Discord_API_Abstractions_Objects_MessageType_Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessageActivity__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPartialApplication__Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessageReference__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_MessageFlags__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessage__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessageInteraction__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IChannel__Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IMessageComponent___Remora_Rest_Core_Optional_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IStickerItem___Remora_Rest_Core_Optional_System_Int32__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IApplicationCommandInteractionDataResolved__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_IPoll__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageUpdate.%23ctor(Remora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IPartialGuildMember%7D%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IUserMention%7D%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Discord.API.Abstractions.Objects.IUser%2CSystem.String%2CSystem.DateTimeOffset%2CSystem.Nullable%7BSystem.DateTimeOffset%7D%2CSystem.Boolean%2CSystem.Boolean%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IChannelMention%7D%7D%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IAttachment%7D%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IEmbed%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IReaction%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.String%7D%2CSystem.Boolean%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Discord.API.Abstractions.Objects.MessageType%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessageActivity%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IPartialApplication%7D%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessageReference%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.MessageFlags%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessage%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessageInteraction%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IChannel%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IMessageComponent%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IStickerItem%7D%7D%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataResolved%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.IPoll%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Messages/MessageUpdate.cs/#L34">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Events_MessageUpdate" data-uid="Remora.Discord.API.Gateway.Events.MessageUpdate.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Gateway.Events.MessageUpdate.#ctor(Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPartialGuildMember},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IUserMention}},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IUser},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.DateTimeOffset},Remora.Rest.Core.Optional{System.Nullable{System.DateTimeOffset}},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IChannelMention}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IAttachment}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IEmbed}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IReaction}},Remora.Rest.Core.Optional{System.String},Remora.Rest.Core.Optional{System.Boolean},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.MessageType},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageActivity},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPartialApplication},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageReference},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.MessageFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessage},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageInteraction},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IChannel},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IMessageComponent}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IStickerItem}},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataResolved},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPoll})">MessageUpdate(Optional&lt;Snowflake&gt;, Optional&lt;IPartialGuildMember&gt;, Optional&lt;IReadOnlyList&lt;IUserMention&gt;&gt;, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, Optional&lt;IUser&gt;, Optional&lt;string&gt;, Optional&lt;DateTimeOffset&gt;, Optional&lt;DateTimeOffset?&gt;, Optional&lt;bool&gt;, Optional&lt;bool&gt;, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt;, Optional&lt;IReadOnlyList&lt;IChannelMention&gt;&gt;, Optional&lt;IReadOnlyList&lt;IAttachment&gt;&gt;, Optional&lt;IReadOnlyList&lt;IEmbed&gt;&gt;, Optional&lt;IReadOnlyList&lt;IReaction&gt;&gt;, Optional&lt;string&gt;, Optional&lt;bool&gt;, Optional&lt;Snowflake&gt;, Optional&lt;MessageType&gt;, Optional&lt;IMessageActivity&gt;, Optional&lt;IPartialApplication&gt;, Optional&lt;Snowflake&gt;, Optional&lt;IMessageReference&gt;, Optional&lt;MessageFlags&gt;, Optional&lt;IMessage?&gt;, Optional&lt;IMessageInteraction&gt;, Optional&lt;IChannel&gt;, Optional&lt;IReadOnlyList&lt;IMessageComponent&gt;&gt;, Optional&lt;IReadOnlyList&lt;IStickerItem&gt;&gt;, Optional&lt;int&gt;, Optional&lt;IApplicationCommandInteractionDataResolved&gt;, Optional&lt;IMessageInteractionMetadata&gt;, Optional&lt;IPoll&gt;)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Gateway.Events.MessageUpdate.#ctor(Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPartialGuildMember},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IUserMention},Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.IUser,System.String,System.DateTimeOffset,System.Nullable{System.DateTimeOffset},System.Boolean,System.Boolean,System.Collections.Generic.IReadOnlyList{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IChannelMention}},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IAttachment},System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IEmbed},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IReaction}},Remora.Rest.Core.Optional{System.String},System.Boolean,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.MessageType,Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageActivity},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPartialApplication},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageReference},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.MessageFlags},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessage},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageInteraction},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IChannel},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IMessageComponent}},Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IStickerItem}},Remora.Rest.Core.Optional{System.Int32},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataResolved},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IPoll})">MessageUpdate(Optional&lt;Snowflake&gt;, Optional&lt;IPartialGuildMember&gt;, IReadOnlyList&lt;IUserMention&gt;, Snowflake, Snowflake, IUser, string, DateTimeOffset, DateTimeOffset?, bool, bool, IReadOnlyList&lt;Snowflake&gt;, Optional&lt;IReadOnlyList&lt;IChannelMention&gt;&gt;, IReadOnlyList&lt;IAttachment&gt;, IReadOnlyList&lt;IEmbed&gt;, Optional&lt;IReadOnlyList&lt;IReaction&gt;&gt;, Optional&lt;string&gt;, bool, Optional&lt;Snowflake&gt;, MessageType, Optional&lt;IMessageActivity&gt;, Optional&lt;IPartialApplication&gt;, Optional&lt;Snowflake&gt;, Optional&lt;IMessageReference&gt;, Optional&lt;MessageFlags&gt;, Optional&lt;IMessage?&gt;, Optional&lt;IMessageInteraction&gt;, Optional&lt;IChannel&gt;, Optional&lt;IReadOnlyList&lt;IMessageComponent&gt;&gt;, Optional&lt;IReadOnlyList&lt;IStickerItem&gt;&gt;, Optional&lt;int&gt;, Optional&lt;IApplicationCommandInteractionDataResolved&gt;, Optional&lt;IMessageInteractionMetadata&gt;, Optional&lt;IPoll&gt;)</h4>
   <div class="markdown level1 summary"><p>Represents the creation of a message.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MessageUpdate(Optional&lt;Snowflake&gt; GuildID = default, Optional&lt;IPartialGuildMember&gt; Member = default, Optional&lt;IReadOnlyList&lt;IUserMention&gt;&gt; Mentions = default, Optional&lt;Snowflake&gt; ID = default, Optional&lt;Snowflake&gt; ChannelID = default, Optional&lt;IUser&gt; Author = default, Optional&lt;string&gt; Content = default, Optional&lt;DateTimeOffset&gt; Timestamp = default, Optional&lt;DateTimeOffset?&gt; EditedTimestamp = default, Optional&lt;bool&gt; IsTTS = default, Optional&lt;bool&gt; MentionsEveryone = default, Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; MentionedRoles = default, Optional&lt;IReadOnlyList&lt;IChannelMention&gt;&gt; MentionedChannels = default, Optional&lt;IReadOnlyList&lt;IAttachment&gt;&gt; Attachments = default, Optional&lt;IReadOnlyList&lt;IEmbed&gt;&gt; Embeds = default, Optional&lt;IReadOnlyList&lt;IReaction&gt;&gt; Reactions = default, Optional&lt;string&gt; Nonce = default, Optional&lt;bool&gt; IsPinned = default, Optional&lt;Snowflake&gt; WebhookID = default, Optional&lt;MessageType&gt; Type = default, Optional&lt;IMessageActivity&gt; Activity = default, Optional&lt;IPartialApplication&gt; Application = default, Optional&lt;Snowflake&gt; ApplicationID = default, Optional&lt;IMessageReference&gt; MessageReference = default, Optional&lt;MessageFlags&gt; Flags = default, Optional&lt;IMessage?&gt; ReferencedMessage = default, Optional&lt;IMessageInteraction&gt; Interaction = default, Optional&lt;IChannel&gt; Thread = default, Optional&lt;IReadOnlyList&lt;IMessageComponent&gt;&gt; Components = default, Optional&lt;IReadOnlyList&lt;IStickerItem&gt;&gt; StickerItems = default, Optional&lt;int&gt; Position = default, Optional&lt;IApplicationCommandInteractionDataResolved&gt; Resolved = default, Optional&lt;IMessageInteractionMetadata&gt; InteractionMetadata = default, Optional&lt;IPoll&gt; Poll = default)</code></pre>
+    <pre><code class="lang-csharp hljs">public MessageUpdate(Optional&lt;Snowflake&gt; GuildID, Optional&lt;IPartialGuildMember&gt; Member, IReadOnlyList&lt;IUserMention&gt; Mentions, Snowflake ID, Snowflake ChannelID, IUser Author, string Content, DateTimeOffset Timestamp, DateTimeOffset? EditedTimestamp, bool IsTTS, bool MentionsEveryone, IReadOnlyList&lt;Snowflake&gt; MentionedRoles, Optional&lt;IReadOnlyList&lt;IChannelMention&gt;&gt; MentionedChannels, IReadOnlyList&lt;IAttachment&gt; Attachments, IReadOnlyList&lt;IEmbed&gt; Embeds, Optional&lt;IReadOnlyList&lt;IReaction&gt;&gt; Reactions, Optional&lt;string&gt; Nonce, bool IsPinned, Optional&lt;Snowflake&gt; WebhookID, MessageType Type, Optional&lt;IMessageActivity&gt; Activity = default, Optional&lt;IPartialApplication&gt; Application = default, Optional&lt;Snowflake&gt; ApplicationID = default, Optional&lt;IMessageReference&gt; MessageReference = default, Optional&lt;MessageFlags&gt; Flags = default, Optional&lt;IMessage?&gt; ReferencedMessage = default, Optional&lt;IMessageInteraction&gt; Interaction = default, Optional&lt;IChannel&gt; Thread = default, Optional&lt;IReadOnlyList&lt;IMessageComponent&gt;&gt; Components = default, Optional&lt;IReadOnlyList&lt;IStickerItem&gt;&gt; StickerItems = default, Optional&lt;int&gt; Position = default, Optional&lt;IApplicationCommandInteractionDataResolved&gt; Resolved = default, Optional&lt;IMessageInteractionMetadata&gt; InteractionMetadata = default, Optional&lt;IPoll&gt; Poll = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -186,52 +187,52 @@ public record MessageUpdate : IMessageUpdate, IPartialMessage, IGatewayEvent, IG
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUserMention.html">IUserMention</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUserMention.html">IUserMention</a>&gt;</td>
         <td><span class="parametername">Mentions</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<span class="xref">Snowflake</span>&gt;</td>
+        <td><span class="xref">Snowflake</span></td>
         <td><span class="parametername">ID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<span class="xref">Snowflake</span>&gt;</td>
+        <td><span class="xref">Snowflake</span></td>
         <td><span class="parametername">ChannelID</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a></td>
         <td><span class="parametername">Author</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td><span class="parametername">Content</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td><span class="parametername">Timestamp</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?</td>
         <td><span class="parametername">EditedTimestamp</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsTTS</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">MentionsEveryone</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Snowflake</span>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Snowflake</span>&gt;</td>
         <td><span class="parametername">MentionedRoles</span></td>
         <td></td>
       </tr>
@@ -241,12 +242,12 @@ public record MessageUpdate : IMessageUpdate, IPartialMessage, IGatewayEvent, IG
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAttachment.html">IAttachment</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAttachment.html">IAttachment</a>&gt;</td>
         <td><span class="parametername">Attachments</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;</td>
         <td><span class="parametername">Embeds</span></td>
         <td></td>
       </tr>
@@ -261,7 +262,7 @@ public record MessageUpdate : IMessageUpdate, IPartialMessage, IGatewayEvent, IG
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td><span class="parametername">IsPinned</span></td>
         <td></td>
       </tr>
@@ -271,7 +272,7 @@ public record MessageUpdate : IMessageUpdate, IPartialMessage, IGatewayEvent, IG
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.MessageType.html">MessageType</a>&gt;</td>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.MessageType.html">MessageType</a></td>
         <td><span class="parametername">Type</span></td>
         <td></td>
       </tr>
@@ -457,7 +458,7 @@ webhooks.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IAttachment&gt;&gt; Attachments { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IAttachment&gt; Attachments { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -469,7 +470,7 @@ webhooks.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAttachment.html">IAttachment</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IAttachment.html">IAttachment</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -490,7 +491,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IUser&gt; Author { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IUser Author { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -502,7 +503,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a>&gt;</td>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUser.html">IUser</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -521,7 +522,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; ChannelID { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ChannelID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -533,7 +534,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<span class="xref">Snowflake</span>&gt;</td>
+        <td><span class="xref">Snowflake</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -583,7 +584,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;string&gt; Content { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Content { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -595,7 +596,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -614,7 +615,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset?&gt; EditedTimestamp { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public DateTimeOffset? EditedTimestamp { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -626,7 +627,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?</td>
         <td></td>
       </tr>
     </tbody>
@@ -645,7 +646,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IEmbed&gt;&gt; Embeds { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IEmbed&gt; Embeds { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -657,7 +658,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IEmbed.html">IEmbed</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -738,7 +739,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;Snowflake&gt; ID { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Snowflake ID { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -750,7 +751,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<span class="xref">Snowflake</span>&gt;</td>
+        <td><span class="xref">Snowflake</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -831,7 +832,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsPinned { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsPinned { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -843,7 +844,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -862,7 +863,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; IsTTS { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsTTS { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -874,7 +875,7 @@ message, the object corresponds to the webhook's ID, username, and avatar - this
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -963,7 +964,7 @@ meet these requirements, this field will not be sent.
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;Snowflake&gt;&gt; MentionedRoles { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;Snowflake&gt; MentionedRoles { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -975,7 +976,7 @@ meet these requirements, this field will not be sent.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Snowflake</span>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Snowflake</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -994,7 +995,7 @@ meet these requirements, this field will not be sent.
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;IReadOnlyList&lt;IUserMention&gt;&gt; Mentions { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IUserMention&gt; Mentions { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -1006,7 +1007,7 @@ meet these requirements, this field will not be sent.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUserMention.html">IUserMention</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IUserMention.html">IUserMention</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1025,7 +1026,7 @@ meet these requirements, this field will not be sent.
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;bool&gt; MentionsEveryone { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool MentionsEveryone { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -1037,7 +1038,7 @@ meet these requirements, this field will not be sent.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1336,7 +1337,7 @@ string.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;DateTimeOffset&gt; Timestamp { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public DateTimeOffset Timestamp { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -1348,7 +1349,7 @@ string.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1367,7 +1368,7 @@ string.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Optional&lt;MessageType&gt; Type { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public MessageType Type { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -1379,7 +1380,7 @@ string.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.MessageType.html">MessageType</a>&gt;</td>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.MessageType.html">MessageType</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -1418,6 +1419,9 @@ string.</p>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate.html">IMessageUpdate</a>
+  </div>
+  <div>
+      <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessage.html">IMessage</a>
   </div>
   <div>
       <a class="xref" href="Remora.Discord.API.Abstractions.Objects.IPartialMessage.html">IPartialMessage</a>
