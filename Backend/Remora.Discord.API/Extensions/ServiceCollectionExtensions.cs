@@ -116,7 +116,8 @@ public static class ServiceCollectionExtensions
                         .AddStickerObjectConverters()
                         .AddApplicationRoleConnectionObjectConverters()
                         .AddMonetizationConverters()
-                        .AddPollObjectConverters();
+                        .AddPollObjectConverters()
+                        .AddWebhookEventObjectConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
                     options.AddConverter<PropertyErrorDetailsConverter>();
@@ -1349,6 +1350,17 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IPollMedia, PollMedia>();
         options.AddDataObjectConverter<IPollResults, PollResults>();
+
+        return options;
+    }
+
+    private static JsonSerializerOptions AddWebhookEventObjectConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IWebhookEvent, WebhookEvent>()
+               .WithPropertyConverter(we => we.Type, new StringEnumConverter<WebhookEventType>(new SnakeCaseNamingPolicy()));
+
+        options.AddDataObjectConverter<IApplicationAuthorizedWebhookEvent, ApplicationAuthorizedWebhookEvent>();
+        options.AddDataObjectConverter<IWebhookEventPayload, WebhookEventPayload>();
 
         return options;
     }
