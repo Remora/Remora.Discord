@@ -36,7 +36,7 @@ public record IntegrationCreate
     Snowflake ID,
     string Name,
     string Type,
-    Optional<bool> IsEnabled,
+    bool IsEnabled,
     Optional<bool> IsSyncing,
     Optional<Snowflake> RoleID,
     Optional<bool> EnableEmoticons,

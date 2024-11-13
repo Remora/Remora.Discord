@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
@@ -29,4 +31,12 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IReaction" />
 [PublicAPI]
-public record Reaction(int Count, bool HasCurrentUserReacted, IPartialEmoji Emoji) : IReaction;
+public record Reaction
+(
+    int Count,
+    IReactionCountDetails CountDetails,
+    bool HasCurrentUserReacted,
+    bool HasCurrentUserBurstReacted,
+    IPartialEmoji Emoji,
+    IReadOnlyList<Color> BurstColours
+) : IReaction;

@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity;
@@ -46,7 +47,7 @@ internal class PaginationInteractions : InteractionGroup
     private readonly IDiscordRestChannelAPI _channelAPI;
     private readonly IDiscordRestInteractionAPI _interactionAPI;
     private readonly InMemoryDataService<Snowflake, PaginatedMessageData> _paginationData;
-    private readonly InteractionContext _context;
+    private readonly IInteractionContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PaginationInteractions"/> class.
@@ -62,7 +63,7 @@ internal class PaginationInteractions : InteractionGroup
         IDiscordRestChannelAPI channelAPI,
         IDiscordRestInteractionAPI interactionAPI,
         InMemoryDataService<Snowflake, PaginatedMessageData> paginationData,
-        InteractionContext context
+        IInteractionContext context
     )
     {
         _feedback = feedback;
@@ -112,6 +113,11 @@ internal class PaginationInteractions : InteractionGroup
             return new InvalidOperationError("No message available for the interaction.");
         }
 
+        if (!_context.TryGetUserID(out var userID))
+        {
+            return new InvalidOperationError("No user ID available for the interaction.");
+        }
+
         var leaseData = await _paginationData.LeaseDataAsync(message.ID, this.CancellationToken);
         if (!leaseData.IsSuccess)
         {
@@ -119,6 +125,12 @@ internal class PaginationInteractions : InteractionGroup
         }
 
         await using var lease = leaseData.Entity;
+
+        if (lease.Data.SourceUserID != userID)
+        {
+            return Result.FromSuccess();
+        }
+
         lease.Delete();
 
         if (lease.Data.IsInteractionDriven)
@@ -146,6 +158,11 @@ internal class PaginationInteractions : InteractionGroup
             return new InvalidOperationError("No message available for the interaction.");
         }
 
+        if (!_context.TryGetUserID(out var userID))
+        {
+            return new InvalidOperationError("No user ID available for the interaction.");
+        }
+
         var leaseData = await _paginationData.LeaseDataAsync(message.ID, this.CancellationToken);
         if (!leaseData.IsSuccess)
         {
@@ -154,12 +171,15 @@ internal class PaginationInteractions : InteractionGroup
 
         await using var lease = leaseData.Entity;
 
-        return (Result)await _feedback.SendContextualInfoAsync
+        if (lease.Data.SourceUserID != userID)
+        {
+            return Result.FromSuccess();
+        }
+        return (Result)await _feedback.SendContextualEmbedAsync
         (
-            lease.Data.Appearance.HelpText,
-            lease.Data.SourceUserID,
+            lease.Data.Appearance.HelpEmbed,
             new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
-            this.CancellationToken
+            ct: this.CancellationToken
         );
     }
 
@@ -170,6 +190,11 @@ internal class PaginationInteractions : InteractionGroup
             return new InvalidOperationError("No message available for the interaction.");
         }
 
+        if (!_context.TryGetUserID(out var userID))
+        {
+            return new InvalidOperationError("No user ID available for the interaction.");
+        }
+
         var leaseData = await _paginationData.LeaseDataAsync(message.ID, this.CancellationToken);
         if (!leaseData.IsSuccess)
         {
@@ -177,6 +202,11 @@ internal class PaginationInteractions : InteractionGroup
         }
 
         await using var lease = leaseData.Entity;
+
+        if (lease.Data.SourceUserID != userID)
+        {
+            return Result.FromSuccess();
+        }
 
         action(lease.Data);
 

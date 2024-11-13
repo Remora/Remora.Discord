@@ -19,7 +19,8 @@
       ],
       "joined_at": "1970-01-01T00:00:00.000000+00:00",
       "deaf": true,
-      "mute": true
+      "mute": true,
+      "flags": 1
     },
     "user": {
       "username": "none",
@@ -52,6 +53,15 @@
     },
     "app_permissions": "0",
     "locale": "en-GB",
-    "guild_locale": "en-GB"
+    "guild_locale": "en-GB",
+    "entitlements": [
+      {
+        "id": "999999999999999999",
+        "sku_id": "999999999999999999",
+        "application_id": "999999999999999999",
+        "type": 8,
+        "deleted": false
+      }
+    ]
   }
 }

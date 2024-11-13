@@ -68,10 +68,12 @@ public record Guild
     string PreferredLocale,
     Snowflake? PublicUpdatesChannelID,
     Optional<int> MaxVideoChannelUsers,
+    Optional<int> MaxStageVideoChannelUsers,
     Optional<int> ApproximateMemberCount,
     Optional<int> ApproximatePresenceCount,
     Optional<IWelcomeScreen> WelcomeScreen,
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<ISticker>> Stickers,
-    bool IsPremiumProgressBarEnabled
+    bool IsPremiumProgressBarEnabled,
+    Snowflake? SafetyAlertsChannelID
 ) : IGuild;

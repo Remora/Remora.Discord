@@ -1,10 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>4.4.3</VersionPrefix>
+        <VersionPrefix>5.0.0</VersionPrefix>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            BREAKING: Rework deletion logic for data leases to prevent deadlocks.
         </PackageReleaseNotes>
     </PropertyGroup>
 

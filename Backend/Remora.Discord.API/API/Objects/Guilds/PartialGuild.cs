@@ -68,10 +68,12 @@ public record PartialGuild
     Optional<string> PreferredLocale = default,
     Optional<Snowflake?> PublicUpdatesChannelID = default,
     Optional<int> MaxVideoChannelUsers = default,
+    Optional<int> MaxStageVideoChannelUsers = default,
     Optional<int> ApproximateMemberCount = default,
     Optional<int> ApproximatePresenceCount = default,
     Optional<IWelcomeScreen> WelcomeScreen = default,
     Optional<GuildNSFWLevel> NSFWLevel = default,
     Optional<IReadOnlyList<ISticker>> Stickers = default,
-    Optional<bool> IsPremiumProgressBarEnabled = default
+    Optional<bool> IsPremiumProgressBarEnabled = default,
+    Optional<Snowflake?> SafetyAlertsChannelID = default
 ) : IPartialGuild;

@@ -43,5 +43,6 @@ public record Role
     IDiscordPermissionSet Permissions,
     bool IsManaged,
     bool IsMentionable,
-    Optional<IRoleTags> Tags = default
+    Optional<IRoleTags> Tags,
+    RoleFlags Flags
 ) : IRole;

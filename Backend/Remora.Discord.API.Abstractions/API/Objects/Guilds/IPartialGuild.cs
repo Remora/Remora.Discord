@@ -135,6 +135,9 @@ public interface IPartialGuild
     /// <inheritdoc cref="IGuild.MaxVideoChannelUsers" />
     Optional<int> MaxVideoChannelUsers { get; }
 
+    /// <inheritdoc cref="IGuild.MaxVideoChannelUsers" />
+    Optional<int> MaxStageVideoChannelUsers { get; }
+
     /// <inheritdoc cref="IGuild.ApproximateMemberCount" />
     Optional<int> ApproximateMemberCount { get; }
 
@@ -152,4 +155,7 @@ public interface IPartialGuild
 
     /// <inheritdoc cref="IGuild.IsPremiumProgressBarEnabled"/>
     Optional<bool> IsPremiumProgressBarEnabled { get; }
+
+    /// <inheritdoc cref="IGuild.SafetyAlertsChannelID"/>
+    Optional<Snowflake?> SafetyAlertsChannelID { get; }
 }

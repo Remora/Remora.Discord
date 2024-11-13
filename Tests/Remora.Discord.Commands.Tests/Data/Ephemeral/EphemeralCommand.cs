@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
@@ -37,19 +36,19 @@ public class EphemeralCommand : CommandGroup
     [Ephemeral]
     public Task<Result> A()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Result.FromSuccess());
     }
 
     [Command("b")]
     public Task<Result> B()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Result.FromSuccess());
     }
 
     [Command("c")]
     [Ephemeral(false)]
     public Task<Result> C()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Result.FromSuccess());
     }
 }

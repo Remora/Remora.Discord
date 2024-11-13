@@ -7,5 +7,6 @@
   "unicode_emoji": null,
   "position": 1,
   "mentionable": false,
-  "permissions": "2146959351"
+  "permissions": "2146959351",
+  "flags": 0
 }

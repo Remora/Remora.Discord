@@ -38,14 +38,24 @@ public interface IUser : IPartialUser
     new Snowflake ID { get; }
 
     /// <summary>
-    /// Gets the username of the user. This is not a unique value.
+    /// Gets the username of the user. This is a unique value for users, but not for bots.
     /// </summary>
+    /// <remarks>
+    /// Discord is currently migrating to a new username system. When the migration is complete, this field will be
+    /// unique across the platform.
+    /// </remarks>
     new string Username { get; }
 
     /// <summary>
     /// Gets the user's 4-digit discord tag.
     /// </summary>
+    /// <remarks>Discord no longer uses discriminators, and migrated users will simply have '0' as their discriminator.</remarks>
     new ushort Discriminator { get; }
+
+    /// <summary>
+    /// Gets the user's display name, if it is set. For bots, this is the application name.
+    /// </summary>
+    new Optional<string?> GlobalName { get; }
 
     /// <summary>
     /// Gets the user's avatar hash.
@@ -108,6 +118,11 @@ public interface IUser : IPartialUser
     /// </summary>
     new Optional<UserFlags> PublicFlags { get; }
 
+    /// <summary>
+    /// Gets the user's avatar decoration.
+    /// </summary>
+    new Optional<IImageHash?> AvatarDecoration { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialUser.ID => this.ID;
 
@@ -116,6 +131,9 @@ public interface IUser : IPartialUser
 
     /// <inheritdoc/>
     Optional<ushort> IPartialUser.Discriminator => this.Discriminator;
+
+    /// <inheritdoc/>
+    Optional<string?> IPartialUser.GlobalName => this.GlobalName;
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialUser.Avatar => new(this.Avatar);
@@ -152,4 +170,7 @@ public interface IUser : IPartialUser
 
     /// <inheritdoc/>
     Optional<UserFlags> IPartialUser.PublicFlags => this.PublicFlags;
+
+    /// <inheritdoc/>
+    Optional<IImageHash?> IPartialUser.AvatarDecoration => this.AvatarDecoration;
 }

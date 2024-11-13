@@ -29,6 +29,7 @@
   "icon": "68b329da9893e34099c7d8ad5cb9c940",
   "owner_id": "999999999999999999",
   "application_id": "999999999999999999",
+  "managed": true,
   "parent_id": "999999999999999999",
   "last_pin_timestamp": "1970-01-01T00:00:00.000000+00:00",
   "rtc_region": "none",

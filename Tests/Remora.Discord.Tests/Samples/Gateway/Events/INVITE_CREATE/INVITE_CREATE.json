@@ -4,7 +4,7 @@
   "op": 0,
   "d": {
     "channel_id": "999999999999999999",
-    "code": "none",
+    "code": "123456",
     "created_at": "1970-01-01T00:00:00.000000+00:00",
     "guild_id": "999999999999999999",
     "inviter": {
@@ -22,7 +22,7 @@
       "discriminator": "9999",
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
-    "target_application": { },
+    "target_application": {},
     "temporary": true,
     "uses": 1
   }

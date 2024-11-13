@@ -202,7 +202,6 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
     ) =>
     operationCode switch
     {
-
         // Commands
         VoiceOperationCode.Identify => DeserializePayload<IVoiceIdentify>
         (

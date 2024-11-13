@@ -239,24 +239,26 @@ public class DiscordRestUserAPITests
             var before = DiscordSnowflake.New(0);
             var after = DiscordSnowflake.New(1);
             var limit = 10;
+            var withCounts = true;
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
                             new KeyValuePair<string, string>("before", before.ToString()),
                             new KeyValuePair<string, string>("after", after.ToString()),
-                            new KeyValuePair<string, string>("limit", limit.ToString())
+                            new KeyValuePair<string, string>("limit", limit.ToString()),
+                            new KeyValuePair<string, string>("with_counts", withCounts.ToString())
                         }
                     )
                     .Respond("application/json", "[]")
             );
 
-            var result = await api.GetCurrentUserGuildsAsync(before, after, limit);
+            var result = await api.GetCurrentUserGuildsAsync(before, after, limit, withCounts);
             ResultAssert.Successful(result);
         }
 
@@ -448,15 +450,15 @@ public class DiscordRestUserAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestUserAPI.GetUserConnectionsAsync"/> method.
+    /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserConnectionsAsync"/> method.
     /// </summary>
-    public class GetUserConnectionsAsync : RestAPITestBase<IDiscordRestUserAPI>
+    public class GetCurrentUserConnectionsAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserConnectionsAsync"/> class.
+        /// Initializes a new instance of the <see cref="GetCurrentUserConnectionsAsync"/> class.
         /// </summary>
         /// <param name="fixture">The test fixture.</param>
-        public GetUserConnectionsAsync(RestAPITestFixture fixture)
+        public GetCurrentUserConnectionsAsync(RestAPITestFixture fixture)
             : base(fixture)
         {
         }
@@ -475,21 +477,21 @@ public class DiscordRestUserAPITests
                     .Respond("application/json", "[]")
             );
 
-            var result = await api.GetUserConnectionsAsync();
+            var result = await api.GetCurrentUserConnectionsAsync();
             ResultAssert.Successful(result);
         }
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestUserAPI.GetUserApplicationRoleConnectionAsync"/> method.
+    /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserApplicationRoleConnectionAsync"/> method.
     /// </summary>
-    public class GetUserApplicationRoleConnectionAsync : RestAPITestBase<IDiscordRestUserAPI>
+    public class GetCurrentUserApplicationRoleConnectionAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserApplicationRoleConnectionAsync"/> class.
+        /// Initializes a new instance of the <see cref="GetCurrentUserApplicationRoleConnectionAsync"/> class.
         /// </summary>
         /// <param name="fixture">The test fixture.</param>
-        public GetUserApplicationRoleConnectionAsync(RestAPITestFixture fixture)
+        public GetCurrentUserApplicationRoleConnectionAsync(RestAPITestFixture fixture)
             : base(fixture)
         {
         }
@@ -514,21 +516,21 @@ public class DiscordRestUserAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 
-            var result = await api.GetUserApplicationRoleConnectionAsync(applicationID);
+            var result = await api.GetCurrentUserApplicationRoleConnectionAsync(applicationID);
             ResultAssert.Successful(result);
         }
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestUserAPI.GetUserApplicationRoleConnectionAsync"/> method.
+    /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserApplicationRoleConnectionAsync"/> method.
     /// </summary>
-    public class UpdateUserApplicationRoleConnectionAsync : RestAPITestBase<IDiscordRestUserAPI>
+    public class UpdateCurrentUserApplicationRoleConnectionAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateUserApplicationRoleConnectionAsync"/> class.
+        /// Initializes a new instance of the <see cref="UpdateCurrentUserApplicationRoleConnectionAsync"/> class.
         /// </summary>
         /// <param name="fixture">The test fixture.</param>
-        public UpdateUserApplicationRoleConnectionAsync(RestAPITestFixture fixture)
+        public UpdateCurrentUserApplicationRoleConnectionAsync(RestAPITestFixture fixture)
             : base(fixture)
         {
         }
@@ -583,7 +585,7 @@ public class DiscordRestUserAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 
-            var result = await api.UpdateUserApplicationRoleConnectionAsync
+            var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
             (
                 applicationID,
                 platformName,
@@ -619,7 +621,7 @@ public class DiscordRestUserAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 
-            var result = await api.UpdateUserApplicationRoleConnectionAsync
+            var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
             (
                 applicationID,
                 platformName,
@@ -655,7 +657,7 @@ public class DiscordRestUserAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 
-            var result = await api.UpdateUserApplicationRoleConnectionAsync
+            var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
             (
                 applicationID,
                 platformName,
@@ -691,7 +693,7 @@ public class DiscordRestUserAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
             );
 
-            var result = await api.UpdateUserApplicationRoleConnectionAsync
+            var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
             (
                 applicationID,
                 platformName,

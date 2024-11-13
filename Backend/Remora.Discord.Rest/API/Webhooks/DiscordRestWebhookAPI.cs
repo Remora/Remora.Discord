@@ -79,9 +79,14 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
             return new ArgumentOutOfRangeError(nameof(name), "Names must be between 1 and 80 characters");
         }
 
-        if (name.Equals("clyde", StringComparison.InvariantCultureIgnoreCase))
+        if (name.Contains("clyde", StringComparison.InvariantCultureIgnoreCase))
         {
-            return new NotSupportedError("Names cannot be \"clyde\".");
+            return new NotSupportedError("Names cannot contain \"clyde\".");
+        }
+
+        if (name.Contains("discord", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return new NotSupportedError("Names cannot contain \"discord\".");
         }
 
         var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
@@ -299,6 +304,8 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
         Optional<string> threadName = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -312,11 +319,16 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                     b.AddQueryParameter("wait", realShouldWait.ToString());
                 }
 
+                if (threadID.TryGet(out var realThreadID))
+                {
+                    b.AddQueryParameter("thread_id", realThreadID.ToString());
+                }
+
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                if (attachments.HasValue)
+                if (attachments.TryGet(out var realAttachments))
                 {
                     // build attachment list
-                    attachmentList = attachments.Value.Select
+                    attachmentList = realAttachments.Select
                     (
                         (f, i) => f.Match
                         (
@@ -325,14 +337,14 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                         )
                     ).ToList();
 
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < realAttachments.Count; i++)
                     {
-                        if (!attachments.Value[i].IsT0)
+                        if (!realAttachments[i].IsT0)
                         {
                             continue;
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var (name, stream, _) = realAttachments[i].AsT0;
                         var contentName = $"files[{i}]";
 
                         b.AddContent(new StreamContent(stream), contentName, name);
@@ -349,11 +361,12 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("tts", isTTS, this.JsonOptions);
                             json.Write("embeds", embeds, this.JsonOptions);
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("thread_id", threadID, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
                             json.Write("thread_name", threadName, this.JsonOptions);
+                            json.Write("applied_tags", appliedTags, this.JsonOptions);
+                            json.Write("poll", poll, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);
@@ -423,7 +436,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                 if (attachments.IsDefined(out var realAttachments))
                 {
                     // build attachment list
-                    attachmentList = attachments.Value.Select
+                    attachmentList = realAttachments.Select
                     (
                         (f, i) => f.Match
                         (
@@ -437,14 +450,14 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                         )
                     ).ToList();
 
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < realAttachments.Count; i++)
                     {
-                        if (!attachments.Value[i].IsT0)
+                        if (!realAttachments[i].IsT0)
                         {
                             continue;
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var (name, stream, _) = realAttachments[i].AsT0;
                         var contentName = $"files[{i}]";
 
                         b.AddContent(new StreamContent(stream), contentName, name);

@@ -116,6 +116,11 @@ public interface IChannel : IPartialChannel
     new Optional<Snowflake> ApplicationID { get; }
 
     /// <summary>
+    /// Gets a value indicating whether the group DM is managed by an application.
+    /// </summary>
+    new Optional<bool> IsManaged { get; }
+
+    /// <summary>
     /// Gets the ID of the parent category for a channel. Each category can contain up to 50 channels.
     /// </summary>
     new Optional<Snowflake?> ParentID { get; }
@@ -254,6 +259,9 @@ public interface IChannel : IPartialChannel
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialChannel.ApplicationID => this.ApplicationID;
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialChannel.IsManaged => this.IsManaged;
 
     /// <inheritdoc/>
     Optional<Snowflake?> IPartialChannel.ParentID => this.ParentID;

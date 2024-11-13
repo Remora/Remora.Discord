@@ -14,6 +14,7 @@
   "premium_since": "1970-01-01T00:00:00.000000+00:00",
   "deaf": true,
   "mute": true,
+  "flags": 1,
   "pending": true,
   "permissions": "0",
   "communication_disabled_until": "1970-01-01T00:00:00.000000+00:00"

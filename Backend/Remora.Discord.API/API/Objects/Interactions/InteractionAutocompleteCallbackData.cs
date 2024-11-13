@@ -28,7 +28,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="InteractionAutocompleteCallbackData" />
+/// <inheritdoc cref="IInteractionAutocompleteCallbackData" />
 [PublicAPI]
 public record InteractionAutocompleteCallbackData
 (

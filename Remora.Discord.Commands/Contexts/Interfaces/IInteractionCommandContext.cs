@@ -25,9 +25,7 @@ using JetBrains.Annotations;
 namespace Remora.Discord.Commands.Contexts;
 
 /// <summary>
-/// Represents contextual information about a currently executing text-based command.
+/// Represents contextual information about a currently executing interaction-based command.
 /// </summary>
 [PublicAPI]
-public interface IInteractionCommandContext : IInteractionContext, ICommandContext
-{
-}
+public interface IInteractionCommandContext : IInteractionContext, ICommandContext;

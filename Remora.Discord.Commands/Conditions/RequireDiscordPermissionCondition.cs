@@ -87,7 +87,7 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return (Result)getGuild;
@@ -106,7 +106,7 @@ public class RequireDiscordPermissionCondition :
         }
 
         // Grab required information
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, userID.Value, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, userID, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;
@@ -137,7 +137,7 @@ public class RequireDiscordPermissionCondition :
         }
 
         // Grab required information
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, user.ID, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;
@@ -167,7 +167,7 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
@@ -181,7 +181,7 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
+        var getChannel = await _channelAPI.GetChannelAsync(channelID, ct);
         if (!getChannel.IsSuccess)
         {
             return (Result)getChannel;
@@ -263,7 +263,7 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
@@ -277,7 +277,7 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
+        var getChannel = await _channelAPI.GetChannelAsync(channelID, ct);
         if (!getChannel.IsSuccess)
         {
             return (Result)getChannel;
@@ -294,7 +294,7 @@ public class RequireDiscordPermissionCondition :
 
         var computedPermissions = DiscordPermissionSet.ComputePermissions
         (
-            role.ID,
+            role,
             everyoneRole,
             permissionOverwrites
         );

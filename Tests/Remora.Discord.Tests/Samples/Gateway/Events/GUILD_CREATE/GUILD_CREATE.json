@@ -28,7 +28,8 @@
         "position": 1,
         "permissions": "0",
         "managed": true,
-        "mentionable": true
+        "mentionable": true,
+        "flags": 0
       }
     ],
     "emojis": [
@@ -55,6 +56,7 @@
     "preferred_locale": "en-US",
     "public_updates_channel_id": "999999999999999999",
     "max_video_channel_users": 1,
+    "max_stage_video_channel_users": 1,
     "approximate_member_count": 1,
     "approximate_presence_count": 1,
     "welcome_screen": {
@@ -73,6 +75,7 @@
       }
     ],
     "premium_progress_bar_enabled": true,
+    "safety_alerts_channel_id": "999999999999999999",
     "joined_at": "1970-01-01T00:00:00.000000+00:00",
     "large": true,
     "unavailable": true,
@@ -87,7 +90,8 @@
         ],
         "joined_at": "1970-01-01T00:00:00.000000+00:00",
         "deaf": true,
-        "mute": true
+        "mute": true,
+        "flags": 1
       }
     ],
     "channels": [

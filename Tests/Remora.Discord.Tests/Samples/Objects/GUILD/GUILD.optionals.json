@@ -20,7 +20,8 @@
       "position": 1,
       "permissions": "0",
       "managed": true,
-      "mentionable": true
+      "mentionable": true,
+      "flags": 0
     }
   ],
   "emojis": [
@@ -44,5 +45,6 @@
   "preferred_locale": "en-US",
   "public_updates_channel_id": "999999999999999999",
   "nsfw_level": 0,
-  "premium_progress_bar_enabled": true
+  "premium_progress_bar_enabled": true,
+  "safety_alerts_channel_id": "999999999999999999"
 }

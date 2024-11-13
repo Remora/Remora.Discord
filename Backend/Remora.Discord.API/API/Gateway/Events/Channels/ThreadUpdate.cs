@@ -49,6 +49,7 @@ public record ThreadUpdate
     Optional<IImageHash?> Icon = default,
     Optional<Snowflake> OwnerID = default,
     Optional<Snowflake> ApplicationID = default,
+    Optional<bool> IsManaged = default,
     Optional<Snowflake?> ParentID = default,
     Optional<DateTimeOffset?> LastPinTimestamp = default,
     Optional<string?> RTCRegion = default,

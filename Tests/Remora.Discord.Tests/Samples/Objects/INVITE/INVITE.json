@@ -38,7 +38,8 @@
             "discriminator": "9999",
             "id": "999999999999999999",
             "username": "none"
-          }
+          },
+          "role": "read_only"
         }
       ],
       "name": "none",

@@ -73,7 +73,7 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
             return new InvalidOperationError("Guild members cannot be parsed outside of guild channels.");
         }
 
-        return await _guildAPI.GetGuildMemberAsync(guildID.Value, guildMemberID.Value, ct);
+        return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
     }
 
     /// <inheritdoc/>

@@ -1,4 +1,5 @@
 {
   "channel_id": "999999999999999999",
-  "duration_seconds": 86400
+  "duration_seconds": 86400,
+  "custom_message": "none"
 }

@@ -186,15 +186,17 @@ public class EarlyCacheResponder :
             cachedInstance = new GuildMember
             (
                 new Optional<IUser>(gatewayEvent.User),
-                gatewayEvent.Nickname.IsDefined(out var nickname) ? nickname : cachedInstance.Nickname,
+                gatewayEvent.Nickname.TryGet(out var nickname) ? nickname : cachedInstance.Nickname,
                 gatewayEvent.Avatar,
                 gatewayEvent.Roles,
                 gatewayEvent.JoinedAt ?? cachedInstance.JoinedAt,
-                gatewayEvent.PremiumSince.IsDefined(out var premiumSince) ? premiumSince : cachedInstance.PremiumSince,
+                gatewayEvent.PremiumSince.TryGet(out var premiumSince) ? premiumSince : cachedInstance.PremiumSince,
                 gatewayEvent.IsDeafened.TryGet(out var isDeafened) ? isDeafened : cachedInstance.IsDeafened,
                 gatewayEvent.IsMuted.TryGet(out var isMuted) ? isMuted : cachedInstance.IsMuted,
+                default, // TODO: this is probably on this event, but Discord hasn't documented it
                 gatewayEvent.IsPending.TryGet(out var isPending) ? isPending : cachedInstance.IsPending,
-                cachedInstance.Permissions
+                cachedInstance.Permissions,
+                gatewayEvent.CommunicationDisabledUntil
             );
         }
         else if (gatewayEvent.JoinedAt.HasValue)
@@ -209,7 +211,10 @@ public class EarlyCacheResponder :
                 gatewayEvent.PremiumSince,
                 gatewayEvent.IsDeafened.TryGet(out var isDeafened) && isDeafened,
                 gatewayEvent.IsMuted.TryGet(out var isMuted) && isMuted,
-                gatewayEvent.IsPending.TryGet(out var isPending) && isPending
+                default, // TODO: this is probably on this event, but Discord hasn't documented it
+                gatewayEvent.IsPending.TryGet(out var isPending) && isPending,
+                default,
+                gatewayEvent.CommunicationDisabledUntil
             );
         }
         else

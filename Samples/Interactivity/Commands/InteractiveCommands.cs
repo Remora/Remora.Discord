@@ -88,7 +88,7 @@ public class InteractiveCommands : CommandGroup
 
         return await _feedback.SendContextualPaginatedMessageAsync
         (
-            userID.Value,
+            userID,
             pages,
             ct: this.CancellationToken
         );
@@ -233,7 +233,74 @@ public class InteractiveCommands : CommandGroup
                                     1,
                                     32,
                                     true,
-                                    string.Empty,
+                                    default,
+                                    "Short Text here"
+                                )
+                            }
+                        )
+                    }
+                )
+            )
+        );
+
+        var result = await _interactionAPI.CreateInteractionResponseAsync
+        (
+            interactionContext.Interaction.ID,
+            interactionContext.Interaction.Token,
+            response,
+            ct: this.CancellationToken
+        );
+
+        return result;
+    }
+
+    /// <summary>
+    /// Shows a modal.
+    /// </summary>
+    /// <returns>A result, indicating if the modal was sent successfully.</returns>
+    [Command("ephemeral-modal")]
+    [SuppressInteractionResponse(true)]
+    public async Task<Result> ShowEphemeralModalAsync()
+    {
+        if (!_context.TryGetUserID(out var userID))
+        {
+            throw new NotSupportedException();
+        }
+
+        if (_context is not IInteractionContext interactionContext)
+        {
+            return (Result)await _feedback.SendContextualWarningAsync
+            (
+                "This command can only be used with slash commands.",
+                userID,
+                new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral)
+            );
+        }
+
+        var response = new InteractionResponse
+        (
+            InteractionCallbackType.Modal,
+            new
+            (
+                new InteractionModalCallbackData
+                (
+                    CustomIDHelpers.CreateModalID("ephemeral-modal"),
+                    "Test Modal",
+                    new[]
+                    {
+                        new ActionRowComponent
+                        (
+                            new[]
+                            {
+                                new TextInputComponent
+                                (
+                                    "modal-text-input",
+                                    TextInputStyle.Short,
+                                    "Short Text",
+                                    1,
+                                    32,
+                                    true,
+                                    default,
                                     "Short Text here"
                                 )
                             }

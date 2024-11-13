@@ -237,6 +237,7 @@ public static class ServiceCollectionExtensions
             .AddParser<EmojiParser>()
             .AddParser<GuildMemberParser>()
             .AddParser<MessageParser>()
+            .AddParser<PartialMessageParser>()
             .AddParser<RoleParser>()
             .AddParser<UserParser>();
 
@@ -247,6 +248,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.TryAddSingleton<ExecutionEventCollectorService>();
 
         serviceCollection.TryAddScoped<FeedbackService>();
+        serviceCollection.TryAddScoped<IFeedbackService>(s => s.GetRequiredService<FeedbackService>());
         serviceCollection.AddSingleton(FeedbackTheme.DiscordLight);
         serviceCollection.AddSingleton(FeedbackTheme.DiscordDark);
 

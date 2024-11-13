@@ -39,10 +39,11 @@ public partial class CachingDiscordRestUserAPI
         Optional<Snowflake> before = default,
         Optional<Snowflake> after = default,
         Optional<int> limit = default,
+        Optional<bool> withCounts = default,
         CancellationToken ct = default
     )
     {
-        return _actual.GetCurrentUserGuildsAsync(before, after, limit, ct);
+        return _actual.GetCurrentUserGuildsAsync(before, after, limit, withCounts, ct);
     }
 
     /// <inheritdoc />

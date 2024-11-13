@@ -37,12 +37,16 @@ namespace Remora.Discord.Interactivity.Services;
 public class DataLease<TKey, TData> : IAsyncDisposable where TKey : notnull
 {
     private readonly InMemoryDataService<TKey, TData> _dataService;
-    private readonly TKey _key;
     private readonly SemaphoreSlim _semaphore;
 
     private bool _shouldDelete;
     private bool _isDisposed;
     private TData _data;
+
+    /// <summary>
+    /// Gets the key associated with the lease.
+    /// </summary>
+    public TKey Key { get; }
 
     /// <summary>
     /// Gets or sets the data associated with the lease.
@@ -73,9 +77,10 @@ public class DataLease<TKey, TData> : IAsyncDisposable where TKey : notnull
     internal DataLease(InMemoryDataService<TKey, TData> dataService, TKey key, SemaphoreSlim semaphore, TData data)
     {
         _dataService = dataService;
-        _key = key;
         _semaphore = semaphore;
         _data = data;
+
+        this.Key = key;
     }
 
     /// <summary>
@@ -94,34 +99,22 @@ public class DataLease<TKey, TData> : IAsyncDisposable where TKey : notnull
             return;
         }
 
-        _isDisposed = true;
-
         GC.SuppressFinalize(this);
 
-        if (_shouldDelete)
+        try
         {
-            var couldDelete = await _dataService.DeleteDataAsync(_key);
-            if (couldDelete)
+            if (_shouldDelete)
             {
+                _ = await _dataService.TryDeleteDataAsync(this);
                 return;
             }
 
-            // manual cleanup, someone must have deleted the data while we were using it
-            if (_data is IAsyncDisposable asyncDisposableData)
-            {
-                await asyncDisposableData.DisposeAsync();
-            }
-
-            if (_data is IDisposable disposableData)
-            {
-                disposableData.Dispose();
-            }
-
-            _semaphore.Dispose();
-            return;
+            _dataService.UpdateData(this.Key, _data);
         }
-
-        _dataService.UpdateData(_key, _data);
-        _semaphore.Release();
+        finally
+        {
+            _isDisposed = true;
+            _semaphore.Release();
+        }
     }
 }

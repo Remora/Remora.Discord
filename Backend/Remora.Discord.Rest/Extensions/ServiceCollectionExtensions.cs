@@ -69,6 +69,27 @@ public static class ServiceCollectionExtensions
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
+        serviceCollection.AddSingleton<IAsyncTokenStore>(ctx =>
+        {
+            var (token, type) = tokenFactory(ctx);
+            return new StaticTokenStore(token, type);
+        });
+
+        return serviceCollection.AddDiscordRest(buildClient);
+    }
+
+    /// <summary>
+    /// Adds the services required for Discord's REST API.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="buildClient">Extra client building operations.</param>
+    /// <returns>The service collection, with the services added.</returns>
+    public static IServiceCollection AddDiscordRest
+    (
+        this IServiceCollection serviceCollection,
+        Action<IHttpClientBuilder>? buildClient = null
+    )
+    {
         serviceCollection.AddMemoryCache();
 
         serviceCollection.TryAddSingleton<MemoryCacheProvider>();
@@ -76,13 +97,7 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.ConfigureDiscordJsonConverters();
 
-        serviceCollection
-            .AddSingleton<ITokenStore>(serviceProvider =>
-            {
-                var (token, tokenType) = tokenFactory(serviceProvider);
-                return new TokenStore(token, tokenType);
-            })
-            .AddTransient<TokenAuthorizationHandler>();
+        serviceCollection.AddTransient<TokenAuthorizationHandler>();
 
         serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
         (
@@ -197,6 +212,20 @@ public static class ServiceCollectionExtensions
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestStickerAPI>(s => new DiscordRestStickerAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ICacheProvider>()
+        ));
+
+        serviceCollection.TryAddTransient<IDiscordRestMonetizationAPI>(s => new DiscordRestMonetizationAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ICacheProvider>()
+        ));
+
+        serviceCollection.TryAddTransient<IDiscordRestPollAPI>(s => new DiscordRestPollAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
             s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),

@@ -42,6 +42,7 @@ public record GuildMember
     Optional<DateTimeOffset?> PremiumSince,
     bool IsDeafened,
     bool IsMuted,
+    GuildMemberFlags Flags,
     Optional<bool?> IsPending = default,
     Optional<IDiscordPermissionSet> Permissions = default,
     Optional<DateTimeOffset?> CommunicationDisabledUntil = default

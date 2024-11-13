@@ -1,12 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>1.1.0</VersionPrefix>
+        <VersionPrefix>1.1.8</VersionPrefix>
         <Description>Redis-based cache provider for Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Use value-based keys for caching
-            Fix duplication of cache entry option
         </PackageReleaseNotes>
     </PropertyGroup>
 

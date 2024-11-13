@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -151,7 +152,7 @@ public interface IMessage : IPartialMessage
     /// <summary>
     /// Gets the message reference. Sent with cross-posted messages.
     /// </summary>
-    new Optional<IMessageReference> MessageReference { get;  }
+    new Optional<IMessageReference> MessageReference { get; }
 
     /// <summary>
     /// Gets a set of bitwise flags describing extra features of the message.
@@ -187,6 +188,21 @@ public interface IMessage : IPartialMessage
     /// Gets the approximate position of the message within the thread. Duplicates and gaps are possible.
     /// </summary>
     new Optional<int> Position { get; }
+
+    /// <summary>
+    /// Gets data for users, members, channels, and roles in the message's auto-populated select menus.
+    /// </summary>
+    new Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+
+    /// <summary>
+    /// Gets the metadata of the interaction, if any.
+    /// </summary>
+    new Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
+
+    /// <summary>
+    /// Gets the poll sent with the message, if any.
+    /// </summary>
+    new Optional<IPoll> Poll { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
@@ -274,4 +290,13 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<int> IPartialMessage.Position => this.Position;
+
+    /// <inheritdoc/>
+    Optional<IApplicationCommandInteractionDataResolved> IPartialMessage.Resolved => this.Resolved;
+
+    /// <inheritdoc/>
+    Optional<IMessageInteractionMetadata> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
+
+    /// <inheritdoc/>
+    Optional<IPoll> IPartialMessage.Poll => this.Poll;
 }

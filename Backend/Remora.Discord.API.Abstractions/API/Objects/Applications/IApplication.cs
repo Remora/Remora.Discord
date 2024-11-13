@@ -69,6 +69,11 @@ public interface IApplication : IPartialApplication
     new bool DoesBotRequireCodeGrant { get; }
 
     /// <summary>
+    /// Gets the user object for the bot user associated with the application.
+    /// </summary>
+    new Optional<IPartialUser> Bot { get; }
+
+    /// <summary>
     /// Gets the URL to the application's terms of service.
     /// </summary>
     new Optional<string> TermsOfServiceURL { get; }
@@ -94,9 +99,14 @@ public interface IApplication : IPartialApplication
     new ITeam? Team { get; }
 
     /// <summary>
-    /// Gets the guild the game is linked to, if the application is a game sold on the Discord storefront.
+    /// Gets the guild the application is associated with.
     /// </summary>
     new Optional<Snowflake> GuildID { get; }
+
+    /// <summary>
+    /// Gets the associated guild object, if any.
+    /// </summary>
+    new Optional<IPartialGuild> Guild { get; }
 
     /// <summary>
     /// Gets the primary SKU ID of the game, if the application is a game sold on the Discord storefront.
@@ -119,6 +129,28 @@ public interface IApplication : IPartialApplication
     new Optional<ApplicationFlags> Flags { get; }
 
     /// <summary>
+    /// Gets an approximate count of the application's guild membership.
+    /// </summary>
+    new Optional<int> ApproximateGuildCount { get; }
+
+    /// <summary>
+    /// Gets the redirect URIs for the application.
+    /// </summary>
+    new Optional<IReadOnlyList<Uri>> RedirectUris { get; }
+
+    /// <summary>
+    /// Gets the interaction endpoint URL for the application.
+    /// </summary>
+    new Optional<Uri> InteractionsEndpointUrl { get; }
+
+    /// <summary>
+    /// Gets the application's role connection verification entry point,
+    /// which when configured will render the app as a verification method
+    /// in the guild role verification configuration.
+    /// </summary>
+    new Optional<Uri> RoleConnectionsVerificationUrl { get; }
+
+    /// <summary>
     /// Gets up to 5 tags describing the content and functionality of the application.
     /// </summary>
     new Optional<IReadOnlyList<string>> Tags { get; }
@@ -134,11 +166,9 @@ public interface IApplication : IPartialApplication
     new Optional<Uri> CustomInstallUrl { get; }
 
     /// <summary>
-    /// Gets the application's role connection verification entry point,
-    /// which when configured will render the app as a verification method
-    /// in the guild role verification configuration.
+    /// Gets the application's integration type configurations.
     /// </summary>
-    new Optional<Uri> RoleConnectionsVerificationUrl { get; }
+    new IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?> IntegrationTypesConfig { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.ID => this.ID;
@@ -162,6 +192,9 @@ public interface IApplication : IPartialApplication
     Optional<bool> IPartialApplication.DoesBotRequireCodeGrant => this.DoesBotRequireCodeGrant;
 
     /// <inheritdoc/>
+    Optional<IPartialUser> IPartialApplication.Bot => this.Bot;
+
+    /// <inheritdoc/>
     Optional<string> IPartialApplication.TermsOfServiceURL => this.TermsOfServiceURL;
 
     /// <inheritdoc/>
@@ -180,6 +213,9 @@ public interface IApplication : IPartialApplication
     Optional<Snowflake> IPartialApplication.GuildID => this.GuildID;
 
     /// <inheritdoc/>
+    Optional<IPartialGuild> IPartialApplication.Guild => this.Guild;
+
+    /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.PrimarySKUID => this.PrimarySKUID;
 
     /// <inheritdoc/>
@@ -192,6 +228,18 @@ public interface IApplication : IPartialApplication
     Optional<ApplicationFlags> IPartialApplication.Flags => this.Flags;
 
     /// <inheritdoc/>
+    Optional<int> IPartialApplication.ApproximateGuildCount => this.ApproximateGuildCount;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<Uri>> IPartialApplication.RedirectUris => this.RedirectUris;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.InteractionsEndpointUrl => this.InteractionsEndpointUrl;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.RoleConnectionsVerificationUrl => this.RoleConnectionsVerificationUrl;
+
+    /// <inheritdoc/>
     Optional<IReadOnlyList<string>> IPartialApplication.Tags => this.Tags;
 
     /// <inheritdoc/>
@@ -201,5 +249,5 @@ public interface IApplication : IPartialApplication
     Optional<Uri> IPartialApplication.CustomInstallUrl => this.CustomInstallUrl;
 
     /// <inheritdoc/>
-    Optional<Uri> IPartialApplication.RoleConnectionsVerificationUrl => this.RoleConnectionsVerificationUrl;
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?>> IPartialApplication.IntegrationTypesConfig => new(this.IntegrationTypesConfig);
 }

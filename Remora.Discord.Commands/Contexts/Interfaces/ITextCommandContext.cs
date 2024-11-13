@@ -28,6 +28,4 @@ namespace Remora.Discord.Commands.Contexts;
 /// Represents contextual information about a currently executing text-based command.
 /// </summary>
 [PublicAPI]
-public interface ITextCommandContext : IMessageContext, ICommandContext
-{
-}
+public interface ITextCommandContext : IMessageContext, ICommandContext;

@@ -35,7 +35,9 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record RestError
 (
-    DiscordError Code,
+    Optional<DiscordError> Code,
     Optional<IReadOnlyDictionary<string, OneOf<IPropertyErrorDetails, IReadOnlyList<IErrorDetails>>>> Errors,
-    string Message
+    string Message,
+    Optional<bool> IsGlobal,
+    Optional<float> RetryAfter
 ) : IRestError;

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -41,5 +42,8 @@ public record PartialAttachment
     Optional<string> ProxyUrl = default,
     Optional<int?> Height = default,
     Optional<int?> Width = default,
-    Optional<bool> IsEphemeral = default
+    Optional<bool> IsEphemeral = default,
+    Optional<TimeSpan> Duration = default,
+    Optional<byte[]> Waveform = default,
+    Optional<AttachmentFlags> Flags = default
 ) : IPartialAttachment;

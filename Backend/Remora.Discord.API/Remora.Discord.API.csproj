@@ -1,32 +1,14 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>70.0.0</VersionPrefix>
+        <VersionPrefix>78.0.0</VersionPrefix>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            BREAKING: Fix nullability for IApplicationRoleConnection
-            BREAKING: Implement DefaultForumLayout.
-            Implement support for age-restricted commands.
-            Use value-based keys for caching
-            BREAKING: Fix name of API type.
-            BREAKING: Fix type names.
-            BREAKING: Fix parameter types.
-            Fix missing name configuration.
-            BREAKING: Fix missing audit log fields.
-            BREAKING: Add missing `mentions` field.
-            BREAKING: Add missing `member` field.
-            BREAKING: Fix optionality and nullability of `owner`.
-            BREAKING: Fix optionality of several fields in IIntegration.
-            BREAKING: Fix type of select menu values.
-            BREAKING: Add missing `icon_hash` field.
-            BREAKING: Fix incorrect enumeration member name.
-            BREAKING: Fix optionality of `image` field.
-            BREAKING: Add missing `two_way_link` field.
-            BREAKING: Fix optionality of field.
-            Fix missing configuration.
-            BREAKING: Support both available and unavailable guilds in GUILD_CREATE.
-            Search any explicitly convertible type when converting payloads.
+          Update dependencies.
+          BREAKING: Implement support for user applications.
+          BREAKING: Implement support for one-time purchases.
+          Implement bulk banning endpoint.
+          BREAKING: Implement support for polls.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -101,6 +83,48 @@
       </Compile>
       <Compile Update="API\Objects\Interactions\Components\SelectMenu\PartialRoleSelectComponent.cs">
         <DependentUpon>RoleSelectComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Applications\PartialApplication.cs">
+        <DependentUpon>Application.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Channels\PartialChannel.cs">
+        <DependentUpon>Channel.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Channels\PartialForumTag.cs">
+        <DependentUpon>ForumTag.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Emojis\PartialEmoji.cs">
+        <DependentUpon>Emoji.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Guilds\PartialGuild.cs">
+        <DependentUpon>Guild.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Guilds\PartialGuildMember.cs">
+        <DependentUpon>GuildMember.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Integrations\PartialIntegration.cs">
+        <DependentUpon>Integration.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Invites\PartialInvite.cs">
+        <DependentUpon>Invite.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Messages\PartialAttachment.cs">
+        <DependentUpon>Attachment.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Messages\PartialMessage.cs">
+        <DependentUpon>Message.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Permissions\PartialRole.cs">
+        <DependentUpon>Role.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Permissions\PartialPermissionOverwrite.cs">
+        <DependentUpon>PermissionOverwrite.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Presences\PartialPresence.cs">
+        <DependentUpon>Presence.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Voice\PartialVoiceState.cs">
+        <DependentUpon>VoiceState.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

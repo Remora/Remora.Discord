@@ -4,33 +4,34 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
+    <PackageVersion Include="CommunityToolkit.HighPerformance" Version="8.2.2" />
     <PackageVersion Include="FuzzySharp" Version="2.0.2" />
     <PackageVersion Include="Humanizer.Core" Version="2.14.1" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Polly" Version="7.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="7.0.0" />
-    <PackageVersion Include="Moq" Version="4.18.3" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Polly" Version="8.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="8.0.2" />
+    <PackageVersion Include="Moq" Version="4.18.4" />
     <PackageVersion Include="NGettext" Version="0.6.7" />
-    <PackageVersion Include="OneOf" Version="3.0.223" />
-    <PackageVersion Include="Polly" Version="7.2.3" />
+    <PackageVersion Include="OneOf" Version="3.0.271" />
+    <PackageVersion Include="Polly" Version="8.4.0" />
     <PackageVersion Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
-    <PackageVersion Include="Remora.Commands" Version="10.0.3" />
-    <PackageVersion Include="Remora.Extensions.Options.Immutable" Version="1.0.6" />
-    <PackageVersion Include="Remora.Rest" Version="3.1.2" />
-    <PackageVersion Include="Remora.Rest.Core" Version="2.1.0" />
-    <PackageVersion Include="Remora.Rest.Xunit" Version="3.0.0" />
-    <PackageVersion Include="Remora.Results" Version="7.2.3" />
-    <PackageVersion Include="Remora.Results.Analyzers" Version="1.0.0" PrivateAssets="all" />
-    <PackageVersion Include="RichardSzalay.MockHttp" Version="6.0.0" />
+    <PackageVersion Include="Remora.Commands" Version="10.0.5" />
+    <PackageVersion Include="Remora.Extensions.Options.Immutable" Version="1.0.8" />
+    <PackageVersion Include="Remora.Rest" Version="3.4.0" />
+    <PackageVersion Include="Remora.Rest.Core" Version="2.2.1" />
+    <PackageVersion Include="Remora.Rest.Xunit" Version="3.0.4" />
+    <PackageVersion Include="Remora.Results" Version="7.4.1" />
+    <PackageVersion Include="Remora.Results.Analyzers" Version="1.0.2" PrivateAssets="all" />
+    <PackageVersion Include="RichardSzalay.MockHttp" Version="7.0.0" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageVersion Include="System.Text.Json" Version="7.0.1" />
-    <PackageVersion Include="System.Threading.Channels" Version="7.0.0" />
+    <PackageVersion Include="System.Text.Json" Version="8.0.3" />
+    <PackageVersion Include="System.Threading.Channels" Version="8.0.0" />
     <PackageVersion Include="Xunit.SkippableFact" Version="1.4.13" />
   </ItemGroup>
 </Project>

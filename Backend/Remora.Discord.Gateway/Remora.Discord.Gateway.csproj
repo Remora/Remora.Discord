@@ -1,10 +1,11 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>11.0.3</VersionPrefix>
+        <VersionPrefix>12.0.2</VersionPrefix>
         <Description>Remora.Discord's implementation of a Discord gateway client</Description>
         <PackageReleaseNotes>
             Update dependencies.
+            Handle reconnection requests on connect.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -13,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="CommunityToolkit.HighPerformance" />
       <PackageReference Include="Remora.Extensions.Options.Immutable" />
       <PackageReference Include="System.Threading.Channels" />
     </ItemGroup>

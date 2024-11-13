@@ -34,20 +34,29 @@
   "attachments": [
     {
       "id": "999999999999999999",
-      "filename": "none",
+      "filename": "file.png",
       "size": 0,
       "url": "https://www.example.org",
       "proxy_url": "https://www.example.org"
     }
   ],
   "embeds": [
-    { }
+    {}
   ],
   "reactions": [
     {
       "count": 1,
+      "count_details": {
+        "burst": 1,
+        "normal": 2
+      },
       "me": true,
-      "emoji": { }
+      "me_burst": true,
+      "emoji": { },
+      "burst_colors": [
+        "#ffffff",
+        "#e30f8a"
+      ]
     }
   ],
   "nonce": "none",
@@ -57,9 +66,9 @@
   "activity": {
     "type": 1
   },
-  "application": { },
+  "application": {},
   "application_id": "999999999999999999",
-  "message_reference": { },
+  "message_reference": {},
   "flags": 1,
   "referenced_message": {
     "id": "999999999999999999",
@@ -75,10 +84,10 @@
     "edited_timestamp": "1970-01-01T00:00:00.000000+00:00",
     "tts": true,
     "mention_everyone": true,
-    "mentions": [ ],
-    "mention_roles": [ ],
-    "attachments": [ ],
-    "embeds": [ ],
+    "mentions": [],
+    "mention_roles": [],
+    "attachments": [],
+    "embeds": [],
     "pinned": true,
     "type": 1
   },
@@ -93,6 +102,20 @@
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     }
   },
+  "interaction_metadata": {
+    "id": "999999999999999999",
+    "type": 2,
+    "user": {
+      "username": "none",
+      "discriminator": "9999",
+      "id": "999999999999999999",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+    },
+    "authorizing_integration_owners": {
+      "0": "999999999999999999",
+      "1": "999999999999999999"
+    }
+  },
   "thread": {
     "id": "999999999999999999",
     "type": 1
@@ -100,7 +123,7 @@
   "components": [
     {
       "type": 1,
-      "components": [ ]
+      "components": []
     }
   ],
   "sticker_items": [
@@ -110,5 +133,35 @@
       "format_type": 1
     }
   ],
-  "position": 1
+  "position": 1,
+  "resolved": {},
+  "poll": {
+    "question": {
+      "text": "abcdef"
+    },
+    "answers": [
+      {
+        "answer_id": 1,
+        "poll_media": {
+          "text": "abcdef",
+          "emoji": {
+            "name": "xyz"
+          }
+        }
+      }
+    ],
+    "expiry": "1970-01-01T00:00:00.000000+00:00",
+    "allow_multiselect": false,
+    "layout_type": 1,
+    "results": {
+      "is_finalized": true,
+      "answer_counts": [
+        {
+          "id": 1,
+          "count": 2,
+          "me_voted": false
+        }
+      ]
+    }
+  }
 }

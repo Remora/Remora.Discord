@@ -41,6 +41,9 @@ public interface IPartialUser
     /// <inheritdoc cref="IUser.Discriminator" />
     Optional<ushort> Discriminator { get; }
 
+    /// <inheritdoc cref="IUser.GlobalName" />
+    Optional<string?> GlobalName { get; }
+
     /// <inheritdoc cref="IUser.Avatar" />
     Optional<IImageHash?> Avatar { get; }
 
@@ -76,4 +79,7 @@ public interface IPartialUser
 
     /// <inheritdoc cref="IUser.PublicFlags" />
     Optional<UserFlags> PublicFlags { get; }
+
+    /// <inheritdoc cref="IUser.AvatarDecoration" />
+    Optional<IImageHash?> AvatarDecoration { get; }
 }

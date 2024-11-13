@@ -32,5 +32,6 @@ namespace Remora.Discord.API.Objects;
 public record AutoModerationActionMetadata
 (
     Optional<Snowflake> ChannelID,
-    Optional<TimeSpan> Duration
+    Optional<TimeSpan> Duration,
+    Optional<string> CustomMessage
 ) : IAutoModerationActionMetadata;

@@ -167,11 +167,13 @@ public class InteractionResponder : IResponder<IInteractionCreate>
                 ct
             );
 
-            if (!preparationError.IsSuccess)
+            // check if the result has changed, since the error events might change the outcome
+            if (!preparationError.IsSuccess && !Equals(preparationError.Error, prepareCommand.Error))
             {
                 return preparationError;
             }
 
+            // eat the error if it's not a developer problem
             if (prepareCommand.Error.IsUserOrEnvironmentError())
             {
                 // We've done our part and notified whoever might be interested; job well done
@@ -200,8 +202,8 @@ public class InteractionResponder : IResponder<IInteractionCreate>
 
         var shouldSendResponse =
         !(
-            suppressResponseAttribute?.Suppress ?? _options.SuppressAutomaticResponses ||
-            commandContext.HasRespondedToInteraction
+            suppressResponseAttribute?.Suppress ??
+            (_options.SuppressAutomaticResponses || commandContext.HasRespondedToInteraction)
         );
 
         if (shouldSendResponse)
@@ -237,7 +239,10 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             }
 
             operationContext.HasRespondedToInteraction = true;
+            operationContext.IsOriginalEphemeral = sendEphemeral;
+
             commandContext.HasRespondedToInteraction = true;
+            commandContext.IsOriginalEphemeral = sendEphemeral;
         }
 
         // Run any user-provided pre-execution events

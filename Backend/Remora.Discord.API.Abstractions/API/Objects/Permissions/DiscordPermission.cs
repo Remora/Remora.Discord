@@ -188,9 +188,9 @@ public enum DiscordPermission
     ManageWebhooks = 29,
 
     /// <summary>
-    /// Allows management and editing of emojis and stickers.
+    /// Allows for editing and deleting of emojis, stickers, and soundboard sounds created by all users.
     /// </summary>
-    ManageEmojisAndStickers = 30,
+    ManageGuildExpressions = 30,
 
     /// <summary>
     /// Allows usage of slash commands.
@@ -203,7 +203,7 @@ public enum DiscordPermission
     RequestToSpeak = 32,
 
     /// <summary>
-    /// Allows the user to manage scheduled events.
+    /// Allows for editing and deleting scheduled events created by all users.
     /// </summary>
     ManageEvents = 33,
 
@@ -241,5 +241,41 @@ public enum DiscordPermission
     /// Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from
     /// speaking in voice and stage channels.
     /// </summary>
-    ModerateMembers = 40
+    ModerateMembers = 40,
+
+    /// <summary>
+    /// Allows for viewing role subscription insights.
+    /// </summary>
+    ViewCreatorMonetizationAnalytics = 41,
+
+    /// <summary>
+    /// Allows for using soundboard in a voice channel.
+    /// </summary>
+    UseSoundboard = 42,
+
+    /// <summary>
+    /// Allows for creating emojis, stickers, and soundboard sounds, as well as editing and deleting those created by
+    /// the current user.
+    /// </summary>
+    CreateGuildExpressions = 43,
+
+    /// <summary>
+    /// Allows for creating scheduled events, as well as editing and deleting those created by the current user.
+    /// </summary>
+    CreateEvents = 44,
+
+    /// <summary>
+    /// Allows the usage of custom soundboard sounds from other servers.
+    /// </summary>
+    UseExternalSounds = 45,
+
+    /// <summary>
+    /// Allows for sending voice messages.
+    /// </summary>
+    SendVoiceMessages = 46,
+
+    /// <summary>
+    /// Allows for sending polls.
+    /// </summary>
+    SendPolls = 49,
 }

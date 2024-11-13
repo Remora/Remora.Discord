@@ -35,6 +35,7 @@ public record UserUpdate
     Snowflake ID,
     string Username,
     ushort Discriminator,
+    Optional<string?> GlobalName,
     IImageHash? Avatar,
     Optional<bool> IsBot = default,
     Optional<bool> IsSystem = default,
@@ -46,5 +47,6 @@ public record UserUpdate
     Optional<string?> Email = default,
     Optional<UserFlags> Flags = default,
     Optional<PremiumType> PremiumType = default,
-    Optional<UserFlags> PublicFlags = default
+    Optional<UserFlags> PublicFlags = default,
+    Optional<IImageHash?> AvatarDecoration = default
 ) : IUserUpdate;

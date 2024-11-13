@@ -37,8 +37,9 @@ public static class Constants
     public static IUser BotUser { get; } = new User
     (
         DiscordSnowflake.New(0),
-        "mock-bot",
+        "mock_bot",
         0,
+        "mock-bot",
         null
     );
 
@@ -51,6 +52,11 @@ public static class Constants
     /// Gets the default mocked session ID.
     /// </summary>
     public static string MockSessionID => "mock-session";
+
+    /// <summary>
+    /// Gets the default mocked sequence number.
+    /// </summary>
+    public static int MockSequenceNumber => 0;
 
     /// <summary>
     /// Gets the default mocked resume gateway URL.

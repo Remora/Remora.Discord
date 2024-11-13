@@ -49,4 +49,15 @@ public interface IAutoModerationActionMetadata
     /// <para>The associated action type for this property is <see cref="AutoModerationActionType.Timeout"/>.</para>
     /// </remarks>
     Optional<TimeSpan> Duration { get; }
+
+    /// <summary>
+    /// Gets an additional explanation that will be shown to members whenever their message is blocked.
+    /// </summary>
+    /// <remarks>
+    /// <para>Maximum of 150 characters.</para>
+    /// <para>T
+    /// he associated action type for this property is <see cref="AutoModerationActionType.BlockMessage"/>.
+    /// </para>
+    /// </remarks>
+    Optional<string> CustomMessage { get; }
 }

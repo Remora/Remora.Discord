@@ -298,5 +298,15 @@ public enum AuditLogEvent
     /// <summary>
     /// A member was timed out by AutoMod (according to a rule.
     /// </summary>
-    AutoModerationUserCommunicationDisabled = 145
+    AutoModerationUserCommunicationDisabled = 145,
+
+    /// <summary>
+    /// A creator monetization request was created.
+    /// </summary>
+    CreatorMonetizationRequestCreated = 150,
+
+    /// <summary>
+    /// Creator monetization terms were accepted.
+    /// </summary>
+    CreatorMonetizationTermsAccepted = 151
 }

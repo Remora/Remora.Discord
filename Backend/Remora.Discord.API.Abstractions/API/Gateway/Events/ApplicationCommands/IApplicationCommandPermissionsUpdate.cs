@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents an update to the permissions of a command.
 /// </summary>
 [PublicAPI]
-public interface IApplicationCommandPermissionsUpdate : IGatewayEvent, IGuildApplicationCommandPermissions
-{
-}
+public interface IApplicationCommandPermissionsUpdate : IGatewayEvent, IGuildApplicationCommandPermissions;

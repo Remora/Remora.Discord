@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Gateway.Commands;
 /// </summary>
 /// <remarks>
 /// This command has some special requirements related to the presence or absence of certain members in the data
-/// payload. Please read <see cref="!:https://discord.com/developers/docs/topics/gateway#request-guild-members"/> for
+/// payload. Please read <see href="https://discord.com/developers/docs/topics/gateway#request-guild-members"/> for
 /// more information before use, as misuse may cause Discord to terminate the gateway connection.
 /// </remarks>
 [PublicAPI]

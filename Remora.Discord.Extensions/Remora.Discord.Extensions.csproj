@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>5.2.3</VersionPrefix>
+        <VersionPrefix>5.3.6</VersionPrefix>
         <Description>Utilities and components which extend upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Don't register interaction groups on arbitrary trees
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -14,6 +13,12 @@
         <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
         <ProjectReference Include="..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />
         <ProjectReference Include="..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Services\IPermissionComputationService.cs">
+        <DependentUpon>PermissionComputationService.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents the update of an auto moderation rule.
 /// </summary>
 [PublicAPI]
-public interface IAutoModerationRuleCreate : IGatewayEvent, IAutoModerationRule
-{
-}
+public interface IAutoModerationRuleCreate : IGatewayEvent, IAutoModerationRule;

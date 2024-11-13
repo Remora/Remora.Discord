@@ -191,6 +191,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<GuildFeature>> features = default,
         Optional<string?> description = default,
         Optional<bool> isPremiumProgressBarEnabled = default,
+        Optional<Snowflake?> safetyAlertsChannelID = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -263,6 +264,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("features", features, this.JsonOptions);
                         json.Write("description", description, this.JsonOptions);
                         json.Write("premium_progress_bar_enabled", isPremiumProgressBarEnabled, this.JsonOptions);
+                        json.Write("safety_alerts_channel_id", safetyAlertsChannelID, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -316,6 +318,8 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IDefaultReaction?> defaultReactionEmoji = default,
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
+        Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -345,6 +349,8 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("default_reaction_emoji", defaultReactionEmoji, this.JsonOptions);
                         json.Write("available_tags", availableTags, this.JsonOptions);
                         json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
+                        json.Write("default_forum_layout", defaultForumLayout, this.JsonOptions);
+                        json.Write("default_thread_rate_limit_per_user", defaultThreadRateLimitPerUser, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -353,18 +359,216 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildTextChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildText,
+        topic: topic,
+        rateLimitPerUser: rateLimitPerUser,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildAnnouncementChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildAnnouncement,
+        bitrate: bitrate,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildForumChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
+        Optional<SortOrder?> defaultSortOrder = default,
+        Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildForum,
+        topic: topic,
+        rateLimitPerUser: rateLimitPerUser,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultReactionEmoji: defaultReactionEmoji,
+        availableTags: availableTags,
+        defaultSortOrder: defaultSortOrder,
+        defaultForumLayout: defaultForumLayout,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildMediaChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
+        Optional<SortOrder?> defaultSortOrder = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildMedia,
+        topic: topic,
+        rateLimitPerUser: rateLimitPerUser,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultReactionEmoji: defaultReactionEmoji,
+        availableTags: availableTags,
+        defaultSortOrder: defaultSortOrder,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildVoiceChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildVoice,
+        bitrate: bitrate,
+        userLimit: userLimit,
+        rateLimitPerUser: rateLimitPerUser,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        rtcRegion: rtcRegion,
+        videoQualityMode: videoQualityMode,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildStageChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<bool?> isNsfw = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildStageVoice,
+        bitrate: bitrate,
+        userLimit: userLimit,
+        rateLimitPerUser: rateLimitPerUser,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        isNsfw: isNsfw,
+        rtcRegion: rtcRegion,
+        videoQualityMode: videoQualityMode,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
     public virtual Task<Result> ModifyGuildChannelPositionsAsync
     (
         Snowflake guildID,
-        IReadOnlyList
-        <
-            (
-            Snowflake ChannelID,
-            int? Position,
-            bool? LockPermissions,
-            Snowflake? ParentID
-            )
-        > positionModifications,
+        IReadOnlyList<IChannelPositionModification> positionModifications,
         CancellationToken ct = default
     )
     {
@@ -376,41 +580,9 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        foreach (var (channelID, position, lockPermissions, parentID) in positionModifications)
-                        {
-                            json.WriteStartObject();
-                            {
-                                json.WriteString("id", channelID.ToString());
-                                if (position is null)
-                                {
-                                    json.WriteNull("position");
-                                }
-                                else
-                                {
-                                    json.WriteNumber("position", position.Value);
-                                }
-
-                                if (lockPermissions is null)
-                                {
-                                    json.WriteNull("lock_permissions");
-                                }
-                                else
-                                {
-                                    json.WriteBoolean("lock_permissions", lockPermissions.Value);
-                                }
-
-                                if (parentID is null)
-                                {
-                                    json.WriteNull("parent_id");
-                                }
-                                else
-                                {
-                                    json.WriteString("parent_id", parentID.Value.ToString());
-                                }
-                            }
-                            json.WriteEndObject();
-                        }
-                    }
+                        json.WriteRawValue(JsonSerializer.Serialize(positionModifications, this.JsonOptions));
+                    },
+                    withStartEndMarkers: false
                 )
                 .WithRateLimitContext(this.RateLimitCache),
             ct
@@ -544,6 +716,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<bool?> isDeafened = default,
         Optional<Snowflake?> channelID = default,
         Optional<DateTimeOffset?> communicationDisabledUntil = default,
+        Optional<GuildMemberFlags> flags = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -563,6 +736,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("deaf", isDeafened, this.JsonOptions);
                         json.Write("channel_id", channelID, this.JsonOptions);
                         json.Write("communication_disabled_until", communicationDisabledUntil, this.JsonOptions);
+                        json.Write("flags", flags, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -736,6 +910,33 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             $"guilds/{guildID}/bans/{userID}",
             b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
+        );
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IBulkBanResponse>> BulkGuildBanAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<Snowflake> userIDs,
+        Optional<int> deleteMessageSeconds = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IBulkBanResponse>
+        (
+            $"guilds/{guildID}/bulk-ban",
+            b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("user_ids", userIDs, this.JsonOptions);
+                        json.Write("delete_message_seconds", deleteMessageSeconds, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache)
+                .AddAuditLogReason(reason),
+            ct: ct
         );
     }
 
@@ -1028,13 +1229,13 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+    public virtual Task<Result<IReadOnlyList<IInviteWithMetadata>>> GetGuildInvitesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IInviteWithMetadata>>
         (
             $"guilds/{guildID}/invites",
             b => b.WithRateLimitContext(this.RateLimitCache),
@@ -1216,6 +1417,21 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc/>
+    public virtual Task<Result<IGuildOnboarding>> GetGuildOnboardingAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IGuildOnboarding>
+        (
+            $"guilds/{guildID}/onboarding",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc/>
     public virtual Task<Result> ModifyCurrentUserVoiceStateAsync
     (
         Snowflake guildID,
@@ -1239,6 +1455,38 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 )
                 .WithRateLimitContext(this.RateLimitCache),
             ct
+        );
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IGuildOnboarding>> ModifyGuildOnboardingAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<IOnboardingPrompt> prompts,
+        IReadOnlyList<Snowflake> defaultChannelIDs,
+        bool isEnabled,
+        GuildOnboardingMode mode,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync<IGuildOnboarding>
+        (
+            $"guilds/{guildID}/onboarding",
+            b => b
+                .AddAuditLogReason(reason)
+                .WithJson
+                (
+                    json =>
+                    {
+                        json.Write("prompts", prompts, this.JsonOptions);
+                        json.Write("default_channel_ids", defaultChannelIDs, this.JsonOptions);
+                        json.Write("enabled", isEnabled, this.JsonOptions);
+                        json.Write("mode", mode, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
         );
     }
 

@@ -30,5 +30,7 @@
             ]
         }
     },
-    "message": "Invalid Form Body"
+    "message": "Invalid Form Body",
+    "global": true,
+    "retry_after": 1
 }

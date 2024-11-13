@@ -510,6 +510,18 @@ public static class KeyHelpers
     }
 
     /// <summary>
+    /// Creates a cache key for a <see cref="IGuildOnboarding"/> instance.
+    /// </summary>
+    /// <param name="GuildID">The guild ID.</param>
+    /// <returns>The cache key.</returns>
+    public record GuildOnboardingCacheKey(in Snowflake GuildID) : GuildCacheKey(GuildID)
+    {
+        /// <inheritdoc/>
+        protected override StringBuilder AppendToString(StringBuilder stringBuilder)
+            => base.AppendToString(stringBuilder).Append(":Onboarding");
+    }
+
+    /// <summary>
     /// Creates a cache key for a <see cref="IThreadMember"/> instance.
     /// </summary>
     /// <param name="ThreadID">The ID of the thread.</param>

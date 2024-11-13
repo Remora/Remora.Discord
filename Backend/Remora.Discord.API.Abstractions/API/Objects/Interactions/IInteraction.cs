@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Rest.Core;
@@ -58,8 +60,18 @@ public interface IInteraction
     Optional<Snowflake> GuildID { get; }
 
     /// <summary>
+    /// Gets the channel associated with the interaction.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="IPartialChannel.ID"/> and <see cref="IPartialChannel.Type"/> are guaranteed to be present in this
+    /// object.
+    /// </remarks>
+    Optional<IPartialChannel> Channel { get; }
+
+    /// <summary>
     /// Gets the ID of the channel the interaction was sent from.
     /// </summary>
+    [Obsolete("Use Channel instead.")]
     Optional<Snowflake> ChannelID { get; }
 
     /// <summary>
@@ -91,7 +103,7 @@ public interface IInteraction
     /// <summary>
     /// Gets the computed permissions for the application in the context of the interaction's execution.
     /// </summary>
-    Optional<IDiscordPermissionSet> AppPermissions { get; }
+    IDiscordPermissionSet AppPermissions { get; }
 
     /// <summary>
     /// Gets the locale of the invoking user.
@@ -105,4 +117,28 @@ public interface IInteraction
     /// Gets the locale of the guild the interaction was sent from.
     /// </summary>
     Optional<string> GuildLocale { get; }
+
+    /// <summary>
+    /// Gets, for monetized apps, any entitlements for the invoking user.
+    /// </summary>
+    IReadOnlyList<IEntitlement> Entitlements { get; }
+
+    /// <summary>
+    /// Gets the context of the interaction.
+    /// </summary>
+    Optional<InteractionContextType> Context { get; }
+
+    /// <summary>
+    /// Gets the integrations that authorized the interaction.
+    /// </summary>
+    /// <remarks>
+    /// This is a mapping of the integration type to the ID of its resource.
+    /// <para>
+    /// The dictionary contains the following, given the circumstances: <br/>
+    /// - If the integration is installed to a user, a key of <see cref="ApplicationIntegrationType.UserInstallable"/> and the value is the user ID. <br/>
+    /// - If the integration is installed to a guild, a key of <see cref="ApplicationIntegrationType.GuildInstallable"/> and the value is the guild ID.
+    /// If the interaction is sent outside the context of a guild, the value is always zero.<br/>
+    /// </para>
+    /// </remarks>
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, Snowflake>> AuthorizingIntegrationOwners { get; }
 }

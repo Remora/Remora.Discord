@@ -1,14 +1,13 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>26.2.0</VersionPrefix>
+        <VersionPrefix>28.1.0</VersionPrefix>
         <Description>Glue code for using Remora.Commands with Remora.Discord</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Handle IPartial* correctly when updating slash commands
-            Improve error checking when using top-level Discord attributes.
-            Implement attribute for marking commands as age-restricted.
-            CreateInteractionResponse expects an InteractionID not ApplicationID
+            Implement support for user applications.
+            Implement support for parsing partial messages.
+            Update maximum command length.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -227,6 +227,8 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
         Optional<IReadOnlyList<Snowflake>> stickerIds = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<bool> enforceNonce = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -243,6 +245,8 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
             stickerIds,
             attachments,
             flags,
+            enforceNonce,
+            poll,
             ct
         );
 
@@ -614,6 +618,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
     (
         Snowflake channelID,
         Snowflake userID,
+        Optional<bool> withMember = default,
         CancellationToken ct = default
     )
     {
@@ -626,7 +631,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
             return cacheResult;
         }
 
-        var result = await _actual.GetThreadMemberAsync(channelID, userID, ct);
+        var result = await _actual.GetThreadMemberAsync(channelID, userID, withMember, ct);
         if (!result.IsSuccess)
         {
             return result;
@@ -642,6 +647,9 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
     public async Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
     (
         Snowflake channelID,
+        Optional<bool> withMember = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
         CancellationToken ct = default
     )
     {
@@ -654,7 +662,7 @@ public partial class CachingDiscordRestChannelAPI : IDiscordRestChannelAPI, IRes
             return cacheResult;
         }
 
-        var result = await _actual.ListThreadMembersAsync(channelID, ct);
+        var result = await _actual.ListThreadMembersAsync(channelID, withMember, after, limit, ct);
         if (!result.IsSuccess)
         {
             return result;

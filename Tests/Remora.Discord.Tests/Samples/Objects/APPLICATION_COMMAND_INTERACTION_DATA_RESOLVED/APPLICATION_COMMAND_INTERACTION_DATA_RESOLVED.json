@@ -8,7 +8,7 @@
     }
   },
   "members": {
-    "999999999999999999": { }
+    "999999999999999999": {}
   },
   "roles": {
     "999999999999999999": {
@@ -19,22 +19,23 @@
       "position": 1,
       "permissions": "66321471",
       "managed": true,
-      "mentionable": true
+      "mentionable": true,
+      "flags": 0
     }
   },
   "channels": {
-    "999999999999999999": { }
+    "999999999999999999": {}
   },
   "messages": {
-    "999999999999999999": { }
+    "999999999999999999": {}
   },
   "attachments": {
     "999999999999999999": {
       "id": "999999999999999999",
-      "filename": "none",
+      "filename": "file.png",
       "size": 0,
-      "url": "https://example.org",
-      "proxy_url": "https://example.org"
+      "url": "https://www.example.org",
+      "proxy_url": "https://www.example.org"
     }
   }
 }

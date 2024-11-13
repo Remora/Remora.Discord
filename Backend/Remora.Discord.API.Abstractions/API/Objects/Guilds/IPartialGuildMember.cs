@@ -57,6 +57,9 @@ public interface IPartialGuildMember
     /// <inheritdoc cref="IGuildMember.IsMuted" />
     Optional<bool> IsMuted { get; }
 
+    /// <inheritdoc cref="IGuildMember.Flags" />
+    Optional<GuildMemberFlags> Flags { get; }
+
     /// <inheritdoc cref="IGuildMember.IsPending" />
     Optional<bool?> IsPending { get; }
 

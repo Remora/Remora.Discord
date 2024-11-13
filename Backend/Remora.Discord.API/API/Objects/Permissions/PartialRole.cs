@@ -43,5 +43,6 @@ public record PartialRole
     Optional<IDiscordPermissionSet> Permissions = default,
     Optional<bool> IsManaged = default,
     Optional<bool> IsMentionable = default,
-    Optional<IRoleTags> Tags = default
+    Optional<IRoleTags> Tags = default,
+    Optional<RoleFlags> Flags = default
 ) : IPartialRole;

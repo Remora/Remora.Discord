@@ -28,7 +28,8 @@
         "position": 1,
         "permissions": "0",
         "managed": true,
-        "mentionable": true
+        "mentionable": true,
+        "flags": 0
       }
     ],
     "emojis": [
@@ -72,6 +73,7 @@
         "format_type": 1
       }
     ],
-    "premium_progress_bar_enabled": true
+    "premium_progress_bar_enabled": true,
+    "safety_alerts_channel_id": null
   }
 }

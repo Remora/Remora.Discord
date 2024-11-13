@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "id": "999999999999999999",
+      "username": "none",
+      "discriminator": "9999",
+      "global_name": "none",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+      "bot": true,
+      "system": true,
+      "mfa_enabled": true,
+      "banner": "68b329da9893e34099c7d8ad5cb9c940",
+      "accent_color": 1,
+      "locale": "en-GB",
+      "verified": true,
+      "email": "nobody@example.org",
+      "flags": 1,
+      "premium_type": 1,
+      "public_flags": 1,
+      "avatar_decoration": "68b329da9893e34099c7d8ad5cb9c940"
+    }
+  ]
+}

@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -62,5 +63,8 @@ public record Message
     Optional<IChannel> Thread = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
     Optional<IReadOnlyList<IStickerItem>> StickerItems = default,
-    Optional<int> Position = default
+    Optional<int> Position = default,
+    Optional<IApplicationCommandInteractionDataResolved> Resolved = default,
+    Optional<IMessageInteractionMetadata> InteractionMetadata = default,
+    Optional<IPoll> Poll = default
 ) : IMessage;

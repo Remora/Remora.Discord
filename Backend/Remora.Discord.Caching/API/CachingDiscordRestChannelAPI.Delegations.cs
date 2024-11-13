@@ -88,6 +88,7 @@ public partial class CachingDiscordRestChannelAPI
         Optional<string> name = default,
         Optional<int?> position = default,
         Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
@@ -104,6 +105,7 @@ public partial class CachingDiscordRestChannelAPI
             name,
             position,
             isNsfw,
+            rateLimitPerUser,
             bitrate,
             userLimit,
             permissionOverwrites,
@@ -121,9 +123,14 @@ public partial class CachingDiscordRestChannelAPI
         Snowflake channelID,
         Optional<string> name = default,
         Optional<int?> position = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -133,9 +140,14 @@ public partial class CachingDiscordRestChannelAPI
             channelID,
             name,
             position,
+            isNsfw,
             bitrate,
+            rateLimitPerUser,
+            userLimit,
             permissionOverwrites,
+            parentID,
             rtcRegion,
+            videoQualityMode,
             reason,
             ct
         );
@@ -244,6 +256,48 @@ public partial class CachingDiscordRestChannelAPI
             defaultThreadRateLimitPerUser,
             defaultSortOrder,
             defaultForumLayout,
+            reason,
+            ct
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<Result<IChannel>> ModifyMediaChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<SortOrder> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ModifyMediaChannelAsync
+        (
+            channelID,
+            name,
+            position,
+            topic,
+            isNsfw,
+            rateLimitPerUser,
+            permissionOverwrites,
+            parentID,
+            defaultAutoArchiveDuration,
+            flags,
+            availableTags,
+            defaultReactionEmoji,
+            defaultThreadRateLimitPerUser,
+            defaultSortOrder,
             reason,
             ct
         );

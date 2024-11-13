@@ -36,6 +36,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Extensions;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Core;
@@ -280,6 +281,7 @@ public class DiscordRestChannelAPITests
             var name = "brr";
             var position = 1;
             var isNsfw = true;
+            var rateLimitPerUser = 10;
             var bitrate = 8000;
             var userLimit = 10;
             var permissionOverwrites = new List<PermissionOverwrite>();
@@ -303,6 +305,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("position", p => p.Is(position))
                                     .WithProperty("nsfw", p => p.Is(isNsfw))
                                     .WithProperty("bitrate", p => p.Is(bitrate))
+                                    .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                     .WithProperty("user_limit", p => p.Is(userLimit))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
@@ -319,6 +322,7 @@ public class DiscordRestChannelAPITests
                 name,
                 position,
                 isNsfw,
+                rateLimitPerUser,
                 bitrate,
                 userLimit,
                 permissionOverwrites,
@@ -341,9 +345,14 @@ public class DiscordRestChannelAPITests
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
             var position = 1;
+            var isNsfw = true;
+            var rateLimitPerUser = 10;
             var bitrate = 8000;
+            var userLimit = 10;
             var permissionOverwrites = new List<PermissionOverwrite>();
+            var parentId = DiscordSnowflake.New(1);
             var rtcRegion = "somewhere";
+            var videoQualityMode = VideoQualityMode.Auto;
             var reason = "test";
 
             var api = CreateAPI
@@ -359,9 +368,14 @@ public class DiscordRestChannelAPITests
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("position", p => p.Is(position))
+                                    .WithProperty("nsfw", p => p.Is(isNsfw))
+                                    .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                     .WithProperty("bitrate", p => p.Is(bitrate))
+                                    .WithProperty("user_limit", p => p.Is(userLimit))
                                     .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
                                     .WithProperty("rtc_region", p => p.Is(rtcRegion))
+                                    .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -372,9 +386,14 @@ public class DiscordRestChannelAPITests
                 channelId,
                 name,
                 position,
+                isNsfw,
+                rateLimitPerUser,
                 bitrate,
+                userLimit,
                 permissionOverwrites,
+                parentId,
                 rtcRegion,
+                videoQualityMode,
                 reason
             );
 
@@ -523,6 +542,88 @@ public class DiscordRestChannelAPITests
                 defaultThreadRateLimitPerUser,
                 defaultSortOrder,
                 defaultForumLayout,
+                reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsMediaChannelRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var name = "brr";
+            var position = 1;
+            var topic = "wooga";
+            var isNsfw = true;
+            var rateLimitPerUser = 10;
+            var permissionOverwrites = new List<PermissionOverwrite>();
+            var parentID = new Snowflake(1);
+            var defaultAutoArchiveDuration = AutoArchiveDuration.Day;
+            var flags = ChannelFlags.RequireTag;
+            var availableTags = new List<IForumTag>();
+            var defaultReactionEmoji = new DefaultReaction(new Snowflake(1));
+            var defaultThreadRateLimitPerUser = 2;
+            var defaultSortOrder = SortOrder.CreationDate;
+            var reason = "test";
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j
+                            .IsObject
+                            (
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("position", p => p.Is(position))
+                                    .WithProperty("topic", p => p.Is(topic))
+                                    .WithProperty("nsfw", p => p.Is(isNsfw))
+                                    .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
+                                    .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("parent_id", p => p.Is(parentID.ToString()))
+                                    .WithProperty
+                                    (
+                                        "default_auto_archive_duration",
+                                        p => p.Is((int)defaultAutoArchiveDuration)
+                                    )
+                                    .WithProperty("flags", p => p.Is((int)flags))
+                                    .WithProperty("available_tags", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("default_reaction_emoji", p => p.IsObject())
+                                    .WithProperty
+                                    (
+                                        "default_thread_rate_limit_per_user",
+                                        p => p.Is(defaultThreadRateLimitPerUser)
+                                    )
+                                    .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
+                            )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
+
+            var result = await api.ModifyMediaChannelAsync
+            (
+                channelId,
+                name,
+                position,
+                topic,
+                isNsfw,
+                rateLimitPerUser,
+                permissionOverwrites,
+                parentID,
+                defaultAutoArchiveDuration,
+                flags,
+                availableTags,
+                defaultReactionEmoji,
+                defaultThreadRateLimitPerUser,
+                defaultSortOrder,
                 reason
             );
 
@@ -754,7 +855,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -784,7 +885,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -814,7 +915,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -914,7 +1015,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
-                    .WithQueryString(expectedQueryStringParameters)
+                    .WithExactQueryString(expectedQueryStringParameters)
                     .Respond("application/json", "[ ]")
             );
 
@@ -1006,6 +1107,7 @@ public class DiscordRestChannelAPITests
             var tts = false;
             var allowedMentions = new AllowedMentions();
             var flags = MessageFlags.SuppressEmbeds;
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1021,6 +1123,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                                 .WithProperty("flags", p => p.Is((int)flags))
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1033,7 +1136,8 @@ public class DiscordRestChannelAPITests
                 nonce,
                 tts,
                 allowedMentions: allowedMentions,
-                flags: flags
+                flags: flags,
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1052,6 +1156,7 @@ public class DiscordRestChannelAPITests
             var nonce = "aasda";
             var tts = false;
             var allowedMentions = new AllowedMentions();
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1066,6 +1171,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("nonce", p => p.Is(nonce))
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1077,7 +1183,8 @@ public class DiscordRestChannelAPITests
                 nonce: nonce,
                 isTTS: tts,
                 embeds: embeds,
-                allowedMentions: allowedMentions
+                allowedMentions: allowedMentions,
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1097,6 +1204,7 @@ public class DiscordRestChannelAPITests
             var tts = false;
             var allowedMentions = new AllowedMentions();
             var components = new List<IMessageComponent>();
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1112,6 +1220,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                                 .WithProperty("components", p => p.IsArray())
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1124,7 +1233,8 @@ public class DiscordRestChannelAPITests
                 isTTS: tts,
                 embeds: embeds,
                 allowedMentions: allowedMentions,
-                components: components
+                components: components,
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1146,6 +1256,7 @@ public class DiscordRestChannelAPITests
 
             var nonce = "aasda";
             var tts = false;
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1159,21 +1270,26 @@ public class DiscordRestChannelAPITests
                             o => o
                                 .WithProperty("nonce", p => p.Is(nonce))
                                 .WithProperty("tts", p => p.Is(tts))
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1184,7 +1300,8 @@ public class DiscordRestChannelAPITests
                 channelId,
                 nonce: nonce,
                 isTTS: tts,
-                attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
+                attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) },
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1210,6 +1327,7 @@ public class DiscordRestChannelAPITests
 
             var nonce = "aasda";
             var tts = false;
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1224,32 +1342,37 @@ public class DiscordRestChannelAPITests
                             o => o
                                 .WithProperty("nonce", p => p.Is(nonce))
                                 .WithProperty("tts", p => p.Is(tts))
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName1))
-                                                    .WithProperty("description", ep => ep.Is(description1))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName2))
-                                                    .WithProperty("description", ep => ep.Is(description2))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1264,7 +1387,8 @@ public class DiscordRestChannelAPITests
                 {
                     new FileData(fileName1, file1, description1),
                     new FileData(fileName2, file2, description2)
-                }
+                },
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1287,6 +1411,7 @@ public class DiscordRestChannelAPITests
 
             var nonce = "aasda";
             var tts = false;
+            var enforceNonce = true;
 
             var api = CreateAPI
             (
@@ -1300,30 +1425,35 @@ public class DiscordRestChannelAPITests
                             o => o
                                 .WithProperty("nonce", p => p.Is(nonce))
                                 .WithProperty("tts", p => p.Is(tts))
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1338,7 +1468,64 @@ public class DiscordRestChannelAPITests
                 {
                     new FileData(fileName, file, description),
                     new PartialAttachment(DiscordSnowflake.New(999))
-                }
+                },
+                enforceNonce: enforceNonce
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsPollRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+
+            var nonce = "aasda";
+            var tts = false;
+            var allowedMentions = new AllowedMentions();
+            var enforceNonce = true;
+            var poll = new PollCreateRequest
+            (
+                new PollMedia("abc"),
+                new[]
+                {
+                    new PollAnswer(new PollMedia("xyz"))
+                },
+                5,
+                true
+            );
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("poll", p => p.IsObject())
+                                .WithProperty("nonce", p => p.Is(nonce))
+                                .WithProperty("tts", p => p.Is(tts))
+                                .WithProperty("allowed_mentions", p => p.IsObject())
+                                .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.CreateMessageAsync
+            (
+                channelId,
+                nonce: nonce,
+                isTTS: tts,
+                poll: poll,
+                allowedMentions: allowedMentions,
+                enforceNonce: enforceNonce
             );
 
             ResultAssert.Successful(result);
@@ -1545,7 +1732,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
                     )
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -1768,6 +1955,45 @@ public class DiscordRestChannelAPITests
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact]
+        public async Task PerformsFlagsOnlyRequestCorrectly()
+        {
+            var channelId = DiscordSnowflake.New(0);
+            var messageId = DiscordSnowflake.New(1);
+            var flags = MessageFlags.SuppressEmbeds;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                    )
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("flags", p => p.Is((int)flags))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+            );
+
+            var result = await api.EditMessageAsync
+            (
+                channelId,
+                messageId,
+                flags: flags
+            );
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
         public async Task PerformsNullableRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
@@ -1837,21 +2063,25 @@ public class DiscordRestChannelAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1897,32 +2127,36 @@ public class DiscordRestChannelAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName1))
-                                                    .WithProperty("description", ep => ep.Is(description1))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName2))
-                                                    .WithProperty("description", ep => ep.Is(description2))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1968,30 +2202,34 @@ public class DiscordRestChannelAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -3011,25 +3249,33 @@ public class DiscordRestChannelAPITests
                         (
                             o => o
                                 .WithProperty("name", p => p.Is(name))
-                                .WithProperty("message", p => p.IsObject
+                                .WithProperty
                                 (
-                                    po => po
-                                        .WithProperty("attachments", poa => poa.IsArray
-                                        (
-                                            a => a
-                                                .WithElement
+                                    "message",
+                                    p => p.IsObject
+                                    (
+                                        po => po
+                                            .WithProperty
+                                            (
+                                                "attachments",
+                                                poa => poa.IsArray
                                                 (
-                                                    0,
-                                                    e => e.IsObject
-                                                    (
-                                                        eo => eo
-                                                            .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                            .WithProperty("filename", ep => ep.Is(fileName))
-                                                            .WithProperty("description", ep => ep.Is(description))
-                                                    )
+                                                    a => a
+                                                        .WithElement
+                                                        (
+                                                            0,
+                                                            e => e.IsObject
+                                                            (
+                                                                eo => eo
+                                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                                    .WithProperty("filename", ep => ep.Is(fileName))
+                                                                    .WithProperty("description", ep => ep.Is(description))
+                                                            )
+                                                        )
                                                 )
-                                        ))
-                                ))
+                                            )
+                                    )
+                                )
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -3076,36 +3322,44 @@ public class DiscordRestChannelAPITests
                         (
                             o => o
                                 .WithProperty("name", p => p.Is(name))
-                                .WithProperty("message", p => p.IsObject
+                                .WithProperty
                                 (
-                                    po => po
-                                        .WithProperty("attachments", poa => poa.IsArray
-                                        (
-                                            a => a
-                                                .WithElement
+                                    "message",
+                                    p => p.IsObject
+                                    (
+                                        po => po
+                                            .WithProperty
+                                            (
+                                                "attachments",
+                                                poa => poa.IsArray
                                                 (
-                                                    0,
-                                                    e => e.IsObject
-                                                    (
-                                                        eo => eo
-                                                            .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                            .WithProperty("filename", ep => ep.Is(fileName1))
-                                                            .WithProperty("description", ep => ep.Is(description1))
-                                                    )
+                                                    a => a
+                                                        .WithElement
+                                                        (
+                                                            0,
+                                                            e => e.IsObject
+                                                            (
+                                                                eo => eo
+                                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                                    .WithProperty("filename", ep => ep.Is(fileName1))
+                                                                    .WithProperty("description", ep => ep.Is(description1))
+                                                            )
+                                                        )
+                                                        .WithElement
+                                                        (
+                                                            1,
+                                                            e => e.IsObject
+                                                            (
+                                                                eo => eo
+                                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                                    .WithProperty("filename", ep => ep.Is(fileName2))
+                                                                    .WithProperty("description", ep => ep.Is(description2))
+                                                            )
+                                                        )
                                                 )
-                                                .WithElement
-                                                (
-                                                    1,
-                                                    e => e.IsObject
-                                                    (
-                                                        eo => eo
-                                                            .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                            .WithProperty("filename", ep => ep.Is(fileName2))
-                                                            .WithProperty("description", ep => ep.Is(description2))
-                                                    )
-                                                )
-                                        ))
-                                ))
+                                            )
+                                    )
+                                )
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -3311,6 +3565,7 @@ public class DiscordRestChannelAPITests
         {
             var channelId = DiscordSnowflake.New(0);
             var userId = DiscordSnowflake.New(1);
+            var withMember = true;
 
             var api = CreateAPI
             (
@@ -3321,10 +3576,11 @@ public class DiscordRestChannelAPITests
                         $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
                     )
                     .WithNoContent()
+                    .WithExactQueryString("with_member", withMember.ToString())
                     .Respond("application/json", SampleRepository.Samples[typeof(IThreadMember)])
             );
 
-            var result = await api.GetThreadMemberAsync(channelId, userId);
+            var result = await api.GetThreadMemberAsync(channelId, userId, withMember);
             ResultAssert.Successful(result);
         }
     }
@@ -3351,6 +3607,9 @@ public class DiscordRestChannelAPITests
         public async Task PerformsRequestCorrectly()
         {
             var channelId = DiscordSnowflake.New(0);
+            var withMember = true;
+            var after = DiscordSnowflake.New(2);
+            var limit = 1;
 
             var api = CreateAPI
             (
@@ -3361,10 +3620,16 @@ public class DiscordRestChannelAPITests
                         $"{Constants.BaseURL}channels/{channelId}/thread-members"
                     )
                     .WithNoContent()
+                    .WithExactQueryString(new KeyValuePair<string, string>[]
+                    {
+                        new("with_member", withMember.ToString()),
+                        new("after", after.ToString()),
+                        new("limit", limit.ToString())
+                    })
                     .Respond("application/json", "[]")
             );
 
-            var result = await api.ListThreadMembersAsync(channelId);
+            var result = await api.ListThreadMembersAsync(channelId, withMember, after, limit);
             ResultAssert.Successful(result);
         }
     }
@@ -3402,7 +3667,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelID}/threads/archived/public"
                     )
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -3452,7 +3717,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelID}/threads/archived/private"
                     )
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -3502,7 +3767,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelID}/users/@me/threads/archived/private"
                     )
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {

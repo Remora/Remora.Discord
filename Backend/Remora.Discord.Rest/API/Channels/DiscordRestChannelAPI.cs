@@ -256,6 +256,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<string> name = default,
         Optional<int?> position = default,
         Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
@@ -272,6 +273,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             name,
             position: position,
             isNsfw: isNsfw,
+            rateLimitPerUser: rateLimitPerUser,
             bitrate: bitrate,
             userLimit: userLimit,
             permissionOverwrites: permissionOverwrites,
@@ -289,9 +291,14 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Snowflake channelID,
         Optional<string> name = default,
         Optional<int?> position = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
         Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -301,9 +308,14 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             channelID,
             name,
             position: position,
+            isNsfw: isNsfw,
+            rateLimitPerUser: rateLimitPerUser,
             bitrate: bitrate,
+            userLimit: userLimit,
             permissionOverwrites: permissionOverwrites,
+            parentID: parentID,
             rtcRegion: rtcRegion,
+            videoQualityMode: videoQualityMode,
             reason: reason,
             ct: ct
         );
@@ -417,6 +429,48 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         );
     }
 
+    /// <inheritdoc/>
+    public Task<Result<IChannel>> ModifyMediaChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<SortOrder> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            position: position,
+            topic: topic,
+            isNsfw: isNsfw,
+            rateLimitPerUser: rateLimitPerUser,
+            permissionOverwrites: permissionOverwrites,
+            parentID: parentID,
+            defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+            flags: flags,
+            availableTags: availableTags,
+            defaultReactionEmoji: defaultReactionEmoji,
+            defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+            defaultSortOrder: defaultSortOrder,
+            reason: reason,
+            ct: ct
+        );
+    }
+
     /// <inheritdoc />
     public virtual Task<Result> DeleteChannelAsync
     (
@@ -445,7 +499,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     )
     {
         var hasAny = around.HasValue || before.HasValue || after.HasValue;
-        var hasStrictlyOne = (around.HasValue ^ before.HasValue ^ after.HasValue)
+        var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue
                              && !(around.HasValue && before.HasValue && after.HasValue);
 
         if (hasAny && !hasStrictlyOne)
@@ -526,6 +580,8 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<IReadOnlyList<Snowflake>> stickerIDs = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<bool> enforceNonce = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -538,7 +594,8 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             && !attachments.HasValue
                             && !embeds.HasValue
                             && !stickerIDs.HasValue
-                            && !components.HasValue;
+                            && !components.HasValue
+                            && !poll.HasValue;
 
         if (hasAtLeastOnePayload)
         {
@@ -595,6 +652,8 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             json.Write("sticker_ids", stickerIDs, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
+                            json.Write("enforce_nonce", enforceNonce, this.JsonOptions);
+                            json.Write("poll", poll, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);
@@ -755,12 +814,12 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         CancellationToken ct = default
     )
     {
-        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !components.HasValue)
+        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !components.HasValue && !flags.HasValue)
         {
             return new InvalidOperationError
             (
-                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(components)}, or {nameof(embeds)} "
-                + "is required."
+                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(components)}, {nameof(embeds)}, "
+                + $"or {nameof(flags)} is required."
             );
         }
 
@@ -1347,13 +1406,22 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     (
         Snowflake channelID,
         Snowflake userID,
+        Optional<bool> withMember = default,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IThreadMember>
         (
             $"channels/{channelID}/thread-members/{userID}",
-            b => b.WithRateLimitContext(this.RateLimitCache),
+            b =>
+            {
+                if (withMember.TryGet(out var realWithMember))
+                {
+                    b.AddQueryParameter("with_member", realWithMember.ToString());
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
@@ -1362,13 +1430,34 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     public virtual Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
     (
         Snowflake channelID,
+        Optional<bool> withMember = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
         (
             $"channels/{channelID}/thread-members",
-            b => b.WithRateLimitContext(this.RateLimitCache),
+            b =>
+            {
+                if (withMember.TryGet(out var realWithMember))
+                {
+                    b.AddQueryParameter("with_member", realWithMember.ToString());
+                }
+
+                if (after.TryGet(out var realAfter))
+                {
+                    b.AddQueryParameter("after", realAfter.ToString());
+                }
+
+                if (limit.TryGet(out var realLimit))
+                {
+                    b.AddQueryParameter("limit", realLimit.ToString());
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }

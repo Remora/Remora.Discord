@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -97,7 +98,7 @@ public interface IPartialMessage
     Optional<Snowflake> ApplicationID { get; }
 
     /// <inheritdoc cref="IMessage.MessageReference" />
-    Optional<IMessageReference> MessageReference { get;  }
+    Optional<IMessageReference> MessageReference { get; }
 
     /// <inheritdoc cref="IMessage.Flags" />
     Optional<MessageFlags> Flags { get; }
@@ -119,4 +120,13 @@ public interface IPartialMessage
 
     /// <inheritdoc cref="IMessage.Position" />
     Optional<int> Position { get; }
+
+    /// <inheritdoc cref="IMessage.Resolved" />
+    Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+
+    /// <inheritdoc cref="IMessage.InteractionMetadata"/>
+    Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
+
+    /// <inheritdoc cref="IMessage.Poll"/>
+    Optional<IPoll> Poll { get; }
 }

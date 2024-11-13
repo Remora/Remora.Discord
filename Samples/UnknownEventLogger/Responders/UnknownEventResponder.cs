@@ -78,10 +78,14 @@ public class UnknownEventResponder : IResponder<IUnknownEvent>
         var filePath = Path.Combine(eventDirectory, filename);
 
         await using var file = File.OpenWrite(filePath);
-        await using var jsonWriter = new Utf8JsonWriter(file, new JsonWriterOptions
-        {
-            Indented = true
-        });
+        await using var jsonWriter = new Utf8JsonWriter
+        (
+            file,
+            new JsonWriterOptions
+            {
+                Indented = true
+            }
+        );
 
         jsonDocument.WriteTo(jsonWriter);
 
