@@ -59,6 +59,7 @@ public record Message
     Optional<IMessageReference> MessageReference = default,
     Optional<MessageFlags> Flags = default,
     Optional<IMessage?> ReferencedMessage = default,
+    Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots = default,
     Optional<IMessageInteraction> Interaction = default,
     Optional<IChannel> Thread = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,

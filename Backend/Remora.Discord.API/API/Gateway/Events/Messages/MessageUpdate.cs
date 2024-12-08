@@ -58,6 +58,7 @@ public record MessageUpdate
     Optional<IPartialApplication> Application = default,
     Optional<Snowflake> ApplicationID = default,
     Optional<IMessageReference> MessageReference = default,
+    Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots = default,
     Optional<MessageFlags> Flags = default,
     Optional<IMessage?> ReferencedMessage = default,
     Optional<IMessageInteraction> Interaction = default,
