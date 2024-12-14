@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents the base level for V2 components.
 /// </summary>
-public interface IBaseComponent
+public interface IBaseComponent : IMessageComponent
 {
     /// <summary>
     /// Gets the ID of this component.
