@@ -33,8 +33,8 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record MediaGalleryComponent
 (
-    Optional<string> Id,
-    IReadOnlyList<IMediaGalleryItem> Items
+    IReadOnlyList<IMediaGalleryItem> Items,
+    Optional<string> Id = default
 ) : IMediaGalleryComponent
 {
     /// <inheritdoc/>
