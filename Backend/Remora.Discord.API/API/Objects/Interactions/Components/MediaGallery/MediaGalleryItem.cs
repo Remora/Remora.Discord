@@ -32,6 +32,6 @@ namespace Remora.Discord.API.Objects;
 public record MediaGalleryItem
 (
     IUnfurledMediaItem Media,
-    Optional<string> Description,
-    Optional<bool> IsSpoiler
+    Optional<string> Description = default,
+    Optional<bool> IsSpoiler = default
 ) : IMediaGalleryItem;
