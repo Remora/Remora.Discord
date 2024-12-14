@@ -1206,6 +1206,25 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IMessageInteractionMetadata, MessageInteractionMetadata>()
                .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
 
+        options.AddDataObjectConverter<IUnfurledMediaItem, UnfurledMediaItem>();
+
+        options.AddDataObjectConverter<IMediaGalleryItem, MediaGalleryItem>()
+               .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<ITextDisplayComponent, TextDisplayComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IMediaGalleryComponent, MediaGalleryComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<ISeparatorComponent, SeparatorComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsDivider, "divider");
+
+        options.AddDataObjectConverter<IFileDisplayServerComponent, FileDisplayServerComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+                .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
         return options;
     }
 

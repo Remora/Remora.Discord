@@ -91,5 +91,10 @@ public enum MessageFlags
     /// <summary>
     /// The message is a voice message.
     /// </summary>
-    IsVoiceMessage = 1 << 13
+    IsVoiceMessage = 1 << 13,
+
+    /// <summary>
+    /// This message has support for Components V2/UI Kit components.
+    /// </summary>
+    IsComponentV2Message = 1 << 15
 }

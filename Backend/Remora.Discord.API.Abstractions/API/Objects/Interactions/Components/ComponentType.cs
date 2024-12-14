@@ -68,5 +68,25 @@ public enum ComponentType
     /// <summary>
     /// A menu of selectable channels.
     /// </summary>
-    ChannelSelect = 8
+    ChannelSelect = 8,
+
+    /// <summary>
+    /// A block of text.
+    /// </summary>
+    TextDisplay = 10,
+
+    /// <summary>
+    /// An array of media.
+    /// </summary>
+    MediaGallery = 12,
+
+    /// <summary>
+    /// A file.
+    /// </summary>
+    File = 13,
+
+    /// <summary>
+    /// A separator to vertically distance components.
+    /// </summary>
+    Separator = 14,
 }
