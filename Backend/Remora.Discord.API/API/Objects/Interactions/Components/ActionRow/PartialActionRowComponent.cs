@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IPartialActionRowComponent" />
 [PublicAPI]
-public record PartialActionRowComponent(Optional<IReadOnlyList<IPartialMessageComponent>> Components)
+public record PartialActionRowComponent(Optional<IReadOnlyList<IPartialMessageComponent>> Components, Optional<int> Id = default)
     : IPartialActionRowComponent
 {
     /// <inheritdoc/>

@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a singular file as a component.
 /// </summary>
-public interface IFileDisplayServerComponent : IBaseComponent
+public interface IFileDisplayServerComponent : IMessageComponent
 {
     /// <summary>
     /// Gets the file associated with this component.

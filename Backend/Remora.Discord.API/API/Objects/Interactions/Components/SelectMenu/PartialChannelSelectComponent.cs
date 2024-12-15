@@ -37,7 +37,8 @@ public record PartialChannelSelectComponent
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default
+    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default,
+    Optional<int> Id = default
 ) : IPartialChannelSelectComponent
 {
     /// <inheritdoc />

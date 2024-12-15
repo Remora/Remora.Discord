@@ -27,10 +27,10 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a component that vertically separates other components.
 /// </summary>
-public interface ISeparatorComponent : IBaseComponent
+public interface ISeparatorComponent : IMessageComponent
 {
     /// <inheritdoc/>
-    ComponentType IBaseComponent.Type => ComponentType.Separator;
+    ComponentType IMessageComponent.Type => ComponentType.Separator;
 
     /// <summary>
     /// Gets whether this component acts as a divider, and will render as a line.

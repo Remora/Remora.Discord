@@ -25,7 +25,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents an arbitrary chunk of text to be displayed.
 /// </summary>
-public interface ITextDisplayComponent : IBaseComponent
+public interface ITextDisplayComponent : IMessageComponent
 {
     /// <summary>
     /// Gets the content of the display component.

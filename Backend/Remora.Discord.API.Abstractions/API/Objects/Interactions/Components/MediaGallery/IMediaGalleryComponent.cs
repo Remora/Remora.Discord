@@ -27,11 +27,8 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a media gallery component.
 /// </summary>
-public interface IMediaGalleryComponent : IBaseComponent
+public interface IMediaGalleryComponent : IMessageComponent
 {
-    /// <inheritdoc/>
-    ComponentType IBaseComponent.Type => ComponentType.MediaGallery;
-
     /// <summary>
     /// Gets the items for this gallery.
     /// </summary>

@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Objects;
 public record TextDisplayComponent
 (
     string Content,
-    Optional<string> Id = default
+    Optional<int> Id = default
 ) : ITextDisplayComponent
 {
     /// <inheritdoc />

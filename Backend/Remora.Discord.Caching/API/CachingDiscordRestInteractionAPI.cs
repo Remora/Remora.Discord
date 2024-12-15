@@ -232,6 +232,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
         Optional<IAllowedMentions?> allowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>?> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     )
     {
@@ -244,6 +245,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
             allowedMentions,
             components,
             attachments,
+            flags,
             ct
         );
 

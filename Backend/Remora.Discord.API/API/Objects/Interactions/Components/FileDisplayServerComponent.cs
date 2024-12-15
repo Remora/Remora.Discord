@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Objects;
 public record FileDisplayServerComponent
 (
     IUnfurledMediaItem File,
-    Optional<string> Id = default,
+    Optional<int> Id = default,
     Optional<bool> IsSpoiler = default
 ) : IFileDisplayServerComponent
 {

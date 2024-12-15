@@ -37,7 +37,8 @@ public record PartialTextInputComponent
     Optional<int> MinLength,
     Optional<int> MaxLength,
     Optional<bool> IsRequired,
-    Optional<string> Placeholder
+    Optional<string> Placeholder,
+    Optional<int> Id = default
 ) : IPartialTextInputComponent
 {
     /// <inheritdoc />

@@ -97,6 +97,7 @@ public interface IDiscordRestInteractionAPI
     /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
     /// mentioned in this parameter will be deleted.
     /// </param>
+    /// <param name="flags">Flags to set on the message. Only <see cref="MessageFlags.IsComponentV2Message"/> may be set.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
     Task<Result<IMessage>> EditOriginalInteractionResponseAsync
@@ -108,6 +109,7 @@ public interface IDiscordRestInteractionAPI
         Optional<IAllowedMentions?> allowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>?> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     );
 
