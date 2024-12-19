@@ -85,8 +85,12 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 => document.RootElement.Deserialize<IMentionableSelectComponent>(options),
             ComponentType.ChannelSelect
                 => document.RootElement.Deserialize<IChannelSelectComponent>(options),
+            ComponentType.Section
+                => document.RootElement.Deserialize<ISectionComponent>(options),
             ComponentType.TextDisplay
                 => document.RootElement.Deserialize<ITextDisplayComponent>(options),
+            ComponentType.Thumbnail
+                => document.RootElement.Deserialize<IThumbnailComponent>(options),
             ComponentType.MediaGallery
                 => document.RootElement.Deserialize<IMediaGalleryComponent>(options),
             ComponentType.File
@@ -142,9 +146,19 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 JsonSerializer.Serialize(writer, mentionableSelect, options);
                 break;
             }
+            case ISectionComponent section:
+            {
+                JsonSerializer.Serialize(writer, section, options);
+                break;
+            }
             case ITextDisplayComponent textDisplay:
             {
                 JsonSerializer.Serialize(writer, textDisplay, options);
+                break;
+            }
+            case IThumbnailComponent thumbnail:
+            {
+                JsonSerializer.Serialize(writer, thumbnail, options);
                 break;
             }
             case IMediaGalleryComponent mediaGallery:

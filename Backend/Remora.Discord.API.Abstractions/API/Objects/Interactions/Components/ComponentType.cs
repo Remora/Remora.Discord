@@ -71,9 +71,19 @@ public enum ComponentType
     ChannelSelect = 8,
 
     /// <summary>
+    /// A section.
+    /// </summary>
+    Section = 9,
+
+    /// <summary>
     /// A block of text.
     /// </summary>
     TextDisplay = 10,
+
+    /// <summary>
+    /// A thumbnail.
+    /// </summary>
+    Thumbnail = 11,
 
     /// <summary>
     /// An array of media.

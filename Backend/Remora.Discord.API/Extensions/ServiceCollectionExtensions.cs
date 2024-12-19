@@ -1209,6 +1209,10 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IUnfurledMediaItem, UnfurledMediaItem>();
 
+        options.AddDataObjectConverter<IThumbnailComponent, ThumbnailComponent>()
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .IncludeWhenSerializing(c => c.Type);
+
         options.AddDataObjectConverter<IMediaGalleryItem, MediaGalleryItem>()
                .WithPropertyName(o => o.IsSpoiler, "spoiler");
 
@@ -1216,6 +1220,9 @@ public static class ServiceCollectionExtensions
                .IncludeWhenSerializing(c => c.Type);
 
         options.AddDataObjectConverter<IMediaGalleryComponent, MediaGalleryComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<ISectionComponent, SectionComponent>()
                .IncludeWhenSerializing(c => c.Type);
 
         options.AddDataObjectConverter<ISeparatorComponent, SeparatorComponent>()
