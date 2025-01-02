@@ -1,5 +1,5 @@
 //
-//  MessageReference.cs
+//  MessageReferenceType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,20 +21,22 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IMessageReference" />
+/// <summary>
+/// Enumerates the message reference types provided by Discord.
+/// </summary>
 [PublicAPI]
-public record MessageReference
-(
-    Optional<MessageReferenceType> Type = default,
-    Optional<Snowflake> MessageID = default,
-    Optional<Snowflake> ChannelID = default,
-    Optional<Snowflake> GuildID = default,
-    Optional<bool> FailIfNotExists = default
-) : IMessageReference;
+public enum MessageReferenceType
+{
+    /// <summary>
+    /// A reference used by replies.
+    /// </summary>
+    Default = 0,
+
+    /// <summary>
+    /// A reference used to point to a message at a point in time.
+    /// </summary>
+    Forward = 1,
+}

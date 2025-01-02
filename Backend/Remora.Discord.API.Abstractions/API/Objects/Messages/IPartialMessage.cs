@@ -100,6 +100,9 @@ public interface IPartialMessage
     /// <inheritdoc cref="IMessage.MessageReference" />
     Optional<IMessageReference> MessageReference { get; }
 
+    /// <inheritdoc cref="IMessage.MessageSnapshots" />
+    Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots { get; }
+
     /// <inheritdoc cref="IMessage.Flags" />
     Optional<MessageFlags> Flags { get; }
 

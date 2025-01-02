@@ -836,6 +836,7 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
         options.AddDataObjectConverter<IMessageReference, MessageReference>();
+        options.AddDataObjectConverter<IMessageSnapshot, MessageSnapshot>();
 
         return options;
     }

@@ -155,6 +155,11 @@ public interface IMessage : IPartialMessage
     new Optional<IMessageReference> MessageReference { get; }
 
     /// <summary>
+    /// Gets the message associated with <see cref="MessageReference"/>. Sent with forwarded messages.
+    /// </summary>
+    new Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots { get; }
+
+    /// <summary>
     /// Gets a set of bitwise flags describing extra features of the message.
     /// </summary>
     new Optional<MessageFlags> Flags { get; }
@@ -269,6 +274,9 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<IMessageReference> IPartialMessage.MessageReference => this.MessageReference;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IMessageSnapshot>> IPartialMessage.MessageSnapshots => this.MessageSnapshots;
 
     /// <inheritdoc/>
     Optional<MessageFlags> IPartialMessage.Flags => this.Flags;

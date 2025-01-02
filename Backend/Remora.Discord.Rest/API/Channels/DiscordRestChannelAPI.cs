@@ -595,14 +595,15 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             && !embeds.HasValue
                             && !stickerIDs.HasValue
                             && !components.HasValue
-                            && !poll.HasValue;
+                            && !poll.HasValue
+                            && (!messageReference.HasValue || messageReference.Value.Type != MessageReferenceType.Forward);
 
         if (hasAtLeastOnePayload)
         {
             return new InvalidOperationError
             (
                 $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(embeds)}, {nameof(components)}, "
-                + $"or {nameof(stickerIDs)} is required."
+                + $"{nameof(stickerIDs)}, or {nameof(messageReference)} with {nameof(messageReference.Value.Type)} = {nameof(MessageReferenceType.Forward)} is required."
             );
         }
 
