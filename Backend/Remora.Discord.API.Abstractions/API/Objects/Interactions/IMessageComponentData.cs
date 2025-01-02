@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -52,10 +53,5 @@ public interface IMessageComponentData
     /// <summary>
     /// Gets the values selected by the user.
     /// </summary>
-    /// <remarks>
-    /// The Discord API docs denote that this field should contain a list of
-    /// <see cref="ISelectOption"/> values. However, in their samples and as
-    /// identified through testing, it actually always contains a list of strings.
-    /// </remarks>
-    Optional<IReadOnlyList<string>> Values { get; }
+    Optional<OneOf<IReadOnlyList<Snowflake>, IReadOnlyList<string>>> Values { get; }
 }
