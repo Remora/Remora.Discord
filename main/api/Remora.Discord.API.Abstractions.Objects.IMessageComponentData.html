@@ -117,7 +117,7 @@ public interface IMessageComponentData</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageComponentData_ComponentType.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageComponentData.ComponentType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageComponentData.cs/#L43">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageComponentData.cs/#L44">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageComponentData" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.ComponentType*"></a>
   <h4 id="ComponentType" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.ComponentType">ComponentType</h4>
@@ -148,7 +148,7 @@ public interface IMessageComponentData</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageComponentData_CustomID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageComponentData.CustomID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageComponentData.cs/#L38">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageComponentData.cs/#L39">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageComponentData" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.CustomID*"></a>
   <h4 id="CustomID" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.CustomID">CustomID</h4>
@@ -179,7 +179,7 @@ public interface IMessageComponentData</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageComponentData_Resolved.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageComponentData.Resolved%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageComponentData.cs/#L50">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageComponentData.cs/#L51">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageComponentData" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.Resolved*"></a>
   <h4 id="Resolved" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.Resolved">Resolved</h4>
@@ -212,7 +212,7 @@ components.</p>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageComponentData_Values.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageComponentData.Values%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageComponentData.cs/#L60">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageComponentData.cs/#L56">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageComponentData" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.Values*"></a>
   <h4 id="Values" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageComponentData.Values">Values</h4>
@@ -221,7 +221,7 @@ components.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IReadOnlyList&lt;string&gt;&gt; Values { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">Optional&lt;OneOf&lt;IReadOnlyList&lt;Snowflake&gt;, IReadOnlyList&lt;string&gt;&gt;&gt; Values { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -233,16 +233,11 @@ components.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</td>
+        <td><span class="xref">Optional</span>&lt;<span class="xref">OneOf</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<span class="xref">Snowflake</span>&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Values_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The Discord API docs denote that this field should contain a list of
-<a class="xref" href="Remora.Discord.API.Abstractions.Objects.ISelectOption.html">ISelectOption</a> values. However, in their samples and as
-identified through testing, it actually always contains a list of strings.</p>
-</div>
 
 </article>
               
