@@ -10,7 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.Extensions.Extensions;
+using Remora.Discord.Gateway;
 using Remora.Discord.Hosting.Extensions;
 
 namespace Remora.Discord.Samples.LoadRespondersFromAssembly;
@@ -52,6 +54,13 @@ public class Program
             (_, services) =>
             {
                 services.AddRespondersFromAssembly(typeof(Program).Assembly);
+                services.Configure<DiscordGatewayClientOptions>
+                (
+                    g => g.Intents |= GatewayIntents.MessageContents
+                                      | GatewayIntents.GuildMembers
+                                      | GatewayIntents.GuildVoiceStates
+                                      | GatewayIntents.GuildMessageReactions
+                );
             }
         )
         .ConfigureLogging
