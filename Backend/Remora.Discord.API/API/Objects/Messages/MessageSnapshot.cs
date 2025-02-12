@@ -1,5 +1,5 @@
 //
-//  MessageReference.cs
+//  MessageSnapshot.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,19 +22,9 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
-
-#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IMessageReference" />
+/// <inheritdoc cref="IMessageSnapshot" />
 [PublicAPI]
-public record MessageReference
-(
-    Optional<MessageReferenceType> Type = default,
-    Optional<Snowflake> MessageID = default,
-    Optional<Snowflake> ChannelID = default,
-    Optional<Snowflake> GuildID = default,
-    Optional<bool> FailIfNotExists = default
-) : IMessageReference;
+public record MessageSnapshot(IPartialMessage Message) : IMessageSnapshot;

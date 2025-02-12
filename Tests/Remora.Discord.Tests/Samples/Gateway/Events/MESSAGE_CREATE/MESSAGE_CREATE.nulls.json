@@ -67,6 +67,7 @@
     "message_reference": {},
     "flags": 1,
     "referenced_message": null,
+    "message_snapshots": [],
     "interaction": {
       "id": "999999999999999999",
       "type": 1,

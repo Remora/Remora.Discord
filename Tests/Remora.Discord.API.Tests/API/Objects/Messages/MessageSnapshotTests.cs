@@ -1,5 +1,5 @@
 //
-//  MessageReference.cs
+//  MessageSnapshotTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,21 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+using Remora.Discord.API.Tests.TestBases;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Tests.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IMessageReference" />
-[PublicAPI]
-public record MessageReference
-(
-    Optional<MessageReferenceType> Type = default,
-    Optional<Snowflake> MessageID = default,
-    Optional<Snowflake> ChannelID = default,
-    Optional<Snowflake> GuildID = default,
-    Optional<bool> FailIfNotExists = default
-) : IMessageReference;
+/// <inheritdoc />
+public class MessageSnapshotTests : ObjectTestBase<IMessageSnapshot>
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MessageSnapshotTests"/> class.
+    /// </summary>
+    /// <param name="fixture">The test fixture.</param>
+    public MessageSnapshotTests(JsonBackedTypeTestFixture fixture)
+        : base(fixture)
+    {
+    }
+}
