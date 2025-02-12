@@ -1530,4 +1530,29 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             ct: ct
         );
     }
+
+    /// <inheritdoc />
+    public Task<Result<IIncidentsData>> ModifyGuildIncidentActionsAsync
+    (
+        Snowflake guildID,
+        Optional<DateTimeOffset?> invitesDisabledUntil = default,
+        Optional<DateTimeOffset?> dmsDisabledUntil = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IIncidentsData>
+        (
+            $"guilds/{guildID}/incident-actions",
+            b => b.WithJson
+                (
+                    j =>
+                    {
+                        j.Write("invites_disabled_until", invitesDisabledUntil, this.JsonOptions);
+                        j.Write("dms_disabled_until", dmsDisabledUntil, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
 }

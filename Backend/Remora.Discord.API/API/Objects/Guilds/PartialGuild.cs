@@ -75,5 +75,6 @@ public record PartialGuild
     Optional<GuildNSFWLevel> NSFWLevel = default,
     Optional<IReadOnlyList<ISticker>> Stickers = default,
     Optional<bool> IsPremiumProgressBarEnabled = default,
-    Optional<Snowflake?> SafetyAlertsChannelID = default
+    Optional<Snowflake?> SafetyAlertsChannelID = default,
+    Optional<IIncidentsData?> IncidentsData = default
 ) : IPartialGuild;

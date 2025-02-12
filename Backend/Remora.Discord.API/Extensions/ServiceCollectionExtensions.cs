@@ -328,6 +328,12 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildRoleUpdate, GuildRoleUpdate>();
         options.AddDataObjectConverter<IGuildRoleDelete, GuildRoleDelete>();
 
+        options.AddDataObjectConverter<IIncidentsData, IncidentsData>()
+            .WithPropertyName(i => i.DMsDisabledUntil, "dms_disabled_until")
+            .WithPropertyConverter(i => i.DMsDisabledUntil, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyName(i => i.DMSpamDetectedAt, "dm_spam_detected_at")
+            .WithPropertyConverter(i => i.DMSpamDetectedAt, new ISO8601DateTimeOffsetConverter());
+
         // Guild scheduled events
         options.AddDataObjectConverter<IGuildScheduledEventCreate, GuildScheduledEventCreate>();
         options.AddDataObjectConverter<IGuildScheduledEventDelete, GuildScheduledEventDelete>();

@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
@@ -3361,6 +3362,117 @@ public class DiscordRestGuildAPITests
             );
 
             var result = await api.DeleteGuildIntegrationAsync(guildID, integrationID, reason);
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildIncidentActionsAsync"/> method.
+    /// </summary>
+    public class ModifyGuildIncidentActionsAsync : RestAPITestBase<IDiscordRestGuildAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildIncidentActionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildIncidentActionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildID = DiscordSnowflake.New(0);
+            var invitesDisabledUntil = DateTimeOffset.Now;
+            var dmsDisabledUntil = DateTimeOffset.Now + TimeSpan.FromMinutes(1);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty
+                                (
+                                    "invites_disabled_until",
+                                    p => p.Is(invitesDisabledUntil.ToISO8601String())
+                                )
+                                .WithProperty("dms_disabled_until", p => p.Is(dmsDisabledUntil.ToISO8601String()))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IIncidentsData)])
+            );
+
+            var result = await api.ModifyGuildIncidentActionsAsync(guildID, invitesDisabledUntil, dmsDisabledUntil);
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsOptionalRequestCorrectly()
+        {
+            var guildID = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithoutProperty("invites_disabled_until")
+                                .WithoutProperty("dms_disabled_until")
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IIncidentsData)])
+            );
+
+            var result = await api.ModifyGuildIncidentActionsAsync(guildID);
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNullableRequestCorrectly()
+        {
+            var guildID = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("invites_disabled_until", p => p.IsNull())
+                                .WithProperty("dms_disabled_until", p => p.IsNull())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IIncidentsData)])
+            );
+
+            var result = await api.ModifyGuildIncidentActionsAsync(guildID, null, null);
 
             ResultAssert.Successful(result);
         }
