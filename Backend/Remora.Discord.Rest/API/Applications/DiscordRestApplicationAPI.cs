@@ -684,6 +684,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Optional<Uri> interactionsEndpointUrl = default,
         Optional<IReadOnlyList<string>> tags = default,
         Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>> integrationTypesConfig = default,
+        Optional<Uri> eventWebhooksUrl = default,
+        Optional<ApplicationEventWebhookStatus> eventWebhooksStatus = default,
+        Optional<IReadOnlyList<string>> eventWebhooksTypes = default,
         CancellationToken ct = default
     )
     {
@@ -726,6 +729,9 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("cover_image", base64EncodedCover, this.JsonOptions);
                         json.Write("interactions_endpoint_url", interactionsEndpointUrl, this.JsonOptions);
                         json.Write("tags", tags, this.JsonOptions);
+                        json.Write("event_webhooks_url", eventWebhooksUrl, this.JsonOptions);
+                        json.Write("event_webhooks_status", eventWebhooksStatus, this.JsonOptions);
+                        json.Write("event_webhooks_types", eventWebhooksTypes, this.JsonOptions);
                         json.Write("integration_types_config", integrationTypesConfig, this.JsonOptions);
                     }
                 );

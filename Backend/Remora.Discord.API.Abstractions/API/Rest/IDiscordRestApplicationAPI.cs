@@ -411,6 +411,9 @@ public interface IDiscordRestApplicationAPI
     /// <param name="interactionsEndpointUrl">The new interactions endpoint URL.</param>
     /// <param name="tags">The new tags.</param>
     /// <param name="integrationTypesConfig">The new integration types.</param>
+    /// <param name="eventWebhooksUrl">The new event webhook url.</param>
+    /// <param name="eventWebhooksStatus">The new status of the event webhook.</param>
+    /// <param name="eventWebhooksTypes">The new events to subscribe to.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The updated application.</returns>
     Task<Result<IApplication>> EditCurrentApplicationAsync
@@ -425,6 +428,9 @@ public interface IDiscordRestApplicationAPI
         Optional<Uri> interactionsEndpointUrl = default,
         Optional<IReadOnlyList<string>> tags = default,
         Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>> integrationTypesConfig = default,
+        Optional<Uri> eventWebhooksUrl = default,
+        Optional<ApplicationEventWebhookStatus> eventWebhooksStatus = default,
+        Optional<IReadOnlyList<string>> eventWebhooksTypes = default,
         CancellationToken ct = default
     );
 }

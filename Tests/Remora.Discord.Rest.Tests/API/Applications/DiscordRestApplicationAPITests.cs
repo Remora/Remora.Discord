@@ -2496,6 +2496,10 @@ public class DiscordRestApplicationAPITests
             var interactionsEndpointUrl = new Uri("https://example.org/interact");
             var tags = new[] { "ooga", "booga" };
 
+            var eventWebhooksUrl = new Uri("https://example.org/webhook");
+            var eventWebhooksStatus = ApplicationEventWebhookStatus.Enabled;
+            var eventWebhooksTypes = new[] { "fake", "types" };
+
             var integrationTypes = new Dictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>
             {
                 { ApplicationIntegrationType.GuildInstallable, new ApplicationIntegrationTypeConfig(new ApplicationOAuth2InstallParams(DiscordPermissionSet.Empty, Array.Empty<string>())) },
@@ -2550,6 +2554,9 @@ public class DiscordRestApplicationAPITests
                                               .WithProperty("1", pp => pp.IsObject())
                                     )
                                 )
+                                .WithProperty("event_webhooks_url", p => p.Is(eventWebhooksUrl.ToString()))
+                                .WithProperty("event_webhooks_status", p => p.Is((int)eventWebhooksStatus))
+                                .WithProperty("event_webhooks_types", p => p.IsArray())
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
@@ -2566,7 +2573,10 @@ public class DiscordRestApplicationAPITests
                 cover,
                 interactionsEndpointUrl,
                 tags,
-                integrationTypes
+                integrationTypes,
+                eventWebhooksUrl,
+                eventWebhooksStatus,
+                eventWebhooksTypes
             );
 
             ResultAssert.Successful(result);
