@@ -37,7 +37,6 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Services;
 using Remora.Rest.Core;
-using Remora.Rest.Extensions;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 using RangeAttribute = Remora.Commands.Attributes.RangeAttribute;
 
