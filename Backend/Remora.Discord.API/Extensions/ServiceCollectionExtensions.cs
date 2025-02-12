@@ -28,6 +28,7 @@ using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Objects.Soundboard;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
@@ -37,6 +38,7 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
+using Remora.Discord.API.Objects.Soundboard;
 using Remora.Discord.API.Rest;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
@@ -117,6 +119,7 @@ public static class ServiceCollectionExtensions
                         .AddApplicationRoleConnectionObjectConverters()
                         .AddMonetizationConverters()
                         .AddPollObjectConverters()
+                        .AddSoundboardObjectConverters()
                         .AddWebhookEventObjectConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -161,6 +164,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IRequestGuildMembers, RequestGuildMembers>()
             .WithPropertyName(r => r.UserIDs, "user_ids");
+
+        options.AddDataObjectConverter<IRequestSoundboardSounds, RequestSoundboardSounds>()
+            .WithPropertyName(r => r.GuildIDs, "guild_ids");
 
         options.AddDataObjectConverter<IResume, Resume>()
             .WithPropertyName(r => r.SequenceNumber, "seq");
@@ -328,6 +334,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildRoleUpdate, GuildRoleUpdate>();
         options.AddDataObjectConverter<IGuildRoleDelete, GuildRoleDelete>();
 
+        // TODO: move this
         options.AddDataObjectConverter<IIncidentsData, IncidentsData>()
             .WithPropertyName(i => i.DMsDisabledUntil, "dms_disabled_until")
             .WithPropertyConverter(i => i.DMsDisabledUntil, new ISO8601DateTimeOffsetConverter())
@@ -444,6 +451,20 @@ public static class ServiceCollectionExtensions
         // Polls
         options.AddDataObjectConverter<IMessagePollVoteAdd, MessagePollVoteAdd>();
         options.AddDataObjectConverter<IMessagePollVoteRemove, MessagePollVoteRemove>();
+
+        // Soundboards
+        options.AddDataObjectConverter<IGuildSoundboardSoundCreate, GuildSoundboardSoundCreate>()
+            .WithPropertyName(e => e.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundUpdate, GuildSoundboardSoundUpdate>()
+            .WithPropertyName(e => e.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundDelete, GuildSoundboardSoundDelete>();
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundsUpdate, GuildSoundboardSoundsUpdate>();
+
+        options.AddDataObjectConverter<ISoundboardSounds, SoundboardSounds>()
+            .WithPropertyName(s => s.Sounds, "soundboard_sounds");
 
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -1357,6 +1378,24 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IPollMedia, PollMedia>();
         options.AddDataObjectConverter<IPollResults, PollResults>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle soundboard objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddSoundboardObjectConverters
+    (
+        this JsonSerializerOptions options
+    )
+    {
+        options.AddDataObjectConverter<ISoundboardSound, SoundboardSound>()
+            .WithPropertyName(s => s.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IListGuildSoundboardSoundsResponse, ListGuildSoundboardSoundsResponse>();
 
         return options;
     }

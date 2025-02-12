@@ -122,6 +122,9 @@
       <Compile Update="API\Rest\IBulkBanResponse.cs">
         <DependentUpon>IDiscordRestGuildAPI.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Rest\IListGuildSoundboardSoundsResponse.cs">
+        <DependentUpon>IDiscordRestSoundboardAPI.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

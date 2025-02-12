@@ -1,0 +1,18 @@
+{
+  "t": "GUILD_SOUNDBOARD_SOUNDS_UPDATE",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "guild_id": "999999999999999999",
+    "soundboard_sounds": [
+      {
+        "name": "none",
+        "sound_id": "999999999999999999",
+        "volume": 0.0,
+        "emoji_id": "999999999999999999",
+        "emoji_name": "none",
+        "available": false
+      }
+    ]
+  }
+}

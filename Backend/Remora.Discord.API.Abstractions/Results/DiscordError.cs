@@ -127,6 +127,11 @@ public enum DiscordError
     UnknownSession = 10020,
 
     /// <summary>
+    /// Unknown asset.
+    /// </summary>
+    UnknownAsset = 10021,
+
+    /// <summary>
     /// Unknown ban.
     /// </summary>
     UnknownBan = 10026,
@@ -250,6 +255,11 @@ public enum DiscordError
     /// Unknown tag.
     /// </summary>
     UnknownTag = 10087,
+
+    /// <summary>
+    /// Unknown sound.
+    /// </summary>
+    UnknownSound = 10097,
 
     /// <summary>
     /// Bots cannot use this endpoint.
@@ -435,6 +445,11 @@ public enum DiscordError
     /// Maximum number of guild widget setting updates has been reached. Try again later.
     /// </summary>
     MaxNumberOfGuildWidgetSettingUpdatesReached = 30042,
+
+    /// <summary>
+    /// The maximum number of soundboard sounds in the guild has been reached.
+    /// </summary>
+    MaxNumberOfGuildSoundboardSoundsReached = 30045,
 
     /// <summary>
     /// Maximum number of edits to messages older than 1 hour reached. Try again later.
@@ -834,6 +849,21 @@ public enum DiscordError
     InvalidJSONInRequestBody = 50109,
 
     /// <summary>
+    /// The provided file is invalid.
+    /// </summary>
+    InvalidFile = 50110,
+
+    /// <summary>
+    /// The provided file type is invalid.
+    /// </summary>
+    InvalidFileType = 50123,
+
+    /// <summary>
+    /// The duration of the provided sound file is too long.
+    /// </summary>
+    InvalidFileDuration = 50124,
+
+    /// <summary>
     /// The specified owner cannot be a pending member.
     /// </summary>
     OwnerCannotBePendingMember = 50131,
@@ -862,6 +892,11 @@ public enum DiscordError
     /// The uploaded file was not found.
     /// </summary>
     UploadedFileNotFound = 50146,
+
+    /// <summary>
+    /// The specified emoji is invalid.
+    /// </summary>
+    InvalidEmoji = 50151,
 
     /// <summary>
     /// Additional attachments are not possible for voice messages.
@@ -897,6 +932,11 @@ public enum DiscordError
     /// The given user must be verified first.
     /// </summary>
     TheUserMustFirstBeVerified = 50178,
+
+    /// <summary>
+    /// The provided sound file has an invalid duration.
+    /// </summary>
+    ProvidedFileHasInvalidDuration = 50192,
 
     /// <summary>
     /// You do not have permission to send this sticker.
