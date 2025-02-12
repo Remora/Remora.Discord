@@ -2194,6 +2194,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageSnapshot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageSnapshot.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IModalSubmitData.yml",
       "output": {
         ".html": {
@@ -3098,6 +3108,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Objects.MessageNotificationLevel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.MessageReferenceType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.MessageReferenceType.html"
         }
       },
       "version": ""
@@ -5778,6 +5798,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.MessageReference.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.MessageSnapshot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.MessageSnapshot.html"
         }
       },
       "version": ""
