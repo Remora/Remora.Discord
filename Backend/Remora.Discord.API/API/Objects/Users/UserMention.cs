@@ -36,7 +36,6 @@ public record UserMention
     ushort Discriminator,
     Optional<string?> GlobalName,
     IImageHash? Avatar,
-    Optional<IImageHash?> AvatarDecoration = default,
     Optional<bool> IsBot = default,
     Optional<bool> IsSystem = default,
     Optional<bool> IsMFAEnabled = default,
@@ -48,5 +47,6 @@ public record UserMention
     Optional<UserFlags> Flags = default,
     Optional<PremiumType> PremiumType = default,
     Optional<UserFlags> PublicFlags = default,
-    Optional<IPartialGuildMember> Member = default
+    Optional<IPartialGuildMember> Member = default,
+    Optional<IImageHash?> AvatarDecoration = default
 ) : IUserMention;
