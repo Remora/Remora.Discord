@@ -49,24 +49,4 @@ public record UserMention
     Optional<PremiumType> PremiumType = default,
     Optional<UserFlags> PublicFlags = default,
     Optional<IPartialGuildMember> Member = default
-) : User
-(
-    ID,
-    Username,
-    Discriminator,
-    Avatar,
-    AvatarDecoration,
-    IsBot,
-    IsSystem,
-    IsMFAEnabled,
-    Banner,
-    AccentColour,
-    Locale,
-    IsVerified,
-    Email,
-    Flags,
-    PremiumType,
-    PublicFlags
-    Optional<IPartialGuildMember> Member = default,
-    Optional<IImageHash?> AvatarDecoration = default
 ) : IUserMention;
