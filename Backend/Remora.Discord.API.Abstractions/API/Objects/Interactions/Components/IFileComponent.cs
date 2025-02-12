@@ -1,5 +1,5 @@
 //
-//  IFileDisplayServerComponent.cs
+//  IFileComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a singular file as a component.
 /// </summary>
-public interface IFileDisplayServerComponent : IMessageComponent
+public interface IFileComponent : IMessageComponent
 {
     /// <summary>
     /// Gets the file associated with this component.

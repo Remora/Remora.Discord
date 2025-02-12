@@ -1,5 +1,5 @@
 //
-//  ThumbnailComponent.cs
+//  ContainerComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents a thumbnail component.
-/// </summary>
+/// <inheritdoc/>
 [PublicAPI]
-public record ThumbnailComponent
+public record ContainerComponent
 (
-    IUnfurledMediaItem Media,
-    Optional<string> Description = default,
+    IReadOnlyList<OneOf<IActionRowComponent, ITextDisplayComponent, ISectionComponent, IMediaGalleryComponent, ISeparatorComponent, IFileComponent>> Components,
     Optional<bool> IsSpoiler = default,
+    Optional<Color> AccentColour = default,
     Optional<int> Id = default
-)
-: IThumbnailComponent
+) : IContainerComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.Thumbnail;
+    /// <inheritdoc/>
+    public ComponentType Type => ComponentType.Container;
 }

@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
@@ -32,5 +33,6 @@ public record InteractionModalCallbackData
 (
     string CustomID,
     string Title,
-    IReadOnlyList<IMessageComponent> Components
+    IReadOnlyList<IMessageComponent> Components,
+    Optional<MessageFlags> Flags = default
 ) : IInteractionModalCallbackData;

@@ -99,4 +99,9 @@ public enum ComponentType
     /// A separator to vertically distance components.
     /// </summary>
     Separator = 14,
+
+    /// <summary>
+    /// A container for other components.
+    /// </summary>
+    Container = 17,
 }

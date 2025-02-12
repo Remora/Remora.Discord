@@ -94,9 +94,11 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
             ComponentType.MediaGallery
                 => document.RootElement.Deserialize<IMediaGalleryComponent>(options),
             ComponentType.File
-                => document.RootElement.Deserialize<IFileDisplayServerComponent>(options),
+                => document.RootElement.Deserialize<IFileComponent>(options),
             ComponentType.Separator
                 => document.RootElement.Deserialize<ISeparatorComponent>(options),
+            ComponentType.Container
+                => document.RootElement.Deserialize<IContainerComponent>(options),
             _ => throw new NotSupportedException($"Deserialization of the component type {type} is not supported")
         };
     }
@@ -166,7 +168,7 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 JsonSerializer.Serialize(writer, mediaGallery, options);
                 break;
             }
-            case IFileDisplayServerComponent file:
+            case IFileComponent file:
             {
                 JsonSerializer.Serialize(writer, file, options);
                 break;
@@ -174,6 +176,11 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
             case ISeparatorComponent separator:
             {
                 JsonSerializer.Serialize(writer, separator, options);
+                break;
+            }
+            case IContainerComponent container:
+            {
+                JsonSerializer.Serialize(writer, container, options);
                 break;
             }
             default:

@@ -32,7 +32,7 @@ public interface IThumbnailComponent : IMessageComponent
     /// <summary>
     /// Gets the image of the thumbnail.
     /// </summary>
-    IUnfurledMediaItem Image { get; }
+    IUnfurledMediaItem Media { get; }
 
     /// <summary>
     /// Gets the description of the thumbnail.

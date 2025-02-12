@@ -1229,9 +1229,14 @@ public static class ServiceCollectionExtensions
                .IncludeWhenSerializing(c => c.Type)
                .WithPropertyName(o => o.IsDivider, "divider");
 
-        options.AddDataObjectConverter<IFileDisplayServerComponent, FileDisplayServerComponent>()
+        options.AddDataObjectConverter<IFileComponent, FileComponent>()
                .IncludeWhenSerializing(c => c.Type)
                 .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IContainerComponent, ContainerComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .WithPropertyName(o => o.AccentColour, "accent_color");
 
         return options;
     }

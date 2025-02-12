@@ -1,5 +1,5 @@
 //
-//  ThumbnailComponent.cs
+//  FileComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,18 +27,16 @@ using Remora.Rest.Core;
 namespace Remora.Discord.API.Objects;
 
 /// <summary>
-/// Represents a thumbnail component.
+/// Represents a component that displays a file.
 /// </summary>
 [PublicAPI]
-public record ThumbnailComponent
+public record FileComponent
 (
-    IUnfurledMediaItem Media,
-    Optional<string> Description = default,
-    Optional<bool> IsSpoiler = default,
-    Optional<int> Id = default
-)
-: IThumbnailComponent
+    IUnfurledMediaItem File,
+    Optional<int> Id = default,
+    Optional<bool> IsSpoiler = default
+) : IFileComponent
 {
     /// <inheritdoc />
-    public ComponentType Type => ComponentType.Thumbnail;
+    public ComponentType Type => ComponentType.File;
 }

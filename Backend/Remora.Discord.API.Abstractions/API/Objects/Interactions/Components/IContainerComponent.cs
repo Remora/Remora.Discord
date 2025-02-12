@@ -1,5 +1,5 @@
 //
-//  FileDisplayServerComponent.cs
+//  IContainerComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
+using System.Collections.Generic;
+using System.Drawing;
+using OneOf;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a component that displays a file.
+/// A container for V2 components.
 /// </summary>
-[PublicAPI]
-public record FileDisplayServerComponent
-(
-    IUnfurledMediaItem File,
-    Optional<int> Id = default,
-    Optional<bool> IsSpoiler = default
-) : IFileDisplayServerComponent
+public interface IContainerComponent : IMessageComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.File;
+    /// <summary>
+    /// Gets the components of the container.
+    /// </summary>
+    IReadOnlyList<OneOf<IActionRowComponent, ITextDisplayComponent, ISectionComponent, IMediaGalleryComponent, ISeparatorComponent, IFileComponent>> Components { get; }
+
+    /// <summary>
+    /// Gets whether the container is spoilered.
+    /// </summary>
+    Optional<bool> IsSpoiler { get; }
+
+    /// <summary>
+    /// Gets the accent colour of the container.
+    /// </summary>
+    Optional<Color> AccentColour { get; }
 }

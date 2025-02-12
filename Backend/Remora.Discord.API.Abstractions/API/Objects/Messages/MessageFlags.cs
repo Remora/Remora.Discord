@@ -96,5 +96,5 @@ public enum MessageFlags
     /// <summary>
     /// This message has support for Components V2/UI Kit components.
     /// </summary>
-    IsComponentV2Message = 1 << 15
+    IsComponentV2 = 1 << 15
 }
