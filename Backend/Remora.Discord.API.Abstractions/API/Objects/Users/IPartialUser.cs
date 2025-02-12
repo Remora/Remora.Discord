@@ -47,9 +47,6 @@ public interface IPartialUser
     /// <inheritdoc cref="IUser.Avatar" />
     Optional<IImageHash?> Avatar { get; }
 
-    /// <inheritdoc cref="IUser.AvatarDecoration" />
-    Optional<IImageHash?> AvatarDecoration { get; }
-
     /// <inheritdoc cref="IUser.IsBot" />
     Optional<bool> IsBot { get; }
 

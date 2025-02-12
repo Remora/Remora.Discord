@@ -37,7 +37,6 @@ public record UserUpdate
     ushort Discriminator,
     Optional<string?> GlobalName,
     IImageHash? Avatar,
-    Optional<IImageHash?> AvatarDecoration = default,
     Optional<bool> IsBot = default,
     Optional<bool> IsSystem = default,
     Optional<bool> IsMFAEnabled = default,
