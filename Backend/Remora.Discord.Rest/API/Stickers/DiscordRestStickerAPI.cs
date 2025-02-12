@@ -47,7 +47,12 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestStickerAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestStickerAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -126,7 +131,8 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         {
             return new ArgumentOutOfRangeError
             (
-                nameof(description), "The description must be either empty, or between 2 and 30 characters."
+                nameof(description),
+                "The description must be either empty, or between 2 and 30 characters."
             );
         }
 
@@ -161,7 +167,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is < 2 or > 30)
+        if (name is { HasValue: true, Value.Length: < 2 or > 30 })
         {
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 30 characters.");
         }
@@ -170,11 +176,12 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         {
             return new ArgumentOutOfRangeError
             (
-                nameof(description), "The description must be either empty, or between 2 and 30 characters."
+                nameof(description),
+                "The description must be either empty, or between 2 and 30 characters."
             );
         }
 
-        if (tags.HasValue && tags.Value.Length is < 2 or > 200)
+        if (tags is { HasValue: true } && tags.Value.Length is < 2 or > 200)
         {
             return new ArgumentOutOfRangeError(nameof(name), "The tags must be between 2 and 200 characters.");
         }

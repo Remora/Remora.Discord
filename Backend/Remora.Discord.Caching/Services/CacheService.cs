@@ -24,8 +24,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
 
@@ -38,17 +38,17 @@ namespace Remora.Discord.Caching.Services;
 public class CacheService
 {
     private readonly ICacheProvider _cacheProvider;
-    private readonly CacheSettings _cacheSettings;
+    private readonly ImmutableCacheSettings _cacheSettings;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CacheService"/> class.
     /// </summary>
     /// <param name="cacheProvider">The cache provider.</param>
     /// <param name="cacheSettings">The cache settings.</param>
-    public CacheService(ICacheProvider cacheProvider, IOptions<CacheSettings> cacheSettings)
+    public CacheService(ICacheProvider cacheProvider, ImmutableCacheSettings cacheSettings)
     {
         _cacheProvider = cacheProvider;
-        _cacheSettings = cacheSettings.Value;
+        _cacheSettings = cacheSettings;
     }
 
     /// <summary>
@@ -60,10 +60,10 @@ public class CacheService
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The instance type.</typeparam>
     /// <returns>A <see cref="ValueTask"/> representing the potentially asynchronous operation.</returns>
-    public async ValueTask CacheAsync<TInstance>(string key, TInstance instance, CancellationToken ct = default)
+    public async ValueTask CacheAsync<TInstance>(CacheKey key, TInstance instance, CancellationToken ct = default)
         where TInstance : class
     {
-        if (_cacheSettings.GetAbsoluteExpirationOrDefault(typeof(TInstance)) is var absoluteExpiration)
+        if (_cacheSettings.GetEntryOptions<TInstance>().AbsoluteExpirationRelativeToNow is var absoluteExpiration)
         {
             if (absoluteExpiration == TimeSpan.Zero)
             {
@@ -97,7 +97,7 @@ public class CacheService
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The instance type.</typeparam>
     /// <returns>A <see cref="Result"/> that may or not have succeeded.</returns>
-    public ValueTask<Result<TInstance>> TryGetValueAsync<TInstance>(string key, CancellationToken ct = default)
+    public ValueTask<Result<TInstance>> TryGetValueAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class => _cacheProvider.RetrieveAsync<TInstance>(key, ct);
 
     /// <summary>
@@ -106,8 +106,8 @@ public class CacheService
     /// <param name="key">The cache key.</param>
     /// <typeparam name="TInstance">The instance type.</typeparam>
     /// <returns>A <see cref="Result"/> that may or not have succeeded.</returns>
-    public ValueTask<Result<TInstance>> TryGetPreviousValueAsync<TInstance>(string key)
-        where TInstance : class => _cacheProvider.RetrieveAsync<TInstance>(KeyHelpers.CreateEvictionCacheKey(key));
+    public ValueTask<Result<TInstance>> TryGetPreviousValueAsync<TInstance>(CacheKey key)
+        where TInstance : class => _cacheProvider.RetrieveAsync<TInstance>(new KeyHelpers.EvictionCacheKey(key));
 
     /// <summary>
     /// Evicts the instance with the given key from the cache.
@@ -116,7 +116,7 @@ public class CacheService
     /// <param name="key">The cache key.</param>
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <returns>A <see cref="ValueTask"/> representing the potentially asynchronous operation.</returns>
-    public async ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
+    public async ValueTask<Result<TInstance>> EvictAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class
     {
         var evictionResult = await _cacheProvider.EvictAsync<TInstance>(key, ct);
@@ -129,72 +129,71 @@ public class CacheService
         var options = _cacheSettings.GetEvictionEntryOptions<TInstance>();
         await _cacheProvider.CacheAsync
         (
-            KeyHelpers.CreateEvictionCacheKey(key),
+            new KeyHelpers.EvictionCacheKey(key),
             evictionResult.Entity,
-            options.AbsoluteExpiration,
-            options.SlidingExpiration,
+            options,
             ct
         );
 
         return evictionResult.Entity;
     }
 
-    private async ValueTask CacheWebhookAsync(string key, IWebhook webhook)
+    private async ValueTask CacheWebhookAsync(CacheKey key, IWebhook webhook)
     {
         await CacheInstanceAsync(key, webhook);
 
-        if (!webhook.User.IsDefined(out var user))
+        if (!webhook.User.TryGet(out var user))
         {
             return;
         }
 
-        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+        var userKey = new KeyHelpers.UserCacheKey(user.ID);
         await CacheAsync(userKey, user);
     }
 
-    private async ValueTask CacheTemplateAsync(string key, ITemplate template)
+    private async ValueTask CacheTemplateAsync(CacheKey key, ITemplate template)
     {
         await CacheInstanceAsync(key, template);
 
-        var creatorKey = KeyHelpers.CreateUserCacheKey(template.Creator.ID);
+        var creatorKey = new KeyHelpers.UserCacheKey(template.Creator.ID);
         await CacheAsync(creatorKey, template.Creator);
     }
 
-    private async ValueTask CacheIntegrationAsync(string key, IIntegration integration)
+    private async ValueTask CacheIntegrationAsync(CacheKey key, IIntegration integration)
     {
         await CacheInstanceAsync(key, integration);
 
-        if (!integration.User.IsDefined(out var user))
+        if (!integration.User.TryGet(out var user))
         {
             return;
         }
 
-        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+        var userKey = new KeyHelpers.UserCacheKey(user.ID);
         await CacheAsync(userKey, user);
     }
 
-    private async ValueTask CacheBanAsync(string key, IBan ban)
+    private async ValueTask CacheBanAsync(CacheKey key, IBan ban)
     {
         await CacheInstanceAsync(key, ban);
 
-        var userKey = KeyHelpers.CreateUserCacheKey(ban.User.ID);
+        var userKey = new KeyHelpers.UserCacheKey(ban.User.ID);
         await CacheAsync(userKey, ban.User);
     }
 
-    private async ValueTask CacheGuildMemberAsync(string key, IGuildMember member)
+    private async ValueTask CacheGuildMemberAsync(CacheKey key, IGuildMember member)
     {
         await CacheInstanceAsync(key, member);
 
-        if (!member.User.IsDefined(out var user))
+        if (!member.User.TryGet(out var user))
         {
             return;
         }
 
-        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+        var userKey = new KeyHelpers.UserCacheKey(user.ID);
         await CacheAsync(userKey, user);
     }
 
-    private async ValueTask CacheGuildPreviewAsync(string key, IGuildPreview preview)
+    private async ValueTask CacheGuildPreviewAsync(CacheKey key, IGuildPreview preview)
     {
         await CacheInstanceAsync(key, preview);
 
@@ -205,12 +204,12 @@ public class CacheService
                 continue;
             }
 
-            var emojiKey = KeyHelpers.CreateEmojiCacheKey(preview.ID, emoji.ID.Value);
+            var emojiKey = new KeyHelpers.EmojiCacheKey(preview.ID, emoji.ID.Value);
             await CacheAsync(emojiKey, emoji);
         }
     }
 
-    private async ValueTask CacheGuildAsync(string key, IGuild guild)
+    private async ValueTask CacheGuildAsync(CacheKey key, IGuild guild)
     {
         await CacheInstanceAsync(key, guild);
 
@@ -221,51 +220,51 @@ public class CacheService
                 continue;
             }
 
-            var emojiKey = KeyHelpers.CreateEmojiCacheKey(guild.ID, emoji.ID.Value);
+            var emojiKey = new KeyHelpers.EmojiCacheKey(guild.ID, emoji.ID.Value);
             await CacheAsync(emojiKey, emoji);
         }
 
-        var rolesKey = KeyHelpers.CreateGuildRolesCacheKey(guild.ID);
+        var rolesKey = new KeyHelpers.GuildRolesCacheKey(guild.ID);
         await CacheAsync(rolesKey, guild.Roles);
 
         foreach (var role in guild.Roles)
         {
-            var roleKey = KeyHelpers.CreateGuildRoleCacheKey(guild.ID, role.ID);
+            var roleKey = new KeyHelpers.GuildRoleCacheKey(guild.ID, role.ID);
             await CacheAsync(roleKey, role);
         }
     }
 
-    private async ValueTask CacheEmojiAsync(string key, IEmoji emoji)
+    private async ValueTask CacheEmojiAsync(CacheKey key, IEmoji emoji)
     {
         await CacheInstanceAsync(key, emoji);
 
-        if (!emoji.User.IsDefined(out var creator))
+        if (!emoji.User.TryGet(out var creator))
         {
             return;
         }
 
-        var creatorKey = KeyHelpers.CreateUserCacheKey(creator.ID);
+        var creatorKey = new KeyHelpers.UserCacheKey(creator.ID);
         await CacheAsync(creatorKey, creator);
     }
 
-    private async ValueTask CacheInviteAsync(string key, IInvite invite)
+    private async ValueTask CacheInviteAsync(CacheKey key, IInvite invite)
     {
         await CacheInstanceAsync(key, invite);
 
-        if (!invite.Inviter.IsDefined(out var inviter))
+        if (!invite.Inviter.TryGet(out var inviter))
         {
             return;
         }
 
-        var inviterKey = KeyHelpers.CreateUserCacheKey(inviter.ID);
+        var inviterKey = new KeyHelpers.UserCacheKey(inviter.ID);
         await CacheAsync(inviterKey, inviter);
     }
 
-    private async ValueTask CacheMessageAsync(string key, IMessage message)
+    private async ValueTask CacheMessageAsync(CacheKey key, IMessage message)
     {
         await CacheInstanceAsync(key, message);
 
-        var authorKey = KeyHelpers.CreateUserCacheKey(message.Author.ID);
+        var authorKey = new KeyHelpers.UserCacheKey(message.Author.ID);
         await CacheAsync(authorKey, message.Author);
 
         if (!message.ReferencedMessage.IsDefined(out var referencedMessage))
@@ -273,7 +272,7 @@ public class CacheService
             return;
         }
 
-        var referencedMessageKey = KeyHelpers.CreateMessageCacheKey
+        var referencedMessageKey = new KeyHelpers.MessageCacheKey
         (
             referencedMessage.ChannelID,
             referencedMessage.ID
@@ -282,17 +281,17 @@ public class CacheService
         await CacheAsync(referencedMessageKey, referencedMessage);
     }
 
-    private async ValueTask CacheChannelAsync(string key, IChannel channel)
+    private async ValueTask CacheChannelAsync(CacheKey key, IChannel channel)
     {
         await CacheInstanceAsync(key, channel);
-        if (!channel.Recipients.IsDefined(out var recipients))
+        if (!channel.Recipients.TryGet(out var recipients))
         {
             return;
         }
 
         foreach (var recipient in recipients)
         {
-            var recipientKey = KeyHelpers.CreateUserCacheKey(recipient.ID);
+            var recipientKey = new KeyHelpers.UserCacheKey(recipient.ID);
             await CacheAsync(recipientKey, recipient);
         }
     }
@@ -303,10 +302,10 @@ public class CacheService
     /// <param name="key">The cache key.</param>
     /// <param name="instance">The instance.</param>
     /// <typeparam name="TInstance">The instance type.</typeparam>
-    private ValueTask CacheInstanceAsync<TInstance>(string key, TInstance instance)
+    private ValueTask CacheInstanceAsync<TInstance>(CacheKey key, TInstance instance)
         where TInstance : class
     {
         var options = _cacheSettings.GetEntryOptions<TInstance>();
-        return _cacheProvider.CacheAsync(key, instance, options.AbsoluteExpiration, options.SlidingExpiration);
+        return _cacheProvider.CacheAsync(key, instance, options);
     }
 }

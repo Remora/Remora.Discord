@@ -100,8 +100,10 @@ public class Program
                         .WithCommandGroup<InteractiveCommands>()
                         .Finish()
                     .AddPagination()
-                    .AddInteractionGroup<ColourDropdownInteractions>()
-                    .AddInteractionGroup<ModalInteractions>();
+                    .AddInteractivity()
+                    .AddInteractionGroup<SelectMenuInteractions>()
+                    .AddInteractionGroup<ModalInteractions>()
+                    .AddInteractionGroup<StatefulInteractions>();
             }
         )
         .ConfigureLogging

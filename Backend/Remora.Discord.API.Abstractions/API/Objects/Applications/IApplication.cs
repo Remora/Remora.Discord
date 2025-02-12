@@ -69,6 +69,11 @@ public interface IApplication : IPartialApplication
     new bool DoesBotRequireCodeGrant { get; }
 
     /// <summary>
+    /// Gets the user object for the bot user associated with the application.
+    /// </summary>
+    new Optional<IPartialUser> Bot { get; }
+
+    /// <summary>
     /// Gets the URL to the application's terms of service.
     /// </summary>
     new Optional<string> TermsOfServiceURL { get; }
@@ -81,7 +86,7 @@ public interface IApplication : IPartialApplication
     /// <summary>
     /// Gets the user information of the application owner.
     /// </summary>
-    new IPartialUser? Owner { get; }
+    new Optional<IPartialUser> Owner { get; }
 
     /// <summary>
     /// Gets the hex-encoded key for GameSDK's GetTicket function.
@@ -94,9 +99,14 @@ public interface IApplication : IPartialApplication
     new ITeam? Team { get; }
 
     /// <summary>
-    /// Gets the guild the game is linked to, if the application is a game sold on the Discord storefront.
+    /// Gets the guild the application is associated with.
     /// </summary>
     new Optional<Snowflake> GuildID { get; }
+
+    /// <summary>
+    /// Gets the associated guild object, if any.
+    /// </summary>
+    new Optional<IPartialGuild> Guild { get; }
 
     /// <summary>
     /// Gets the primary SKU ID of the game, if the application is a game sold on the Discord storefront.
@@ -119,6 +129,43 @@ public interface IApplication : IPartialApplication
     new Optional<ApplicationFlags> Flags { get; }
 
     /// <summary>
+    /// Gets an approximate count of the application's guild membership.
+    /// </summary>
+    new Optional<int> ApproximateGuildCount { get; }
+
+    /// <summary>
+    /// Gets the redirect URIs for the application.
+    /// </summary>
+    new Optional<IReadOnlyList<Uri>> RedirectUris { get; }
+
+    /// <summary>
+    /// Gets the interaction endpoint URL for the application.
+    /// </summary>
+    new Optional<Uri> InteractionsEndpointUrl { get; }
+
+    /// <summary>
+    /// Gets the application's role connection verification entry point,
+    /// which when configured will render the app as a verification method
+    /// in the guild role verification configuration.
+    /// </summary>
+    new Optional<Uri> RoleConnectionsVerificationUrl { get; }
+
+    /// <summary>
+    /// Gets the application's event webhook URL where the application receives events from Discord.
+    /// </summary>
+    new Optional<Uri> EventWebhooksUrl { get; }
+
+    /// <summary>
+    /// Gets the status of the application's event webhook.
+    /// </summary>
+    new ApplicationEventWebhookStatus EventWebhooksStatus { get; }
+
+    /// <summary>
+    /// Gets a list of the webhook event types the application subscribes to.
+    /// </summary>
+    new Optional<IReadOnlyList<string>> EventWebhooksTypes { get; }
+
+    /// <summary>
     /// Gets up to 5 tags describing the content and functionality of the application.
     /// </summary>
     new Optional<IReadOnlyList<string>> Tags { get; }
@@ -132,6 +179,11 @@ public interface IApplication : IPartialApplication
     /// Gets the application's default custom authorization link.
     /// </summary>
     new Optional<Uri> CustomInstallUrl { get; }
+
+    /// <summary>
+    /// Gets the application's integration type configurations.
+    /// </summary>
+    new IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?> IntegrationTypesConfig { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.ID => this.ID;
@@ -155,13 +207,16 @@ public interface IApplication : IPartialApplication
     Optional<bool> IPartialApplication.DoesBotRequireCodeGrant => this.DoesBotRequireCodeGrant;
 
     /// <inheritdoc/>
+    Optional<IPartialUser> IPartialApplication.Bot => this.Bot;
+
+    /// <inheritdoc/>
     Optional<string> IPartialApplication.TermsOfServiceURL => this.TermsOfServiceURL;
 
     /// <inheritdoc/>
     Optional<string> IPartialApplication.PrivacyPolicyURL => this.PrivacyPolicyURL;
 
     /// <inheritdoc/>
-    Optional<IPartialUser?> IPartialApplication.Owner => new(this.Owner);
+    Optional<IPartialUser> IPartialApplication.Owner => this.Owner;
 
     /// <inheritdoc/>
     Optional<string> IPartialApplication.VerifyKey => this.VerifyKey;
@@ -171,6 +226,9 @@ public interface IApplication : IPartialApplication
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.GuildID => this.GuildID;
+
+    /// <inheritdoc/>
+    Optional<IPartialGuild> IPartialApplication.Guild => this.Guild;
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.PrimarySKUID => this.PrimarySKUID;
@@ -185,11 +243,35 @@ public interface IApplication : IPartialApplication
     Optional<ApplicationFlags> IPartialApplication.Flags => this.Flags;
 
     /// <inheritdoc/>
-    Optional<IReadOnlyList<string>> IPartialApplication.Tags => throw new NotImplementedException();
+    Optional<int> IPartialApplication.ApproximateGuildCount => this.ApproximateGuildCount;
 
     /// <inheritdoc/>
-    Optional<IApplicationInstallParameters> IPartialApplication.InstallParams => throw new NotImplementedException();
+    Optional<IReadOnlyList<Uri>> IPartialApplication.RedirectUris => this.RedirectUris;
 
     /// <inheritdoc/>
-    Optional<Uri> IPartialApplication.CustomInstallUrl => throw new NotImplementedException();
+    Optional<Uri> IPartialApplication.InteractionsEndpointUrl => this.InteractionsEndpointUrl;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.RoleConnectionsVerificationUrl => this.RoleConnectionsVerificationUrl;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.EventWebhooksUrl => this.EventWebhooksUrl;
+
+    /// <inheritdoc/>
+    Optional<ApplicationEventWebhookStatus> IPartialApplication.EventWebhooksStatus => this.EventWebhooksStatus;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<string>> IPartialApplication.EventWebhooksTypes => this.EventWebhooksTypes;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<string>> IPartialApplication.Tags => this.Tags;
+
+    /// <inheritdoc/>
+    Optional<IApplicationInstallParameters> IPartialApplication.InstallParams => this.InstallParams;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.CustomInstallUrl => this.CustomInstallUrl;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig?>> IPartialApplication.IntegrationTypesConfig => new(this.IntegrationTypesConfig);
 }

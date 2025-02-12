@@ -49,6 +49,7 @@ public record ChannelDelete
     Optional<IImageHash?> Icon = default,
     Optional<Snowflake> OwnerID = default,
     Optional<Snowflake> ApplicationID = default,
+    Optional<bool> IsManaged = default,
     Optional<Snowflake?> ParentID = default,
     Optional<DateTimeOffset?> LastPinTimestamp = default,
     Optional<string?> RTCRegion = default,
@@ -65,5 +66,6 @@ public record ChannelDelete
     Optional<IReadOnlyList<Snowflake>> AppliedTags = default,
     Optional<IDefaultReaction?> DefaultReactionEmoji = default,
     Optional<TimeSpan> DefaultThreadRateLimitPerUser = default,
-    Optional<SortOrder?> DefaultSortOrder = default
+    Optional<SortOrder?> DefaultSortOrder = default,
+    Optional<ForumLayout> DefaultForumLayout = default
 ) : IChannelDelete;

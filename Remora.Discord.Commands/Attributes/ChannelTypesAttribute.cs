@@ -29,7 +29,8 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
-/// Marks a channel parameter with type requirements for Discord slash commands, controlling what channel autocompletion is presented to the user.
+/// Marks a channel parameter with type requirements for Discord slash commands, controlling what channel
+/// autocompletion is presented to the user.
 /// </summary>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Parameter)]

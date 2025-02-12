@@ -42,15 +42,17 @@ public interface IDiscordRestAuditLogAPI
     /// <param name="userID">The ID of the user to filter on.</param>
     /// <param name="actionType">The action type to filter on.</param>
     /// <param name="before">The ID of the audit log entry to limit searches before.</param>
+    /// <param name="after">The ID of the audit log entry to limit searches after.</param>
     /// <param name="limit">The number of log entries to limit the request to.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IAuditLog>> GetAuditLogAsync
+    Task<Result<IAuditLog>> GetGuildAuditLogAsync
     (
         Snowflake guildID,
         Optional<Snowflake> userID = default,
         Optional<AuditLogEvent> actionType = default,
         Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         Optional<byte> limit = default,
         CancellationToken ct = default
     );

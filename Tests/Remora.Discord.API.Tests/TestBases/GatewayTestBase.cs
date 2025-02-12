@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Tests.TestBases;
 
 /// <inheritdoc />
 public abstract class GatewayTestBase<TType, TEventDataSource> : JsonBackedTypeTestBase<IPayload, TEventDataSource>
-    where TEventDataSource : TheoryData, new()
+    where TEventDataSource : TheoryData<SampleDataDescriptor>, new()
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="GatewayTestBase{TType, TEventDataSource}"/> class.

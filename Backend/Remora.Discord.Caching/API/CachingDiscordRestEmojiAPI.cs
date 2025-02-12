@@ -66,7 +66,7 @@ public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
+        var key = new KeyHelpers.EmojiCacheKey(guildID, emojiID);
         var cacheResult = await _cacheService.TryGetValueAsync<IEmoji>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -110,7 +110,7 @@ public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCus
             return createResult;
         }
 
-        var key = KeyHelpers.CreateEmojiCacheKey(guildID, emoji.ID.Value);
+        var key = new KeyHelpers.EmojiCacheKey(guildID, emoji.ID.Value);
         await _cacheService.CacheAsync(key, emoji, ct);
 
         return createResult;
@@ -134,7 +134,7 @@ public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCus
         }
 
         var emoji = modifyResult.Entity;
-        var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
+        var key = new KeyHelpers.EmojiCacheKey(guildID, emojiID);
         await _cacheService.CacheAsync(key, emoji, ct);
 
         return modifyResult;
@@ -155,7 +155,7 @@ public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCus
             return deleteResult;
         }
 
-        var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
+        var key = new KeyHelpers.EmojiCacheKey(guildID, emojiID);
         await _cacheService.EvictAsync<IEmoji>(key, ct);
 
         return deleteResult;
@@ -168,7 +168,7 @@ public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCus
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateGuildEmojisCacheKey(guildID);
+        var key = new KeyHelpers.GuildEmojisCacheKey(guildID);
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IEmoji>>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -189,7 +189,7 @@ public partial class CachingDiscordRestEmojiAPI : IDiscordRestEmojiAPI, IRestCus
                 continue;
             }
 
-            var emojiKey = KeyHelpers.CreateEmojiCacheKey(guildID, emoji.ID.Value);
+            var emojiKey = new KeyHelpers.EmojiCacheKey(guildID, emoji.ID.Value);
             await _cacheService.CacheAsync(emojiKey, emoji, ct);
         }
 

@@ -41,7 +41,8 @@ public static class TypeExtensions
     public static bool IsResponder(this Type type)
     {
         var interfaces = type.GetInterfaces();
-        return interfaces.Any(
+        return interfaces.Any
+        (
             i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResponder<>)
         );
     }

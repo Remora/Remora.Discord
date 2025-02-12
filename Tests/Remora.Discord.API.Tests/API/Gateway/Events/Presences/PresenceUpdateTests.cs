@@ -43,8 +43,8 @@ public class PresenceUpdateTests : GatewayEventTestBase<IPresenceUpdate>
     {
         AllowMissing = new[]
         {
-            "id",           // undocumented field in "activities[]" objects
-            "sync_id",      // undocumented field in "activities[]" objects
+            "id", // undocumented field in "activities[]" objects
+            "sync_id", // undocumented field in "activities[]" objects
             "session_id"
         }
     };

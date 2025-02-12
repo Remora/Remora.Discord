@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -37,9 +38,12 @@ public record Attachment
     Optional<string> Description,
     Optional<string> ContentType,
     int Size,
-    string Url,
-    string ProxyUrl,
+    [UriString("GET")] string Url,
+    [UriString("GET")] string ProxyUrl,
     Optional<int?> Height,
     Optional<int?> Width,
-    Optional<bool> IsEphemeral
+    Optional<bool> IsEphemeral,
+    Optional<TimeSpan> Duration,
+    Optional<byte[]> Waveform,
+    Optional<AttachmentFlags> Flags
 ) : IAttachment;

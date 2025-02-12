@@ -239,24 +239,26 @@ public class DiscordRestUserAPITests
             var before = DiscordSnowflake.New(0);
             var after = DiscordSnowflake.New(1);
             var limit = 10;
+            var withCounts = true;
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
                             new KeyValuePair<string, string>("before", before.ToString()),
                             new KeyValuePair<string, string>("after", after.ToString()),
-                            new KeyValuePair<string, string>("limit", limit.ToString())
+                            new KeyValuePair<string, string>("limit", limit.ToString()),
+                            new KeyValuePair<string, string>("with_counts", withCounts.ToString())
                         }
                     )
                     .Respond("application/json", "[]")
             );
 
-            var result = await api.GetCurrentUserGuildsAsync(before, after, limit);
+            var result = await api.GetCurrentUserGuildsAsync(before, after, limit, withCounts);
             ResultAssert.Successful(result);
         }
 
@@ -448,15 +450,15 @@ public class DiscordRestUserAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestUserAPI.GetUserConnectionsAsync"/> method.
+    /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserConnectionsAsync"/> method.
     /// </summary>
-    public class GetUserConnectionsAsync : RestAPITestBase<IDiscordRestUserAPI>
+    public class GetCurrentUserConnectionsAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserConnectionsAsync"/> class.
+        /// Initializes a new instance of the <see cref="GetCurrentUserConnectionsAsync"/> class.
         /// </summary>
         /// <param name="fixture">The test fixture.</param>
-        public GetUserConnectionsAsync(RestAPITestFixture fixture)
+        public GetCurrentUserConnectionsAsync(RestAPITestFixture fixture)
             : base(fixture)
         {
         }
@@ -475,8 +477,230 @@ public class DiscordRestUserAPITests
                     .Respond("application/json", "[]")
             );
 
-            var result = await api.GetUserConnectionsAsync();
+            var result = await api.GetCurrentUserConnectionsAsync();
             ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserApplicationRoleConnectionAsync"/> method.
+    /// </summary>
+    public class GetCurrentUserApplicationRoleConnectionAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCurrentUserApplicationRoleConnectionAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetCurrentUserApplicationRoleConnectionAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+            );
+
+            var result = await api.GetCurrentUserApplicationRoleConnectionAsync(applicationID);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserApplicationRoleConnectionAsync"/> method.
+    /// </summary>
+    public class UpdateCurrentUserApplicationRoleConnectionAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateCurrentUserApplicationRoleConnectionAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public UpdateCurrentUserApplicationRoleConnectionAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var platformName = string.Empty;
+            var platformUsername = string.Empty;
+            var metadata = new Dictionary<string, string>
+            {
+                { "a", string.Empty },
+                { "b", new string('1', 100) }
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("platform_name", p => p.Is(platformName))
+                                .WithProperty("platform_username", p => p.Is(platformUsername))
+                                .WithProperty
+                                (
+                                    "metadata",
+                                    p => p.IsObject
+                                    (
+                                        m =>
+                                        {
+                                            foreach (var metaPair in metadata)
+                                            {
+                                                m.WithProperty(metaPair.Key, pp => pp.Is(metaPair.Value));
+                                            }
+                                        }
+                                    )
+                                )
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+            );
+
+            var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
+            (
+                applicationID,
+                platformName,
+                platformUsername,
+                metadata
+            );
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfPlatformNameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var platformName = new string('a', 51);
+            var platformUsername = string.Empty;
+            var metadata = new Dictionary<string, string>
+            {
+                { "a", "true" }
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+            );
+
+            var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
+            (
+                applicationID,
+                platformName,
+                platformUsername,
+                metadata
+            );
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfPlatformUsernameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var platformName = string.Empty;
+            var platformUsername = new string('a', 101);
+            var metadata = new Dictionary<string, string>
+            {
+                { "a", "true" }
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+            );
+
+            var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
+            (
+                applicationID,
+                platformName,
+                platformUsername,
+                metadata
+            );
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfMetadataValueIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var platformName = string.Empty;
+            var platformUsername = string.Empty;
+            var metadata = new Dictionary<string, string>
+            {
+                { "a", new string('1', 101) }
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+            );
+
+            var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
+            (
+                applicationID,
+                platformName,
+                platformUsername,
+                metadata
+            );
+            ResultAssert.Unsuccessful(result);
         }
     }
 }

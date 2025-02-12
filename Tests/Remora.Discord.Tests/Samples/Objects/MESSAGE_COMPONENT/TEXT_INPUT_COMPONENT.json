@@ -5,7 +5,7 @@
   "label": "none",
   "min_length": 1,
   "max_length": 2,
-  "required": false,
-  "value": "bbbb",
+  "required": true,
+  "value": "none",
   "placeholder": "none"
 }

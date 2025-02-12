@@ -112,5 +112,5 @@ public interface IGuildScheduledEvent
     /// <summary>
     /// Gets the cover image of the scheduled event.
     /// </summary>
-    IImageHash? Image { get; }
+    Optional<IImageHash?> Image { get; }
 }

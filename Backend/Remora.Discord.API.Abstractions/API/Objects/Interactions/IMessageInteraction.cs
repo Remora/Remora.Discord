@@ -50,4 +50,9 @@ public interface IMessageInteraction
     /// Gets the user who invoked the interaction.
     /// </summary>
     IUser User { get; }
+
+    /// <summary>
+    /// Gets the member who invoked the interaction in the guild.
+    /// </summary>
+    Optional<IPartialGuildMember> Member { get; }
 }

@@ -6,7 +6,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
@@ -14,7 +13,6 @@ using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
-using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
@@ -90,7 +88,7 @@ public class HttpCatCommands : CommandGroup
     [Description("Posts a cat image that matches the user.")]
     public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IPartialUser catUser)
     {
-        if (!catUser.ID.IsDefined(out var id))
+        if (!catUser.ID.TryGet(out var id))
         {
             return Task.FromResult<IResult>(Result.FromSuccess());
         }
@@ -113,7 +111,7 @@ public class HttpCatCommands : CommandGroup
     [Description("Posts a cat image that matches the provided channel.")]
     public Task<IResult> PostChannelHttpCatAsync
     (
-        [Description("The channel to cattify")][ChannelTypes(ChannelType.GuildText)] IChannel channel
+        [Description("The channel to cattify")] [ChannelTypes(ChannelType.GuildText)] IChannel channel
     )
     {
         var values = Enum.GetValues<HttpStatusCode>();

@@ -47,5 +47,5 @@ public record GuildScheduledEventDelete
     IGuildScheduledEventEntityMetadata? EntityMetadata,
     Optional<IUser> Creator,
     Optional<int> UserCount,
-    IImageHash? Image
+    Optional<IImageHash?> Image
 ) : IGuildScheduledEventDelete;

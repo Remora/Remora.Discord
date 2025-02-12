@@ -120,7 +120,12 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
     /// <param name="options">The JSON options to use.</param>
     /// <returns>The deserialized payload.</returns>
     /// <exception cref="JsonException">Thrown if the payload was invalid.</exception>
-    protected static VoicePayload<TData> DeserializePayload<TData>(VoiceOperationCode operationCode, JsonDocument document, JsonSerializerOptions options)
+    protected static VoicePayload<TData> DeserializePayload<TData>
+    (
+        VoiceOperationCode operationCode,
+        JsonDocument document,
+        JsonSerializerOptions options
+    )
         where TData : IVoiceGatewayPayloadData
     {
         if (!document.RootElement.TryGetProperty("d", out var dataProperty))
@@ -142,7 +147,7 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
     /// Gets the respective <see cref="VoiceOperationCode"/> for a payload data type.
     /// </summary>
     /// <param name="payloadDataType">The type of the payload data.</param>
-    /// <returns>A result representing the determined <see cref="VoiceOperationCode"/> on success, or the given error otherwise.</returns>
+    /// <returns>The operation code.</returns>
     protected virtual VoiceOperationCode GetVoiceOperationCode(Type payloadDataType)
         => payloadDataType switch
         {
@@ -189,26 +194,79 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
     /// <param name="document">The document to deserialize.</param>
     /// <param name="options">The options to use.</param>
     /// <returns>The deserialized payload, or <c>null</c> if the operation code was not recognised.</returns>
-    protected virtual IVoicePayload? DeserializeFromOperationCode(VoiceOperationCode operationCode, JsonDocument document, JsonSerializerOptions options)
-        => operationCode switch
-        {
+    protected virtual IVoicePayload? DeserializeFromOperationCode
+    (
+        VoiceOperationCode operationCode,
+        JsonDocument document,
+        JsonSerializerOptions options
+    ) =>
+    operationCode switch
+    {
+        // Commands
+        VoiceOperationCode.Identify => DeserializePayload<IVoiceIdentify>
+        (
+            VoiceOperationCode.Identify,
+            document,
+            options
+        ),
+        VoiceOperationCode.SelectProtocol => DeserializePayload<IVoiceSelectProtocol>
+        (
+            VoiceOperationCode.SelectProtocol,
+            document,
+            options
+        ),
+        VoiceOperationCode.Heartbeat => DeserializePayload<IVoiceHeartbeat>
+        (
+            VoiceOperationCode.Heartbeat,
+            document,
+            options
+        ),
+        VoiceOperationCode.Speaking => DeserializePayload<IVoiceSpeakingCommand>
+        (
+            VoiceOperationCode.Speaking,
+            document,
+            options
+        ),
+        VoiceOperationCode.Resume => DeserializePayload<IVoiceResume>
+        (
+            VoiceOperationCode.Resume,
+            document,
+            options
+        ),
 
-            // Commands
-            VoiceOperationCode.Identify => DeserializePayload<IVoiceIdentify>(VoiceOperationCode.Identify, document, options),
-            VoiceOperationCode.SelectProtocol => DeserializePayload<IVoiceSelectProtocol>(VoiceOperationCode.SelectProtocol, document, options),
-            VoiceOperationCode.Heartbeat => DeserializePayload<IVoiceHeartbeat>(VoiceOperationCode.Heartbeat, document, options),
-            VoiceOperationCode.Speaking => DeserializePayload<IVoiceSpeakingCommand>(VoiceOperationCode.Speaking, document, options),
-            VoiceOperationCode.Resume => DeserializePayload<IVoiceResume>(VoiceOperationCode.Resume, document, options),
+        // Events
+        VoiceOperationCode.Ready => DeserializePayload<IVoiceReady>
+        (
+            VoiceOperationCode.Ready,
+            document,
+            options
+        ),
+        VoiceOperationCode.SessionDescription => DeserializePayload<IVoiceSessionDescription>
+        (
+            VoiceOperationCode.SessionDescription,
+            document,
+            options
+        ),
+        VoiceOperationCode.HeartbeatAcknowledgement => DeserializePayload<IVoiceHeartbeatAcknowledge>
+        (
+            VoiceOperationCode.HeartbeatAcknowledgement,
+            document,
+            options
+        ),
+        VoiceOperationCode.Hello => DeserializePayload<IVoiceHello>
+        (
+            VoiceOperationCode.Hello,
+            document,
+            options
+        ),
+        VoiceOperationCode.Resumed => new VoicePayload<VoiceResumed>
+        (
+            VoiceOperationCode.Resumed,
+            new VoiceResumed()
+        ),
 
-            // Events
-            VoiceOperationCode.Ready => DeserializePayload<IVoiceReady>(VoiceOperationCode.Ready, document, options),
-            VoiceOperationCode.SessionDescription => DeserializePayload<IVoiceSessionDescription>(VoiceOperationCode.SessionDescription, document, options),
-            VoiceOperationCode.HeartbeatAcknowledgement => DeserializePayload<IVoiceHeartbeatAcknowledge>(VoiceOperationCode.HeartbeatAcknowledgement, document, options),
-            VoiceOperationCode.Hello => DeserializePayload<IVoiceHello>(VoiceOperationCode.Hello, document, options),
-            VoiceOperationCode.Resumed => new VoicePayload<VoiceResumed>(VoiceOperationCode.Resumed, new VoiceResumed()),
-
-            // If we don't recognise it (which often happens due to undocumented OP codes) we just return null.
-            // It's not fantastically explicit design but it prevents generating an exception.
-            _ => null
-        };
+        // If we don't recognise it (which often happens due to undocumented OP codes) we just return null.
+        // It's not fantastically explicit design but it prevents generating an exception.
+        _ => null
+    };
 }

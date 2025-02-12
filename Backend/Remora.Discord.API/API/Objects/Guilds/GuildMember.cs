@@ -37,11 +37,13 @@ public record GuildMember
     Optional<IUser> User,
     Optional<string?> Nickname,
     Optional<IImageHash?> Avatar,
+    Optional<IImageHash?> Banner,
     IReadOnlyList<Snowflake> Roles,
     DateTimeOffset JoinedAt,
     Optional<DateTimeOffset?> PremiumSince,
     bool IsDeafened,
     bool IsMuted,
+    GuildMemberFlags Flags,
     Optional<bool?> IsPending = default,
     Optional<IDiscordPermissionSet> Permissions = default,
     Optional<DateTimeOffset?> CommunicationDisabledUntil = default

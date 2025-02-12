@@ -36,18 +36,21 @@ namespace Remora.Discord.Extensions.Embeds;
 public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
 {
     /// <summary>
-    /// Gets or sets the author's name. Must be shorter than or equal to <see cref="EmbedConstants.MaxAuthorNameLength"/> in length.
+    /// Gets or sets the author's name. Must be shorter than or equal to
+    /// <see cref="EmbedConstants.MaxAuthorNameLength"/> in length.
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
     /// Gets or sets the author's website. Provide <c>null</c> if no url is needed.
     /// </summary>
+    [UriString("GET")]
     public string? Url { get; set; }
 
     /// <summary>
     /// Gets or sets the author's icon url. Provide <c>null</c> if no url is needed.
     /// </summary>
+    [UriString("GET")]
     public string? IconUrl { get; set; }
 
     /// <summary>
@@ -56,7 +59,12 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
     /// <param name="name">The author's name.</param>
     /// <param name="url">The author's website.</param>
     /// <param name="iconUrl">The author's icon url.</param>
-    public EmbedAuthorBuilder(string name, string? url = null, string? iconUrl = null)
+    public EmbedAuthorBuilder
+    (
+        string name,
+        [UriString("GET")] string? url = null,
+        [UriString("GET")] string? iconUrl = null
+    )
     {
         this.Name = name;
         this.Url = url;
@@ -69,7 +77,12 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
         var validationResult = Validate();
 
         return validationResult.IsSuccess
-            ? new EmbedAuthor(this.Name, this.Url ?? default(Optional<string>), this.IconUrl ?? default(Optional<string>))
+            ? new EmbedAuthor
+            (
+                this.Name,
+                this.Url ?? default(Optional<string>),
+                this.IconUrl ?? default(Optional<string>)
+            )
             : Result<EmbedAuthor>.FromError(validationResult);
     }
 
@@ -78,8 +91,13 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
     /// </summary>
     /// <param name="author">The author of the embed.</param>
     /// <returns>A new <see cref="EmbedAuthorBuilder"/> based on the provided author.</returns>
-    public static EmbedAuthorBuilder FromAuthor(IEmbedAuthor author)
-        => new(author.Name, author.Url.HasValue ? author.Url.Value : null, author.IconUrl.HasValue ? author.Url.Value : null);
+    public static EmbedAuthorBuilder FromAuthor(IEmbedAuthor author) =>
+    new
+    (
+        author.Name,
+        author.Url.AsNullable(),
+        author.IconUrl.AsNullable()
+    );
 
     /// <inheritdoc/>
     public override Result Validate()

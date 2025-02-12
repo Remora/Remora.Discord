@@ -36,6 +36,7 @@ public record PartialUser
     Optional<Snowflake> ID = default,
     Optional<string> Username = default,
     Optional<ushort> Discriminator = default,
+    Optional<string?> GlobalName = default,
     Optional<IImageHash?> Avatar = default,
     Optional<IImageHash?> AvatarDecoration = default,
     Optional<bool> IsBot = default,
@@ -48,5 +49,6 @@ public record PartialUser
     Optional<string?> Email = default,
     Optional<UserFlags> Flags = default,
     Optional<PremiumType> PremiumType = default,
-    Optional<UserFlags> PublicFlags = default
+    Optional<UserFlags> PublicFlags = default,
+    Optional<IImageHash?> AvatarDecoration = default
 ) : IPartialUser;

@@ -66,7 +66,7 @@ public partial class CachingDiscordRestInviteAPI : IDiscordRestInviteAPI, IRestC
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
+        var key = new KeyHelpers.InviteCacheKey(inviteCode);
         var cacheResult = await _cacheService.TryGetValueAsync<IInvite>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -108,7 +108,7 @@ public partial class CachingDiscordRestInviteAPI : IDiscordRestInviteAPI, IRestC
             return deleteInvite;
         }
 
-        var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
+        var key = new KeyHelpers.InviteCacheKey(inviteCode);
         await _cacheService.EvictAsync<IInvite>(key, ct);
 
         return deleteInvite;

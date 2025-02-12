@@ -7,7 +7,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
@@ -24,8 +26,7 @@ public class EchoResponder : IResponder<IMessageCreate>
     /// Initializes a new instance of the <see cref="EchoResponder"/> class.
     /// </summary>
     /// <param name="channelAPI">The <see cref="IDiscordRestChannelAPI"/>.</param>
-    public EchoResponder(
-        IDiscordRestChannelAPI channelAPI)
+    public EchoResponder(IDiscordRestChannelAPI channelAPI)
     {
         _channelAPI = channelAPI;
     }
@@ -33,8 +34,8 @@ public class EchoResponder : IResponder<IMessageCreate>
     /// <inheritdoc />
     public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
     {
-        if ((gatewayEvent.Author.IsBot.IsDefined(out var isBot) && isBot) ||
-            (gatewayEvent.Author.IsSystem.IsDefined(out var isSystem) && isSystem))
+        if ((gatewayEvent.Author.IsBot.TryGet(out var isBot) && isBot) ||
+            (gatewayEvent.Author.IsSystem.TryGet(out var isSystem) && isSystem))
         {
             return Result.FromSuccess();
         }
@@ -42,8 +43,8 @@ public class EchoResponder : IResponder<IMessageCreate>
         return (Result)await _channelAPI.CreateMessageAsync
         (
             gatewayEvent.ChannelID,
-            gatewayEvent.Content,
-            ct: ct
+            ct: ct,
+            messageReference: new MessageReference(MessageReferenceType.Forward, MessageID: gatewayEvent.ID, ChannelID: gatewayEvent.ChannelID, GuildID: gatewayEvent.GuildID)
         );
     }
 }

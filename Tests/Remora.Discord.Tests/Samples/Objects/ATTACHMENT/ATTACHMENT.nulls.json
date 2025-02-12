@@ -1,0 +1,15 @@
+{
+  "id": "999999999999999999",
+  "filename": "file.png",
+  "description": "none",
+  "content_type": "none",
+  "size": 0,
+  "url": "https://www.example.org",
+  "proxy_url": "https://www.example.org",
+  "height": null,
+  "width": null,
+  "ephemeral": true,
+  "duration_secs": 10,
+  "waveform": "bm9uZQ==",
+  "flags": 0
+}

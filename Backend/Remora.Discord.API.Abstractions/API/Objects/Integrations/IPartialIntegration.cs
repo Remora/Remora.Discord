@@ -64,7 +64,7 @@ public interface IPartialIntegration
     Optional<IUser> User { get; }
 
     /// <inheritdoc cref="IIntegration.Account" />
-    Optional<IAccount> Account { get; }
+    Optional<IIntegrationAccount> Account { get; }
 
     /// <inheritdoc cref="IIntegration.SyncedAt" />
     Optional<DateTimeOffset> SyncedAt { get; }

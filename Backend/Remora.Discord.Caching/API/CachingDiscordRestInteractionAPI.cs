@@ -94,8 +94,8 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
 
         var message = result.Entity;
 
-        var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
-        var followupKey = KeyHelpers.CreateFollowupMessageCacheKey(token, message.ID);
+        var messageKey = new KeyHelpers.MessageCacheKey(message.ChannelID, message.ID);
+        var followupKey = new KeyHelpers.FollowupMessageCacheKey(token, message.ID);
 
         await _cacheService.CacheAsync(messageKey, message, ct);
         await _cacheService.CacheAsync(followupKey, message, ct);
@@ -118,7 +118,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
             return result;
         }
 
-        var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
+        var key = new KeyHelpers.FollowupMessageCacheKey(token, messageID);
         await _cacheService.EvictAsync<IMessage>(key, ct);
 
         return result;
@@ -133,7 +133,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
+        var key = new KeyHelpers.FollowupMessageCacheKey(token, messageID);
         var cacheResult = await _cacheService.TryGetValueAsync<IMessage>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -184,7 +184,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
             return result;
         }
 
-        var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+        var key = new KeyHelpers.WebhookMessageCacheKey(token, messageID);
         await _cacheService.CacheAsync(key, result.Entity, ct);
 
         return result;
@@ -198,7 +198,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(interactionToken);
+        var key = new KeyHelpers.OriginalInteractionMessageCacheKey(interactionToken);
         var cacheResult = await _cacheService.TryGetValueAsync<IMessage>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -214,7 +214,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
 
         var message = result.Entity;
 
-        var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+        var messageKey = new KeyHelpers.MessageCacheKey(message.ChannelID, message.ID);
 
         await _cacheService.CacheAsync(key, message, ct);
         await _cacheService.CacheAsync(messageKey, message, ct);
@@ -254,8 +254,8 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
 
         var message = result.Entity;
 
-        var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
-        var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+        var key = new KeyHelpers.OriginalInteractionMessageCacheKey(token);
+        var messageKey = new KeyHelpers.MessageCacheKey(message.ChannelID, message.ID);
 
         await _cacheService.CacheAsync(key, message, ct);
         await _cacheService.CacheAsync(messageKey, message, ct);
@@ -277,7 +277,7 @@ public partial class CachingDiscordRestInteractionAPI : IDiscordRestInteractionA
             return result;
         }
 
-        var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
+        var key = new KeyHelpers.OriginalInteractionMessageCacheKey(token);
         await _cacheService.EvictAsync<IMessage>(key, ct);
 
         return result;

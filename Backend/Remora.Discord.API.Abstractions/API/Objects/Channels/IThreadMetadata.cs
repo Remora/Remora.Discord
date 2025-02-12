@@ -58,7 +58,8 @@ public interface IThreadMetadata
     Optional<bool> IsInvitable { get; }
 
     /// <summary>
-    /// Gets a value indicating when the thread was created. Only populated for threads created after 2022-01-09 (YYYY-MM-DD).
+    /// Gets a value indicating when the thread was created. Only populated for threads created after 2022-01-09
+    /// (YYYY-MM-DD).
     /// </summary>
     Optional<DateTimeOffset?> CreateTimestamp { get; }
 }

@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
@@ -35,6 +36,8 @@ namespace Remora.Discord.Commands.Extensions;
 [PublicAPI]
 public static class ApplicationCommandDataExtensions
 {
+    private static readonly Regex _parameterNameRegex = new(@"(?<Name>\S+)__\d{1,2}$", RegexOptions.Compiled);
+
     /// <summary>
     /// Unpacks an interaction into a command name string and a set of parameters.
     /// </summary>
@@ -56,7 +59,7 @@ public static class ApplicationCommandDataExtensions
 
             commandPath = new[] { commandData.Name };
 
-            if (commandData.TargetID.IsDefined(out var targetId))
+            if (commandData.TargetID.TryGet(out var targetId))
             {
                 parameters = new Dictionary<string, IReadOnlyList<string>>
                 {
@@ -71,7 +74,7 @@ public static class ApplicationCommandDataExtensions
             return;
         }
 
-        if (!commandData.Options.IsDefined(out var options))
+        if (!commandData.Options.TryGet(out var options))
         {
             commandPath = new[] { commandData.Name };
             parameters = new Dictionary<string, IReadOnlyList<string>>();
@@ -100,15 +103,31 @@ public static class ApplicationCommandDataExtensions
 
         if (options.Count > 1)
         {
-            // multiple parameters
-            var unpackedParameters = new Dictionary<string, IReadOnlyList<string>>();
+            var tempParameters = new Dictionary<string, IReadOnlyList<string>>();
             foreach (var option in options)
             {
                 var (name, values) = UnpackInteractionParameter(option);
-                unpackedParameters.Add(name, values);
+
+                name = _parameterNameRegex.Replace(name, "$1");
+                if (!tempParameters.TryGetValue(name, out var existingValues))
+                {
+                    tempParameters[name] = values;
+                }
+                else
+                {
+                    if (existingValues is List<string> casted)
+                    {
+                        casted.AddRange(values);
+                    }
+                    else
+                    {
+                        tempParameters[name] = (List<string>)[..existingValues, ..values];
+                    }
+                }
             }
 
-            parameters = unpackedParameters;
+            parameters = tempParameters;
+
             return;
         }
 
@@ -127,7 +146,7 @@ public static class ApplicationCommandDataExtensions
                 { name, values }
             };
         }
-        else if (singleOption.Options.IsDefined(out var nestedOptions))
+        else if (singleOption.Options.TryGet(out var nestedOptions))
         {
             // A nested group
             UnpackInteractionOptions(nestedOptions, out var nestedCommandPath, out parameters);
@@ -149,21 +168,24 @@ public static class ApplicationCommandDataExtensions
         IApplicationCommandInteractionDataOption option
     )
     {
-        if (!option.Value.IsDefined(out var optionValue))
+        if (!option.Value.TryGet(out var optionValue))
         {
             throw new InvalidOperationException();
         }
 
-        var values = new List<string>();
         if (optionValue.Value is ICollection collection)
         {
-            values.AddRange(collection.Cast<object>().Select(o => o.ToString() ?? string.Empty));
+            var valueStrings = collection.Cast<object>().Select(o => o.ToString() ?? string.Empty).ToArray();
+            return (option.Name, valueStrings);
         }
         else
         {
-            values.Add(optionValue.Value.ToString() ?? string.Empty);
-        }
+            var value = optionValue.Value.ToString() ?? string.Empty;
 
-        return (option.Name, values);
+            #pragma warning disable SA1010 // Stylecop doesn't handle collection expressions correctly here
+            // Casting to string[] is optional, but absolves reliance on Roslyn making an inline array here.
+            return (option.Name, (string[])[value]);
+            #pragma warning restore SA1010
+        }
     }
 }

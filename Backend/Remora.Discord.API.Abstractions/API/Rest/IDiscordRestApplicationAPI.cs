@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -69,6 +71,9 @@ public interface IDiscordRestApplicationAPI
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="dmPermission">Whether this command is executable in DMs.</param>
+    /// <param name="isNsfw">Whether the command is age-restricted.</param>
+    /// <param name="integrationTypes">The installation contexts the command can be installed to.</param>
+    /// <param name="allowedContextTypes">The contexts in which the command is allowed to be run in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
@@ -82,6 +87,9 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
+        Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -125,6 +133,9 @@ public interface IDiscordRestApplicationAPI
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
     /// <param name="dmPermission">Whether this command is executable in DMs.</param>
+    /// <param name="isNsfw">Whether this command is age-restricted.</param>
+    /// <param name="integrationTypes">The installation contexts the command can be installed to.</param>
+    /// <param name="allowedContextTypes">The contexts in which the command is allowed to be run in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
@@ -138,6 +149,9 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
         Optional<bool?> dmPermission = default,
+        Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -190,6 +204,9 @@ public interface IDiscordRestApplicationAPI
     /// <param name="nameLocalizations">The localized names of the command.</param>
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
+    /// <param name="isNsfw">Whether the command is age-restricted.</param>
+    /// <param name="integrationTypes">The installation contexts the command can be installed to.</param>
+    /// <param name="allowedContextTypes">The contexts in which the command is allowed to be run in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
@@ -203,6 +220,9 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -250,9 +270,14 @@ public interface IDiscordRestApplicationAPI
     /// <param name="nameLocalizations">The localized names of the command.</param>
     /// <param name="descriptionLocalizations">The localized descriptions of the command.</param>
     /// <param name="defaultMemberPermissions">The permissions required to execute the command.</param>
+    /// <param name="isNsfw">Whether this command is age-restricted.</param>
+    /// <param name="integrationTypes">The installation contexts the command can be installed to.</param>
+    /// <param name="allowedContextTypes">The contexts in which the command is allowed to be run in.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
-    /// <remarks>This method requires a bearer token authorized with the applications.commands.permissions.update scope.</remarks>
+    /// <remarks>
+    /// This method requires a bearer token authorized with the applications.commands.permissions.update scope.
+    /// </remarks>
     Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
     (
         Snowflake applicationID,
@@ -264,6 +289,9 @@ public interface IDiscordRestApplicationAPI
         Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
         Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
         Optional<IDiscordPermissionSet?> defaultMemberPermissions = default,
+        Optional<bool> isNsfw = default,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> integrationTypes = default,
+        Optional<IReadOnlyList<InteractionContextType>> allowedContextTypes = default,
         CancellationToken ct = default
     );
 
@@ -322,13 +350,87 @@ public interface IDiscordRestApplicationAPI
     /// <param name="permissions">The permissions to overwrite the existing ones with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>An edit result which may or may not have succeeded.</returns>
-    /// <remarks>This method requires a bearer token authorized with the applications.commands.permissions.update scope.</remarks>
+    /// <remarks>
+    /// This method requires a bearer token authorized with the applications.commands.permissions.update scope.
+    /// </remarks>
     Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
     (
         Snowflake applicationID,
         Snowflake guildID,
         Snowflake commandID,
         IReadOnlyList<IApplicationCommandPermissions> permissions,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets the application role connection metadata records for the given application..
+    /// </summary>
+    /// <param name="applicationID">The ID of the bot application.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> GetApplicationRoleConnectionMetadataRecordsAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Updates the application role connection metadata records for the given application..
+    /// </summary>
+    /// <remarks>
+    /// An application can have a maximum of 5 metadata records.
+    /// </remarks>
+    /// <param name="applicationID">The ID of the bot application.</param>
+    /// <param name="records">The metadata records to overwrite the existing ones.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>An update result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IApplicationRoleConnectionMetadata>>> UpdateApplicationRoleConnectionMetadataRecordsAsync
+    (
+        Snowflake applicationID,
+        IReadOnlyList<IApplicationRoleConnectionMetadata> records,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets the application object associated with the requesting user.
+    /// </summary>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The application object.</returns>
+    Task<Result<IApplication>> GetCurrentApplicationAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Edit properties of the application associated with the requesting bot user.
+    /// </summary>
+    /// <param name="customInstallUrl">The default custom authorization URL of the app.</param>
+    /// <param name="description">The description of the app.</param>
+    /// <param name="roleConnectionsVerificationUrl">The role connections verification URL of the app.</param>
+    /// <param name="installParams">The settings for the app's in-app authorization.</param>
+    /// <param name="flags">The new flags.</param>
+    /// <param name="icon">The new icon.</param>
+    /// <param name="coverImage">The new cover image.</param>
+    /// <param name="interactionsEndpointUrl">The new interactions endpoint URL.</param>
+    /// <param name="tags">The new tags.</param>
+    /// <param name="integrationTypesConfig">The new integration types.</param>
+    /// <param name="eventWebhooksUrl">The new event webhook url.</param>
+    /// <param name="eventWebhooksStatus">The new status of the event webhook.</param>
+    /// <param name="eventWebhooksTypes">The new events to subscribe to.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The updated application.</returns>
+    Task<Result<IApplication>> EditCurrentApplicationAsync
+    (
+        Optional<Uri> customInstallUrl = default,
+        Optional<string> description = default,
+        Optional<Uri> roleConnectionsVerificationUrl = default,
+        Optional<IApplicationInstallParameters> installParams = default,
+        Optional<ApplicationFlags> flags = default,
+        Optional<Stream> icon = default,
+        Optional<Stream> coverImage = default,
+        Optional<Uri> interactionsEndpointUrl = default,
+        Optional<IReadOnlyList<string>> tags = default,
+        Optional<IReadOnlyDictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>> integrationTypesConfig = default,
+        Optional<Uri> eventWebhooksUrl = default,
+        Optional<ApplicationEventWebhookStatus> eventWebhooksStatus = default,
+        Optional<IReadOnlyList<string>> eventWebhooksTypes = default,
         CancellationToken ct = default
     );
 }

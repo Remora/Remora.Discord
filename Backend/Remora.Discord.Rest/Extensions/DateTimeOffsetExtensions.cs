@@ -39,6 +39,9 @@ public static class DateTimeOffsetExtensions
     public static string ToISO8601String(this DateTimeOffset dateTimeOffset)
     {
         var offset = dateTimeOffset.Offset;
-        return dateTimeOffset.ToString($"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}");
+        return dateTimeOffset.ToString
+        (
+            $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
+        );
     }
 }

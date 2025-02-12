@@ -6,7 +6,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
@@ -89,7 +88,7 @@ public class HttpCatCommands : CommandGroup
     [Description("Posts a cat image that matches the user.")]
     public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IPartialUser catUser)
     {
-        if (!catUser.ID.IsDefined(out var id))
+        if (!catUser.ID.TryGet(out var id))
         {
             return Task.FromResult<IResult>(Result.FromSuccess());
         }
@@ -112,7 +111,7 @@ public class HttpCatCommands : CommandGroup
     [Description("Posts a cat image that matches the provided channel.")]
     public Task<IResult> PostChannelHttpCatAsync
     (
-        [Description("The channel to cattify")][ChannelTypes(ChannelType.GuildText)] IChannel channel
+        [Description("The channel to cattify")] [ChannelTypes(ChannelType.GuildText)] IChannel channel
     )
     {
         var values = Enum.GetValues<HttpStatusCode>();
@@ -121,6 +120,17 @@ public class HttpCatCommands : CommandGroup
         var code = values[index];
         return PostHttpCatAsync((int)code);
     }
+
+    /// <inheritdoc cref="PostUserHttpCatAsync"/>
+    /// <remarks>
+    /// This method differs in the fact that it is installable to a user's account, rather than a guild.
+    /// </remarks>
+    [Command("user-cat-dm")]
+    [AllowedContexts(InteractionContextType.PrivateChannel)]
+    [DiscordInstallContext(ApplicationIntegrationType.UserInstallable)]
+    [Description("Posts a cat image that matches the user, usable exclusively in DMs.")]
+    public Task<IResult> PostUserHttpCatDMAsync([Description("The user to cattify")] IPartialUser catUser)
+        => PostUserHttpCatAsync(catUser);
 
     private static ulong Map(ulong value, ulong fromSource, ulong toSource, ulong fromTarget, ulong toTarget)
     {

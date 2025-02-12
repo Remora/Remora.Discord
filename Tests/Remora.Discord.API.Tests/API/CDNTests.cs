@@ -618,8 +618,9 @@ public class CDNTests
     }
 
     /// <summary>
-    /// Tests the <see cref="CDN.GetGuildMemberAvatarUrl(Snowflake, IGuildMember, Optional{CDNImageFormat}, Optional{ushort})"/> method and
-    /// its overloads.
+    /// Tests the
+    /// <see cref="CDN.GetGuildMemberAvatarUrl(Snowflake, IGuildMember, Optional{CDNImageFormat}, Optional{ushort})"/>
+    /// method and its overloads.
     /// </summary>
     public class GetGuildMemberAvatarUrl : CDNTestBase
     {
@@ -739,6 +740,84 @@ public class CDNTests
     }
 
     /// <summary>
+    /// Tests the <see cref="CDN.GetUserAvatarDecorationUrl(IUser, Optional{CDNImageFormat}, Optional{ushort})"/> method and
+    /// its overloads.
+    /// </summary>
+    public class GetUserAvatarDecorationUrl : CDNTestBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetUserAvatarDecorationUrl"/> class.
+        /// </summary>
+        public GetUserAvatarDecorationUrl()
+            : base
+            (
+                new Uri("https://cdn.discordapp.com/avatar-decorations/0/1"),
+                new[] { CDNImageFormat.PNG }
+            )
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the correct address is returned when the instance has no image set.
+        /// </summary>
+        [Fact]
+        public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
+        {
+            var userID = DiscordSnowflake.New(0);
+
+            var mockedUser = new Mock<IUser>();
+            mockedUser.SetupGet(g => g.AvatarDecoration).Returns(default(Optional<IImageHash?>));
+            mockedUser.SetupGet(g => g.ID).Returns(userID);
+
+            var user = mockedUser.Object;
+
+            var getActual = CDN.GetUserAvatarDecorationUrl(user, CDNImageFormat.PNG);
+
+            Assert.False(getActual.IsSuccess);
+            Assert.IsType<ImageNotFoundError>(getActual.Error);
+        }
+
+        /// <summary>
+        /// Tests whether the correct address is returned when the instance has an image set to null.
+        /// </summary>
+        [Fact]
+        public void ReturnsUnsuccessfulResultIfInstanceHasNullImage()
+        {
+            var userID = DiscordSnowflake.New(0);
+
+            var mockedUser = new Mock<IUser>();
+            mockedUser.SetupGet(g => g.AvatarDecoration).Returns(new Optional<IImageHash?>(null));
+            mockedUser.SetupGet(g => g.ID).Returns(userID);
+
+            var user = mockedUser.Object;
+
+            var getActual = CDN.GetUserAvatarDecorationUrl(user, CDNImageFormat.PNG);
+
+            Assert.False(getActual.IsSuccess);
+            Assert.IsType<ImageNotFoundError>(getActual.Error);
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<Result<Uri>> GetImageUris
+        (
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var userID = DiscordSnowflake.New(0);
+            var imageHash = new ImageHash("1");
+
+            var mockedUser = new Mock<IUser>();
+            mockedUser.SetupGet(g => g.AvatarDecoration).Returns(imageHash);
+            mockedUser.SetupGet(g => g.ID).Returns(userID);
+
+            var user = mockedUser.Object;
+            yield return CDN.GetUserAvatarDecorationUrl(user, imageFormat, imageSize);
+            yield return CDN.GetUserAvatarDecorationUrl(userID, imageHash, imageFormat, imageSize);
+        }
+    }
+
+    /// <summary>
     /// Tests the <see cref="CDN.GetApplicationIconUrl(IApplication, Optional{CDNImageFormat}, Optional{ushort})"/>
     /// method and its overloads.
     /// </summary>
@@ -793,6 +872,42 @@ public class CDNTests
             var application = mockedApplication.Object;
             yield return CDN.GetApplicationIconUrl(application, imageFormat, imageSize);
             yield return CDN.GetApplicationIconUrl(applicationID, imageHash, imageFormat, imageSize);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="CDN.GetStorePageAssetUrl(IApplication, string, Optional{CDNImageFormat}, Optional{ushort})"/>
+    /// method and its overloads.
+    /// </summary>
+    public class GetStorePageAssetUrl : CDNTestBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetStorePageAssetUrl"/> class.
+        /// </summary>
+        public GetStorePageAssetUrl()
+            : base
+            (
+                new Uri("https://cdn.discordapp.com/app-assets/0/store/1"),
+                new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+            )
+        {
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<Result<Uri>> GetImageUris
+        (
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var applicationID = DiscordSnowflake.New(0);
+
+            var mockedApplication = new Mock<IApplication>();
+            mockedApplication.SetupGet(g => g.ID).Returns(applicationID);
+
+            var application = mockedApplication.Object;
+            yield return CDN.GetStorePageAssetUrl(application, "1", imageFormat, imageSize);
+            yield return CDN.GetStorePageAssetUrl(applicationID, "1", imageFormat, imageSize);
         }
     }
 
@@ -989,6 +1104,42 @@ public class CDNTests
     }
 
     /// <summary>
+    /// Tests the <see cref="CDN.GetStickerUrl(ISticker, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+    /// overloads.
+    /// </summary>
+    public class GetStickerUrl : CDNTestBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetStickerUrl"/> class.
+        /// </summary>
+        public GetStickerUrl()
+            : base
+            (
+                new Uri("https://cdn.discordapp.com/stickers/0"),
+                new[] { CDNImageFormat.PNG, CDNImageFormat.Lottie, CDNImageFormat.GIF }
+            )
+        {
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<Result<Uri>> GetImageUris
+        (
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var stickerID = DiscordSnowflake.New(0);
+
+            var mockedSticker = new Mock<ISticker>();
+            mockedSticker.SetupGet(g => g.ID).Returns(stickerID);
+
+            var sticker = mockedSticker.Object;
+            yield return CDN.GetStickerUrl(sticker, imageFormat, imageSize);
+            yield return CDN.GetStickerUrl(stickerID, imageFormat, imageSize);
+        }
+    }
+
+    /// <summary>
     /// Tests the <see cref="CDN.GetRoleIconUrl(IRole, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
     /// overloads.
     /// </summary>
@@ -1043,7 +1194,8 @@ public class CDNTests
     }
 
     /// <summary>
-    /// Tests the <see cref="CDN.GetGuildScheduledEventCoverUrl(IGuildScheduledEvent, Optional{CDNImageFormat}, Optional{ushort})"/>
+    /// Tests the
+    /// <see cref="CDN.GetGuildScheduledEventCoverUrl(IGuildScheduledEvent, Optional{CDNImageFormat}, Optional{ushort})"/>
     /// method and its overloads.
     /// </summary>
     public class GetGuildScheduledEventCoverUrl : CDNTestBase
@@ -1067,7 +1219,7 @@ public class CDNTests
         public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
         {
             var mockedEvent = new Mock<IGuildScheduledEvent>();
-            mockedEvent.SetupGet(g => g.Image).Returns(default(IImageHash?));
+            mockedEvent.SetupGet(g => g.Image).Returns(default(Optional<IImageHash?>));
 
             var scheduledEvent = mockedEvent.Object;
 

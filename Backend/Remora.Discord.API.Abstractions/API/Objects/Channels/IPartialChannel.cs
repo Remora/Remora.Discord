@@ -81,6 +81,9 @@ public interface IPartialChannel
     /// <inheritdoc cref="IChannel.ApplicationID" />
     Optional<Snowflake> ApplicationID { get; }
 
+    /// <inheritdoc cref="IChannel.IsManaged" />
+    Optional<bool> IsManaged { get; }
+
     /// <inheritdoc cref="IChannel.ParentID" />
     Optional<Snowflake?> ParentID { get; }
 
@@ -131,4 +134,7 @@ public interface IPartialChannel
 
     /// <inheritdoc cref="IChannel.DefaultSortOrder" />
     Optional<SortOrder?> DefaultSortOrder { get; }
+
+    /// <inheritdoc cref="IChannel.DefaultForumLayout" />
+    Optional<ForumLayout> DefaultForumLayout { get; }
 }

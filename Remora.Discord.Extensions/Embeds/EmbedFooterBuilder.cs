@@ -36,13 +36,15 @@ namespace Remora.Discord.Extensions.Embeds;
 public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
 {
     /// <summary>
-    /// Gets or sets the text of the footer. Must be shorter than or equal to <see cref="EmbedConstants.MaxFooterTextLength"/> in length.
+    /// Gets or sets the text of the footer. Must be shorter than or equal to
+    /// <see cref="EmbedConstants.MaxFooterTextLength"/> in length.
     /// </summary>
     public string Text { get; set; }
 
     /// <summary>
     /// Gets or sets the icon url of the footer. Provide <c>null</c> if no url is needed.
     /// </summary>
+    [UriString("GET")]
     public string? IconUrl { get; set; }
 
     /// <summary>
@@ -50,7 +52,7 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     /// </summary>
     /// <param name="text">The text of the footer.</param>
     /// <param name="iconUrl">The icon url of the footer.</param>
-    public EmbedFooterBuilder(string text, string? iconUrl = null)
+    public EmbedFooterBuilder(string text, [UriString("GET")] string? iconUrl = null)
     {
         this.Text = text;
         this.IconUrl = iconUrl;
@@ -69,7 +71,14 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     /// <inheritdoc />
     public override Result Validate()
     {
-        var textValidationResult = ValidateLength(nameof(this.Text), this.Text, EmbedConstants.MaxFooterTextLength, false);
+        var textValidationResult = ValidateLength
+        (
+            nameof(this.Text),
+            this.Text,
+            EmbedConstants.MaxFooterTextLength,
+            false
+        );
+
         if (!textValidationResult.IsSuccess)
         {
             return textValidationResult;
@@ -85,5 +94,5 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     /// <param name="footer">The footer.</param>
     /// <returns>A new <see cref="EmbedFooterBuilder"/> based on the provided footer.</returns>
     public static EmbedFooterBuilder FromFooter(IEmbedFooter footer)
-        => new(footer.Text, footer.IconUrl.HasValue ? footer.IconUrl.Value : null);
+        => new(footer.Text, footer.IconUrl.AsNullable());
 }

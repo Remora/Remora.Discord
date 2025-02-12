@@ -1,3 +1,11 @@
 {
-    "sticker_packs": [ ]
+    "sticker_packs": [
+        {
+            "id": "999999999999999999",
+            "stickers": [ ],
+            "name": "none",
+            "sku_id": "999999999999999999",
+            "description": "none"
+        }
+    ]
 }

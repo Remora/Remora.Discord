@@ -58,16 +58,35 @@ public static class ServiceCollectionExtensions
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
-        serviceCollection
-            .AddDiscordRest
-            (
-                s => (tokenFactory(s), DiscordTokenType.Bot),
-                buildClient
-            );
+        serviceCollection.AddSingleton<IAsyncTokenStore>
+        (
+            ctx => new StaticTokenStore(tokenFactory(ctx), DiscordTokenType.Bot)
+        );
+
+        return serviceCollection.AddDiscordGateway(buildClient);
+    }
+
+    /// <summary>
+    /// Adds services required by the Discord Gateway system.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="buildClient">Extra options to configure the rest client.</param>
+    /// <returns>The service collection, with the services added.</returns>
+    public static IServiceCollection AddDiscordGateway
+    (
+        this IServiceCollection serviceCollection,
+        Action<IHttpClientBuilder>? buildClient = null
+    )
+    {
+        serviceCollection.AddDiscordRest(buildClient);
 
         serviceCollection.TryAddSingleton<Random>();
-        serviceCollection.TryAddSingleton<ResponderDispatchService>();
-        serviceCollection.TryAddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<IOptions<ResponderService>>().Value);
+        serviceCollection.TryAddSingleton<IResponderDispatchService, ResponderDispatchService>();
+        serviceCollection.TryAddSingleton<IResponderTypeRepository>
+        (
+            s => s.GetRequiredService<IOptions<ResponderService>>().Value
+        );
+
         serviceCollection.TryAddSingleton<DiscordGatewayClient>();
 
         serviceCollection.TryAddTransient<ClientWebSocket>();
@@ -113,7 +132,9 @@ public static class ServiceCollectionExtensions
     /// <param name="responderType">The type implementing <see cref="IResponder"/>.</param>
     /// <param name="group">The group the responder belongs to.</param>
     /// <returns>The service collection, with the responder added.</returns>
-    /// <exception cref="ArgumentException">Throws if responderType does not implement <see cref="IResponder"/>.</exception>
+    /// <exception cref="ArgumentException">
+    /// Thrown if responderType does not implement <see cref="IResponder"/>.
+    /// </exception>
     public static IServiceCollection AddResponder
     (
         this IServiceCollection serviceCollection,
@@ -123,9 +144,11 @@ public static class ServiceCollectionExtensions
     {
         if (!responderType.IsResponder())
         {
-            throw new ArgumentException(
-                $"{nameof(responderType)} should implement {nameof(IResponder)}.",
-                nameof(responderType));
+            throw new ArgumentException
+            (
+                $"{nameof(responderType)} must implement {nameof(IResponder)}.",
+                nameof(responderType)
+            );
         }
 
         var responderTypeInterfaces = responderType.GetInterfaces();

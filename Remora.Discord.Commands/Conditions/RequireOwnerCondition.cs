@@ -27,6 +27,7 @@ using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Conditions;
@@ -37,7 +38,7 @@ namespace Remora.Discord.Commands.Conditions;
 [PublicAPI]
 public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestOAuth2API _oauth2API;
 
     /// <summary>
@@ -45,7 +46,7 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="oauth2API">The OAuth2 API.</param>
-    public RequireOwnerCondition(ICommandContext context, IDiscordRestOAuth2API oauth2API)
+    public RequireOwnerCondition(IOperationContext context, IDiscordRestOAuth2API oauth2API)
     {
         _context = context;
         _oauth2API = oauth2API;
@@ -62,19 +63,17 @@ public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 
         var application = getApplication.Entity;
 
-        if (application.Owner is null || !application.Owner.ID.HasValue)
+        if (!application.Owner.TryGet(out var owner) || !owner.ID.TryGet(out var ownerID))
         {
             return new InvalidOperationError("The application owner's ID was not present.");
         }
 
-        var userID = _context switch
+        if (!_context.TryGetUserID(out var userID))
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
-            _ => throw new NotSupportedException()
-        };
+            throw new NotSupportedException();
+        }
 
-        return application.Owner.ID.Value == userID
+        return ownerID == userID
             ? Result.FromSuccess()
             : new InvalidOperationError("You need to be the bot owner to do that.");
     }

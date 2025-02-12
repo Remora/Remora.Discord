@@ -69,13 +69,21 @@ public class ChannelParser : AbstractTypeParser<IChannel>, ITypeParser<IPartialC
     }
 
     /// <inheritdoc/>
-    async ValueTask<Result<IPartialChannel>> ITypeParser<IPartialChannel>.TryParseAsync(IReadOnlyList<string> tokens, CancellationToken ct)
+    async ValueTask<Result<IPartialChannel>> ITypeParser<IPartialChannel>.TryParseAsync
+    (
+        IReadOnlyList<string> tokens,
+        CancellationToken ct
+    )
     {
         return (await (this as ITypeParser<IChannel>).TryParseAsync(tokens, ct)).Map(a => a as IPartialChannel);
     }
 
     /// <inheritdoc/>
-    async ValueTask<Result<IPartialChannel>> ITypeParser<IPartialChannel>.TryParseAsync(string token, CancellationToken ct)
+    async ValueTask<Result<IPartialChannel>> ITypeParser<IPartialChannel>.TryParseAsync
+    (
+        string token,
+        CancellationToken ct
+    )
     {
         _ = DiscordSnowflake.TryParse(token.Unmention(), out var channelID);
         if (channelID is null)
@@ -96,13 +104,13 @@ public class ChannelParser : AbstractTypeParser<IChannel>, ITypeParser<IPartialC
             return null;
         }
 
-        if (!interactionContext.Interaction.Data.IsDefined(out var data))
+        if (!interactionContext.Interaction.Data.TryGet(out var data))
         {
             return null;
         }
 
         var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.IsDefined(out var resolved) || !resolved.Channels.IsDefined(out var channels))
+        if (!resolvedData.TryGet(out var resolved) || !resolved.Channels.TryGet(out var channels))
         {
             return null;
         }

@@ -1,0 +1,14 @@
+{
+    "application_id": "999999999999999999",
+    "auto_moderation_rule_name": "none",
+    "auto_moderation_rule_trigger_type": "none",
+    "channel_id": "999999999999999999",
+    "count": "1",
+    "delete_member_days": "1",
+    "id": "999999999999999999",
+    "members_removed": "1",
+    "message_id": "999999999999999999",
+    "role_name": "none",
+    "type": "1",
+    "integration_type": "twitch"
+}

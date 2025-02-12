@@ -21,13 +21,12 @@
 //
 
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
 
 namespace Remora.Discord.API.Tests.Objects;
 
 /// <summary>
-/// Tests the <see cref="AuditLog"/> type.
+/// Tests the <see cref="IAuditLog"/> type.
 /// </summary>
 public class AuditLogTests : ObjectTestBase<IAuditLog>
 {

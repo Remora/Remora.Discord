@@ -90,7 +90,13 @@ public class DiscordRateLimitPolicyTests
         for (var i = 1; i <= Constants.GlobalRateLimit + 1; ++i)
         {
             var policyResponse = await policy.ExecuteAsync(_ => Task.FromResult(apiResponse), contextWithToken);
-            Assert.Equal(i <= Constants.GlobalRateLimit ? HttpStatusCode.OK : HttpStatusCode.TooManyRequests, policyResponse.StatusCode);
+            Assert.Equal
+            (
+                i <= Constants.GlobalRateLimit
+                    ? HttpStatusCode.OK
+                    : HttpStatusCode.TooManyRequests,
+                policyResponse.StatusCode
+            );
         }
     }
 
@@ -114,7 +120,13 @@ public class DiscordRateLimitPolicyTests
         for (var i = 1; i <= Constants.GlobalRateLimit + 1; ++i)
         {
             policyResponse = await policy.ExecuteAsync(_ => Task.FromResult(apiResponse), contextWithToken);
-            Assert.Equal(i <= Constants.GlobalRateLimit ? HttpStatusCode.OK : HttpStatusCode.TooManyRequests, policyResponse.StatusCode);
+            Assert.Equal
+            (
+                i <= Constants.GlobalRateLimit
+                    ? HttpStatusCode.OK
+                    : HttpStatusCode.TooManyRequests,
+                policyResponse.StatusCode
+            );
         }
 
         // Verify that requests without token is not rate limited.

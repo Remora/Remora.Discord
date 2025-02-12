@@ -87,6 +87,11 @@ public interface IRole : IPartialRole
     /// </summary>
     new Optional<IRoleTags> Tags { get; }
 
+    /// <summary>
+    /// Gets the flags the role has.
+    /// </summary>
+    new RoleFlags Flags { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialRole.ID => this.ID;
 
@@ -119,4 +124,7 @@ public interface IRole : IPartialRole
 
     /// <inheritdoc/>
     Optional<IRoleTags> IPartialRole.Tags => this.Tags;
+
+    /// <inheritdoc/>
+    Optional<RoleFlags> IPartialRole.Flags => this.Flags;
 }

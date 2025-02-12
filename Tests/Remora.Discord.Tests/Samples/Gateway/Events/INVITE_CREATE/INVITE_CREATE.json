@@ -11,35 +11,18 @@
       "id": "999999999999999999",
       "username": "none",
       "discriminator": "9999",
-      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-      "bot": false,
-      "system": false,
-      "mfa_enabled": false,
-      "locale": "en-US",
-      "verified": true,
-      "email": "nobody@example.org",
-      "flags": 0,
-      "premium_type": 0,
-      "public_flags": 0
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
     "max_age": 1,
     "max_uses": 1,
+    "target_type": 1,
     "target_user": {
       "id": "999999999999999999",
       "username": "none",
       "discriminator": "9999",
-      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-      "bot": false,
-      "system": false,
-      "mfa_enabled": false,
-      "locale": "en-US",
-      "verified": true,
-      "email": "nobody@example.org",
-      "flags": 0,
-      "premium_type": 0,
-      "public_flags": 0
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
-    "target_type": 1,
+    "target_application": {},
     "temporary": true,
     "uses": 1
   }

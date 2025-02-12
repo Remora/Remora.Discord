@@ -44,7 +44,7 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog;
 public class DiscordRestAuditLogAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestAuditLogAPI.GetAuditLogAsync"/> method.
+    /// Tests the <see cref="DiscordRestAuditLogAPI.GetGuildAuditLogAsync"/> method.
     /// </summary>
     public class GetAuditLogAsync : RestAPITestBase<IDiscordRestAuditLogAPI>
     {
@@ -68,6 +68,7 @@ public class DiscordRestAuditLogAPITests
             var userID = DiscordSnowflake.New(1);
             var actionType = AuditLogEvent.BotAdd;
             var before = DiscordSnowflake.New(2);
+            var after = DiscordSnowflake.New(3);
             byte limit = 45;
 
             var api = CreateAPI
@@ -75,25 +76,27 @@ public class DiscordRestAuditLogAPITests
                 b =>
                     b.Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/*/audit-logs")
                         .WithAuthentication()
-                        .WithQueryString
+                        .WithExactQueryString
                         (
                             new[]
                             {
                                 new KeyValuePair<string, string>("user_id", userID.ToString()),
                                 new KeyValuePair<string, string>("action_type", ((int)actionType).ToString()),
                                 new KeyValuePair<string, string>("before", before.ToString()),
+                                new KeyValuePair<string, string>("after", after.ToString()),
                                 new KeyValuePair<string, string>("limit", limit.ToString())
                             }
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IAuditLog)])
             );
 
-            var result = await api.GetAuditLogAsync
+            var result = await api.GetGuildAuditLogAsync
             (
                 guildID,
                 userID,
                 actionType,
                 before,
+                after,
                 limit
             );
 
@@ -110,24 +113,27 @@ public class DiscordRestAuditLogAPITests
             var userID = DiscordSnowflake.New(1);
             var actionType = AuditLogEvent.BotAdd;
             var before = DiscordSnowflake.New(2);
+            var after = DiscordSnowflake.New(3);
 
-            var result = await api.GetAuditLogAsync
+            var result = await api.GetGuildAuditLogAsync
             (
                 guildID,
                 userID,
                 actionType,
                 before,
+                after,
                 0
             );
 
             ResultAssert.Unsuccessful(result);
 
-            result = await api.GetAuditLogAsync
+            result = await api.GetGuildAuditLogAsync
             (
                 guildID,
                 userID,
                 actionType,
                 before,
+                after,
                 101
             );
 

@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Abstractions.Services;
@@ -36,6 +37,7 @@ using Remora.Results;
 namespace Remora.Discord.Rest.API;
 
 /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestAutoModerationAPI" />
+[PublicAPI]
 public class DiscordRestAutoModerationAPI : AbstractDiscordRestAPI, IDiscordRestAutoModerationAPI
 {
     /// <summary>

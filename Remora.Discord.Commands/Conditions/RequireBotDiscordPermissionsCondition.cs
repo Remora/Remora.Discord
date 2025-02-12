@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Results;
 using Remora.Results;
 
@@ -47,7 +48,7 @@ public class RequireBotDiscordPermissionsCondition :
     private readonly IDiscordRestUserAPI _userAPI;
     private readonly IDiscordRestGuildAPI _guildAPI;
     private readonly IDiscordRestChannelAPI _channelAPI;
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequireBotDiscordPermissionsCondition"/> class.
@@ -61,7 +62,7 @@ public class RequireBotDiscordPermissionsCondition :
         IDiscordRestUserAPI userAPI,
         IDiscordRestGuildAPI guildAPI,
         IDiscordRestChannelAPI channelAPI,
-        ICommandContext context
+        IOperationContext context
     )
     {
         _userAPI = userAPI;
@@ -77,14 +78,7 @@ public class RequireBotDiscordPermissionsCondition :
         CancellationToken ct = default
     )
     {
-        var guildID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out _))
         {
             return new PermissionDeniedError
             (
@@ -92,19 +86,12 @@ public class RequireBotDiscordPermissionsCondition :
             );
         }
 
-        var channelID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.ChannelID,
-            ITextCommandContext tx => tx.Message.ChannelID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!channelID.HasValue)
+        if (!_context.TryGetChannelID(out var channelID))
         {
             return new PermissionDeniedError("Commands executed outside of channels may not require any permissions.");
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
+        var getChannel = await _channelAPI.GetChannelAsync(channelID, ct);
 
         if (!getChannel.IsSuccess)
         {
@@ -124,14 +111,7 @@ public class RequireBotDiscordPermissionsCondition :
         CancellationToken ct = default
     )
     {
-        var guildID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -147,7 +127,7 @@ public class RequireBotDiscordPermissionsCondition :
 
         var user = getUser.Entity;
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return (Result)getGuild;
@@ -160,7 +140,7 @@ public class RequireBotDiscordPermissionsCondition :
             return Result.FromSuccess();
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
@@ -168,7 +148,7 @@ public class RequireBotDiscordPermissionsCondition :
 
         var guildRoles = getRoles.Entity;
 
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, user.ID, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;
@@ -179,7 +159,7 @@ public class RequireBotDiscordPermissionsCondition :
         var member = getMember.Entity;
         var memberRoles = guildRoles.Where(r => member.Roles.Contains(r.ID)).ToArray();
 
-        var channelOverwrites = data.PermissionOverwrites.IsDefined(out var overwrites)
+        var channelOverwrites = data.PermissionOverwrites.TryGet(out var overwrites)
             ? overwrites
             : Array.Empty<IPermissionOverwrite>();
 
@@ -223,7 +203,7 @@ public class RequireBotDiscordPermissionsCondition :
         return result;
     }
 
-    private string Explain
+    private static string Explain
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator
@@ -232,18 +212,25 @@ public class RequireBotDiscordPermissionsCondition :
         return logicalOperator switch
         {
             LogicalOperator.Not =>
-                $"had disallowed permissions {string.Join(", ", permissionInformation.Where(kvp => kvp.Value).Select(kvp => kvp.Key.ToString()))}",
+                $"had disallowed permissions {string.Join(", ", permissionInformation
+                    .Where(kvp => kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}",
             LogicalOperator.And =>
-                $"missing permissions {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}",
+                $"missing permissions {string.Join(", ", permissionInformation
+                    .Where(kvp => !kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}",
             LogicalOperator.Or =>
-                $"missing one of {string.Join(", ", permissionInformation.Keys.Select(k => k.ToString()))}",
+                $"missing one of {string.Join(", ", permissionInformation.Keys
+                    .Select(k => k.ToString()))}",
             LogicalOperator.Xor =>
-                $"had {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}; only one is allowed",
+                $"had {string.Join(", ", permissionInformation
+                    .Where(kvp => !kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}; only one is allowed",
             _ => throw new ArgumentOutOfRangeException(nameof(logicalOperator), logicalOperator, null)
         };
     }
 
-    private Result CheckRequirements
+    private static Result CheckRequirements
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator

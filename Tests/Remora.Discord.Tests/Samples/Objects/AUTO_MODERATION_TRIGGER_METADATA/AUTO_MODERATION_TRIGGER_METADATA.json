@@ -1,13 +1,16 @@
 {
   "keyword_filter": [
-    "none",
-    "none2",
-    "none3",
-    "none4",
-    "none5",
-    "none6"
+    "none"
+  ],
+  "regex_patterns": [
+    "*"
   ],
   "presets": [
-    1, 2, 3, 4, 5, 6
-  ]
+    1
+  ],
+  "allow_list": [
+    "none"
+  ],
+  "mention_total_limit": 1,
+  "mention_raid_protection_enabled": true
 }

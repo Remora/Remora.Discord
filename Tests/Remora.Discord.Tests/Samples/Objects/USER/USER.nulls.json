@@ -1,0 +1,19 @@
+{
+  "id": "999999999999999999",
+  "username": "none",
+  "discriminator": "9999",
+  "global_name": null,
+  "avatar": null,
+  "bot": true,
+  "system": true,
+  "mfa_enabled": true,
+  "banner": null,
+  "accent_color": null,
+  "locale": "en-GB",
+  "verified": true,
+  "email": null,
+  "flags": 1,
+  "premium_type": 1,
+  "public_flags": 1,
+  "avatar_decoration": null
+}

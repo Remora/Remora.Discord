@@ -23,6 +23,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.Commands.Responders;
 using Remora.Results;
@@ -32,6 +33,7 @@ namespace Remora.Discord.Commands.Services;
 /// <summary>
 /// Provides simple static prefix matching.
 /// </summary>
+[PublicAPI]
 public class SimplePrefixMatcher : ICommandPrefixMatcher
 {
     private readonly CommandResponderOptions _options;

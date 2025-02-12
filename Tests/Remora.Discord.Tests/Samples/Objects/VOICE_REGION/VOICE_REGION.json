@@ -2,6 +2,6 @@
   "id": "999999999999999999",
   "name": "none",
   "optimal": true,
-  "deprecated": false,
-  "custom": false
+  "deprecated": true,
+  "custom": true
 }

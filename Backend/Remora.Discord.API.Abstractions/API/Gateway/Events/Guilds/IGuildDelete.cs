@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents the delete of a guild.
 /// </summary>
 [PublicAPI]
-public interface IGuildDelete : IGatewayEvent, IUnavailableGuild
-{
-}
+public interface IGuildDelete : IGatewayEvent, IUnavailableGuild;

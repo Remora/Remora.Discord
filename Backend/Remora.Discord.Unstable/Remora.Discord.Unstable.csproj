@@ -5,11 +5,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <VersionPrefix>6.0.23</VersionPrefix>
-        <Description>Unstable or experimental features of Remora.Discord</Description>
+        <VersionPrefix>6.0.32</VersionPrefix>
+        <Description>Unstable or experimental features of Remora.Discord.</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Update Remora.Sdk.
         </PackageReleaseNotes>
     </PropertyGroup>
 

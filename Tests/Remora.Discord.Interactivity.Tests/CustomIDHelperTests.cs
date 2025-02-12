@@ -48,6 +48,24 @@ public class CustomIDHelperTests
     }
 
     /// <summary>
+    /// Tests the <see cref="CustomIDHelpers.CreateButtonIDWithState(string, string)"/> method and its overloads.
+    /// </summary>
+    public class CreateButtonIDWithState : CustomIDTestBase
+    {
+        /// <inheritdoc />
+        protected override string TypeName => "button";
+
+        /// <inheritdoc />
+        protected override string State => "state";
+
+        /// <inheritdoc />
+        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateButtonIDWithState(name, this.State);
+
+        /// <inheritdoc />
+        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateButtonIDWithState(name, this.State, path);
+    }
+
+    /// <summary>
     /// Tests the <see cref="CustomIDHelpers.CreateSelectMenuID(string)"/> method and its overloads.
     /// </summary>
     public class CreateSelectMenuID : CustomIDTestBase
@@ -63,6 +81,24 @@ public class CustomIDHelperTests
     }
 
     /// <summary>
+    /// Tests the <see cref="CustomIDHelpers.CreateSelectMenuIDWithState(string, string)"/> method and its overloads.
+    /// </summary>
+    public class CreateSelectMenuIDWithState : CustomIDTestBase
+    {
+        /// <inheritdoc />
+        protected override string TypeName => "select-menu";
+
+        /// <inheritdoc />
+        protected override string State => "state";
+
+        /// <inheritdoc />
+        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateSelectMenuIDWithState(name, this.State);
+
+        /// <inheritdoc />
+        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateSelectMenuIDWithState(name, this.State, path);
+    }
+
+    /// <summary>
     /// Tests the <see cref="CustomIDHelpers.CreateModalID(string)"/> method and its overloads.
     /// </summary>
     public class CreateModalID : CustomIDTestBase
@@ -75,6 +111,24 @@ public class CustomIDHelperTests
 
         /// <inheritdoc />
         protected override GroupedDelegate Grouped => CustomIDHelpers.CreateModalID;
+    }
+
+    /// <summary>
+    /// Tests the <see cref="CustomIDHelpers.CreateModalIDWithState(string, string)"/> method and its overloads.
+    /// </summary>
+    public class CreateModalIDWithState : CustomIDTestBase
+    {
+        /// <inheritdoc />
+        protected override string TypeName => "modal";
+
+        /// <inheritdoc />
+        protected override string State => "state";
+
+        /// <inheritdoc />
+        protected override SimpleDelegate Simple => name => CustomIDHelpers.CreateModalIDWithState(name, this.State);
+
+        /// <inheritdoc />
+        protected override GroupedDelegate Grouped => (name, path) => CustomIDHelpers.CreateModalIDWithState(name, this.State, path);
     }
 
     /// <summary>
@@ -229,6 +283,220 @@ public class CustomIDHelperTests
             var group1 = new string('b', 40);
 
             Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateID(ComponentType.Button, name, group1));
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="CustomIDHelpers.CreateIDWithState(string, ComponentType, string)"/> method and its overloads.
+    /// </summary>
+    public class CreateIDWithState
+    {
+        /// <summary>
+        /// Tests whether simple method returns a correctly formatted value.
+        /// </summary>
+        [Fact]
+        public void ReturnsCorrectValueForSimpleCase()
+        {
+            const string name = "ooga";
+            const string state = "state";
+
+            const string expected = $"{Constants.InteractionTree}::{Constants.StatePrefix}{state} button::{name}";
+            var actual = CustomIDHelpers.CreateIDWithState(name, ComponentType.Button, state);
+
+            Assert.Equal(expected, actual);
+        }
+
+        /// <summary>
+        /// Tests whether the group-aware method returns a correctly formatted
+        /// value.
+        /// </summary>
+        [Fact]
+        public void ReturnsCorrectValueForGroupedCase()
+        {
+            const string name = "ooga";
+            const string group1 = "wooga";
+            const string group2 = "booga";
+            const string state = "state";
+
+            const string expected = $"{Constants.InteractionTree}::{Constants.StatePrefix}{state} {group1} {group2} button::{name}";
+            var actual = CustomIDHelpers.CreateIDWithState(ComponentType.Button, name, state, group1, group2);
+
+            Assert.Equal(expected, actual);
+        }
+
+        /// <summary>
+        /// Tests whether the simple method throws if the provided name is composed entirely of whitespace.
+        /// </summary>
+        [Fact]
+        public void SimpleCaseThrowsIfNameIsWhitespace()
+        {
+            const string name = " ";
+            const string state = "state";
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(name, ComponentType.Button, state));
+        }
+
+        /// <summary>
+        /// Tests whether the grouped method throws if the provided name is composed entirely of whitespace.
+        /// </summary>
+        [Fact]
+        public void GroupedCaseThrowsIfNameIsWhitespace()
+        {
+            const string name = " ";
+            const string state = "state";
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(ComponentType.Button, name, state));
+        }
+
+        /// <summary>
+        /// Tests whether the grouped method throws if any provided path component is composed entirely of whitespace.
+        /// </summary>
+        [Fact]
+        public void GroupedCaseThrowsIfAnyPathComponentIsWhitespace()
+        {
+            const string name = "ooga";
+            const string group1 = "wooga";
+            const string group2 = " ";
+            const string state = "state";
+
+            Assert.Throws<ArgumentException>
+            (
+                () => CustomIDHelpers.CreateIDWithState
+                (
+                    ComponentType.Button,
+                    name,
+                    state,
+                    group1,
+                    group2
+                )
+            );
+        }
+
+        /// <summary>
+        /// Tests whether the simple method throws if the provided name contains whitespace.
+        /// </summary>
+        [Fact]
+        public void SimpleThrowsIfNameContainsWhitespace()
+        {
+            const string name = "oo ga";
+            const string state = "state";
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(name, ComponentType.Button, state));
+        }
+
+        /// <summary>
+        /// Tests whether the grouped method throws if the provided name contains whitespace.
+        /// </summary>
+        [Fact]
+        public void GroupedThrowsIfNameContainsWhitespace()
+        {
+            const string name = "oo ga";
+            const string state = "state";
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(ComponentType.Button, name, state));
+        }
+
+        /// <summary>
+        /// Tests whether the simple method throws if any provided path component contains whitespace.
+        /// </summary>
+        [Fact]
+        public void GroupedThrowsIfAnyPathComponentContainsWhitespace()
+        {
+            const string name = "ooga";
+            const string group1 = "wooga";
+            const string group2 = "boo ga";
+            const string state = "state";
+
+            Assert.Throws<ArgumentException>
+            (
+                () => CustomIDHelpers.CreateIDWithState
+                (
+                    ComponentType.Button,
+                    name,
+                    state,
+                    group1,
+                    group2
+                )
+            );
+        }
+
+        /// <summary>
+        /// Tests whether the simple method throws if the provided name contains whitespace.
+        /// </summary>
+        [Fact]
+        public void SimpleThrowsIfStateContainsWhitespace()
+        {
+            const string name = "ooga";
+            const string state = "sta te";
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(name, ComponentType.Button, state));
+        }
+
+        /// <summary>
+        /// Tests whether the grouped method throws if the provided name contains whitespace.
+        /// </summary>
+        [Fact]
+        public void GroupedThrowsIfStateContainsWhitespace()
+        {
+            const string name = "ooga";
+            const string state = "sta te";
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(ComponentType.Button, name, state));
+        }
+
+        /// <summary>
+        /// Tests whether the simple method throws if the final ID is longer than 100 characters.
+        /// </summary>
+        [Fact]
+        public void SimpleThrowsIfNameIsTooLong()
+        {
+            const string state = "state";
+            var name = new string('a', 80);
+
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(name, ComponentType.Button, state));
+        }
+
+        /// <summary>
+        /// Tests whether the group-aware method throws if the final ID is longer than 100 characters.
+        /// </summary>
+        [Fact]
+        public void GroupedThrowsIfNameIsTooLong()
+        {
+            const string state = "state";
+            var name = new string('a', 80);
+
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(ComponentType.Button, name, state));
+        }
+
+        /// <summary>
+        /// Tests whether the simple method throws if the final ID is longer than 100 characters.
+        /// </summary>
+        [Fact]
+        public void SimpleThrowsIfStateIsTooLong()
+        {
+            const string name = "ooga";
+            var state = new string('a', 80);
+
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(name, ComponentType.Button, state));
+        }
+
+        /// <summary>
+        /// Tests whether the group-aware method throws if the final ID is longer than 100 characters.
+        /// </summary>
+        [Fact]
+        public void GroupedThrowsIfStateIsTooLong()
+        {
+            const string name = "ooga";
+            var state = new string('a', 80);
+
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(ComponentType.Button, name, state));
+        }
+
+        /// <summary>
+        /// Tests whether the group-aware method throws if the final ID is longer than 100 characters.
+        /// </summary>
+        [Fact]
+        public void GroupedThrowsIfArgumentCombinationIsTooLong()
+        {
+            var name = new string('a', 30);
+            var state = new string('b', 20);
+            var group1 = new string('c', 30);
+
+            Assert.Throws<ArgumentException>(() => CustomIDHelpers.CreateIDWithState(ComponentType.Button, name, state, group1));
         }
     }
 }

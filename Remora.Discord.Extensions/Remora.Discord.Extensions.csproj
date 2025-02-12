@@ -1,22 +1,24 @@
 ﻿<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>5.2.0</VersionPrefix>
+        <VersionPrefix>5.3.6</VersionPrefix>
         <Description>Utilities and components which extend upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Update Remora.Sdk.
-            Add support for adding all responders and/or command groups from an assembly
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
         <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+        <ProjectReference Include="..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />
+        <ProjectReference Include="..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Remora.Commands" Version="10.0.2" />
+      <Compile Update="Services\IPermissionComputationService.cs">
+        <DependentUpon>PermissionComputationService.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

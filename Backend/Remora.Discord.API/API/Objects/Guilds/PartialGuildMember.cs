@@ -37,11 +37,13 @@ public record PartialGuildMember
     Optional<IUser> User = default,
     Optional<string?> Nickname = default,
     Optional<IImageHash?> Avatar = default,
+    Optional<IImageHash?> Banner = default,
     Optional<IReadOnlyList<Snowflake>> Roles = default,
     Optional<DateTimeOffset> JoinedAt = default,
     Optional<DateTimeOffset?> PremiumSince = default,
     Optional<bool> IsDeafened = default,
     Optional<bool> IsMuted = default,
+    Optional<GuildMemberFlags> Flags = default,
     Optional<bool?> IsPending = default,
     Optional<IDiscordPermissionSet> Permissions = default,
     Optional<DateTimeOffset?> CommunicationDisabledUntil = default

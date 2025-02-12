@@ -76,6 +76,11 @@ public interface IMessage : IPartialMessage
     new bool MentionsEveryone { get; }
 
     /// <summary>
+    /// Gets the users mentioned in the message.
+    /// </summary>
+    new IReadOnlyList<IUser> Mentions { get; }
+
+    /// <summary>
     /// Gets a list of mentioned roles.
     /// </summary>
     new IReadOnlyList<Snowflake> MentionedRoles { get; }
@@ -146,7 +151,12 @@ public interface IMessage : IPartialMessage
     /// <summary>
     /// Gets the message reference. Sent with cross-posted messages.
     /// </summary>
-    new Optional<IMessageReference> MessageReference { get;  }
+    new Optional<IMessageReference> MessageReference { get; }
+
+    /// <summary>
+    /// Gets the message associated with <see cref="MessageReference"/>. Sent with forwarded messages.
+    /// </summary>
+    new Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots { get; }
 
     /// <summary>
     /// Gets a set of bitwise flags describing extra features of the message.
@@ -183,6 +193,21 @@ public interface IMessage : IPartialMessage
     /// </summary>
     new Optional<int> Position { get; }
 
+    /// <summary>
+    /// Gets data for users, members, channels, and roles in the message's auto-populated select menus.
+    /// </summary>
+    new Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+
+    /// <summary>
+    /// Gets the metadata of the interaction, if any.
+    /// </summary>
+    new Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
+
+    /// <summary>
+    /// Gets the poll sent with the message, if any.
+    /// </summary>
+    new Optional<IPoll> Poll { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
 
@@ -206,6 +231,9 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<bool> IPartialMessage.MentionsEveryone => this.MentionsEveryone;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IUser>> IPartialMessage.Mentions => new(this.Mentions);
 
     /// <inheritdoc/>
     Optional<IReadOnlyList<Snowflake>> IPartialMessage.MentionedRoles => new(this.MentionedRoles);
@@ -247,6 +275,9 @@ public interface IMessage : IPartialMessage
     Optional<IMessageReference> IPartialMessage.MessageReference => this.MessageReference;
 
     /// <inheritdoc/>
+    Optional<IReadOnlyList<IMessageSnapshot>> IPartialMessage.MessageSnapshots => this.MessageSnapshots;
+
+    /// <inheritdoc/>
     Optional<MessageFlags> IPartialMessage.Flags => this.Flags;
 
     /// <inheritdoc/>
@@ -266,4 +297,13 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<int> IPartialMessage.Position => this.Position;
+
+    /// <inheritdoc/>
+    Optional<IApplicationCommandInteractionDataResolved> IPartialMessage.Resolved => this.Resolved;
+
+    /// <inheritdoc/>
+    Optional<IMessageInteractionMetadata> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
+
+    /// <inheritdoc/>
+    Optional<IPoll> IPartialMessage.Poll => this.Poll;
 }

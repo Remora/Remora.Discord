@@ -2,42 +2,75 @@
   "id": "999999999999999999",
   "name": "none",
   "icon": "68b329da9893e34099c7d8ad5cb9c940",
-  "description": "none",
-  "splash": null,
-  "discovery_splash": null,
-  "features": [
-    "ANIMATED_ICON",
-    "VERIFIED",
-    "NEWS",
-    "VANITY_URL",
-    "DISCOVERABLE",
-    "INVITE_SPLASH",
-    "BANNER",
-    "COMMUNITY"
-  ],
-  "emojis": [],
-  "banner": "68b329da9893e34099c7d8ad5cb9c940",
+  "icon_hash": "68b329da9893e34099c7d8ad5cb9c940",
+  "splash": "68b329da9893e34099c7d8ad5cb9c940",
+  "discovery_splash": "68b329da9893e34099c7d8ad5cb9c940",
+  "owner": true,
   "owner_id": "999999999999999999",
-  "application_id": null,
-  "afk_channel_id": null,
+  "permissions": "0",
+  "afk_channel_id": "999999999999999999",
   "afk_timeout": 300,
-  "system_channel_id": null,
   "widget_enabled": true,
-  "widget_channel_id": null,
+  "widget_channel_id": "999999999999999999",
   "verification_level": 3,
-  "roles": [],
   "default_message_notifications": 1,
-  "mfa_level": 1,
   "explicit_content_filter": 2,
-  "max_presences": 40000,
-  "max_members": 250000,
-  "vanity_url_code": "none",
-  "premium_tier": 3,
-  "premium_subscription_count": 33,
-  "system_channel_flags": 0,
-  "preferred_locale": "en-US",
+  "roles": [
+    {
+      "id": "999999999999999999",
+      "name": "none",
+      "color": 1,
+      "hoist": true,
+      "position": 1,
+      "permissions": "0",
+      "managed": true,
+      "mentionable": true,
+      "flags": 0
+    }
+  ],
+  "emojis": [
+    {
+      "id": "999999999999999999",
+      "name": "none"
+    }
+  ],
+  "features": [
+    "ANIMATED_ICON"
+  ],
+  "mfa_level": 1,
+  "application_id": "999999999999999999",
+  "system_channel_id": "999999999999999999",
+  "system_channel_flags": 1,
   "rules_channel_id": "999999999999999999",
+  "max_presences": 1,
+  "max_members": 1,
+  "vanity_url_code": "none",
+  "description": "none",
+  "banner": "68b329da9893e34099c7d8ad5cb9c940",
+  "premium_tier": 1,
+  "premium_subscription_count": 1,
+  "preferred_locale": "en-US",
   "public_updates_channel_id": "999999999999999999",
+  "max_video_channel_users": 1,
+  "max_stage_video_channel_users": 1,
+  "approximate_member_count": 1,
+  "approximate_presence_count": 1,
+  "welcome_screen": {
+    "description": "none",
+    "welcome_channels": [ ]
+  },
   "nsfw_level": 0,
-  "premium_progress_bar_enabled": true
+  "stickers": [
+    {
+      "id": "999999999999999999",
+      "name": "none",
+      "description": "none",
+      "tags": "none",
+      "type": 1,
+      "format_type": 1
+    }
+  ],
+  "premium_progress_bar_enabled": true,
+  "safety_alerts_channel_id": "999999999999999999",
+  "incidents_data": { }
 }

@@ -52,7 +52,12 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestInteractionAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestInteractionAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -68,10 +73,10 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
     )
     {
         Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-        if (attachments.HasValue)
+        if (attachments.TryGet(out var realAttachments))
         {
             // build attachment list
-            attachmentList = attachments.Value.Select
+            attachmentList = realAttachments.Select
             (
                 (f, i) => f.Match
                 (
@@ -102,14 +107,14 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                 {
                     if (attachmentList.HasValue)
                     {
-                        for (var i = 0; i < attachments.Value.Count; i++)
+                        for (var i = 0; i < realAttachments!.Count; i++)
                         {
-                            if (!attachments.Value[i].IsT0)
+                            if (!realAttachments[i].IsT0)
                             {
                                 continue;
                             }
 
-                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var (name, stream, _) = realAttachments[i].AsT0;
                             var contentName = $"files[{i}]";
 
                             b.AddContent(new StreamContent(stream), contentName, name);
@@ -185,31 +190,32 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             $"webhooks/{applicationID}/{token}/messages/@original",
             b =>
             {
-                Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = default;
-                if (attachments.HasValue && attachments.Value is null)
-                {
-                    attachmentList = null;
-                }
-                else if (attachments.HasValue && attachments.Value is not null)
+                Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = null;
+                if (attachments.IsDefined(out var realAttachments))
                 {
                     // build attachment list
-                    attachmentList = attachments.Value.Select
+                    attachmentList = realAttachments.Select
                     (
                         (f, i) => f.Match
                         (
-                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            data => new PartialAttachment
+                            (
+                                DiscordSnowflake.New((ulong)i),
+                                data.Name,
+                                data.Description
+                            ),
                             attachment => attachment
                         )
                     ).ToList();
 
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < realAttachments.Count; i++)
                     {
-                        if (!attachments.Value[i].IsT0)
+                        if (!realAttachments[i].IsT0)
                         {
                             continue;
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var (name, stream, _) = realAttachments[i].AsT0;
                         var contentName = $"files[{i}]";
 
                         b.AddContent(new StreamContent(stream), contentName, name);
@@ -270,10 +276,10 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             b =>
             {
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                if (attachments.HasValue)
+                if (attachments.TryGet(out var realAttachments))
                 {
                     // build attachment list
-                    attachmentList = attachments.Value.Select
+                    attachmentList = realAttachments.Select
                     (
                         (f, i) => f.Match
                         (
@@ -282,14 +288,14 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         )
                     ).ToList();
 
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < realAttachments.Count; i++)
                     {
-                        if (!attachments.Value[i].IsT0)
+                        if (!realAttachments[i].IsT0)
                         {
                             continue;
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var (name, stream, _) = realAttachments[i].AsT0;
                         var contentName = $"files[{i}]";
 
                         b.AddContent(new StreamContent(stream), contentName, name);
@@ -361,31 +367,32 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             $"webhooks/{applicationID}/{token}/messages/{messageID}",
             b =>
             {
-                Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = default;
-                if (attachments.HasValue && attachments.Value is null)
-                {
-                    attachmentList = null;
-                }
-                else if (attachments.HasValue && attachments.Value is not null)
+                Optional<IReadOnlyList<IPartialAttachment>?> attachmentList = null;
+                if (attachments.IsDefined(out var realAttachments))
                 {
                     // build attachment list
-                    attachmentList = attachments.Value.Select
+                    attachmentList = realAttachments.Select
                     (
                         (f, i) => f.Match
                         (
-                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            data => new PartialAttachment
+                            (
+                                DiscordSnowflake.New((ulong)i),
+                                data.Name,
+                                data.Description
+                            ),
                             attachment => attachment
                         )
                     ).ToList();
 
-                    for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < realAttachments.Count; i++)
                     {
-                        if (!attachments.Value[i].IsT0)
+                        if (!realAttachments[i].IsT0)
                         {
                             continue;
                         }
 
-                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var (name, stream, _) = realAttachments[i].AsT0;
                         var contentName = $"files[{i}]";
 
                         b.AddContent(new StreamContent(stream), contentName, name);

@@ -162,12 +162,16 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("event_type", p => p.Is((int)eventType))
                                 .WithProperty("trigger_type", p => p.Is((int)triggerType))
-                                .WithProperty("trigger_metadata", p => p.IsObject
+                                .WithProperty
                                 (
-                                    oo => oo
-                                        .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
-                                        .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
-                                ))
+                                    "trigger_metadata",
+                                    p => p.IsObject
+                                    (
+                                        oo => oo
+                                            .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
+                                            .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
+                                    )
+                                )
                                 .WithProperty("actions", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("enabled", p => p.Is(enabled))
                                 .WithProperty("exempt_roles", p => p.IsArray(a => a.WithCount(0)))
@@ -242,12 +246,16 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("event_type", p => p.Is((int)eventType))
                                 .WithProperty("trigger_type", p => p.Is((int)triggerType))
-                                .WithProperty("trigger_metadata", p => p.IsObject
+                                .WithProperty
                                 (
-                                    oo => oo
-                                        .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
-                                        .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
-                                ))
+                                    "trigger_metadata",
+                                    p => p.IsObject
+                                    (
+                                        oo => oo
+                                            .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
+                                            .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
+                                    )
+                                )
                                 .WithProperty("actions", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("enabled", p => p.Is(enabled))
                                 .WithProperty("exempt_roles", p => p.IsArray(a => a.WithCount(0)))

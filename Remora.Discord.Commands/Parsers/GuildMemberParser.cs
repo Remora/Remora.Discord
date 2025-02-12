@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,7 +42,7 @@ namespace Remora.Discord.Commands.Parsers;
 [PublicAPI]
 public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<IPartialGuildMember>
 {
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestGuildAPI _guildAPI;
 
     /// <summary>
@@ -51,7 +50,7 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="guildAPI">The guild API.</param>
-    public GuildMemberParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
+    public GuildMemberParser(IOperationContext context, IDiscordRestGuildAPI guildAPI)
     {
         _guildAPI = guildAPI;
         _context = context;
@@ -69,29 +68,30 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
             return new ParsingError<IGuildMember>(value, "Unrecognized input format.");
         }
 
-        var guildID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new InvalidOperationError("Guild members cannot be parsed outside of guild channels.");
         }
 
-        return await _guildAPI.GetGuildMemberAsync(guildID.Value, guildMemberID.Value, ct);
+        return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
     }
 
     /// <inheritdoc/>
-    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync(IReadOnlyList<string> tokens, CancellationToken ct)
+    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync
+    (
+        IReadOnlyList<string> tokens,
+        CancellationToken ct
+    )
     {
         return (await (this as ITypeParser<IGuildMember>).TryParseAsync(tokens, ct)).Map(a => a as IPartialGuildMember);
     }
 
     /// <inheritdoc/>
-    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync(string token, CancellationToken ct)
+    async ValueTask<Result<IPartialGuildMember>> ITypeParser<IPartialGuildMember>.TryParseAsync
+    (
+        string token,
+        CancellationToken ct
+    )
     {
         _ = DiscordSnowflake.TryParse(token.Unmention(), out var guildMemberID);
         if (guildMemberID is null)
@@ -112,13 +112,13 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>, ITypeParser<I
             return null;
         }
 
-        if (!injectionContext.Interaction.Data.IsDefined(out var data))
+        if (!injectionContext.Interaction.Data.TryGet(out var data))
         {
             return null;
         }
 
         var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.IsDefined(out var resolved) || !resolved.Members.IsDefined(out var guildMembers))
+        if (!resolvedData.TryGet(out var resolved) || !resolved.Members.TryGet(out var guildMembers))
         {
             return null;
         }

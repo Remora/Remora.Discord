@@ -44,23 +44,29 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestAuditLogAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestAuditLogAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
     /// <inheritdoc />
-    public virtual async Task<Result<IAuditLog>> GetAuditLogAsync
+    public virtual async Task<Result<IAuditLog>> GetGuildAuditLogAsync
     (
         Snowflake guildID,
         Optional<Snowflake> userID = default,
         Optional<AuditLogEvent> actionType = default,
         Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         Optional<byte> limit = default,
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is > 100 or 0)
+        if (limit is { HasValue: true, Value: > 100 or 0 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -74,24 +80,29 @@ public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditL
             $"guilds/{guildID}/audit-logs",
             b =>
             {
-                if (userID.HasValue)
+                if (userID.TryGet(out var id))
                 {
-                    b.AddQueryParameter("user_id", userID.Value.ToString());
+                    b.AddQueryParameter("user_id", id.ToString());
                 }
 
-                if (actionType.HasValue)
+                if (actionType.TryGet(out var action))
                 {
-                    b.AddQueryParameter("action_type", ((int)actionType.Value).ToString());
+                    b.AddQueryParameter("action_type", ((int)action).ToString());
                 }
 
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (limit.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
+                }
+
+                if (limit.TryGet(out var realLimit))
+                {
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);

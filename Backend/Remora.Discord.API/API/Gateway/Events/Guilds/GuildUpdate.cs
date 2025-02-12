@@ -36,6 +36,7 @@ public record GuildUpdate
     Snowflake ID,
     string Name,
     IImageHash? Icon,
+    Optional<IImageHash?> IconHash,
     IImageHash? Splash,
     IImageHash? DiscoverySplash,
     Optional<bool> IsOwner,
@@ -66,10 +67,13 @@ public record GuildUpdate
     string PreferredLocale,
     Snowflake? PublicUpdatesChannelID,
     Optional<int> MaxVideoChannelUsers,
+    Optional<int> MaxStageVideoChannelUsers,
     Optional<int> ApproximateMemberCount,
     Optional<int> ApproximatePresenceCount,
     Optional<IWelcomeScreen> WelcomeScreen,
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<ISticker>> Stickers,
-    bool IsPremiumProgressBarEnabled
+    bool IsPremiumProgressBarEnabled,
+    Snowflake? SafetyAlertsChannelID,
+    IIncidentsData? IncidentsData
 ) : IGuildUpdate;

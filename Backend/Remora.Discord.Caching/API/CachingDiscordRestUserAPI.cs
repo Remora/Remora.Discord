@@ -65,7 +65,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateUserCacheKey(userID);
+        var key = new KeyHelpers.UserCacheKey(userID);
         var cacheResult = await _cacheService.TryGetValueAsync<IUser>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -98,7 +98,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
         }
 
         var dm = createDM.Entity;
-        var key = KeyHelpers.CreateChannelCacheKey(dm.ID);
+        var key = new KeyHelpers.ChannelCacheKey(dm.ID);
 
         await _cacheService.CacheAsync(key, dm, ct);
 
@@ -108,7 +108,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
     /// <inheritdoc />
     public async Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
     {
-        var key = KeyHelpers.CreateCurrentUserCacheKey();
+        var key = new KeyHelpers.CurrentUserCacheKey();
         var cacheResult = await _cacheService.TryGetValueAsync<IUser>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -123,7 +123,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
         }
 
         var user = getUser.Entity;
-        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+        var userKey = new KeyHelpers.UserCacheKey(user.ID);
 
         // Cache this as both a normal user and our current user
         await _cacheService.CacheAsync(key, user, ct);
@@ -133,12 +133,12 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
     }
 
     /// <inheritdoc />
-    public async Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    public async Task<Result<IReadOnlyList<IConnection>>> GetCurrentUserConnectionsAsync
     (
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateCurrentUserConnectionsCacheKey();
+        var key = new KeyHelpers.CurrentUserConnectionsCacheKey();
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IConnection>>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -146,7 +146,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
             return cacheResult;
         }
 
-        var getUserConnections = await _actual.GetUserConnectionsAsync(ct);
+        var getUserConnections = await _actual.GetCurrentUserConnectionsAsync(ct);
         if (!getUserConnections.IsSuccess)
         {
             return getUserConnections;
@@ -157,7 +157,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
 
         foreach (var connection in connections)
         {
-            var connectionKey = KeyHelpers.CreateConnectionCacheKey(connection.ID);
+            var connectionKey = new KeyHelpers.ConnectionCacheKey(connection.ID);
             await _cacheService.CacheAsync(connectionKey, connection, ct);
         }
 
@@ -179,8 +179,8 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
         }
 
         var user = modifyUser.Entity;
-        var key = KeyHelpers.CreateCurrentUserCacheKey();
-        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+        var key = new KeyHelpers.CurrentUserCacheKey();
+        var userKey = new KeyHelpers.UserCacheKey(user.ID);
 
         await _cacheService.CacheAsync(key, user, ct);
         await _cacheService.CacheAsync(userKey, user, ct);
@@ -194,7 +194,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
         CancellationToken ct = default
     )
     {
-        var key = KeyHelpers.CreateCurrentUserDMsCacheKey();
+        var key = new KeyHelpers.CurrentUserDMsCacheKey();
         var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IChannel>>(key, ct);
 
         if (cacheResult.IsSuccess)
@@ -213,7 +213,7 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
 
         foreach (var dm in userDMs)
         {
-            var channelKey = KeyHelpers.CreateChannelCacheKey(dm.ID);
+            var channelKey = new KeyHelpers.ChannelCacheKey(dm.ID);
             await _cacheService.CacheAsync(channelKey, dm, ct);
         }
 
@@ -234,13 +234,74 @@ public partial class CachingDiscordRestUserAPI : IDiscordRestUserAPI, IRestCusto
         }
 
         var member = result.Entity;
-        if (!member.User.IsDefined(out var user))
+        if (!member.User.TryGet(out var user))
         {
             return result;
         }
 
-        var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
+        var key = new KeyHelpers.GuildMemberKey(guildID, user.ID);
         await _cacheService.CacheAsync(key, member, ct);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IApplicationRoleConnection>> GetCurrentUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    )
+    {
+        var key = new KeyHelpers.CurrentUserApplicationRoleConnectionCacheKey(applicationID);
+        var cacheResult = await _cacheService.TryGetValueAsync<IApplicationRoleConnection>(key, ct);
+
+        if (cacheResult.IsSuccess)
+        {
+            return cacheResult;
+        }
+
+        var getUserApplicationRoleConnection = await _actual.GetCurrentUserApplicationRoleConnectionAsync
+        (
+            applicationID,
+            ct
+        );
+
+        if (!getUserApplicationRoleConnection.IsDefined(out var userApplicationRoleConnection))
+        {
+            return getUserApplicationRoleConnection;
+        }
+
+        await _cacheService.CacheAsync(key, userApplicationRoleConnection, ct);
+
+        return getUserApplicationRoleConnection;
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IApplicationRoleConnection>> UpdateCurrentUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        Optional<string> platformName = default,
+        Optional<string> platformUsername = default,
+        Optional<IReadOnlyDictionary<string, string>> metadata = default,
+        CancellationToken ct = default
+    )
+    {
+        var result = await _actual.UpdateCurrentUserApplicationRoleConnectionAsync
+        (
+            applicationID,
+            platformName,
+            platformUsername,
+            metadata,
+            ct
+        );
+
+        if (!result.IsDefined(out var userApplicationRoleConnection))
+        {
+            return result;
+        }
+
+        var key = new KeyHelpers.CurrentUserApplicationRoleConnectionCacheKey(applicationID);
+        await _cacheService.CacheAsync(key, userApplicationRoleConnection, ct);
 
         return result;
     }

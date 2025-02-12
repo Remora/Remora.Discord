@@ -1,15 +1,16 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>1.0.4</VersionPrefix>
+        <VersionPrefix>1.1.4</VersionPrefix>
         <Description>Cache provider abstractions for Remora.Discord</Description>
         <PackageReleaseNotes>
-            Update Remora.Sdk.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Remora.Results" Version="7.2.3" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
+      <PackageReference Include="Remora.Results" />
     </ItemGroup>
 
 </Project>

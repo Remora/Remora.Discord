@@ -37,10 +37,13 @@ public static class ApplicationCommandTypeExtensions
     /// </summary>
     /// <param name="commandType">The command type.</param>
     /// <returns>The parameter type the <see cref="ApplicationCommandType"/> is mapped to.</returns>
-    /// <exception cref="NotSupportedException">Thrown if the <see cref="ApplicationCommandType"/> is not supported.</exception>
+    /// <exception cref="NotSupportedException">
+    /// Thrown if the <see cref="ApplicationCommandType"/> is not supported.
+    /// </exception>
     public static string AsParameterName(this ApplicationCommandType commandType)
     {
-        return commandType switch {
+        return commandType switch
+        {
             ApplicationCommandType.Message => "message",
             ApplicationCommandType.User => "user",
             _ => throw new NotSupportedException($"Command type {commandType} is not supported as parameter name")

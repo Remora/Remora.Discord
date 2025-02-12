@@ -50,7 +50,7 @@ public class DiscordGatewayClientOptions
     /// this is the information about Remora.Discord itself. You may, optionally, override this to present your
     /// own information.
     /// </summary>
-    public IConnectionProperties ConnectionProperties { get; set; } = new ConnectionProperties("Remora.Discord");
+    public IIdentifyConnectionProperties ConnectionProperties { get; set; } = new IdentifyConnectionProperties("Remora.Discord");
 
     /// <summary>
     /// Gets or sets the large threshold for the gateway.

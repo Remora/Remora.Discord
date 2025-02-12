@@ -21,15 +21,18 @@
 //
 
 using System;
-using System.Buffers;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.WebSockets;
+#if NET6_0_OR_GREATER
+using System.Runtime.CompilerServices;
+#endif
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.HighPerformance.Buffers;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -51,9 +54,9 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 {
     private readonly IServiceProvider _services;
     private readonly JsonSerializerOptions _jsonOptions;
-    private readonly AsyncRetryPolicy _retryPolicy;
+
     private readonly AsyncRetryPolicy<ClientWebSocket> _connectRetryPolicy;
-    private readonly AsyncRetryPolicy<WebSocketReceiveResult> _receiveRetryPolicy;
+
     private readonly ILogger<WebSocketPayloadTransportService> _log;
 
     /// <summary>
@@ -83,15 +86,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         _jsonOptions = jsonOptions;
         _log = log;
 
-        _retryPolicy = Policy
-            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
-            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
-
         _connectRetryPolicy = Policy<ClientWebSocket>
-            .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
-            .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
-
-        _receiveRetryPolicy = Policy<WebSocketReceiveResult>
             .Handle<WebSocketException>(IsWebSocketErrorRetryEligible)
             .WaitAndRetryAsync(RetryDelayFactory(), LogRetry);
     }
@@ -156,7 +151,10 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     }
 
     /// <inheritdoc />
-    public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
+    #if NET6_0_OR_GREATER
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
+    #endif
+    public async ValueTask<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
     {
         if (_clientWebSocket is null)
         {
@@ -168,40 +166,65 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The socket was not open.");
         }
 
-        await using var memoryStream = new MemoryStream();
+        // Most common case is heartbeat ({"op":1"}), so this is more than enough
+        // if it isn't, the writer resizes the array, which is rare, and a cost we're
+        // fine with eating.
+        using var bufferWriter = new ArrayPoolBufferWriter<byte>(128);
 
-        byte[]? buffer = null;
-        try
+        // `SkipValidation = !Debugger.IsAttached` is to replicate what STJ does internally;
+        // it's worth noting however that STJ uses #if !DEBUG, while we simply check if
+        // there's a debugger, which is good enough.
+        await using var writer = new Utf8JsonWriter(bufferWriter, new JsonWriterOptions { Encoder = _jsonOptions.Encoder, Indented = false, SkipValidation = !Debugger.IsAttached });
+        JsonSerializer.Serialize(writer, payload, _jsonOptions);
+
+        if (bufferWriter.WrittenSpan.Length > 4096)
         {
-            await JsonSerializer.SerializeAsync(memoryStream, payload, _jsonOptions, ct);
-
-            if (memoryStream.Length > 4096)
-            {
-                return new NotSupportedError
-                (
-                    "The payload was too large to be accepted by the gateway."
-                );
-            }
-
-            buffer = ArrayPool<byte>.Shared.Rent((int)memoryStream.Length);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            // Copy the data
-            var copiedBytes = 0;
-            while (copiedBytes < memoryStream.Length)
-            {
-                var bufferSegment = new ArraySegment<byte>(buffer, copiedBytes, (int)memoryStream.Length - copiedBytes);
-                copiedBytes += await memoryStream.ReadAsync(bufferSegment, ct);
-            }
-
-            // Send the whole payload as one chunk
-            var segment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
-
-            await _retryPolicy.ExecuteAsync
+            return new NotSupportedError
             (
-                c => _clientWebSocket.SendAsync(segment, WebSocketMessageType.Text, true, c),
-                ct
+                "The payload was too large to be accepted by the gateway."
             );
+        }
+
+        // Send the whole payload as one chunk
+        await _clientWebSocket.SendAsync(bufferWriter.WrittenMemory, WebSocketMessageType.Text, true, ct);
+
+        if (!_clientWebSocket.CloseStatus.HasValue)
+        {
+            return Result.FromSuccess();
+        }
+
+        if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
+        {
+            return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus);
+        }
+
+        return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
+    }
+
+    /// <inheritdoc />
+    #if NET6_0_OR_GREATER
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
+    #endif
+    public async ValueTask<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
+    {
+        if (_clientWebSocket is null)
+        {
+            return new InvalidOperationError("The transport service is not connected.");
+        }
+
+        if (_clientWebSocket.State != WebSocketState.Open)
+        {
+            return new InvalidOperationError("The socket was not open.");
+        }
+
+        using var bufferWriter = new ArrayPoolBufferWriter<byte>(); // Backed by the ArrayPool; the only allocation is the class itself
+
+        ValueWebSocketReceiveResult result;
+
+        do
+        {
+            var buffer = bufferWriter.GetMemory(4096);
+            result = await _clientWebSocket.ReceiveAsync(buffer, ct);
 
             if (_clientWebSocket.CloseStatus.HasValue)
             {
@@ -212,74 +235,21 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
                 return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
             }
+
+            bufferWriter.Advance(result.Count);
         }
-        finally
+        while (!result.EndOfMessage);
+
+        var payload = JsonSerializer.Deserialize<IPayload>(bufferWriter.WrittenSpan, _jsonOptions);
+        if (payload is null)
         {
-            if (buffer is not null)
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            return new NotSupportedError
+            (
+                "The received payload deserialized as a null value."
+            );
         }
 
-        return Result.FromSuccess();
-    }
-
-    /// <inheritdoc />
-    public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
-    {
-        if (_clientWebSocket is null)
-        {
-            return new InvalidOperationError("The transport service is not connected.");
-        }
-
-        if (_clientWebSocket.State != WebSocketState.Open)
-        {
-            return new InvalidOperationError("The socket was not open.");
-        }
-
-        await using var memoryStream = new MemoryStream();
-
-        var buffer = ArrayPool<byte>.Shared.Rent(4096);
-
-        try
-        {
-            WebSocketReceiveResult result;
-
-            do
-            {
-                result = await _receiveRetryPolicy.ExecuteAsync(c => _clientWebSocket.ReceiveAsync(buffer, c), ct);
-
-                if (result.CloseStatus.HasValue)
-                {
-                    if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)result.CloseStatus))
-                    {
-                        return new GatewayDiscordError((GatewayCloseStatus)result.CloseStatus);
-                    }
-
-                    return new GatewayWebSocketError(result.CloseStatus.Value);
-                }
-
-                await memoryStream.WriteAsync(buffer, 0, result.Count, ct);
-            }
-            while (!result.EndOfMessage);
-
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
-            if (payload is null)
-            {
-                return new NotSupportedError
-                (
-                    "The received payload deserialized as a null value."
-                );
-            }
-
-            return Result<IPayload>.FromSuccess(payload);
-        }
-        finally
-        {
-            ArrayPool<byte>.Shared.Return(buffer);
-        }
+        return Result<IPayload>.FromSuccess(payload);
     }
 
     /// <inheritdoc/>
@@ -356,19 +326,8 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             WebSocketError.Success => true, // should never happen, but try again
             WebSocketError.UnsupportedProtocol => false,
             WebSocketError.UnsupportedVersion => false,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => false // no idea, best to assume it's a non-retryable error
         };
-    }
-
-    private void LogRetry(Exception result, TimeSpan delay, int count, Context context)
-    {
-        _log.LogDebug
-        (
-            result,
-            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
-            delay,
-            count
-        );
     }
 
     private void LogRetry(DelegateResult<ClientWebSocket> result, TimeSpan delay, int count, Context context)
@@ -378,23 +337,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return;
         }
 
-        _log.LogDebug
-        (
-            result.Exception,
-            "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",
-            delay,
-            count
-        );
-    }
-
-    private void LogRetry(DelegateResult<WebSocketReceiveResult> result, TimeSpan delay, int count, Context context)
-    {
-        if (result.Result is not null)
-        {
-            return;
-        }
-
-        _log.LogDebug
+        _log.LogWarning
         (
             result.Exception,
             "Transient failure in websocket action - retrying after {Delay} (retry #{Count})",

@@ -41,6 +41,11 @@ public enum GuildFeature
     AnimatedIcon,
 
     /// <summary>
+    /// The guild is using the old permission configuration behaviour.
+    /// </summary>
+    ApplicationCommandPermissionsV2,
+
+    /// <summary>
     /// The guild has set up Auto Moderation rules.
     /// </summary>
     AutoModeration,
@@ -54,6 +59,16 @@ public enum GuildFeature
     /// The guild has community features enabled.
     /// </summary>
     Community,
+
+    /// <summary>
+    /// The guild has enabled monetization.
+    /// </summary>
+    CreatorMonetizableProvisional,
+
+    /// <summary>
+    /// The guild has enabled the role subscriptions promo page.
+    /// </summary>
+    CreatorStorePage,
 
     /// <summary>
     /// The guild has been set as a support server on the app directory.
@@ -86,6 +101,11 @@ public enum GuildFeature
     MemberVerificationGateEnabled,
 
     /// <summary>
+    /// The guild has increased custom soundboard sound slots.
+    /// </summary>
+    MoreSoundboard,
+
+    /// <summary>
     /// The guild has enabled monetization.
     /// </summary>
     MonetizationEnabled,
@@ -111,9 +131,9 @@ public enum GuildFeature
     PreviewEnabled,
 
     /// <summary>
-    /// Private threads may be created in the guild.
+    /// The guild has disabled alerts for join raids in the configured safety alerts channel.
     /// </summary>
-    PrivateThreads,
+    RaidAlertsDisabled,
 
     /// <summary>
     /// The guild is able to set role icons.
@@ -121,14 +141,19 @@ public enum GuildFeature
     RoleIcons,
 
     /// <summary>
-    /// The guild has access to the seven-day archival time for threads.
+    /// The guild has role subscriptions that can be purchased.
     /// </summary>
-    SevenDayThreadArchive,
+    RoleSubscriptionsAvailableForPurchase,
 
     /// <summary>
-    /// The guild has access to the three-day archival time for threads.
+    /// The guild has enabled role subscriptions.
     /// </summary>
-    ThreeDayThreadArchive,
+    RoleSubscriptionsEnabled,
+
+    /// <summary>
+    /// The guild has created soundboard sounds.
+    /// </summary>
+    Soundboard,
 
     /// <summary>
     /// The guild has enabled ticketed events.

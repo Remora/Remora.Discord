@@ -48,7 +48,12 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestTemplateAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestTemplateAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -135,7 +140,11 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
 
         if (description.IsDefined(out var descriptionValue) && descriptionValue.Length > 120)
         {
-            return new ArgumentOutOfRangeError(nameof(description), "The description must be between 0 and 120 characters.");
+            return new ArgumentOutOfRangeError
+            (
+                nameof(description),
+                "The description must be between 0 and 120 characters."
+            );
         }
 
         return await this.RestHttpClient.PostAsync<ITemplate>
@@ -180,14 +189,18 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         CancellationToken ct = default
     )
     {
-        if (name.IsDefined(out var nameValue) && nameValue.Length is < 1 or > 100)
+        if (name.TryGet(out var nameValue) && nameValue.Length is < 1 or > 100)
         {
             return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
         }
 
         if (description.IsDefined(out var descriptionValue) && descriptionValue.Length > 120)
         {
-            return new ArgumentOutOfRangeError(nameof(description), "The description must be between 0 and 120 characters.");
+            return new ArgumentOutOfRangeError
+            (
+                nameof(description),
+                "The description must be between 0 and 120 characters."
+            );
         }
 
         return await this.RestHttpClient.PatchAsync<ITemplate>

@@ -33,6 +33,8 @@ namespace Remora.Discord.API.Objects;
 public record OptionalAuditEntryInfo
 (
     Optional<Snowflake> ApplicationID = default,
+    Optional<string> AutoModerationRuleName = default,
+    Optional<string> AutoModerationRuleTriggerType = default,
     Optional<Snowflake> ChannelID = default,
     Optional<string> Count = default,
     Optional<string> DeleteMemberDays = default,
@@ -40,5 +42,6 @@ public record OptionalAuditEntryInfo
     Optional<string> MembersRemoved = default,
     Optional<Snowflake> MessageID = default,
     Optional<string> RoleName = default,
-    Optional<PermissionOverwriteType> Type = default
+    Optional<PermissionOverwriteType> Type = default,
+    Optional<string> IntegrationType = default
 ) : IOptionalAuditEntryInfo;

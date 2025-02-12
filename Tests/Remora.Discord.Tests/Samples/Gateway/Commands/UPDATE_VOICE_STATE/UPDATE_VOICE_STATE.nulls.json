@@ -1,0 +1,11 @@
+{
+  "op": 4,
+  "d": {
+    "guild_id": "999999999999999999",
+    "channel_id": null,
+    "self_mute": false,
+    "self_deaf": false
+  },
+  "s": null,
+  "t": null
+}

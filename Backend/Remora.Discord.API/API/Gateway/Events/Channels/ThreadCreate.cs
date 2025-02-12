@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Gateway.Events.Channels;
 [PublicAPI]
 public record ThreadCreate
 (
-    bool IsNewlyCreated,
+    Optional<bool> IsNewlyCreated,
     Snowflake ID,
     ChannelType Type,
     Optional<Snowflake> GuildID = default,
@@ -50,6 +50,7 @@ public record ThreadCreate
     Optional<IImageHash?> Icon = default,
     Optional<Snowflake> OwnerID = default,
     Optional<Snowflake> ApplicationID = default,
+    Optional<bool> IsManaged = default,
     Optional<Snowflake?> ParentID = default,
     Optional<DateTimeOffset?> LastPinTimestamp = default,
     Optional<string?> RTCRegion = default,
@@ -66,5 +67,6 @@ public record ThreadCreate
     Optional<IReadOnlyList<Snowflake>> AppliedTags = default,
     Optional<IDefaultReaction?> DefaultReactionEmoji = default,
     Optional<TimeSpan> DefaultThreadRateLimitPerUser = default,
-    Optional<SortOrder?> DefaultSortOrder = default
+    Optional<SortOrder?> DefaultSortOrder = default,
+    Optional<ForumLayout> DefaultForumLayout = default
 ) : IThreadCreate;

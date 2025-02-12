@@ -115,7 +115,7 @@ public class SampleDataService
 
         if (typeof(TType).IsInterface && samplesDirectoryName.StartsWith('I'))
         {
-            samplesDirectoryName = samplesDirectoryName[2..];
+            samplesDirectoryName = samplesDirectoryName[1..].TrimStart('_');
         }
 
         var samplesPath = Path.Combine(basePath, samplesDirectoryName);
@@ -125,9 +125,10 @@ public class SampleDataService
         }
 
         return Directory.EnumerateFiles(samplesPath, "*.json", SearchOption.AllDirectories)
-            .Select(fullPath => new SampleDataDescriptor(
-                basePath,
-                Path.GetRelativePath(basePath, fullPath)))
+            .Select
+            (
+                fullPath => new SampleDataDescriptor(basePath, Path.GetRelativePath(basePath, fullPath))
+            )
             .ToArray();
     }
 }

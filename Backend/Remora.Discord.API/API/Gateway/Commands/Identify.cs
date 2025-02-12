@@ -35,7 +35,7 @@ namespace Remora.Discord.API.Gateway.Commands;
 public record Identify
 (
     string Token,
-    IConnectionProperties Properties,
+    IIdentifyConnectionProperties Properties,
     Optional<bool> Compress = default,
     Optional<byte> LargeThreshold = default,
     Optional<IShardIdentification> Shard = default,

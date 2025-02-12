@@ -4,27 +4,23 @@
   "op": 0,
   "d": {
     "guild_id": "999999999999999999",
-    "roles": [],
+    "roles": [
+      "999999999999999999"
+    ],
     "user": {
       "id": "999999999999999999",
       "username": "none",
       "discriminator": "9999",
-      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-      "bot": false,
-      "system": false,
-      "mfa_enabled": false,
-      "locale": "en-US",
-      "verified": true,
-      "email": "nobody@example.org",
-      "flags": 0,
-      "premium_type": 0,
-      "public_flags": 0
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
     "nick": "none",
+    "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+    "banner": "68b329da9893e34099c7d8ad5cb9c940",
     "joined_at": "1970-01-01T00:00:00.000000+00:00",
-    "premium_since": null,
-    "pending": true,
+    "premium_since": "1970-01-01T00:00:00.000000+00:00",
     "deaf": true,
-    "mute": true
+    "mute": true,
+    "pending": true,
+    "communication_disabled_until": "1970-01-01T00:00:00.000000+00:00"
   }
 }

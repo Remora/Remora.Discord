@@ -20,8 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,16 +31,15 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
-using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
 
 /// <summary>
-/// Parses instances of <see cref="IMessage"/> and <see cref="IPartialMessage"/> from command-line inputs.
+/// Parses instances of <see cref="IMessage"/> from command-line inputs.
 /// </summary>
 [PublicAPI]
-public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialMessage>
+public class MessageParser : AbstractTypeParser<IMessage>
 {
     private static readonly Regex _messageLinkRegex = new
     (
@@ -50,7 +47,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
         RegexOptions.Compiled | RegexOptions.CultureInvariant
     );
 
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
     private readonly IDiscordRestChannelAPI _channelAPI;
 
     /// <summary>
@@ -58,7 +55,7 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
     /// </summary>
     /// <param name="context">The command context.</param>
     /// <param name="channelAPI">The channel API.</param>
-    public MessageParser(ICommandContext context, IDiscordRestChannelAPI channelAPI)
+    public MessageParser(IOperationContext context, IDiscordRestChannelAPI channelAPI)
     {
         _channelAPI = channelAPI;
         _context = context;
@@ -73,19 +70,12 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
     {
         if (DiscordSnowflake.TryParse(value.Unmention(), out var messageID))
         {
-            var channelID = _context switch
-            {
-                IInteractionCommandContext ix => ix.Interaction.ChannelID,
-                ITextCommandContext tx => tx.Message.ChannelID,
-                _ => throw new NotSupportedException()
-            };
-
-            if (!channelID.HasValue)
+            if (!_context.TryGetChannelID(out var channelID))
             {
                 return new ParsingError<IMessage>(value, "Messages can only be parsed by ID in channels.");
             }
 
-            return await _channelAPI.GetChannelMessageAsync(channelID.Value, messageID.Value, ct);
+            return await _channelAPI.GetChannelMessageAsync(channelID, messageID.Value, ct);
         }
 
         var messageLinkMatch = _messageLinkRegex.Match(value);
@@ -107,58 +97,5 @@ public class MessageParser : AbstractTypeParser<IMessage>, ITypeParser<IPartialM
         }
 
         return await _channelAPI.GetChannelMessageAsync(channelId.Value, messageId.Value, ct);
-    }
-
-    /// <inheritdoc/>
-    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync(IReadOnlyList<string> tokens, CancellationToken ct)
-    {
-        return (await (this as ITypeParser<IMessage>).TryParseAsync(tokens, ct)).Map(a => a as IPartialMessage);
-    }
-
-    /// <inheritdoc/>
-    async ValueTask<Result<IPartialMessage>> ITypeParser<IPartialMessage>.TryParseAsync(string token, CancellationToken ct)
-    {
-        _ = DiscordSnowflake.TryParse(token.Unmention(), out var messageID);
-        if (messageID is null)
-        {
-            var messageLinkMatch = _messageLinkRegex.Match(token);
-            if (!messageLinkMatch.Success)
-            {
-                return new ParsingError<IPartialMessage>(token, "Unrecognized input format.");
-            }
-
-            var messageIdRaw = messageLinkMatch.Groups["message_id"].Value;
-            if (!DiscordSnowflake.TryParse(messageIdRaw, out messageID))
-            {
-                return new ParsingError<IPartialMessage>(token, "Unrecognized input format.");
-            }
-        }
-
-        var resolvedMessage = GetResolvedMessageOrDefault(messageID.Value);
-        return resolvedMessage is null
-            ? (await (this as ITypeParser<IMessage>).TryParseAsync(token, ct)).Map(a => a as IPartialMessage)
-            : Result<IPartialMessage>.FromSuccess(resolvedMessage);
-    }
-
-    private IPartialMessage? GetResolvedMessageOrDefault(Snowflake messageID)
-    {
-        if (_context is not IInteractionContext interactionContext)
-        {
-            return null;
-        }
-
-        if (!interactionContext.Interaction.Data.IsDefined(out var data))
-        {
-            return null;
-        }
-
-        var resolvedData = data.Match(a => a.Resolved, _ => default, _ => default);
-        if (!resolvedData.IsDefined(out var resolved) || !resolved.Messages.IsDefined(out var messages))
-        {
-            return null;
-        }
-
-        _ = messages.TryGetValue(messageID, out var message);
-        return message;
     }
 }

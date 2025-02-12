@@ -40,7 +40,9 @@ public class StringEnumListConverter<TEnum> : JsonConverter<IReadOnlyList<TEnum>
     /// <summary>
     /// Initializes a new instance of the <see cref="StringEnumListConverter{TEnum}"/> class.
     /// </summary>
-    /// <param name="namingPolicy">The naming policy to be used to translate JSON values into enum values, and vice-versa.</param>
+    /// <param name="namingPolicy">
+    /// The naming policy to be used to translate JSON values into enum values and vice-versa.
+    /// </param>
     public StringEnumListConverter(JsonNamingPolicy namingPolicy)
     {
         _enumValuesByJsonValue = new Dictionary<string, TEnum>();
@@ -56,13 +58,21 @@ public class StringEnumListConverter<TEnum> : JsonConverter<IReadOnlyList<TEnum>
     }
 
     /// <inheritdoc />
-    public override IReadOnlyList<TEnum> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IReadOnlyList<TEnum> Read
+    (
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
     {
         var enumValues = new List<TEnum>();
 
         if (reader.TokenType is not JsonTokenType.StartArray)
         {
-            throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.StartArray)}");
+            throw new JsonException
+            (
+                $"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.StartArray)}"
+            );
         }
 
         while (reader.Read())
@@ -83,7 +93,11 @@ public class StringEnumListConverter<TEnum> : JsonConverter<IReadOnlyList<TEnum>
                 }
                 default:
                 {
-                    throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.String)} or {nameof(JsonTokenType.EndArray)}");
+                    throw new JsonException
+                    (
+                        $"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.String)} or "
+                        + $"{nameof(JsonTokenType.EndArray)}"
+                    );
                 }
             }
         }

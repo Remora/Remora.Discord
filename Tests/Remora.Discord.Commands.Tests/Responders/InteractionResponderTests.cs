@@ -86,6 +86,10 @@ public class InteractionResponderTests
         public async Task AreExecutedForNotFoundCommands()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("nonexistent");
@@ -93,9 +97,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -123,6 +132,10 @@ public class InteractionResponderTests
         public async Task AreExecutedForFailedConditions()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("failing-condition");
@@ -130,9 +143,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -160,6 +178,10 @@ public class InteractionResponderTests
         public async Task AreExecutedForFailedParsing()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("with-parameter");
@@ -177,9 +199,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -238,6 +265,10 @@ public class InteractionResponderTests
         public async Task AreExecuted()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("successful");
@@ -245,9 +276,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -304,6 +340,10 @@ public class InteractionResponderTests
         public async Task AreExecuted()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("successful");
@@ -311,9 +351,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -337,6 +382,10 @@ public class InteractionResponderTests
         public async Task AreExecutedForUnsuccessfulCommands()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("unsuccessful");
@@ -344,9 +393,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -386,6 +440,10 @@ public class InteractionResponderTests
         public async Task EphemeralHandledCorrectly()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("a");
@@ -393,9 +451,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -426,6 +489,10 @@ public class InteractionResponderTests
         public async Task NonEphemeralHandledCorrectly()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("b");
@@ -433,9 +500,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -466,6 +538,10 @@ public class InteractionResponderTests
         public async Task DisabledEphemeralHandledCorrectly()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("c");
@@ -473,9 +549,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -508,6 +589,10 @@ public class InteractionResponderTests
         public async Task DisabledEphemeralHandledCorrectlyIfGloballyEphemeral()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("c");
@@ -515,9 +600,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -563,6 +653,10 @@ public class InteractionResponderTests
         public async Task EphemeralHandledCorrectly()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("a");
@@ -570,9 +664,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -603,6 +702,10 @@ public class InteractionResponderTests
         public async Task NonEphemeralHandledCorrectly()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("b");
@@ -610,9 +713,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);
@@ -643,6 +751,10 @@ public class InteractionResponderTests
         public async Task DisabledEphemeralHandledCorrectly()
         {
             var userMock = new Mock<IUser>();
+            var channelMock = new Mock<IPartialChannel>();
+
+            channelMock.Setup(c => c.ID).Returns(new Optional<Snowflake>(DiscordSnowflake.New(0)));
+
             var dataMock = new Mock<IApplicationCommandData>();
 
             dataMock.Setup(d => d.Name).Returns("c");
@@ -650,9 +762,14 @@ public class InteractionResponderTests
             var eventMock = new Mock<IInteractionCreate>();
 
             eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
-            eventMock.Setup(e => e.ChannelID).Returns(DiscordSnowflake.New(0));
+            eventMock.Setup(e => e.Channel).Returns(new Optional<IPartialChannel>(channelMock.Object));
             eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-            eventMock.Setup(e => e.Data).Returns(OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object));
+            eventMock
+                .Setup(e => e.Data)
+                .Returns
+                (
+                    OneOf<IApplicationCommandData, IMessageComponentData, IModalSubmitData>.FromT0(dataMock.Object)
+                );
 
             var result = await this.Responder.RespondAsync(eventMock.Object);
             ResultAssert.Successful(result);

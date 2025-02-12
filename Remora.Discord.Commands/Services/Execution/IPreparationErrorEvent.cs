@@ -41,5 +41,10 @@ public interface IPreparationErrorEvent
     /// <param name="preparationResult">The result of the command preparation.</param>
     /// <param name="ct">The cancellation token of the current operation.</param>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    Task<Result> PreparationFailed(IOperationContext context, IResult preparationResult, CancellationToken ct = default);
+    Task<Result> PreparationFailed
+    (
+        IOperationContext context,
+        IResult preparationResult,
+        CancellationToken ct = default
+    );
 }

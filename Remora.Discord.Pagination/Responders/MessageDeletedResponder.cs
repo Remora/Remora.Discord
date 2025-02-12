@@ -49,7 +49,15 @@ internal sealed class MessageDeletedResponder : IResponder<IMessageDelete>, IRes
     /// <inheritdoc />
     public async Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
     {
-        _ = await _paginationData.TryRemoveDataAsync(gatewayEvent.ID);
+        var getLease = await _paginationData.LeaseDataAsync(gatewayEvent.ID, ct);
+        if (!getLease.IsSuccess)
+        {
+            return Result.FromSuccess();
+        }
+
+        await using var lease = getLease.Entity;
+        lease.Delete();
+
         return Result.FromSuccess();
     }
 
@@ -58,7 +66,14 @@ internal sealed class MessageDeletedResponder : IResponder<IMessageDelete>, IRes
     {
         foreach (var id in gatewayEvent.IDs)
         {
-            _ = await _paginationData.TryRemoveDataAsync(id);
+            var getLease = await _paginationData.LeaseDataAsync(id, ct);
+            if (!getLease.IsSuccess)
+            {
+                continue;
+            }
+
+            await using var lease = getLease.Entity;
+            lease.Delete();
         }
 
         return Result.FromSuccess();

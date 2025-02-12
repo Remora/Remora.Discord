@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Attributes;
 
@@ -28,6 +29,7 @@ namespace Remora.Discord.Commands.Attributes;
 /// Marks a parameter as having an associated autocomplete provider, which will dynamically suggest values as the
 /// user is typing.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Parameter)]
 public class AutocompleteProviderAttribute : AutocompleteAttribute
 {

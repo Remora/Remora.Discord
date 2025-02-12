@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -36,60 +37,72 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 ///     3. When the current user joins a guild.
 /// </summary>
 [PublicAPI]
-public interface IGuildCreate : IGatewayEvent, IGuild
+public interface IGuildCreate : IGatewayEvent
 {
     /// <summary>
-    /// Gets the time when the current user joined the guild.
+    /// Gets the created guild.
     /// </summary>
-    DateTimeOffset JoinedAt { get; }
+    OneOf<IAvailableGuild, IUnavailableGuild> Guild { get; }
 
     /// <summary>
-    /// Gets a value indicating whether this is considered a large guild.
+    /// Represents an available guild sent during a GUILD_CREATE event.
     /// </summary>
-    bool IsLarge { get; }
+    [PublicAPI]
+    public interface IAvailableGuild : IGuild
+    {
+        /// <summary>
+        /// Gets the time when the current user joined the guild.
+        /// </summary>
+        DateTimeOffset JoinedAt { get; }
 
-    /// <summary>
-    /// Gets a value indicating whether the guild is unavailable due to an outage.
-    /// </summary>
-    Optional<bool> IsUnavailable { get; }
+        /// <summary>
+        /// Gets a value indicating whether this is considered a large guild.
+        /// </summary>
+        bool IsLarge { get; }
 
-    /// <summary>
-    /// Gets the number of members in the guild.
-    /// </summary>
-    int MemberCount { get; }
+        /// <summary>
+        /// Gets a value indicating whether the guild is unavailable due to an outage.
+        /// </summary>
+        Optional<bool> IsUnavailable { get; }
 
-    /// <summary>
-    /// Gets the states of members currently in voice channels.
-    /// </summary>
-    IReadOnlyList<IPartialVoiceState> VoiceStates { get; }
+        /// <summary>
+        /// Gets the number of members in the guild.
+        /// </summary>
+        int MemberCount { get; }
 
-    /// <summary>
-    /// Gets the members in the guild.
-    /// </summary>
-    IReadOnlyList<IGuildMember> Members { get; }
+        /// <summary>
+        /// Gets the states of members currently in voice channels.
+        /// </summary>
+        IReadOnlyList<IPartialVoiceState> VoiceStates { get; }
 
-    /// <summary>
-    /// Gets the channels in the guild.
-    /// </summary>
-    IReadOnlyList<IChannel> Channels { get; }
+        /// <summary>
+        /// Gets the members in the guild.
+        /// </summary>
+        IReadOnlyList<IGuildMember> Members { get; }
 
-    /// <summary>
-    /// Gets the threads in the guild.
-    /// </summary>
-    IReadOnlyList<IChannel> Threads { get; }
+        /// <summary>
+        /// Gets the channels in the guild.
+        /// </summary>
+        IReadOnlyList<IChannel> Channels { get; }
 
-    /// <summary>
-    /// Gets the presences of the members in the guild.
-    /// </summary>
-    IReadOnlyList<IPartialPresence> Presences { get; }
+        /// <summary>
+        /// Gets the threads in the guild.
+        /// </summary>
+        IReadOnlyList<IChannel> Threads { get; }
 
-    /// <summary>
-    /// Gets the stage instances in the guild.
-    /// </summary>
-    IReadOnlyList<IStageInstance> StageInstances { get; }
+        /// <summary>
+        /// Gets the presences of the members in the guild.
+        /// </summary>
+        IReadOnlyList<IPartialPresence> Presences { get; }
 
-    /// <summary>
-    /// Gets the scheduled events in the guild.
-    /// </summary>
-    IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents { get; }
+        /// <summary>
+        /// Gets the stage instances in the guild.
+        /// </summary>
+        IReadOnlyList<IStageInstance> StageInstances { get; }
+
+        /// <summary>
+        /// Gets the scheduled events in the guild.
+        /// </summary>
+        IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents { get; }
+    }
 }

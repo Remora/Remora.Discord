@@ -34,28 +34,36 @@ namespace Remora.Discord.Json.Converters.Internal;
 internal class UnstableVoicePayloadConverter : VoicePayloadConverter
 {
     /// <inheritdoc />
-    protected override IVoicePayload? DeserializeFromOperationCode(VoiceOperationCode operationCode, JsonDocument document, JsonSerializerOptions options)
-        => operationCode switch
-        {
-            VoiceOperationCode.Speaking => DeserializeFromSpeakingOperationCode(document, options),
-            VoiceOperationCode.ClientDisconnect => DeserializePayload<IVoiceClientDisconnect>(VoiceOperationCode.ClientDisconnect, document, options),
+    protected override IVoicePayload? DeserializeFromOperationCode
+    (
+        VoiceOperationCode operationCode,
+        JsonDocument document,
+        JsonSerializerOptions options
+    ) => operationCode switch
+    {
+        VoiceOperationCode.Speaking => DeserializeFromSpeakingOperationCode(document, options),
+        VoiceOperationCode.ClientDisconnect => DeserializePayload<IVoiceClientDisconnect>
+        (
+            VoiceOperationCode.ClientDisconnect,
+            document,
+            options
+        ),
 
-            _ => base.DeserializeFromOperationCode(operationCode, document, options)
-        };
+        _ => base.DeserializeFromOperationCode(operationCode, document, options)
+    };
 
     /// <inheritdoc />
-    protected override VoiceOperationCode GetVoiceOperationCode(Type payloadDataType)
-        => payloadDataType switch
-        {
-            _ when typeof(IVoiceSpeakingEvent).IsAssignableFrom(payloadDataType)
-            => VoiceOperationCode.Speaking,
+    protected override VoiceOperationCode GetVoiceOperationCode(Type payloadDataType) => payloadDataType switch
+    {
+        _ when typeof(IVoiceSpeakingEvent).IsAssignableFrom(payloadDataType)
+        => VoiceOperationCode.Speaking,
 
-            _ when typeof(IVoiceClientDisconnect).IsAssignableFrom(payloadDataType)
-            => VoiceOperationCode.ClientDisconnect,
+        _ when typeof(IVoiceClientDisconnect).IsAssignableFrom(payloadDataType)
+        => VoiceOperationCode.ClientDisconnect,
 
-            // Other
-            _ => base.GetVoiceOperationCode(payloadDataType)
-        };
+        // Other
+        _ => base.GetVoiceOperationCode(payloadDataType)
+    };
 
     /// <summary>
     /// Deserializes an object with the <see cref="VoiceOperationCode.Speaking"/> OP code.

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -59,11 +60,13 @@ public interface IAttachment : IPartialAttachment
     /// <summary>
     /// Gets the source URL of the file.
     /// </summary>
+    [UriString("GET")]
     new string Url { get; }
 
     /// <summary>
     /// Gets the proxied URL of the file.
     /// </summary>
+    [UriString("GET")]
     new string ProxyUrl { get; }
 
     /// <summary>
@@ -80,6 +83,21 @@ public interface IAttachment : IPartialAttachment
     /// Gets a value indicating whether the attachment is ephemeral.
     /// </summary>
     new Optional<bool> IsEphemeral { get; }
+
+    /// <summary>
+    /// Gets the duration of the audio file.
+    /// </summary>
+    new Optional<TimeSpan> Duration { get; }
+
+    /// <summary>
+    /// Gets a preview of the audio contained in the audio file.
+    /// </summary>
+    new Optional<byte[]> Waveform { get; }
+
+    /// <summary>
+    /// Gets the flags applied to the attachment.
+    /// </summary>
+    new Optional<AttachmentFlags> Flags { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialAttachment.ID => this.ID;
@@ -110,4 +128,13 @@ public interface IAttachment : IPartialAttachment
 
     /// <inheritdoc/>
     Optional<bool> IPartialAttachment.IsEphemeral => this.IsEphemeral;
+
+    /// <inheritdoc/>
+    Optional<TimeSpan> IPartialAttachment.Duration => this.Duration;
+
+    /// <inheritdoc/>
+    Optional<byte[]> IPartialAttachment.Waveform => this.Waveform;
+
+    /// <inheritdoc/>
+    Optional<AttachmentFlags> IPartialAttachment.Flags => this.Flags;
 }

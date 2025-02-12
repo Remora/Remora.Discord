@@ -36,7 +36,7 @@ namespace Remora.Discord.API.Gateway.Commands;
 [PublicAPI]
 public record UpdatePresence
 (
-    ClientStatus Status,
+    UserStatus Status,
     bool IsAFK,
     DateTimeOffset? Since,
     IReadOnlyList<IActivity> Activities

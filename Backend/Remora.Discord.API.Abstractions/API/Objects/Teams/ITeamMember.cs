@@ -51,4 +51,9 @@ public interface ITeamMember
     /// Gets the user that's part of the team.
     /// </summary>
     IPartialUser User { get; }
+
+    /// <summary>
+    /// Gets the user's role.
+    /// </summary>
+    TeamMemberRole Role { get; }
 }

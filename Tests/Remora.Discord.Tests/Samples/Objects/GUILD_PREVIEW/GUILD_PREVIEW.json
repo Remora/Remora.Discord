@@ -2,21 +2,28 @@
   "id": "999999999999999999",
   "name": "none",
   "icon": "68b329da9893e34099c7d8ad5cb9c940",
-  "splash": null,
-  "discovery_splash": null,
-  "emojis": [],
-  "features": [
-    "DISCOVERABLE",
-    "VANITY_URL",
-    "ANIMATED_ICON",
-    "INVITE_SPLASH",
-    "NEWS",
-    "COMMUNITY",
-    "BANNER",
-    "VERIFIED"
+  "splash": "68b329da9893e34099c7d8ad5cb9c940",
+  "discovery_splash": "68b329da9893e34099c7d8ad5cb9c940",
+  "emojis": [
+    {
+      "id": "999999999999999999",
+      "name": "none"
+    }
   ],
-  "approximate_member_count": 60814,
-  "approximate_presence_count": 20034,
+  "features": [
+    "DISCOVERABLE"
+  ],
+  "approximate_member_count": 1,
+  "approximate_presence_count": 1,
   "description": "none",
-  "stickers": []
+  "stickers": [
+    {
+      "id": "999999999999999999",
+      "name": "none",
+      "description": "none",
+      "tags": "none",
+      "type": 1,
+      "format_type": 1
+    }
+  ]
 }

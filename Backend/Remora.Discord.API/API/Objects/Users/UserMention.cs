@@ -34,6 +34,7 @@ public record UserMention
     Snowflake ID,
     string Username,
     ushort Discriminator,
+    Optional<string?> GlobalName,
     IImageHash? Avatar,
     Optional<IImageHash?> AvatarDecoration = default,
     Optional<bool> IsBot = default,
@@ -66,4 +67,6 @@ public record UserMention
     Flags,
     PremiumType,
     PublicFlags
-), IUserMention;
+    Optional<IPartialGuildMember> Member = default,
+    Optional<IImageHash?> AvatarDecoration = default
+) : IUserMention;

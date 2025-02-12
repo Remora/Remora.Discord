@@ -88,5 +88,10 @@ public enum OperationCode
     /// <summary>
     /// Sent in response to receiving a heartbeat to acknowledge that it has been received.
     /// </summary>
-    HeartbeatAcknowledge = 11
+    HeartbeatAcknowledge = 11,
+
+    /// <summary>
+    /// Request information about soundboard sounds in guilds.
+    /// </summary>
+    RequestSoundboardSounds = 31
 }

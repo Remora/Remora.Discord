@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// <summary>
 /// Represents the execution of an auto moderation action.
 /// </summary>
+[PublicAPI]
 public interface IAutoModerationActionExecution : IGatewayEvent
 {
     /// <summary>
@@ -72,7 +74,8 @@ public interface IAutoModerationActionExecution : IGatewayEvent
     /// Gets the ID of any system auto moderation messages posted as a result of this action.
     /// </summary>
     /// <remarks>
-    /// This will not exist if this event does not correspond to an action with type <see cref="AutoModerationActionType.SendAlertMessage"/>.
+    /// This will not exist if this event does not correspond to an action with type
+    /// <see cref="AutoModerationActionType.SendAlertMessage"/>.
     /// </remarks>
     Optional<Snowflake> AlertSystemMessageID { get; }
 

@@ -103,7 +103,10 @@ internal class PayloadConverter : JsonConverter<IPayload?>
 
             // Other
             OperationCode.Unknown => DeserializePayload<IUnknownEvent>(realDocument, options),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new NotSupportedException
+            (
+                $"Payload deserialization of the operation code {operationCode} is not supported"
+            )
         };
 
         return obj;
@@ -233,6 +236,9 @@ internal class PayloadConverter : JsonConverter<IPayload?>
             _ when typeof(IRequestGuildMembers).IsAssignableFrom(dataType)
                 => OperationCode.RequestGuildMembers,
 
+            _ when typeof(IRequestSoundboardSounds).IsAssignableFrom(dataType)
+                => OperationCode.RequestSoundboardSounds,
+
             _ when typeof(IResume).IsAssignableFrom(dataType)
                 => OperationCode.Resume,
 
@@ -309,25 +315,53 @@ internal class PayloadConverter : JsonConverter<IPayload?>
 
         if (!_eventTypes.TryGetValue(eventName, out var eventType))
         {
-            var convertibleTypes = options.Converters.Where
-                (
-                    c =>
+            // Consider interface types which have either a JsonConverter or DataObjectConverter registered
+            var convertibleTypes = options.Converters.Select
+            (
+                c =>
+                {
+                    var converterType = c.GetType();
+                    if (!converterType.IsGenericType)
                     {
-                        var converterType = c.GetType();
-                        if (!converterType.IsGenericType)
+                        var baseType = converterType.BaseType;
+                        if (baseType is null)
                         {
-                            return false;
+                            return null;
                         }
 
-                        var genericConverterType = converterType.GetGenericTypeDefinition();
-                        return genericConverterType == typeof(DataObjectConverter<,>);
+                        if (!baseType.IsGenericType)
+                        {
+                            return null;
+                        }
+
+                        // Include explicitly convertible types in the search
+                        if (baseType.GetGenericTypeDefinition() != typeof(JsonConverter<>))
+                        {
+                            return null;
+                        }
+
+                        var converterArgument = baseType.GetGenericArguments()[0];
+                        return converterArgument.IsInterface
+                            ? converterArgument
+                            : null;
                     }
-                )
-                .Select(c => c.GetType().GetGenericArguments()[0]);
+
+                    if (converterType.GetGenericTypeDefinition() != typeof(DataObjectConverter<,>))
+                    {
+                        return null;
+                    }
+
+                    var dataConverterArgument = converterType.GetGenericArguments()[0];
+                    return dataConverterArgument.IsInterface
+                        ? dataConverterArgument
+                        : null;
+                }
+            )
+            .Where(t => t is not null);
 
             eventType = convertibleTypes.FirstOrDefault
             (
-                t => _snakeCase.ConvertName(t.Name[1..]).ToUpperInvariant() == eventName
+                t => _snakeCase.ConvertName(t!.Name[1..]).ToUpperInvariant() == eventName
             );
 
             _eventTypes.TryAdd(eventName, eventType);
@@ -354,7 +388,9 @@ internal class PayloadConverter : JsonConverter<IPayload?>
         {
             eventData = JsonSerializer.Deserialize
             (
-                dataProperty.GetRawText(), eventType, options
+                dataProperty.GetRawText(),
+                eventType,
+                options
             );
         }
         catch

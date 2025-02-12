@@ -33,5 +33,6 @@ public record MessageInteraction
     Snowflake ID,
     InteractionType Type,
     string Name,
-    IUser User
+    IUser User,
+    Optional<IPartialGuildMember> Member = default
 ) : IMessageInteraction;

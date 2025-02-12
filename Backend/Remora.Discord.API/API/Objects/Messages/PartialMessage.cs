@@ -42,6 +42,7 @@ public record PartialMessage
     Optional<DateTimeOffset?> EditedTimestamp = default,
     Optional<bool> IsTTS = default,
     Optional<bool> MentionsEveryone = default,
+    Optional<IReadOnlyList<IUser>> Mentions = default,
     Optional<IReadOnlyList<Snowflake>> MentionedRoles = default,
     Optional<IReadOnlyList<IChannelMention>> MentionedChannels = default,
     Optional<IReadOnlyList<IAttachment>> Attachments = default,
@@ -55,11 +56,15 @@ public record PartialMessage
     Optional<IPartialApplication> Application = default,
     Optional<Snowflake> ApplicationID = default,
     Optional<IMessageReference> MessageReference = default,
+    Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots = default,
     Optional<MessageFlags> Flags = default,
     Optional<IMessage?> ReferencedMessage = default,
     Optional<IMessageInteraction> Interaction = default,
     Optional<IChannel> Thread = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
     Optional<IReadOnlyList<IStickerItem>> StickerItems = default,
-    Optional<int> Position = default
+    Optional<int> Position = default,
+    Optional<IApplicationCommandInteractionDataResolved> Resolved = default,
+    Optional<IMessageInteractionMetadata> InteractionMetadata = default,
+    Optional<IPoll> Poll = default
 ) : IPartialMessage;

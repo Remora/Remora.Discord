@@ -42,5 +42,6 @@ public record RoleTemplate
     int Position,
     IDiscordPermissionSet Permissions,
     bool IsMentionable,
-    Optional<IRoleTags> Tags
+    Optional<IRoleTags> Tags,
+    RoleFlags Flags
 ) : IRoleTemplate;

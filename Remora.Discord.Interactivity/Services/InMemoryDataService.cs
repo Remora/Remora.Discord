@@ -100,126 +100,92 @@ public class InMemoryDataService<TKey, TData> : IAsyncDisposable where TKey : no
         var (semaphore, data) = tuple;
         await semaphore.WaitAsync(ct);
 
-        return new DataLease<TKey, TData>(this, key, semaphore, data);
+        // may have been deleted while we were waiting - check first
+        if (_data.ContainsKey(key))
+        {
+            return new DataLease<TKey, TData>(this, key, semaphore, data);
+        }
+
+        semaphore.Release();
+        return new NotFoundError();
     }
 
     /// <summary>
-    /// Rents the data associated with the given key, blocking until a lock can be taken on the data object.
+    /// Deletes the data associated with the given lease.
     /// </summary>
-    /// <remarks>
-    /// The semaphore returned by this method has the lock held on it and must be released once the caller is done with
-    /// the object.
-    /// </remarks>
-    /// <param name="key">The key the data object is associated with.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>The data and semaphore associated with the data or a <see cref="NotFoundError"/>.</returns>
-    [Obsolete("Use LeaseDataAsync instead.", true)]
-    public async Task<Result<(SemaphoreSlim Semaphore, TData Data)>> RentDataAsync
-    (
-        TKey key,
-        CancellationToken ct = default
-    )
-    {
-        if (_isDisposed)
-        {
-            throw new ObjectDisposedException("The data service has been disposed of and cannot be used.");
-        }
-
-        if (!_data.TryGetValue(key, out var tuple))
-        {
-            return new NotFoundError();
-        }
-
-        var (semaphore, _) = tuple;
-        await semaphore.WaitAsync(ct);
-
-        return tuple;
-    }
-
-    /// <summary>
-    /// Removes the data associated with the given key. This method does nothing if no data is associated with
-    /// the given key.
-    /// </summary>
-    /// <param name="key">The key the data object is associated with.</param>
+    /// <param name="lease">The lease you have on the data object.</param>
     /// <returns>true if the data was successfully removed; otherwise, false.</returns>
-    public bool TryRemoveData(TKey key)
+    public bool TryDeleteData(DataLease<TKey, TData> lease)
     {
         if (_isDisposed)
         {
             throw new ObjectDisposedException("The data service has been disposed of and cannot be used.");
         }
 
-        if (!_data.TryRemove(key, out var tuple))
+        if (!_data.TryRemove(lease.Key, out _))
         {
+            // already removed
             return false;
         }
 
-        var (semaphore, data) = tuple;
-
-        if (data is IAsyncDisposable and not IDisposable)
+        if (lease.Data is IAsyncDisposable and not IDisposable)
         {
             throw new InvalidOperationException
             (
-                $"Unable to synchronously dispose of the held data belonging to key {key}."
+                $"Unable to synchronously dispose of the held data belonging to key {lease.Key}."
             );
         }
 
-        if (data is IDisposable disposableData)
+        if (lease.Data is IDisposable disposable)
         {
-            disposableData.Dispose();
+            disposable.Dispose();
         }
 
-        if (data is IAsyncDisposable and not IDisposable)
-        {
-            throw new InvalidOperationException
-            (
-                $"Unable to synchronously dispose of the held data belonging to key {key}."
-            );
-        }
-
-        semaphore.Dispose();
         return true;
     }
 
     /// <summary>
-    /// Removes the data associated with the given key. This method does nothing if no data is associated with
-    /// the given key.
+    /// Deletes the data associated with the given lease.
     /// </summary>
-    /// <param name="key">The key the data object is associated with.</param>
+    /// <param name="lease">The lease you have on the data object.</param>
     /// <returns>true if the data was successfully removed; otherwise, false.</returns>
-    public async ValueTask<bool> TryRemoveDataAsync(TKey key)
+    public async Task<bool> TryDeleteDataAsync(DataLease<TKey, TData> lease)
     {
         if (_isDisposed)
         {
             throw new ObjectDisposedException("The data service has been disposed of and cannot be used.");
         }
 
-        if (!_data.TryRemove(key, out var tuple))
+        if (!_data.TryRemove(lease.Key, out _))
         {
+            // already removed
             return false;
         }
 
-        var (semaphore, data) = tuple;
-
-        if (data is IAsyncDisposable asyncDisposableData)
+        switch (lease.Data)
         {
-            await asyncDisposableData.DisposeAsync();
+            // preferentially use the asynchronous disposal logic
+            case IAsyncDisposable asyncDisposable:
+            {
+                await asyncDisposable.DisposeAsync();
+                break;
+            }
+            case IDisposable disposable:
+            {
+                disposable.Dispose();
+                break;
+            }
         }
 
-        if (data is IDisposable disposableData)
-        {
-            disposableData.Dispose();
-        }
-
-        semaphore.Dispose();
         return true;
     }
 
     /// <summary>
-    /// Deletes the data, disposing of the semaphore and, if necessary, the data.
+    /// Deletes the data associated with the key, disposing of the data if necessary. A lock is acquired before the data
+    /// is disposed.
     /// </summary>
     /// <param name="key">The key the data object is associated with.</param>
-    /// <returns>true if the data was successfully removed; otherwise, false..</returns>
+    /// <returns>true if the data was successfully removed; otherwise, false.</returns>
     internal async ValueTask<bool> DeleteDataAsync(TKey key)
     {
         if (_isDisposed)
@@ -229,22 +195,26 @@ public class InMemoryDataService<TKey, TData> : IAsyncDisposable where TKey : no
 
         if (!_data.TryRemove(key, out var tuple))
         {
-            // already gone
             return false;
         }
 
         var (semaphore, data) = tuple;
-        if (data is IAsyncDisposable asyncDisposableData)
+        await semaphore.WaitAsync();
+
+        switch (data)
         {
-            await asyncDisposableData.DisposeAsync();
+            case IAsyncDisposable asyncDisposableData:
+            {
+                await asyncDisposableData.DisposeAsync();
+                break;
+            }
+            case IDisposable disposableData:
+            {
+                disposableData.Dispose();
+                break;
+            }
         }
 
-        if (data is IDisposable disposableData)
-        {
-            disposableData.Dispose();
-        }
-
-        semaphore.Dispose();
         return true;
     }
 
@@ -292,6 +262,8 @@ public class InMemoryDataService<TKey, TData> : IAsyncDisposable where TKey : no
         {
             return;
         }
+
+        GC.SuppressFinalize(this);
 
         var keys = _data.Keys.ToList();
         foreach (var key in keys)

@@ -76,8 +76,12 @@ public enum GatewayIntents
     /// Subscribes to the following events:
     ///     - GUILD_EMOJIS_UPDATE
     ///     - GUILD_STICKERS_UPDATE
+    ///     - GUILD_SOUNDBOARD_SOUND_CREATE
+    ///     - GUILD_SOUNDBOARD_SOUND_UPDATE
+    ///     - GUILD_SOUNDBOARD_SOUND_DELETE
+    ///     - GUILD_SOUNDBOARD_SOUNDS_UPDATE
     /// </summary>
-    GuildEmojisAndStickers = 1 << 3,
+    GuildExpressions = 1 << 3,
 
     /// <summary>
     /// Subscribes to the following events:
@@ -199,5 +203,19 @@ public enum GatewayIntents
     /// Subscribes to the following events:
     ///     - AUTO_MODERATION_ACTION_EXECUTION
     /// </summary>
-    AutoModerationExecution = 1 << 21
+    AutoModerationExecution = 1 << 21,
+
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - MESSAGE_POLL_VOTE_ADD
+    ///     - MESSAGE_POLL_VOTE_REMOVE
+    /// </summary>
+    GuildMessagePolls = 1 << 24,
+
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - MESSAGE_POLL_VOTE_ADD
+    ///     - MESSAGE_POLL_VOTE_REMOVE
+    /// </summary>
+    DirectMessagePolls = 1 << 25,
 }

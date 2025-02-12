@@ -51,17 +51,17 @@ public interface IIntegration : IPartialIntegration
     /// <summary>
     /// Gets a value indicating whether the integration is enabled.
     /// </summary>
-    new Optional<bool> IsEnabled { get; }
+    new bool IsEnabled { get; }
 
     /// <summary>
     /// Gets a value indicating whether the integration is syncing.
     /// </summary>
-    new bool IsSyncing { get; }
+    new Optional<bool> IsSyncing { get; }
 
     /// <summary>
     /// Gets the ID of the role that this integration uses for subscribers.
     /// </summary>
-    new Snowflake RoleID { get; }
+    new Optional<Snowflake> RoleID { get; }
 
     /// <summary>
     /// Gets a value indicating whether emoticons should be synced for this integration (twitch only, currently).
@@ -71,12 +71,12 @@ public interface IIntegration : IPartialIntegration
     /// <summary>
     /// Gets the behaviour of expiring subscribers.
     /// </summary>
-    new IntegrationExpireBehaviour ExpireBehaviour { get; }
+    new Optional<IntegrationExpireBehaviour> ExpireBehaviour { get; }
 
     /// <summary>
     /// Gets the grace period (in days) before expiring subscribers.
     /// </summary>
-    new TimeSpan ExpireGracePeriod { get; }
+    new Optional<TimeSpan> ExpireGracePeriod { get; }
 
     /// <summary>
     /// Gets the user for this integration.
@@ -86,22 +86,22 @@ public interface IIntegration : IPartialIntegration
     /// <summary>
     /// Gets the integration's account information.
     /// </summary>
-    new IAccount Account { get; }
+    new IIntegrationAccount Account { get; }
 
     /// <summary>
     /// Gets the time when the integration was last synced.
     /// </summary>
-    new DateTimeOffset SyncedAt { get; }
+    new Optional<DateTimeOffset> SyncedAt { get; }
 
     /// <summary>
     /// Gets the number of subscribers this integration has.
     /// </summary>
-    new int SubscriberCount { get; }
+    new Optional<int> SubscriberCount { get; }
 
     /// <summary>
     /// Gets a value indicating whether this integration has been revoked.
     /// </summary>
-    new bool IsRevoked { get; }
+    new Optional<bool> IsRevoked { get; }
 
     /// <summary>
     /// Gets the bot/OAuth2 application for Discord integrations.
@@ -144,7 +144,7 @@ public interface IIntegration : IPartialIntegration
     Optional<IUser> IPartialIntegration.User => this.User;
 
     /// <inheritdoc/>
-    Optional<IAccount> IPartialIntegration.Account => new(this.Account);
+    Optional<IIntegrationAccount> IPartialIntegration.Account => new(this.Account);
 
     /// <inheritdoc/>
     Optional<DateTimeOffset> IPartialIntegration.SyncedAt => this.SyncedAt;

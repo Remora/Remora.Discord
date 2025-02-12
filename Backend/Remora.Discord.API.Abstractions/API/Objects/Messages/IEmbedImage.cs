@@ -32,22 +32,23 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IEmbedImage
 {
     /// <summary>
-    /// Gets the source URL of the thumbnail. Only supports http(s) and attachments.
+    /// Gets the source URL of the image. Only supports http(s) and attachments.
     /// </summary>
+    [UriString("GET")]
     string Url { get; }
 
     /// <summary>
-    /// Gets the proxied URL of the thumbnail.
+    /// Gets the proxied URL of the image.
     /// </summary>
     Optional<string> ProxyUrl { get; }
 
     /// <summary>
-    /// Gets the height of the thumbnail.
+    /// Gets the height of the image.
     /// </summary>
     Optional<int> Height { get; }
 
     /// <summary>
-    /// Gets the width of the thumbnail.
+    /// Gets the width of the image.
     /// </summary>
     Optional<int> Width { get; }
 }

@@ -271,6 +271,21 @@ public enum AuditLogEvent
     ApplicationCommandPermissionUpdate = 121,
 
     /// <summary>
+    /// A soundboard sound was created.
+    /// </summary>
+    SoundboardSoundCreate = 130,
+
+    /// <summary>
+    /// A soundboard sound was updated.
+    /// </summary>
+    SoundboardSoundUpdate = 131,
+
+    /// <summary>
+    /// A soundboard sound was deleted.
+    /// </summary>
+    SoundboardSoundDelete = 132,
+
+    /// <summary>
     /// An Auto Moderation rule was created.
     /// </summary>
     AutoModerationRuleCreate = 140,
@@ -288,5 +303,25 @@ public enum AuditLogEvent
     /// <summary>
     /// A message was blocked by AutoMod (according to a rule).
     /// </summary>
-    AutoModerationBlockMessage = 143
+    AutoModerationBlockMessage = 143,
+
+    /// <summary>
+    /// A message was flagged by AutoMod (according to a rule).
+    /// </summary>
+    AutoModerationFlagToChannel = 144,
+
+    /// <summary>
+    /// A member was timed out by AutoMod (according to a rule.
+    /// </summary>
+    AutoModerationUserCommunicationDisabled = 145,
+
+    /// <summary>
+    /// A creator monetization request was created.
+    /// </summary>
+    CreatorMonetizationRequestCreated = 150,
+
+    /// <summary>
+    /// Creator monetization terms were accepted.
+    /// </summary>
+    CreatorMonetizationTermsAccepted = 151
 }

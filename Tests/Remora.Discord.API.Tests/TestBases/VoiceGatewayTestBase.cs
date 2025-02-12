@@ -30,8 +30,10 @@ using Xunit;
 namespace Remora.Discord.API.Tests.TestBases;
 
 /// <inheritdoc />
-public abstract class VoiceGatewayTestBase<TType, TEventDataSource> : JsonBackedTypeTestBase<IVoicePayload, TEventDataSource>
-    where TType : IVoiceGatewayPayloadData where TEventDataSource : TheoryData, new()
+public abstract class VoiceGatewayTestBase<TType, TEventDataSource>
+    : JsonBackedTypeTestBase<IVoicePayload, TEventDataSource>
+        where TType : IVoiceGatewayPayloadData
+        where TEventDataSource : TheoryData<SampleDataDescriptor>, new()
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="VoiceGatewayTestBase{TType, TEventDataSource}"/> class.

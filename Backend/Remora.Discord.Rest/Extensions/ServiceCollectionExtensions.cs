@@ -57,13 +57,36 @@ public static class ServiceCollectionExtensions
     /// Adds the services required for Discord's REST API.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
-    /// <param name="tokenFactory">A function that creates or retrieves the authorization token and its token type.</param>
+    /// <param name="tokenFactory">
+    /// A function that creates or retrieves the authorization token and its token type.
+    /// </param>
     /// <param name="buildClient">Extra client building operations.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordRest
     (
         this IServiceCollection serviceCollection,
         Func<IServiceProvider, (string Token, DiscordTokenType TokenType)> tokenFactory,
+        Action<IHttpClientBuilder>? buildClient = null
+    )
+    {
+        serviceCollection.AddSingleton<IAsyncTokenStore>(ctx =>
+        {
+            var (token, type) = tokenFactory(ctx);
+            return new StaticTokenStore(token, type);
+        });
+
+        return serviceCollection.AddDiscordRest(buildClient);
+    }
+
+    /// <summary>
+    /// Adds the services required for Discord's REST API.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="buildClient">Extra client building operations.</param>
+    /// <returns>The service collection, with the services added.</returns>
+    public static IServiceCollection AddDiscordRest
+    (
+        this IServiceCollection serviceCollection,
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
@@ -74,13 +97,7 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.ConfigureDiscordJsonConverters();
 
-        serviceCollection
-            .AddSingleton<ITokenStore>(serviceProvider =>
-            {
-                var (token, tokenType) = tokenFactory(serviceProvider);
-                return new TokenStore(token, tokenType);
-            })
-            .AddTransient<TokenAuthorizationHandler>();
+        serviceCollection.AddTransient<TokenAuthorizationHandler>();
 
         serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
         (
@@ -201,6 +218,27 @@ public static class ServiceCollectionExtensions
             s.GetRequiredService<ICacheProvider>()
         ));
 
+        serviceCollection.TryAddTransient<IDiscordRestMonetizationAPI>(s => new DiscordRestMonetizationAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ICacheProvider>()
+        ));
+
+        serviceCollection.TryAddTransient<IDiscordRestPollAPI>(s => new DiscordRestPollAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ICacheProvider>()
+        ));
+
+        serviceCollection.TryAddTransient<IDiscordRestSoundboardAPI>(s => new DiscordRestSoundboardAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<ICacheProvider>()
+        ));
+
         var rateLimitPolicy = DiscordRateLimitPolicy.Create();
         var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
         var clientBuilder = serviceCollection
@@ -254,7 +292,8 @@ public static class ServiceCollectionExtensions
     /// Registers a decorator service, replacing the existing interface.
     /// </summary>
     /// <remarks>
-    /// Implementation based off of https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection/.
+    /// Implementation based off of
+    /// https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection/.
     /// </remarks>
     /// <param name="services">The service collection.</param>
     /// <typeparam name="TInterface">The interface type to decorate.</typeparam>

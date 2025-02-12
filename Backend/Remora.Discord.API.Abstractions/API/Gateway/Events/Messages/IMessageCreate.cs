@@ -48,5 +48,8 @@ public interface IMessageCreate : IGatewayEvent, IMessage
     /// <summary>
     /// Gets a list of users mentioned in the message.
     /// </summary>
-    IReadOnlyList<IUserMention> Mentions { get; }
+    new IReadOnlyList<IUserMention> Mentions { get; }
+
+    /// <inheritdoc/>
+    IReadOnlyList<IUser> IMessage.Mentions => this.Mentions;
 }

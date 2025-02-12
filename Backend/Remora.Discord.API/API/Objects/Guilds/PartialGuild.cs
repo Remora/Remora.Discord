@@ -37,6 +37,7 @@ public record PartialGuild
     Optional<Snowflake> ID = default,
     Optional<string> Name = default,
     Optional<IImageHash?> Icon = default,
+    Optional<IImageHash?> IconHash = default,
     Optional<IImageHash?> Splash = default,
     Optional<IImageHash?> DiscoverySplash = default,
     Optional<bool> IsOwner = default,
@@ -67,10 +68,13 @@ public record PartialGuild
     Optional<string> PreferredLocale = default,
     Optional<Snowflake?> PublicUpdatesChannelID = default,
     Optional<int> MaxVideoChannelUsers = default,
+    Optional<int> MaxStageVideoChannelUsers = default,
     Optional<int> ApproximateMemberCount = default,
     Optional<int> ApproximatePresenceCount = default,
     Optional<IWelcomeScreen> WelcomeScreen = default,
     Optional<GuildNSFWLevel> NSFWLevel = default,
     Optional<IReadOnlyList<ISticker>> Stickers = default,
-    Optional<bool> IsPremiumProgressBarEnabled = default
+    Optional<bool> IsPremiumProgressBarEnabled = default,
+    Optional<Snowflake?> SafetyAlertsChannelID = default,
+    Optional<IIncidentsData?> IncidentsData = default
 ) : IPartialGuild;

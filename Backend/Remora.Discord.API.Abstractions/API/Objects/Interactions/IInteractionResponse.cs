@@ -40,5 +40,13 @@ public interface IInteractionResponse
     /// <summary>
     /// Gets the response payload.
     /// </summary>
-    Optional<OneOf<IInteractionMessageCallbackData, IInteractionAutocompleteCallbackData, IInteractionModalCallbackData>> Data { get; }
+    Optional
+    <
+        OneOf
+        <
+            IInteractionMessageCallbackData,
+            IInteractionAutocompleteCallbackData,
+            IInteractionModalCallbackData
+        >
+    > Data { get; }
 }

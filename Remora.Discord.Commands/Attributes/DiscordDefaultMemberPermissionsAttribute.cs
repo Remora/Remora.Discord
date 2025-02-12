@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Attributes;
@@ -29,11 +30,14 @@ namespace Remora.Discord.Commands.Attributes;
 /// <summary>
 /// Marks a command as requiring the executor of the command to have the specified permissions. Specifying no
 /// permissions will make the command or group inaccessible to anyone.
+///
+/// Due to Discord's current design, it is only supported on top-level groups or commands.
 /// </summary>
 /// <remarks>
 /// Permissions serve as a base for command access, however moderators with the appropriate permissions can add
 /// additional filters to the command, either adding or removing applicable users.
 /// </remarks>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class DiscordDefaultMemberPermissionsAttribute : Attribute
 {

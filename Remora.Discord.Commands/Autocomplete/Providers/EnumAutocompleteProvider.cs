@@ -26,6 +26,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FuzzySharp;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
@@ -36,6 +37,7 @@ namespace Remora.Discord.Commands.Autocomplete;
 /// Provides autocompletion suggestions for enums.
 /// </summary>
 /// <typeparam name="TEnum">The enumeration type.</typeparam>
+[PublicAPI]
 public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
     where TEnum : struct, Enum
 {

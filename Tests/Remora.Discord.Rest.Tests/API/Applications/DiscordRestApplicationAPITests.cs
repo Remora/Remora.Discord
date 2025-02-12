@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Numerics;
@@ -31,6 +32,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -73,7 +75,7 @@ public class DiscordRestApplicationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                    .WithQueryString("with_localizations", withLocalizations.ToString())
+                    .WithExactQueryString("with_localizations", withLocalizations.ToString())
                     .WithHeaders(Constants.LocaleHeaderName, locale)
                     .WithNoContent()
                     .Respond("application/json", "[ ]")
@@ -117,6 +119,7 @@ public class DiscordRestApplicationAPITests
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
             var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
+            var nsfw = true;
 
             var api = CreateAPI
             (
@@ -133,6 +136,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                                 .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
                                 .WithProperty("dm_permission", p => p.Is(false))
+                                .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -146,7 +150,8 @@ public class DiscordRestApplicationAPITests
                 options,
                 defaultMemberPermissions: permissions,
                 dmPermission: false,
-                type: type
+                type: type,
+                isNsfw: nsfw
             );
 
             ResultAssert.Successful(result);
@@ -461,9 +466,12 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("name", p => p.Is(commands[0].Name))
                                             .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
                                             .WithProperty("description", p => p.Is(commands[0].Description))
-                                            .WithProperty("options", p => p.IsArray(
-                                                ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
+                                            .WithProperty("options", p => p.IsArray(ar => ar.WithCount(0)))
+                                            .WithProperty
+                                            (
+                                                "default_member_permissions",
+                                                p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString())
+                                            )
                                     )
                                 )
                                 .WithElement
@@ -474,9 +482,12 @@ public class DiscordRestApplicationAPITests
                                         o => o
                                             .WithProperty("name", p => p.Is(commands[1].Name))
                                             .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
-                                            .WithProperty("options", p => p.IsArray(
-                                                ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString()))
+                                            .WithProperty("options", p => p.IsArray(ar => ar.WithCount(0)))
+                                            .WithProperty
+                                            (
+                                                "default_member_permissions",
+                                                p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString())
+                                            )
                                     )
                                 )
                                 .WithElement
@@ -708,6 +719,7 @@ public class DiscordRestApplicationAPITests
             var name = "aaa";
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
+            var nsfw = true;
 
             var api = CreateAPI
             (
@@ -721,6 +733,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
+                                .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -732,7 +745,8 @@ public class DiscordRestApplicationAPITests
                 commandID,
                 name,
                 description,
-                options
+                options,
+                isNsfw: nsfw
             );
 
             ResultAssert.Successful(result);
@@ -940,7 +954,8 @@ public class DiscordRestApplicationAPITests
                 b => b
                     .Expect
                     (
-                        HttpMethod.Delete, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}"
+                        HttpMethod.Delete,
+                        $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}"
                     )
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
@@ -985,7 +1000,7 @@ public class DiscordRestApplicationAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
-                    .WithQueryString("with_localizations", withLocalizations.ToString())
+                    .WithExactQueryString("with_localizations", withLocalizations.ToString())
                     .WithHeaders(Constants.LocaleHeaderName, locale)
                     .WithNoContent()
                     .Respond("application/json", "[ ]")
@@ -1032,6 +1047,7 @@ public class DiscordRestApplicationAPITests
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
             var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
+            var nsfw = true;
 
             var api = CreateAPI
             (
@@ -1051,6 +1067,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
                                 .WithProperty("default_member_permissions", p => p.Is(permissions.Value.ToString()))
+                                .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -1064,7 +1081,8 @@ public class DiscordRestApplicationAPITests
                 description,
                 options,
                 defaultMemberPermissions: permissions,
-                type: type
+                type: type,
+                isNsfw: nsfw
             );
 
             ResultAssert.Successful(result);
@@ -1404,7 +1422,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .WithJson
                     (
                         json => json.IsArray
@@ -1419,9 +1441,12 @@ public class DiscordRestApplicationAPITests
                                             .WithProperty("name", p => p.Is(commands[0].Name))
                                             .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
                                             .WithProperty("description", p => p.Is(commands[0].Description))
-                                            .WithProperty("options", p => p.IsArray(
-                                                ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString()))
+                                            .WithProperty("options", p => p.IsArray(ar => ar.WithCount(0)))
+                                            .WithProperty
+                                            (
+                                                "default_member_permissions",
+                                                p => p.Is(commands[0].DefaultMemberPermissions!.Value.ToString())
+                                            )
                                     )
                                 )
                                 .WithElement
@@ -1432,9 +1457,12 @@ public class DiscordRestApplicationAPITests
                                         o => o
                                             .WithProperty("name", p => p.Is(commands[1].Name))
                                             .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
-                                            .WithProperty("options", p => p.IsArray(
-                                                ar => ar.WithCount(0)))
-                                            .WithProperty("default_member_permissions", p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString()))
+                                            .WithProperty("options", p => p.IsArray(ar => ar.WithCount(0)))
+                                            .WithProperty
+                                            (
+                                                "default_member_permissions",
+                                                p => p.Is(commands[1].DefaultMemberPermissions!.Value.ToString())
+                                            )
                                     )
                                 )
                                 .WithElement
@@ -1486,7 +1514,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
             );
 
@@ -1521,7 +1553,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
             );
 
@@ -1556,7 +1592,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
             );
 
@@ -1591,7 +1631,11 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
             );
 
@@ -1682,6 +1726,7 @@ public class DiscordRestApplicationAPITests
             var name = "aaa";
             var description = "wwww";
             var options = new List<ApplicationCommandOption>();
+            var nsfw = true;
 
             var api = CreateAPI
             (
@@ -1699,6 +1744,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("options", p => p.IsArray())
+                                .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
@@ -1711,7 +1757,8 @@ public class DiscordRestApplicationAPITests
                 commandID,
                 name,
                 description,
-                options
+                options,
+                isNsfw: nsfw
             );
 
             ResultAssert.Successful(result);
@@ -2088,7 +2135,450 @@ public class DiscordRestApplicationAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)])
             );
 
-            var result = await api.EditApplicationCommandPermissionsAsync(applicationID, guildID, commandID, permissions);
+            var result = await api.EditApplicationCommandPermissionsAsync
+            (
+                applicationID,
+                guildID,
+                commandID,
+                permissions
+            );
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetApplicationRoleConnectionMetadataRecordsAsync"/> method.
+    /// </summary>
+    public class GetApplicationRoleConnectionMetadataRecordsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetApplicationRoleConnectionMetadataRecordsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetApplicationRoleConnectionMetadataRecordsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
+                    .WithNoContent()
+                    .Respond("application/json", "[ ]")
+            );
+
+            var result = await api.GetApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.UpdateApplicationRoleConnectionMetadataRecordsAsync"/> method.
+    /// </summary>
+    public class UpdateApplicationRoleConnectionMetadataRecordsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateApplicationRoleConnectionMetadataRecordsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public UpdateApplicationRoleConnectionMetadataRecordsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    string.Empty,
+                    string.Empty,
+                    string.Empty,
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                ),
+                new ApplicationRoleConnectionMetadata
+                (
+                    new string('d', 50),
+                    new string('e', 100),
+                    new string('f', 200),
+                    ApplicationRoleConnectionMetadataType.IntegerGreaterThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsArray
+                        (
+                            a => a
+                                .WithElement
+                                (
+                                    0,
+                                    e => e.IsObject
+                                    (
+                                        o => o
+                                            .WithProperty("key", p => p.Is(records[0].Key))
+                                            .WithProperty("name", p => p.Is(records[0].Name))
+                                            .WithProperty("description", p => p.Is(records[0].Description))
+                                            .WithProperty("type", p => p.Is((int)records[0].Type))
+                                    )
+                                )
+                                .WithElement
+                                (
+                                    1,
+                                    e => e.IsObject
+                                    (
+                                        o => o
+                                            .WithProperty("key", p => p.Is(records[1].Key))
+                                            .WithProperty("name", p => p.Is(records[1].Name))
+                                            .WithProperty("description", p => p.Is(records[1].Description))
+                                            .WithProperty("type", p => p.Is((int)records[1].Type))
+                                    )
+                                )
+                        )
+                    )
+                    .Respond("application/json", "[]")
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfKeyIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    new string('a', 51),
+                    string.Empty,
+                    string.Empty,
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
+                    .Respond
+                    (
+                        "application/json",
+                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                    )
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    string.Empty,
+                    new string('b', 101),
+                    string.Empty,
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
+                    .Respond
+                    (
+                        "application/json",
+                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                    )
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var records = new[]
+            {
+                new ApplicationRoleConnectionMetadata
+                (
+                    string.Empty,
+                    string.Empty,
+                    new string('c', 201),
+                    ApplicationRoleConnectionMetadataType.IntegerLessThanOrEqual
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                    )
+                    .Respond
+                    (
+                        "application/json",
+                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                    )
+            );
+
+            var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
+            (
+                applicationID,
+                records
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetCurrentApplicationAsync"/> method.
+    /// </summary>
+    public class GetCurrentApplicationAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetCurrentApplicationAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetCurrentApplicationAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}applications/@me"
+                    )
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
+            );
+
+            var result = await api.GetCurrentApplicationAsync();
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.EditCurrentApplicationAsync"/> method.
+    /// </summary>
+    public class EditCurrentApplicationAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditCurrentApplicationAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public EditCurrentApplicationAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var customInstallUrl = new Uri("https://example.org/install");
+            var description = "aaa";
+            var roleConnectionsVerificationUrl = new Uri("https://example.org/verify");
+            var installParams = new ApplicationInstallParameters
+            (
+                Array.Empty<string>(),
+                new DiscordPermissionSet(DiscordPermission.Administrator)
+            );
+            var flags = ApplicationFlags.ApplicationCommandBadge;
+
+            // Create a dummy PNG image
+            await using var icon = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(icon);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
+            icon.Position = 0;
+
+            // Create a dummy PNG image
+            await using var cover = new MemoryStream();
+            await using var coverBinaryWriter = new BinaryWriter(cover);
+            coverBinaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
+            cover.Position = 0;
+
+            var interactionsEndpointUrl = new Uri("https://example.org/interact");
+            var tags = new[] { "ooga", "booga" };
+
+            var eventWebhooksUrl = new Uri("https://example.org/webhook");
+            var eventWebhooksStatus = ApplicationEventWebhookStatus.Enabled;
+            var eventWebhooksTypes = new[] { "fake", "types" };
+
+            var integrationTypes = new Dictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>
+            {
+                { ApplicationIntegrationType.GuildInstallable, new ApplicationIntegrationTypeConfig(new ApplicationOAuth2InstallParams(DiscordPermissionSet.Empty, Array.Empty<string>())) },
+                { ApplicationIntegrationType.UserInstallable, new ApplicationIntegrationTypeConfig(new ApplicationOAuth2InstallParams(DiscordPermissionSet.Empty, Array.Empty<string>())) },
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}applications/@me"
+                    )
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("custom_install_url", p => p.Is(customInstallUrl.ToString()))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty
+                                (
+                                    "role_connections_verification_url",
+                                    p => p.Is(roleConnectionsVerificationUrl.ToString())
+                                )
+                                .WithProperty("install_params", p => p.IsObject())
+                                .WithProperty("flags", p => p.Is((int)flags))
+                                .WithProperty("icon", p => p.Is("data:image/png;base64,iVBORw0KGgo="))
+                                .WithProperty("cover_image", p => p.Is("data:image/png;base64,iVBORw0KGgo="))
+                                .WithProperty
+                                (
+                                    "interactions_endpoint_url",
+                                    p => p.Is(interactionsEndpointUrl.ToString())
+                                )
+                                .WithProperty
+                                (
+                                    "tags",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement(0, e => e.Is("ooga"))
+                                            .WithElement(1, e => e.Is("booga"))
+                                    )
+                                )
+                                .WithProperty
+                                (
+                                    "integration_types_config",
+                                    p => p.IsObject
+                                    (
+                                        a => a.WithProperty("0", pp => pp.IsObject())
+                                              .WithProperty("1", pp => pp.IsObject())
+                                    )
+                                )
+                                .WithProperty("event_webhooks_url", p => p.Is(eventWebhooksUrl.ToString()))
+                                .WithProperty("event_webhooks_status", p => p.Is((int)eventWebhooksStatus))
+                                .WithProperty("event_webhooks_types", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
+            );
+
+            var result = await api.EditCurrentApplicationAsync
+            (
+                customInstallUrl,
+                description,
+                roleConnectionsVerificationUrl,
+                installParams,
+                flags,
+                icon,
+                cover,
+                interactionsEndpointUrl,
+                tags,
+                integrationTypes,
+                eventWebhooksUrl,
+                eventWebhooksStatus,
+                eventWebhooksTypes
+            );
+
             ResultAssert.Successful(result);
         }
     }

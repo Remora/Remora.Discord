@@ -43,7 +43,12 @@ public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2AP
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestOAuth2API(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestOAuth2API
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }

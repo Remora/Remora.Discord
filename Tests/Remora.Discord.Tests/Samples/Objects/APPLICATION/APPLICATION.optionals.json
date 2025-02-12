@@ -1,0 +1,36 @@
+{
+  "id": "999999999999999999",
+  "name": "none",
+  "icon": "68b329da9893e34099c7d8ad5cb9c940",
+  "description": "none",
+  "bot_public": true,
+  "bot_require_code_grant": true,
+  "verify_key": "none",
+  "team": {
+    "icon": "68b329da9893e34099c7d8ad5cb9c940",
+    "id": "999999999999999999",
+    "members": [
+      {
+        "membership_state": 2,
+        "permissions": [
+          "*"
+        ],
+        "team_id": "999999999999999999",
+        "user": {
+          "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+          "discriminator": "9999",
+          "id": "999999999999999999",
+          "username": "none"
+        },
+        "role": "read_only"
+      }
+    ],
+    "name": "none",
+    "owner_user_id": "999999999999999999"
+  },
+  "event_webhooks_status": 1,
+  "integration_types_config": {
+    "0": { "oauth2_install_params": { "scopes": [ "bot", "application.commands" ], "permissions": "0" } },
+    "1": { "oauth2_install_params": { "scopes": [ "application.commands" ], "permissions": "0" } }
+  }
+}

@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
@@ -52,7 +51,6 @@ public class AtMostOneDMPermissionAttributeAllowed
             /// </summary>
             /// <returns>Nothing.</returns>
             [Command("b")]
-            [DoesNotReturn]
             public Task<Result> B() => throw new NotImplementedException();
         }
 
@@ -68,7 +66,6 @@ public class AtMostOneDMPermissionAttributeAllowed
             /// </summary>
             /// <returns>Nothing.</returns>
             [Command("c")]
-            [DoesNotReturn]
             public Task<Result> C() => throw new NotImplementedException();
         }
     }

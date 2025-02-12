@@ -3,7 +3,12 @@
   "d": {
     "guild_id": "999999999999999999",
     "query": "",
-    "limit": 0
+    "limit": 0,
+    "presences": true,
+    "user_ids": [
+      "999999999999999999"
+    ],
+    "nonce": "none"
   },
   "s": null,
   "t": null

@@ -44,8 +44,8 @@ public enum AutoModerationActionType
     /// Timeout user for a specified duration.
     /// </summary>
     /// <remarks>
-    /// A <see cref="Timeout"/> action can only be setup for <see cref="AutoModerationTriggerType.Keyword"/> rules and the
-    /// <see cref="DiscordPermission.ModerateMembers"/> permission is required.
+    /// A <see cref="Timeout"/> action can only be setup for <see cref="AutoModerationTriggerType.Keyword"/> rules and
+    /// the <see cref="DiscordPermission.ModerateMembers"/> permission is required.
     /// </remarks>
     Timeout = 3
 }

@@ -4,12 +4,7 @@
   "options": [
     {
       "label": "none",
-      "value": "priest",
-      "description": "none",
-      "emoji": {
-        "name": "none",
-        "id": "999999999999999999"
-      }
+      "value": "none"
     }
   ]
 }

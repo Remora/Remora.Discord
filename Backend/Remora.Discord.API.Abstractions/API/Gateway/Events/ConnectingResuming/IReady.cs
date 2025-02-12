@@ -57,6 +57,7 @@ public interface IReady : IGatewayEvent
     /// <summary>
     /// Gets the resume gateway URL.
     /// </summary>
+    [UriString]
     string ResumeGatewayUrl { get; }
 
     /// <summary>

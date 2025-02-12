@@ -3,19 +3,23 @@
   "d": {
     "v": 6,
     "user": {
-      "verified": true,
-      "username": "none",
-      "mfa_enabled": true,
       "id": "999999999999999999",
-      "flags": 0,
-      "email": null,
+      "username": "none",
       "discriminator": "9999",
-      "bot": true,
-      "avatar": null
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
+    "guilds": [
+      {
+        "id": "999999999999999999",
+        "unavailable": true
+      }
+    ],
     "session_id": "none",
     "resume_gateway_url": "https://www.example.org",
-    "guilds": [],
+    "shard": [
+      0,
+      1
+    ],
     "application": {
       "id": "999999999999999999",
       "flags": 0

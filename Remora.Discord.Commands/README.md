@@ -53,10 +53,126 @@ register a different named tree, or register the tree at a guild level.
 await slashService.UpdateSlashCommandsAsync(guildID: myServerID, treeName: myTreeName);
 ```
 
-Remember to check the result of your command registration, as not every feature
-supported by `Remora.Commands` is supported by Discord.
+Not every feature supported by `Remora.Commands` is supported by Discord - if 
+you end up using incompatible features, an exception will be thrown at this 
+point.
 
-### User feedback
+### Special Attributes
+Remora.Discord.Commands exposes a number of attributes you can use to influence
+or configure the way your commands are translated to Discord's slash command UX.
+
+For the most part, these attributes map directly to fields or properties on 
+Discord's application command object, but some have more specialized uses.
+
+#### `ChannelTypes`
+Sets the channel types that should be show in Discord's autocompletion when a
+user is typing.
+
+Can be applied to `Snowflake` or `IPartialChannel` (and implementors)-typed 
+command parameters.
+
+#### `DiscordDefaultDMPermission`
+Sets the default DM accessibility for a group or command.
+
+Can be applied to top-level groups or commands. The attribute is *not* 
+compatible with nested groups or commands, and will produce an exception if 
+applied to those.
+
+#### `DiscordDefaultMemberPermissions`
+Sets the default member permissions required for a user to use a group or 
+command.
+
+Can be applied to top-level groups or commands. The attribute is *not*
+compatible with nested groups or commands, and will produce an exception if
+applied to those.
+
+#### `DiscordNsfw`
+Sets whether the group or command is age-restricted and hidden or otherwise made
+unavailable in open channels.
+
+Can be applied to top-level groups or commands. The attribute is *not*
+compatible with nested groups or commands, and will produce an exception if
+applied to those.
+
+#### `DiscordTypeHint`
+Hints Discord's autocompletion about the type of the parameter it is applied to, 
+allowing only certain types of autocompleted input data.
+
+Can be applied to any parameter, but is typically most useful for 
+`Snowflake`-typed parameters.
+
+#### `ExcludeFromChoices`
+Removes the marked enumeration member from Discord's autocomplete list.
+
+Can be applied to enumeration members.
+
+#### `ExcludeFromSlashCommands`
+Excludes the marked group or command from the slash command UI. This is 
+primarily useful when you have certain commands which use incompatible 
+Remora.Commands features, since it also removes all restrictions that would 
+otherwise come from being a slash command.
+
+Can be applied to groups and commands.
+
+#### `MinValue`
+Marks a numeric parameter as having a minimum allowed value. This restricts
+Discord's autocompletion and client-side validation to the specified range.
+
+The range is inclusive.
+
+Can be applied to any parameter which has a numeric C# type.
+
+#### `MaxValue`
+Marks a numeric parameter as having a maximum allowed value. This restricts
+Discord's autocompletion and client-side validation to the specified range.
+
+The range is inclusive.
+
+Can be applied to any parameter which has a numeric C# type.
+
+#### `SuppressInteractionResponse`
+This attribute prevents Remora from automatically sending an interaction 
+response on your behalf when receiving a slash command (or similar interaction,
+such as a context menu click or button press). If you suppress the response, you
+must send one yourself within a few seconds of entering user code or Discord 
+will consider the interaction failed.
+
+Can be applied to groups and commands.
+
+### Context Menu Commands
+Discord also supports context menu items on users and messages, which are 
+treated as special slash commands by their system.
+
+These commands have some additional restrictions.
+  * they must have a particular C# signature
+  * they must be declared as top-level commands
+  * they must *not* have descriptions
+
+To mark a command as either a `User` or a `Message` command, apply the 
+`CommandType` attribute.
+
+A `User` command must take a single parameter named `user`. 
+A `Message` command must take a single parameter named `message`.
+
+In both cases, the data passed to the command will be a `string` containing the
+user or message's ID; typically, this means you'd want to declare the parameter 
+with a type that can parse this ID into the entity you want. `IUser` or 
+`IMessage` is probably a good bet, but you can use any type you want as long as 
+its parser understands a `Snowflake` in `string` form.
+
+Context menus also have relaxed rules when it comes to command names, and you
+can use both varied capitalization as well as whitespace.
+
+```c#
+[Command("My User Command")]
+[CommandType(ApplicationCommandType.User)]
+public async Task<IResult> MyUserCommand(IUser user)
+{
+    // ...
+}
+```
+
+### User Feedback
 If you want to create messages with a uniform UX, you may use the 
 `FeedbackService` for various message types, such as notices, successes, 
 failures, etc. The styling of these messages is controlled by an 

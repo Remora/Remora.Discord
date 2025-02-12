@@ -1,0 +1,17 @@
+{
+  "name": "none",
+  "type": 4,
+  "url": null,
+  "created_at": 0,
+  "timestamps": { },
+  "application_id": "999999999999999999",
+  "details": null,
+  "state": null,
+  "emoji": null,
+  "party": { },
+  "assets": { },
+  "secrets": { },
+  "instance": true,
+  "flags": 0,
+  "buttons": [ ]
+}

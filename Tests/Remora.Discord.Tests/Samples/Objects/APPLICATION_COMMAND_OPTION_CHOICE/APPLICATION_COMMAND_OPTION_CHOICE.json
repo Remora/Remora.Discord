@@ -1,4 +1,7 @@
 {
   "name": "none",
-  "value": "booga"
+  "name_localizations": {
+    "en-GB": "none"
+  },
+  "value": "none"
 }

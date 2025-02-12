@@ -86,10 +86,22 @@ internal partial class ResponseTrackingInteractionAPI : IDiscordRestInteractionA
             ct
         );
 
-        if (_contextInjector?.Context is InteractionContext interactionContext)
+        if (_contextInjector?.Context is not InteractionContext interactionContext)
         {
-            // only flip this to true once, and never go back to false
-            interactionContext.HasRespondedToInteraction |= createResponse.IsSuccess;
+            return createResponse;
+        }
+
+        // only flip this to true once, and never go back to false
+        interactionContext.HasRespondedToInteraction |= createResponse.IsSuccess;
+
+        if (!response.Data.TryGet(out var data) || !data.MapT0(o => o.Flags).TryPickT0(out var flags, out _))
+        {
+            return createResponse;
+        }
+
+        if (flags.IsDefined(out var actualFlags))
+        {
+            interactionContext.IsOriginalEphemeral |= actualFlags.HasFlag(MessageFlags.Ephemeral);
         }
 
         return createResponse;

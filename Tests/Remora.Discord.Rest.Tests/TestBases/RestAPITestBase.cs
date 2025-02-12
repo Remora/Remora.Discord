@@ -143,6 +143,4 @@ public class RestAPITestFixture
 /// Defines a test collection for JSON-backed type tests.
 /// </summary>
 [CollectionDefinition("REST API tests")]
-public class RestAPITestCollection : ICollectionFixture<RestAPITestFixture>
-{
-}
+public class RestAPITestCollection : ICollectionFixture<RestAPITestFixture>;

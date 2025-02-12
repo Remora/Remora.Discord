@@ -31,13 +31,16 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents an error reported by the REST API.
 /// </summary>
+/// <remarks>
+/// This is a combination of the "normal" REST error and the rate limiting error.
+/// </remarks>
 [PublicAPI]
 public interface IRestError
 {
     /// <summary>
     /// Gets the error code.
     /// </summary>
-    DiscordError Code { get; }
+    Optional<DiscordError> Code { get; }
 
     /// <summary>
     /// Gets the per-property error details.
@@ -48,4 +51,14 @@ public interface IRestError
     /// Gets a descriptive error message.
     /// </summary>
     string Message { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether you are globally rate limited.
+    /// </summary>
+    Optional<bool> IsGlobal { get; }
+
+    /// <summary>
+    /// Gets the time (in seconds) after which the request should be retried.
+    /// </summary>
+    Optional<float> RetryAfter { get; }
 }

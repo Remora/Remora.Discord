@@ -38,5 +38,6 @@ public record MessageReactionAdd
     Snowflake MessageID,
     Optional<Snowflake> GuildID,
     Optional<IGuildMember> Member,
-    IPartialEmoji Emoji
+    IPartialEmoji Emoji,
+    Optional<Snowflake> MessageAuthorID
 ) : IMessageReactionAdd;

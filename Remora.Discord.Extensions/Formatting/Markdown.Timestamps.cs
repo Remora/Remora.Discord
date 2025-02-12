@@ -82,7 +82,12 @@ public partial class Markdown
             TimestampStyle.LongDateTime => 'F',
             TimestampStyle.RelativeTime => 'R',
             null => TimestampStyleToCode(TimestampStyle.ShortDateTime),
-            _ => throw new ArgumentOutOfRangeException(nameof(timestampStyle), timestampStyle, "The specified timestamp style was invalid.")
+            _ => throw new ArgumentOutOfRangeException
+            (
+                nameof(timestampStyle),
+                timestampStyle,
+                "The specified timestamp style was invalid."
+            )
         };
     }
 }

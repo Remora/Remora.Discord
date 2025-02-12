@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Results;
 using Remora.Results;
 
@@ -48,7 +49,7 @@ public class RequireDiscordPermissionCondition :
 {
     private readonly IDiscordRestGuildAPI _guildAPI;
     private readonly IDiscordRestChannelAPI _channelAPI;
-    private readonly ICommandContext _context;
+    private readonly IOperationContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequireDiscordPermissionCondition"/> class.
@@ -60,7 +61,7 @@ public class RequireDiscordPermissionCondition :
     (
         IDiscordRestGuildAPI guildAPI,
         IDiscordRestChannelAPI channelAPI,
-        ICommandContext context
+        IOperationContext context
     )
     {
         _guildAPI = guildAPI;
@@ -78,14 +79,7 @@ public class RequireDiscordPermissionCondition :
         CancellationToken ct = default
     )
     {
-        var guildID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -93,18 +87,16 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getGuild = await _guildAPI.GetGuildAsync(guildID.Value, ct: ct);
+        var getGuild = await _guildAPI.GetGuildAsync(guildID, ct: ct);
         if (!getGuild.IsSuccess)
         {
             return (Result)getGuild;
         }
 
-        var userID = _context switch
+        if (!_context.TryGetUserID(out var userID))
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
-            _ => throw new NotSupportedException()
-        };
+            throw new NotSupportedException();
+        }
 
         var guild = getGuild.Entity;
         if (guild.OwnerID == userID)
@@ -114,7 +106,7 @@ public class RequireDiscordPermissionCondition :
         }
 
         // Grab required information
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, userID, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, userID, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;
@@ -136,14 +128,7 @@ public class RequireDiscordPermissionCondition :
         CancellationToken ct = default
     )
     {
-        var guildID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -152,7 +137,7 @@ public class RequireDiscordPermissionCondition :
         }
 
         // Grab required information
-        var getMember = await _guildAPI.GetGuildMemberAsync(guildID.Value, user.ID, ct);
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
         if (!getMember.IsSuccess)
         {
             return (Result)getMember;
@@ -174,14 +159,7 @@ public class RequireDiscordPermissionCondition :
         CancellationToken ct = default
     )
     {
-        var guildID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -189,20 +167,13 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
         }
 
-        var channelID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.ChannelID,
-            ITextCommandContext tx => tx.Message.ChannelID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!channelID.HasValue)
+        if (!_context.TryGetChannelID(out var channelID))
         {
             return new PermissionDeniedError
             (
@@ -210,7 +181,7 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
+        var getChannel = await _channelAPI.GetChannelAsync(channelID, ct);
         if (!getChannel.IsSuccess)
         {
             return (Result)getChannel;
@@ -234,12 +205,10 @@ public class RequireDiscordPermissionCondition :
             permissionOverwrites
         );
 
-        var userID = _context switch
+        if (!_context.TryGetUserID(out var userID))
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
-            _ => throw new NotSupportedException()
-        };
+            throw new NotSupportedException();
+        }
 
         var isCheckingInvoker = userID == member.User.Value.ID;
         if (isCheckingInvoker && computedPermissions.HasPermission(DiscordPermission.Administrator))
@@ -286,14 +255,7 @@ public class RequireDiscordPermissionCondition :
         CancellationToken ct = default
     )
     {
-        var guildID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.GuildID,
-            ITextCommandContext tx => tx.GuildID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!guildID.HasValue)
+        if (!_context.TryGetGuildID(out var guildID))
         {
             return new PermissionDeniedError
             (
@@ -301,20 +263,13 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID.Value, ct);
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
         if (!getRoles.IsSuccess)
         {
             return (Result)getRoles;
         }
 
-        var channelID = _context switch
-        {
-            IInteractionCommandContext ix => ix.Interaction.ChannelID,
-            ITextCommandContext tx => tx.Message.ChannelID,
-            _ => throw new NotSupportedException()
-        };
-
-        if (!channelID.HasValue)
+        if (!_context.TryGetChannelID(out var channelID))
         {
             return new PermissionDeniedError
             (
@@ -322,7 +277,7 @@ public class RequireDiscordPermissionCondition :
             );
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(channelID.Value, ct);
+        var getChannel = await _channelAPI.GetChannelAsync(channelID, ct);
         if (!getChannel.IsSuccess)
         {
             return (Result)getChannel;
@@ -339,7 +294,7 @@ public class RequireDiscordPermissionCondition :
 
         var computedPermissions = DiscordPermissionSet.ComputePermissions
         (
-            role.ID,
+            role,
             everyoneRole,
             permissionOverwrites
         );
@@ -370,7 +325,7 @@ public class RequireDiscordPermissionCondition :
         return result;
     }
 
-    private string Explain
+    private static string Explain
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator
@@ -379,18 +334,25 @@ public class RequireDiscordPermissionCondition :
         return logicalOperator switch
         {
             LogicalOperator.Not =>
-                $"had disallowed permissions {string.Join(", ", permissionInformation.Where(kvp => kvp.Value).Select(kvp => kvp.Key.ToString()))}",
+                $"had disallowed permissions {string.Join(", ", permissionInformation
+                    .Where(kvp => kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}",
             LogicalOperator.And =>
-                $"missing permissions {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}",
+                $"missing permissions {string.Join(", ", permissionInformation
+                    .Where(kvp => !kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}",
             LogicalOperator.Or =>
-                $"missing one of {string.Join(", ", permissionInformation.Keys.Select(k => k.ToString()))}",
+                $"missing one of {string.Join(", ", permissionInformation.Keys
+                    .Select(k => k.ToString()))}",
             LogicalOperator.Xor =>
-                $"had {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}; only one is allowed",
+                $"had {string.Join(", ", permissionInformation
+                    .Where(kvp => !kvp.Value)
+                    .Select(kvp => kvp.Key.ToString()))}; only one is allowed",
             _ => throw new ArgumentOutOfRangeException(nameof(logicalOperator), logicalOperator, null)
         };
     }
 
-    private Result CheckRequirements
+    private static Result CheckRequirements
     (
         IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
         LogicalOperator logicalOperator

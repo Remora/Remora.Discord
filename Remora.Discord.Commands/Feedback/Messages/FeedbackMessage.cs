@@ -21,10 +21,12 @@
 //
 
 using System.Drawing;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Feedback.Messages;
 
 /// <summary>
 /// Encapsulates a feedback message sent to a user.
 /// </summary>
+[PublicAPI]
 public record FeedbackMessage(string Message, Color Colour);

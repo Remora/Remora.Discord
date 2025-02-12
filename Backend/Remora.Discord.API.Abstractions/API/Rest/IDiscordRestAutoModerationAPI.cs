@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -32,6 +33,7 @@ namespace Remora.Discord.API.Abstractions.Rest;
 /// <summary>
 /// Represents the Discord Auto Moderation API.
 /// </summary>
+[PublicAPI]
 public interface IDiscordRestAutoModerationAPI
 {
     /// <summary>

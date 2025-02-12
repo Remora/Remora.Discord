@@ -137,7 +137,7 @@ internal class Program
             try
             {
                 await using var fileStream = File.OpenRead(actualFile);
-                json = JsonNode.Parse(fileStream) ?? throw new InvalidOperationException();
+                json = await JsonNode.ParseAsync(fileStream) ?? throw new InvalidOperationException();
             }
             catch (Exception e)
             {

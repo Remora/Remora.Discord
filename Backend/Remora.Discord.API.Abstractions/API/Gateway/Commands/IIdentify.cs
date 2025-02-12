@@ -39,7 +39,7 @@ public interface IIdentify : IGatewayCommand
     /// <summary>
     /// Gets the connection properties.
     /// </summary>
-    IConnectionProperties Properties { get; }
+    IIdentifyConnectionProperties Properties { get; }
 
     /// <summary>
     /// Gets an optional field, containing a value that indicates whether the connection supports compressed

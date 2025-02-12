@@ -41,6 +41,7 @@ public class ExecutionEventCollectorService
     /// <summary>
     /// Runs all collected command preparation error events.
     /// </summary>
+    /// <remarks>If no error events are registered, this method will just return the original result.</remarks>
     /// <param name="services">The service provider.</param>
     /// <param name="operationContext">The operation context.</param>
     /// <param name="preparationResult">The result of the command preparation.</param>
@@ -54,7 +55,14 @@ public class ExecutionEventCollectorService
         CancellationToken ct
     )
     {
-        var events = services.GetServices<IPreparationErrorEvent>();
+        var events = services.GetServices<IPreparationErrorEvent>().ToArray();
+        if (events.Length <= 0)
+        {
+            return preparationResult.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(preparationResult.Error);
+        }
+
         return await RunEvents
         (
             events.Select
@@ -108,6 +116,7 @@ public class ExecutionEventCollectorService
     /// <summary>
     /// Runs all collected post-execution events.
     /// </summary>
+    /// <remarks>If no post-execution events are registered, this method will just return the original result.</remarks>
     /// <param name="services">The service provider.</param>
     /// <param name="commandContext">The command context.</param>
     /// <param name="commandResult">The result of the executed command.</param>
@@ -121,7 +130,14 @@ public class ExecutionEventCollectorService
         CancellationToken ct
     )
     {
-        var events = services.GetServices<IPostExecutionEvent>();
+        var events = services.GetServices<IPostExecutionEvent>().ToArray();
+        if (events.Length <= 0)
+        {
+            return commandResult.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(commandResult.Error);
+        }
+
         return await RunEvents
         (
             events.Select
@@ -140,7 +156,7 @@ public class ExecutionEventCollectorService
         );
     }
 
-    private async Task<Result> RunEvents
+    private static async Task<Result> RunEvents
     (
         IEnumerable<Func<CancellationToken, Task<Result>>> events,
         CancellationToken ct

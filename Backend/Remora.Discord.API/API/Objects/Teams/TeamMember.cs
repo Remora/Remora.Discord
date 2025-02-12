@@ -36,5 +36,6 @@ public record TeamMember
     MembershipState MembershipState,
     IReadOnlyList<string> Permissions,
     Snowflake TeamID,
-    IPartialUser User
+    IPartialUser User,
+    TeamMemberRole Role
 ) : ITeamMember;

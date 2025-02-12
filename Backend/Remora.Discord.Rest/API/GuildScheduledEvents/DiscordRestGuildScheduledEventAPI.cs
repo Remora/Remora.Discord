@@ -26,6 +26,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Abstractions.Services;
@@ -39,6 +40,7 @@ using Remora.Results;
 namespace Remora.Discord.Rest.API;
 
 /// <inheritdoc cref="IDiscordRestGuildScheduledEventAPI"/>
+[PublicAPI]
 public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscordRestGuildScheduledEventAPI
 {
     /// <summary>
@@ -47,7 +49,12 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestGuildScheduledEventAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestGuildScheduledEventAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -65,9 +72,9 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             $"guilds/{guildID}/scheduled-events",
             b =>
             {
-                if (withUserCount.HasValue)
+                if (withUserCount.TryGet(out var realWithUserCount))
                 {
-                    b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
+                    b.AddQueryParameter("with_user_count", realWithUserCount.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -102,7 +109,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        if (description is { HasValue: true, Value.Length: < 1 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -113,9 +120,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
 
         if
         (
-            entityMetadata.HasValue &&
-            entityMetadata.Value.Location.HasValue &&
-            entityMetadata.Value.Location.Value.Length is < 1 or > 100
+            entityMetadata is { HasValue: true, Value.Location: { HasValue: true, Value.Length: < 1 or > 100 } }
         )
         {
             return new ArgumentOutOfRangeError
@@ -175,9 +180,9 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             $"guilds/{guildID}/scheduled-events/{eventID}",
             b =>
             {
-                if (withUserCount.HasValue)
+                if (withUserCount.TryGet(out var realWithUserCount))
                 {
-                    b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
+                    b.AddQueryParameter("with_user_count", realWithUserCount.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -205,7 +210,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        if (name.HasValue && name.Value.Length is < 1 or > 100)
+        if (name is { HasValue: true, Value.Length: < 1 or > 100 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -226,8 +231,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         if
         (
             entityMetadata.IsDefined(out var metadata) &&
-            metadata.Location.HasValue &&
-            metadata.Location.Value.Length is < 1 or > 100
+            metadata.Location is { HasValue: true, Value.Length: < 1 or > 100 }
         )
         {
             return new ArgumentOutOfRangeError
@@ -275,7 +279,12 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     }
 
     /// <inheritdoc />
-    public Task<Result> DeleteGuildScheduledEventAsync(Snowflake guildID, Snowflake eventID, CancellationToken ct = default)
+    public Task<Result> DeleteGuildScheduledEventAsync
+    (
+        Snowflake guildID,
+        Snowflake eventID,
+        CancellationToken ct = default
+    )
     {
         return this.RestHttpClient.DeleteAsync
         (
@@ -297,7 +306,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is < 1 or >= 100)
+        if (limit is { HasValue: true, Value: < 1 or >= 100 })
         {
             return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
         }
@@ -307,24 +316,24 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             $"guilds/{guildID}/scheduled-events/{eventID}/users",
             b =>
             {
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
                 }
 
-                if (withMember.HasValue)
+                if (withMember.TryGet(out var realWithMember))
                 {
-                    b.AddQueryParameter("with_member", withMember.Value.ToString());
+                    b.AddQueryParameter("with_member", realWithMember.ToString());
                 }
 
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (after.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("after", after.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);

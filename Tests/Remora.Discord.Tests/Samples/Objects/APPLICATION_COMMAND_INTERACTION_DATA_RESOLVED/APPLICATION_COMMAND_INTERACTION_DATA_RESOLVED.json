@@ -1,89 +1,41 @@
 {
   "users": {
-    "54351326674432000": {
+    "999999999999999999": {
       "id": "999999999999999999",
       "username": "none",
       "discriminator": "9999",
-      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-      "bot": false,
-      "system": false,
-      "mfa_enabled": false,
-      "locale": "en-US",
-      "verified": true,
-      "email": "nobody@example.org",
-      "flags": 0,
-      "premium_type": 0,
-      "public_flags": 0
-    },
-    "54351326674432001": {
-      "id": "999999999999999999",
-      "username": "none",
-      "discriminator": "9999",
-      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-      "bot": false,
-      "system": false,
-      "mfa_enabled": false,
-      "locale": "en-US",
-      "verified": true,
-      "email": "nobody@example.org",
-      "flags": 0,
-      "premium_type": 0,
-      "public_flags": 0
+      "avatar": null
     }
   },
   "members": {
-    "54351326674432001": {
-      "nick": "none",
-      "roles": [],
-      "joined_at": "1970-01-01T00:00:00.000000+00:00",
-      "premium_since": null,
-      "pending": false
-    }
+    "999999999999999999": {}
   },
   "roles": {
-    "41771983423143936": {
+    "999999999999999999": {
       "id": "999999999999999999",
       "name": "none",
       "color": 3447003,
       "hoist": true,
-      "icon": "68b329da9893e34099c7d8ad5cb9c940",
-      "unicode_emoji": null,
       "position": 1,
       "permissions": "66321471",
-      "managed": false,
-      "mentionable": false
+      "managed": true,
+      "mentionable": true,
+      "flags": 0
     }
   },
   "channels": {
-    "748969255210450984": {
-      "id": "999999999999999999",
-      "type": 0,
-      "name": "none"
-    }
+    "999999999999999999": {}
   },
   "messages": {
-    "867793854505943041": {
-      "attachments": [],
-      "author": {
-        "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-        "discriminator": "9999",
-        "id": "999999999999999999",
-        "public_flags": 1,
-        "username": "none"
-      },
-      "channel_id": "999999999999999999",
-      "components": [],
-      "content": "none",
-      "edited_timestamp": null,
-      "embeds": [],
-      "flags": 0,
+    "999999999999999999": {}
+  },
+  "attachments": {
+    "999999999999999999": {
       "id": "999999999999999999",
-      "mention_everyone": false,
-      "mention_roles": [],
-      "pinned": false,
-      "timestamp": "1970-01-01T00:00:00.000000+00:00",
-      "tts": false,
-      "type": 0
+      "filename": "file.png",
+      "size": 0,
+      "url": "https://www.example.org",
+      "proxy_url": "https://www.example.org"
     }
   }
 }

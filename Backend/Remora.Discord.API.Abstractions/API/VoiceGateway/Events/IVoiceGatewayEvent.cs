@@ -28,6 +28,4 @@ namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
 /// Acts as a marker interface for voice gateway events.
 /// </summary>
 [PublicAPI]
-public interface IVoiceGatewayEvent : IVoiceGatewayPayloadData
-{
-}
+public interface IVoiceGatewayEvent : IVoiceGatewayPayloadData;

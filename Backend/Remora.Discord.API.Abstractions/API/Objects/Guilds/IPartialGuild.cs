@@ -42,6 +42,9 @@ public interface IPartialGuild
     /// <inheritdoc cref="IGuild.Icon" />
     Optional<IImageHash?> Icon { get; }
 
+    /// <inheritdoc cref="IGuild.IconHash" />
+    Optional<IImageHash?> IconHash { get; }
+
     /// <inheritdoc cref="IGuild.Splash" />
     Optional<IImageHash?> Splash { get; }
 
@@ -132,6 +135,9 @@ public interface IPartialGuild
     /// <inheritdoc cref="IGuild.MaxVideoChannelUsers" />
     Optional<int> MaxVideoChannelUsers { get; }
 
+    /// <inheritdoc cref="IGuild.MaxVideoChannelUsers" />
+    Optional<int> MaxStageVideoChannelUsers { get; }
+
     /// <inheritdoc cref="IGuild.ApproximateMemberCount" />
     Optional<int> ApproximateMemberCount { get; }
 
@@ -149,4 +155,10 @@ public interface IPartialGuild
 
     /// <inheritdoc cref="IGuild.IsPremiumProgressBarEnabled"/>
     Optional<bool> IsPremiumProgressBarEnabled { get; }
+
+    /// <inheritdoc cref="IGuild.SafetyAlertsChannelID"/>
+    Optional<Snowflake?> SafetyAlertsChannelID { get; }
+
+    /// <inheritdoc cref="IGuild.IncidentsData"/>
+    Optional<IIncidentsData?> IncidentsData { get; }
 }

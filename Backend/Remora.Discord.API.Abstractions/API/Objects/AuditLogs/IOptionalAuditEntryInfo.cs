@@ -40,6 +40,26 @@ public interface IOptionalAuditEntryInfo
     Optional<Snowflake> ApplicationID { get; }
 
     /// <summary>
+    /// Gets the name of the triggered auto-moderation rule.
+    /// </summary>
+    /// <remarks>
+    /// Relevant for <see cref="AuditLogEvent.AutoModerationBlockMessage"/>,
+    /// <see cref="AuditLogEvent.AutoModerationFlagToChannel"/> and
+    /// <see cref="AuditLogEvent.AutoModerationUserCommunicationDisabled"/>.
+    /// </remarks>
+    Optional<string> AutoModerationRuleName { get; }
+
+    /// <summary>
+    /// Gets the trigger type of the auto-moderation rule that was triggered.
+    /// </summary>
+    /// <remarks>
+    /// Relevant for <see cref="AuditLogEvent.AutoModerationBlockMessage"/>,
+    /// <see cref="AuditLogEvent.AutoModerationFlagToChannel"/> and
+    /// <see cref="AuditLogEvent.AutoModerationUserCommunicationDisabled"/>.
+    /// </remarks>
+    Optional<string> AutoModerationRuleTriggerType { get; }
+
+    /// <summary>
     /// Gets the channel in which the entities were targeted.
     /// <remarks>
     /// Relevant for <see cref="AuditLogEvent.MemberMove"/>, <see cref="AuditLogEvent.MessagePin"/>,
@@ -104,4 +124,13 @@ public interface IOptionalAuditEntryInfo
     /// </remarks>
     /// </summary>
     Optional<PermissionOverwriteType> Type { get; }
+
+    /// <summary>
+    /// Gets the type of integration which performed the action.
+    /// </summary>
+    /// <remarks>
+    /// This is a strangely documented property from Discord, but corresponds to the <see cref="IIntegration.Type"/>
+    /// property.
+    /// </remarks>
+    Optional<string> IntegrationType { get; }
 }

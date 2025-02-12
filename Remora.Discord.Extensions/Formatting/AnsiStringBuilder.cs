@@ -21,12 +21,14 @@
 //
 
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Extensions.Formatting;
 
 /// <summary>
 /// Provides a builder to build an ANSI formatted string.
 /// </summary>
+[PublicAPI]
 public class AnsiStringBuilder
 {
     private readonly StringBuilder _builder;
@@ -128,7 +130,7 @@ public class AnsiStringBuilder
     /// <summary>
     /// Build the ansi formatted string.
     /// </summary>
-    /// <returns>Returns a string containing the ansi formatting codes.</returns>
+    /// <returns>A string containing the ansi formatting codes.</returns>
     public string Build()
     {
         return _builder.ToString();
@@ -139,7 +141,7 @@ public class AnsiStringBuilder
     /// </summary>
     private sealed class StyleState
     {
-        private const char EscapeChar = '\u001b';
+        private const char _escapeChar = '\u001b';
 
         private bool _hasChanged;
         private bool _isBold;
@@ -244,7 +246,7 @@ public class AnsiStringBuilder
 
             _hasChanged = false;
 
-            stringBuilder.Append($"{EscapeChar}[{AnsiStyle.Reset}");
+            stringBuilder.Append($"{_escapeChar}[{AnsiStyle.Reset}");
 
             if (this.IsBold)
             {

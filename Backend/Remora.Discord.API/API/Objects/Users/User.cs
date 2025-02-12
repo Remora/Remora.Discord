@@ -36,6 +36,7 @@ public record User
     Snowflake ID,
     string Username,
     ushort Discriminator,
+    Optional<string?> GlobalName,
     IImageHash? Avatar,
     Optional<IImageHash?> AvatarDecoration = default,
     Optional<bool> IsBot = default,
@@ -48,5 +49,6 @@ public record User
     Optional<string?> Email = default,
     Optional<UserFlags> Flags = default,
     Optional<PremiumType> PremiumType = default,
-    Optional<UserFlags> PublicFlags = default
+    Optional<UserFlags> PublicFlags = default,
+    Optional<IImageHash?> AvatarDecoration = default
 ) : IUser;

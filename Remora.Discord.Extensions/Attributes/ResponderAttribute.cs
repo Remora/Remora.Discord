@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.Gateway.Responders;
 
 namespace Remora.Discord.Extensions.Attributes;
@@ -28,6 +29,7 @@ namespace Remora.Discord.Extensions.Attributes;
 /// <summary>
 /// Indicates that a responder type or method should be registered as the specified group.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Class)]
 public class ResponderAttribute : Attribute
 {
@@ -39,7 +41,9 @@ public class ResponderAttribute : Attribute
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponderAttribute"/> class.
     /// </summary>
-    /// <param name="group">The responder group the responder should be added to, defaulting to <see cref="ResponderGroup.Normal"/>.</param>
+    /// <param name="group">
+    /// The responder group the responder should be added to, defaulting to <see cref="ResponderGroup.Normal"/>.
+    /// </param>
     public ResponderAttribute(ResponderGroup group = ResponderGroup.Normal)
     {
         this.Group = group;

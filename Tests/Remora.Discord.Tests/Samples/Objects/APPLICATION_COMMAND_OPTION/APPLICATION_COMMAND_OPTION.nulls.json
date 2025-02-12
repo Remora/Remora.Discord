@@ -1,0 +1,29 @@
+{
+  "type": 1,
+  "name": "none",
+  "name_localizations": null,
+  "description": "none",
+  "description_localizations": null,
+  "required": true,
+  "choices": [
+    {
+      "name": "none",
+      "value": 1
+    }
+  ],
+  "options": [
+    {
+      "type": 1,
+      "name": "none",
+      "description": "none"
+    }
+  ],
+  "channel_types": [
+    0
+  ],
+  "min_value": 1,
+  "max_value": 1,
+  "min_length": 1,
+  "max_length": 1,
+  "autocomplete": true
+}

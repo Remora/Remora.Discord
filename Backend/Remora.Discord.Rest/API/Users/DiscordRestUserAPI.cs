@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,7 +49,12 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestUserAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestUserAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -117,10 +123,11 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
         Optional<Snowflake> before = default,
         Optional<Snowflake> after = default,
         Optional<int> limit = default,
+        Optional<bool> withCounts = default,
         CancellationToken ct = default
     )
     {
-        if (limit.HasValue && limit.Value is < 1 or > 200)
+        if (limit is { HasValue: true, Value: < 1 or > 200 })
         {
             return new ArgumentOutOfRangeError
             (
@@ -134,19 +141,24 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
             "users/@me/guilds",
             b =>
             {
-                if (before.HasValue)
+                if (before.TryGet(out var realBefore))
                 {
-                    b.AddQueryParameter("before", before.Value.ToString());
+                    b.AddQueryParameter("before", realBefore.ToString());
                 }
 
-                if (after.HasValue)
+                if (after.TryGet(out var realAfter))
                 {
-                    b.AddQueryParameter("after", after.Value.ToString());
+                    b.AddQueryParameter("after", realAfter.ToString());
                 }
 
-                if (limit.HasValue)
+                if (limit.TryGet(out var realLimit))
                 {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
+                    b.AddQueryParameter("limit", realLimit.ToString());
+                }
+
+                if (withCounts.TryGet(out var realWithCounts))
+                {
+                    b.AddQueryParameter("with_counts", realWithCounts.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -218,7 +230,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    public virtual Task<Result<IReadOnlyList<IConnection>>> GetCurrentUserConnectionsAsync
     (
         CancellationToken ct = default
     )
@@ -227,6 +239,75 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
         (
             "users/@me/connections",
             b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IApplicationRoleConnection>> GetCurrentUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IApplicationRoleConnection>
+        (
+            $"users/@me/applications/{applicationID}/role-connection",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IApplicationRoleConnection>> UpdateCurrentUserApplicationRoleConnectionAsync
+    (
+        Snowflake applicationID,
+        Optional<string> platformName = default,
+        Optional<string> platformUsername = default,
+        Optional<IReadOnlyDictionary<string, string>> metadata = default,
+        CancellationToken ct = default
+    )
+    {
+        if (platformName.HasValue && platformName.Value.Length > 50)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(platformName),
+                "The platform name must be max. 50 characters."
+            );
+        }
+
+        if (platformUsername.HasValue && platformUsername.Value.Length > 100)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(platformUsername),
+                "The platform username must be max. 100 characters."
+            );
+        }
+
+        if (metadata.HasValue && metadata.Value.Values.Any(m => m.Length > 100))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(metadata),
+                "The metadata values must be max. 100 characters."
+            );
+        }
+
+        return await this.RestHttpClient.PutAsync<IApplicationRoleConnection>
+        (
+            $"users/@me/applications/{applicationID}/role-connection",
+            b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("platform_name", platformName, this.JsonOptions);
+                        json.Write("platform_username", platformUsername, this.JsonOptions);
+                        json.Write("metadata", metadata, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

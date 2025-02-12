@@ -54,6 +54,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <summary>
     /// Gets or sets the url of the embed.
     /// </summary>
+    [UriString("GET")]
     public string? Url { get; set; }
 
     /// <summary>
@@ -74,11 +75,13 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <summary>
     /// Gets or sets the image added to this embed.
     /// </summary>
+    [UriString("GET")]
     public string? ImageUrl { get; set; }
 
     /// <summary>
     /// Gets or sets the thumbnail added to this embed.
     /// </summary>
+    [UriString("GET")]
     public string? ThumbnailUrl { get; set; }
 
     /// <summary>
@@ -119,7 +122,12 @@ public class EmbedBuilder : BuilderBase<Embed>
     }
 
     private EmbedBuilder(Optional<IReadOnlyList<IEmbedField>> fields)
-        : this(fields.HasValue ? new List<IEmbedField>(fields.Value) : new List<IEmbedField>(EmbedConstants.MaxFieldCount))
+        : this
+        (
+            fields.HasValue
+                ? new List<IEmbedField>(fields.Value)
+                : new List<IEmbedField>(EmbedConstants.MaxFieldCount)
+        )
     {
     }
 
@@ -129,9 +137,10 @@ public class EmbedBuilder : BuilderBase<Embed>
     }
 
     /// <summary>
-    /// Ensures that the overall length of the embed is less than the value of <see cref="EmbedConstants.MaxEmbedLength"/>.
+    /// Ensures that the overall length of the embed is less than the value of
+    /// <see cref="EmbedConstants.MaxEmbedLength"/>.
     /// </summary>
-    /// <returns>Returns a <see cref="Result"/> indicating success or failure of the validation.</returns>
+    /// <returns>A <see cref="Result"/> indicating success or failure of the validation.</returns>
     public override Result Validate()
     {
         var validateTitleResult = ValidateLength(nameof(this.Title), this.Title, EmbedConstants.MaxTitleLength, true);
@@ -140,7 +149,14 @@ public class EmbedBuilder : BuilderBase<Embed>
             return validateTitleResult;
         }
 
-        var validateDescriptionResult = ValidateLength(nameof(this.Description), this.Description, EmbedConstants.MaxDescriptionLength, true);
+        var validateDescriptionResult = ValidateLength
+        (
+            nameof(this.Description),
+            this.Description,
+            EmbedConstants.MaxDescriptionLength,
+            true
+        );
+
         if (!validateDescriptionResult.IsSuccess)
         {
             return validateDescriptionResult;
@@ -179,7 +195,11 @@ public class EmbedBuilder : BuilderBase<Embed>
 
         if (this.Fields.Count >= EmbedConstants.MaxFieldCount)
         {
-            return new ArgumentOutOfRangeError(nameof(this.Fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {this.Fields.Count}.");
+            return new ArgumentOutOfRangeError
+            (
+                nameof(this.Fields),
+                $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {this.Fields.Count}."
+            );
         }
 
         return this.Length > EmbedConstants.MaxEmbedLength
@@ -214,7 +234,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="url">The url.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithUrl(string url)
+    public EmbedBuilder WithUrl([UriString("GET")] string url)
     {
         this.Url = url;
         return this;
@@ -225,7 +245,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="thumbnailUrl">The url of the thumbnail.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithThumbnailUrl(string thumbnailUrl)
+    public EmbedBuilder WithThumbnailUrl([UriString("GET")] string thumbnailUrl)
     {
         this.ThumbnailUrl = thumbnailUrl;
         return this;
@@ -236,7 +256,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="imageUrl">The url of the thumbnail.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithImageUrl(string imageUrl)
+    public EmbedBuilder WithImageUrl([UriString("GET")] string imageUrl)
     {
         this.ImageUrl = imageUrl;
         return this;
@@ -264,7 +284,8 @@ public class EmbedBuilder : BuilderBase<Embed>
     }
 
     /// <summary>
-    /// Sets the timestamp of the <see cref="EmbedBuilder"/> to the timestamp specified by the <paramref name="snowflake"/>.
+    /// Sets the timestamp of the <see cref="EmbedBuilder"/> to the timestamp specified by the
+    /// <paramref name="snowflake"/>.
     /// </summary>
     /// <param name="snowflake">The snowflake.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
@@ -296,7 +317,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     (
         string name,
         string? url = null,
-        string? iconUrl = null
+        [UriString("GET")] string? iconUrl = null
     )
     {
         this.Author = new EmbedAuthorBuilder(name, url, iconUrl);
@@ -326,7 +347,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <param name="text">The text of the footer.</param>
     /// <param name="iconUrl">The url of the icon.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithFooter(string text, string? iconUrl = null)
+    public EmbedBuilder WithFooter(string text, [UriString("GET")] string? iconUrl = null)
     {
         this.Footer = new EmbedFooterBuilder(text, iconUrl);
         return this;
@@ -378,7 +399,11 @@ public class EmbedBuilder : BuilderBase<Embed>
     {
         if (fields.Count >= EmbedConstants.MaxFieldCount)
         {
-            return new ArgumentOutOfRangeError(nameof(fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {fields.Count}.");
+            return new ArgumentOutOfRangeError
+            (
+                nameof(fields),
+                $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {fields.Count}."
+            );
         }
 
         _fields = fields.ToList();
@@ -410,7 +435,9 @@ public class EmbedBuilder : BuilderBase<Embed>
             Timestamp = this.Timestamp ?? default(Optional<DateTimeOffset>),
             Colour = this.Colour ?? default(Optional<Color>),
             Image = this.ImageUrl is null ? default(Optional<IEmbedImage>) : new EmbedImage(this.ImageUrl),
-            Thumbnail = this.ThumbnailUrl is null ? default(Optional<IEmbedThumbnail>) : new EmbedThumbnail(this.ThumbnailUrl),
+            Thumbnail = this.ThumbnailUrl is null
+                ? default(Optional<IEmbedThumbnail>)
+                : new EmbedThumbnail(this.ThumbnailUrl),
             Author = authorResult is { IsSuccess: true } author
                 ? author.Entity
                 : default(Optional<IEmbedAuthor>),
@@ -425,14 +452,15 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// Converts the provided <see cref="IEmbed"/> to an instance of <see cref="EmbedBuilder"/>.
     /// </summary>
     /// <param name="embed">The embed to convert.</param>
-    /// <returns>An <see cref="EmbedBuilder"/> with the same properties as the provided embed, where present. The <see cref="EmbedType"/> will be overwritten to <see cref="EmbedType.Rich"/>.</returns>
+    /// <returns>An <see cref="EmbedBuilder"/> with the same properties as the provided embed, where present. The
+    /// <see cref="EmbedType"/> will be overwritten to <see cref="EmbedType.Rich"/>.</returns>
     public static EmbedBuilder FromEmbed(IEmbed embed) => new(embed.Fields)
     {
-        Title = embed.Title.HasValue ? embed.Title.Value : null,
-        Description = embed.Description.HasValue ? embed.Description.Value : null,
-        Url = embed.Url.HasValue ? embed.Url.Value : null,
-        Timestamp = embed.Timestamp.HasValue ? embed.Timestamp.Value : null,
-        Colour = embed.Colour.HasValue ? embed.Colour.Value : null,
+        Title = embed.Title.AsNullable(),
+        Description = embed.Description.AsNullable(),
+        Url = embed.Url.AsNullable(),
+        Timestamp = embed.Timestamp.AsNullable(),
+        Colour = embed.Colour.AsNullable(),
         ImageUrl = embed.Image.HasValue ? embed.Image.Value.Url : null,
         ThumbnailUrl = embed.Thumbnail.HasValue ? embed.Thumbnail.Value.Url : null,
         Author = embed.Author.HasValue ? EmbedAuthorBuilder.FromAuthor(embed.Author.Value) : default,

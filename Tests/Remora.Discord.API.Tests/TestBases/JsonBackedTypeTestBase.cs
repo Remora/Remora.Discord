@@ -46,12 +46,12 @@ namespace Remora.Discord.API.Tests.TestBases;
 [Collection("JSON-backed type tests")]
 [UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract class JsonBackedTypeTestBase<TType, TSampleSource>
-    where TSampleSource : TheoryData, new()
+    where TSampleSource : TheoryData<SampleDataDescriptor>, new()
 {
     /// <summary>
     /// Gets the data sample source.
     /// </summary>
-    public static TheoryData SampleSource => new TSampleSource();
+    public static TheoryData<SampleDataDescriptor> SampleSource => new TSampleSource();
 
     /// <summary>
     /// Gets the JSON serializer options in use.
@@ -163,7 +163,7 @@ public class JsonBackedTypeTestFixture
     public JsonBackedTypeTestFixture()
     {
         var services = new ServiceCollection()
-            .ConfigureDiscordJsonConverters()
+            .ConfigureDiscordJsonConverters(allowUnknownEvents: false)
             .AddExperimentalDiscordApi()
             .BuildServiceProvider(true);
 
@@ -184,6 +184,4 @@ public class JsonBackedTypeTestFixture
 /// Defines a test collection for JSON-backed type tests.
 /// </summary>
 [CollectionDefinition("JSON-backed type tests")]
-public class JsonBackedTypeTestCollection : ICollectionFixture<JsonBackedTypeTestFixture>
-{
-}
+public class JsonBackedTypeTestCollection : ICollectionFixture<JsonBackedTypeTestFixture>;

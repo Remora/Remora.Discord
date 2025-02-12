@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Remora.Discord.API.Errors;
+using Remora.Discord.API.Extensions;
 using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
@@ -99,7 +100,7 @@ public abstract class CDNTestBase
             {
                 var expected = new Uri
                 (
-                    this.ValidUriWithoutExtension + $".{supportedFormat.ToString().ToLowerInvariant()}"
+                    this.ValidUriWithoutExtension + $".{supportedFormat.ToFileExtension()}"
                 );
 
                 Assert.True(getActual.IsSuccess);

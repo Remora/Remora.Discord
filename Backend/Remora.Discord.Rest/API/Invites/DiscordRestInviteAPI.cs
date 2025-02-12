@@ -44,7 +44,12 @@ public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAP
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
-    public DiscordRestInviteAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, ICacheProvider rateLimitCache)
+    public DiscordRestInviteAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        ICacheProvider rateLimitCache
+    )
         : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
@@ -64,19 +69,19 @@ public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAP
             $"invites/{inviteCode}",
             b =>
             {
-                if (withCounts.HasValue)
+                if (withCounts.TryGet(out var realWithCounts))
                 {
-                    b.AddQueryParameter("with_counts", withCounts.Value.ToString());
+                    b.AddQueryParameter("with_counts", realWithCounts.ToString());
                 }
 
-                if (withExpiration.HasValue)
+                if (withExpiration.TryGet(out var realWithExpiration))
                 {
-                    b.AddQueryParameter("with_expiration", withExpiration.Value.ToString());
+                    b.AddQueryParameter("with_expiration", realWithExpiration.ToString());
                 }
 
-                if (guildScheduledEventID.HasValue)
+                if (guildScheduledEventID.TryGet(out var realGuildScheduledEventID))
                 {
-                    b.AddQueryParameter("guild_scheduled_event_id", guildScheduledEventID.Value.ToString());
+                    b.AddQueryParameter("guild_scheduled_event_id", realGuildScheduledEventID.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);

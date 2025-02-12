@@ -1,25 +1,21 @@
 {
-  "bot_public": true,
-  "bot_require_code_grant": false,
-  "cover_image": "68b329da9893e34099c7d8ad5cb9c940",
-  "description": "none",
-  "guild_id": "999999999999999999",
-  "icon": null,
   "id": "999999999999999999",
   "name": "none",
-  "owner": {
-    "avatar": null,
-    "discriminator": "9999",
-    "flags": 1024,
-    "id": "999999999999999999",
-    "username": "none"
-  },
-  "primary_sku_id": "999999999999999999",
-  "slug": "test",
+  "icon": "68b329da9893e34099c7d8ad5cb9c940",
+  "description": "none",
+  "rpc_origins": [
+    "https://example.org"
+  ],
+  "bot_public": true,
+  "bot_require_code_grant": true,
+  "bot": {},
+  "terms_of_service_url": "https://www.example.org",
+  "privacy_policy_url": "https://www.example.org",
+  "owner": {},
+  "verify_key": "none",
   "team": {
     "icon": "68b329da9893e34099c7d8ad5cb9c940",
     "id": "999999999999999999",
-    "owner_user_id": "999999999999999999",
     "members": [
       {
         "membership_state": 2,
@@ -32,10 +28,42 @@
           "discriminator": "9999",
           "id": "999999999999999999",
           "username": "none"
-        }
+        },
+        "role": "read_only"
       }
     ],
-    "name": "none"
+    "name": "none",
+    "owner_user_id": "999999999999999999"
   },
-  "verify_key": "none"
+  "guild_id": "999999999999999999",
+  "guild": {},
+  "primary_sku_id": "999999999999999999",
+  "slug": "none",
+  "cover_image": "68b329da9893e34099c7d8ad5cb9c940",
+  "flags": 0,
+  "approximate_guild_count": 0,
+  "redirect_uris": [
+    "https://www.example.org"
+  ],
+  "interactions_endpoint_url": "https://www.example.org",
+  "role_connections_verification_url": "https://www.example.org",
+  "event_webhooks_url": "https://www.example.org",
+  "event_webhooks_status": 1,
+  "event_webhooks_types": [
+    "none"
+  ],
+  "tags": [
+    "none"
+  ],
+  "install_params": {
+    "scopes": [
+      "none"
+    ],
+    "permissions": "0"
+  },
+  "custom_install_url": "https://www.example.org",
+  "integration_types_config": {
+    "0": { "oauth2_install_params": { "scopes": [ "bot", "application.commands" ], "permissions": "0"} },
+    "1": { "oauth2_install_params": { "scopes": [ "application.commands" ], "permissions": "0" } }
+  }
 }

@@ -49,6 +49,14 @@ public interface IGuild : IPartialGuild
     new IImageHash? Icon { get; }
 
     /// <summary>
+    /// Gets the image hash of the guild's icon.
+    /// </summary>
+    /// <remarks>
+    /// Only present when part of a guild template.
+    /// </remarks>
+    new Optional<IImageHash?> IconHash { get; }
+
+    /// <summary>
     /// Gets the guild's splash banner.
     /// </summary>
     new IImageHash? Splash { get; }
@@ -201,6 +209,11 @@ public interface IGuild : IPartialGuild
     new Optional<int> MaxVideoChannelUsers { get; }
 
     /// <summary>
+    /// Gets the maximum number of users in a video stage channel.
+    /// </summary>
+    new Optional<int> MaxStageVideoChannelUsers { get; }
+
+    /// <summary>
     /// Gets the approximate number of members in the guild.
     /// </summary>
     new Optional<int> ApproximateMemberCount { get; }
@@ -230,6 +243,16 @@ public interface IGuild : IPartialGuild
     /// </summary>
     new bool IsPremiumProgressBarEnabled { get; }
 
+    /// <summary>
+    /// Gets the ID of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
+    /// </summary>
+    new Snowflake? SafetyAlertsChannelID { get; }
+
+    /// <summary>
+    /// Gets the incident data for the guild.
+    /// </summary>
+    new IIncidentsData? IncidentsData { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialGuild.ID => this.ID;
 
@@ -238,6 +261,9 @@ public interface IGuild : IPartialGuild
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialGuild.Icon => new(this.Icon);
+
+    /// <inheritdoc/>
+    Optional<IImageHash?> IPartialGuild.IconHash => this.IconHash;
 
     /// <inheritdoc/>
     Optional<IImageHash?> IPartialGuild.Splash => new(this.Splash);
@@ -330,6 +356,9 @@ public interface IGuild : IPartialGuild
     Optional<int> IPartialGuild.MaxVideoChannelUsers => this.MaxVideoChannelUsers;
 
     /// <inheritdoc/>
+    Optional<int> IPartialGuild.MaxStageVideoChannelUsers => this.MaxStageVideoChannelUsers;
+
+    /// <inheritdoc/>
     Optional<int> IPartialGuild.ApproximateMemberCount => this.ApproximateMemberCount;
 
     /// <inheritdoc/>
@@ -346,4 +375,10 @@ public interface IGuild : IPartialGuild
 
     /// <inheritdoc/>
     Optional<bool> IPartialGuild.IsPremiumProgressBarEnabled => this.IsPremiumProgressBarEnabled;
+
+    /// <inheritdoc/>
+    Optional<Snowflake?> IPartialGuild.SafetyAlertsChannelID => this.SafetyAlertsChannelID;
+
+    /// <inheritdoc/>
+    Optional<IIncidentsData?> IPartialGuild.IncidentsData => new(this.IncidentsData);
 }

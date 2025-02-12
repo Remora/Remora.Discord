@@ -23,6 +23,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Errors;
 using Remora.Discord.API.Extensions;
@@ -65,7 +66,7 @@ public static class CDN
         }
 
         // Prefer the animated version of emojis, if available
-        if (emoji.IsAnimated.IsDefined(out var isAnimated) && isAnimated)
+        if (emoji.IsAnimated.TryGet(out var isAnimated) && isAnimated)
         {
             imageFormat = CDNImageFormat.GIF;
         }
@@ -114,9 +115,9 @@ public static class CDN
             Path = $"emojis/{emojiID}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -193,9 +194,9 @@ public static class CDN
             Path = $"icons/{guildID}/{iconHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -262,9 +263,9 @@ public static class CDN
             Path = $"splashes/{guildID}/{splashHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -331,9 +332,9 @@ public static class CDN
             Path = $"discovery-splashes/{guildID}/{discoverySplashHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -401,9 +402,9 @@ public static class CDN
             Path = $"banners/{guildID}/{bannerHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -540,9 +541,9 @@ public static class CDN
             Path = $"banners/{userID}/{bannerHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -562,19 +563,20 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        return GetDefaultUserAvatarUrl(user.Discriminator, imageFormat, imageSize);
+        return GetDefaultUserAvatarUrl(user.ID, imageFormat, imageSize);
     }
 
     /// <summary>
     /// Gets the CDN URI of the given user's default avatar.
     /// </summary>
-    /// <param name="userDiscriminator">The user's discriminator.</param>
+    /// <param name="userDiscriminatorOrID">The user's discriminator, or their ID.</param>
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
+    /// <remarks>The ID of the user should be preferred, as any migrated accounts will have a discriminator of 0, and the result will be wrong.</remarks>
     public static Result<Uri> GetDefaultUserAvatarUrl
     (
-        ushort userDiscriminator,
+        OneOf<Snowflake, ushort> userDiscriminatorOrID,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
     )
@@ -598,15 +600,15 @@ public static class CDN
             return Result<Uri>.FromError(checkImageSize);
         }
 
-        var discriminatorModulus = userDiscriminator % 5;
+        var valueModulus = userDiscriminatorOrID.Match(t0 => (ushort)(t0.Value >> 22) % 6, t1 => t1 % 5);
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
-            Path = $"embed/avatars/{discriminatorModulus}.{format.ToFileExtension()}"
+            Path = $"embed/avatars/{valueModulus}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -683,9 +685,9 @@ public static class CDN
             Path = $"avatars/{userID}/{avatarHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -707,18 +709,18 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        if (!member.Avatar.HasValue || member.Avatar.Value is null || !member.User.HasValue)
+        if (!member.Avatar.IsDefined(out var avatar) || !member.User.TryGet(out var user))
         {
             return new ImageNotFoundError();
         }
 
         // Prefer the animated version, if available
-        if (member.Avatar.Value.HasGif && !imageFormat.HasValue)
+        if (avatar.HasGif && !imageFormat.HasValue)
         {
             imageFormat = CDNImageFormat.GIF;
         }
 
-        return GetGuildMemberAvatarUrl(guildID, member.User.Value.ID, member.Avatar.Value, imageFormat, imageSize);
+        return GetGuildMemberAvatarUrl(guildID, user.ID, avatar, imageFormat, imageSize);
     }
 
     /// <summary>
@@ -766,9 +768,85 @@ public static class CDN
             Path = $"guilds/{guildID}/users/{userID}/avatars/{avatarHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
+        }
+
+        return ub.Uri;
+    }
+
+    /// <summary>
+    /// Gets the CDN URI of the given user's avatar decoration.
+    /// </summary>
+    /// <param name="user">The user.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetUserAvatarDecorationUrl
+    (
+        IUser user,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        if (!user.AvatarDecoration.IsDefined(out var avatarDecoration))
+        {
+            return new ImageNotFoundError();
+        }
+
+        // Prefer the animated version, if available
+        if (avatarDecoration.HasGif && !imageFormat.HasValue)
+        {
+            imageFormat = CDNImageFormat.GIF;
+        }
+
+        return GetUserAvatarDecorationUrl(user.ID, avatarDecoration, imageFormat, imageSize);
+    }
+
+    /// <summary>
+    /// Gets the CDN URI of the given user's avatar decoration.
+    /// </summary>
+    /// <param name="userID">The ID of the user.</param>
+    /// <param name="avatarDecorationHash">The image hash of the user's avatar decoration.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetUserAvatarDecorationUrl
+    (
+        Snowflake userID,
+        IImageHash avatarDecorationHash,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        var formatValidation = ValidateOrDefaultImageFormat
+        (
+            imageFormat,
+            CDNImageFormat.PNG
+        );
+
+        if (!formatValidation.IsSuccess)
+        {
+            return Result<Uri>.FromError(formatValidation);
+        }
+
+        var format = formatValidation.Entity;
+
+        var checkImageSize = CheckImageSize(imageSize);
+        if (!checkImageSize.IsSuccess)
+        {
+            return Result<Uri>.FromError(checkImageSize);
+        }
+
+        var ub = new UriBuilder(Constants.CDNBaseURL)
+        {
+            Path = $"avatar-decorations/{userID}/{avatarDecorationHash.Value}.{format.ToFileExtension()}"
+        };
+
+        if (imageSize.TryGet(out var size))
+        {
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -835,9 +913,9 @@ public static class CDN
             Path = $"app-icons/{applicationID}/{iconHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -857,7 +935,7 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        return application.CoverImage.IsDefined(out var coverImage)
+        return application.CoverImage.TryGet(out var coverImage)
             ? GetApplicationCoverUrl(application.ID, coverImage, imageFormat, imageSize)
             : new ImageNotFoundError();
     }
@@ -904,9 +982,9 @@ public static class CDN
             Path = $"app-icons/{applicationID}/{coverHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -970,9 +1048,9 @@ public static class CDN
             Path = $"app-assets/{applicationID}/{assetID}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -1037,12 +1115,79 @@ public static class CDN
 
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
-            Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/{iconHash.Value}.{format.ToFileExtension()}"
+            Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/"
+                   + $"{iconHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
+        }
+
+        return ub.Uri;
+    }
+
+    /// <summary>
+    /// Gets the CDN URI of the given application's store page's icon.
+    /// </summary>
+    /// <param name="application">The application.</param>
+    /// <param name="assetID">The ID of the asset.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetStorePageAssetUrl
+    (
+        IApplication application,
+        string assetID,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    ) => GetStorePageAssetUrl(application.ID, assetID, imageFormat, imageSize);
+
+    /// <summary>
+    /// Gets the CDN URI of the given application's store page asset..
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="assetID">The ID of the asset.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetStorePageAssetUrl
+    (
+        Snowflake applicationID,
+        string assetID,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        var formatValidation = ValidateOrDefaultImageFormat
+        (
+            imageFormat,
+            CDNImageFormat.PNG,
+            CDNImageFormat.JPEG,
+            CDNImageFormat.WebP
+        );
+
+        if (!formatValidation.IsSuccess)
+        {
+            return Result<Uri>.FromError(formatValidation);
+        }
+
+        var format = formatValidation.Entity;
+
+        var checkImageSize = CheckImageSize(imageSize);
+        if (!checkImageSize.IsSuccess)
+        {
+            return Result<Uri>.FromError(checkImageSize);
+        }
+
+        var ub = new UriBuilder(Constants.CDNBaseURL)
+        {
+            Path = $"app-assets/{applicationID}/store/{assetID}.{format.ToFileExtension()}"
+        };
+
+        if (imageSize.TryGet(out var size))
+        {
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -1062,7 +1207,7 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        return stickerPack.BannerAssetID.IsDefined(out var assetID)
+        return stickerPack.BannerAssetID.TryGet(out var assetID)
             ? GetStickerPackBannerUrl(assetID, imageFormat, imageSize)
             : new ImageNotFoundError();
     }
@@ -1108,9 +1253,9 @@ public static class CDN
             Path = $"app-assets/710982414301790216/store/{bannerAssetID}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -1177,9 +1322,9 @@ public static class CDN
             Path = $"team-icons/{teamID}/{iconHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -1217,7 +1362,8 @@ public static class CDN
         (
             imageFormat,
             CDNImageFormat.PNG,
-            CDNImageFormat.Lottie
+            CDNImageFormat.Lottie,
+            CDNImageFormat.GIF
         );
 
         if (!formatValidation.IsSuccess)
@@ -1238,9 +1384,9 @@ public static class CDN
             Path = $"stickers/{stickerID}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -1307,9 +1453,9 @@ public static class CDN
             Path = $"role-icons/{roleID}/{iconHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -1329,9 +1475,9 @@ public static class CDN
         Optional<ushort> imageSize = default
     )
     {
-        return scheduledEvent.Image is null
-            ? new ImageNotFoundError()
-            : GetGuildScheduledEventCoverUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
+        return scheduledEvent.Image.IsDefined(out var image)
+            ? GetGuildScheduledEventCoverUrl(scheduledEvent.ID, image, imageFormat, imageSize)
+            : new ImageNotFoundError();
     }
 
     /// <summary>
@@ -1376,9 +1522,9 @@ public static class CDN
             Path = $"guild-events/{eventID}/{bannerHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -1429,9 +1575,9 @@ public static class CDN
             Path = $"guilds/{guildID}/users/{userID}/banners/{bannerHash.Value}.{format.ToFileExtension()}"
         };
 
-        if (imageSize.HasValue)
+        if (imageSize.TryGet(out var size))
         {
-            ub.Query = $"size={imageSize.Value}";
+            ub.Query = $"size={size}";
         }
 
         return ub.Uri;
@@ -1443,7 +1589,7 @@ public static class CDN
         params CDNImageFormat[] acceptedFormats
     )
     {
-        if (!imageFormat.IsDefined(out var format))
+        if (!imageFormat.TryGet(out var format))
         {
             format = CDNImageFormat.PNG;
         }
@@ -1458,7 +1604,7 @@ public static class CDN
 
     private static Result CheckImageSize(Optional<ushort> imageSize)
     {
-        if (!imageSize.IsDefined(out var size))
+        if (!imageSize.TryGet(out var size))
         {
             return Result.FromSuccess();
         }

@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 
@@ -30,6 +31,7 @@ namespace Remora.Discord.Commands.Services;
 /// <summary>
 /// Represents the public interface of a service that can perform a post-execution event.
 /// </summary>
+[PublicAPI]
 public interface IPostExecutionEvent
 {
     /// <summary>

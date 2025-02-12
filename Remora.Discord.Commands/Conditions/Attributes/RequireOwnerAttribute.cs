@@ -31,6 +31,4 @@ namespace Remora.Discord.Commands.Conditions;
 /// </summary>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Method)]
-public class RequireOwnerAttribute : ConditionAttribute
-{
-}
+public class RequireOwnerAttribute : ConditionAttribute;

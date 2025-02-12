@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -39,8 +38,7 @@ public interface ICacheProvider
     /// </summary>
     /// <param name="key">The key to cache the value with.</param>
     /// <param name="instance">The instance of the object to cache.</param>
-    /// <param name="absoluteExpiration">The absolute expiration of the value to cache.</param>
-    /// <param name="slidingExpiration">The sliding expiration of the value to cache.</param>
+    /// <param name="options">The options of the value to cache.</param>
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The type to cache.</typeparam>
     /// <remarks>Absolute and sliding expirations may be handled differently (or not at all)
@@ -49,10 +47,9 @@ public interface ICacheProvider
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous operation.</returns>
     ValueTask CacheAsync<TInstance>
     (
-        string key,
+        CacheKey key,
         TInstance instance,
-        DateTimeOffset? absoluteExpiration = null,
-        TimeSpan? slidingExpiration = null,
+        CacheEntryOptions options,
         CancellationToken ct = default
     )
         where TInstance : class;
@@ -64,7 +61,7 @@ public interface ICacheProvider
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The type to return from the backing store, if it exists.</typeparam>
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous action.</returns>
-    ValueTask<Result<TInstance>> RetrieveAsync<TInstance>(string key, CancellationToken ct = default)
+    ValueTask<Result<TInstance>> RetrieveAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class;
 
     /// <summary>
@@ -73,7 +70,7 @@ public interface ICacheProvider
     /// <param name="key">The key to evict from the backing store.</param>
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous action.</returns>
-    ValueTask<Result> EvictAsync(string key, CancellationToken ct = default);
+    ValueTask<Result> EvictAsync(CacheKey key, CancellationToken ct = default);
 
     /// <summary>
     /// Evicts a key from the backing store, returning its current value if it exists.
@@ -82,6 +79,6 @@ public interface ICacheProvider
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The type to return from the backing store, if it exists.</typeparam>
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous action.</returns>
-    ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
+    ValueTask<Result<TInstance>> EvictAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class;
 }

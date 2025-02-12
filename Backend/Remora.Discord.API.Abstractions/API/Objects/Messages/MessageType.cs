@@ -148,5 +148,40 @@ public enum MessageType
     /// <summary>
     /// An executed action of an Auto Moderation rule.
     /// </summary>
-    AutoModerationAction = 24
+    AutoModerationAction = 24,
+
+    /// <summary>
+    /// A subscriber role has been purchased.
+    /// </summary>
+    RoleSubscriptionPurchase = 25,
+
+    /// <summary>
+    /// An upsell message about premium interactions.
+    /// </summary>
+    InteractionPremiumUpsell = 26,
+
+    /// <summary>
+    /// A stage instance has started.
+    /// </summary>
+    StageStart = 27,
+
+    /// <summary>
+    /// A stage instance has ended.
+    /// </summary>
+    StageEnd = 28,
+
+    /// <summary>
+    /// A stage instance speaker.
+    /// </summary>
+    StageSpeaker = 29,
+
+    /// <summary>
+    /// A stage instance topic.
+    /// </summary>
+    StageTopic = 31,
+
+    /// <summary>
+    /// TODO: Some kind of notification that a user has subscribed? Discord docs are unclear.
+    /// </summary>
+    GuildApplicationPremiumSubscription = 32
 }

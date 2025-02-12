@@ -61,7 +61,7 @@ public class LateCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IChannelDelete gatewayEvent, CancellationToken ct = default)
     {
-        var key = KeyHelpers.CreateChannelCacheKey(gatewayEvent.ID);
+        var key = new KeyHelpers.ChannelCacheKey(gatewayEvent.ID);
         await _cacheService.EvictAsync<IChannel>(key, ct);
 
         return Result.FromSuccess();
@@ -70,7 +70,7 @@ public class LateCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IGuildBanRemove gatewayEvent, CancellationToken ct = default)
     {
-        var key = KeyHelpers.CreateGuildBanCacheKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
+        var key = new KeyHelpers.GuildBanCacheKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
         await _cacheService.EvictAsync<IBan>(key, ct).AsTask();
 
         return Result.FromSuccess();
@@ -79,7 +79,7 @@ public class LateCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IGuildDelete gatewayEvent, CancellationToken ct = default)
     {
-        var key = KeyHelpers.CreateGuildCacheKey(gatewayEvent.ID);
+        var key = new KeyHelpers.GuildCacheKey(gatewayEvent.ID);
         await _cacheService.EvictAsync<IGuild>(key, ct);
 
         return Result.FromSuccess();
@@ -88,7 +88,7 @@ public class LateCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IGuildMemberRemove gatewayEvent, CancellationToken ct = default)
     {
-        var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
+        var key = new KeyHelpers.GuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
         await _cacheService.EvictAsync<IGuildMember>(key, ct);
 
         return Result.FromSuccess();
@@ -97,10 +97,10 @@ public class LateCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IGuildRoleDelete gatewayEvent, CancellationToken ct = default)
     {
-        var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.RoleID);
+        var key = new KeyHelpers.GuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.RoleID);
         await _cacheService.EvictAsync<IRole>(key, ct);
 
-        var collectionKey = KeyHelpers.CreateGuildRolesCacheKey(gatewayEvent.GuildID);
+        var collectionKey = new KeyHelpers.GuildRolesCacheKey(gatewayEvent.GuildID);
         var getCachedList = await _cacheService.TryGetValueAsync<IReadOnlyList<IRole>>(collectionKey, ct);
         if (getCachedList.IsSuccess)
         {
@@ -133,7 +133,7 @@ public class LateCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IInviteDelete gatewayEvent, CancellationToken ct = default)
     {
-        var key = KeyHelpers.CreateInviteCacheKey(gatewayEvent.Code);
+        var key = new KeyHelpers.InviteCacheKey(gatewayEvent.Code);
         await _cacheService.EvictAsync<IInvite>(key, ct);
 
         return Result.FromSuccess();
@@ -142,7 +142,7 @@ public class LateCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
     {
-        var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
+        var key = new KeyHelpers.MessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
         await _cacheService.EvictAsync<IMessage>(key, ct);
 
         return Result.FromSuccess();
@@ -153,7 +153,7 @@ public class LateCacheResponder :
     {
         foreach (var messageID in gatewayEvent.IDs)
         {
-            var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, messageID);
+            var key = new KeyHelpers.MessageCacheKey(gatewayEvent.ChannelID, messageID);
             await _cacheService.EvictAsync<IMessage>(key, ct);
         }
 

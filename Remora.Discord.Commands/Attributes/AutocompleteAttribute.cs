@@ -21,13 +21,13 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Attributes;
 
 /// <summary>
 /// Marks a parameter as being considered for autocompletion.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Parameter)]
-public class AutocompleteAttribute : Attribute
-{
-}
+public class AutocompleteAttribute : Attribute;

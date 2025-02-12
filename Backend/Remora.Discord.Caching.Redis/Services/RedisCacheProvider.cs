@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
+using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
 using Remora.Results;
 
@@ -62,28 +63,21 @@ public class RedisCacheProvider : ICacheProvider
     /// </remarks>
     public virtual async ValueTask CacheAsync<TInstance>
     (
-        string key,
+        CacheKey key,
         TInstance instance,
-        DateTimeOffset? absoluteExpiration = null,
-        TimeSpan? slidingExpiration = null,
+        CacheEntryOptions options,
         CancellationToken ct = default
     )
         where TInstance : class
     {
-        if (absoluteExpiration >= DateTimeOffset.UtcNow)
+        if (options.AbsoluteExpiration >= DateTimeOffset.UtcNow)
         {
             return;
         }
 
         var serialized = JsonSerializer.SerializeToUtf8Bytes(instance, _jsonOptions);
 
-        var options = new DistributedCacheEntryOptions
-        {
-            AbsoluteExpiration = absoluteExpiration,
-            SlidingExpiration = slidingExpiration
-        };
-
-        await _cache.SetAsync(key, serialized, options, ct);
+        await _cache.SetAsync(key.ToCanonicalString(), serialized, options, ct);
     }
 
     /// <inheritdoc cref="ICacheProvider.RetrieveAsync{TInstance}"/>
@@ -96,36 +90,40 @@ public class RedisCacheProvider : ICacheProvider
     /// </remarks>
     public virtual async ValueTask<Result<TInstance>> RetrieveAsync<TInstance>
     (
-        string key,
+        CacheKey key,
         CancellationToken ct = default
     )
         where TInstance : class
     {
-        var value = await _cache.GetAsync(key, ct);
+        var keyString = key.ToCanonicalString();
+
+        var value = await _cache.GetAsync(keyString, ct);
 
         if (value is null)
         {
             return new NotFoundError($"The given key \"{key}\" held no value in the cache.");
         }
 
-        await _cache.RefreshAsync(key, ct);
+        await _cache.RefreshAsync(keyString, ct);
 
         var deserialized = JsonSerializer.Deserialize<TInstance>(value, _jsonOptions);
 
         return deserialized;
     }
 
-    /// <inheritdoc />
-    public async ValueTask<Result> EvictAsync(string key, CancellationToken ct = default)
+    /// <inheritdoc cref="ICacheProvider.EvictAsync" />
+    public async ValueTask<Result> EvictAsync(CacheKey key, CancellationToken ct = default)
     {
-        var existingValue = await _cache.GetAsync(key, ct);
+        var keyString = key.ToCanonicalString();
+
+        var existingValue = await _cache.GetAsync(keyString, ct);
 
         if (existingValue is null)
         {
             return new NotFoundError($"The given key \"{key}\" held no value in the cache.");
         }
 
-        await _cache.RemoveAsync(key, ct);
+        await _cache.RemoveAsync(keyString, ct);
 
         return Result.FromSuccess();
     }
@@ -138,17 +136,23 @@ public class RedisCacheProvider : ICacheProvider
     /// In the event that this is not the case, this method can be overridden in a derived class to provide
     /// a more apt transformation of evicted data.
     /// </remarks>
-    public virtual async ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
+    public virtual async ValueTask<Result<TInstance>> EvictAsync<TInstance>
+    (
+        CacheKey key,
+        CancellationToken ct = default
+    )
         where TInstance : class
     {
-        var existingValue = await _cache.GetAsync(key, ct);
+        var keyString = key.ToCanonicalString();
+
+        var existingValue = await _cache.GetAsync(keyString, ct);
 
         if (existingValue is null)
         {
             return new NotFoundError($"The given key \"{key}\" held no value in the cache.");
         }
 
-        await _cache.RemoveAsync(key, ct);
+        await _cache.RemoveAsync(keyString, ct);
 
         var deserialized = JsonSerializer.Deserialize<TInstance>(existingValue, _jsonOptions);
 

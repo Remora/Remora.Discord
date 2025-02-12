@@ -15,17 +15,7 @@
     ],
     "presence": {
       "since": 1623914239,
-      "activities": [
-        {
-          "type": 0,
-          "timestamps": {
-            "start": 0
-          },
-          "name": "none",
-          "id": "none",
-          "created_at": 0
-        }
-      ],
+      "activities": [ ],
       "status": "dnd",
       "afk": false
     },

@@ -14,6 +14,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity;
@@ -80,12 +81,10 @@ public class InteractiveCommands : CommandGroup
             (c, i) => new Embed(Image: new EmbedImage(i), Description: c)
         ).ToList();
 
-        var userID = _context switch
+        if (!_context.TryGetUserID(out var userID))
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
-            _ => throw new NotSupportedException()
-        };
+            throw new NotSupportedException();
+        }
 
         return await _feedback.SendContextualPaginatedMessageAsync
         (
@@ -196,12 +195,10 @@ public class InteractiveCommands : CommandGroup
     [SuppressInteractionResponse(true)]
     public async Task<Result> ShowModalAsync()
     {
-        var userID = _context switch
+        if (!_context.TryGetUserID(out var userID))
         {
-            IInteractionCommandContext ix => ix.Interaction.User.IsDefined(out var user) ? user.ID : default,
-            ITextCommandContext tx => tx.Message.Author.IsDefined(out var author) ? author.ID : default,
-            _ => throw new NotSupportedException()
-        };
+            throw new NotSupportedException();
+        }
 
         if (_context is not IInteractionContext interactionContext)
         {
@@ -236,7 +233,7 @@ public class InteractiveCommands : CommandGroup
                                     1,
                                     32,
                                     true,
-                                    string.Empty,
+                                    default,
                                     "Short Text here"
                                 )
                             }
@@ -255,5 +252,114 @@ public class InteractiveCommands : CommandGroup
         );
 
         return result;
+    }
+
+    /// <summary>
+    /// Shows a modal.
+    /// </summary>
+    /// <returns>A result, indicating if the modal was sent successfully.</returns>
+    [Command("ephemeral-modal")]
+    [SuppressInteractionResponse(true)]
+    public async Task<Result> ShowEphemeralModalAsync()
+    {
+        if (!_context.TryGetUserID(out var userID))
+        {
+            throw new NotSupportedException();
+        }
+
+        if (_context is not IInteractionContext interactionContext)
+        {
+            return (Result)await _feedback.SendContextualWarningAsync
+            (
+                "This command can only be used with slash commands.",
+                userID,
+                new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral)
+            );
+        }
+
+        var response = new InteractionResponse
+        (
+            InteractionCallbackType.Modal,
+            new
+            (
+                new InteractionModalCallbackData
+                (
+                    CustomIDHelpers.CreateModalID("ephemeral-modal"),
+                    "Test Modal",
+                    new[]
+                    {
+                        new ActionRowComponent
+                        (
+                            new[]
+                            {
+                                new TextInputComponent
+                                (
+                                    "modal-text-input",
+                                    TextInputStyle.Short,
+                                    "Short Text",
+                                    1,
+                                    32,
+                                    true,
+                                    default,
+                                    "Short Text here"
+                                )
+                            }
+                        )
+                    }
+                )
+            )
+        );
+
+        var result = await _interactionAPI.CreateInteractionResponseAsync
+        (
+            interactionContext.Interaction.ID,
+            interactionContext.Interaction.Token,
+            response,
+            ct: this.CancellationToken
+        );
+
+        return result;
+    }
+
+    /// <summary>
+    /// Pass state along with buttons.
+    /// </summary>
+    /// <returns>A result, indicating if the modal was sent successfully.</returns>
+    [Command("stateful-buttons")]
+    public async Task<IResult> SendStatefulButtonsAsync()
+    {
+        var embed = new Embed(Description: "Click on any button below.");
+        var options = new FeedbackMessageOptions(MessageComponents: new IMessageComponent[]
+        {
+            new ActionRowComponent(new[]
+            {
+                new ButtonComponent
+                (
+                    ButtonComponentStyle.Primary,
+                    "Primary",
+                    CustomID: CustomIDHelpers.CreateButtonIDWithState("stateful-button", "Primary")
+                ),
+                new ButtonComponent
+                (
+                    ButtonComponentStyle.Secondary,
+                    "Secondary",
+                    CustomID: CustomIDHelpers.CreateButtonIDWithState("stateful-button", "Secondary")
+                ),
+                new ButtonComponent
+                (
+                    ButtonComponentStyle.Success,
+                    "Success",
+                    CustomID: CustomIDHelpers.CreateButtonIDWithState("stateful-button", "Success")
+                ),
+                new ButtonComponent
+                (
+                    ButtonComponentStyle.Danger,
+                    "No State",
+                    CustomID: CustomIDHelpers.CreateButtonID("stateful-button")
+                )
+            })
+        });
+
+        return await _feedback.SendContextualEmbedAsync(embed, options, this.CancellationToken);
     }
 }

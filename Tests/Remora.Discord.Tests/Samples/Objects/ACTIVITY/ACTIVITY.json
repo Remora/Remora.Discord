@@ -1,7 +1,19 @@
 {
-  "type": 4,
-  "state": "none",
   "name": "none",
-  "id": "none",
-  "created_at": 0
+  "type": 4,
+  "url": "https://www.example.org",
+  "created_at": 0,
+  "timestamps": {},
+  "application_id": "999999999999999999",
+  "details": "none",
+  "state": "none",
+  "emoji": {
+    "name": "none"
+  },
+  "party": {},
+  "assets": {},
+  "secrets": {},
+  "instance": true,
+  "flags": 0,
+  "buttons": []
 }

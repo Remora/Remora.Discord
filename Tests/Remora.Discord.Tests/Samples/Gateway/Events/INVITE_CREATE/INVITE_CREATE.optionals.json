@@ -1,0 +1,14 @@
+{
+  "t": "INVITE_CREATE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "channel_id": "999999999999999999",
+    "code": "123456",
+    "created_at": "1970-01-01T00:00:00.000000+00:00",
+    "max_age": 1,
+    "max_uses": 1,
+    "temporary": true,
+    "uses": 1
+  }
+}

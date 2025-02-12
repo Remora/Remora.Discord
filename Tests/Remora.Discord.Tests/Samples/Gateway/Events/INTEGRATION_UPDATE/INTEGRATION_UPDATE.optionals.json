@@ -1,0 +1,16 @@
+{
+  "t": "INTEGRATION_UPDATE",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "name": "none",
+    "type": "twitch",
+    "enabled": true,
+    "account": {
+      "id": "999999999999999999",
+      "name": "none"
+    },
+    "guild_id": "999999999999999999"
+  }
+}

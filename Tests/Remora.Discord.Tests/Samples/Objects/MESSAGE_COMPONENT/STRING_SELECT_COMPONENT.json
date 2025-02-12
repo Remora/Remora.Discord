@@ -4,16 +4,11 @@
   "options": [
     {
       "label": "none",
-      "value": "priest",
-      "description": "none",
-      "emoji": {
-        "name": "none",
-        "id": "999999999999999999"
-      }
+      "value": "none"
     }
   ],
   "placeholder": "none",
   "min_values": 1,
   "max_values": 3,
-  "disabled": false
+  "disabled": true
 }

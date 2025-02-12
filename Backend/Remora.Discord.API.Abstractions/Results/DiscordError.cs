@@ -127,6 +127,11 @@ public enum DiscordError
     UnknownSession = 10020,
 
     /// <summary>
+    /// Unknown asset.
+    /// </summary>
+    UnknownAsset = 10021,
+
+    /// <summary>
     /// Unknown ban.
     /// </summary>
     UnknownBan = 10026,
@@ -252,6 +257,11 @@ public enum DiscordError
     UnknownTag = 10087,
 
     /// <summary>
+    /// Unknown sound.
+    /// </summary>
+    UnknownSound = 10097,
+
+    /// <summary>
     /// Bots cannot use this endpoint.
     /// </summary>
     NoBotsAllowed = 20001,
@@ -337,7 +347,7 @@ public enum DiscordError
     MaxGuildRolesReached = 30005,
 
     /// <summary>
-    /// Maximum number of webhooks reached (10).
+    /// Maximum number of webhooks reached (15).
     /// </summary>
     MaxWebhooksReached = 30007,
 
@@ -350,6 +360,11 @@ public enum DiscordError
     /// Maximum number of reactions reached (20).
     /// </summary>
     MaxReactionsReached = 30010,
+
+    /// <summary>
+    /// Maximum number of group DMs has been reached (10).
+    /// </summary>
+    MaximumNumberOfGroupDMsReached = 30011,
 
     /// <summary>
     /// Maximum number of guild channels reached (500).
@@ -432,6 +447,11 @@ public enum DiscordError
     MaxNumberOfGuildWidgetSettingUpdatesReached = 30042,
 
     /// <summary>
+    /// The maximum number of soundboard sounds in the guild has been reached.
+    /// </summary>
+    MaxNumberOfGuildSoundboardSoundsReached = 30045,
+
+    /// <summary>
     /// Maximum number of edits to messages older than 1 hour reached. Try again later.
     /// </summary>
     MaxNumberOfEditsToMessagesOlderThanOneHourReached = 30046,
@@ -450,6 +470,26 @@ public enum DiscordError
     /// The requested bitrate is too high for a channel of this type.
     /// </summary>
     BitrateTooHighForChannelType = 30052,
+
+    /// <summary>
+    /// The maximum number of premium emojis has been reached (25).
+    /// </summary>
+    MaximumNumberOfPremiumEmojisReached = 30056,
+
+    /// <summary>
+    /// The maximum number of webhooks per guild has been reached (1000).
+    /// </summary>
+    MaximumNumberOfWebhooksPerGuildReached = 30058,
+
+    /// <summary>
+    /// The maximum number of channel permission overwrites has been reached (1000).
+    /// </summary>
+    MaximumNumberOfChannelPermissionOverwritesReached = 30060,
+
+    /// <summary>
+    /// The channels for the guild are too large.
+    /// </summary>
+    ChannelsForGuildAreTooLarge = 30061,
 
     /// <summary>
     /// Unauthorized. Provide a valid token and try again.
@@ -527,6 +567,11 @@ public enum DiscordError
     TagNamesMustBeUnique = 40061,
 
     /// <summary>
+    /// A service resource is being rate limited.
+    /// </summary>
+    ServiceResourceIsBeingRateLimited = 40062,
+
+    /// <summary>
     /// There are no tags available that can be set by non-moderators.
     /// </summary>
     NoUnmoderatedTagsAvailable = 40066,
@@ -535,6 +580,11 @@ public enum DiscordError
     /// A tag is required to create a forum post in this channel.
     /// </summary>
     TagRequired = 40067,
+
+    /// <summary>
+    /// An entitlement has already been granted for this resource.
+    /// </summary>
+    EntitlementAlreadyGranted = 40074,
 
     /// <summary>
     /// Missing access.
@@ -714,6 +764,16 @@ public enum DiscordError
     InvalidGuild = 50055,
 
     /// <summary>
+    /// The SKU is invalid.
+    /// </summary>
+    InvalidSKU = 50057,
+
+    /// <summary>
+    /// The request origin is invalid.
+    /// </summary>
+    InvalidRequestOrigin = 50067,
+
+    /// <summary>
     /// Some message type is invalid.
     /// </summary>
     InvalidMessageType = 50068,
@@ -764,6 +824,11 @@ public enum DiscordError
     CommunityServerChannelMustBeTextChannel = 50086,
 
     /// <summary>
+    /// The entity type of the event is different from the entity you are trying to start the event for.
+    /// </summary>
+    EventEntityTypeIsDifferentThanAttemptedStartEntity = 50091,
+
+    /// <summary>
     /// This server is not available in your location.
     /// </summary>
     ServerUnavailableInYourLocation = 50095,
@@ -784,6 +849,26 @@ public enum DiscordError
     InvalidJSONInRequestBody = 50109,
 
     /// <summary>
+    /// The provided file is invalid.
+    /// </summary>
+    InvalidFile = 50110,
+
+    /// <summary>
+    /// The provided file type is invalid.
+    /// </summary>
+    InvalidFileType = 50123,
+
+    /// <summary>
+    /// The duration of the provided sound file is too long.
+    /// </summary>
+    InvalidFileDuration = 50124,
+
+    /// <summary>
+    /// The specified owner cannot be a pending member.
+    /// </summary>
+    OwnerCannotBePendingMember = 50131,
+
+    /// <summary>
     /// The ownership of the object cannot be transferred to a bot user.
     /// </summary>
     OwnershipCannotBeTransferredToBotUser = 50132,
@@ -794,9 +879,64 @@ public enum DiscordError
     FailedToResizeAsset = 50138,
 
     /// <summary>
+    /// Cannot mix subscription and non subscriptions roles for an emoji.
+    /// </summary>
+    CannotMixSubscriptionAndNormalRolesForEmoji = 50144,
+
+    /// <summary>
+    /// Cannot convert between premium emoji and normal emoji.
+    /// </summary>
+    CannotConvertBetweenPremiumAndNormalEmoji = 50145,
+
+    /// <summary>
     /// The uploaded file was not found.
     /// </summary>
     UploadedFileNotFound = 50146,
+
+    /// <summary>
+    /// The specified emoji is invalid.
+    /// </summary>
+    InvalidEmoji = 50151,
+
+    /// <summary>
+    /// Additional attachments are not possible for voice messages.
+    /// </summary>
+    VoiceMessagesDoNotSupportAdditionalContent = 50159,
+
+    /// <summary>
+    /// Voice messages must have an audio attachment.
+    /// </summary>
+    VoiceMessagesMustHaveASingleAudioAttachment = 50160,
+
+    /// <summary>
+    /// Voice messages must have additional data attached to the object.
+    /// </summary>
+    VoiceMessagesMustHaveSupportingMetadata = 50161,
+
+    /// <summary>
+    /// Voice messages cannot be edited.
+    /// </summary>
+    VoiceMessagesCannotBeEdited = 50162,
+
+    /// <summary>
+    /// Guild integrations that come from subscriptions cannot be deleted.
+    /// </summary>
+    CannotDeleteGuildSubscriptionIntegration = 50163,
+
+    /// <summary>
+    /// Voice messages cannot be sent in this channel.
+    /// </summary>
+    YouCannotSendVoiceMessagesInThisChannel = 50173,
+
+    /// <summary>
+    /// The given user must be verified first.
+    /// </summary>
+    TheUserMustFirstBeVerified = 50178,
+
+    /// <summary>
+    /// The provided sound file has an invalid duration.
+    /// </summary>
+    ProvidedFileHasInvalidDuration = 50192,
 
     /// <summary>
     /// You do not have permission to send this sticker.
@@ -817,6 +957,11 @@ public enum DiscordError
     /// Reaction was blocked.
     /// </summary>
     ReactionBlocked = 90001,
+
+    /// <summary>
+    /// The user cannot use burst (super) reactions.
+    /// </summary>
+    UserCannotUseBurstReactions = 90002,
 
     /// <summary>
     /// The application isn't available yet. Try again later.
@@ -931,5 +1076,50 @@ public enum DiscordError
     /// <summary>
     /// Webhook services cannot be used in forum channels.
     /// </summary>
-    WebhookServicesCannotBeUsedInForumChannels = 220004
+    WebhookServicesCannotBeUsedInForumChannels = 220004,
+
+    /// <summary>
+    /// Onboarding cannot be enabled while requirements are not met.
+    /// </summary>
+    CannotEnableOnboarding = 350000,
+
+    /// <summary>
+    /// Onboarding cannot be updated while requirements are not met.
+    /// </summary>
+    CannotUpdateOnboarding = 350001,
+
+    /// <summary>
+    /// Failed to bulk ban the given set of users.
+    /// </summary>
+    FailedToBanUsers = 500000,
+
+    /// <summary>
+    /// Poll voting is blocked.
+    /// </summary>
+    PollVotingBlocked = 520000,
+
+    /// <summary>
+    /// Poll has expired.
+    /// </summary>
+    PollExpired = 520001,
+
+    /// <summary>
+    /// Invalid channel type for poll creation.
+    /// </summary>
+    InvalidChannelTypeForPollCreation = 520002,
+
+    /// <summary>
+    /// Poll message cannot be edited.
+    /// </summary>
+    CannotEditAPollMessage = 520003,
+
+    /// <summary>
+    /// The emoji included in the poll cannot be used.
+    /// </summary>
+    CannotUseAnEmojiIncludedWithThePoll = 520004,
+
+    /// <summary>
+    /// A non-poll message cannot expire.
+    /// </summary>
+    CannotExpireANonPollMessage = 520006,
 }

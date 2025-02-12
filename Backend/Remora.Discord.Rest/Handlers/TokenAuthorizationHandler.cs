@@ -35,21 +35,25 @@ namespace Remora.Discord.Rest.Handlers;
 /// </summary>
 internal class TokenAuthorizationHandler : DelegatingHandler
 {
-    private readonly ITokenStore _tokenStore;
+    private readonly IAsyncTokenStore _tokenStore;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TokenAuthorizationHandler"/> class.
     /// </summary>
     /// <param name="tokenStore">The token store.</param>
-    public TokenAuthorizationHandler(ITokenStore tokenStore)
+    public TokenAuthorizationHandler(IAsyncTokenStore tokenStore)
     {
         _tokenStore = tokenStore;
     }
 
     /// <inheritdoc />
-    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override async Task<HttpResponseMessage> SendAsync
+    (
+        HttpRequestMessage request,
+        CancellationToken cancellationToken
+    )
     {
-        var token = _tokenStore.Token;
+        var token = await _tokenStore.GetTokenAsync(cancellationToken);
         var tokenType = _tokenStore.TokenType;
 
         if (string.IsNullOrWhiteSpace(token))
@@ -63,16 +67,16 @@ internal class TokenAuthorizationHandler : DelegatingHandler
         if (request.Properties.ContainsKey(Constants.SkipAuthorizationPropertyName))
         #endif
         {
-            return base.SendAsync(request, cancellationToken);
+            return await base.SendAsync(request, cancellationToken);
         }
 
         AddTokenToPollyContext(request, token);
         AddAuthorizationHeader(request, token, tokenType);
 
-        return base.SendAsync(request, cancellationToken);
+        return await base.SendAsync(request, cancellationToken);
     }
 
-    private void AddAuthorizationHeader
+    private static void AddAuthorizationHeader
     (
         HttpRequestMessage request,
         string token,
@@ -86,7 +90,7 @@ internal class TokenAuthorizationHandler : DelegatingHandler
         );
     }
 
-    private void AddTokenToPollyContext(HttpRequestMessage request, string token)
+    private static void AddTokenToPollyContext(HttpRequestMessage request, string token)
     {
         void ModifyContext(Context context)
         {

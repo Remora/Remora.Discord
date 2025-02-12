@@ -40,7 +40,9 @@ public class EphemeralAttribute : Attribute
     /// <summary>
     /// Initializes a new instance of the <see cref="EphemeralAttribute"/> class.
     /// </summary>
-    /// <param name="isEphemeral">A value indicating whether this command should send ephemeral responses. Set this to override group-level <see cref="EphemeralAttribute"/>s.</param>
+    /// <param name="isEphemeral">
+    /// Whether this command should send ephemeral responses. Set this to override group-level
+    /// <see cref="EphemeralAttribute"/>s.</param>
     public EphemeralAttribute(bool isEphemeral = true)
     {
         this.IsEphemeral = isEphemeral;

@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Interactivity;
 
 /// <summary>
@@ -28,4 +30,5 @@ namespace Remora.Discord.Interactivity;
 /// <param name="SuppressAutomaticResponses">
 /// true if the responder shouldn't automatically create interaction responses; otherwise, false.
 /// </param>
+[PublicAPI]
 public record InteractivityResponderOptions(bool SuppressAutomaticResponses = false);

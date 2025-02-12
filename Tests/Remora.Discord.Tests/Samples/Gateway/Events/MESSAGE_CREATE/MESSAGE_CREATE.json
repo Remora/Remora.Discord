@@ -1,0 +1,133 @@
+{
+  "t": "MESSAGE_CREATE",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "channel_id": "999999999999999999",
+    "author": {
+      "username": "none",
+      "discriminator": "9999",
+      "id": "999999999999999999",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+    },
+    "content": "none",
+    "timestamp": "1970-01-01T00:00:00.000000+00:00",
+    "edited_timestamp": "1970-01-01T00:00:00.000000+00:00",
+    "tts": true,
+    "mention_everyone": true,
+    "mention_roles": [
+      "999999999999999999"
+    ],
+    "mention_channels": [
+      {
+        "id": "999999999999999999",
+        "guild_id": "999999999999999999",
+        "type": 1,
+        "name": "none"
+      }
+    ],
+    "attachments": [
+      {
+        "id": "999999999999999999",
+        "filename": "file.png",
+        "size": 0,
+        "url": "https://www.example.org",
+        "proxy_url": "https://www.example.org"
+      }
+    ],
+    "embeds": [
+      {}
+    ],
+    "reactions": [
+      {
+        "count": 1,
+        "count_details": {
+          "burst": 1,
+          "normal": 2
+        },
+        "me": true,
+        "me_burst": true,
+        "emoji": { },
+        "burst_colors": [
+          "#ffffff",
+          "#e30f8a"
+        ]
+      }
+    ],
+    "nonce": "none",
+    "pinned": true,
+    "webhook_id": "999999999999999999",
+    "type": 1,
+    "activity": {
+      "type": 1
+    },
+    "application": {},
+    "application_id": "999999999999999999",
+    "message_reference": {},
+    "flags": 1,
+    "referenced_message": {
+      "id": "999999999999999999",
+      "channel_id": "999999999999999999",
+      "author": {
+        "username": "none",
+        "discriminator": "9999",
+        "id": "999999999999999999",
+        "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+      },
+      "content": "none",
+      "timestamp": "1970-01-01T00:00:00.000000+00:00",
+      "edited_timestamp": "1970-01-01T00:00:00.000000+00:00",
+      "tts": true,
+      "mention_everyone": true,
+      "mentions": [],
+      "mention_roles": [],
+      "attachments": [],
+      "embeds": [],
+      "pinned": true,
+      "type": 1
+    },
+    "message_snapshots": [],
+    "interaction": {
+      "id": "999999999999999999",
+      "type": 1,
+      "name": "none",
+      "user": {
+        "username": "none",
+        "discriminator": "9999",
+        "id": "999999999999999999",
+        "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+      }
+    },
+    "thread": {
+      "id": "999999999999999999",
+      "type": 1
+    },
+    "components": [
+      {
+        "type": 1,
+        "components": []
+      }
+    ],
+    "sticker_items": [
+      {
+        "id": "999999999999999999",
+        "name": "none",
+        "format_type": 1
+      }
+    ],
+    "position": 1,
+    "guild_id": "999999999999999999",
+    "member": {},
+    "mentions": [
+      {
+        "id": "999999999999999999",
+        "username": "none",
+        "discriminator": "9999",
+        "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+        "member": {}
+      }
+    ],
+    "resolved": {}
+  }
+}

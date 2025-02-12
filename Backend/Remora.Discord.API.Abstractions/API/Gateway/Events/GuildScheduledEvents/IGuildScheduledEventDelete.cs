@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events;
@@ -27,6 +28,5 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// <summary>
 /// Sent when a scheduled event is deleted.
 /// </summary>
-public interface IGuildScheduledEventDelete : IGatewayEvent, IGuildScheduledEvent
-{
-}
+[PublicAPI]
+public interface IGuildScheduledEventDelete : IGatewayEvent, IGuildScheduledEvent;

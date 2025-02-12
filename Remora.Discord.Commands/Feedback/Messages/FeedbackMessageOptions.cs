@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -36,6 +37,7 @@ namespace Remora.Discord.Commands.Feedback.Messages;
 /// <param name="AllowedMentions">The allowed mentions for the message.</param>
 /// <param name="MessageComponents">A list of message components to include with the message.</param>
 /// <param name="MessageFlags">The flags to set on the message.</param>
+[PublicAPI]
 public record FeedbackMessageOptions
 (
     Optional<bool> IsTTS = default,

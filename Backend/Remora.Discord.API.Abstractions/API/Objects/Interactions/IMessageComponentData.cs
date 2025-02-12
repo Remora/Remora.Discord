@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -52,5 +53,5 @@ public interface IMessageComponentData
     /// <summary>
     /// Gets the values selected by the user.
     /// </summary>
-    Optional<IReadOnlyList<string>> Values { get; }
+    Optional<OneOf<IReadOnlyList<Snowflake>, IReadOnlyList<string>>> Values { get; }
 }

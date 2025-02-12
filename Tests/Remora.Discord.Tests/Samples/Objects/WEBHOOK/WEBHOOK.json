@@ -1,16 +1,19 @@
 {
-  "name": "none",
-  "type": 1,
-  "channel_id": "999999999999999999",
-  "token": "none",
-  "avatar": null,
-  "guild_id": "999999999999999999",
   "id": "999999999999999999",
+  "type": 1,
+  "guild_id": "999999999999999999",
+  "channel_id": "999999999999999999",
   "user": {
     "username": "none",
     "discriminator": "9999",
     "id": "999999999999999999",
     "avatar": "68b329da9893e34099c7d8ad5cb9c940"
   },
-  "application_id": "999999999999999999"
+  "name": "none",
+  "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+  "token": "none",
+  "application_id": "999999999999999999",
+  "source_guild": { },
+  "source_channel": { },
+  "url": "https://www.example.org"
 }

@@ -116,20 +116,6 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
-            public void ThrowsIfACommandContainsACollectionParameter()
-            {
-                var builder = new CommandTreeBuilder();
-                builder.RegisterModule<CollectionsAreNotSupported>();
-
-                var tree = builder.Build();
-
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
-            }
-
-            /// <summary>
-            /// Tests whether the method responds appropriately to a failure case.
-            /// </summary>
-            [Fact]
             public void ThrowsIfACommandContainsASwitchParameter()
             {
                 var builder = new CommandTreeBuilder();
@@ -229,11 +215,110 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
+            public void ThrowsIfNestedNamedGroupHasADefaultPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<OnlyTopLevelDefaultPermissionAttributeAllowed.GroupViolation>();
+
+                var tree = builder.Build();
+
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ThrowsIfNestedCommandHasADefaultPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<OnlyTopLevelDefaultPermissionAttributeAllowed.CommandViolation>();
+
+                var tree = builder.Build();
+
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
             public void ThrowsIfMultipleNamedGroupsWithTheSameNameHaveADefaultDMPermissionAttribute()
             {
                 var builder = new CommandTreeBuilder();
                 builder.RegisterModule<AtMostOneDMPermissionAttributeAllowed.Named.GroupOne>();
                 builder.RegisterModule<AtMostOneDMPermissionAttributeAllowed.Named.GroupTwo>();
+
+                var tree = builder.Build();
+
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ThrowsIfNestedNamedGroupHasADefaultDMPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<OnlyTopLevelDMPermissionAttributeAllowed.GroupViolation>();
+
+                var tree = builder.Build();
+
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ThrowsIfNestedCommandHasADefaultDMPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<OnlyTopLevelDMPermissionAttributeAllowed.CommandViolation>();
+
+                var tree = builder.Build();
+
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ThrowsIfMultipleNamedGroupsWithTheSameNameHaveAnNsfwPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<AtMostOneNsfwAttributeAllowed.Named.GroupOne>();
+                builder.RegisterModule<AtMostOneNsfwAttributeAllowed.Named.GroupTwo>();
+
+                var tree = builder.Build();
+
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ThrowsIfNestedNamedGroupHasAnNsfwPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<OnlyTopLevelNsfwAttributeAllowed.GroupViolation>();
+
+                var tree = builder.Build();
+
+                Assert.Throws<InvalidNodeException>(() => tree.CreateApplicationCommands());
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a failure case.
+            /// </summary>
+            [Fact]
+            public void ThrowsIfNestedCommandHasAnNsfwPermissionAttribute()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<OnlyTopLevelNsfwAttributeAllowed.CommandViolation>();
 
                 var tree = builder.Build();
 
@@ -516,11 +601,11 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a successful case.
             /// </summary>
             [Fact]
-            public void CreatesUngroupedTopLevelCommandsWithDefaultPermissionCorrectly()
+            public void CreatesUngroupedTopLevelCommandsWithDefaultPermissionAttributeOnGroupCorrectly()
             {
                 var builder = new CommandTreeBuilder();
-                builder.RegisterModule<MultipleCommandsWithDefaultPermission.GroupOne>();
-                builder.RegisterModule<MultipleCommandsWithDefaultPermission.GroupTwo>();
+                builder.RegisterModule<MultipleCommandsWithDefaultPermissionOnGroup.GroupOne>();
+                builder.RegisterModule<MultipleCommandsWithDefaultPermissionOnGroup.GroupTwo>();
 
                 var tree = builder.Build();
 
@@ -538,14 +623,102 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a successful case.
             /// </summary>
             [Fact]
-            public void CreatesUngroupedTopLevelCommandsWithDefaultDMPermissionCorrectly()
+            public void CreatesUngroupedTopLevelCommandsWithDefaultPermissionAttributeOnCommandCorrectly()
             {
                 var builder = new CommandTreeBuilder();
-                builder.RegisterModule<MultipleCommandsWithDMPermission.GroupOne>();
-                builder.RegisterModule<MultipleCommandsWithDMPermission.GroupTwo>();
+                builder.RegisterModule<MultipleCommandsWithDefaultPermissionOnCommand.GroupOne>();
+                builder.RegisterModule<MultipleCommandsWithDefaultPermissionOnCommand.GroupTwo>();
+
                 var tree = builder.Build();
 
-                _ = tree.CreateApplicationCommands();
+                var commands = tree.CreateApplicationCommands();
+
+                Assert.Equal(2, commands.Count);
+                var a = commands[0];
+                var b = commands[1];
+
+                Assert.Equal(8, a.DefaultMemberPermissions?.Value);
+                Assert.Equal(4, b.DefaultMemberPermissions?.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesUngroupedTopLevelCommandsWithDefaultDMPermissionAttributeOnGroupCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<MultipleCommandsWithDMPermissionOnGroup.GroupOne>();
+                builder.RegisterModule<MultipleCommandsWithDMPermissionOnGroup.GroupTwo>();
+                var tree = builder.Build();
+
+                var commands = tree.CreateApplicationCommands();
+
+                var commandA = commands.Single(c => c.Name == "a");
+                Assert.True(commandA.DMPermission.Value);
+
+                var commandB = commands.Single(c => c.Name == "b");
+                Assert.False(commandB.DMPermission.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesUngroupedTopLevelCommandsWithDefaultDMPermissionAttributeOnCommandCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<MultipleCommandsWithDMPermissionOnCommand.GroupOne>();
+                builder.RegisterModule<MultipleCommandsWithDMPermissionOnCommand.GroupTwo>();
+                var tree = builder.Build();
+
+                var commands = tree.CreateApplicationCommands();
+
+                var commandA = commands.Single(c => c.Name == "a");
+                Assert.True(commandA.DMPermission.Value);
+
+                var commandB = commands.Single(c => c.Name == "b");
+                Assert.False(commandB.DMPermission.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesUngroupedTopLevelCommandsWithNsfwAttributeOnGroupCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<MultipleCommandsWithNsfwOnGroup.GroupOne>();
+                builder.RegisterModule<MultipleCommandsWithNsfwOnGroup.GroupTwo>();
+                var tree = builder.Build();
+
+                var commands = tree.CreateApplicationCommands();
+
+                var commandA = commands.Single(c => c.Name == "a");
+                Assert.True(commandA.IsNsfw.Value);
+
+                var commandB = commands.Single(c => c.Name == "b");
+                Assert.False(commandB.IsNsfw.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesUngroupedTopLevelCommandsWithNsfwAttributeOnCommandCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<MultipleCommandsWithNsfwOnCommand.GroupOne>();
+                builder.RegisterModule<MultipleCommandsWithNsfwOnCommand.GroupTwo>();
+                var tree = builder.Build();
+
+                var commands = tree.CreateApplicationCommands();
+
+                var commandA = commands.Single(c => c.Name == "a");
+                Assert.True(commandA.IsNsfw.Value);
+
+                var commandB = commands.Single(c => c.Name == "b");
+                Assert.False(commandB.IsNsfw.Value);
             }
 
             /// <summary>
@@ -559,7 +732,27 @@ public class CommandTreeExtensionTests
 
                 var tree = builder.Build();
 
-                _ = tree.CreateApplicationCommands();
+                var commands = tree.CreateApplicationCommands();
+
+                var groupA = commands.Single(c => c.Name == "a");
+                Assert.True(groupA.DMPermission.Value);
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesMultipartGroupWithNsfwCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<MultipartNamedGroupWithNsfw>();
+
+                var tree = builder.Build();
+
+                var commands = tree.CreateApplicationCommands();
+
+                var groupA = commands.Single(c => c.Name == "a");
+                Assert.True(groupA.IsNsfw.Value);
             }
 
             /// <summary>
@@ -1536,10 +1729,13 @@ public class CommandTreeExtensionTests
                     string.Empty,
                     new[]
                     {
-                        new ApplicationCommandOption(SubCommandGroup, subGroupNode.Key, string.Empty, Options: new[]
-                        {
-                            new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty)
-                        })
+                        new ApplicationCommandOption
+                        (
+                            SubCommandGroup,
+                            subGroupNode.Key,
+                            string.Empty,
+                            Options: new[] { new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty) }
+                        )
                     },
                     default
                 )
@@ -1595,11 +1791,17 @@ public class CommandTreeExtensionTests
                     string.Empty,
                     new[]
                     {
-                        new ApplicationCommandOption(SubCommandGroup, subGroupNode.Key, string.Empty, Options: new[]
-                        {
-                            new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty),
-                            new ApplicationCommandOption(SubCommand, commandNodeD.Key, string.Empty)
-                        }),
+                        new ApplicationCommandOption
+                        (
+                            SubCommandGroup,
+                            subGroupNode.Key,
+                            string.Empty,
+                            Options: new[]
+                            {
+                                new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty),
+                                new ApplicationCommandOption(SubCommand, commandNodeD.Key, string.Empty)
+                            }
+                        ),
                         new ApplicationCommandOption(SubCommand, commandNodeE.Key, string.Empty),
                         new ApplicationCommandOption(SubCommand, commandNodeF.Key, string.Empty)
                     },

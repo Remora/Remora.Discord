@@ -33,7 +33,12 @@ namespace Remora.Discord.API.Json;
 internal class MessageComponentConverter : JsonConverter<IMessageComponent>
 {
     /// <inheritdoc />
-    public override IMessageComponent? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IMessageComponent? Read
+    (
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
     {
         if (reader.TokenType != JsonTokenType.StartObject)
         {
@@ -80,7 +85,7 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 => document.RootElement.Deserialize<IMentionableSelectComponent>(options),
             ComponentType.ChannelSelect
                 => document.RootElement.Deserialize<IChannelSelectComponent>(options),
-            _ => throw new ArgumentOutOfRangeException(nameof(type))
+            _ => throw new NotSupportedException($"Deserialization of the component type {type} is not supported")
         };
     }
 
@@ -119,14 +124,14 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 JsonSerializer.Serialize(writer, roleSelect, options);
                 break;
             }
-            case IMentionableSelectComponent mentionableSelect:
-            {
-                JsonSerializer.Serialize(writer, mentionableSelect, options);
-                break;
-            }
             case IChannelSelectComponent channelSelect:
             {
                 JsonSerializer.Serialize(writer, channelSelect, options);
+                break;
+            }
+            case IMentionableSelectComponent mentionableSelect:
+            {
+                JsonSerializer.Serialize(writer, mentionableSelect, options);
                 break;
             }
             default:

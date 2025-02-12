@@ -1,0 +1,11 @@
+{
+  "id": "999999999999999999",
+  "name": "none",
+  "color": 1,
+  "hoist": true,
+  "position": 1,
+  "permissions": "0",
+  "managed": true,
+  "mentionable": true,
+  "flags": 0
+}

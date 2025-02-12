@@ -1,0 +1,4 @@
+#!/bin/bash
+
+DOCFX_DIR=${GITHUB_WORKSPACE}/base/docfx
+SITE_DIR=${GITHUB_WORKSPACE}/site

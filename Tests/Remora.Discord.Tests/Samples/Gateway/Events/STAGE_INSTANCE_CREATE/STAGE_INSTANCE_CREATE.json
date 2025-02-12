@@ -8,7 +8,7 @@
     "channel_id": "999999999999999999",
     "topic": "none",
     "privacy_level": 1,
-    "discoverable_disabled": false,
+    "discoverable_disabled": true,
     "guild_scheduled_event_id": "999999999999999999"
   }
 }

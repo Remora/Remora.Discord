@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -28,6 +29,7 @@ namespace Remora.Discord.Commands.Contexts;
 /// <summary>
 /// Represents contextual information about an ongoing operation on a message.
 /// </summary>
+[PublicAPI]
 public interface IMessageContext : IOperationContext
 {
     /// <summary>

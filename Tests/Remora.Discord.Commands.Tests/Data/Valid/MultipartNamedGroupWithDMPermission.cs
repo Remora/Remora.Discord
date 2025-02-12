@@ -38,7 +38,7 @@ public class MultipartNamedGroupWithDMPermission : CommandGroup
     /// The first group.
     /// </summary>
     [Group("a")]
-    [DiscordDefaultDMPermission(false)]
+    [DiscordDefaultDMPermission]
     public class MultipartNamedGroupWithDMPermissionPart1 : CommandGroup
     {
         /// <summary>
