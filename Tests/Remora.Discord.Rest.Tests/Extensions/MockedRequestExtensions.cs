@@ -38,11 +38,5 @@ public static class MockedRequestExtensions
     /// <param name="value">The query string value to match.</param>
     /// <returns>The <see cref="T:MockedRequest" /> instance.</returns>
     public static MockedRequest WithExactQueryString(this MockedRequest source, string name, string value) =>
-        source.WithExactQueryString(new Dictionary<string, string>
-        {
-            {
-                name,
-                value
-            }
-        });
+        source.WithExactQueryString(new Dictionary<string, string> { { name, value } });
 }

@@ -46,12 +46,12 @@ namespace Remora.Discord.API.Tests.TestBases;
 [Collection("JSON-backed type tests")]
 [UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract class JsonBackedTypeTestBase<TType, TSampleSource>
-    where TSampleSource : TheoryData, new()
+    where TSampleSource : TheoryData<SampleDataDescriptor>, new()
 {
     /// <summary>
     /// Gets the data sample source.
     /// </summary>
-    public static TheoryData SampleSource => new TSampleSource();
+    public static TheoryData<SampleDataDescriptor> SampleSource => new TSampleSource();
 
     /// <summary>
     /// Gets the JSON serializer options in use.

@@ -41,8 +41,7 @@ public static class ChannelContextExtensions
         new Dictionary<ChannelContext, IReadOnlyList<ChannelType>>
         {
             {
-                ChannelContext.Guild,
-                new[]
+                ChannelContext.Guild, new[]
                 {
                     GuildText,
                     GuildVoice,
@@ -55,15 +54,13 @@ public static class ChannelContextExtensions
                 }
             },
             {
-                ChannelContext.DM,
-                new[]
+                ChannelContext.DM, new[]
                 {
                     DM
                 }
             },
             {
-                ChannelContext.GroupDM,
-                new[]
+                ChannelContext.GroupDM, new[]
                 {
                     GroupDM
                 }

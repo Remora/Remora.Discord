@@ -2546,8 +2546,8 @@ public class DiscordRestApplicationAPITests
                                     "integration_types_config",
                                     p => p.IsObject
                                     (
-                                        a => a.WithProperty("0", p => p.IsObject())
-                                              .WithProperty("1", p => p.IsObject())
+                                        a => a.WithProperty("0", pp => pp.IsObject())
+                                              .WithProperty("1", pp => pp.IsObject())
                                     )
                                 )
                         )
