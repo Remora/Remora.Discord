@@ -37,10 +37,11 @@ public sealed record PaginatedAppearanceOptions
     ButtonComponent Previous,
     ButtonComponent Next,
     ButtonComponent Last,
-    ButtonComponent Close,
-    ButtonComponent Help,
-    Embed HelpEmbed,
-    string FooterFormat = "Page {0}/{1}"
+    ButtonComponent? Close,
+    ButtonComponent? Help,
+    Embed? HelpEmbed,
+    string FooterFormat = "Page {0}/{1}",
+    ButtonComponent[]? CustomButtons = null
 )
 {
     /// <summary>
@@ -94,7 +95,7 @@ public sealed record PaginatedAppearanceOptions
     /// <summary>
     /// Gets the appearance options' configured buttons as an array.
     /// </summary>
-    public IReadOnlyList<ButtonComponent> Buttons { get; } = new[]
+    public IReadOnlyList<ButtonComponent?> Buttons { get; } = new[]
     {
         First,
         Previous,

@@ -175,6 +175,11 @@ internal class PaginationInteractions : InteractionGroup
         {
             return Result.FromSuccess();
         }
+        if (lease.Data.Appearance.HelpEmbed == null)
+        {
+            return new InvalidOperationError("Help embed is not available.");
+        }
+
         return (Result)await _feedback.SendContextualEmbedAsync
         (
             lease.Data.Appearance.HelpEmbed,
