@@ -21,13 +21,13 @@
     <PackageVersion Include="OneOf" Version="3.0.271" />
     <PackageVersion Include="Polly" Version="8.5.2" />
     <PackageVersion Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
-    <PackageVersion Include="Remora.Commands" Version="10.0.6" />
-    <PackageVersion Include="Remora.Extensions.Options.Immutable" Version="1.0.8" />
-    <PackageVersion Include="Remora.Rest" Version="3.4.0" />
-    <PackageVersion Include="Remora.Rest.Core" Version="2.2.1" />
-    <PackageVersion Include="Remora.Rest.Xunit" Version="3.0.4" />
-    <PackageVersion Include="Remora.Results" Version="7.4.1" />
-    <PackageVersion Include="Remora.Results.Analyzers" Version="1.0.2" PrivateAssets="all" />
+    <PackageVersion Include="Remora.Commands" Version="11.0.1" />
+    <PackageVersion Include="Remora.Extensions.Options.Immutable" Version="2.0.0" />
+    <PackageVersion Include="Remora.Rest" Version="4.0.0" />
+    <PackageVersion Include="Remora.Rest.Core" Version="3.0.0" />
+    <PackageVersion Include="Remora.Rest.Xunit" Version="4.0.0" />
+    <PackageVersion Include="Remora.Results" Version="8.0.0" />
+    <PackageVersion Include="Remora.Results.Analyzers" Version="1.0.3" PrivateAssets="all" />
     <PackageVersion Include="RichardSzalay.MockHttp" Version="7.0.0" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.2" />

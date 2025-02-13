@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Moq;
 using Remora.Commands.Signatures;
@@ -52,11 +53,9 @@ public class ParameterShapeExtensionsTests
         [Theory]
         public void ReturnsCorrectly(Type parameterType, Type expectedResult)
         {
-            var parameterInfoMock = new Mock<ParameterInfo>();
             var parameterShapeMock = new Mock<IParameterShape>();
 
-            parameterInfoMock.SetupGet(p => p.ParameterType).Returns(parameterType);
-            parameterShapeMock.SetupGet(p => p.Parameter).Returns(parameterInfoMock.Object);
+            parameterShapeMock.SetupGet(p => p.ParameterType).Returns(parameterType);
 
             Assert.Equal(expectedResult, parameterShapeMock.Object.GetActualParameterType());
         }
@@ -102,11 +101,10 @@ public class ParameterShapeExtensionsTests
             ApplicationCommandOptionType expectedResult
         )
         {
-            var parameterInfoMock = new Mock<ParameterInfo>();
             var parameterShapeMock = new Mock<IParameterShape>();
 
-            parameterInfoMock.SetupGet(p => p.ParameterType).Returns(parameterType);
-            parameterShapeMock.SetupGet(p => p.Parameter).Returns(parameterInfoMock.Object);
+            parameterShapeMock.SetupGet(p => p.Attributes).Returns(new List<Attribute>());
+            parameterShapeMock.SetupGet(p => p.ParameterType).Returns(parameterType);
 
             Assert.Equal(expectedResult, parameterShapeMock.Object.GetDiscordType());
         }
@@ -132,20 +130,18 @@ public class ParameterShapeExtensionsTests
         [Theory]
         public void ReturnsWithTypeHintAttributeCorrectly(Type parameterType)
         {
-            var parameterInfoMock = new Mock<ParameterInfo>();
             var parameterShapeMock = new Mock<IParameterShape>();
 
-            parameterInfoMock.Setup(p => p.GetCustomAttributes(typeof(DiscordTypeHintAttribute), false))
+            parameterShapeMock.SetupGet(p => p.Attributes)
                 .Returns
                 (
-                    new object[]
+                    new List<Attribute>
                     {
                         new DiscordTypeHintAttribute(TypeHint.String)
                     }
                 );
 
-            parameterInfoMock.SetupGet(p => p.ParameterType).Returns(parameterType);
-            parameterShapeMock.SetupGet(p => p.Parameter).Returns(parameterInfoMock.Object);
+            parameterShapeMock.SetupGet(p => p.ParameterType).Returns(parameterType);
 
             Assert.Equal(ApplicationCommandOptionType.String, parameterShapeMock.Object.GetDiscordType());
         }

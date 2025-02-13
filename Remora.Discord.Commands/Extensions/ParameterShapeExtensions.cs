@@ -24,7 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Remora.Commands.Extensions;
 using Remora.Commands.Signatures;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
@@ -47,7 +46,7 @@ public static class ParameterShapeExtensions
     /// <returns>The actual type.</returns>
     public static Type GetActualParameterType(this IParameterShape shape, bool unwrapCollections = false)
     {
-        var parameterType = shape.Parameter.ParameterType;
+        var parameterType = shape.ParameterType;
 
         // Unwrap the parameter type if it's a Nullable<T> or Optional<T>
         // TODO: Maybe more cases?
@@ -81,7 +80,7 @@ public static class ParameterShapeExtensions
     /// <returns>The option type.</returns>
     public static ApplicationCommandOptionType GetDiscordType(this IParameterShape shape)
     {
-        var typeHint = shape.Parameter.GetCustomAttribute<DiscordTypeHintAttribute>();
+        var typeHint = shape.Attributes.OfType<DiscordTypeHintAttribute>().SingleOrDefault();
         if (typeHint is not null)
         {
             return (ApplicationCommandOptionType)typeHint.TypeHint;
