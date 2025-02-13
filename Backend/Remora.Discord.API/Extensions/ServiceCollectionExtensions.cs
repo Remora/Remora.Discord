@@ -1305,12 +1305,21 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(e => e.SKUID, "sku_id")
             .WithPropertyName(e => e.IsDeleted, "deleted")
             .WithPropertyName(e => e.IsConsumed, "consumed");
+
         options.AddDataObjectConverter<IPartialEntitlement, PartialEntitlement>()
             .WithPropertyName(e => e.SKUID, "sku_id")
             .WithPropertyName(e => e.IsDeleted, "deleted")
             .WithPropertyName(e => e.IsConsumed, "consumed");
 
         options.AddDataObjectConverter<ISKU, SKU>();
+
+        options.AddDataObjectConverter<ISubscription, Subscription>()
+            .WithPropertyName(s => s.SKUIDs, "sku_ids")
+            .WithPropertyName(s => s.RenewalSKUIDs, "renewal_sku_ids")
+            .WithPropertyName(s => s.EntitlementIDs, "entitlement_ids")
+            .WithPropertyConverter(s => s.CurrentPeriodStart, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyConverter(s => s.CurrentPeriodEnd, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyConverter(s => s.CanceledAt, new ISO8601DateTimeOffsetConverter());
 
         return options;
     }

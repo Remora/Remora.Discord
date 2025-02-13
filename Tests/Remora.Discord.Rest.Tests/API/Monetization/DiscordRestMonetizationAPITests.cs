@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -308,6 +307,103 @@ public class DiscordRestMonetizationAPITests
             );
 
             var result = await api.ListSKUsAsync(applicationID);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestMonetizationAPI.ListSKUSubscriptionsAsync"/> method.
+    /// </summary>
+    public class ListSKUSubscriptionsAsync : RestAPITestBase<IDiscordRestMonetizationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListSKUSubscriptionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListSKUSubscriptionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var skuID = DiscordSnowflake.New(1);
+            var before = DiscordSnowflake.New(5);
+            var after = DiscordSnowflake.New(6);
+            var limit = 1;
+            var userID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}skus/{skuID}/subscriptions")
+                    .WithExactQueryString
+                    (
+                        [
+                            new("before", before.ToString()),
+                            new("after", after.ToString()),
+                            new("limit", limit.ToString()),
+                            new("user_id", userID.ToString())
+                        ]
+                    )
+                    .Respond("application/json", "[ ]")
+            );
+
+            var result = await api.ListSKUSubscriptionsAsync
+            (
+                skuID,
+                before,
+                after,
+                limit,
+                userID
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestMonetizationAPI.GetSKUSubscriptionAsync"/> method.
+    /// </summary>
+    public class GetSKUSubscriptionAsync : RestAPITestBase<IDiscordRestMonetizationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetSKUSubscriptionAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetSKUSubscriptionAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var skuID = DiscordSnowflake.New(1);
+            var subscriptionID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}skus/{skuID}/subscriptions/{subscriptionID}")
+                    .Respond("application/json", SampleRepository.Samples[typeof(ISubscription)])
+            );
+
+            var result = await api.GetSKUSubscriptionAsync
+            (
+                skuID,
+                subscriptionID
+            );
+
             ResultAssert.Successful(result);
         }
     }

@@ -158,4 +158,38 @@ public class DiscordRestMonetizationAPI : AbstractDiscordRestAPI, IDiscordRestMo
         b => b.WithRateLimitContext(this.RateLimitCache),
         ct: ct
     );
+
+    /// <inheritdoc />
+    public Task<Result<IReadOnlyList<ISubscription>>> ListSKUSubscriptionsAsync
+    (
+        Snowflake skuID,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
+        Optional<Snowflake> userID = default,
+        CancellationToken ct = default
+    ) => this.RestHttpClient.GetAsync<IReadOnlyList<ISubscription>>
+    (
+        $"skus/{skuID}/subscriptions",
+        b => b
+            .AddQueryParameter("before", before)
+            .AddQueryParameter("after", after)
+            .AddQueryParameter("limit", limit)
+            .AddQueryParameter("user_id", userID)
+            .WithRateLimitContext(this.RateLimitCache),
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<ISubscription>> GetSKUSubscriptionAsync
+    (
+        Snowflake skuID,
+        Snowflake subscriptionID,
+        CancellationToken ct = default
+    ) => this.RestHttpClient.GetAsync<ISubscription>
+    (
+        $"skus/{skuID}/subscriptions/{subscriptionID}",
+        b => b.WithRateLimitContext(this.RateLimitCache),
+        ct: ct
+    );
 }

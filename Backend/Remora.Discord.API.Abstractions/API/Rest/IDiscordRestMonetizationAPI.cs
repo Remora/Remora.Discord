@@ -131,4 +131,38 @@ public interface IDiscordRestMonetizationAPI
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The SKUs.</returns>
     Task<Result<IReadOnlyList<ISKU>>> ListSKUsAsync(Snowflake applicationID, CancellationToken ct = default);
+
+    /// <summary>
+    /// Gets all subscriptions containing the SKU, filtered by user.
+    /// </summary>
+    /// <param name="skuID">The ID of the SKU.</param>
+    /// <param name="before">The subscription to search before.</param>
+    /// <param name="after">The subscription to search after.</param>
+    /// <param name="limit">The maximum number of subscriptions to return (1-100). Defaults to 100.</param>
+    /// <param name="userID">The ID of the user to limit the search to.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The subscriptions.</returns>
+    Task<Result<IReadOnlyList<ISubscription>>> ListSKUSubscriptionsAsync
+    (
+        Snowflake skuID,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
+        Optional<Snowflake> userID = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets a subscription by its ID.
+    /// </summary>
+    /// <param name="skuID">The ID of the SKU.</param>
+    /// <param name="subscriptionID">The ID of the subscription.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The subscription.</returns>
+    Task<Result<ISubscription>> GetSKUSubscriptionAsync
+    (
+        Snowflake skuID,
+        Snowflake subscriptionID,
+        CancellationToken ct = default
+    );
 }
