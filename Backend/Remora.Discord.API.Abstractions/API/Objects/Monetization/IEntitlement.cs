@@ -65,12 +65,12 @@ public interface IEntitlement : IPartialEntitlement
     /// <summary>
     /// Gets the start time at which the entitlement is valid.
     /// </summary>
-    new Optional<DateTimeOffset> StartsAt { get; }
+    new DateTimeOffset? StartsAt { get; }
 
     /// <summary>
     /// Gets the end time at which the entitlement is no longer valid.
     /// </summary>
-    new Optional<DateTimeOffset> EndsAt { get; }
+    new DateTimeOffset? EndsAt { get; }
 
     /// <summary>
     /// Gets the ID of the guild that is granted access to the entitlement's SKU.
@@ -101,10 +101,10 @@ public interface IEntitlement : IPartialEntitlement
     Optional<bool> IPartialEntitlement.IsDeleted => this.IsDeleted;
 
     /// <inheritdoc/>
-    Optional<DateTimeOffset> IPartialEntitlement.StartsAt => this.StartsAt;
+    Optional<DateTimeOffset?> IPartialEntitlement.StartsAt => this.StartsAt;
 
     /// <inheritdoc/>
-    Optional<DateTimeOffset> IPartialEntitlement.EndsAt => this.EndsAt;
+    Optional<DateTimeOffset?> IPartialEntitlement.EndsAt => this.EndsAt;
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialEntitlement.GuildID => this.GuildID;

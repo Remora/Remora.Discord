@@ -51,10 +51,10 @@ public interface IPartialEntitlement
     Optional<bool> IsDeleted { get; }
 
     /// <inheritdoc cref="IEntitlement.StartsAt"/>
-    Optional<DateTimeOffset> StartsAt { get; }
+    Optional<DateTimeOffset?> StartsAt { get; }
 
     /// <inheritdoc cref="IEntitlement.EndsAt"/>
-    Optional<DateTimeOffset> EndsAt { get; }
+    Optional<DateTimeOffset?> EndsAt { get; }
 
     /// <inheritdoc cref="IEntitlement.GuildID"/>
     Optional<Snowflake> GuildID { get; }
