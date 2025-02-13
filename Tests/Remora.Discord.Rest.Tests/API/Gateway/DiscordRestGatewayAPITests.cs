@@ -64,7 +64,7 @@ public class DiscordRestGatewayAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGatewayEndpoint)])
+                    .Respond("application/json", SampleRepository.Get<IGatewayEndpoint>())
             );
 
             var result = await api.GetGatewayAsync();
@@ -99,7 +99,7 @@ public class DiscordRestGatewayAPITests
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway/bot")
                     .WithNoContent()
                     .WithAuthentication()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGatewayEndpoint)])
+                    .Respond("application/json", SampleRepository.Get<IGatewayEndpoint>())
             );
 
             var result = await api.GetGatewayBotAsync();

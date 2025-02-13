@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -66,7 +67,7 @@ public class DiscordRestTemplateAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/templates/{templateCode}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(ITemplate)])
+                    .Respond("application/json", SampleRepository.Get<ITemplate>())
             );
 
             var result = await api.GetTemplateAsync(templateCode);
@@ -117,7 +118,7 @@ public class DiscordRestTemplateAPITests
                                 .WithProperty("icon", p => p.IsString())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond("application/json", SampleRepository.Get<IGuild>())
             );
 
             var result = await api.CreateGuildFromTemplateAsync(templateCode, name, icon);
@@ -151,7 +152,7 @@ public class DiscordRestTemplateAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/templates")
-                    .Respond("application/json", "[ ]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<ITemplate>>())
             );
 
             var result = await api.GetGuildTemplatesAsync(guildId);
@@ -197,7 +198,7 @@ public class DiscordRestTemplateAPITests
                                 .WithProperty("description", p => p.Is(description))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(ITemplate)])
+                    .Respond("application/json", SampleRepository.Get<ITemplate>())
             );
 
             var result = await api.CreateGuildTemplateAsync(guildId, name, description);
@@ -232,7 +233,7 @@ public class DiscordRestTemplateAPITests
             (
                 b => b
                     .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/templates/{templateCode}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(ITemplate)])
+                    .Respond("application/json", SampleRepository.Get<ITemplate>())
             );
 
             var result = await api.SyncGuildTemplateAsync(guildId, templateCode);
@@ -279,7 +280,7 @@ public class DiscordRestTemplateAPITests
                                 .WithProperty("description", p => p.Is(description))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(ITemplate)])
+                    .Respond("application/json", SampleRepository.Get<ITemplate>())
             );
 
             var result = await api.ModifyGuildTemplateAsync(guildId, templateCode, name, description);
@@ -314,7 +315,7 @@ public class DiscordRestTemplateAPITests
             (
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/templates/{templateCode}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(ITemplate)])
+                    .Respond("application/json", SampleRepository.Get<ITemplate>())
             );
 
             var result = await api.DeleteGuildTemplateAsync(guildId, templateCode);

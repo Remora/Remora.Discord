@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -90,7 +91,7 @@ public class DiscordRestMonetizationAPITests
                             new("exclude_deleted", excludeDeleted.ToString())
                         ]
                     )
-                    .Respond("application/json", "[ ]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IEntitlement>>())
             );
 
             var result = await api.ListEntitlementsAsync
@@ -138,7 +139,7 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IEntitlement)])
+                    .Respond("application/json", SampleRepository.Get<IEntitlement>())
             );
 
             var result = await api.GetEntitlementAsync
@@ -179,7 +180,7 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}/consume")
-                    .Respond("application/json", "[ ]")
+                    .Respond(HttpStatusCode.NoContent)
             );
 
             var result = await api.ConsumeEntitlementAsync
@@ -232,7 +233,7 @@ public class DiscordRestMonetizationAPITests
                                 .WithProperty("owner_type", p => p.Is((int)ownerType))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IEntitlement)])
+                    .Respond("application/json", SampleRepository.Get<IEntitlement>())
             );
 
             var result = await api.CreateTestEntitlementAsync(applicationID, skuID, ownerID, ownerType);
@@ -303,7 +304,7 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/skus")
-                    .Respond("application/json", "[ ]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<ISKU>>())
             );
 
             var result = await api.ListSKUsAsync(applicationID);
@@ -351,7 +352,7 @@ public class DiscordRestMonetizationAPITests
                             new("user_id", userID.ToString())
                         ]
                     )
-                    .Respond("application/json", "[ ]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<ISubscription>>())
             );
 
             var result = await api.ListSKUSubscriptionsAsync
@@ -395,7 +396,7 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}skus/{skuID}/subscriptions/{subscriptionID}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(ISubscription)])
+                    .Respond("application/json", SampleRepository.Get<ISubscription>())
             );
 
             var result = await api.GetSKUSubscriptionAsync

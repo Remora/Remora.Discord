@@ -67,7 +67,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+                    .Respond("application/json", SampleRepository.Get<IUser>())
             );
 
             var result = await api.GetCurrentUserAsync();
@@ -102,7 +102,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/{userId}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+                    .Respond("application/json", SampleRepository.Get<IUser>())
             );
 
             var result = await api.GetUserAsync(userId);
@@ -152,7 +152,7 @@ public class DiscordRestUserAPITests
                                 .WithProperty("avatar", p => p.IsString())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+                    .Respond("application/json", SampleRepository.Get<IUser>())
             );
 
             var result = await api.ModifyCurrentUserAsync(username, avatar);
@@ -181,7 +181,7 @@ public class DiscordRestUserAPITests
                                 .WithProperty("avatar", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+                    .Respond("application/json", SampleRepository.Get<IUser>())
             );
 
             var result = await api.ModifyCurrentUserAsync(username, null);
@@ -207,7 +207,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+                    .Respond("application/json", SampleRepository.Get<IUser>())
             );
 
             var result = await api.ModifyCurrentUserAsync(username, avatar);
@@ -255,7 +255,7 @@ public class DiscordRestUserAPITests
                             new KeyValuePair<string, string>("with_counts", withCounts.ToString())
                         }
                     )
-                    .Respond("application/json", "[]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IGuild>>())
             );
 
             var result = await api.GetCurrentUserGuildsAsync(before, after, limit, withCounts);
@@ -275,7 +275,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
-                    .Respond("application/json", "[]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IGuild>>())
             );
 
             var result = await api.GetCurrentUserGuildsAsync(limit: limit);
@@ -295,7 +295,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
-                    .Respond("application/json", "[]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IGuild>>())
             );
 
             var result = await api.GetCurrentUserGuildsAsync(limit: limit);
@@ -330,7 +330,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds/{guildId}/member")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildMember)])
+                    .Respond("application/json", SampleRepository.Get<IGuildMember>())
             );
 
             var result = await api.GetCurrentUserGuildMemberAsync(guildId);
@@ -398,7 +398,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/channels")
-                    .Respond("application/json", "[]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IChannel>>())
             );
 
             var result = await api.GetUserDMsAsync();
@@ -441,7 +441,7 @@ public class DiscordRestUserAPITests
                                 .WithProperty("recipient_id", p => p.Is(recipientID.ToString()))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                    .Respond("application/json", SampleRepository.Get<IChannel>())
             );
 
             var result = await api.CreateDMAsync(recipientID);
@@ -474,7 +474,7 @@ public class DiscordRestUserAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/connections")
-                    .Respond("application/json", "[]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IConnection>>())
             );
 
             var result = await api.GetCurrentUserConnectionsAsync();
@@ -513,7 +513,7 @@ public class DiscordRestUserAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+                    .Respond("application/json", SampleRepository.Get<IApplicationRoleConnection>())
             );
 
             var result = await api.GetCurrentUserApplicationRoleConnectionAsync(applicationID);
@@ -582,7 +582,7 @@ public class DiscordRestUserAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+                    .Respond("application/json", SampleRepository.Get<IApplicationRoleConnection>())
             );
 
             var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
@@ -618,7 +618,7 @@ public class DiscordRestUserAPITests
                         HttpMethod.Put,
                         $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+                    .Respond("application/json", SampleRepository.Get<IApplicationRoleConnection>())
             );
 
             var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
@@ -654,7 +654,7 @@ public class DiscordRestUserAPITests
                         HttpMethod.Put,
                         $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+                    .Respond("application/json", SampleRepository.Get<IApplicationRoleConnection>())
             );
 
             var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync
@@ -690,7 +690,7 @@ public class DiscordRestUserAPITests
                         HttpMethod.Put,
                         $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationRoleConnection)])
+                    .Respond("application/json", SampleRepository.Get<IApplicationRoleConnection>())
             );
 
             var result = await api.UpdateCurrentUserApplicationRoleConnectionAsync

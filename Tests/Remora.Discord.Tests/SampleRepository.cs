@@ -27,18 +27,19 @@ using System.Linq;
 using System.Reflection;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
+using Remora.Rest.Extensions;
 
 namespace Remora.Discord.Tests;
 
 /// <summary>
 /// Holds sample files.
 /// </summary>
-public class SampleRepository
+public static class SampleRepository
 {
     /// <summary>
     /// Gets the loaded samples.
     /// </summary>
-    public static IReadOnlyDictionary<Type, string> Samples { get; }
+    private static IReadOnlyDictionary<Type, string> Samples { get; }
 
     /// <summary>
     /// Initializes static members of the <see cref="SampleRepository"/> class.
@@ -51,6 +52,23 @@ public class SampleRepository
         LoadTypeSamples(assembly, samples);
 
         Samples = samples;
+    }
+
+    /// <summary>
+    /// Gets a JSON sample for the given type. The type may be a collection, in which a single-element array will be
+    /// returned.
+    /// </summary>
+    /// <typeparam name="TSample">The type of the sample to get.</typeparam>
+    /// <returns>The JSON data for the type.</returns>
+    public static string Get<TSample>()
+    {
+        if (!typeof(TSample).GetGenericTypeDefinition().IsCollection())
+        {
+            return Samples[typeof(TSample)];
+        }
+
+        var elementType = typeof(TSample).GetGenericArguments().Single();
+        return "[" + Samples[elementType] + "]";
     }
 
     private static void LoadTypeSamples(Assembly assembly, Dictionary<Type, string> samples)

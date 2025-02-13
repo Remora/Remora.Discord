@@ -64,7 +64,7 @@ public class DiscordRestOAuth2APITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/applications/@me")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
+                    .Respond("application/json", SampleRepository.Get<IApplication>())
             );
 
             var result = await api.GetCurrentBotApplicationInformationAsync();
@@ -98,7 +98,7 @@ public class DiscordRestOAuth2APITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/@me")
                     .WithNoContent()
-                    .Respond("Authorization/json", SampleRepository.Samples[typeof(IAuthorizationInformation)])
+                    .Respond("Authorization/json", SampleRepository.Get<IAuthorizationInformation>())
             );
 
             var result = await api.GetCurrentAuthorizationInformationAsync();

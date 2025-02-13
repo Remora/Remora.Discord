@@ -70,7 +70,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules")
-                    .Respond("application/json", "[ ]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IAutoModerationRule>>())
             );
 
             var result = await api.ListAutoModerationRulesAsync(guildID);
@@ -106,7 +106,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
+                    .Respond("application/json", SampleRepository.Get<IAutoModerationRule>())
             );
 
             var result = await api.GetAutoModerationRuleAsync(guildID, ruleID);
@@ -178,7 +178,7 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("exempt_channels", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
+                    .Respond("application/json", SampleRepository.Get<IAutoModerationRule>())
             );
 
             var result = await api.CreateAutoModerationRuleAsync
@@ -262,7 +262,7 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("exempt_channels", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
+                    .Respond("application/json", SampleRepository.Get<IAutoModerationRule>())
             );
 
             var result = await api.ModifyAutoModerationRuleAsync
@@ -311,7 +311,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
+                    .Respond("application/json", SampleRepository.Get<IAutoModerationRule>())
             );
 
             var result = await api.DeleteAutoModerationRuleAsync

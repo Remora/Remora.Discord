@@ -78,7 +78,7 @@ public class DiscordRestInviteAPITests
                             new KeyValuePair<string, string>("guild_scheduled_event_id", eventID.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
+                    .Respond("application/json", SampleRepository.Get<IInvite>())
             );
 
             var result = await api.GetInviteAsync(inviteCode, withCounts, withExpiration, eventID);
@@ -115,7 +115,7 @@ public class DiscordRestInviteAPITests
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}invites/{inviteCode}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
+                    .Respond("application/json", SampleRepository.Get<IInvite>())
             );
 
             var result = await api.DeleteInviteAsync(inviteCode, reason);

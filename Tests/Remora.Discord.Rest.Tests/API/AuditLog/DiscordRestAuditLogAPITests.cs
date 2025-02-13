@@ -87,7 +87,7 @@ public class DiscordRestAuditLogAPITests
                                 new KeyValuePair<string, string>("limit", limit.ToString())
                             }
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IAuditLog)])
+                        .Respond("application/json", SampleRepository.Get<IAuditLog>())
             );
 
             var result = await api.GetGuildAuditLogAsync

@@ -70,7 +70,7 @@ public class DiscordRestPollsAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelID}/polls/{messageID}/answers/{answerID}")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IPollAnswerVoters)])
+                    .Respond("application/json", SampleRepository.Get<IPollAnswerVoters>())
             );
 
             var result = await api.GetAnswerVotersAsync(channelID, messageID, answerID);
@@ -100,7 +100,7 @@ public class DiscordRestPollsAPITests
                             new KeyValuePair<string, string>("after", after.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IPollAnswerVoters)])
+                    .Respond("application/json", SampleRepository.Get<IPollAnswerVoters>())
             );
 
             var result = await api.GetAnswerVotersAsync(channelID, messageID, answerID, after: after);
@@ -130,7 +130,7 @@ public class DiscordRestPollsAPITests
                             new KeyValuePair<string, string>("limit", limit.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IPollAnswerVoters)])
+                    .Respond("application/json", SampleRepository.Get<IPollAnswerVoters>())
             );
 
             var result = await api.GetAnswerVotersAsync(channelID, messageID, answerID, limit: limit);
@@ -189,7 +189,7 @@ public class DiscordRestPollsAPITests
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelID}/polls/{messageID}/expire")
                     .WithNoContent()
-                    .Respond("Authorization/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("Authorization/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EndPollAsync(channelID, messageID);

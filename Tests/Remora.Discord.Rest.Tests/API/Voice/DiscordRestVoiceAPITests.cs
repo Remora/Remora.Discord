@@ -20,8 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
@@ -61,7 +63,7 @@ public class DiscordRestVoiceAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}voice/regions")
-                    .Respond("application/json", "[]")
+                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IVoiceRegion>>())
             );
 
             var result = await api.ListVoiceRegionsAsync();

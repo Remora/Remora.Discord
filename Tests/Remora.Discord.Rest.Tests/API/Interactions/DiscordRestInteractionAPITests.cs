@@ -82,7 +82,7 @@ public class DiscordRestInteractionAPITests
                             o => o.WithProperty("type", p => p.Is(5))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IInteractionResponse)])
+                    .Respond("application/json", SampleRepository.Get<IInteractionResponse>())
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -149,7 +149,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -233,7 +233,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -315,7 +315,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -382,7 +382,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -448,7 +448,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -527,7 +527,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -604,7 +604,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -713,7 +713,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -758,7 +758,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -819,7 +819,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -894,7 +894,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -967,7 +967,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -1019,7 +1019,7 @@ public class DiscordRestInteractionAPITests
                         $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.GetFollowupMessageAsync
@@ -1082,7 +1082,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1150,7 +1150,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1231,7 +1231,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1310,7 +1310,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1409,7 +1409,7 @@ public class DiscordRestInteractionAPITests
                         $"{Constants.BaseURL}webhooks/{interactionID}/{token}/messages/@original"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond("application/json", SampleRepository.Get<IMessage>())
             );
 
             var result = await api.GetOriginalInteractionResponseAsync
