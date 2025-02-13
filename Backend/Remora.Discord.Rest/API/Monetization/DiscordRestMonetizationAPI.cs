@@ -68,6 +68,7 @@ public class DiscordRestMonetizationAPI : AbstractDiscordRestAPI, IDiscordRestMo
         Optional<int> limit = default,
         Optional<Snowflake> guildID = default,
         Optional<bool> excludeEnded = default,
+        Optional<bool> excludeDeleted = default,
         CancellationToken ct = default
     ) => this.RestHttpClient.GetAsync<IReadOnlyList<IEntitlement>>
     (
@@ -80,7 +81,21 @@ public class DiscordRestMonetizationAPI : AbstractDiscordRestAPI, IDiscordRestMo
             .AddQueryParameter("limit", limit)
             .AddQueryParameter("guild_id", guildID)
             .AddQueryParameter("exclude_ended", excludeEnded)
+            .AddQueryParameter("exclude_deleted", excludeDeleted)
             .WithRateLimitContext(this.RateLimitCache),
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IEntitlement>> GetEntitlementAsync
+    (
+        Snowflake applicationID,
+        Snowflake entitlementID,
+        CancellationToken ct = default
+    ) => this.RestHttpClient.GetAsync<IEntitlement>
+    (
+        $"applications/{applicationID}/entitlements/{entitlementID}",
+        b => b.WithRateLimitContext(this.RateLimitCache),
         ct: ct
     );
 

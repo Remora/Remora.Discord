@@ -47,6 +47,7 @@ public interface IDiscordRestMonetizationAPI
     /// <param name="limit">The maximum number of entitlements to return (1-100). Defaults to 100.</param>
     /// <param name="guildID">The ID of the guild to limit the search to.</param>
     /// <param name="excludeEnded">Whether to exclude expired entitlements.</param>
+    /// <param name="excludeDeleted">Whether to exclude deleted entitlements.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>The entitlements.</returns>
     Task<Result<IReadOnlyList<IEntitlement>>> ListEntitlementsAsync
@@ -59,6 +60,21 @@ public interface IDiscordRestMonetizationAPI
         Optional<int> limit = default,
         Optional<Snowflake> guildID = default,
         Optional<bool> excludeEnded = default,
+        Optional<bool> excludeDeleted = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets information about an entitlement.
+    /// </summary>
+    /// <param name="applicationID">The ID of the application.</param>
+    /// <param name="entitlementID">The ID of the entitlement.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The entitlement.</returns>
+    Task<Result<IEntitlement>> GetEntitlementAsync
+    (
+        Snowflake applicationID,
+        Snowflake entitlementID,
         CancellationToken ct = default
     );
 

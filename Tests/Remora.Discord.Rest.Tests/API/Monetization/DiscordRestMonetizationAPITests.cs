@@ -72,6 +72,7 @@ public class DiscordRestMonetizationAPITests
             var limit = 1;
             var guildID = DiscordSnowflake.New(7);
             var excludeEnded = true;
+            var excludeDeleted = true;
 
             var api = CreateAPI
             (
@@ -79,16 +80,16 @@ public class DiscordRestMonetizationAPITests
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/entitlements")
                     .WithExactQueryString
                     (
-                        new KeyValuePair<string, string>[]
-                        {
+                        [
                             new("user_id", userID.ToString()),
                             new("sku_ids", string.Join(',', skuIDs.Select(id => id.ToString()))),
                             new("before", before.ToString()),
                             new("after", after.ToString()),
                             new("limit", limit.ToString()),
                             new("guild_id", guildID.ToString()),
-                            new("exclude_ended", excludeEnded.ToString())
-                        }
+                            new("exclude_ended", excludeEnded.ToString()),
+                            new("exclude_deleted", excludeDeleted.ToString())
+                        ]
                     )
                     .Respond("application/json", "[ ]")
             );
@@ -102,7 +103,49 @@ public class DiscordRestMonetizationAPITests
                 after,
                 limit,
                 guildID,
-                excludeEnded
+                excludeEnded,
+                excludeDeleted
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestMonetizationAPI.GetEntitlementAsync"/> method.
+    /// </summary>
+    public class GetEntitlementAsync : RestAPITestBase<IDiscordRestMonetizationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetEntitlementAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetEntitlementAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(1);
+            var entitlementID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IEntitlement)])
+            );
+
+            var result = await api.GetEntitlementAsync
+            (
+                applicationID,
+                entitlementID
             );
 
             ResultAssert.Successful(result);
