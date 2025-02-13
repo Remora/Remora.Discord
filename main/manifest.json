@@ -94,6 +94,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Commands.IRequestSoundboardSounds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Commands.IRequestSoundboardSounds.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Commands.IResume.yml",
       "output": {
         ".html": {
@@ -474,6 +484,46 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildSoundboardSoundCreate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildSoundboardSoundCreate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildSoundboardSoundDelete.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildSoundboardSoundDelete.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildSoundboardSoundUpdate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildSoundboardSoundUpdate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildSoundboardSoundsUpdate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildSoundboardSoundsUpdate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IGuildStickersUpdate.yml",
       "output": {
         ".html": {
@@ -708,6 +758,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.IResumed.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.ISoundboardSounds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Gateway.Events.ISoundboardSounds.html"
         }
       },
       "version": ""
@@ -988,6 +1048,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Objects.ApplicationCommandType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.ApplicationEventWebhookStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.ApplicationEventWebhookStatus.html"
         }
       },
       "version": ""
@@ -1448,6 +1518,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataResolved.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionMetadata.html"
         }
       },
       "version": ""
@@ -2014,6 +2094,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IIncidentsData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IIncidentsData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IIntegration.yml",
       "output": {
         ".html": {
@@ -2144,6 +2234,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageCall.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageComponent.yml",
       "output": {
         ".html": {
@@ -2158,6 +2258,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageComponentData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageComponentInteractionMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IMessageComponentInteractionMetadata.html"
         }
       },
       "version": ""
@@ -2208,6 +2318,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IModalSubmitData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.IModalSubmitInteractionMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.IModalSubmitInteractionMetadata.html"
         }
       },
       "version": ""
@@ -3234,6 +3354,26 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.Soundboard.ISoundboardSound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.Soundboard.ISoundboardSound.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.Soundboard.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.Soundboard.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.StagePrivacyLevel.yml",
       "output": {
         ".html": {
@@ -3554,6 +3694,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestSoundboardAPI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestSoundboardAPI.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestStageInstanceAPI.yml",
       "output": {
         ".html": {
@@ -3608,6 +3758,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Abstractions.Rest.IDiscordRestWebhookAPI.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Rest.IListGuildSoundboardSoundsResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Rest.IListGuildSoundboardSoundsResponse.html"
         }
       },
       "version": ""
@@ -4104,6 +4264,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Gateway.Commands.RequestSoundboardSounds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Gateway.Commands.RequestSoundboardSounds.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Gateway.Commands.Resume.yml",
       "output": {
         ".html": {
@@ -4574,6 +4744,46 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Gateway.Events.GuildSoundboardSoundCreate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Gateway.Events.GuildSoundboardSoundCreate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Gateway.Events.GuildSoundboardSoundDelete.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Gateway.Events.GuildSoundboardSoundDelete.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Gateway.Events.GuildSoundboardSoundUpdate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Gateway.Events.GuildSoundboardSoundUpdate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Gateway.Events.GuildSoundboardSoundsUpdate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Gateway.Events.GuildSoundboardSoundsUpdate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Gateway.Events.GuildStickersUpdate.yml",
       "output": {
         ".html": {
@@ -4808,6 +5018,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Gateway.Events.Resumed.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Gateway.Events.SoundboardSounds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Gateway.Events.SoundboardSounds.html"
         }
       },
       "version": ""
@@ -5068,6 +5288,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.ApplicationCommandInteractionDataResolved.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.ApplicationCommandInteractionMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.ApplicationCommandInteractionMetadata.html"
         }
       },
       "version": ""
@@ -5634,6 +5864,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.IncidentsData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.IncidentsData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Objects.Integration.yml",
       "output": {
         ".html": {
@@ -5764,10 +6004,30 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.MessageCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.MessageCall.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Objects.MessageComponentData.yml",
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.MessageComponentData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.MessageComponentInteractionMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.MessageComponentInteractionMetadata.html"
         }
       },
       "version": ""
@@ -5818,6 +6078,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Objects.ModalSubmitData.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.ModalSubmitInteractionMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.ModalSubmitInteractionMetadata.html"
         }
       },
       "version": ""
@@ -6364,6 +6634,26 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.Soundboard.SoundboardSound.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.Soundboard.SoundboardSound.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Objects.Soundboard.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Objects.Soundboard.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Objects.StageInstance.yml",
       "output": {
         ".html": {
@@ -6618,6 +6908,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.API.Rest.ChannelPositionModification.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Rest.ListGuildSoundboardSoundsResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Rest.ListGuildSoundboardSoundsResponse.html"
         }
       },
       "version": ""
@@ -9548,6 +9848,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Remora.Discord.Rest.API.DiscordRestPollAPI.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.Rest.API.DiscordRestSoundboardAPI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.Rest.API.DiscordRestSoundboardAPI.html"
         }
       },
       "version": ""

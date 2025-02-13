@@ -100,7 +100,8 @@
 
 
   <h1 id="Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata" class="text-break">Interface IMessageInteractionMetadata</h1>
-  <div class="markdown level0 summary"><p>Represents the metadata of an application command interaction.</p>
+  <div class="markdown level0 summary"><p>Represents generic information about a message interaction. Cast this to its relevant subtype based on
+<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.html#Type">Type</a> to access type-specific fields.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Remora.html">Remora</a>.<a class="xref" href="Remora.Discord.html">Discord</a>.<a class="xref" href="Remora.Discord.API.html">API</a>.<a class="xref" href="Remora.Discord.API.Abstractions.html">Abstractions</a>.<a class="xref" href="Remora.Discord.API.Abstractions.Objects.html">Objects</a></h6>
@@ -117,7 +118,7 @@ public interface IMessageInteractionMetadata</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata_AuthorizingIntegrationOwners.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.AuthorizingIntegrationOwners%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L72">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L63">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.AuthorizingIntegrationOwners*"></a>
   <h4 id="AuthorizingIntegrationOwners" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.AuthorizingIntegrationOwners">AuthorizingIntegrationOwners</h4>
@@ -156,7 +157,7 @@ If the interaction is sent outside the context of a guild, the value is always z
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata_ID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.ID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L38">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L39">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.ID*"></a>
   <h4 id="ID" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.ID">ID</h4>
@@ -184,41 +185,10 @@ If the interaction is sent outside the context of a guild, the value is always z
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata_InteractedMessageID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.InteractedMessageID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L58">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.InteractedMessageID*"></a>
-  <h4 id="InteractedMessageID" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.InteractedMessageID">InteractedMessageID</h4>
-  <div class="markdown level1 summary"><p>Gets the ID of the message containing the interactive component; only applicable to component interactions.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;Snowflake&gt; InteractedMessageID { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Optional</span>&lt;<span class="xref">Snowflake</span>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata_OriginalResponseMessageID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.OriginalResponseMessageID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L53">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L68">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.OriginalResponseMessageID*"></a>
   <h4 id="OriginalResponseMessageID" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.OriginalResponseMessageID">OriginalResponseMessageID</h4>
@@ -246,41 +216,10 @@ If the interaction is sent outside the context of a guild, the value is always z
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata_TriggeringInteractionMetadata.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.TriggeringInteractionMetadata%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L77">View Source</a>
-  </span>
-  <a id="Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.TriggeringInteractionMetadata*"></a>
-  <h4 id="TriggeringInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.TriggeringInteractionMetadata">TriggeringInteractionMetadata</h4>
-  <div class="markdown level1 summary"><p>Gets the interaction metadata responsible, if this is a response to a modal.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;IMessageInteractionMetadata&gt; TriggeringInteractionMetadata { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.html">IMessageInteractionMetadata</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata_Type.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L48">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L44">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.Type*"></a>
   <h4 id="Type" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.Type">Type</h4>
@@ -311,7 +250,7 @@ If the interaction is sent outside the context of a guild, the value is always z
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata_User.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.User%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L43">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Interactions/IMessageInteractionMetadata.cs/#L49">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IMessageInteractionMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.User*"></a>
   <h4 id="User" data-uid="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.User">User</h4>

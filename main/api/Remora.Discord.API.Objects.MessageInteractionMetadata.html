@@ -100,7 +100,8 @@
 
 
   <h1 id="Remora_Discord_API_Objects_MessageInteractionMetadata" data-uid="Remora.Discord.API.Objects.MessageInteractionMetadata" class="text-break">Class MessageInteractionMetadata</h1>
-  <div class="markdown level0 summary"><p>Represents the metadata of an application command interaction.</p>
+  <div class="markdown level0 summary"><p>Represents generic information about a message interaction. Cast this to its relevant subtype based on
+<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.html#Type">Type</a> to access type-specific fields.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -155,7 +156,8 @@ public record MessageInteractionMetadata : IMessageInteractionMetadata, IEquatab
   </span>
   <a id="Remora_Discord_API_Objects_MessageInteractionMetadata" data-uid="Remora.Discord.API.Objects.MessageInteractionMetadata.#ctor*"></a>
   <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.MessageInteractionMetadata.#ctor(Remora.Rest.Core.Snowflake,Remora.Discord.API.Abstractions.Objects.IUser,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.InteractionType,System.Collections.Generic.IReadOnlyDictionary{Remora.Discord.API.Abstractions.Objects.ApplicationIntegrationType,Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata})">MessageInteractionMetadata(Snowflake, IUser, Optional&lt;Snowflake&gt;, Optional&lt;Snowflake&gt;, InteractionType, IReadOnlyDictionary&lt;ApplicationIntegrationType, Snowflake&gt;, Optional&lt;IMessageInteractionMetadata&gt;)</h4>
-  <div class="markdown level1 summary"><p>Represents the metadata of an application command interaction.</p>
+  <div class="markdown level1 summary"><p>Represents generic information about a message interaction. Cast this to its relevant subtype based on
+<a class="xref" href="Remora.Discord.API.Abstractions.Objects.IMessageInteractionMetadata.html#Type">Type</a> to access type-specific fields.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -290,8 +292,7 @@ If the interaction is sent outside the context of a guild, the value is always z
   </span>
   <a id="Remora_Discord_API_Objects_MessageInteractionMetadata" data-uid="Remora.Discord.API.Objects.MessageInteractionMetadata.InteractedMessageID*"></a>
   <h4 id="InteractedMessageID" data-uid="Remora.Discord.API.Objects.MessageInteractionMetadata.InteractedMessageID">InteractedMessageID</h4>
-  <div class="markdown level1 summary"><p>Gets the ID of the message containing the interactive component; only applicable to component interactions.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
@@ -352,8 +353,7 @@ If the interaction is sent outside the context of a guild, the value is always z
   </span>
   <a id="Remora_Discord_API_Objects_MessageInteractionMetadata" data-uid="Remora.Discord.API.Objects.MessageInteractionMetadata.TriggeringInteractionMetadata*"></a>
   <h4 id="TriggeringInteractionMetadata" data-uid="Remora.Discord.API.Objects.MessageInteractionMetadata.TriggeringInteractionMetadata">TriggeringInteractionMetadata</h4>
-  <div class="markdown level1 summary"><p>Gets the interaction metadata responsible, if this is a response to a modal.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
