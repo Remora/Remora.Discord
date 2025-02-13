@@ -86,7 +86,7 @@ public class DiscordRestStageInstanceAPITests
                                 .WithProperty("guild_scheduled_event_id", p => p.Is(guildScheduledEventID))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IStageInstance>())
+                    .Respond<IStageInstance>()
             );
 
             var result = await api.CreateStageInstanceAsync
@@ -131,7 +131,7 @@ public class DiscordRestStageInstanceAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}stage-instances/{channelID}")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IStageInstance>())
+                    .Respond<IStageInstance>()
             );
 
             var result = await api.GetStageInstanceAsync(channelID);
@@ -179,7 +179,7 @@ public class DiscordRestStageInstanceAPITests
                                 .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IStageInstance>())
+                    .Respond<IStageInstance>()
             );
 
             var result = await api.ModifyStageInstanceAsync(channelID, topic, privacyLevel, reason);

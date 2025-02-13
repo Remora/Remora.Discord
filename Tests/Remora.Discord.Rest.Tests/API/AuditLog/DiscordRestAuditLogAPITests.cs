@@ -28,6 +28,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -87,7 +88,7 @@ public class DiscordRestAuditLogAPITests
                                 new KeyValuePair<string, string>("limit", limit.ToString())
                             }
                         )
-                        .Respond("application/json", SampleRepository.Get<IAuditLog>())
+                        .Respond<IAuditLog>()
             );
 
             var result = await api.GetGuildAuditLogAsync

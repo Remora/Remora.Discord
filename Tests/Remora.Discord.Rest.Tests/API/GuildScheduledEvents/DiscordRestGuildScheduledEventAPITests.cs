@@ -74,7 +74,7 @@ public class DiscordRestGuildScheduledEventAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events")
                     .WithExactQueryString("with_user_count", withUserCount.ToString())
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IGuildScheduledEvent>>())
+                    .Respond<IReadOnlyList<IGuildScheduledEvent>>()
             );
 
             var result = await api.ListScheduledEventsForGuildAsync(guildID, withUserCount);
@@ -144,7 +144,7 @@ public class DiscordRestGuildScheduledEventAPITests
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Get<IGuildScheduledEvent>())
+                    .Respond<IGuildScheduledEvent>()
             );
 
             var result = await api.CreateGuildScheduledEventAsync
@@ -197,7 +197,7 @@ public class DiscordRestGuildScheduledEventAPITests
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}")
                     .WithExactQueryString("with_user_count", withCounts.ToString())
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IGuildScheduledEvent>())
+                    .Respond<IGuildScheduledEvent>()
             );
 
             var result = await api.GetGuildScheduledEventAsync(guildID, eventID, withCounts);
@@ -270,7 +270,7 @@ public class DiscordRestGuildScheduledEventAPITests
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Get<IGuildScheduledEvent>())
+                    .Respond<IGuildScheduledEvent>()
             );
 
             var result = await api.ModifyGuildScheduledEventAsync
@@ -373,7 +373,7 @@ public class DiscordRestGuildScheduledEventAPITests
                             new KeyValuePair<string, string>("after", after.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IGuildScheduledEventUser>>())
+                    .Respond<IReadOnlyList<IGuildScheduledEventUser>>()
             );
 
             var result = await api.GetGuildScheduledEventUsersAsync(guildID, eventID, limit, withMember, before, after);

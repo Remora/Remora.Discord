@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.API.Webhooks;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -82,7 +83,7 @@ public class DiscordRestInteractionAPITests
                             o => o.WithProperty("type", p => p.Is(5))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IInteractionResponse>())
+                    .Respond<IInteractionResponse>()
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -149,7 +150,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -233,7 +234,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -315,7 +316,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -382,7 +383,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -448,7 +449,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -527,7 +528,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -604,7 +605,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -713,7 +714,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -758,7 +759,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -819,7 +820,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -894,7 +895,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -967,7 +968,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -1019,7 +1020,7 @@ public class DiscordRestInteractionAPITests
                         $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.GetFollowupMessageAsync
@@ -1082,7 +1083,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1150,7 +1151,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1231,7 +1232,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1310,7 +1311,7 @@ public class DiscordRestInteractionAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1409,7 +1410,7 @@ public class DiscordRestInteractionAPITests
                         $"{Constants.BaseURL}webhooks/{interactionID}/{token}/messages/@original"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.GetOriginalInteractionResponseAsync

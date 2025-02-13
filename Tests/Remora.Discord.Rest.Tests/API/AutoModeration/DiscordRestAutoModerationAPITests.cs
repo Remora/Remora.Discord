@@ -29,6 +29,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Core;
@@ -70,7 +71,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules")
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IAutoModerationRule>>())
+                    .Respond<IReadOnlyList<IAutoModerationRule>>()
             );
 
             var result = await api.ListAutoModerationRulesAsync(guildID);
@@ -106,7 +107,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
-                    .Respond("application/json", SampleRepository.Get<IAutoModerationRule>())
+                    .Respond<IAutoModerationRule>()
             );
 
             var result = await api.GetAutoModerationRuleAsync(guildID, ruleID);
@@ -178,7 +179,7 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("exempt_channels", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IAutoModerationRule>())
+                    .Respond<IAutoModerationRule>()
             );
 
             var result = await api.CreateAutoModerationRuleAsync
@@ -262,7 +263,7 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("exempt_channels", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IAutoModerationRule>())
+                    .Respond<IAutoModerationRule>()
             );
 
             var result = await api.ModifyAutoModerationRuleAsync
@@ -311,7 +312,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
-                    .Respond("application/json", SampleRepository.Get<IAutoModerationRule>())
+                    .Respond<IAutoModerationRule>()
             );
 
             var result = await api.DeleteAutoModerationRuleAsync

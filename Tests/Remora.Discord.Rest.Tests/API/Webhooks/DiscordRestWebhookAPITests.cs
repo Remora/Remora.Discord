@@ -92,7 +92,7 @@ public class DiscordRestWebhookAPITests
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -120,7 +120,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -147,7 +147,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -174,7 +174,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -207,7 +207,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -247,7 +247,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IWebhook>>())
+                    .Respond<IReadOnlyList<IWebhook>>()
             );
 
             var result = await api.GetChannelWebhooksAsync
@@ -285,7 +285,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/webhooks")
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IWebhook>>())
+                    .Respond<IReadOnlyList<IWebhook>>()
             );
 
             var result = await api.GetGuildWebhooksAsync
@@ -323,7 +323,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}")
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.GetWebhookAsync
@@ -364,7 +364,7 @@ public class DiscordRestWebhookAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
                     .With(m => m.Headers.Authorization == null)
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.GetWebhookWithTokenAsync
@@ -425,7 +425,7 @@ public class DiscordRestWebhookAPITests
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookAsync
@@ -461,7 +461,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookAsync
@@ -500,7 +500,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookAsync
@@ -551,7 +551,7 @@ public class DiscordRestWebhookAPITests
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .With(m => m.Headers.Authorization == null)
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookWithTokenAsync
@@ -588,7 +588,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookWithTokenAsync
@@ -621,7 +621,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .Respond("application/json", SampleRepository.Get<IWebhook>())
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookWithTokenAsync
@@ -776,7 +776,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("applied_tags", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -840,7 +840,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -901,7 +901,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("thread_name", p => p.Is(threadName))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -956,7 +956,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -1020,7 +1020,7 @@ public class DiscordRestWebhookAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -1095,7 +1095,7 @@ public class DiscordRestWebhookAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -1168,7 +1168,7 @@ public class DiscordRestWebhookAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -1217,7 +1217,7 @@ public class DiscordRestWebhookAPITests
                             o => o.WithProperty("poll", p => p.IsObject())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -1316,7 +1316,7 @@ public class DiscordRestWebhookAPITests
                         )
                     )
                     .WithExactQueryString("thread_id", threadID.ToString())
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1364,7 +1364,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1430,7 +1430,7 @@ public class DiscordRestWebhookAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1511,7 +1511,7 @@ public class DiscordRestWebhookAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1590,7 +1590,7 @@ public class DiscordRestWebhookAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1691,7 +1691,7 @@ public class DiscordRestWebhookAPITests
                     )
                     .WithNoContent()
                     .WithExactQueryString("thread_id", threadID.ToString())
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.GetWebhookMessageAsync

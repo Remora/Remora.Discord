@@ -91,7 +91,7 @@ public class DiscordRestMonetizationAPITests
                             new("exclude_deleted", excludeDeleted.ToString())
                         ]
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IEntitlement>>())
+                    .Respond<IReadOnlyList<IEntitlement>>()
             );
 
             var result = await api.ListEntitlementsAsync
@@ -139,7 +139,7 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}")
-                    .Respond("application/json", SampleRepository.Get<IEntitlement>())
+                    .Respond<IEntitlement>()
             );
 
             var result = await api.GetEntitlementAsync
@@ -233,7 +233,7 @@ public class DiscordRestMonetizationAPITests
                                 .WithProperty("owner_type", p => p.Is((int)ownerType))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IEntitlement>())
+                    .Respond<IEntitlement>()
             );
 
             var result = await api.CreateTestEntitlementAsync(applicationID, skuID, ownerID, ownerType);
@@ -304,7 +304,7 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/skus")
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<ISKU>>())
+                    .Respond<IReadOnlyList<ISKU>>()
             );
 
             var result = await api.ListSKUsAsync(applicationID);
@@ -352,7 +352,7 @@ public class DiscordRestMonetizationAPITests
                             new("user_id", userID.ToString())
                         ]
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<ISubscription>>())
+                    .Respond<IReadOnlyList<ISubscription>>()
             );
 
             var result = await api.ListSKUSubscriptionsAsync
@@ -396,7 +396,7 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}skus/{skuID}/subscriptions/{subscriptionID}")
-                    .Respond("application/json", SampleRepository.Get<ISubscription>())
+                    .Respond<ISubscription>()
             );
 
             var result = await api.GetSKUSubscriptionAsync

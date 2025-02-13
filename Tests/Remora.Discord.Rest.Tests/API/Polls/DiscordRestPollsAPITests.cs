@@ -27,6 +27,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -70,7 +71,7 @@ public class DiscordRestPollsAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelID}/polls/{messageID}/answers/{answerID}")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IPollAnswerVoters>())
+                    .Respond<IPollAnswerVoters>()
             );
 
             var result = await api.GetAnswerVotersAsync(channelID, messageID, answerID);
@@ -100,7 +101,7 @@ public class DiscordRestPollsAPITests
                             new KeyValuePair<string, string>("after", after.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Get<IPollAnswerVoters>())
+                    .Respond<IPollAnswerVoters>()
             );
 
             var result = await api.GetAnswerVotersAsync(channelID, messageID, answerID, after: after);
@@ -130,7 +131,7 @@ public class DiscordRestPollsAPITests
                             new KeyValuePair<string, string>("limit", limit.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Get<IPollAnswerVoters>())
+                    .Respond<IPollAnswerVoters>()
             );
 
             var result = await api.GetAnswerVotersAsync(channelID, messageID, answerID, limit: limit);

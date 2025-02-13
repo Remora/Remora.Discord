@@ -160,7 +160,7 @@ public class DiscordRestSoundboardAPITests
                         $"{Constants.BaseURL}guilds/{guildID}/soundboard-sounds"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IListGuildSoundboardSoundsResponse>())
+                    .Respond<IListGuildSoundboardSoundsResponse>()
             );
 
             var result = await api.ListGuildSoundboardSoundsAsync(guildID);
@@ -201,7 +201,7 @@ public class DiscordRestSoundboardAPITests
                         $"{Constants.BaseURL}guilds/{guildID}/soundboard-sounds/{soundID}"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<ISoundboardSound>())
+                    .Respond<ISoundboardSound>()
             );
 
             var result = await api.GetGuildSoundboardSoundAsync(guildID, soundID);
@@ -260,7 +260,7 @@ public class DiscordRestSoundboardAPITests
                         )
                     )
                     .WithHeaders("X-Audit-Log-Reason", reason)
-                    .Respond("application/json", SampleRepository.Get<ISoundboardSound>())
+                    .Respond<ISoundboardSound>()
             );
 
             var result = await api.CreateGuildSoundboardSoundAsync
@@ -327,7 +327,7 @@ public class DiscordRestSoundboardAPITests
                         )
                     )
                     .WithHeaders("X-Audit-Log-Reason", reason)
-                    .Respond("application/json", SampleRepository.Get<ISoundboardSound>())
+                    .Respond<ISoundboardSound>()
             );
 
             var result = await api.ModifyGuildSoundboardSoundAsync

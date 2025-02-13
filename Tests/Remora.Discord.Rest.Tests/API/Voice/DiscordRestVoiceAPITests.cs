@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using RichardSzalay.MockHttp;
@@ -63,7 +64,7 @@ public class DiscordRestVoiceAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}voice/regions")
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IVoiceRegion>>())
+                    .Respond<IReadOnlyList<IVoiceRegion>>()
             );
 
             var result = await api.ListVoiceRegionsAsync();

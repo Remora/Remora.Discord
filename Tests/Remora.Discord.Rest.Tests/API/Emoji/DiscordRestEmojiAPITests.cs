@@ -30,6 +30,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Core;
@@ -72,7 +73,7 @@ public class DiscordRestEmojiAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/emojis")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IEmoji>>())
+                    .Respond<IReadOnlyList<IEmoji>>()
             );
 
             var result = await api.ListGuildEmojisAsync(guildId);
@@ -109,7 +110,7 @@ public class DiscordRestEmojiAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IEmoji>())
+                    .Respond<IEmoji>()
             );
 
             var result = await api.GetGuildEmojiAsync(guildId, emojiId);
@@ -165,7 +166,7 @@ public class DiscordRestEmojiAPITests
                                 .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IEmoji>())
+                    .Respond<IEmoji>()
             );
 
             var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles, reason);
@@ -204,7 +205,7 @@ public class DiscordRestEmojiAPITests
                                 .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IEmoji>())
+                    .Respond<IEmoji>()
             );
 
             var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
@@ -243,7 +244,7 @@ public class DiscordRestEmojiAPITests
                                 .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IEmoji>())
+                    .Respond<IEmoji>()
             );
 
             var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
@@ -292,7 +293,7 @@ public class DiscordRestEmojiAPITests
                                 .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IEmoji>())
+                    .Respond<IEmoji>()
             );
 
             var result = await api.ModifyGuildEmojiAsync(guildId, emojiId, name, roles, reason);
@@ -323,7 +324,7 @@ public class DiscordRestEmojiAPITests
                                 .WithProperty("roles", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IEmoji>())
+                    .Respond<IEmoji>()
             );
 
             var result = await api.ModifyGuildEmojiAsync(guildId, emojiId, name, null);

@@ -78,7 +78,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelID}")
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.GetChannelAsync(channelID);
@@ -128,7 +128,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("icon", p => p.Is("data:image/png;base64,iVBORw0KGgo="))
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyGroupDMChannelAsync
@@ -186,7 +186,7 @@ public class DiscordRestChannelAPITests
                                     )
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyGuildTextChannelAsync
@@ -250,7 +250,7 @@ public class DiscordRestChannelAPITests
                                     )
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyGuildAnnouncementChannelAsync
@@ -313,7 +313,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyGuildVoiceChannelAsync
@@ -378,7 +378,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyGuildStageChannelAsync
@@ -443,7 +443,7 @@ public class DiscordRestChannelAPITests
                                     )
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyThreadChannelAsync
@@ -522,7 +522,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("default_forum_layout", p => p.Is((int)defaultForumLayout))
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyForumChannelAsync
@@ -605,7 +605,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("default_sort_order", p => p.Is((int)defaultSortOrder))
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyMediaChannelAsync
@@ -661,7 +661,7 @@ public class DiscordRestChannelAPITests
                                     .WithProperty("default_auto_archive_duration", p => p.IsNull())
                             )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.ModifyChannelAsync
@@ -818,7 +818,7 @@ public class DiscordRestChannelAPITests
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}channels/{channelId.ToString()}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.DeleteChannelAsync(channelId, reason);
@@ -863,7 +863,7 @@ public class DiscordRestChannelAPITests
                             new KeyValuePair<string, string>("before", before.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IMessage>>())
+                    .Respond<IReadOnlyList<IMessage>>()
             );
 
             var result = await api.GetChannelMessagesAsync(channelId, before: before, limit: limit);
@@ -893,7 +893,7 @@ public class DiscordRestChannelAPITests
                             new KeyValuePair<string, string>("after", after.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IMessage>>())
+                    .Respond<IReadOnlyList<IMessage>>()
             );
 
             var result = await api.GetChannelMessagesAsync(channelId, after: after, limit: limit);
@@ -923,7 +923,7 @@ public class DiscordRestChannelAPITests
                             new KeyValuePair<string, string>("around", around.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IMessage>>())
+                    .Respond<IReadOnlyList<IMessage>>()
             );
 
             var result = await api.GetChannelMessagesAsync(channelId, around, limit: limit);
@@ -1016,7 +1016,7 @@ public class DiscordRestChannelAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
                     .WithExactQueryString(expectedQueryStringParameters)
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IMessage>>())
+                    .Respond<IReadOnlyList<IMessage>>()
             );
 
             var result = await api.GetChannelMessagesAsync(channelId, around, before, after, limit);
@@ -1072,7 +1072,7 @@ public class DiscordRestChannelAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.GetChannelMessageAsync(channelId, messageId);
@@ -1126,7 +1126,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateMessageAsync
@@ -1174,7 +1174,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateMessageAsync
@@ -1223,7 +1223,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateMessageAsync
@@ -1292,7 +1292,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateMessageAsync
@@ -1375,7 +1375,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateMessageAsync
@@ -1456,7 +1456,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateMessageAsync
@@ -1515,7 +1515,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("enforce_nonce", p => p.Is(enforceNonce))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateMessageAsync
@@ -1564,7 +1564,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Post,
                         $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/crosspost"
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.CrosspostMessageAsync(channelId, messageId);
@@ -1740,7 +1740,7 @@ public class DiscordRestChannelAPITests
                             new KeyValuePair<string, string>("limit", limit.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IUser>>())
+                    .Respond<IReadOnlyList<IUser>>()
             );
 
             var result = await api.GetReactionsAsync(channelId, messageId, "🔥", after, limit);
@@ -1767,7 +1767,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IUser>>())
+                    .Respond<IReadOnlyList<IUser>>()
             );
 
             var result = await api.GetReactionsAsync(channelId, messageId, "🔥", limit: limit);
@@ -1794,7 +1794,7 @@ public class DiscordRestChannelAPITests
                         HttpMethod.Get,
                         $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
                     )
-                    .Respond("application/json", SampleRepository.Get<IReadOnlyList<IUser>>())
+                    .Respond<IReadOnlyList<IUser>>()
             );
 
             var result = await api.GetReactionsAsync(channelId, messageId, "🔥", limit: limit);
@@ -1934,7 +1934,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditMessageAsync
@@ -1977,7 +1977,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditMessageAsync
@@ -2021,7 +2021,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("attachments", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditMessageAsync
@@ -2084,7 +2084,7 @@ public class DiscordRestChannelAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditMessageAsync
@@ -2159,7 +2159,7 @@ public class DiscordRestChannelAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditMessageAsync
@@ -2232,7 +2232,7 @@ public class DiscordRestChannelAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditMessageAsync
@@ -2581,7 +2581,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("target_application_id", p => p.Is(targetApplication.Value.ToString()))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IInvite>())
+                    .Respond<IInvite>()
             );
 
             var result = await api.CreateChannelInviteAsync
@@ -2682,7 +2682,7 @@ public class DiscordRestChannelAPITests
                             o => o.WithProperty("webhook_channel_id", p => p.Is(webhookChannelId.ToString()))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IFollowedChannel>())
+                    .Respond<IFollowedChannel>()
             );
 
             var result = await api.FollowAnnouncementChannelAsync(channelId, webhookChannelId);
@@ -2990,7 +2990,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("rate_limit_per_user", p => p.Is(rateLimit))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.StartThreadFromMessageAsync(channelId, messageId, name, duration, rateLimit, reason);
@@ -3048,7 +3048,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("rate_limit_per_user", p => p.Is(rateLimit))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.StartThreadWithoutMessageAsync
@@ -3116,7 +3116,7 @@ public class DiscordRestChannelAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IChannel>())
+                    .Respond<IChannel>()
             );
 
             var result = await api.StartThreadInForumChannelAsync
@@ -3163,7 +3163,7 @@ public class DiscordRestChannelAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.StartThreadInForumChannelAsync
@@ -3210,7 +3210,7 @@ public class DiscordRestChannelAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.StartThreadInForumChannelAsync
@@ -3278,7 +3278,7 @@ public class DiscordRestChannelAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.StartThreadInForumChannelAsync
@@ -3362,7 +3362,7 @@ public class DiscordRestChannelAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Get<IMessage>())
+                    .Respond<IMessage>()
             );
 
             var result = await api.StartThreadInForumChannelAsync
@@ -3577,7 +3577,7 @@ public class DiscordRestChannelAPITests
                     )
                     .WithNoContent()
                     .WithExactQueryString("with_member", withMember.ToString())
-                    .Respond("application/json", SampleRepository.Get<IThreadMember>())
+                    .Respond<IThreadMember>()
             );
 
             var result = await api.GetThreadMemberAsync(channelId, userId, withMember);
@@ -3676,7 +3676,7 @@ public class DiscordRestChannelAPITests
                         }
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IChannelThreadQueryResponse>())
+                    .Respond<IChannelThreadQueryResponse>()
             );
 
             var result = await api.ListPublicArchivedThreadsAsync(channelID, before, limit);
@@ -3726,7 +3726,7 @@ public class DiscordRestChannelAPITests
                         }
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IChannelThreadQueryResponse>())
+                    .Respond<IChannelThreadQueryResponse>()
             );
 
             var result = await api.ListPrivateArchivedThreadsAsync(channelID, before, limit);
@@ -3776,7 +3776,7 @@ public class DiscordRestChannelAPITests
                         }
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IChannelThreadQueryResponse>())
+                    .Respond<IChannelThreadQueryResponse>()
             );
 
             var result = await api.ListJoinedPrivateArchivedThreadsAsync(channelID, before, limit);

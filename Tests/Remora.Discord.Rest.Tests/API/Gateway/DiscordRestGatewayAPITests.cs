@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -64,7 +65,7 @@ public class DiscordRestGatewayAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Get<IGatewayEndpoint>())
+                    .Respond<IGatewayEndpoint>()
             );
 
             var result = await api.GetGatewayAsync();
@@ -99,7 +100,7 @@ public class DiscordRestGatewayAPITests
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway/bot")
                     .WithNoContent()
                     .WithAuthentication()
-                    .Respond("application/json", SampleRepository.Get<IGatewayEndpoint>())
+                    .Respond<IGatewayEndpoint>()
             );
 
             var result = await api.GetGatewayBotAsync();

@@ -62,7 +62,7 @@ public static class SampleRepository
     /// <returns>The JSON data for the type.</returns>
     public static string Get<TSample>()
     {
-        if (!typeof(TSample).GetGenericTypeDefinition().IsCollection())
+        if (!typeof(TSample).IsGenericType || !typeof(TSample).GetGenericTypeDefinition().IsCollection())
         {
             return Samples[typeof(TSample)];
         }
