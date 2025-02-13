@@ -156,6 +156,19 @@ internal sealed class PaginatedMessageData
     /// <returns>The buttons.</returns>
     public IReadOnlyList<IMessageComponent> GetCurrentComponents()
     {
+        List<ButtonComponent> customComponents = new List<ButtonComponent>();
+        if (this.Appearance.Help != null)
+        {
+            customComponents.Add(this.Appearance.Help with { CustomID = CustomIDHelpers.CreateButtonID("help") });
+        }
+        if (this.Appearance.Close != null)
+        {
+            customComponents.Add(this.Appearance.Close with { CustomID = CustomIDHelpers.CreateButtonID("close") });
+        }
+        if (this.Appearance.CustomButtons != null)
+        {
+            customComponents.AddRange(this.Appearance.CustomButtons);
+        }
         return new[]
         {
             new ActionRowComponent
@@ -186,11 +199,7 @@ internal sealed class PaginatedMessageData
             ),
             new ActionRowComponent
             (
-                new[]
-                {
-                    this.Appearance.Close with { CustomID = CustomIDHelpers.CreateButtonID("close") },
-                    this.Appearance.Help with { CustomID = CustomIDHelpers.CreateButtonID("help") }
-                }
+                customComponents
             )
         };
     }
