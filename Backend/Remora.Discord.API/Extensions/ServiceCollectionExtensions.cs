@@ -863,6 +863,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
         options.AddDataObjectConverter<IMessageReference, MessageReference>();
         options.AddDataObjectConverter<IMessageSnapshot, MessageSnapshot>();
+        options.AddDataObjectConverter<IMessageCall, MessageCall>();
 
         return options;
     }
@@ -1230,8 +1231,19 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
 
-        options.AddDataObjectConverter<IMessageInteractionMetadata, MessageInteractionMetadata>()
-               .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+        options.AddConverter<MessageInteractionMetadataConverter>();
+
+        options.AddDataObjectConverter<IApplicationCommandInteractionMetadata, ApplicationCommandInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IMessageComponentInteractionMetadata, MessageComponentInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IModalSubmitInteractionMetadata, ModalSubmitInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
 
         return options;
     }

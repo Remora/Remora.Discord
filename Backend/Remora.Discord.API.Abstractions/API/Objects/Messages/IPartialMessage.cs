@@ -131,4 +131,7 @@ public interface IPartialMessage
 
     /// <inheritdoc cref="IMessage.Poll"/>
     Optional<IPoll> Poll { get; }
+
+    /// <inheritdoc cref="IMessage.Call"/>
+    Optional<IMessageCall> Call { get; }
 }

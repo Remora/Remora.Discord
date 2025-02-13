@@ -125,6 +125,15 @@
       <Compile Update="API\Rest\IListGuildSoundboardSoundsResponse.cs">
         <DependentUpon>IDiscordRestSoundboardAPI.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\Interactions\IMessageComponentInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\IModalSubmitInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\IApplicationCommandInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

@@ -126,6 +126,15 @@
       <Compile Update="API\Objects\Voice\PartialVoiceState.cs">
         <DependentUpon>VoiceState.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\Interactions\ApplicationCommandInteractionMetadata.cs">
+        <DependentUpon>MessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\MessageComponentInteractionMetadata.cs">
+        <DependentUpon>MessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\ModalSubmitInteractionMetadata.cs">
+        <DependentUpon>MessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

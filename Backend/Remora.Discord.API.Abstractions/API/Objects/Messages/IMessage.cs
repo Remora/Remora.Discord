@@ -208,6 +208,11 @@ public interface IMessage : IPartialMessage
     /// </summary>
     new Optional<IPoll> Poll { get; }
 
+    /// <summary>
+    /// Gets the call associated with the message, if any.
+    /// </summary>
+    new Optional<IMessageCall> Call { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
 
@@ -306,4 +311,7 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<IPoll> IPartialMessage.Poll => this.Poll;
+
+    /// <inheritdoc/>
+    Optional<IMessageCall> IPartialMessage.Call => this.Call;
 }

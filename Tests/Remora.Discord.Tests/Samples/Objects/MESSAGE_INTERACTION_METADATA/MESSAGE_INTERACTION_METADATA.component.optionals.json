@@ -1,6 +1,6 @@
 {
   "id": "999999999999999999",
-  "type": 2,
+  "type": 3,
   "user": {
     "username": "none",
     "discriminator": "9999",
@@ -11,5 +11,5 @@
     "0": "999999999999999999",
     "1": "999999999999999999"
   },
-  "original_response_message_id": "999999999999999999"
+  "interacted_message_id": "999999999999999999"
 }

@@ -66,5 +66,6 @@ public record Message
     Optional<int> Position = default,
     Optional<IApplicationCommandInteractionDataResolved> Resolved = default,
     Optional<IMessageInteractionMetadata> InteractionMetadata = default,
-    Optional<IPoll> Poll = default
+    Optional<IPoll> Poll = default,
+    Optional<IMessageCall> Call = default
 ) : IMessage;
