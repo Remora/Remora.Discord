@@ -248,6 +248,11 @@ public interface IGuild : IPartialGuild
     /// </summary>
     new Snowflake? SafetyAlertsChannelID { get; }
 
+    /// <summary>
+    /// Gets the incident data for the guild.
+    /// </summary>
+    new IIncidentsData? IncidentsData { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialGuild.ID => this.ID;
 
@@ -373,4 +378,7 @@ public interface IGuild : IPartialGuild
 
     /// <inheritdoc/>
     Optional<Snowflake?> IPartialGuild.SafetyAlertsChannelID => this.SafetyAlertsChannelID;
+
+    /// <inheritdoc/>
+    Optional<IIncidentsData?> IPartialGuild.IncidentsData => new(this.IncidentsData);
 }

@@ -1126,4 +1126,20 @@ public interface IDiscordRestGuildAPI
         Optional<bool> suppress = default,
         CancellationToken ct = default
     );
+
+    /// <summary>
+    /// Modifies the incident actions of the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="invitesDisabledUntil">The time at which invites are reenabled.</param>
+    /// <param name="dmsDisabledUntil">The time at which DMs are reenabled.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>The new incident data.</returns>
+    Task<Result<IIncidentsData>> ModifyGuildIncidentActionsAsync
+    (
+        Snowflake guildID,
+        Optional<DateTimeOffset?> invitesDisabledUntil = default,
+        Optional<DateTimeOffset?> dmsDisabledUntil = default,
+        CancellationToken ct = default
+    );
 }

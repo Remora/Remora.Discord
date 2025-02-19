@@ -27,7 +27,8 @@ using Remora.Rest.Core;
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents the metadata of an application command interaction.
+/// Represents generic information about a message interaction. Cast this to its relevant subtype based on
+/// <see cref="Type"/> to access type-specific fields.
 /// </summary>
 [PublicAPI]
 public interface IMessageInteractionMetadata
@@ -38,24 +39,14 @@ public interface IMessageInteractionMetadata
     Snowflake ID { get; }
 
     /// <summary>
-    /// Gets the ID of the user who triggered the interaction.
-    /// </summary>
-    IUser User { get; }
-
-    /// <summary>
     /// Gets the type of the interaction.
     /// </summary>
     InteractionType Type { get; }
 
     /// <summary>
-    /// Gets the ID of the original response message. Only applicable to followup messages.
+    /// Gets the ID of the user who triggered the interaction.
     /// </summary>
-    Optional<Snowflake> OriginalResponseMessageID { get; }
-
-    /// <summary>
-    /// Gets the ID of the message containing the interactive component; only applicable to component interactions.
-    /// </summary>
-    Optional<Snowflake> InteractedMessageID { get; }
+    IUser User { get; }
 
     /// <summary>
     /// Gets the integrations that authorized the interaction.
@@ -72,7 +63,7 @@ public interface IMessageInteractionMetadata
     IReadOnlyDictionary<ApplicationIntegrationType, Snowflake> AuthorizingIntegrationOwners { get; }
 
     /// <summary>
-    /// Gets the interaction metadata responsible, if this is a response to a modal.
+    /// Gets the ID of the original response message. Only applicable to followup messages.
     /// </summary>
-    Optional<IMessageInteractionMetadata> TriggeringInteractionMetadata { get; }
+    Optional<Snowflake> OriginalResponseMessageID { get; }
 }

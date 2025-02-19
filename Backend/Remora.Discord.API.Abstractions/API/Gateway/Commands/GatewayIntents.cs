@@ -76,8 +76,12 @@ public enum GatewayIntents
     /// Subscribes to the following events:
     ///     - GUILD_EMOJIS_UPDATE
     ///     - GUILD_STICKERS_UPDATE
+    ///     - GUILD_SOUNDBOARD_SOUND_CREATE
+    ///     - GUILD_SOUNDBOARD_SOUND_UPDATE
+    ///     - GUILD_SOUNDBOARD_SOUND_DELETE
+    ///     - GUILD_SOUNDBOARD_SOUNDS_UPDATE
     /// </summary>
-    GuildEmojisAndStickers = 1 << 3,
+    GuildExpressions = 1 << 3,
 
     /// <summary>
     /// Subscribes to the following events:

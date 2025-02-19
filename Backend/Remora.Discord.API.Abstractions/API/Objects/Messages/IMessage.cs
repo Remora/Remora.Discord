@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -155,6 +154,11 @@ public interface IMessage : IPartialMessage
     new Optional<IMessageReference> MessageReference { get; }
 
     /// <summary>
+    /// Gets the message associated with <see cref="MessageReference"/>. Sent with forwarded messages.
+    /// </summary>
+    new Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots { get; }
+
+    /// <summary>
     /// Gets a set of bitwise flags describing extra features of the message.
     /// </summary>
     new Optional<MessageFlags> Flags { get; }
@@ -203,6 +207,11 @@ public interface IMessage : IPartialMessage
     /// Gets the poll sent with the message, if any.
     /// </summary>
     new Optional<IPoll> Poll { get; }
+
+    /// <summary>
+    /// Gets the call associated with the message, if any.
+    /// </summary>
+    new Optional<IMessageCall> Call { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
@@ -271,6 +280,9 @@ public interface IMessage : IPartialMessage
     Optional<IMessageReference> IPartialMessage.MessageReference => this.MessageReference;
 
     /// <inheritdoc/>
+    Optional<IReadOnlyList<IMessageSnapshot>> IPartialMessage.MessageSnapshots => this.MessageSnapshots;
+
+    /// <inheritdoc/>
     Optional<MessageFlags> IPartialMessage.Flags => this.Flags;
 
     /// <inheritdoc/>
@@ -299,4 +311,7 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<IPoll> IPartialMessage.Poll => this.Poll;
+
+    /// <inheritdoc/>
+    Optional<IMessageCall> IPartialMessage.Call => this.Call;
 }

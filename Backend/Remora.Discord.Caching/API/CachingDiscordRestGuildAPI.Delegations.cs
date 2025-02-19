@@ -256,6 +256,18 @@ public partial class CachingDiscordRestGuildAPI
         return _actual.ModifyUserVoiceStateAsync(guildID, userID, channelID, suppress, ct);
     }
 
+    /// <inheritdoc />
+    public Task<Result<IIncidentsData>> ModifyGuildIncidentActionsAsync
+    (
+        Snowflake guildID,
+        Optional<DateTimeOffset?> invitesDisabledUntil = default,
+        Optional<DateTimeOffset?> dmsDisabledUntil = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ModifyGuildIncidentActionsAsync(guildID, invitesDisabledUntil, dmsDisabledUntil, ct);
+    }
+
     /// <inheritdoc/>
     public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
     {

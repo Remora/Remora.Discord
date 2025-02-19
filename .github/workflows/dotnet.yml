@@ -31,9 +31,8 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            6.0.x
-            7.0.x
             8.0.x
+            9.0.x
 
       - name: Build
         run: |
@@ -44,13 +43,12 @@ jobs:
         run: dotnet test -c Release --no-restore --no-build --verbosity minimal --collect:"XPlat Code Coverage" --results-directory ./coverage
 
       - name: Inspect
-        uses: JetBrains/ReSharper-InspectCode@v0.3
+        uses: JetBrains/ReSharper-InspectCode@v0.8
         with:
-          tool-version: 2023.3.4
+          tool-version: 2024.3.0
           solution: Remora.Discord.sln
           build: false
           no-build: true
-          telemetry-optout: true
 
       - name: Coverage
         uses: irongut/CodeCoverageSummary@v1.3.0
@@ -145,7 +143,7 @@ jobs:
 
       # To ensure that the current version being pushed does not get pruned we prune first.
       - name: Prune packages older than 4 versions (new version is the 5th)
-        uses: smartsquaregmbh/delete-old-packages@v0.8.0
+        uses: smartsquaregmbh/delete-old-packages@v0.8.1
         with:
           organization: Remora
           type: nuget

@@ -1,11 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2024.3</VersionPrefix>
+        <VersionPrefix>2025.1</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            BREAKING: Rework deletion logic for data leases to prevent deadlocks.
+            BREAKING: Update target frameworks.
+            BREAKING: Update dependencies.
+            BREAKING: Catch-up on all discord features...
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

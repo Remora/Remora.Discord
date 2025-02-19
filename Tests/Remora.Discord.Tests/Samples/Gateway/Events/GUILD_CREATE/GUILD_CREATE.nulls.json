@@ -133,6 +133,7 @@
         "entity_id": "999999999999999999",
         "entity_metadata": { }
       }
-    ]
+    ],
+    "incidents_data": null
   }
 }

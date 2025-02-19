@@ -29,6 +29,7 @@ using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Objects.Soundboard;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
@@ -38,6 +39,7 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
+using Remora.Discord.API.Objects.Soundboard;
 using Remora.Discord.API.Rest;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
@@ -118,6 +120,7 @@ public static class ServiceCollectionExtensions
                         .AddApplicationRoleConnectionObjectConverters()
                         .AddMonetizationConverters()
                         .AddPollObjectConverters()
+                        .AddSoundboardObjectConverters()
                         .AddWebhookEventObjectConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -162,6 +165,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IRequestGuildMembers, RequestGuildMembers>()
             .WithPropertyName(r => r.UserIDs, "user_ids");
+
+        options.AddDataObjectConverter<IRequestSoundboardSounds, RequestSoundboardSounds>()
+            .WithPropertyName(r => r.GuildIDs, "guild_ids");
 
         options.AddDataObjectConverter<IResume, Resume>()
             .WithPropertyName(r => r.SequenceNumber, "seq");
@@ -440,6 +446,20 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IMessagePollVoteAdd, MessagePollVoteAdd>();
         options.AddDataObjectConverter<IMessagePollVoteRemove, MessagePollVoteRemove>();
 
+        // Soundboards
+        options.AddDataObjectConverter<IGuildSoundboardSoundCreate, GuildSoundboardSoundCreate>()
+            .WithPropertyName(e => e.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundUpdate, GuildSoundboardSoundUpdate>()
+            .WithPropertyName(e => e.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundDelete, GuildSoundboardSoundDelete>();
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundsUpdate, GuildSoundboardSoundsUpdate>();
+
+        options.AddDataObjectConverter<ISoundboardSounds, SoundboardSounds>()
+            .WithPropertyName(s => s.Sounds, "soundboard_sounds");
+
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -714,6 +734,12 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IBulkBanResponse, BulkBanResponse>();
 
+        options.AddDataObjectConverter<IIncidentsData, IncidentsData>()
+            .WithPropertyName(i => i.DMsDisabledUntil, "dms_disabled_until")
+            .WithPropertyConverter(i => i.DMsDisabledUntil, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyName(i => i.DMSpamDetectedAt, "dm_spam_detected_at")
+            .WithPropertyConverter(i => i.DMSpamDetectedAt, new ISO8601DateTimeOffsetConverter());
+
         return options;
     }
 
@@ -837,6 +863,8 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
         options.AddDataObjectConverter<IMessageReference, MessageReference>();
+        options.AddDataObjectConverter<IMessageSnapshot, MessageSnapshot>();
+        options.AddDataObjectConverter<IMessageCall, MessageCall>();
 
         return options;
     }
@@ -1204,8 +1232,19 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
 
-        options.AddDataObjectConverter<IMessageInteractionMetadata, MessageInteractionMetadata>()
-               .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+        options.AddConverter<MessageInteractionMetadataConverter>();
+
+        options.AddDataObjectConverter<IApplicationCommandInteractionMetadata, ApplicationCommandInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IMessageComponentInteractionMetadata, MessageComponentInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IModalSubmitInteractionMetadata, ModalSubmitInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
 
         options.AddDataObjectConverter<IUnfurledMediaItem, UnfurledMediaItem>();
 
@@ -1298,12 +1337,21 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(e => e.SKUID, "sku_id")
             .WithPropertyName(e => e.IsDeleted, "deleted")
             .WithPropertyName(e => e.IsConsumed, "consumed");
+
         options.AddDataObjectConverter<IPartialEntitlement, PartialEntitlement>()
             .WithPropertyName(e => e.SKUID, "sku_id")
             .WithPropertyName(e => e.IsDeleted, "deleted")
             .WithPropertyName(e => e.IsConsumed, "consumed");
 
         options.AddDataObjectConverter<ISKU, SKU>();
+
+        options.AddDataObjectConverter<ISubscription, Subscription>()
+            .WithPropertyName(s => s.SKUIDs, "sku_ids")
+            .WithPropertyName(s => s.RenewalSKUIDs, "renewal_sku_ids")
+            .WithPropertyName(s => s.EntitlementIDs, "entitlement_ids")
+            .WithPropertyConverter(s => s.CurrentPeriodStart, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyConverter(s => s.CurrentPeriodEnd, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyConverter(s => s.CanceledAt, new ISO8601DateTimeOffsetConverter());
 
         return options;
     }
@@ -1382,6 +1430,24 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IPollMedia, PollMedia>();
         options.AddDataObjectConverter<IPollResults, PollResults>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle soundboard objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddSoundboardObjectConverters
+    (
+        this JsonSerializerOptions options
+    )
+    {
+        options.AddDataObjectConverter<ISoundboardSound, SoundboardSound>()
+            .WithPropertyName(s => s.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IListGuildSoundboardSoundsResponse, ListGuildSoundboardSoundsResponse>();
 
         return options;
     }

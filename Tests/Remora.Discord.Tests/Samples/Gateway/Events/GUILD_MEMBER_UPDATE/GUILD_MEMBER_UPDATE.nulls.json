@@ -15,6 +15,7 @@
     },
     "nick": null,
     "avatar": null,
+    "banner": null,
     "joined_at": null,
     "premium_since": null,
     "deaf": true,

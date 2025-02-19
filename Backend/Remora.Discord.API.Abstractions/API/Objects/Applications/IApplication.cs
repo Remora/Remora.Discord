@@ -151,6 +151,21 @@ public interface IApplication : IPartialApplication
     new Optional<Uri> RoleConnectionsVerificationUrl { get; }
 
     /// <summary>
+    /// Gets the application's event webhook URL where the application receives events from Discord.
+    /// </summary>
+    new Optional<Uri> EventWebhooksUrl { get; }
+
+    /// <summary>
+    /// Gets the status of the application's event webhook.
+    /// </summary>
+    new ApplicationEventWebhookStatus EventWebhooksStatus { get; }
+
+    /// <summary>
+    /// Gets a list of the webhook event types the application subscribes to.
+    /// </summary>
+    new Optional<IReadOnlyList<string>> EventWebhooksTypes { get; }
+
+    /// <summary>
     /// Gets up to 5 tags describing the content and functionality of the application.
     /// </summary>
     new Optional<IReadOnlyList<string>> Tags { get; }
@@ -238,6 +253,15 @@ public interface IApplication : IPartialApplication
 
     /// <inheritdoc/>
     Optional<Uri> IPartialApplication.RoleConnectionsVerificationUrl => this.RoleConnectionsVerificationUrl;
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.EventWebhooksUrl => this.EventWebhooksUrl;
+
+    /// <inheritdoc/>
+    Optional<ApplicationEventWebhookStatus> IPartialApplication.EventWebhooksStatus => this.EventWebhooksStatus;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<string>> IPartialApplication.EventWebhooksTypes => this.EventWebhooksTypes;
 
     /// <inheritdoc/>
     Optional<IReadOnlyList<string>> IPartialApplication.Tags => this.Tags;

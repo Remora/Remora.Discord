@@ -7,7 +7,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
@@ -41,8 +43,8 @@ public class EchoResponder : IResponder<IMessageCreate>
         return (Result)await _channelAPI.CreateMessageAsync
         (
             gatewayEvent.ChannelID,
-            gatewayEvent.Content,
-            ct: ct
+            ct: ct,
+            messageReference: new MessageReference(MessageReferenceType.Forward, MessageID: gatewayEvent.ID, ChannelID: gatewayEvent.ChannelID, GuildID: gatewayEvent.GuildID)
         );
     }
 }

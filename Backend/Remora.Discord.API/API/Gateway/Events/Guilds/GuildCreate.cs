@@ -90,6 +90,7 @@ public record GuildCreate(OneOf<IGuildCreate.IAvailableGuild, IUnavailableGuild>
         IReadOnlyList<IChannel> Threads,
         IReadOnlyList<IPartialPresence> Presences,
         IReadOnlyList<IStageInstance> StageInstances,
-        IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents
+        IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents,
+        IIncidentsData? IncidentsData
     ) : IGuildCreate.IAvailableGuild;
 }

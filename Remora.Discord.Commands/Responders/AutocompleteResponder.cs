@@ -119,7 +119,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             return new InvalidOperationError("Autocomplete interaction without focused option received. Desync?");
         }
 
-        var realParameter = commandNode.CommandMethod.GetParameters().First
+        var realParameter = commandNode.Invoke.Method.GetParameters().First
         (
             p => p.Name is not null && p.Name.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
         );

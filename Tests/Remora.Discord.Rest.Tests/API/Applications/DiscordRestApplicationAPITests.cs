@@ -78,7 +78,7 @@ public class DiscordRestApplicationAPITests
                     .WithExactQueryString("with_localizations", withLocalizations.ToString())
                     .WithHeaders(Constants.LocaleHeaderName, locale)
                     .WithNoContent()
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<IApplicationCommand>>()
             );
 
             var result = await api.GetGlobalApplicationCommandsAsync
@@ -139,7 +139,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGlobalApplicationCommandAsync
@@ -183,7 +183,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGlobalApplicationCommandAsync
@@ -223,7 +223,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGlobalApplicationCommandAsync
@@ -265,7 +265,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGlobalApplicationCommandAsync
@@ -306,7 +306,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGlobalApplicationCommandAsync
@@ -346,7 +346,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGlobalApplicationCommandAsync
@@ -386,7 +386,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGlobalApplicationCommandAsync
@@ -505,7 +505,7 @@ public class DiscordRestApplicationAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", "[]")
+                    .Respond<IReadOnlyList<IApplicationCommand>>()
             );
 
             var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
@@ -538,7 +538,7 @@ public class DiscordRestApplicationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
@@ -571,7 +571,7 @@ public class DiscordRestApplicationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
@@ -604,7 +604,7 @@ public class DiscordRestApplicationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
@@ -637,7 +637,7 @@ public class DiscordRestApplicationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
@@ -679,7 +679,7 @@ public class DiscordRestApplicationAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.GetGlobalApplicationCommandAsync
@@ -736,7 +736,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGlobalApplicationCommandAsync
@@ -780,7 +780,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGlobalApplicationCommandAsync
@@ -823,7 +823,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGlobalApplicationCommandAsync
@@ -866,7 +866,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGlobalApplicationCommandAsync
@@ -909,7 +909,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGlobalApplicationCommandAsync
@@ -1003,7 +1003,7 @@ public class DiscordRestApplicationAPITests
                     .WithExactQueryString("with_localizations", withLocalizations.ToString())
                     .WithHeaders(Constants.LocaleHeaderName, locale)
                     .WithNoContent()
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<IApplicationCommand>>()
             );
 
             var result = await api.GetGuildApplicationCommandsAsync
@@ -1070,7 +1070,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGuildApplicationCommandAsync
@@ -1120,7 +1120,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGuildApplicationCommandAsync
@@ -1167,7 +1167,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGuildApplicationCommandAsync
@@ -1214,7 +1214,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGuildApplicationCommandAsync
@@ -1261,7 +1261,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGuildApplicationCommandAsync
@@ -1308,7 +1308,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGuildApplicationCommandAsync
@@ -1355,7 +1355,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.CreateGuildApplicationCommandAsync
@@ -1480,7 +1480,7 @@ public class DiscordRestApplicationAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", "[]")
+                    .Respond<IReadOnlyList<IApplicationCommand>>()
             );
 
             var result = await api.BulkOverwriteGuildApplicationCommandsAsync
@@ -1519,7 +1519,7 @@ public class DiscordRestApplicationAPITests
                         HttpMethod.Put,
                         $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.BulkOverwriteGuildApplicationCommandsAsync
@@ -1558,7 +1558,7 @@ public class DiscordRestApplicationAPITests
                         HttpMethod.Put,
                         $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.BulkOverwriteGuildApplicationCommandsAsync
@@ -1597,7 +1597,7 @@ public class DiscordRestApplicationAPITests
                         HttpMethod.Put,
                         $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.BulkOverwriteGuildApplicationCommandsAsync
@@ -1636,7 +1636,7 @@ public class DiscordRestApplicationAPITests
                         HttpMethod.Put,
                         $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.BulkOverwriteGuildApplicationCommandsAsync
@@ -1684,7 +1684,7 @@ public class DiscordRestApplicationAPITests
                         $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.GetGuildApplicationCommandAsync
@@ -1747,7 +1747,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("nsfw", p => p.Is(nsfw))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGuildApplicationCommandAsync
@@ -1797,7 +1797,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGuildApplicationCommandAsync
@@ -1846,7 +1846,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGuildApplicationCommandAsync
@@ -1895,7 +1895,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGuildApplicationCommandAsync
@@ -1944,7 +1944,7 @@ public class DiscordRestApplicationAPITests
                                 .WithProperty("options", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                    .Respond<IApplicationCommand>()
             );
 
             var result = await api.EditGuildApplicationCommandAsync
@@ -2036,7 +2036,7 @@ public class DiscordRestApplicationAPITests
                         $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
                     )
                     .WithNoContent()
-                    .Respond("application/json", "[]")
+                    .Respond<IReadOnlyList<IGuildApplicationCommandPermissions>>()
             );
 
             var result = await api.GetGuildApplicationCommandPermissionsAsync(applicationID, guildID);
@@ -2081,7 +2081,7 @@ public class DiscordRestApplicationAPITests
                     .Respond
                     (
                         "application/json",
-                        SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)]
+                        SampleRepository.Get<IGuildApplicationCommandPermissions>()
                     )
             );
 
@@ -2132,7 +2132,7 @@ public class DiscordRestApplicationAPITests
                             o => o.WithProperty("permissions", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)])
+                    .Respond<IGuildApplicationCommandPermissions>()
             );
 
             var result = await api.EditApplicationCommandPermissionsAsync
@@ -2178,7 +2178,7 @@ public class DiscordRestApplicationAPITests
                         $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
                     )
                     .WithNoContent()
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<IApplicationRoleConnectionMetadata>>()
             );
 
             var result = await api.GetApplicationRoleConnectionMetadataRecordsAsync
@@ -2269,7 +2269,7 @@ public class DiscordRestApplicationAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", "[]")
+                    .Respond<IReadOnlyList<IApplicationRoleConnectionMetadata>>()
             );
 
             var result = await api.UpdateApplicationRoleConnectionMetadataRecordsAsync
@@ -2311,7 +2311,7 @@ public class DiscordRestApplicationAPITests
                     .Respond
                     (
                         "application/json",
-                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                        $"[ {SampleRepository.Get<IApplicationRoleConnectionMetadata>()} ]"
                     )
             );
 
@@ -2354,7 +2354,7 @@ public class DiscordRestApplicationAPITests
                     .Respond
                     (
                         "application/json",
-                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                        $"[ {SampleRepository.Get<IApplicationRoleConnectionMetadata>()} ]"
                     )
             );
 
@@ -2397,7 +2397,7 @@ public class DiscordRestApplicationAPITests
                     .Respond
                     (
                         "application/json",
-                        $"[ {SampleRepository.Samples[typeof(IApplicationRoleConnectionMetadata)]} ]"
+                        $"[ {SampleRepository.Get<IApplicationRoleConnectionMetadata>()} ]"
                     )
             );
 
@@ -2441,7 +2441,7 @@ public class DiscordRestApplicationAPITests
                         $"{Constants.BaseURL}applications/@me"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
+                    .Respond<IApplication>()
             );
 
             var result = await api.GetCurrentApplicationAsync();
@@ -2496,6 +2496,10 @@ public class DiscordRestApplicationAPITests
             var interactionsEndpointUrl = new Uri("https://example.org/interact");
             var tags = new[] { "ooga", "booga" };
 
+            var eventWebhooksUrl = new Uri("https://example.org/webhook");
+            var eventWebhooksStatus = ApplicationEventWebhookStatus.Enabled;
+            var eventWebhooksTypes = new[] { "fake", "types" };
+
             var integrationTypes = new Dictionary<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>
             {
                 { ApplicationIntegrationType.GuildInstallable, new ApplicationIntegrationTypeConfig(new ApplicationOAuth2InstallParams(DiscordPermissionSet.Empty, Array.Empty<string>())) },
@@ -2546,13 +2550,16 @@ public class DiscordRestApplicationAPITests
                                     "integration_types_config",
                                     p => p.IsObject
                                     (
-                                        a => a.WithProperty("0", p => p.IsObject())
-                                              .WithProperty("1", p => p.IsObject())
+                                        a => a.WithProperty("0", pp => pp.IsObject())
+                                              .WithProperty("1", pp => pp.IsObject())
                                     )
                                 )
+                                .WithProperty("event_webhooks_url", p => p.Is(eventWebhooksUrl.ToString()))
+                                .WithProperty("event_webhooks_status", p => p.Is((int)eventWebhooksStatus))
+                                .WithProperty("event_webhooks_types", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
+                    .Respond<IApplication>()
             );
 
             var result = await api.EditCurrentApplicationAsync
@@ -2566,7 +2573,10 @@ public class DiscordRestApplicationAPITests
                 cover,
                 interactionsEndpointUrl,
                 tags,
-                integrationTypes
+                integrationTypes,
+                eventWebhooksUrl,
+                eventWebhooksStatus,
+                eventWebhooksTypes
             );
 
             ResultAssert.Successful(result);

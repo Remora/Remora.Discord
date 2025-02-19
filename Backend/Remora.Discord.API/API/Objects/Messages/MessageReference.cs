@@ -32,6 +32,7 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record MessageReference
 (
+    Optional<MessageReferenceType> Type = default,
     Optional<Snowflake> MessageID = default,
     Optional<Snowflake> ChannelID = default,
     Optional<Snowflake> GuildID = default,

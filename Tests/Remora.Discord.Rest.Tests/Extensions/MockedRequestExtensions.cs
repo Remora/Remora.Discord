@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using Remora.Discord.Tests;
 using RichardSzalay.MockHttp;
 
 namespace Remora.Discord.Rest.Tests.Extensions;
@@ -38,11 +39,14 @@ public static class MockedRequestExtensions
     /// <param name="value">The query string value to match.</param>
     /// <returns>The <see cref="T:MockedRequest" /> instance.</returns>
     public static MockedRequest WithExactQueryString(this MockedRequest source, string name, string value) =>
-        source.WithExactQueryString(new Dictionary<string, string>
-        {
-            {
-                name,
-                value
-            }
-        });
+        source.WithExactQueryString(new Dictionary<string, string> { { name, value } });
+
+    /// <summary>
+    /// Responds with a JSON payload based on a given type.
+    /// </summary>
+    /// <param name="source">The source mocked request.</param>
+    /// <typeparam name="TSample">The type of the sample.</typeparam>
+    /// <returns>The <see cref="T:MockedRequest" /> instance.</returns>
+    public static MockedRequest Respond<TSample>(this MockedRequest source) =>
+        source.Respond("application/json", SampleRepository.Get<TSample>());
 }

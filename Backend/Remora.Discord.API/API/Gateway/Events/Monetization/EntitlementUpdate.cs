@@ -38,8 +38,8 @@ public record EntitlementUpdate
     Optional<Snowflake> UserID,
     EntitlementType Type,
     bool IsDeleted,
-    Optional<DateTimeOffset> StartsAt = default,
-    Optional<DateTimeOffset> EndsAt = default,
+    DateTimeOffset? StartsAt = null,
+    DateTimeOffset? EndsAt = null,
     Optional<Snowflake> GuildID = default,
     Optional<bool> IsConsumed = default
 ) : IEntitlementUpdate;

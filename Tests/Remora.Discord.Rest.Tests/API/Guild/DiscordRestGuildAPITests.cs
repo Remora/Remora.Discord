@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
@@ -113,7 +114,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("system_channel_flags", p => p.Is((int)systemChannelFlags))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.CreateGuildAsync
@@ -147,7 +148,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.CreateGuildAsync
@@ -171,7 +172,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.CreateGuildAsync
@@ -201,7 +202,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.CreateGuildAsync
@@ -243,7 +244,7 @@ public class DiscordRestGuildAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}")
                     .WithExactQueryString("with_counts", withCounts.ToString())
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.GetGuildAsync(guildId, withCounts);
@@ -279,7 +280,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/preview")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildPreview)])
+                    .Respond<IGuildPreview>()
             );
 
             var result = await api.GetGuildPreviewAsync(guildId);
@@ -387,7 +388,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("safety_alerts_channel_id", p => p.Is(safetyAlertsChannel.ToString()))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.ModifyGuildAsync
@@ -444,7 +445,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("safety_alerts_channel_id", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.ModifyGuildAsync
@@ -479,7 +480,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.ModifyGuildAsync
@@ -511,7 +512,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.ModifyGuildAsync
@@ -543,7 +544,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                    .Respond<IGuild>()
             );
 
             var result = await api.ModifyGuildAsync
@@ -620,7 +621,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/channels")
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<IChannel>>()
             );
 
             var result = await api.GetGuildChannelsAsync(guildId);
@@ -689,7 +690,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                    .Respond<IChannel>()
             );
 
             var result = await api.CreateGuildTextChannelAsync
@@ -754,7 +755,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                    .Respond<IChannel>()
             );
 
             var result = await api.CreateGuildAnnouncementChannelAsync
@@ -828,7 +829,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                    .Respond<IChannel>()
             );
 
             var result = await api.CreateGuildForumChannelAsync
@@ -903,7 +904,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("default_thread_rate_limit_per_user", p => p.Is(defaultThreadRateLimitPerUser))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                    .Respond<IChannel>()
             );
 
             var result = await api.CreateGuildMediaChannelAsync
@@ -970,7 +971,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                    .Respond<IChannel>()
             );
 
             var result = await api.CreateGuildVoiceChannelAsync
@@ -1036,7 +1037,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                    .Respond<IChannel>()
             );
 
             var result = await api.CreateGuildStageChannelAsync
@@ -1094,7 +1095,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("default_sort_order", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                    .Respond<IChannel>()
             );
 
             var result = await api.CreateGuildChannelAsync
@@ -1418,7 +1419,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildMember)])
+                    .Respond<IGuildMember>()
             );
 
             var result = await api.GetGuildMemberAsync(guildId, userId);
@@ -1464,7 +1465,7 @@ public class DiscordRestGuildAPITests
                             new KeyValuePair<string, string>("after", after.ToString())
                         }
                     )
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<IGuildMember>>()
             );
 
             var result = await api.ListGuildMembersAsync(guildId, limit, after);
@@ -1613,7 +1614,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("deaf", p => p.Is(deaf))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildMember)])
+                    .Respond<IGuildMember>()
             );
 
             var result = await api.AddGuildMemberAsync
@@ -1743,7 +1744,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("nick", p => p.Is(nick))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildMember)])
+                    .Respond<IGuildMember>()
             );
 
             var result = await api.ModifyCurrentMemberAsync
@@ -1979,7 +1980,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/bans/{userId}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IBan)])
+                    .Respond<IBan>()
             );
 
             var result = await api.GetGuildBanAsync
@@ -2130,7 +2131,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("delete_message_seconds", p => p.Is(deleteMessageSeconds))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IBulkBanResponse)])
+                    .Respond<IBulkBanResponse>()
             );
 
             var result = await api.BulkGuildBanAsync
@@ -2241,7 +2242,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("mentionable", p => p.Is(mentionable))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IRole)])
+                    .Respond<IRole>()
             );
 
             var result = await api.CreateGuildRoleAsync
@@ -2417,7 +2418,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("mentionable", p => p.Is(mentionable))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IRole)])
+                    .Respond<IRole>()
             );
 
             var result = await api.ModifyGuildRoleAsync
@@ -2573,7 +2574,7 @@ public class DiscordRestGuildAPITests
                             new KeyValuePair<string, string>("include_roles", string.Join(',', includeRoles))
                         }
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IPruneCount)])
+                    .Respond<IPruneCount>()
             );
 
             var result = await api.GetGuildPruneCountAsync
@@ -2629,7 +2630,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("include_roles", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IPruneCount)])
+                    .Respond<IPruneCount>()
             );
 
             var result = await api.BeginGuildPruneAsync
@@ -2789,7 +2790,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidgetSettings)])
+                    .Respond<IGuildWidgetSettings>()
             );
 
             var result = await api.GetGuildWidgetSettingsAsync
@@ -2841,7 +2842,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("channel_id", p => p.Is(channelId.ToString()))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidgetSettings)])
+                    .Respond<IGuildWidgetSettings>()
             );
 
             var result = await api.ModifyGuildWidgetAsync
@@ -2884,7 +2885,7 @@ public class DiscordRestGuildAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget.json")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidget)])
+                    .Respond<IGuildWidget>()
             );
 
             var result = await api.GetGuildWidgetAsync
@@ -2923,7 +2924,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/vanity-url")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
+                    .Respond<IInvite>()
             );
 
             var result = await api.GetGuildVanityUrlAsync
@@ -3004,7 +3005,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/welcome-screen")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWelcomeScreen)])
+                    .Respond<IWelcomeScreen>()
             );
 
             var result = await api.GetGuildWelcomeScreenAsync
@@ -3058,7 +3059,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("description", p => p.Is(description))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWelcomeScreen)])
+                    .Respond<IWelcomeScreen>()
             );
 
             var result = await api.ModifyGuildWelcomeScreenAsync
@@ -3101,7 +3102,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/onboarding")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildOnboarding)])
+                    .Respond<IGuildOnboarding>()
             );
 
             var result = await api.GetGuildOnboardingAsync
@@ -3157,7 +3158,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("mode", p => p.Is((int)mode))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildOnboarding)])
+                    .Respond<IGuildOnboarding>()
             );
 
             var result = await api.ModifyGuildOnboardingAsync
@@ -3218,7 +3219,7 @@ public class DiscordRestGuildAPITests
                                 )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IVoiceState)])
+                    .Respond<IVoiceState>()
             );
 
             var result = await api.ModifyCurrentUserVoiceStateAsync
@@ -3272,7 +3273,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("suppress", p => p.Is(suppress))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IVoiceState)])
+                    .Respond<IVoiceState>()
             );
 
             var result = await api.ModifyUserVoiceStateAsync
@@ -3319,7 +3320,7 @@ public class DiscordRestGuildAPITests
                         $"{Constants.BaseURL}guilds/{guildID}/threads/active"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildThreadQueryResponse)])
+                    .Respond<IGuildThreadQueryResponse>()
             );
 
             var result = await api.ListActiveGuildThreadsAsync(guildID);
@@ -3361,6 +3362,117 @@ public class DiscordRestGuildAPITests
             );
 
             var result = await api.DeleteGuildIntegrationAsync(guildID, integrationID, reason);
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildIncidentActionsAsync"/> method.
+    /// </summary>
+    public class ModifyGuildIncidentActionsAsync : RestAPITestBase<IDiscordRestGuildAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyGuildIncidentActionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ModifyGuildIncidentActionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildID = DiscordSnowflake.New(0);
+            var invitesDisabledUntil = DateTimeOffset.Now;
+            var dmsDisabledUntil = DateTimeOffset.Now + TimeSpan.FromMinutes(1);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty
+                                (
+                                    "invites_disabled_until",
+                                    p => p.Is(invitesDisabledUntil.ToISO8601String())
+                                )
+                                .WithProperty("dms_disabled_until", p => p.Is(dmsDisabledUntil.ToISO8601String()))
+                        )
+                    )
+                    .Respond<IIncidentsData>()
+            );
+
+            var result = await api.ModifyGuildIncidentActionsAsync(guildID, invitesDisabledUntil, dmsDisabledUntil);
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsOptionalRequestCorrectly()
+        {
+            var guildID = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithoutProperty("invites_disabled_until")
+                                .WithoutProperty("dms_disabled_until")
+                        )
+                    )
+                    .Respond<IIncidentsData>()
+            );
+
+            var result = await api.ModifyGuildIncidentActionsAsync(guildID);
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNullableRequestCorrectly()
+        {
+            var guildID = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("invites_disabled_until", p => p.IsNull())
+                                .WithProperty("dms_disabled_until", p => p.IsNull())
+                        )
+                    )
+                    .Respond<IIncidentsData>()
+            );
+
+            var result = await api.ModifyGuildIncidentActionsAsync(guildID, null, null);
 
             ResultAssert.Successful(result);
         }

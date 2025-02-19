@@ -27,6 +27,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using RichardSzalay.MockHttp;
@@ -78,7 +79,7 @@ public class DiscordRestInviteAPITests
                             new KeyValuePair<string, string>("guild_scheduled_event_id", eventID.ToString())
                         }
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
+                    .Respond<IInvite>()
             );
 
             var result = await api.GetInviteAsync(inviteCode, withCounts, withExpiration, eventID);
@@ -115,7 +116,7 @@ public class DiscordRestInviteAPITests
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}invites/{inviteCode}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
+                    .Respond<IInvite>()
             );
 
             var result = await api.DeleteInviteAsync(inviteCode, reason);

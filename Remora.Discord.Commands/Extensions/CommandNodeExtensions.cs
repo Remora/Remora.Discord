@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Remora.Commands.Trees.Nodes;
@@ -42,7 +43,7 @@ public static class CommandNodeExtensions
     /// <returns>The command type.</returns>
     public static ApplicationCommandType GetCommandType(this CommandNode node)
     {
-        var attribute = node.CommandMethod.GetCustomAttribute<CommandTypeAttribute>();
+        var attribute = node.Attributes.OfType<CommandTypeAttribute>().SingleOrDefault();
         return attribute?.Type ?? ApplicationCommandType.ChatInput;
     }
 
@@ -63,17 +64,11 @@ public static class CommandNodeExtensions
         bool includeAncestors = true
     ) where T : Attribute
     {
-        // Attempt to first find the attribute on the command itself
-        var attribute = node.CommandMethod.GetCustomAttribute<T>();
+        // Attempt to first find the attribute on the command itself. This catches attributes from any unnamed groups,
+        // which get copied onto the command.
+        var attribute = node.Attributes.OfType<T>().FirstOrDefault();
 
         if (attribute is not null || !includeAncestors)
-        {
-            return attribute;
-        }
-
-        // Check the associated group type directly first
-        attribute = node.GroupType.GetCustomAttribute<T>();
-        if (attribute is not null)
         {
             return attribute;
         }

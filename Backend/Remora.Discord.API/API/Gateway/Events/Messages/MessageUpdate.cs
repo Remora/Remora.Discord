@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -58,6 +57,7 @@ public record MessageUpdate
     Optional<IPartialApplication> Application = default,
     Optional<Snowflake> ApplicationID = default,
     Optional<IMessageReference> MessageReference = default,
+    Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots = default,
     Optional<MessageFlags> Flags = default,
     Optional<IMessage?> ReferencedMessage = default,
     Optional<IMessageInteraction> Interaction = default,
@@ -67,5 +67,6 @@ public record MessageUpdate
     Optional<int> Position = default,
     Optional<IApplicationCommandInteractionDataResolved> Resolved = default,
     Optional<IMessageInteractionMetadata> InteractionMetadata = default,
-    Optional<IPoll> Poll = default
+    Optional<IPoll> Poll = default,
+    Optional<IMessageCall> Call = default
 ) : IMessageUpdate;

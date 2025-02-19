@@ -102,6 +102,15 @@ public interface IPartialApplication
     /// <inheritdoc cref="IApplication.RoleConnectionsVerificationUrl" />
     Optional<Uri> RoleConnectionsVerificationUrl { get; }
 
+    /// <inheritdoc cref="IApplication.EventWebhooksUrl" />
+    Optional<Uri> EventWebhooksUrl { get; }
+
+    /// <inheritdoc cref="IApplication.EventWebhooksStatus" />
+    Optional<ApplicationEventWebhookStatus> EventWebhooksStatus { get; }
+
+    /// <inheritdoc cref="IApplication.EventWebhooksTypes" />
+    Optional<IReadOnlyList<string>> EventWebhooksTypes { get; }
+
     /// <inheritdoc cref="IApplication.Tags" />
     Optional<IReadOnlyList<string>> Tags { get; }
 

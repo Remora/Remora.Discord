@@ -68,6 +68,7 @@ public class DiscordRestMonetizationAPI : AbstractDiscordRestAPI, IDiscordRestMo
         Optional<int> limit = default,
         Optional<Snowflake> guildID = default,
         Optional<bool> excludeEnded = default,
+        Optional<bool> excludeDeleted = default,
         CancellationToken ct = default
     ) => this.RestHttpClient.GetAsync<IReadOnlyList<IEntitlement>>
     (
@@ -80,7 +81,21 @@ public class DiscordRestMonetizationAPI : AbstractDiscordRestAPI, IDiscordRestMo
             .AddQueryParameter("limit", limit)
             .AddQueryParameter("guild_id", guildID)
             .AddQueryParameter("exclude_ended", excludeEnded)
+            .AddQueryParameter("exclude_deleted", excludeDeleted)
             .WithRateLimitContext(this.RateLimitCache),
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IEntitlement>> GetEntitlementAsync
+    (
+        Snowflake applicationID,
+        Snowflake entitlementID,
+        CancellationToken ct = default
+    ) => this.RestHttpClient.GetAsync<IEntitlement>
+    (
+        $"applications/{applicationID}/entitlements/{entitlementID}",
+        b => b.WithRateLimitContext(this.RateLimitCache),
         ct: ct
     );
 
@@ -140,6 +155,40 @@ public class DiscordRestMonetizationAPI : AbstractDiscordRestAPI, IDiscordRestMo
         => this.RestHttpClient.GetAsync<IReadOnlyList<ISKU>>
     (
         $"applications/{applicationID}/skus",
+        b => b.WithRateLimitContext(this.RateLimitCache),
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IReadOnlyList<ISubscription>>> ListSKUSubscriptionsAsync
+    (
+        Snowflake skuID,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
+        Optional<Snowflake> userID = default,
+        CancellationToken ct = default
+    ) => this.RestHttpClient.GetAsync<IReadOnlyList<ISubscription>>
+    (
+        $"skus/{skuID}/subscriptions",
+        b => b
+            .AddQueryParameter("before", before)
+            .AddQueryParameter("after", after)
+            .AddQueryParameter("limit", limit)
+            .AddQueryParameter("user_id", userID)
+            .WithRateLimitContext(this.RateLimitCache),
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<ISubscription>> GetSKUSubscriptionAsync
+    (
+        Snowflake skuID,
+        Snowflake subscriptionID,
+        CancellationToken ct = default
+    ) => this.RestHttpClient.GetAsync<ISubscription>
+    (
+        $"skus/{skuID}/subscriptions/{subscriptionID}",
         b => b.WithRateLimitContext(this.RateLimitCache),
         ct: ct
     );

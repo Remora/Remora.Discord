@@ -42,6 +42,9 @@ public interface IPartialGuildMember
     /// <inheritdoc cref="IGuildMember.Avatar"/>
     Optional<IImageHash?> Avatar { get; }
 
+    /// <inheritdoc cref="IGuildMember.Banner"/>
+    Optional<IImageHash?> Banner { get; }
+
     /// <inheritdoc cref="IGuildMember.Roles" />
     Optional<IReadOnlyList<Snowflake>> Roles { get; }
 

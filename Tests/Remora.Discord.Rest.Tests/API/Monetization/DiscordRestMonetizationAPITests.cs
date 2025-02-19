@@ -72,6 +72,7 @@ public class DiscordRestMonetizationAPITests
             var limit = 1;
             var guildID = DiscordSnowflake.New(7);
             var excludeEnded = true;
+            var excludeDeleted = true;
 
             var api = CreateAPI
             (
@@ -79,18 +80,18 @@ public class DiscordRestMonetizationAPITests
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/entitlements")
                     .WithExactQueryString
                     (
-                        new KeyValuePair<string, string>[]
-                        {
+                        [
                             new("user_id", userID.ToString()),
                             new("sku_ids", string.Join(',', skuIDs.Select(id => id.ToString()))),
                             new("before", before.ToString()),
                             new("after", after.ToString()),
                             new("limit", limit.ToString()),
                             new("guild_id", guildID.ToString()),
-                            new("exclude_ended", excludeEnded.ToString())
-                        }
+                            new("exclude_ended", excludeEnded.ToString()),
+                            new("exclude_deleted", excludeDeleted.ToString())
+                        ]
                     )
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<IEntitlement>>()
             );
 
             var result = await api.ListEntitlementsAsync
@@ -102,7 +103,49 @@ public class DiscordRestMonetizationAPITests
                 after,
                 limit,
                 guildID,
-                excludeEnded
+                excludeEnded,
+                excludeDeleted
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestMonetizationAPI.GetEntitlementAsync"/> method.
+    /// </summary>
+    public class GetEntitlementAsync : RestAPITestBase<IDiscordRestMonetizationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetEntitlementAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetEntitlementAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(1);
+            var entitlementID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}")
+                    .Respond<IEntitlement>()
+            );
+
+            var result = await api.GetEntitlementAsync
+            (
+                applicationID,
+                entitlementID
             );
 
             ResultAssert.Successful(result);
@@ -137,7 +180,7 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}/consume")
-                    .Respond("application/json", "[ ]")
+                    .Respond(HttpStatusCode.NoContent)
             );
 
             var result = await api.ConsumeEntitlementAsync
@@ -190,7 +233,7 @@ public class DiscordRestMonetizationAPITests
                                 .WithProperty("owner_type", p => p.Is((int)ownerType))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IEntitlement)])
+                    .Respond<IEntitlement>()
             );
 
             var result = await api.CreateTestEntitlementAsync(applicationID, skuID, ownerID, ownerType);
@@ -261,10 +304,107 @@ public class DiscordRestMonetizationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/skus")
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<ISKU>>()
             );
 
             var result = await api.ListSKUsAsync(applicationID);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestMonetizationAPI.ListSKUSubscriptionsAsync"/> method.
+    /// </summary>
+    public class ListSKUSubscriptionsAsync : RestAPITestBase<IDiscordRestMonetizationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListSKUSubscriptionsAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public ListSKUSubscriptionsAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var skuID = DiscordSnowflake.New(1);
+            var before = DiscordSnowflake.New(5);
+            var after = DiscordSnowflake.New(6);
+            var limit = 1;
+            var userID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}skus/{skuID}/subscriptions")
+                    .WithExactQueryString
+                    (
+                        [
+                            new("before", before.ToString()),
+                            new("after", after.ToString()),
+                            new("limit", limit.ToString()),
+                            new("user_id", userID.ToString())
+                        ]
+                    )
+                    .Respond<IReadOnlyList<ISubscription>>()
+            );
+
+            var result = await api.ListSKUSubscriptionsAsync
+            (
+                skuID,
+                before,
+                after,
+                limit,
+                userID
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestMonetizationAPI.GetSKUSubscriptionAsync"/> method.
+    /// </summary>
+    public class GetSKUSubscriptionAsync : RestAPITestBase<IDiscordRestMonetizationAPI>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetSKUSubscriptionAsync"/> class.
+        /// </summary>
+        /// <param name="fixture">The test fixture.</param>
+        public GetSKUSubscriptionAsync(RestAPITestFixture fixture)
+            : base(fixture)
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var skuID = DiscordSnowflake.New(1);
+            var subscriptionID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}skus/{skuID}/subscriptions/{subscriptionID}")
+                    .Respond<ISubscription>()
+            );
+
+            var result = await api.GetSKUSubscriptionAsync
+            (
+                skuID,
+                subscriptionID
+            );
+
             ResultAssert.Successful(result);
         }
     }

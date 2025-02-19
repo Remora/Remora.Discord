@@ -1,14 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>78.0.0</VersionPrefix>
+        <VersionPrefix>79.0.0</VersionPrefix>
         <Description>Remora.Discord's implementation of Discord's API objects</Description>
         <PackageReleaseNotes>
-          Update dependencies.
-          BREAKING: Implement support for user applications.
-          BREAKING: Implement support for one-time purchases.
-          Implement bulk banning endpoint.
-          BREAKING: Implement support for polls.
+          BREAKING: Update target frameworks.
+          BREAKING: Update dependencies.
+          BREAKING: Catch-up on all discord features...
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -125,6 +123,15 @@
       </Compile>
       <Compile Update="API\Objects\Voice\PartialVoiceState.cs">
         <DependentUpon>VoiceState.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\ApplicationCommandInteractionMetadata.cs">
+        <DependentUpon>MessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\MessageComponentInteractionMetadata.cs">
+        <DependentUpon>MessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\ModalSubmitInteractionMetadata.cs">
+        <DependentUpon>MessageInteractionMetadata.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

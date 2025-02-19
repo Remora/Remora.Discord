@@ -47,6 +47,11 @@
   ],
   "interactions_endpoint_url": "https://www.example.org",
   "role_connections_verification_url": "https://www.example.org",
+  "event_webhooks_url": "https://www.example.org",
+  "event_webhooks_status": 1,
+  "event_webhooks_types": [
+    "none"
+  ],
   "tags": [
     "none"
   ],

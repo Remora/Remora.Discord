@@ -58,6 +58,9 @@ public record Application
     Optional<IReadOnlyList<Uri>> RedirectUris = default,
     Optional<Uri> InteractionsEndpointUrl = default,
     Optional<Uri> RoleConnectionsVerificationUrl = default,
+    Optional<Uri> EventWebhooksUrl = default,
+    ApplicationEventWebhookStatus EventWebhooksStatus = ApplicationEventWebhookStatus.Disabled,
+    Optional<IReadOnlyList<string>> EventWebhooksTypes = default,
     Optional<IReadOnlyList<string>> Tags = default,
     Optional<IApplicationInstallParameters> InstallParams = default,
     Optional<Uri> CustomInstallUrl = default

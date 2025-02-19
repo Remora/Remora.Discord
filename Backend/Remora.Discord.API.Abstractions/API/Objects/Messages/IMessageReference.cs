@@ -32,6 +32,11 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IMessageReference
 {
     /// <summary>
+    /// Gets the type of message reference provided.
+    /// </summary>
+    Optional<MessageReferenceType> Type { get; }
+
+    /// <summary>
     /// Gets the ID of the originating message.
     /// </summary>
     Optional<Snowflake> MessageID { get; }

@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -60,6 +59,7 @@ public record MessageCreate
     Optional<IMessageReference> MessageReference = default,
     Optional<MessageFlags> Flags = default,
     Optional<IMessage?> ReferencedMessage = default,
+    Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots = default,
     Optional<IMessageInteraction> Interaction = default,
     Optional<IChannel> Thread = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
@@ -67,5 +67,6 @@ public record MessageCreate
     Optional<int> Position = default,
     Optional<IApplicationCommandInteractionDataResolved> Resolved = default,
     Optional<IMessageInteractionMetadata> InteractionMetadata = default,
-    Optional<IPoll> Poll = default
+    Optional<IPoll> Poll = default,
+    Optional<IMessageCall> Call = default
 ) : IMessageCreate;
