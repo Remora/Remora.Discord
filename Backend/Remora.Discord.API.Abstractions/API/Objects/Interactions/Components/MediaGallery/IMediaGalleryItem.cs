@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  IMediaGalleryItem.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
-[PublicAPI]
-public record StringSelectComponent
-(
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
-) : IStringSelectComponent
+/// <summary>
+/// Represents a media item for a gallery component.
+/// </summary>
+public interface IMediaGalleryItem
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <summary>
+    /// Gets the media associated with this gallery item.
+    /// </summary>
+    IUnfurledMediaItem Media { get; }
+
+    /// <summary>
+    /// Gets the description of this gallery item.
+    /// </summary>
+    Optional<string> Description { get; }
+
+    /// <summary>
+    /// Gets whether this gallery item is spoilered.
+    /// </summary>
+    Optional<bool> IsSpoiler { get; }
 }

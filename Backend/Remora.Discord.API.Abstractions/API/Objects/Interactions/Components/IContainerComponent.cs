@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  IContainerComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,25 +21,29 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
+using System.Drawing;
+using OneOf;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
-[PublicAPI]
-public record StringSelectComponent
-(
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
-) : IStringSelectComponent
+/// <summary>
+/// A container for V2 components.
+/// </summary>
+public interface IContainerComponent : IMessageComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <summary>
+    /// Gets the components of the container.
+    /// </summary>
+    IReadOnlyList<OneOf<IActionRowComponent, ITextDisplayComponent, ISectionComponent, IMediaGalleryComponent, ISeparatorComponent, IFileComponent>> Components { get; }
+
+    /// <summary>
+    /// Gets whether the container is spoilered.
+    /// </summary>
+    Optional<bool> IsSpoiler { get; }
+
+    /// <summary>
+    /// Gets the accent colour of the container.
+    /// </summary>
+    Optional<Color> AccentColour { get; }
 }

@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  ContainerComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,25 +21,24 @@
 //
 
 using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
+/// <inheritdoc/>
 [PublicAPI]
-public record StringSelectComponent
+public record ContainerComponent
 (
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
+    IReadOnlyList<OneOf<IActionRowComponent, ITextDisplayComponent, ISectionComponent, IMediaGalleryComponent, ISeparatorComponent, IFileComponent>> Components,
+    Optional<bool> IsSpoiler = default,
+    Optional<Color> AccentColour = default,
     Optional<int> Id = default
-) : IStringSelectComponent
+) : IContainerComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <inheritdoc/>
+    public ComponentType Type => ComponentType.Container;
 }
