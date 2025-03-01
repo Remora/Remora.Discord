@@ -302,10 +302,17 @@ public class CacheService
     /// <param name="key">The cache key.</param>
     /// <param name="instance">The instance.</param>
     /// <typeparam name="TInstance">The instance type.</typeparam>
-    private ValueTask CacheInstanceAsync<TInstance>(CacheKey key, TInstance instance)
+    private async ValueTask CacheInstanceAsync<TInstance>(CacheKey key, TInstance instance)
         where TInstance : class
     {
         var options = _cacheSettings.GetEntryOptions<TInstance>();
-        return _cacheProvider.CacheAsync(key, instance, options);
+
+        var getValue = await _cacheProvider.RetrieveAsync<TInstance>(key);
+        if (getValue.IsDefined(out var previousInstance))
+        {
+            await _cacheProvider.CacheAsync(new KeyHelpers.EvictionCacheKey(key), previousInstance, options);
+        }
+
+        await _cacheProvider.CacheAsync(key, instance, options);
     }
 }
