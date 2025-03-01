@@ -51,6 +51,7 @@ public class EarlyCacheResponder :
     IResponder<IGuildRoleCreate>,
     IResponder<IGuildRoleUpdate>,
     IResponder<IMessageCreate>,
+    IResponder<IMessageUpdate>,
     IResponder<IMessageReactionAdd>,
     IResponder<IUserUpdate>,
     IResponder<IInteractionCreate>
@@ -249,6 +250,15 @@ public class EarlyCacheResponder :
 
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+    {
+        var key = new KeyHelpers.MessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
+        await _cacheService.CacheAsync<IMessage>(key, gatewayEvent, ct);
+
+        return Result.FromSuccess();
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result> RespondAsync(IMessageUpdate gatewayEvent, CancellationToken ct = default)
     {
         var key = new KeyHelpers.MessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
         await _cacheService.CacheAsync<IMessage>(key, gatewayEvent, ct);
