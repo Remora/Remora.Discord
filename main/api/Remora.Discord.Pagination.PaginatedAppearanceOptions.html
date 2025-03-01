@@ -144,19 +144,19 @@ public sealed record PaginatedAppearanceOptions : IEquatable&lt;PaginatedAppeara
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Pagination_PaginatedAppearanceOptions__ctor_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_Embed_System_String_.md&amp;value=---%0Auid%3A%20Remora.Discord.Pagination.PaginatedAppearanceOptions.%23ctor(Remora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.Embed%2CSystem.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Pagination_PaginatedAppearanceOptions__ctor_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_ButtonComponent_Remora_Discord_API_Objects_Embed_System_String_Remora_Discord_API_Objects_ButtonComponent___.md&amp;value=---%0Auid%3A%20Remora.Discord.Pagination.PaginatedAppearanceOptions.%23ctor(Remora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.ButtonComponent%2CRemora.Discord.API.Objects.Embed%2CSystem.String%2CRemora.Discord.API.Objects.ButtonComponent%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Pagination/PaginatedAppearanceOptions.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_Pagination_PaginatedAppearanceOptions" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.#ctor(Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.Embed,System.String)">PaginatedAppearanceOptions(ButtonComponent, ButtonComponent, ButtonComponent, ButtonComponent, ButtonComponent, ButtonComponent, Embed, string)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.#ctor(Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.ButtonComponent,Remora.Discord.API.Objects.Embed,System.String,Remora.Discord.API.Objects.ButtonComponent[])">PaginatedAppearanceOptions(ButtonComponent, ButtonComponent, ButtonComponent, ButtonComponent, ButtonComponent?, ButtonComponent?, Embed?, string, ButtonComponent[]?)</h4>
   <div class="markdown level1 summary"><p>Represents a set of appearance options for a paginated message.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PaginatedAppearanceOptions(ButtonComponent First, ButtonComponent Previous, ButtonComponent Next, ButtonComponent Last, ButtonComponent Close, ButtonComponent Help, Embed HelpEmbed, string FooterFormat = &quot;Page {0}/{1}&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs">public PaginatedAppearanceOptions(ButtonComponent First, ButtonComponent Previous, ButtonComponent Next, ButtonComponent Last, ButtonComponent? Close, ButtonComponent? Help, Embed? HelpEmbed, string FooterFormat = &quot;Page {0}/{1}&quot;, ButtonComponent[]? CustomButtons = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -208,6 +208,11 @@ public sealed record PaginatedAppearanceOptions : IEquatable&lt;PaginatedAppeara
         <td><span class="parametername">FooterFormat</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Objects.ButtonComponent.html">ButtonComponent</a>[]</td>
+        <td><span class="parametername">CustomButtons</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
@@ -217,7 +222,7 @@ public sealed record PaginatedAppearanceOptions : IEquatable&lt;PaginatedAppeara
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Pagination_PaginatedAppearanceOptions_Buttons.md&amp;value=---%0Auid%3A%20Remora.Discord.Pagination.PaginatedAppearanceOptions.Buttons%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Pagination/PaginatedAppearanceOptions.cs/#L97">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Pagination/PaginatedAppearanceOptions.cs/#L98">View Source</a>
   </span>
   <a id="Remora_Discord_Pagination_PaginatedAppearanceOptions" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.Buttons*"></a>
   <h4 id="Buttons" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.Buttons">Buttons</h4>
@@ -226,7 +231,7 @@ public sealed record PaginatedAppearanceOptions : IEquatable&lt;PaginatedAppeara
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;ButtonComponent&gt; Buttons { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;ButtonComponent?&gt; Buttons { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -256,7 +261,7 @@ public sealed record PaginatedAppearanceOptions : IEquatable&lt;PaginatedAppeara
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ButtonComponent Close { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ButtonComponent? Close { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -275,10 +280,40 @@ public sealed record PaginatedAppearanceOptions : IEquatable&lt;PaginatedAppeara
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Pagination_PaginatedAppearanceOptions_CustomButtons.md&amp;value=---%0Auid%3A%20Remora.Discord.Pagination.PaginatedAppearanceOptions.CustomButtons%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Pagination/PaginatedAppearanceOptions.cs/#L44">View Source</a>
+  </span>
+  <a id="Remora_Discord_Pagination_PaginatedAppearanceOptions" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.CustomButtons*"></a>
+  <h4 id="CustomButtons" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.CustomButtons">CustomButtons</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ButtonComponent[]? CustomButtons { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Objects.ButtonComponent.html">ButtonComponent</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Pagination_PaginatedAppearanceOptions_Default.md&amp;value=---%0Auid%3A%20Remora.Discord.Pagination.PaginatedAppearanceOptions.Default%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Pagination/PaginatedAppearanceOptions.cs/#L49">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Remora.Discord.Pagination/PaginatedAppearanceOptions.cs/#L50">View Source</a>
   </span>
   <a id="Remora_Discord_Pagination_PaginatedAppearanceOptions" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.Default*"></a>
   <h4 id="Default" data-uid="Remora.Discord.Pagination.PaginatedAppearanceOptions.Default">Default</h4>
@@ -377,7 +412,7 @@ public sealed record PaginatedAppearanceOptions : IEquatable&lt;PaginatedAppeara
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ButtonComponent Help { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ButtonComponent? Help { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -407,7 +442,7 @@ public sealed record PaginatedAppearanceOptions : IEquatable&lt;PaginatedAppeara
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Embed HelpEmbed { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Embed? HelpEmbed { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
