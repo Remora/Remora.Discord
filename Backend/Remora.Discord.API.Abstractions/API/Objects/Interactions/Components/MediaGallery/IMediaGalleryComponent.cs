@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  IMediaGalleryComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,25 +21,16 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
-[PublicAPI]
-public record StringSelectComponent
-(
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
-) : IStringSelectComponent
+/// <summary>
+/// Represents a media gallery component.
+/// </summary>
+public interface IMediaGalleryComponent : IMessageComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <summary>
+    /// Gets the items for this gallery.
+    /// </summary>
+    IReadOnlyList<IMediaGalleryItem> Items { get; }
 }

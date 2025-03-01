@@ -21,6 +21,7 @@
 //
 
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -1244,6 +1245,37 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IModalSubmitInteractionMetadata, ModalSubmitInteractionMetadata>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IUnfurledMediaItem, UnfurledMediaItem>();
+
+        options.AddDataObjectConverter<IThumbnailComponent, ThumbnailComponent>()
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IMediaGalleryItem, MediaGalleryItem>()
+               .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<ITextDisplayComponent, TextDisplayComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IMediaGalleryComponent, MediaGalleryComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<ISectionComponent, SectionComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<ISeparatorComponent, SeparatorComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsDivider, "divider");
+
+        options.AddDataObjectConverter<IFileComponent, FileComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+                .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IContainerComponent, ContainerComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .WithPropertyName(o => o.AccentColour, "accent_color");
 
         return options;
     }

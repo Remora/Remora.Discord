@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  IFileComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
-[PublicAPI]
-public record StringSelectComponent
-(
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
-) : IStringSelectComponent
+/// <summary>
+/// Represents a singular file as a component.
+/// </summary>
+public interface IFileComponent : IMessageComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <summary>
+    /// Gets the file associated with this component.
+    /// </summary>
+    /// <remarks>When creating a message, this file only supports attachment:// references, and not https:// urls.</remarks>
+    IUnfurledMediaItem File { get; }
+
+    /// <summary>
+    /// Gets whether this file is spoilered.
+    /// </summary>
+    Optional<bool> IsSpoiler { get; }
 }

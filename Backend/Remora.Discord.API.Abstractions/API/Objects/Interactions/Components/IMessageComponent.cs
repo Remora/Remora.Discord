@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -28,4 +29,13 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents the base type for all components. This is a marker interface with no real functionality.
 /// </summary>
 [PublicAPI]
-public interface IMessageComponent : IPartialMessageComponent;
+public interface IMessageComponent : IPartialMessageComponent
+{
+    /// <summary>
+    /// Gets the type of the component.
+    /// </summary>
+    new ComponentType Type { get; }
+
+    /// <inheritdoc/>
+    Optional<ComponentType> IPartialMessageComponent.Type => Type;
+}

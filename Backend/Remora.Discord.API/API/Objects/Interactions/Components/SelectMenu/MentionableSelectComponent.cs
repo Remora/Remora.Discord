@@ -36,7 +36,8 @@ public record MentionableSelectComponent
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<ISelectDefaultValue>> DefaultValues = default
+    Optional<IReadOnlyList<ISelectDefaultValue>> DefaultValues = default,
+    Optional<int> Id = default
 ) : IMentionableSelectComponent
 {
     /// <inheritdoc />

@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  ThumbnailComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
+/// <summary>
+/// Represents a thumbnail component.
+/// </summary>
 [PublicAPI]
-public record StringSelectComponent
+public record ThumbnailComponent
 (
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
+    IUnfurledMediaItem Media,
+    Optional<string> Description = default,
+    Optional<bool> IsSpoiler = default,
     Optional<int> Id = default
-) : IStringSelectComponent
+)
+: IThumbnailComponent
 {
     /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    public ComponentType Type => ComponentType.Thumbnail;
 }
