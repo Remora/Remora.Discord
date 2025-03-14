@@ -89,12 +89,11 @@ public class Program
         (
             (_, services) =>
             {
-                //services.Configure<DiscordGatewayClientOptions>(g => g.Intents |= GatewayIntents.MessageContents);
+                services.Configure<DiscordGatewayClientOptions>(g => g.Intents |= GatewayIntents.MessageContents);
                 services
                     .AddDiscordCommands(true)
                     .AddCommandTree()
-                        .WithCommandGroup<HttpCatCommands>()
-                        .WithCommandGroup<ComponentTests>();
+                    .WithCommandGroup<HttpCatCommands>();
             }
         )
         .ConfigureLogging
