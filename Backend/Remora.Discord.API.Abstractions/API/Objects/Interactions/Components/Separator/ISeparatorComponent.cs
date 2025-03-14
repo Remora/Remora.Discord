@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  ISeparatorComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
-[PublicAPI]
-public record StringSelectComponent
-(
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
-) : IStringSelectComponent
+/// <summary>
+/// Represents a component that vertically separates other components.
+/// </summary>
+public interface ISeparatorComponent : IMessageComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <inheritdoc/>
+    ComponentType IMessageComponent.Type => ComponentType.Separator;
+
+    /// <summary>
+    /// Gets whether this component acts as a divider, and will render as a line.
+    /// </summary>
+    Optional<bool> IsDivider { get; }
+
+    /// <summary>
+    /// Gets the spacing of this separator.
+    /// </summary>
+    Optional<SeparatorSpacingSize> Spacing { get; }
 }

@@ -23,12 +23,13 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IActionRowComponent" />
 [PublicAPI]
-public record ActionRowComponent(IReadOnlyList<IMessageComponent> Components)
+public record ActionRowComponent(IReadOnlyList<IMessageComponent> Components, Optional<int> Id = default)
     : IActionRowComponent
 {
     /// <inheritdoc/>

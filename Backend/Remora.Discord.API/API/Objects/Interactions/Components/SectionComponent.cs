@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  SectionComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,24 +22,25 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
+/// <summary>
+/// Represents a section component.
+/// </summary>
 [PublicAPI]
-public record StringSelectComponent
+public record SectionComponent
 (
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
+    IReadOnlyList<ITextDisplayComponent> Components,
+    OneOf<IThumbnailComponent, IButtonComponent> Accessory,
     Optional<int> Id = default
-) : IStringSelectComponent
+) : ISectionComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <summary>
+    /// Gets the type of the component.
+    /// </summary>
+    public ComponentType Type => ComponentType.Section;
 }

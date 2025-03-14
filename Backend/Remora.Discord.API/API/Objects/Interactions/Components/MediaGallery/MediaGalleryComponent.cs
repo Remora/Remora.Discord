@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  MediaGalleryComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,19 +27,16 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IStringSelectComponent" />
+/// <summary>
+/// Represents a media gallery component.
+/// </summary>
 [PublicAPI]
-public record StringSelectComponent
+public record MediaGalleryComponent
 (
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
+    IReadOnlyList<IMediaGalleryItem> Items,
     Optional<int> Id = default
-) : IStringSelectComponent
+) : IMediaGalleryComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <inheritdoc/>
+    public ComponentType Type => ComponentType.MediaGallery;
 }
