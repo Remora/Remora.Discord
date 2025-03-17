@@ -148,6 +148,35 @@ public class CacheTests
     }
 
     /// <summary>
+    /// Tests whether the caching system makes overwritten values available through <see cref="CacheService.TryGetPreviousValueAsync"/>.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanProduceCachedPreviousValue()
+    {
+        var dummyMessageNew = new Mock<Fixture>().Object;
+        var dummyMessageOld = new Mock<Fixture>().Object;
+
+        var services = CreateServices().CreateScope().ServiceProvider;
+
+        var cache = services.GetRequiredService<CacheService>();
+
+        var key = CacheKey.StringKey("dummy");
+
+        await cache.CacheAsync(key, dummyMessageOld);
+        await cache.CacheAsync(key, dummyMessageNew);
+
+        var resultNew = await cache.TryGetValueAsync<Fixture>(key);
+        ResultAssert.Successful(resultNew);
+
+        var resultOld = await cache.TryGetPreviousValueAsync<Fixture>(key);
+        ResultAssert.Successful(resultOld);
+
+        Assert.Same(dummyMessageNew, resultNew.Entity);
+        Assert.Same(dummyMessageOld, resultOld.Entity);
+    }
+
+    /// <summary>
     /// Tests whether a cached value does not expire before the specified timeout.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
