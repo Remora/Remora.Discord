@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  SeparatorSpacingSize.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IStringSelectComponent" />
-[PublicAPI]
-public record StringSelectComponent
-(
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
-) : IStringSelectComponent
+/// <summary>
+/// Represents the spacing of a separator.
+/// </summary>
+public enum SeparatorSpacingSize
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
+    /// <summary>
+    /// A small spacing.
+    /// </summary>
+    Small = 1,
+
+    /// <summary>
+    /// A large spacing.
+    /// </summary>
+    Large = 2,
 }

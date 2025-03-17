@@ -1,5 +1,5 @@
 //
-//  StringSelectComponent.cs
+//  MediaGalleryItem.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IStringSelectComponent" />
+/// <summary>
+/// Represents an item in a media gallery.
+/// </summary>
 [PublicAPI]
-public record StringSelectComponent
+public record MediaGalleryItem
 (
-    string CustomID,
-    IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
-) : IStringSelectComponent
-{
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.StringSelect;
-}
+    IUnfurledMediaItem Media,
+    Optional<string> Description = default,
+    Optional<bool> IsSpoiler = default
+) : IMediaGalleryItem;

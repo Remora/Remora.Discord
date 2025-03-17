@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -45,4 +46,9 @@ public interface IInteractionModalCallbackData
     /// Gets the components for the modal.
     /// </summary>
     IReadOnlyList<IMessageComponent> Components { get; }
+
+    /// <summary>
+    /// Gets the message flags for the modal.
+    /// </summary>
+    Optional<MessageFlags> Flags { get; }
 }
