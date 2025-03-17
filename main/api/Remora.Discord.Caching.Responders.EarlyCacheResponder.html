@@ -121,6 +121,7 @@
     <div><a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleCreate.html">IGuildRoleCreate</a>&gt;</div>
     <div><a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleUpdate.html">IGuildRoleUpdate</a>&gt;</div>
     <div><a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IMessageCreate.html">IMessageCreate</a>&gt;</div>
+    <div><a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate.html">IMessageUpdate</a>&gt;</div>
     <div><a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html">IMessageReactionAdd</a>&gt;</div>
     <div><a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate.html">IUserUpdate</a>&gt;</div>
     <div><a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder</a>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IInteractionCreate.html">IInteractionCreate</a>&gt;</div>
@@ -155,7 +156,7 @@
   <h5 id="Remora_Discord_Caching_Responders_EarlyCacheResponder_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[PublicAPI]
-public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&lt;IChannelUpdate&gt;, IResponder&lt;IGuildBanAdd&gt;, IResponder&lt;IGuildCreate&gt;, IResponder&lt;IGuildEmojisUpdate&gt;, IResponder&lt;IGuildMemberAdd&gt;, IResponder&lt;IGuildMembersChunk&gt;, IResponder&lt;IGuildMemberUpdate&gt;, IResponder&lt;IGuildRoleCreate&gt;, IResponder&lt;IGuildRoleUpdate&gt;, IResponder&lt;IMessageCreate&gt;, IResponder&lt;IMessageReactionAdd&gt;, IResponder&lt;IUserUpdate&gt;, IResponder&lt;IInteractionCreate&gt;, IResponder</code></pre>
+public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&lt;IChannelUpdate&gt;, IResponder&lt;IGuildBanAdd&gt;, IResponder&lt;IGuildCreate&gt;, IResponder&lt;IGuildEmojisUpdate&gt;, IResponder&lt;IGuildMemberAdd&gt;, IResponder&lt;IGuildMembersChunk&gt;, IResponder&lt;IGuildMemberUpdate&gt;, IResponder&lt;IGuildRoleCreate&gt;, IResponder&lt;IGuildRoleUpdate&gt;, IResponder&lt;IMessageCreate&gt;, IResponder&lt;IMessageUpdate&gt;, IResponder&lt;IMessageReactionAdd&gt;, IResponder&lt;IUserUpdate&gt;, IResponder&lt;IInteractionCreate&gt;, IResponder</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -164,7 +165,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder__ctor_Remora_Discord_Caching_Services_CacheService_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.%23ctor(Remora.Discord.Caching.Services.CacheService)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L64">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L65">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.#ctor*"></a>
   <h4 id="_ctor_1" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.#ctor(Remora.Discord.Caching.Services.CacheService)">EarlyCacheResponder(CacheService)</h4>
@@ -200,7 +201,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IChannelCreate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IChannelCreate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L70">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L71">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_1" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IChannelCreate,System.Threading.CancellationToken)">RespondAsync(IChannelCreate, CancellationToken)</h4>
@@ -256,7 +257,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IChannelUpdate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IChannelUpdate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L79">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L80">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_2" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IChannelUpdate,System.Threading.CancellationToken)">RespondAsync(IChannelUpdate, CancellationToken)</h4>
@@ -312,7 +313,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IGuildBanAdd_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildBanAdd%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L88">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L89">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_3" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildBanAdd,System.Threading.CancellationToken)">RespondAsync(IGuildBanAdd, CancellationToken)</h4>
@@ -368,7 +369,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IGuildCreate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildCreate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L97">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L98">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_4" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildCreate,System.Threading.CancellationToken)">RespondAsync(IGuildCreate, CancellationToken)</h4>
@@ -424,7 +425,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IGuildEmojisUpdate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildEmojisUpdate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L111">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L112">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_5" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildEmojisUpdate,System.Threading.CancellationToken)">RespondAsync(IGuildEmojisUpdate, CancellationToken)</h4>
@@ -480,7 +481,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IGuildMemberAdd_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberAdd%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L128">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L129">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_6" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberAdd,System.Threading.CancellationToken)">RespondAsync(IGuildMemberAdd, CancellationToken)</h4>
@@ -536,7 +537,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IGuildMemberUpdate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberUpdate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L175">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L176">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_7" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberUpdate,System.Threading.CancellationToken)">RespondAsync(IGuildMemberUpdate, CancellationToken)</h4>
@@ -592,7 +593,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IGuildMembersChunk_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildMembersChunk%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L142">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L143">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_8" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildMembersChunk,System.Threading.CancellationToken)">RespondAsync(IGuildMembersChunk, CancellationToken)</h4>
@@ -648,7 +649,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IGuildRoleCreate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleCreate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L233">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L234">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_9" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleCreate,System.Threading.CancellationToken)">RespondAsync(IGuildRoleCreate, CancellationToken)</h4>
@@ -704,7 +705,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IGuildRoleUpdate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleUpdate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L242">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L243">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_10" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleUpdate,System.Threading.CancellationToken)">RespondAsync(IGuildRoleUpdate, CancellationToken)</h4>
@@ -760,7 +761,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IInteractionCreate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IInteractionCreate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L293">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L303">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_11" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IInteractionCreate,System.Threading.CancellationToken)">RespondAsync(IInteractionCreate, CancellationToken)</h4>
@@ -816,7 +817,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IMessageCreate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageCreate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L251">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L252">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_12" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageCreate,System.Threading.CancellationToken)">RespondAsync(IMessageCreate, CancellationToken)</h4>
@@ -872,7 +873,7 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IMessageReactionAdd_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L260">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L270">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
   <h4 id="RespondAsync_13" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd,System.Threading.CancellationToken)">RespondAsync(IMessageReactionAdd, CancellationToken)</h4>
@@ -925,13 +926,69 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IMessageUpdate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L261">View Source</a>
+  </span>
+  <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
+  <h4 id="RespondAsync_14" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate,System.Threading.CancellationToken)">RespondAsync(IMessageUpdate, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Responds to the given gateway event, handling it asynchronously.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; RespondAsync(IMessageUpdate gatewayEvent, CancellationToken ct = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate.html">IMessageUpdate</a></td>
+        <td><span class="parametername">gatewayEvent</span></td>
+        <td><p>The event to respond to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">ct</span></td>
+        <td><p>The cancellation token for this operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<span class="xref">Result</span>&gt;</td>
+        <td><p>A response result which may or may not have succeeded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_Caching_Responders_EarlyCacheResponder_RespondAsync_Remora_Discord_API_Abstractions_Gateway_Events_IUserUpdate_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L284">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.Caching/Responders/EarlyCacheResponder.cs/#L294">View Source</a>
   </span>
   <a id="Remora_Discord_Caching_Responders_EarlyCacheResponder" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync*"></a>
-  <h4 id="RespondAsync_14" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate,System.Threading.CancellationToken)">RespondAsync(IUserUpdate, CancellationToken)</h4>
+  <h4 id="RespondAsync_15" data-uid="Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate,System.Threading.CancellationToken)">RespondAsync(IUserUpdate, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Responds to the given gateway event, handling it asynchronously.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -980,6 +1037,9 @@ public class EarlyCacheResponder : IResponder&lt;IChannelCreate&gt;, IResponder&
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder&lt;TGatewayEvent&gt;</a>
+  </div>
   <div>
       <a class="xref" href="Remora.Discord.Gateway.Responders.IResponder-1.html">IResponder&lt;TGatewayEvent&gt;</a>
   </div>
