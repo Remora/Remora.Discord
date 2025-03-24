@@ -27,14 +27,12 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents a media gallery component.
-/// </summary>
+/// <inheritdoc/>
 [PublicAPI]
 public record MediaGalleryComponent
 (
     IReadOnlyList<IMediaGalleryItem> Items,
-    Optional<int> Id = default
+    Optional<int> ID = default
 ) : IMediaGalleryComponent
 {
     /// <inheritdoc/>

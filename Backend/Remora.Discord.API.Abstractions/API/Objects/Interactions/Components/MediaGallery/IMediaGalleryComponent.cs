@@ -21,16 +21,22 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Represents a media gallery component.
 /// </summary>
-public interface IMediaGalleryComponent : IMessageComponent
+[PublicAPI]
+public interface IMediaGalleryComponent : IMessageComponent, IPartialMediaGalleryComponent
 {
     /// <summary>
     /// Gets the items for this gallery.
     /// </summary>
-    IReadOnlyList<IMediaGalleryItem> Items { get; }
+    new IReadOnlyList<IMediaGalleryItem> Items { get; }
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IPartialMediaGalleryItem>> IPartialMediaGalleryComponent.Items => new(this.Items);
 }

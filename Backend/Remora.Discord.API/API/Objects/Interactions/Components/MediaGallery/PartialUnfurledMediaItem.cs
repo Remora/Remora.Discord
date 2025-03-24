@@ -1,5 +1,5 @@
 //
-//  SectionComponent.cs
+//  PartialUnfurledMediaItem.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents a section component.
-/// </summary>
+/// <inheritdoc/>
 [PublicAPI]
-public record SectionComponent
-(
-    IReadOnlyList<ITextDisplayComponent> Components,
-    OneOf<IThumbnailComponent, IButtonComponent> Accessory,
-    Optional<int> Id = default
-) : ISectionComponent
-{
-    /// <summary>
-    /// Gets the type of the component.
-    /// </summary>
-    public ComponentType Type => ComponentType.Section;
-}
+public record PartialUnfurledMediaItem(Optional<string> Url) : IPartialUnfurledMediaItem;

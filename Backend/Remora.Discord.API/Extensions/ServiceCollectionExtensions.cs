@@ -1230,6 +1230,26 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 
+        options.AddDataObjectConverter<IPartialContainerComponent, PartialContainerComponent>()
+            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IPartialFileComponent, FileComponent>()
+            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IPartialMediaGalleryComponent, PartialMediaGalleryComponent>();
+
+        options.AddDataObjectConverter<IPartialMediaGalleryItem, PartialMediaGalleryItem>()
+            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IPartialSectionComponent, PartialSectionComponent>()
+            .IncludeWhenSerializing(o => o.Type);
+
+        options.AddDataObjectConverter<IPartialTextDisplayComponent, PartialTextDisplayComponent>();
+
+        options.AddDataObjectConverter<IPartialThumbnailComponent, PartialThumbnailComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
         options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
 
         options.AddConverter<MessageInteractionMetadataConverter>();

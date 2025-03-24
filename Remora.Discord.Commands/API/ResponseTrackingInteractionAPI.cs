@@ -200,6 +200,7 @@ internal partial class ResponseTrackingInteractionAPI : IDiscordRestInteractionA
         Optional<IAllowedMentions?> allowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>?> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
+        Optional<MessageFlags?> flags = default,
         CancellationToken ct = default
     ) =>
         _actual.EditFollowupMessageAsync
@@ -212,6 +213,7 @@ internal partial class ResponseTrackingInteractionAPI : IDiscordRestInteractionA
             allowedMentions,
             components,
             attachments,
+            flags,
             ct
         );
 

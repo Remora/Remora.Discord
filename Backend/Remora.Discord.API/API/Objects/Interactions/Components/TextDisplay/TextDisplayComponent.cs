@@ -1,5 +1,5 @@
 //
-//  PartialChannelSelectComponent.cs
+//  TextDisplayComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IPartialChannelSelectComponent" />
-[PublicAPI]
-public record PartialChannelSelectComponent
+/// <summary>
+/// Represents a text display component.
+/// </summary>
+public record TextDisplayComponent
 (
-    Optional<string> CustomID,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default,
+    string Content,
     Optional<int> ID = default
-) : IPartialChannelSelectComponent
+) : ITextDisplayComponent
 {
     /// <inheritdoc />
-    public Optional<ComponentType> Type => ComponentType.ChannelSelect;
+    public ComponentType Type => ComponentType.TextDisplay;
 }

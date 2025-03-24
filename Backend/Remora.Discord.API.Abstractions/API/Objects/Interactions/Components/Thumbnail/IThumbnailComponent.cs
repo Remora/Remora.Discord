@@ -1,5 +1,5 @@
 //
-//  IContainerComponent.cs
+//  IThumbnailComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,30 +20,38 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using System.Drawing;
-using OneOf;
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// A container for V2 components.
+/// Represents a thumbnail component.
 /// </summary>
-public interface IContainerComponent : IMessageComponent
+[PublicAPI]
+public interface IThumbnailComponent : IMessageComponent, IPartialThumbnailComponent
 {
     /// <summary>
-    /// Gets the components of the container.
+    /// Gets the image of the thumbnail.
     /// </summary>
-    IReadOnlyList<OneOf<IActionRowComponent, ITextDisplayComponent, ISectionComponent, IMediaGalleryComponent, ISeparatorComponent, IFileComponent>> Components { get; }
+    new IUnfurledMediaItem Media { get; }
 
     /// <summary>
-    /// Gets whether the container is spoilered.
+    /// Gets the description of the thumbnail.
     /// </summary>
-    Optional<bool> IsSpoiler { get; }
+    new Optional<string> Description { get; }
 
     /// <summary>
-    /// Gets the accent colour of the container.
+    /// Gets whether the thumbnail is a spoiler.
     /// </summary>
-    Optional<Color> AccentColour { get; }
+    new Optional<bool> IsSpoiler { get; }
+
+    /// <inheritdoc/>
+    Optional<IPartialUnfurledMediaItem> IPartialThumbnailComponent.Media => new(this.Media);
+
+    /// <inheritdoc/>
+    Optional<string> IPartialThumbnailComponent.Description => this.Description;
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialThumbnailComponent.IsSpoiler => this.IsSpoiler;
 }

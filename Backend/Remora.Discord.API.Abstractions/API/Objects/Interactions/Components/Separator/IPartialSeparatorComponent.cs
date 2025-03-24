@@ -1,5 +1,5 @@
 //
-//  IThumbnailComponent.cs
+//  IPartialSeparatorComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <summary>
-/// Rerpesents a thumbnail component.
-/// </summary>
-public interface IThumbnailComponent : IMessageComponent
+/// <inheritdoc cref="ISeparatorComponent"/>
+[PublicAPI]
+public interface IPartialSeparatorComponent : IPartialMessageComponent
 {
-    /// <summary>
-    /// Gets the image of the thumbnail.
-    /// </summary>
-    IUnfurledMediaItem Media { get; }
+    /// <inheritdoc cref="ISeparatorComponent.IsDivider"/>
+    Optional<bool> IsDivider { get; }
 
-    /// <summary>
-    /// Gets the description of the thumbnail.
-    /// </summary>
-    Optional<string> Description { get; }
-
-    /// <summary>
-    /// Gets whether the thumbnail is a spoiler.
-    /// </summary>
-    Optional<bool> IsSpoiler { get; }
+    /// <inheritdoc cref="ISeparatorComponent.Spacing"/>
+    Optional<SeparatorSpacingSize> Spacing { get; }
 }

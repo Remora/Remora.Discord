@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -27,16 +28,23 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a singular file as a component.
 /// </summary>
-public interface IFileComponent : IMessageComponent
+[PublicAPI]
+public interface IFileComponent : IMessageComponent, IPartialFileComponent
 {
     /// <summary>
     /// Gets the file associated with this component.
     /// </summary>
     /// <remarks>When creating a message, this file only supports attachment:// references, and not https:// urls.</remarks>
-    IUnfurledMediaItem File { get; }
+    new IUnfurledMediaItem File { get; }
 
     /// <summary>
     /// Gets whether this file is spoilered.
     /// </summary>
-    Optional<bool> IsSpoiler { get; }
+    new Optional<bool> IsSpoiler { get; }
+
+    /// <inheritdoc/>
+    Optional<IPartialUnfurledMediaItem> IPartialFileComponent.File => new(this.File);
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialFileComponent.IsSpoiler => this.IsSpoiler;
 }

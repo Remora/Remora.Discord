@@ -1,5 +1,5 @@
 //
-//  PartialChannelSelectComponent.cs
+//  ThumbnailComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IPartialChannelSelectComponent" />
+/// <summary>
+/// Represents a thumbnail component.
+/// </summary>
 [PublicAPI]
-public record PartialChannelSelectComponent
+public record ThumbnailComponent
 (
-    Optional<string> CustomID,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default,
+    IUnfurledMediaItem Media,
+    Optional<string> Description = default,
+    Optional<bool> IsSpoiler = default,
     Optional<int> ID = default
-) : IPartialChannelSelectComponent
+)
+: IThumbnailComponent
 {
     /// <inheritdoc />
-    public Optional<ComponentType> Type => ComponentType.ChannelSelect;
+    public ComponentType Type => ComponentType.Thumbnail;
 }

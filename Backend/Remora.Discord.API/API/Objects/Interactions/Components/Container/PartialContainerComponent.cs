@@ -1,5 +1,5 @@
 //
-//  TextDisplayComponent.cs
+//  PartialContainerComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Drawing;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents a text display component.
-/// </summary>
-public record TextDisplayComponent
+/// <inheritdoc />
+[PublicAPI]
+public record PartialContainerComponent
 (
-    string Content,
-    Optional<int> Id = default
-) : ITextDisplayComponent
+    Optional<IReadOnlyList<IPartialMessageComponent>> Components = default,
+    Optional<bool> IsSpoiler = default,
+    Optional<Color> AccentColour = default,
+    Optional<int> ID = default
+) : IPartialContainerComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.TextDisplay;
+    /// <inheritdoc cref="IPartialContainerComponent.Type" />
+    public Optional<ComponentType> Type => ComponentType.Container;
 }

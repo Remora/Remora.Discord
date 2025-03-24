@@ -36,7 +36,7 @@ public record PartialButtonComponent
     Optional<string> CustomID = default,
     Optional<string> URL = default,
     Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
+    Optional<int> ID = default
 ) : IPartialButtonComponent
 {
     /// <inheritdoc />

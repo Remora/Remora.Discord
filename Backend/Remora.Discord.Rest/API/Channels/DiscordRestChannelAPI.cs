@@ -607,7 +607,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             );
         }
 
-        if ((flags.OrDefault() & MessageFlags.IsComponentV2) is not 0)
+        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentV2))
         {
             // Technically attachments can't be set, but checking components for attachment
             // references is non-trivial, so we'll let Discord validate that.
@@ -834,7 +834,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             );
         }
 
-        if ((flags.OrDefault() & MessageFlags.IsComponentV2) is not 0)
+        if (flags.OrDefault()?.HasFlag(MessageFlags.IsComponentV2) ?? false)
         {
             // Technically attachments can't be set, but checking components for attachment
             // references is non-trivial, so we'll let Discord validate that.

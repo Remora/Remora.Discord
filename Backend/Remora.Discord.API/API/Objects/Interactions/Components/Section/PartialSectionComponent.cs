@@ -1,5 +1,5 @@
 //
-//  PartialChannelSelectComponent.cs
+//  PartialSectionComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,20 +27,12 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IPartialChannelSelectComponent" />
+/// <inheritdoc/>
 [PublicAPI]
-public record PartialChannelSelectComponent
+public record PartialSectionComponent
 (
-    Optional<string> CustomID,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default,
-    Optional<int> ID = default
-) : IPartialChannelSelectComponent
-{
-    /// <inheritdoc />
-    public Optional<ComponentType> Type => ComponentType.ChannelSelect;
-}
+    Optional<int> ID,
+    Optional<ComponentType> Type,
+    Optional<IReadOnlyList<IPartialTextDisplayComponent>> Components,
+    Optional<IPartialMessageComponent> Accessory
+) : IPartialSectionComponent;

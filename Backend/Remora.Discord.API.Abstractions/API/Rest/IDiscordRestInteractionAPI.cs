@@ -203,6 +203,7 @@ public interface IDiscordRestInteractionAPI
     /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
     /// mentioned in this parameter will be deleted.
     /// </param>
+    /// <param name="flags">The new flags, if any.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
     Task<Result<IMessage>> EditFollowupMessageAsync
@@ -215,6 +216,7 @@ public interface IDiscordRestInteractionAPI
         Optional<IAllowedMentions?> allowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>?> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
+        Optional<MessageFlags?> flags = default,
         CancellationToken ct = default
     );
 

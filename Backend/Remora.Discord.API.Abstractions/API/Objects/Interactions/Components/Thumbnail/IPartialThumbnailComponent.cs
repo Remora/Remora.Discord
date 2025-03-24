@@ -1,5 +1,5 @@
 //
-//  ISectionComponent.cs
+//  IPartialThumbnailComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using OneOf;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a section.
+/// Represents a partial thumbnail component.
 /// </summary>
-public interface ISectionComponent : IMessageComponent
+public interface IPartialThumbnailComponent : IPartialMessageComponent
 {
-    /// <summary>
-    /// Gets the components of the section.
-    /// </summary>
-    IReadOnlyList<ITextDisplayComponent> Components { get; }
+    /// <inheritdoc cref="IThumbnailComponent.Media"/>
+    Optional<IPartialUnfurledMediaItem> Media { get; }
 
-    /// <summary>
-    /// Gets the accessory associated with this section.
-    /// </summary>
-    OneOf<IThumbnailComponent, IButtonComponent> Accessory { get; }
+    /// <inheritdoc cref="IThumbnailComponent.Description"/>
+    Optional<string> Description { get; }
+
+    /// <inheritdoc cref="IThumbnailComponent.IsSpoiler"/>
+    Optional<bool> IsSpoiler { get; }
 }

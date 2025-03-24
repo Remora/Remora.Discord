@@ -37,7 +37,7 @@ public record UserSelectComponent
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default,
     Optional<IReadOnlyList<ISelectDefaultValue>> DefaultValues = default,
-    Optional<int> Id = default
+    Optional<int> ID = default
 ) : IUserSelectComponent
 {
     /// <inheritdoc />

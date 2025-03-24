@@ -1,5 +1,5 @@
 //
-//  IMediaGalleryItem.cs
+//  IContainerComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,49 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a media item for a gallery component.
+/// A container for V2 components.
 /// </summary>
 [PublicAPI]
-public interface IMediaGalleryItem : IPartialMediaGalleryItem
+public interface IContainerComponent : IMessageComponent, IPartialContainerComponent
 {
     /// <summary>
-    /// Gets the media associated with this gallery item.
+    /// Gets the type of the component.
     /// </summary>
-    new IUnfurledMediaItem Media { get; }
+    new ComponentType Type { get; }
 
     /// <summary>
-    /// Gets the description of this gallery item.
+    /// Gets the components of the container.
     /// </summary>
-    new Optional<string> Description { get; }
+    new IReadOnlyList<IMessageComponent> Components { get; }
 
     /// <summary>
-    /// Gets whether this gallery item is spoilered.
+    /// Gets whether the container is spoilered.
     /// </summary>
     new Optional<bool> IsSpoiler { get; }
 
-    /// <inheritdoc/>
-    Optional<IPartialUnfurledMediaItem> IPartialMediaGalleryItem.Media => new(this.Media);
+    /// <summary>
+    /// Gets the accent colour of the container.
+    /// </summary>
+    new Optional<Color> AccentColour { get; }
 
     /// <inheritdoc/>
-    Optional<string> IPartialMediaGalleryItem.Description => this.Description;
+    Optional<ComponentType> IPartialContainerComponent.Type => this.Type;
 
     /// <inheritdoc/>
-    Optional<bool> IPartialMediaGalleryItem.IsSpoiler => this.IsSpoiler;
+    Optional<IReadOnlyList<IPartialMessageComponent>> IPartialContainerComponent.Components => new(this.Components);
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialContainerComponent.IsSpoiler => this.IsSpoiler;
+
+    /// <inheritdoc/>
+    Optional<Color> IPartialContainerComponent.AccentColour => this.AccentColour;
 }

@@ -20,14 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents a media item that has been unfurled.
-/// </summary>
-public record UnfurledMediaItem
-(
-    string Url
-) : IUnfurledMediaItem;
+/// <inheritdoc/>
+[PublicAPI]
+public record UnfurledMediaItem(string Url) : IUnfurledMediaItem;

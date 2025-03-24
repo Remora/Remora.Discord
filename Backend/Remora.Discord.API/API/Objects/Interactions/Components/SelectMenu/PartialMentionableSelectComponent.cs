@@ -37,7 +37,7 @@ public record PartialMentionableSelectComponent
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default,
     Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default,
-    Optional<int> Id = default
+    Optional<int> ID = default
 ) : IPartialMentionableSelectComponent
 {
     /// <inheritdoc />

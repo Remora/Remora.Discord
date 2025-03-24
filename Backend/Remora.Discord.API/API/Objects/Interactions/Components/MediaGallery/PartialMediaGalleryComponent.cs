@@ -1,5 +1,5 @@
 //
-//  ThumbnailComponent.cs
+//  PartialMediaGalleryComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents a thumbnail component.
-/// </summary>
+/// <inheritdoc/>
 [PublicAPI]
-public record ThumbnailComponent
-(
-    IUnfurledMediaItem Media,
-    Optional<string> Description = default,
-    Optional<bool> IsSpoiler = default,
-    Optional<int> Id = default
-)
-: IThumbnailComponent
-{
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.Thumbnail;
-}
+public record PartialMediaGalleryComponent(Optional<IReadOnlyList<IPartialMediaGalleryItem>> Items) : IPartialMediaGalleryComponent;

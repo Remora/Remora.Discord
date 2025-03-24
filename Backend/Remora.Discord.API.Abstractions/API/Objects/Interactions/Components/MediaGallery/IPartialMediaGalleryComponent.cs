@@ -1,5 +1,5 @@
 //
-//  PartialChannelSelectComponent.cs
+//  IPartialMediaGalleryComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,25 +22,14 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IPartialChannelSelectComponent" />
+/// <inheritdoc cref="IMediaGalleryComponent"/>
 [PublicAPI]
-public record PartialChannelSelectComponent
-(
-    Optional<string> CustomID,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default,
-    Optional<int> ID = default
-) : IPartialChannelSelectComponent
+public interface IPartialMediaGalleryComponent
 {
-    /// <inheritdoc />
-    public Optional<ComponentType> Type => ComponentType.ChannelSelect;
+    /// <inheritdoc cref="IMediaGalleryComponent.Items"/>
+    Optional<IReadOnlyList<IPartialMediaGalleryItem>> Items { get; }
 }

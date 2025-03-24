@@ -1,5 +1,5 @@
 //
-//  PartialChannelSelectComponent.cs
+//  IPartialFileComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IPartialChannelSelectComponent" />
+/// <inheritdoc cref="IFileComponent"/>
 [PublicAPI]
-public record PartialChannelSelectComponent
-(
-    Optional<string> CustomID,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default,
-    Optional<int> ID = default
-) : IPartialChannelSelectComponent
+public interface IPartialFileComponent
 {
-    /// <inheritdoc />
-    public Optional<ComponentType> Type => ComponentType.ChannelSelect;
+    /// <inheritdoc cref="IFileComponent.File"/>
+    Optional<IPartialUnfurledMediaItem> File { get; }
+
+    /// <inheritdoc cref="IFileComponent.File"/>
+    Optional<bool> IsSpoiler { get; }
 }

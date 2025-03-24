@@ -1,5 +1,5 @@
 //
-//  PartialChannelSelectComponent.cs
+//  IPartialContainerComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,26 +21,25 @@
 //
 
 using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IPartialChannelSelectComponent" />
+/// <inheritdoc cref="IContainerComponent"/>
 [PublicAPI]
-public record PartialChannelSelectComponent
-(
-    Optional<string> CustomID,
-    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
-    Optional<string> Placeholder = default,
-    Optional<int> MinValues = default,
-    Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default,
-    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues = default,
-    Optional<int> ID = default
-) : IPartialChannelSelectComponent
+public interface IPartialContainerComponent : IPartialMessageComponent
 {
-    /// <inheritdoc />
-    public Optional<ComponentType> Type => ComponentType.ChannelSelect;
+    /// <inheritdoc cref="IContainerComponent.Type"/>
+    Optional<ComponentType> Type { get; }
+
+    /// <inheritdoc cref="IContainerComponent.Components"/>
+    Optional<IReadOnlyList<IPartialMessageComponent>> Components { get; }
+
+    /// <inheritdoc cref="IContainerComponent.IsSpoiler"/>
+    Optional<bool> IsSpoiler { get; }
+
+    /// <inheritdoc cref="IContainerComponent.AccentColour"/>
+    Optional<Color> AccentColour { get; }
 }

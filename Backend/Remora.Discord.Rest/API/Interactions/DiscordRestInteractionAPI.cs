@@ -186,6 +186,16 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             return new NotSupportedError("Too many embeds (max 10).");
         }
 
+        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentV2))
+        {
+            // Technically attachments can't be set, but checking components for attachment
+            // references is non-trivial, so we'll let Discord validate that.
+            if (content.HasValue || embeds.HasValue)
+            {
+                return new InvalidOperationError("Content and embeds are not allowed for component v2 messages.");
+            }
+        }
+
         return await this.RestHttpClient.PatchAsync<IMessage>
         (
             $"webhooks/{applicationID}/{token}/messages/@original",
@@ -272,6 +282,16 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         CancellationToken ct = default
     )
     {
+        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentV2))
+        {
+            // Technically attachments can't be set, but checking components for attachment
+            // references is non-trivial, so we'll let Discord validate that.
+            if (content.HasValue || embeds.HasValue)
+            {
+                return Task.FromResult<Result<IMessage>>(new InvalidOperationError("Content and embeds are not allowed for component v2 messages."));
+            }
+        }
+
         return this.RestHttpClient.PostAsync<IMessage>
         (
             $"webhooks/{applicationID}/{token}",
@@ -351,6 +371,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         Optional<IAllowedMentions?> allowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>?> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>?> attachments = default,
+        Optional<MessageFlags?> flags = default,
         CancellationToken ct = default
     )
     {
@@ -362,6 +383,16 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         if (embeds.IsDefined(out var embedsValue) && embedsValue.Count > 10)
         {
             return new NotSupportedError("Too many embeds (max 10).");
+        }
+
+        if (flags.OrDefault()?.HasFlag(MessageFlags.IsComponentV2) ?? false)
+        {
+            // Technically attachments can't be set, but checking components for attachment
+            // references is non-trivial, so we'll let Discord validate that.
+            if (content.HasValue || embeds.HasValue)
+            {
+                return new InvalidOperationError("Content and embeds are not allowed for component v2 messages.");
+            }
         }
 
         return await this.RestHttpClient.PatchAsync<IMessage>
@@ -410,6 +441,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                         json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
                         json.Write("components", components, this.JsonOptions);
                         json.Write("attachments", attachmentList, this.JsonOptions);
+                        json.Write("flags", flags, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache, true);

@@ -133,6 +133,30 @@
       <Compile Update="API\Objects\Interactions\ModalSubmitInteractionMetadata.cs">
         <DependentUpon>MessageInteractionMetadata.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\Interactions\Components\Container\PartialContainerComponent.cs">
+        <DependentUpon>ContainerComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\MediaGallery\PartialMediaGalleryComponent.cs">
+        <DependentUpon>MediaGalleryComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\MediaGallery\PartialMediaGalleryItem.cs">
+        <DependentUpon>MediaGalleryItem.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\MediaGallery\PartialUnfurledMediaItem.cs">
+        <DependentUpon>UnfurledMediaItem.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\File\PartialFIleComponent.cs">
+        <DependentUpon>FileComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\Section\PartialSectionComponent.cs">
+        <DependentUpon>SectionComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\TextDisplay\PartialTextDisplayComponent.cs">
+        <DependentUpon>TextDisplayComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\Thumbnail\PartialThumbnailComponent.cs">
+        <DependentUpon>ThumbnailComponent.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

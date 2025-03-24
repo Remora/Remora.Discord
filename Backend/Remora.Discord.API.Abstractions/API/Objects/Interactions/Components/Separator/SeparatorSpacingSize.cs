@@ -20,20 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
 /// Represents the spacing of a separator.
 /// </summary>
+[PublicAPI]
 public enum SeparatorSpacingSize
 {
     /// <summary>
-    /// A small spacing.
+    /// A small spacing, equivalent to ~17px, or 1 line of text.
     /// </summary>
     Small = 1,
 
     /// <summary>
-    /// A large spacing.
+    /// A large spacing, equivalent to ~36px, or 2 lines of text.
     /// </summary>
-    Large = 2,
+    Large = 2
 }

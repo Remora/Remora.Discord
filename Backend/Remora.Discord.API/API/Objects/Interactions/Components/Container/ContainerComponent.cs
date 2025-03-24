@@ -1,5 +1,5 @@
 //
-//  FileComponent.cs
+//  ContainerComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents a component that displays a file.
-/// </summary>
+/// <inheritdoc/>
 [PublicAPI]
-public record FileComponent
+public record ContainerComponent
 (
-    IUnfurledMediaItem File,
-    Optional<int> Id = default,
-    Optional<bool> IsSpoiler = default
-) : IFileComponent
+    IReadOnlyList<IMessageComponent> Components,
+    Optional<bool> IsSpoiler = default,
+    Optional<Color> AccentColour = default,
+    Optional<int> ID = default
+) : IContainerComponent
 {
-    /// <inheritdoc />
-    public ComponentType Type => ComponentType.File;
+    /// <inheritdoc/>
+    public ComponentType Type => ComponentType.Container;
 }

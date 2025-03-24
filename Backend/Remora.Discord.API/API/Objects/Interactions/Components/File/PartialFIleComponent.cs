@@ -1,5 +1,5 @@
 //
-//  ITextDisplayComponent.cs
+//  PartialFIleComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Objects;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
-/// <summary>
-/// Represents an arbitrary chunk of text to be displayed.
-/// </summary>
-public interface ITextDisplayComponent : IMessageComponent
-{
-    /// <summary>
-    /// Gets the content of the display component.
-    /// </summary>
-    string Content { get; }
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc/>
+[PublicAPI]
+public record PartialFIleComponent
+(
+    Optional<IPartialUnfurledMediaItem> File,
+    Optional<bool> IsSpoiler
+) : IPartialFileComponent;

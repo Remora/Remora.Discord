@@ -37,7 +37,7 @@ public record StringSelectComponent
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default,
-    Optional<int> Id = default
+    Optional<int> ID = default
 ) : IStringSelectComponent
 {
     /// <inheritdoc />

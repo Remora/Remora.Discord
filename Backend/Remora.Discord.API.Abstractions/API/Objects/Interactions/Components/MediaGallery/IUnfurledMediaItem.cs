@@ -20,15 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Rest.Core;
+
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents an unfurled media attachment(?).
+/// Represents an unfurled media attachment.
 /// </summary>
-public interface IUnfurledMediaItem
+public interface IUnfurledMediaItem : IPartialUnfurledMediaItem
 {
     /// <summary>
     /// Gets the URL of this media item.
     /// </summary>
-    string Url { get; }
+    new string Url { get; }
+
+    /// <inheritdoc/>
+    Optional<string> IPartialUnfurledMediaItem.Url => this.Url;
 }

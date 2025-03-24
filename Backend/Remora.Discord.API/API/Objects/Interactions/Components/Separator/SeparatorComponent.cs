@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Objects;
 [PublicAPI]
 public record SeparatorComponent
 (
-    Optional<int> Id = default,
+    Optional<int> ID = default,
     Optional<bool> IsDivider = default,
     Optional<SeparatorSpacingSize> Spacing = default
 ) : ISeparatorComponent

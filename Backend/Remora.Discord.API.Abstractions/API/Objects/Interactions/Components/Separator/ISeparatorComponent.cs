@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -27,18 +28,22 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a component that vertically separates other components.
 /// </summary>
-public interface ISeparatorComponent : IMessageComponent
+[PublicAPI]
+public interface ISeparatorComponent : IMessageComponent, IPartialSeparatorComponent
 {
-    /// <inheritdoc/>
-    ComponentType IMessageComponent.Type => ComponentType.Separator;
-
     /// <summary>
     /// Gets whether this component acts as a divider, and will render as a line.
     /// </summary>
-    Optional<bool> IsDivider { get; }
+    new Optional<bool> IsDivider { get; }
 
     /// <summary>
     /// Gets the spacing of this separator.
     /// </summary>
-    Optional<SeparatorSpacingSize> Spacing { get; }
+    new Optional<SeparatorSpacingSize> Spacing { get; }
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialSeparatorComponent.IsDivider { get; }
+
+    /// <inheritdoc/>
+    Optional<SeparatorSpacingSize> IPartialSeparatorComponent.Spacing { get; }
 }
