@@ -42,8 +42,8 @@ public interface ISeparatorComponent : IMessageComponent, IPartialSeparatorCompo
     new Optional<SeparatorSpacingSize> Spacing { get; }
 
     /// <inheritdoc/>
-    Optional<bool> IPartialSeparatorComponent.IsDivider { get; }
+    Optional<bool> IPartialSeparatorComponent.IsDivider => IsDivider;
 
     /// <inheritdoc/>
-    Optional<SeparatorSpacingSize> IPartialSeparatorComponent.Spacing { get; }
+    Optional<SeparatorSpacingSize> IPartialSeparatorComponent.Spacing => Spacing;
 }
