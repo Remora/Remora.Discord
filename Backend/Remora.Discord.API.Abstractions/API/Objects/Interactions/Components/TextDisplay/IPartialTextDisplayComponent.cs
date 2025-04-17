@@ -20,13 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <inheritdoc cref="ITextDisplayComponent"/>
-public interface IPartialTextDisplayComponent
+[PublicAPI]
+public interface IPartialTextDisplayComponent : IPartialMessageComponent
 {
+    /// <inheritdoc cref="ITextDisplayComponent.Type"/>
+    new Optional<ComponentType> Type { get; }
+
     /// <inheritdoc cref="ITextDisplayComponent.Content"/>
     Optional<string> Content { get; }
 }

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -27,13 +28,20 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents an arbitrary chunk of text to be displayed.
 /// </summary>
+[PublicAPI]
 public interface ITextDisplayComponent : IMessageComponent, IPartialTextDisplayComponent
 {
+    /// <inheritdoc cref="IMessageComponent.Type"/>
+    new ComponentType Type { get; }
+
     /// <summary>
     /// Gets the content of the display component.
     /// </summary>
     new string Content { get; }
 
     /// <inheritdoc/>
-    Optional<string> IPartialTextDisplayComponent.Content => Content;
+    Optional<ComponentType> IPartialTextDisplayComponent.Type => this.Type;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialTextDisplayComponent.Content => this.Content;
 }
