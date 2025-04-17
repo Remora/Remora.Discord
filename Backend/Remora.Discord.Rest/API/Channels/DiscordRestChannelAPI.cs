@@ -831,7 +831,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             );
         }
 
-        if (flags.OrDefault()?.HasFlag(MessageFlags.IsComponentV2) ?? false && (content.HasValue || embeds.HasValue))
+        if ((flags.OrDefault()?.HasFlag(MessageFlags.IsComponentV2) ?? false) && (content.HasValue || embeds.HasValue))
         {
             // Technically attachments can't be set, but checking components for attachment
             // references is non-trivial, so we'll let Discord validate that.
