@@ -52,7 +52,7 @@ public interface IContainerComponent : IMessageComponent, IPartialContainerCompo
     /// <summary>
     /// Gets the accent colour of the container.
     /// </summary>
-    new Optional<Color> AccentColour { get; }
+    new Optional<Color?> AccentColour { get; }
 
     /// <inheritdoc/>
     Optional<ComponentType> IPartialContainerComponent.Type => this.Type;
@@ -64,5 +64,5 @@ public interface IContainerComponent : IMessageComponent, IPartialContainerCompo
     Optional<bool> IPartialContainerComponent.IsSpoiler => this.IsSpoiler;
 
     /// <inheritdoc/>
-    Optional<Color> IPartialContainerComponent.AccentColour => this.AccentColour;
+    Optional<Color?> IPartialContainerComponent.AccentColour => this.AccentColour;
 }

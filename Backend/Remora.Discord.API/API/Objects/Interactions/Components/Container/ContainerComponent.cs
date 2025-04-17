@@ -35,10 +35,10 @@ public record ContainerComponent
 (
     IReadOnlyList<IMessageComponent> Components,
     Optional<bool> IsSpoiler = default,
-    Optional<Color> AccentColour = default,
+    Optional<Color?> AccentColour = default,
     Optional<int> ID = default
 ) : IContainerComponent
 {
-    /// <inheritdoc/>
+    /// <inheritdoc cref="IContainerComponent.Type"/>
     public ComponentType Type => ComponentType.Container;
 }

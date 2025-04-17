@@ -37,5 +37,5 @@ public interface IMessageComponent : IPartialMessageComponent
     new ComponentType Type { get; }
 
     /// <inheritdoc/>
-    Optional<ComponentType> IPartialMessageComponent.Type => Type;
+    Optional<ComponentType> IPartialMessageComponent.Type => this.Type;
 }
