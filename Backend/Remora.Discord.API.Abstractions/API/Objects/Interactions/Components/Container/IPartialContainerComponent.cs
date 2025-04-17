@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IPartialContainerComponent : IPartialMessageComponent
 {
     /// <inheritdoc cref="IContainerComponent.Type"/>
-    Optional<ComponentType> Type { get; }
+    new Optional<ComponentType> Type { get; }
 
     /// <inheritdoc cref="IContainerComponent.Components"/>
     Optional<IReadOnlyList<IPartialMessageComponent>> Components { get; }
@@ -41,5 +41,5 @@ public interface IPartialContainerComponent : IPartialMessageComponent
     Optional<bool> IsSpoiler { get; }
 
     /// <inheritdoc cref="IContainerComponent.AccentColour"/>
-    Optional<Color> AccentColour { get; }
+    Optional<Color?> AccentColour { get; }
 }

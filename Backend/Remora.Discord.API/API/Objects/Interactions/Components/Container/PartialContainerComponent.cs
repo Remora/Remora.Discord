@@ -34,7 +34,7 @@ public record PartialContainerComponent
 (
     Optional<IReadOnlyList<IPartialMessageComponent>> Components = default,
     Optional<bool> IsSpoiler = default,
-    Optional<Color> AccentColour = default,
+    Optional<Color?> AccentColour = default,
     Optional<int> ID = default
 ) : IPartialContainerComponent
 {
