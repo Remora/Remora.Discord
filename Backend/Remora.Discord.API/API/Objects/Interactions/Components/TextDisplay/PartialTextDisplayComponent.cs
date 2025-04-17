@@ -28,4 +28,4 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc/>
 [PublicAPI]
-public record PartialTextDisplayComponent(Optional<string> Content) : IPartialTextDisplayComponent;
+public record PartialTextDisplayComponent(Optional<ComponentType> Type, Optional<string> Content, Optional<int> ID) : IPartialTextDisplayComponent;
