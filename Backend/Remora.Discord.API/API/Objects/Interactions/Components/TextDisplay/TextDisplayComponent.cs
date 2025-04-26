@@ -36,6 +36,6 @@ public record TextDisplayComponent
     Optional<int> ID = default
 ) : ITextDisplayComponent
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="ITextDisplayComponent.Type" />
     public ComponentType Type => ComponentType.TextDisplay;
 }
