@@ -148,19 +148,19 @@ public record InteractionModalCallbackData : IInteractionModalCallbackData, IEqu
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_InteractionModalCallbackData__ctor_System_String_System_String_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IMessageComponent__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.InteractionModalCallbackData.%23ctor(System.String%2CSystem.String%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IMessageComponent%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_InteractionModalCallbackData__ctor_System_String_System_String_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IMessageComponent__Remora_Rest_Core_Optional_Remora_Discord_API_Abstractions_Objects_MessageFlags__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.InteractionModalCallbackData.%23ctor(System.String%2CSystem.String%2CSystem.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IMessageComponent%7D%2CRemora.Rest.Core.Optional%7BRemora.Discord.API.Abstractions.Objects.MessageFlags%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L30">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_InteractionModalCallbackData" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IMessageComponent})">InteractionModalCallbackData(string, string, IReadOnlyList&lt;IMessageComponent&gt;)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IMessageComponent},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.MessageFlags})">InteractionModalCallbackData(string, string, IReadOnlyList&lt;IMessageComponent&gt;, Optional&lt;MessageFlags&gt;)</h4>
   <div class="markdown level1 summary"><p>Represents return payload data for an interaction response.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public InteractionModalCallbackData(string CustomID, string Title, IReadOnlyList&lt;IMessageComponent&gt; Components)</code></pre>
+    <pre><code class="lang-csharp hljs">public InteractionModalCallbackData(string CustomID, string Title, IReadOnlyList&lt;IMessageComponent&gt; Components, Optional&lt;MessageFlags&gt; Flags = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -187,6 +187,11 @@ public record InteractionModalCallbackData : IInteractionModalCallbackData, IEqu
         <td><span class="parametername">Components</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.MessageFlags.html">MessageFlags</a>&gt;</td>
+        <td><span class="parametername">Flags</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
@@ -196,7 +201,7 @@ public record InteractionModalCallbackData : IInteractionModalCallbackData, IEqu
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_InteractionModalCallbackData_Components.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.InteractionModalCallbackData.Components%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L35">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L36">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_InteractionModalCallbackData" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.Components*"></a>
   <h4 id="Components" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.Components">Components</h4>
@@ -227,7 +232,7 @@ public record InteractionModalCallbackData : IInteractionModalCallbackData, IEqu
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_InteractionModalCallbackData_CustomID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.InteractionModalCallbackData.CustomID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L33">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L34">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_InteractionModalCallbackData" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.CustomID*"></a>
   <h4 id="CustomID" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.CustomID">CustomID</h4>
@@ -255,10 +260,41 @@ public record InteractionModalCallbackData : IInteractionModalCallbackData, IEqu
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_InteractionModalCallbackData_Flags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.InteractionModalCallbackData.Flags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L37">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_InteractionModalCallbackData" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.Flags*"></a>
+  <h4 id="Flags" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.Flags">Flags</h4>
+  <div class="markdown level1 summary"><p>Gets the message flags for the modal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;MessageFlags&gt; Flags { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Optional</span>&lt;<a class="xref" href="Remora.Discord.API.Abstractions.Objects.MessageFlags.html">MessageFlags</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_InteractionModalCallbackData_Title.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.InteractionModalCallbackData.Title%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L34">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/InteractionModalCallbackData.cs/#L35">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_InteractionModalCallbackData" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.Title*"></a>
   <h4 id="Title" data-uid="Remora.Discord.API.Objects.InteractionModalCallbackData.Title">Title</h4>

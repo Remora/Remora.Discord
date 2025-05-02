@@ -151,19 +151,19 @@ public record ActionRowComponent : IActionRowComponent, IMessageComponent, IPart
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_ActionRowComponent__ctor_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IMessageComponent__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.ActionRowComponent.%23ctor(System.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IMessageComponent%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_ActionRowComponent__ctor_System_Collections_Generic_IReadOnlyList_Remora_Discord_API_Abstractions_Objects_IMessageComponent__Remora_Rest_Core_Optional_System_Int32__.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.ActionRowComponent.%23ctor(System.Collections.Generic.IReadOnlyList%7BRemora.Discord.API.Abstractions.Objects.IMessageComponent%7D%2CRemora.Rest.Core.Optional%7BSystem.Int32%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/ActionRow/ActionRowComponent.cs/#L30">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/ActionRow/ActionRowComponent.cs/#L31">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_ActionRowComponent" data-uid="Remora.Discord.API.Objects.ActionRowComponent.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.ActionRowComponent.#ctor(System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IMessageComponent})">ActionRowComponent(IReadOnlyList&lt;IMessageComponent&gt;)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Objects.ActionRowComponent.#ctor(System.Collections.Generic.IReadOnlyList{Remora.Discord.API.Abstractions.Objects.IMessageComponent},Remora.Rest.Core.Optional{System.Int32})">ActionRowComponent(IReadOnlyList&lt;IMessageComponent&gt;, Optional&lt;int&gt;)</h4>
   <div class="markdown level1 summary"><p>Represents a row of interactive components.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ActionRowComponent(IReadOnlyList&lt;IMessageComponent&gt; Components)</code></pre>
+    <pre><code class="lang-csharp hljs">public ActionRowComponent(IReadOnlyList&lt;IMessageComponent&gt; Components, Optional&lt;int&gt; ID = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -180,6 +180,11 @@ public record ActionRowComponent : IActionRowComponent, IMessageComponent, IPart
         <td><span class="parametername">Components</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td><span class="parametername">ID</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
@@ -189,7 +194,7 @@ public record ActionRowComponent : IActionRowComponent, IMessageComponent, IPart
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_ActionRowComponent_Components.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.ActionRowComponent.Components%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/ActionRow/ActionRowComponent.cs/#L31">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/ActionRow/ActionRowComponent.cs/#L32">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_ActionRowComponent" data-uid="Remora.Discord.API.Objects.ActionRowComponent.Components*"></a>
   <h4 id="Components" data-uid="Remora.Discord.API.Objects.ActionRowComponent.Components">Components</h4>
@@ -217,10 +222,48 @@ public record ActionRowComponent : IActionRowComponent, IMessageComponent, IPart
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_ActionRowComponent_ID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.ActionRowComponent.ID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/ActionRow/ActionRowComponent.cs/#L32">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Objects_ActionRowComponent" data-uid="Remora.Discord.API.Objects.ActionRowComponent.ID*"></a>
+  <h4 id="ID" data-uid="Remora.Discord.API.Objects.ActionRowComponent.ID">ID</h4>
+  <div class="markdown level1 summary"><p>Gets the ID of this component.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Optional&lt;int&gt; ID { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Optional</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="ID_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is not to be confused with the <em>custom id</em> of a component.
+<br>
+This ID may be defined by the developer; if it is not, it is assigned an auto-incrementing value by Discord.
+IDs may not overlap with other components, as their function is to identify a given component, under the
+presumption that components are flattened to a 1-dimensional array.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Objects_ActionRowComponent_Type.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Objects.ActionRowComponent.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/ActionRow/ActionRowComponent.cs/#L35">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Objects/Interactions/Components/ActionRow/ActionRowComponent.cs/#L36">View Source</a>
   </span>
   <a id="Remora_Discord_API_Objects_ActionRowComponent" data-uid="Remora.Discord.API.Objects.ActionRowComponent.Type*"></a>
   <h4 id="Type" data-uid="Remora.Discord.API.Objects.ActionRowComponent.Type">Type</h4>
