@@ -1,0 +1,18 @@
+{
+  "id": 1,
+  "type": 9,
+  "components": [
+    {
+      "id": 2,
+      "type": 10,
+      "content": "Text within a section."
+    }
+  ],
+  "accessory": {
+    "id": 3,
+    "type": 2,
+    "style": 2,
+    "label": "Accessory Button",
+    "custom_id": "section_accessory_button"
+  }
+}

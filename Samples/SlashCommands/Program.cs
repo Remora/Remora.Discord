@@ -93,7 +93,7 @@ public class Program
                 services
                     .AddDiscordCommands(true)
                     .AddCommandTree()
-                        .WithCommandGroup<HttpCatCommands>();
+                    .WithCommandGroup<HttpCatCommands>();
             }
         )
         .ConfigureLogging

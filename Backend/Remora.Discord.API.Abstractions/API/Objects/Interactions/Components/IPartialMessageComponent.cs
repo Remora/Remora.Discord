@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -28,4 +29,22 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents the base type for all partial components. This is a marker interface with no real functionality.
 /// </summary>
 [PublicAPI]
-public interface IPartialMessageComponent;
+public interface IPartialMessageComponent
+{
+    /// <summary>
+    /// Gets the ID of this component.
+    /// </summary>
+    /// <remarks>
+    /// This is not to be confused with the *custom id* of a component.
+    /// <br/>
+    /// This ID may be defined by the developer; if it is not, it is assigned an auto-incrementing value by Discord.
+    /// IDs may not overlap with other components, as their function is to identify a given component, under the
+    /// presumption that components are flattened to a 1-dimensional array.
+    /// </remarks>
+    Optional<int> ID { get; }
+
+    /// <summary>
+    /// Gets the type of the component.
+    /// </summary>
+    Optional<ComponentType> Type { get; }
+}

@@ -1229,6 +1229,36 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 
+        options.AddDataObjectConverter<IPartialUnfurledMediaItem, PartialUnfurledMediaItem>()
+               .ExcludeWhenSerializing(o => o.ProxyUrl)
+               .ExcludeWhenSerializing(o => o.Width)
+               .ExcludeWhenSerializing(o => o.Height)
+               .ExcludeWhenSerializing(o => o.ContentType);
+
+        options.AddDataObjectConverter<IPartialContainerComponent, PartialContainerComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .WithPropertyName(o => o.AccentColour, "accent_color");
+
+        options.AddDataObjectConverter<IPartialFileComponent, FileComponent>()
+               .IncludeWhenSerializing(c => c.Type).WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IPartialMediaGalleryComponent, PartialMediaGalleryComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IPartialMediaGalleryItem, PartialMediaGalleryItem>()
+            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IPartialSectionComponent, PartialSectionComponent>()
+               .IncludeWhenSerializing(o => o.Type);
+
+        options.AddDataObjectConverter<IPartialTextDisplayComponent, PartialTextDisplayComponent>()
+               .IncludeWhenSerializing(o => o.Type);
+
+        options.AddDataObjectConverter<IPartialThumbnailComponent, PartialThumbnailComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
         options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
 
         options.AddConverter<MessageInteractionMetadataConverter>();
@@ -1244,6 +1274,41 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IModalSubmitInteractionMetadata, ModalSubmitInteractionMetadata>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IUnfurledMediaItem, UnfurledMediaItem>()
+               .ExcludeWhenSerializing(o => o.ProxyUrl)
+               .ExcludeWhenSerializing(o => o.Width)
+               .ExcludeWhenSerializing(o => o.Height)
+               .ExcludeWhenSerializing(o => o.ContentType);
+
+        options.AddDataObjectConverter<IThumbnailComponent, ThumbnailComponent>()
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IMediaGalleryItem, MediaGalleryItem>()
+               .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<ITextDisplayComponent, TextDisplayComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IMediaGalleryComponent, MediaGalleryComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<ISectionComponent, SectionComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<ISeparatorComponent, SeparatorComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsDivider, "divider");
+
+        options.AddDataObjectConverter<IFileComponent, FileComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+                .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IContainerComponent, ContainerComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .WithPropertyName(o => o.AccentColour, "accent_color");
 
         return options;
     }

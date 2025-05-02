@@ -96,5 +96,10 @@ public enum MessageFlags
     /// <summary>
     /// The message has a snapshot taken via message forwarding.
     /// </summary>
-    HasSnapshot = 1 << 14
+    HasSnapshot = 1 << 14,
+
+    /// <summary>
+    /// This message has support for Components V2/UI Kit components.
+    /// </summary>
+    IsComponentsV2 = 1 << 15
 }

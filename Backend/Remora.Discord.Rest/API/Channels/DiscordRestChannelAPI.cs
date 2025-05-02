@@ -607,6 +607,13 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
             );
         }
 
+        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentsV2) && (content.HasValue || embeds.HasValue))
+        {
+            // Technically attachments can't be set, but checking components for attachment
+            // references is non-trivial, so we'll let Discord validate that.
+            return new InvalidOperationError("Content and embeds are not allowed for component v2 messages.");
+        }
+
         return await this.RestHttpClient.PostAsync<IMessage>
         (
             $"channels/{channelID}/messages",
@@ -822,6 +829,13 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                 $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(components)}, {nameof(embeds)}, "
                 + $"or {nameof(flags)} is required."
             );
+        }
+
+        if ((flags.OrDefault()?.HasFlag(MessageFlags.IsComponentsV2) ?? false) && (content.HasValue || embeds.HasValue))
+        {
+            // Technically attachments can't be set, but checking components for attachment
+            // references is non-trivial, so we'll let Discord validate that.
+            return new InvalidOperationError("Content and embeds are not allowed for component v2 messages.");
         }
 
         return await this.RestHttpClient.PatchAsync<IMessage>

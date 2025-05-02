@@ -36,7 +36,8 @@ public record PartialStringSelectComponent
     Optional<string> Placeholder = default,
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,
-    Optional<bool> IsDisabled = default
+    Optional<bool> IsDisabled = default,
+    Optional<int> ID = default
 ) : IPartialStringSelectComponent
 {
     /// <inheritdoc />
