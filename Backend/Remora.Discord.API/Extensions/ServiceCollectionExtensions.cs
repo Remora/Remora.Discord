@@ -1230,20 +1230,23 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(o => o.IsDefault, "default");
 
         options.AddDataObjectConverter<IPartialContainerComponent, PartialContainerComponent>()
-            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsSpoiler, "spoiler");
 
         options.AddDataObjectConverter<IPartialFileComponent, FileComponent>()
-            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+               .IncludeWhenSerializing(c => c.Type).WithPropertyName(o => o.IsSpoiler, "spoiler");
 
-        options.AddDataObjectConverter<IPartialMediaGalleryComponent, PartialMediaGalleryComponent>();
+        options.AddDataObjectConverter<IPartialMediaGalleryComponent, PartialMediaGalleryComponent>()
+               .IncludeWhenSerializing(c => c.Type);
 
         options.AddDataObjectConverter<IPartialMediaGalleryItem, PartialMediaGalleryItem>()
             .WithPropertyName(o => o.IsSpoiler, "spoiler");
 
         options.AddDataObjectConverter<IPartialSectionComponent, PartialSectionComponent>()
-            .IncludeWhenSerializing(o => o.Type);
+               .IncludeWhenSerializing(o => o.Type);
 
-        options.AddDataObjectConverter<IPartialTextDisplayComponent, PartialTextDisplayComponent>();
+        options.AddDataObjectConverter<IPartialTextDisplayComponent, PartialTextDisplayComponent>()
+               .IncludeWhenSerializing(o => o.Type);
 
         options.AddDataObjectConverter<IPartialThumbnailComponent, PartialThumbnailComponent>()
             .IncludeWhenSerializing(c => c.Type)

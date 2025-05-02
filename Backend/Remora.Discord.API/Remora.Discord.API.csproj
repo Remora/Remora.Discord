@@ -145,7 +145,7 @@
       <Compile Update="API\Objects\Interactions\Components\MediaGallery\PartialUnfurledMediaItem.cs">
         <DependentUpon>UnfurledMediaItem.cs</DependentUpon>
       </Compile>
-      <Compile Update="API\Objects\Interactions\Components\File\PartialFIleComponent.cs">
+      <Compile Update="API\Objects\Interactions\Components\File\PartialFileComponent.cs">
         <DependentUpon>FileComponent.cs</DependentUpon>
       </Compile>
       <Compile Update="API\Objects\Interactions\Components\Section\PartialSectionComponent.cs">

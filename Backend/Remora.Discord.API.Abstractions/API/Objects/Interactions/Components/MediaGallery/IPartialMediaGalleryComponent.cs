@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <inheritdoc cref="IMediaGalleryComponent"/>
 [PublicAPI]
-public interface IPartialMediaGalleryComponent
+public interface IPartialMediaGalleryComponent : IPartialMessageComponent
 {
     /// <inheritdoc cref="IMediaGalleryComponent.Items"/>
     Optional<IReadOnlyList<IPartialMediaGalleryItem>> Items { get; }

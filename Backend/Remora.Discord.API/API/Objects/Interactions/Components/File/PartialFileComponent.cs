@@ -1,5 +1,5 @@
 //
-//  PartialFIleComponent.cs
+//  PartialFileComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc/>
 [PublicAPI]
-public record PartialFIleComponent
+public record PartialFileComponent
 (
     Optional<IPartialUnfurledMediaItem> File,
     Optional<bool> IsSpoiler

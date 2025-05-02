@@ -29,4 +29,8 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc/>
 [PublicAPI]
-public record PartialMediaGalleryComponent(Optional<IReadOnlyList<IPartialMediaGalleryItem>> Items) : IPartialMediaGalleryComponent;
+public record PartialMediaGalleryComponent(Optional<IReadOnlyList<IPartialMediaGalleryItem>> Items, Optional<int> ID = default) : IPartialMediaGalleryComponent
+{
+    /// <inheritdoc />
+    public Optional<ComponentType> Type => ComponentType.MediaGallery;
+}
