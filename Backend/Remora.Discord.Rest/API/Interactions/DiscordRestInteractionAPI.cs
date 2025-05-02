@@ -186,7 +186,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             return new NotSupportedError("Too many embeds (max 10).");
         }
 
-        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentV2) && (content.HasValue || embeds.HasValue))
+        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentsV2) && (content.HasValue || embeds.HasValue))
         {
             // Technically attachments can't be set, but checking components for attachment
             // references is non-trivial, so we'll let Discord validate that.
@@ -279,7 +279,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         CancellationToken ct = default
     )
     {
-        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentV2) && (content.HasValue || embeds.HasValue))
+        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentsV2) && (content.HasValue || embeds.HasValue))
         {
             // Technically attachments can't be set, but checking components for attachment
             // references is non-trivial, so we'll let Discord validate that.
@@ -379,7 +379,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
             return new NotSupportedError("Too many embeds (max 10).");
         }
 
-        if ((flags.OrDefault()?.HasFlag(MessageFlags.IsComponentV2) ?? false) && (content.HasValue || embeds.HasValue))
+        if ((flags.OrDefault()?.HasFlag(MessageFlags.IsComponentsV2) ?? false) && (content.HasValue || embeds.HasValue))
         {
             // Technically attachments can't be set, but checking components for attachment
             // references is non-trivial, so we'll let Discord validate that.
