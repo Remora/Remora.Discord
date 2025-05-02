@@ -1231,7 +1231,8 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IPartialContainerComponent, PartialContainerComponent>()
                .IncludeWhenSerializing(c => c.Type)
-               .WithPropertyName(o => o.IsSpoiler, "spoiler");
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .WithPropertyName(o => o.AccentColour, "accent_color");
 
         options.AddDataObjectConverter<IPartialFileComponent, FileComponent>()
                .IncludeWhenSerializing(c => c.Type).WithPropertyName(o => o.IsSpoiler, "spoiler");

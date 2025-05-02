@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "type": 11,
+  "description": "A descriptive thumbnail",
+  "spoiler": true,
+  "media": {
+    "url": "https://example.com/image.png"
+  }
+}
