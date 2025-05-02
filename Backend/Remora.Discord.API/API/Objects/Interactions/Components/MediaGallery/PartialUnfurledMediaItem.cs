@@ -28,4 +28,17 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc/>
 [PublicAPI]
-public record PartialUnfurledMediaItem(Optional<string> Url) : IPartialUnfurledMediaItem;
+public record PartialUnfurledMediaItem(Optional<string> Url) : IPartialUnfurledMediaItem
+{
+    /// <inheritdoc/>
+    public Optional<string> ProxyUrl { get; }
+
+    /// <inheritdoc/>
+    public Optional<int?> Width { get; }
+
+    /// <inheritdoc/>
+    public Optional<int?> Height { get; }
+
+    /// <inheritdoc/>
+    public Optional<string> ContentType { get; }
+}

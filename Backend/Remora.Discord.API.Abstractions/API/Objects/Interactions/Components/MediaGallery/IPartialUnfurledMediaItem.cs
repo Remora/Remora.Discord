@@ -35,4 +35,28 @@ public interface IPartialUnfurledMediaItem
     /// Gets the url of this media item.
     /// </summary>
     Optional<string> Url { get; }
+
+    /// <summary>
+    /// Gets the proxy url of this media item.
+    /// </summary>
+    /// <remarks>This field is return-only.</remarks>
+    Optional<string> ProxyUrl { get; }
+
+    /// <summary>
+    /// Gets the width of this media item.
+    /// </summary>
+    /// <remarks>This field is return-only.</remarks>
+    Optional<int?> Width { get; }
+
+    /// <summary>
+    /// Gets the height of this media item.
+    /// </summary>
+    /// <remarks>This field is return-only.</remarks>
+    Optional<int?> Height { get; }
+
+    /// <summary>
+    /// Gets the content type of this media item.
+    /// </summary>
+    /// <remarks>This field is return-only.</remarks>
+    Optional<string> ContentType { get; }
 }

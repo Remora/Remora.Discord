@@ -1229,6 +1229,12 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 
+        options.AddDataObjectConverter<IPartialUnfurledMediaItem, PartialUnfurledMediaItem>()
+               .ExcludeWhenSerializing(o => o.ProxyUrl)
+               .ExcludeWhenSerializing(o => o.Width)
+               .ExcludeWhenSerializing(o => o.Height)
+               .ExcludeWhenSerializing(o => o.ContentType);
+
         options.AddDataObjectConverter<IPartialContainerComponent, PartialContainerComponent>()
                .IncludeWhenSerializing(c => c.Type)
                .WithPropertyName(o => o.IsSpoiler, "spoiler")
@@ -1269,7 +1275,11 @@ public static class ServiceCollectionExtensions
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
 
-        options.AddDataObjectConverter<IUnfurledMediaItem, UnfurledMediaItem>();
+        options.AddDataObjectConverter<IUnfurledMediaItem, UnfurledMediaItem>()
+               .ExcludeWhenSerializing(o => o.ProxyUrl)
+               .ExcludeWhenSerializing(o => o.Width)
+               .ExcludeWhenSerializing(o => o.Height)
+               .ExcludeWhenSerializing(o => o.ContentType);
 
         options.AddDataObjectConverter<IThumbnailComponent, ThumbnailComponent>()
                .WithPropertyName(o => o.IsSpoiler, "spoiler")

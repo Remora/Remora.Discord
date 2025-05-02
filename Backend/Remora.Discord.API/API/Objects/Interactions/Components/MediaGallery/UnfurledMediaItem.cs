@@ -22,9 +22,23 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc/>
 [PublicAPI]
-public record UnfurledMediaItem(string Url) : IUnfurledMediaItem;
+public record UnfurledMediaItem(string Url) : IUnfurledMediaItem
+{
+    /// <inheritdoc/>
+    public Optional<string> ProxyUrl { get; }
+
+    /// <inheritdoc/>
+    public Optional<int?> Width { get; }
+
+    /// <inheritdoc/>
+    public Optional<int?> Height { get; }
+
+    /// <inheritdoc/>
+    public Optional<string> ContentType { get; }
+}
