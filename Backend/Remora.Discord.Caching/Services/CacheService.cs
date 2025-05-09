@@ -45,7 +45,11 @@ public class CacheService
     /// </summary>
     /// <param name="cacheProvider">The cache provider.</param>
     /// <param name="cacheSettings">The cache settings.</param>
-    public CacheService(ICacheProvider cacheProvider, ImmutableCacheSettings cacheSettings)
+    public CacheService
+    (
+        ICacheProvider cacheProvider,
+        ImmutableCacheSettings cacheSettings
+    )
     {
         _cacheProvider = cacheProvider;
         _cacheSettings = cacheSettings;
