@@ -64,7 +64,7 @@ public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
         return new ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>>
         (
             choices
-                .OrderByDescending(choice => Fuzz.Ratio(userInput, choice.Name))
+                .Where(choice => choice.Name.Contains(userInput, StringComparison.OrdinalIgnoreCase))
                 .Take(25)
                 .ToList()
         );
