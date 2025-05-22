@@ -58,9 +58,14 @@ public record Message
     Optional<IMessageReference> MessageReference = default,
     Optional<MessageFlags> Flags = default,
     Optional<IMessage?> ReferencedMessage = default,
+    Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots = default,
     Optional<IMessageInteraction> Interaction = default,
     Optional<IChannel> Thread = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
     Optional<IReadOnlyList<IStickerItem>> StickerItems = default,
-    Optional<int> Position = default
+    Optional<int> Position = default,
+    Optional<IApplicationCommandInteractionDataResolved> Resolved = default,
+    Optional<IMessageInteractionMetadata> InteractionMetadata = default,
+    Optional<IPoll> Poll = default,
+    Optional<IMessageCall> Call = default
 ) : IMessage;

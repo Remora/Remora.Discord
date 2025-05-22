@@ -429,6 +429,48 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         );
     }
 
+    /// <inheritdoc/>
+    public Task<Result<IChannel>> ModifyMediaChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<SortOrder> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            position: position,
+            topic: topic,
+            isNsfw: isNsfw,
+            rateLimitPerUser: rateLimitPerUser,
+            permissionOverwrites: permissionOverwrites,
+            parentID: parentID,
+            defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+            flags: flags,
+            availableTags: availableTags,
+            defaultReactionEmoji: defaultReactionEmoji,
+            defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+            defaultSortOrder: defaultSortOrder,
+            reason: reason,
+            ct: ct
+        );
+    }
+
     /// <inheritdoc />
     public virtual Task<Result> DeleteChannelAsync
     (
@@ -457,7 +499,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     )
     {
         var hasAny = around.HasValue || before.HasValue || after.HasValue;
-        var hasStrictlyOne = (around.HasValue ^ before.HasValue ^ after.HasValue)
+        var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue
                              && !(around.HasValue && before.HasValue && after.HasValue);
 
         if (hasAny && !hasStrictlyOne)
@@ -538,6 +580,8 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<IReadOnlyList<Snowflake>> stickerIDs = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<bool> enforceNonce = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -550,15 +594,24 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             && !attachments.HasValue
                             && !embeds.HasValue
                             && !stickerIDs.HasValue
-                            && !components.HasValue;
+                            && !components.HasValue
+                            && !poll.HasValue
+                            && (!messageReference.HasValue || messageReference.Value.Type != MessageReferenceType.Forward);
 
         if (hasAtLeastOnePayload)
         {
             return new InvalidOperationError
             (
                 $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(embeds)}, {nameof(components)}, "
-                + $"or {nameof(stickerIDs)} is required."
+                + $"{nameof(stickerIDs)}, or {nameof(messageReference)} with {nameof(messageReference.Value.Type)} = {nameof(MessageReferenceType.Forward)} is required."
             );
+        }
+
+        if (flags.OrDefault().HasFlag(MessageFlags.IsComponentsV2) && (content.HasValue || embeds.HasValue))
+        {
+            // Technically attachments can't be set, but checking components for attachment
+            // references is non-trivial, so we'll let Discord validate that.
+            return new InvalidOperationError("Content and embeds are not allowed for component v2 messages.");
         }
 
         return await this.RestHttpClient.PostAsync<IMessage>
@@ -607,6 +660,8 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             json.Write("sticker_ids", stickerIDs, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
+                            json.Write("enforce_nonce", enforceNonce, this.JsonOptions);
+                            json.Write("poll", poll, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);
@@ -774,6 +829,13 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                 $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(components)}, {nameof(embeds)}, "
                 + $"or {nameof(flags)} is required."
             );
+        }
+
+        if ((flags.OrDefault()?.HasFlag(MessageFlags.IsComponentsV2) ?? false) && (content.HasValue || embeds.HasValue))
+        {
+            // Technically attachments can't be set, but checking components for attachment
+            // references is non-trivial, so we'll let Discord validate that.
+            return new InvalidOperationError("Content and embeds are not allowed for component v2 messages.");
         }
 
         return await this.RestHttpClient.PatchAsync<IMessage>

@@ -27,6 +27,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -65,6 +66,7 @@ public class DiscordRestStageInstanceAPITests
             var topic = "aa";
             var privacyLevel = StagePrivacyLevel.GuildOnly;
             var sendNotification = true;
+            var guildScheduledEventID = DiscordSnowflake.New(2);
             var reason = "test";
 
             var api = CreateAPI
@@ -77,15 +79,26 @@ public class DiscordRestStageInstanceAPITests
                         json => json.IsObject
                         (
                             o => o
-                                .WithProperty("channel_id", p => p.Is(channelID.ToString()))
+                                .WithProperty("channel_id", p => p.Is(channelID))
                                 .WithProperty("topic", p => p.Is(topic))
                                 .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
+                                .WithProperty("send_start_notification", p => p.Is(sendNotification))
+                                .WithProperty("guild_scheduled_event_id", p => p.Is(guildScheduledEventID))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
+                    .Respond<IStageInstance>()
             );
 
-            var result = await api.CreateStageInstanceAsync(channelID, topic, privacyLevel, sendNotification, reason);
+            var result = await api.CreateStageInstanceAsync
+            (
+                channelID,
+                topic,
+                privacyLevel,
+                sendNotification,
+                guildScheduledEventID,
+                reason
+            );
+
             ResultAssert.Successful(result);
         }
     }
@@ -118,7 +131,7 @@ public class DiscordRestStageInstanceAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}stage-instances/{channelID}")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
+                    .Respond<IStageInstance>()
             );
 
             var result = await api.GetStageInstanceAsync(channelID);
@@ -166,7 +179,7 @@ public class DiscordRestStageInstanceAPITests
                                 .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
+                    .Respond<IStageInstance>()
             );
 
             var result = await api.ModifyStageInstanceAsync(channelID, topic, privacyLevel, reason);

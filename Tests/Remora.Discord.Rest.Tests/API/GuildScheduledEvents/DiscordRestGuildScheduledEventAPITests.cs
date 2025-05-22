@@ -31,6 +31,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -72,8 +73,8 @@ public class DiscordRestGuildScheduledEventAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events")
-                    .WithQueryString("with_user_count", withUserCount.ToString())
-                    .Respond("application/json", "[]")
+                    .WithExactQueryString("with_user_count", withUserCount.ToString())
+                    .Respond<IReadOnlyList<IGuildScheduledEvent>>()
             );
 
             var result = await api.ListScheduledEventsForGuildAsync(guildID, withUserCount);
@@ -143,7 +144,7 @@ public class DiscordRestGuildScheduledEventAPITests
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
+                    .Respond<IGuildScheduledEvent>()
             );
 
             var result = await api.CreateGuildScheduledEventAsync
@@ -194,9 +195,9 @@ public class DiscordRestGuildScheduledEventAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}")
-                    .WithQueryString("with_user_count", withCounts.ToString())
+                    .WithExactQueryString("with_user_count", withCounts.ToString())
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
+                    .Respond<IGuildScheduledEvent>()
             );
 
             var result = await api.GetGuildScheduledEventAsync(guildID, eventID, withCounts);
@@ -269,7 +270,7 @@ public class DiscordRestGuildScheduledEventAPITests
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
+                    .Respond<IGuildScheduledEvent>()
             );
 
             var result = await api.ModifyGuildScheduledEventAsync
@@ -362,7 +363,7 @@ public class DiscordRestGuildScheduledEventAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}/users")
-                    .WithQueryString
+                    .WithExactQueryString
                     (
                         new[]
                         {
@@ -372,7 +373,7 @@ public class DiscordRestGuildScheduledEventAPITests
                             new KeyValuePair<string, string>("after", after.ToString())
                         }
                     )
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<IGuildScheduledEventUser>>()
             );
 
             var result = await api.GetGuildScheduledEventUsersAsync(guildID, eventID, limit, withMember, before, after);

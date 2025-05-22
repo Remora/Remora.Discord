@@ -60,6 +60,11 @@ public interface IGuildMemberUpdate : IGatewayEvent
     Optional<IImageHash?> Avatar { get; }
 
     /// <summary>
+    /// Gets the member's guild banner hash.
+    /// </summary>
+    Optional<IImageHash?> Banner { get; }
+
+    /// <summary>
     /// Gets the date when the user joined the guild.
     /// </summary>
     DateTimeOffset? JoinedAt { get; }

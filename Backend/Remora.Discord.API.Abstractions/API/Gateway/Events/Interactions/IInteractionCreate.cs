@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 /// Represents a user-invoked slash command.
 /// </summary>
 [PublicAPI]
-public interface IInteractionCreate : IInteraction, IGatewayEvent
-{
-}
+public interface IInteractionCreate : IInteraction, IGatewayEvent;

@@ -37,7 +37,8 @@ public record TextInputComponent
     Optional<int> MaxLength,
     Optional<bool> IsRequired,
     Optional<string> Value,
-    Optional<string> Placeholder
+    Optional<string> Placeholder,
+    Optional<int> ID = default
 ) : ITextInputComponent
 {
     /// <inheritdoc />

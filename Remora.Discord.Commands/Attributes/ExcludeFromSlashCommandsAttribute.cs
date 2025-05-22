@@ -30,6 +30,4 @@ namespace Remora.Discord.Commands.Attributes;
 /// </summary>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class ExcludeFromSlashCommandsAttribute : Attribute
-{
-}
+public class ExcludeFromSlashCommandsAttribute : Attribute;

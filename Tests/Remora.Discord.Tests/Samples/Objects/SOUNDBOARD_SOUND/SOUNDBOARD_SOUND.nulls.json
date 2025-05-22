@@ -1,0 +1,15 @@
+{
+    "name": "none",
+    "sound_id": "999999999999999999",
+    "volume": 0.0,
+    "emoji_id": null,
+    "emoji_name": null,
+    "guild_id": "999999999999999999",
+    "available": false,
+    "user": {
+        "id": "999999999999999999",
+        "username": "none",
+        "discriminator": "9999",
+        "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+    }
+}

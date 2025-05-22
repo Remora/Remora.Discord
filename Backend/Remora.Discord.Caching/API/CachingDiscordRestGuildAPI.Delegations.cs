@@ -26,6 +26,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -38,10 +39,7 @@ public partial class CachingDiscordRestGuildAPI
     public Task<Result> ModifyGuildChannelPositionsAsync
     (
         Snowflake guildID,
-        IReadOnlyList
-        <
-            (Snowflake ChannelID, int? Position, bool? LockPermissions, Snowflake? ParentID)
-        > positionModifications,
+        IReadOnlyList<IChannelPositionModification> positionModifications,
         CancellationToken ct = default
     )
     {
@@ -127,6 +125,19 @@ public partial class CachingDiscordRestGuildAPI
     )
     {
         return _actual.CreateGuildBanAsync(guildID, userID, deleteMessageDays, reason, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IBulkBanResponse>> BulkGuildBanAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<Snowflake> userIDs,
+        Optional<int> deleteMessageSeconds = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.BulkGuildBanAsync(guildID, userIDs, deleteMessageSeconds, reason, ct);
     }
 
     /// <inheritdoc />
@@ -243,6 +254,18 @@ public partial class CachingDiscordRestGuildAPI
     )
     {
         return _actual.ModifyUserVoiceStateAsync(guildID, userID, channelID, suppress, ct);
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IIncidentsData>> ModifyGuildIncidentActionsAsync
+    (
+        Snowflake guildID,
+        Optional<DateTimeOffset?> invitesDisabledUntil = default,
+        Optional<DateTimeOffset?> dmsDisabledUntil = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.ModifyGuildIncidentActionsAsync(guildID, invitesDisabledUntil, dmsDisabledUntil, ct);
     }
 
     /// <inheritdoc/>

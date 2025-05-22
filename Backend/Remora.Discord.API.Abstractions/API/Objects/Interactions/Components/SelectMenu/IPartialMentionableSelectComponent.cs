@@ -20,14 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a partial dropdown of selectable mentionables (users and roles).
+/// Represents a partial dropdown of selectable mentionables (users, roles, and channels).
 /// </summary>
 [PublicAPI]
 public interface IPartialMentionableSelectComponent : IPartialSelectMenuComponent
 {
+    /// <inheritdoc cref="IMentionableSelectComponent.DefaultValues"/>
+    Optional<IReadOnlyList<IPartialSelectDefaultValue>> DefaultValues { get; }
 }

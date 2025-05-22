@@ -127,6 +127,11 @@ public enum DiscordError
     UnknownSession = 10020,
 
     /// <summary>
+    /// Unknown asset.
+    /// </summary>
+    UnknownAsset = 10021,
+
+    /// <summary>
     /// Unknown ban.
     /// </summary>
     UnknownBan = 10026,
@@ -250,6 +255,11 @@ public enum DiscordError
     /// Unknown tag.
     /// </summary>
     UnknownTag = 10087,
+
+    /// <summary>
+    /// Unknown sound.
+    /// </summary>
+    UnknownSound = 10097,
 
     /// <summary>
     /// Bots cannot use this endpoint.
@@ -437,6 +447,11 @@ public enum DiscordError
     MaxNumberOfGuildWidgetSettingUpdatesReached = 30042,
 
     /// <summary>
+    /// The maximum number of soundboard sounds in the guild has been reached.
+    /// </summary>
+    MaxNumberOfGuildSoundboardSoundsReached = 30045,
+
+    /// <summary>
     /// Maximum number of edits to messages older than 1 hour reached. Try again later.
     /// </summary>
     MaxNumberOfEditsToMessagesOlderThanOneHourReached = 30046,
@@ -565,6 +580,11 @@ public enum DiscordError
     /// A tag is required to create a forum post in this channel.
     /// </summary>
     TagRequired = 40067,
+
+    /// <summary>
+    /// An entitlement has already been granted for this resource.
+    /// </summary>
+    EntitlementAlreadyGranted = 40074,
 
     /// <summary>
     /// Missing access.
@@ -744,6 +764,11 @@ public enum DiscordError
     InvalidGuild = 50055,
 
     /// <summary>
+    /// The SKU is invalid.
+    /// </summary>
+    InvalidSKU = 50057,
+
+    /// <summary>
     /// The request origin is invalid.
     /// </summary>
     InvalidRequestOrigin = 50067,
@@ -824,6 +849,21 @@ public enum DiscordError
     InvalidJSONInRequestBody = 50109,
 
     /// <summary>
+    /// The provided file is invalid.
+    /// </summary>
+    InvalidFile = 50110,
+
+    /// <summary>
+    /// The provided file type is invalid.
+    /// </summary>
+    InvalidFileType = 50123,
+
+    /// <summary>
+    /// The duration of the provided sound file is too long.
+    /// </summary>
+    InvalidFileDuration = 50124,
+
+    /// <summary>
     /// The specified owner cannot be a pending member.
     /// </summary>
     OwnerCannotBePendingMember = 50131,
@@ -852,6 +892,11 @@ public enum DiscordError
     /// The uploaded file was not found.
     /// </summary>
     UploadedFileNotFound = 50146,
+
+    /// <summary>
+    /// The specified emoji is invalid.
+    /// </summary>
+    InvalidEmoji = 50151,
 
     /// <summary>
     /// Additional attachments are not possible for voice messages.
@@ -889,6 +934,11 @@ public enum DiscordError
     TheUserMustFirstBeVerified = 50178,
 
     /// <summary>
+    /// The provided sound file has an invalid duration.
+    /// </summary>
+    ProvidedFileHasInvalidDuration = 50192,
+
+    /// <summary>
     /// You do not have permission to send this sticker.
     /// </summary>
     MissingPermissionToSendSticker = 50600,
@@ -907,6 +957,11 @@ public enum DiscordError
     /// Reaction was blocked.
     /// </summary>
     ReactionBlocked = 90001,
+
+    /// <summary>
+    /// The user cannot use burst (super) reactions.
+    /// </summary>
+    UserCannotUseBurstReactions = 90002,
 
     /// <summary>
     /// The application isn't available yet. Try again later.
@@ -1031,5 +1086,40 @@ public enum DiscordError
     /// <summary>
     /// Onboarding cannot be updated while requirements are not met.
     /// </summary>
-    CannotUpdateOnboarding = 350001
+    CannotUpdateOnboarding = 350001,
+
+    /// <summary>
+    /// Failed to bulk ban the given set of users.
+    /// </summary>
+    FailedToBanUsers = 500000,
+
+    /// <summary>
+    /// Poll voting is blocked.
+    /// </summary>
+    PollVotingBlocked = 520000,
+
+    /// <summary>
+    /// Poll has expired.
+    /// </summary>
+    PollExpired = 520001,
+
+    /// <summary>
+    /// Invalid channel type for poll creation.
+    /// </summary>
+    InvalidChannelTypeForPollCreation = 520002,
+
+    /// <summary>
+    /// Poll message cannot be edited.
+    /// </summary>
+    CannotEditAPollMessage = 520003,
+
+    /// <summary>
+    /// The emoji included in the poll cannot be used.
+    /// </summary>
+    CannotUseAnEmojiIncludedWithThePoll = 520004,
+
+    /// <summary>
+    /// A non-poll message cannot expire.
+    /// </summary>
+    CannotExpireANonPollMessage = 520006,
 }

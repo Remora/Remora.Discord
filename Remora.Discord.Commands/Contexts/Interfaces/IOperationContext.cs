@@ -28,6 +28,4 @@ namespace Remora.Discord.Commands.Contexts;
 /// Marker interface for various context types related to commands and interactions.
 /// </summary>
 [PublicAPI]
-public interface IOperationContext
-{
-}
+public interface IOperationContext;

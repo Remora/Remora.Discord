@@ -124,4 +124,13 @@ public interface IOptionalAuditEntryInfo
     /// </remarks>
     /// </summary>
     Optional<PermissionOverwriteType> Type { get; }
+
+    /// <summary>
+    /// Gets the type of integration which performed the action.
+    /// </summary>
+    /// <remarks>
+    /// This is a strangely documented property from Discord, but corresponds to the <see cref="IIntegration.Type"/>
+    /// property.
+    /// </remarks>
+    Optional<string> IntegrationType { get; }
 }

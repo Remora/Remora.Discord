@@ -32,8 +32,10 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
@@ -90,7 +92,7 @@ public class DiscordRestWebhookAPITests
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -118,7 +120,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -145,7 +147,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -172,7 +174,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -205,7 +207,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.CreateWebhookAsync
@@ -245,7 +247,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/webhooks")
-                    .Respond("application/json", "[]")
+                    .Respond<IReadOnlyList<IWebhook>>()
             );
 
             var result = await api.GetChannelWebhooksAsync
@@ -283,7 +285,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/webhooks")
-                    .Respond("application/json", "[]")
+                    .Respond<IReadOnlyList<IWebhook>>()
             );
 
             var result = await api.GetGuildWebhooksAsync
@@ -321,7 +323,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.GetWebhookAsync
@@ -362,7 +364,7 @@ public class DiscordRestWebhookAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
                     .With(m => m.Headers.Authorization == null)
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.GetWebhookWithTokenAsync
@@ -423,7 +425,7 @@ public class DiscordRestWebhookAPITests
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookAsync
@@ -459,7 +461,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookAsync
@@ -498,7 +500,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookAsync
@@ -549,7 +551,7 @@ public class DiscordRestWebhookAPITests
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .With(m => m.Headers.Authorization == null)
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookWithTokenAsync
@@ -586,7 +588,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar", p => p.IsNull())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookWithTokenAsync
@@ -619,7 +621,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                    .Respond<IWebhook>()
             );
 
             var result = await api.ModifyWebhookWithTokenAsync
@@ -752,12 +754,13 @@ public class DiscordRestWebhookAPITests
             var allowedMentions = new AllowedMentions();
             var components = new List<IMessageComponent>();
             var flags = MessageFlags.SuppressEmbeds;
+            var tags = new List<Snowflake>();
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
                         j => j.IsObject
@@ -770,9 +773,10 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                                 .WithProperty("components", p => p.IsArray())
                                 .WithProperty("flags", p => p.Is((int)flags))
+                                .WithProperty("applied_tags", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -786,7 +790,8 @@ public class DiscordRestWebhookAPITests
                 tts,
                 allowedMentions: allowedMentions,
                 components: components,
-                flags: flags
+                flags: flags,
+                appliedTags: tags
             );
 
             ResultAssert.Successful(result);
@@ -816,7 +821,11 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithExactQueryString(new Dictionary<string, string>
+                    {
+                        { "wait", shouldWait.ToString() },
+                        { "thread_id", threadID.ToString() },
+                    })
                     .WithJson
                     (
                         j => j.IsObject
@@ -827,12 +836,11 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar_url", p => p.Is(avatarUrl))
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
-                                .WithProperty("thread_id", p => p.Is(threadID.ToString()))
                                 .WithProperty("components", p => p.IsArray())
                                 .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -877,7 +885,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
                         j => j.IsObject
@@ -893,7 +901,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("thread_name", p => p.Is(threadName))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -935,7 +943,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                    .WithQueryString("wait", shouldWait.ToString())
+                    .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
                         j => j.IsObject
@@ -948,7 +956,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -991,24 +999,28 @@ public class DiscordRestWebhookAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -1051,35 +1063,39 @@ public class DiscordRestWebhookAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName1))
-                                                    .WithProperty("description", ep => ep.Is(description1))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName2))
-                                                    .WithProperty("description", ep => ep.Is(description2))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -1122,33 +1138,37 @@ public class DiscordRestWebhookAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.ExecuteWebhookAsync
@@ -1160,6 +1180,51 @@ public class DiscordRestWebhookAPITests
                     new FileData(fileName, file, description),
                     new PartialAttachment(DiscordSnowflake.New(999))
                 }
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsPollRequestCorrectly()
+        {
+            var webhookId = DiscordSnowflake.New(0);
+            var token = "aa";
+
+            var poll = new PollCreateRequest
+            (
+                new PollMedia("abc"),
+                new[]
+                {
+                    new PollAnswer(new PollMedia("xyz"))
+                },
+                5,
+                true
+            );
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o.WithProperty("poll", p => p.IsObject())
+                        )
+                    )
+                    .Respond<IMessage>()
+            );
+
+            var result = await api.ExecuteWebhookAsync
+            (
+                webhookId,
+                token,
+                poll: poll
             );
 
             ResultAssert.Successful(result);
@@ -1250,8 +1315,8 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .WithQueryString("thread_id", threadID.ToString())
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .WithExactQueryString("thread_id", threadID.ToString())
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1299,7 +1364,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1344,24 +1409,28 @@ public class DiscordRestWebhookAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1410,35 +1479,39 @@ public class DiscordRestWebhookAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName1))
-                                                    .WithProperty("description", ep => ep.Is(description1))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName2))
-                                                    .WithProperty("description", ep => ep.Is(description2))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1487,33 +1560,37 @@ public class DiscordRestWebhookAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditWebhookMessageAsync
@@ -1562,7 +1639,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
-                    .WithQueryString("thread_id", threadID.ToString())
+                    .WithExactQueryString("thread_id", threadID.ToString())
                     .Respond(HttpStatusCode.NoContent)
             );
 
@@ -1613,8 +1690,8 @@ public class DiscordRestWebhookAPITests
                         $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
                     .WithNoContent()
-                    .WithQueryString("thread_id", threadID.ToString())
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .WithExactQueryString("thread_id", threadID.ToString())
+                    .Respond<IMessage>()
             );
 
             var result = await api.GetWebhookMessageAsync

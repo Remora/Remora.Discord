@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
@@ -30,4 +31,11 @@ namespace Remora.Discord.API.Abstractions.Objects;
 [PublicAPI]
 public interface IMessageComponent : IPartialMessageComponent
 {
+    /// <summary>
+    /// Gets the type of the component.
+    /// </summary>
+    new ComponentType Type { get; }
+
+    /// <inheritdoc/>
+    Optional<ComponentType> IPartialMessageComponent.Type => this.Type;
 }

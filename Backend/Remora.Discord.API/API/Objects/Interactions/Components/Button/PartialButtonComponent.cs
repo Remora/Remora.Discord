@@ -35,7 +35,8 @@ public record PartialButtonComponent
     Optional<IPartialEmoji> Emoji = default,
     Optional<string> CustomID = default,
     Optional<string> URL = default,
-    Optional<bool> IsDisabled = default
+    Optional<bool> IsDisabled = default,
+    Optional<int> ID = default
 ) : IPartialButtonComponent
 {
     /// <inheritdoc />

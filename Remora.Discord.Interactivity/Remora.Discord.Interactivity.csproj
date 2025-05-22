@@ -1,11 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>4.5.0</VersionPrefix>
+        <VersionPrefix>6.0.0</VersionPrefix>
         <Description>Framework for using Discord's interaction-driven message components</Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Support Ephemeral for interactivity groups.
+            BREAKING: Update target frameworks.
+            BREAKING: Update dependencies.
+            BREAKING: Catch-up on all discord features...
         </PackageReleaseNotes>
     </PropertyGroup>
 

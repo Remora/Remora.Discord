@@ -124,14 +124,14 @@ internal class PartialMessageComponentConverter : JsonConverter<IPartialMessageC
                 JsonSerializer.Serialize(writer, roleSelect, options);
                 break;
             }
-            case IPartialMentionableSelectComponent mentionableSelect:
-            {
-                JsonSerializer.Serialize(writer, mentionableSelect, options);
-                break;
-            }
             case IPartialChannelSelectComponent channelSelect:
             {
                 JsonSerializer.Serialize(writer, channelSelect, options);
+                break;
+            }
+            case IPartialMentionableSelectComponent mentionableSelect:
+            {
+                JsonSerializer.Serialize(writer, mentionableSelect, options);
                 break;
             }
             default:

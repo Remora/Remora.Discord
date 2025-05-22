@@ -76,6 +76,7 @@ public interface IDiscordRestUserAPI
     /// <param name="before">Get guilds before this guild ID.</param>
     /// <param name="after">Get guilds after this guild ID.</param>
     /// <param name="limit">The maximum number of guilds to get (1-200). Defaults to 200.</param>
+    /// <param name="withCounts">Whether member and presence counts should be included.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
@@ -83,6 +84,7 @@ public interface IDiscordRestUserAPI
         Optional<Snowflake> before = default,
         Optional<Snowflake> after = default,
         Optional<int> limit = default,
+        Optional<bool> withCounts = default,
         CancellationToken ct = default
     );
 
@@ -135,7 +137,7 @@ public interface IDiscordRestUserAPI
     /// </remarks>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    Task<Result<IReadOnlyList<IConnection>>> GetCurrentUserConnectionsAsync
     (
         CancellationToken ct = default
     );
@@ -150,7 +152,7 @@ public interface IDiscordRestUserAPI
     /// <param name="applicationID">The ID of the application.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IApplicationRoleConnection>> GetUserApplicationRoleConnectionAsync
+    Task<Result<IApplicationRoleConnection>> GetCurrentUserApplicationRoleConnectionAsync
     (
         Snowflake applicationID,
         CancellationToken ct = default
@@ -172,7 +174,7 @@ public interface IDiscordRestUserAPI
     /// </param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IApplicationRoleConnection>> UpdateUserApplicationRoleConnectionAsync
+    Task<Result<IApplicationRoleConnection>> UpdateCurrentUserApplicationRoleConnectionAsync
     (
         Snowflake applicationID,
         Optional<string> platformName = default,

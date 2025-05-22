@@ -21,9 +21,9 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Remora.Commands.Extensions;
 using Remora.Commands.Signatures;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
@@ -42,15 +42,35 @@ public static class ParameterShapeExtensions
     /// Gets the actual underlying type of the parameter, unwrapping things like nullables and optionals.
     /// </summary>
     /// <param name="shape">The parameter shape.</param>
+    /// <param name="unwrapCollections">Whether to unwrap collections as well.</param>
     /// <returns>The actual type.</returns>
-    public static Type GetActualParameterType(this IParameterShape shape)
+    public static Type GetActualParameterType(this IParameterShape shape, bool unwrapCollections = false)
     {
+        var parameterType = shape.ParameterType;
+
         // Unwrap the parameter type if it's a Nullable<T> or Optional<T>
         // TODO: Maybe more cases?
-        var parameterType = shape.Parameter.ParameterType;
-        return parameterType.IsNullable() || parameterType.IsOptional()
+        parameterType = parameterType.IsNullable() || parameterType.IsOptional()
             ? parameterType.GetGenericArguments().Single()
             : parameterType;
+
+        // IsCollection loves to inexplicably return false for IReadOnlyList<T> and friends, so we'll just do it manually
+        if (!unwrapCollections || parameterType == typeof(string))
+        {
+            return parameterType;
+        }
+
+        var interfaces = parameterType.GetInterfaces();
+        var collectionTypes = interfaces
+                              .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                              .ToList();
+
+        return collectionTypes.Count switch
+        {
+            0 => parameterType,
+            1 => collectionTypes[0].GetGenericArguments()[0],
+            _ => throw new InvalidOperationException($"{parameterType.Name} has multiple implementations for IEnumerable<>, which is ambiguous.")
+        };
     }
 
     /// <summary>
@@ -60,13 +80,13 @@ public static class ParameterShapeExtensions
     /// <returns>The option type.</returns>
     public static ApplicationCommandOptionType GetDiscordType(this IParameterShape shape)
     {
-        var typeHint = shape.Parameter.GetCustomAttribute<DiscordTypeHintAttribute>();
+        var typeHint = shape.Attributes.OfType<DiscordTypeHintAttribute>().SingleOrDefault();
         if (typeHint is not null)
         {
             return (ApplicationCommandOptionType)typeHint.TypeHint;
         }
 
-        return shape.GetActualParameterType() switch
+        return shape.GetActualParameterType(true) switch
         {
             var t when t == typeof(bool) => ApplicationCommandOptionType.Boolean,
             var t when typeof(IPartialRole).IsAssignableFrom(t) => Role,

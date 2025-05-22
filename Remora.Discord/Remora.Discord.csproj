@@ -1,23 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2023.3</VersionPrefix>
+        <VersionPrefix>2025.1</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Support Ephemeral for interactivity groups.
-            feat: implement abstraction level for feedback service
-            BREAKING: Move ephemerality tracking to the response tracking API.
-            Webhook name "discord" is not allowed
-            BREAKING: Implement onboarding
-            Add new permissions
-            feat: Use ArrayPoolBufferWriter
-            BREAKING: Implement support for voice messages.
-            BREAKING: Mark ChannelID as deprecated and replace it with Channel.
-            BREAKING: Implement max stage video users.
-            Add new application flag.
-            BREAKING: Move ephemerality tracking to the response tracking API.
-            Support Ephemeral for interactivity groups.
+            BREAKING: Update target frameworks.
+            BREAKING: Update dependencies.
+            BREAKING: Catch-up on all discord features...
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

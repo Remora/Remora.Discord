@@ -365,6 +365,52 @@ public interface IDiscordRestChannelAPI
     );
 
     /// <summary>
+    /// Modifies the given media channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the channel.</param>
+    /// <param name="name">The new name of the channel.</param>
+    /// <param name="position">The new position of the channel in the listing.</param>
+    /// <param name="topic">The new topic of the channel. Max 1024 characters (4096 for forums).</param>
+    /// <param name="isNsfw">The new NSFW status of the channel.</param>
+    /// <param name="rateLimitPerUser">The new rate limit per user.</param>
+    /// <param name="permissionOverwrites">The new permission overwrites.</param>
+    /// <param name="parentID">The new parent category ID.</param>
+    /// <param name="defaultAutoArchiveDuration">
+    /// The default time of inactivity after which threads in the channel are archived.
+    /// </param>
+    /// <param name="flags">The new channel flags.</param>
+    /// <param name="availableTags">
+    /// The set of tags that can be used in a forum channel. Only "name" is required to be set.
+    /// </param>
+    /// <param name="defaultReactionEmoji">The emoji to show in the add reaction button on threads in a forum.</param>
+    /// <param name="defaultThreadRateLimitPerUser">
+    /// The initial <see cref="IChannel.RateLimitPerUser"/> to set on new threads in a forum channel.
+    /// </param>
+    /// <param name="defaultSortOrder">The default sort order of posts.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> ModifyMediaChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<ChannelFlags> flags = default,
+        Optional<IReadOnlyList<IPartialForumTag>> availableTags = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<int> defaultThreadRateLimitPerUser = default,
+        Optional<SortOrder> defaultSortOrder = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
     /// Deletes a channel by its ID.
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>
@@ -446,6 +492,8 @@ public interface IDiscordRestChannelAPI
     /// mentioned in this parameter will be deleted.
     /// </param>
     /// <param name="flags">The message flags.</param>
+    /// <param name="enforceNonce">Indicates whether messages should be deduplicated using the passed nonce.</param>
+    /// <param name="poll">The poll of the message.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IMessage>> CreateMessageAsync
@@ -461,6 +509,8 @@ public interface IDiscordRestChannelAPI
         Optional<IReadOnlyList<Snowflake>> stickerIDs = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
+        Optional<bool> enforceNonce = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     );
 

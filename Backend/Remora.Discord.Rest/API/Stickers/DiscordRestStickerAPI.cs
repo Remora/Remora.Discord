@@ -131,7 +131,8 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         {
             return new ArgumentOutOfRangeError
             (
-                nameof(description), "The description must be either empty, or between 2 and 30 characters."
+                nameof(description),
+                "The description must be either empty, or between 2 and 30 characters."
             );
         }
 
@@ -175,7 +176,8 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         {
             return new ArgumentOutOfRangeError
             (
-                nameof(description), "The description must be either empty, or between 2 and 30 characters."
+                nameof(description),
+                "The description must be either empty, or between 2 and 30 characters."
             );
         }
 

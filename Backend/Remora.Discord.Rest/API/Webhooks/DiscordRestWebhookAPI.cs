@@ -304,6 +304,8 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
         Optional<string> threadName = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -315,6 +317,11 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                 if (shouldWait.TryGet(out var realShouldWait))
                 {
                     b.AddQueryParameter("wait", realShouldWait.ToString());
+                }
+
+                if (threadID.TryGet(out var realThreadID))
+                {
+                    b.AddQueryParameter("thread_id", realThreadID.ToString());
                 }
 
                 Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
@@ -354,11 +361,12 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("tts", isTTS, this.JsonOptions);
                             json.Write("embeds", embeds, this.JsonOptions);
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("thread_id", threadID, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
                             json.Write("thread_name", threadName, this.JsonOptions);
+                            json.Write("applied_tags", appliedTags, this.JsonOptions);
+                            json.Write("poll", poll, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext(this.RateLimitCache);

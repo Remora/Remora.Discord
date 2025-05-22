@@ -1,10 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>1.1.4</VersionPrefix>
+        <VersionPrefix>2.0.0</VersionPrefix>
         <Description>Redis-based cache provider for Remora.Discord</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            BREAKING: Update target frameworks.
+            BREAKING: Update dependencies.
+            BREAKING: Catch-up on all discord features...
         </PackageReleaseNotes>
     </PropertyGroup>
 

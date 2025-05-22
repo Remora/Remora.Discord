@@ -116,20 +116,6 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a failure case.
             /// </summary>
             [Fact]
-            public void ThrowsIfACommandContainsACollectionParameter()
-            {
-                var builder = new CommandTreeBuilder();
-                builder.RegisterModule<CollectionsAreNotSupported>();
-
-                var tree = builder.Build();
-
-                Assert.Throws<UnsupportedParameterFeatureException>(() => tree.CreateApplicationCommands());
-            }
-
-            /// <summary>
-            /// Tests whether the method responds appropriately to a failure case.
-            /// </summary>
-            [Fact]
             public void ThrowsIfACommandContainsASwitchParameter()
             {
                 var builder = new CommandTreeBuilder();
@@ -1743,10 +1729,13 @@ public class CommandTreeExtensionTests
                     string.Empty,
                     new[]
                     {
-                        new ApplicationCommandOption(SubCommandGroup, subGroupNode.Key, string.Empty, Options: new[]
-                        {
-                            new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty)
-                        })
+                        new ApplicationCommandOption
+                        (
+                            SubCommandGroup,
+                            subGroupNode.Key,
+                            string.Empty,
+                            Options: new[] { new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty) }
+                        )
                     },
                     default
                 )
@@ -1802,11 +1791,17 @@ public class CommandTreeExtensionTests
                     string.Empty,
                     new[]
                     {
-                        new ApplicationCommandOption(SubCommandGroup, subGroupNode.Key, string.Empty, Options: new[]
-                        {
-                            new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty),
-                            new ApplicationCommandOption(SubCommand, commandNodeD.Key, string.Empty)
-                        }),
+                        new ApplicationCommandOption
+                        (
+                            SubCommandGroup,
+                            subGroupNode.Key,
+                            string.Empty,
+                            Options: new[]
+                            {
+                                new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty),
+                                new ApplicationCommandOption(SubCommand, commandNodeD.Key, string.Empty)
+                            }
+                        ),
                         new ApplicationCommandOption(SubCommand, commandNodeE.Key, string.Empty),
                         new ApplicationCommandOption(SubCommand, commandNodeF.Key, string.Empty)
                     },

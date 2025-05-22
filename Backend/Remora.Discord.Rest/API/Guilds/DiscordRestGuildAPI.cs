@@ -319,6 +319,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -349,6 +350,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                         json.Write("available_tags", availableTags, this.JsonOptions);
                         json.Write("default_sort_order", defaultSortOrder, this.JsonOptions);
                         json.Write("default_forum_layout", defaultForumLayout, this.JsonOptions);
+                        json.Write("default_thread_rate_limit_per_user", defaultThreadRateLimitPerUser, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -368,6 +370,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<Snowflake?> parentID = default,
         Optional<bool?> isNsfw = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -382,6 +385,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         parentID: parentID,
         isNsfw: isNsfw,
         defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -397,6 +401,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<Snowflake?> parentID = default,
         Optional<bool?> isNsfw = default,
         Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -410,6 +415,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         parentID: parentID,
         isNsfw: isNsfw,
         defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -420,6 +426,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Snowflake guildID,
         string name,
         Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
         Optional<int?> position = default,
         Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentID = default,
@@ -429,6 +436,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IReadOnlyList<IForumTag>?> availableTags = default,
         Optional<SortOrder?> defaultSortOrder = default,
         Optional<ForumLayout?> defaultForumLayout = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     ) => CreateGuildChannelAsync
@@ -437,6 +445,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         name,
         ChannelType.GuildForum,
         topic: topic,
+        rateLimitPerUser: rateLimitPerUser,
         position: position,
         permissionOverwrites: permissionOverwrites,
         parentID: parentID,
@@ -446,6 +455,43 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         availableTags: availableTags,
         defaultSortOrder: defaultSortOrder,
         defaultForumLayout: defaultForumLayout,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
+        reason: reason,
+        ct: ct
+    );
+
+    /// <inheritdoc />
+    public Task<Result<IChannel>> CreateGuildMediaChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> topic = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> position = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentID = default,
+        Optional<AutoArchiveDuration?> defaultAutoArchiveDuration = default,
+        Optional<IDefaultReaction?> defaultReactionEmoji = default,
+        Optional<IReadOnlyList<IForumTag>?> availableTags = default,
+        Optional<SortOrder?> defaultSortOrder = default,
+        Optional<int?> defaultThreadRateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) => CreateGuildChannelAsync
+    (
+        guildID,
+        name,
+        ChannelType.GuildMedia,
+        topic: topic,
+        rateLimitPerUser: rateLimitPerUser,
+        position: position,
+        permissionOverwrites: permissionOverwrites,
+        parentID: parentID,
+        defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+        defaultReactionEmoji: defaultReactionEmoji,
+        availableTags: availableTags,
+        defaultSortOrder: defaultSortOrder,
+        defaultThreadRateLimitPerUser: defaultThreadRateLimitPerUser,
         reason: reason,
         ct: ct
     );
@@ -522,15 +568,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     public virtual Task<Result> ModifyGuildChannelPositionsAsync
     (
         Snowflake guildID,
-        IReadOnlyList
-        <
-            (
-            Snowflake ChannelID,
-            int? Position,
-            bool? LockPermissions,
-            Snowflake? ParentID
-            )
-        > positionModifications,
+        IReadOnlyList<IChannelPositionModification> positionModifications,
         CancellationToken ct = default
     )
     {
@@ -542,41 +580,9 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                 (
                     json =>
                     {
-                        foreach (var (channelID, position, lockPermissions, parentID) in positionModifications)
-                        {
-                            json.WriteStartObject();
-                            {
-                                json.WriteString("id", channelID.ToString());
-                                if (position is null)
-                                {
-                                    json.WriteNull("position");
-                                }
-                                else
-                                {
-                                    json.WriteNumber("position", position.Value);
-                                }
-
-                                if (lockPermissions is null)
-                                {
-                                    json.WriteNull("lock_permissions");
-                                }
-                                else
-                                {
-                                    json.WriteBoolean("lock_permissions", lockPermissions.Value);
-                                }
-
-                                if (parentID is null)
-                                {
-                                    json.WriteNull("parent_id");
-                                }
-                                else
-                                {
-                                    json.WriteString("parent_id", parentID.Value.ToString());
-                                }
-                            }
-                            json.WriteEndObject();
-                        }
-                    }
+                        json.WriteRawValue(JsonSerializer.Serialize(positionModifications, this.JsonOptions));
+                    },
+                    withStartEndMarkers: false
                 )
                 .WithRateLimitContext(this.RateLimitCache),
             ct
@@ -908,6 +914,33 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<IBulkBanResponse>> BulkGuildBanAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<Snowflake> userIDs,
+        Optional<int> deleteMessageSeconds = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IBulkBanResponse>
+        (
+            $"guilds/{guildID}/bulk-ban",
+            b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("user_ids", userIDs, this.JsonOptions);
+                        json.Write("delete_message_seconds", deleteMessageSeconds, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache)
+                .AddAuditLogReason(reason),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
     public virtual Task<Result<IReadOnlyList<IRole>>> GetGuildRolesAsync
     (
         Snowflake guildID,
@@ -1196,13 +1229,13 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+    public virtual Task<Result<IReadOnlyList<IInviteWithMetadata>>> GetGuildInvitesAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IInviteWithMetadata>>
         (
             $"guilds/{guildID}/invites",
             b => b.WithRateLimitContext(this.RateLimitCache),
@@ -1494,6 +1527,31 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         (
             $"guilds/{guildID}/threads/active",
             b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IIncidentsData>> ModifyGuildIncidentActionsAsync
+    (
+        Snowflake guildID,
+        Optional<DateTimeOffset?> invitesDisabledUntil = default,
+        Optional<DateTimeOffset?> dmsDisabledUntil = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IIncidentsData>
+        (
+            $"guilds/{guildID}/incident-actions",
+            b => b.WithJson
+                (
+                    j =>
+                    {
+                        j.Write("invites_disabled_until", invitesDisabledUntil, this.JsonOptions);
+                        j.Write("dms_disabled_until", dmsDisabledUntil, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

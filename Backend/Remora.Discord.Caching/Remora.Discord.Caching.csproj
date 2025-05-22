@@ -1,12 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>36.0.0</VersionPrefix>
+        <VersionPrefix>40.0.0</VersionPrefix>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            BREAKING: Implement onboarding
-            Add new permissions
+            BREAKING: Update target frameworks.
+            BREAKING: Update dependencies.
+            BREAKING: Catch-up on all discord features...
         </PackageReleaseNotes>
     </PropertyGroup>
 

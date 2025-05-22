@@ -74,5 +74,6 @@ public record GuildUpdate
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<ISticker>> Stickers,
     bool IsPremiumProgressBarEnabled,
-    Snowflake? SafetyAlertsChannelID
+    Snowflake? SafetyAlertsChannelID,
+    IIncidentsData? IncidentsData
 ) : IGuildUpdate;

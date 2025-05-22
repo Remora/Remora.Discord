@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "type": 12,
+  "items": [
+    {
+      "media": {
+        "url": "https://example.com/image.png"
+      },
+      "description": "An example image",
+      "spoiler": false
+    }
+  ]
+}

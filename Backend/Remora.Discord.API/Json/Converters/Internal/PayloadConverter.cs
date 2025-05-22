@@ -236,6 +236,9 @@ internal class PayloadConverter : JsonConverter<IPayload?>
             _ when typeof(IRequestGuildMembers).IsAssignableFrom(dataType)
                 => OperationCode.RequestGuildMembers,
 
+            _ when typeof(IRequestSoundboardSounds).IsAssignableFrom(dataType)
+                => OperationCode.RequestSoundboardSounds,
+
             _ when typeof(IResume).IsAssignableFrom(dataType)
                 => OperationCode.Resume,
 
@@ -385,7 +388,9 @@ internal class PayloadConverter : JsonConverter<IPayload?>
         {
             eventData = JsonSerializer.Deserialize
             (
-                dataProperty.GetRawText(), eventType, options
+                dataProperty.GetRawText(),
+                eventType,
+                options
             );
         }
         catch

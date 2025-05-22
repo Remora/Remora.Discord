@@ -151,7 +151,12 @@ public interface IMessage : IPartialMessage
     /// <summary>
     /// Gets the message reference. Sent with cross-posted messages.
     /// </summary>
-    new Optional<IMessageReference> MessageReference { get;  }
+    new Optional<IMessageReference> MessageReference { get; }
+
+    /// <summary>
+    /// Gets the message associated with <see cref="MessageReference"/>. Sent with forwarded messages.
+    /// </summary>
+    new Optional<IReadOnlyList<IMessageSnapshot>> MessageSnapshots { get; }
 
     /// <summary>
     /// Gets a set of bitwise flags describing extra features of the message.
@@ -187,6 +192,26 @@ public interface IMessage : IPartialMessage
     /// Gets the approximate position of the message within the thread. Duplicates and gaps are possible.
     /// </summary>
     new Optional<int> Position { get; }
+
+    /// <summary>
+    /// Gets data for users, members, channels, and roles in the message's auto-populated select menus.
+    /// </summary>
+    new Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+
+    /// <summary>
+    /// Gets the metadata of the interaction, if any.
+    /// </summary>
+    new Optional<IMessageInteractionMetadata> InteractionMetadata { get; }
+
+    /// <summary>
+    /// Gets the poll sent with the message, if any.
+    /// </summary>
+    new Optional<IPoll> Poll { get; }
+
+    /// <summary>
+    /// Gets the call associated with the message, if any.
+    /// </summary>
+    new Optional<IMessageCall> Call { get; }
 
     /// <inheritdoc/>
     Optional<Snowflake> IPartialMessage.ID => this.ID;
@@ -255,6 +280,9 @@ public interface IMessage : IPartialMessage
     Optional<IMessageReference> IPartialMessage.MessageReference => this.MessageReference;
 
     /// <inheritdoc/>
+    Optional<IReadOnlyList<IMessageSnapshot>> IPartialMessage.MessageSnapshots => this.MessageSnapshots;
+
+    /// <inheritdoc/>
     Optional<MessageFlags> IPartialMessage.Flags => this.Flags;
 
     /// <inheritdoc/>
@@ -274,4 +302,16 @@ public interface IMessage : IPartialMessage
 
     /// <inheritdoc/>
     Optional<int> IPartialMessage.Position => this.Position;
+
+    /// <inheritdoc/>
+    Optional<IApplicationCommandInteractionDataResolved> IPartialMessage.Resolved => this.Resolved;
+
+    /// <inheritdoc/>
+    Optional<IMessageInteractionMetadata> IPartialMessage.InteractionMetadata => this.InteractionMetadata;
+
+    /// <inheritdoc/>
+    Optional<IPoll> IPartialMessage.Poll => this.Poll;
+
+    /// <inheritdoc/>
+    Optional<IMessageCall> IPartialMessage.Call => this.Call;
 }

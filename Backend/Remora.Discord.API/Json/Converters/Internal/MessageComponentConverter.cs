@@ -85,6 +85,20 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 => document.RootElement.Deserialize<IMentionableSelectComponent>(options),
             ComponentType.ChannelSelect
                 => document.RootElement.Deserialize<IChannelSelectComponent>(options),
+            ComponentType.Section
+                => document.RootElement.Deserialize<ISectionComponent>(options),
+            ComponentType.TextDisplay
+                => document.RootElement.Deserialize<ITextDisplayComponent>(options),
+            ComponentType.Thumbnail
+                => document.RootElement.Deserialize<IThumbnailComponent>(options),
+            ComponentType.MediaGallery
+                => document.RootElement.Deserialize<IMediaGalleryComponent>(options),
+            ComponentType.File
+                => document.RootElement.Deserialize<IFileComponent>(options),
+            ComponentType.Separator
+                => document.RootElement.Deserialize<ISeparatorComponent>(options),
+            ComponentType.Container
+                => document.RootElement.Deserialize<IContainerComponent>(options),
             _ => throw new NotSupportedException($"Deserialization of the component type {type} is not supported")
         };
     }
@@ -124,14 +138,49 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 JsonSerializer.Serialize(writer, roleSelect, options);
                 break;
             }
+            case IChannelSelectComponent channelSelect:
+            {
+                JsonSerializer.Serialize(writer, channelSelect, options);
+                break;
+            }
             case IMentionableSelectComponent mentionableSelect:
             {
                 JsonSerializer.Serialize(writer, mentionableSelect, options);
                 break;
             }
-            case IChannelSelectComponent channelSelect:
+            case ISectionComponent section:
             {
-                JsonSerializer.Serialize(writer, channelSelect, options);
+                JsonSerializer.Serialize(writer, section, options);
+                break;
+            }
+            case ITextDisplayComponent textDisplay:
+            {
+                JsonSerializer.Serialize(writer, textDisplay, options);
+                break;
+            }
+            case IThumbnailComponent thumbnail:
+            {
+                JsonSerializer.Serialize(writer, thumbnail, options);
+                break;
+            }
+            case IMediaGalleryComponent mediaGallery:
+            {
+                JsonSerializer.Serialize(writer, mediaGallery, options);
+                break;
+            }
+            case IFileComponent file:
+            {
+                JsonSerializer.Serialize(writer, file, options);
+                break;
+            }
+            case ISeparatorComponent separator:
+            {
+                JsonSerializer.Serialize(writer, separator, options);
+                break;
+            }
+            case IContainerComponent container:
+            {
+                JsonSerializer.Serialize(writer, container, options);
                 break;
             }
             default:

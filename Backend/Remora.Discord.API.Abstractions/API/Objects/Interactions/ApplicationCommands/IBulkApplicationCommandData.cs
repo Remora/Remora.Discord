@@ -61,4 +61,10 @@ public interface IBulkApplicationCommandData
 
     /// <inheritdoc cref="IApplicationCommand.IsNsfw"/>
     Optional<bool> IsNsfw { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.IntegrationTypes"/>
+    Optional<IReadOnlyList<ApplicationIntegrationType>> IntegrationTypes { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.Contexts"/>
+    Optional<IReadOnlyList<InteractionContextType>> Contexts { get; }
 }

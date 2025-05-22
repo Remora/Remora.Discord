@@ -1,0 +1,18 @@
+{
+  "question": {
+    "text": "abcdef"
+  },
+  "answers": [
+    {
+      "answer_id": 1,
+      "poll_media": {
+        "text": "abcdef",
+        "emoji": {
+          "name": "xyz"
+        }
+      }
+    }
+  ],
+  "duration": 10,
+  "allow_multiselect": false
+}

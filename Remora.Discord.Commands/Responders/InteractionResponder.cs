@@ -202,8 +202,8 @@ public class InteractionResponder : IResponder<IInteractionCreate>
 
         var shouldSendResponse =
         !(
-            suppressResponseAttribute?.Suppress ?? _options.SuppressAutomaticResponses ||
-            commandContext.HasRespondedToInteraction
+            suppressResponseAttribute?.Suppress ??
+            (_options.SuppressAutomaticResponses || commandContext.HasRespondedToInteraction)
         );
 
         if (shouldSendResponse)

@@ -1,5 +1,14 @@
 {
   "count": 1,
+  "count_details": {
+    "burst": 1,
+    "normal": 2
+  },
   "me": true,
-  "emoji": { }
+  "me_burst": true,
+  "emoji": { },
+  "burst_colors": [
+    "#ffffff",
+    "#e30f8a"
+  ]
 }

@@ -28,6 +28,4 @@ namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
 /// Represents an acknowledged session resume.
 /// </summary>
 [PublicAPI]
-public interface IVoiceResumed : IVoiceGatewayEvent
-{
-}
+public interface IVoiceResumed : IVoiceGatewayEvent;

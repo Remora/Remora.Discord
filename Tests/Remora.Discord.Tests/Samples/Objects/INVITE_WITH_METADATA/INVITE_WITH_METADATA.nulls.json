@@ -1,0 +1,70 @@
+{
+  "code": "123456",
+  "guild": { },
+  "channel": null,
+  "inviter": {
+    "username": "none",
+    "discriminator": "9999",
+    "id": "999999999999999999",
+    "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+  },
+  "target_type": 1,
+  "target_user": {
+    "username": "none",
+    "discriminator": "9999",
+    "id": "999999999999999999",
+    "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+  },
+  "target_application": {
+    "id": "999999999999999999",
+    "name": "none",
+    "icon": "68b329da9893e34099c7d8ad5cb9c940",
+    "description": "none",
+    "bot_public": true,
+    "bot_require_code_grant": true,
+    "verify_key": "none",
+    "team": {
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "id": "999999999999999999",
+      "members": [
+        {
+          "membership_state": 2,
+          "permissions": [
+            "*"
+          ],
+          "team_id": "999999999999999999",
+          "user": {
+            "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+            "discriminator": "9999",
+            "id": "999999999999999999",
+            "username": "none"
+          },
+          "role": "read_only"
+        }
+      ],
+      "name": "none",
+      "owner_user_id": "999999999999999999"
+    }
+  },
+  "approximate_presence_count": 1,
+  "approximate_member_count": 1,
+  "expires_at": null,
+  "guild_scheduled_event": {
+    "id": "999999999999999999",
+    "guild_id": "999999999999999999",
+    "channel_id": "999999999999999999",
+    "name": "none",
+    "scheduled_start_time": "1970-01-01T00:00:00.000000+00:00",
+    "scheduled_end_time": "1970-01-01T00:00:00.000000+00:00",
+    "privacy_level": 1,
+    "status": 1,
+    "entity_type": 1,
+    "entity_id": "999999999999999999",
+    "entity_metadata": { }
+  },
+  "uses": 1,
+  "max_uses": 1,
+  "max_age": 86400,
+  "temporary": true,
+  "created_at": "1970-01-01T00:00:00.000000+00:00"
+}

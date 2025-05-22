@@ -4,7 +4,6 @@
   "author": {
     "username": "none",
     "discriminator": "9999",
-    "global_name": "none",
     "id": "999999999999999999",
     "avatar": "68b329da9893e34099c7d8ad5cb9c940"
   },
@@ -17,7 +16,6 @@
     {
       "username": "none",
       "discriminator": "9999",
-      "global_name": "none",
       "id": "999999999999999999",
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     }
@@ -48,8 +46,17 @@
   "reactions": [
     {
       "count": 1,
+      "count_details": {
+        "burst": 1,
+        "normal": 2
+      },
       "me": true,
-      "emoji": {}
+      "me_burst": true,
+      "emoji": { },
+      "burst_colors": [
+        "#ffffff",
+        "#e30f8a"
+      ]
     }
   ],
   "nonce": "none",
@@ -69,7 +76,6 @@
     "author": {
       "username": "none",
       "discriminator": "9999",
-      "global_name": "none",
       "id": "999999999999999999",
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
@@ -85,6 +91,7 @@
     "pinned": true,
     "type": 1
   },
+  "message_snapshots": [],
   "interaction": {
     "id": "999999999999999999",
     "type": 1,
@@ -92,9 +99,22 @@
     "user": {
       "username": "none",
       "discriminator": "9999",
-      "global_name": "none",
       "id": "999999999999999999",
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+    }
+  },
+  "interaction_metadata": {
+    "id": "999999999999999999",
+    "type": 2,
+    "user": {
+      "username": "none",
+      "discriminator": "9999",
+      "id": "999999999999999999",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
+    },
+    "authorizing_integration_owners": {
+      "0": "999999999999999999",
+      "1": "999999999999999999"
     }
   },
   "thread": {
@@ -114,5 +134,35 @@
       "format_type": 1
     }
   ],
-  "position": 1
+  "position": 1,
+  "resolved": {},
+  "poll": {
+    "question": {
+      "text": "abcdef"
+    },
+    "answers": [
+      {
+        "answer_id": 1,
+        "poll_media": {
+          "text": "abcdef",
+          "emoji": {
+            "name": "xyz"
+          }
+        }
+      }
+    ],
+    "expiry": "1970-01-01T00:00:00.000000+00:00",
+    "allow_multiselect": false,
+    "layout_type": 1,
+    "results": {
+      "is_finalized": true,
+      "answer_counts": [
+        {
+          "id": 1,
+          "count": 2,
+          "me_voted": false
+        }
+      ]
+    }
+  }
 }

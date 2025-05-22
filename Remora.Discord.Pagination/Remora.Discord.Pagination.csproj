@@ -1,10 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>3.0.17</VersionPrefix>
+        <VersionPrefix>5.0.0</VersionPrefix>
         <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            BREAKING: Update target frameworks.
+            BREAKING: Update dependencies.
+            BREAKING: Catch-up on all discord features...
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -11,11 +11,11 @@
       "id": "999999999999999999",
       "username": "none",
       "discriminator": "9999",
-      "global_name": "none",
       "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
     "nick": "none",
     "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+    "banner": "68b329da9893e34099c7d8ad5cb9c940",
     "joined_at": "1970-01-01T00:00:00.000000+00:00",
     "premium_since": "1970-01-01T00:00:00.000000+00:00",
     "deaf": true,

@@ -158,4 +158,7 @@ public interface IPartialGuild
 
     /// <inheritdoc cref="IGuild.SafetyAlertsChannelID"/>
     Optional<Snowflake?> SafetyAlertsChannelID { get; }
+
+    /// <inheritdoc cref="IGuild.IncidentsData"/>
+    Optional<IIncidentsData?> IncidentsData { get; }
 }

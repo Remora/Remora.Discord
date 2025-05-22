@@ -16,6 +16,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity;
@@ -145,7 +146,7 @@ public partial class SelectMenuInteractions : InteractionGroup
         return (Result)await _feedback.SendContextualNeutralAsync
         (
             message,
-            _context.Interaction.User.TryGet(out var user) ? user.ID : default,
+            _context.TryGetUserID(out var userID) ? userID : default,
             options: new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
             ct: this.CancellationToken
         );
@@ -178,7 +179,7 @@ public partial class SelectMenuInteractions : InteractionGroup
         return (Result)await _feedback.SendContextualNeutralAsync
         (
             stringBuilder.ToString(),
-            _context.Interaction.User.TryGet(out var user) ? user.ID : default,
+            _context.TryGetUserID(out var userID) ? userID : default,
             options: new FeedbackMessageOptions
             (
                 MessageFlags: MessageFlags.Ephemeral,

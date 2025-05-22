@@ -38,6 +38,7 @@ using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Services;
 using Remora.Rest.Core;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
+using RangeAttribute = Remora.Commands.Attributes.RangeAttribute;
 
 namespace Remora.Discord.Commands.Extensions;
 
@@ -51,13 +52,13 @@ public static class CommandTreeExtensions
      * Various Discord-imposed limits.
      */
 
-    private const int MaxRootCommandsOrGroups = 100;
-    private const int MaxGroupCommands = 25;
-    private const int MaxChoiceValues = 25;
-    private const int MaxCommandParameters = 25;
-    private const int MaxCommandStringifiedLength = 4000;
-    private const int MaxCommandDescriptionLength = 100;
-    private const int MaxTreeDepth = 3; // Top level is a depth of 1
+    private const int _maxRootCommandsOrGroups = 100;
+    private const int _maxGroupCommands = 25;
+    private const int _maxChoiceValues = 25;
+    private const int _maxCommandParameters = 25;
+    private const int _maxCommandStringifiedLength = 8000;
+    private const int _maxCommandDescriptionLength = 100;
+    private const int _maxTreeDepth = 3; // Top level is a depth of 1
 
     /// <summary>
     /// Maps a set of Discord application commands to their respective command nodes.
@@ -188,18 +189,18 @@ public static class CommandTreeExtensions
                 throw new UnsupportedFeatureException("Overloads are not supported.", node);
             }
 
-            if (GetCommandStringifiedLength(option) > MaxCommandStringifiedLength)
+            if (GetCommandStringifiedLength(option) > _maxCommandStringifiedLength)
             {
                 throw new UnsupportedFeatureException
                 (
                     "One or more commands is too long (combined length of name, description, and value " +
-                    $"properties), max {MaxCommandStringifiedLength}).",
+                    $"properties), max {_maxCommandStringifiedLength}).",
                     node
                 );
             }
 
             // Translate from options to bulk data
-            var (commandType, directMessagePermission, defaultMemberPermissions, isNsfw) = GetNodeMetadata(node);
+            var (commandType, directMessagePermission, defaultMemberPermissions, isNsfw, allowedInstalls, allowedContexts) = GetNodeMetadata(node);
 
             var localizedNames = localizationProvider.GetStrings(option.Name);
             var localizedDescriptions = localizationProvider.GetStrings(option.Description);
@@ -217,17 +218,19 @@ public static class CommandTreeExtensions
                     localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
                     defaultMemberPermissions,
                     directMessagePermission,
-                    isNsfw
+                    isNsfw,
+                    allowedInstalls,
+                    allowedContexts
                 )
             );
         }
 
         // Perform validations
-        if (commands.Count > MaxRootCommandsOrGroups)
+        if (commands.Count > _maxRootCommandsOrGroups)
         {
             throw new UnsupportedFeatureException
             (
-                $"Too many root-level commands or groups (max {MaxRootCommandsOrGroups}, found {commands.Count}).",
+                $"Too many root-level commands or groups (max {_maxRootCommandsOrGroups}, found {commands.Count}).",
                 tree.Root
             );
         }
@@ -237,132 +240,212 @@ public static class CommandTreeExtensions
 
     private static TopLevelMetadata GetNodeMetadata(IChildNode node)
     {
-        Optional<ApplicationCommandType> commandType = default;
-        Optional<bool> directMessagePermission = default;
-        IDiscordPermissionSet? defaultMemberPermissions = default;
-        Optional<bool> isNsfw = default;
-
-        switch (node)
+        return node switch
         {
-            case GroupNode groupNode:
-            {
-                var memberPermissionAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
+            GroupNode groupNode => GetGroupNodeMetadata(node, groupNode),
+            CommandNode commandNode => GetCommandNodeMetadata(commandNode),
+            _ => new(default, default, default, default, default, default)
+        };
+    }
 
-                if (memberPermissionAttributes.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        "In a set of groups with the same name, only one may be marked with a default " +
-                        $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
-                        node
-                    );
-                }
+    private static TopLevelMetadata GetCommandNodeMetadata(CommandNode commandNode)
+    {
+        var commandType = commandNode.GetCommandType();
 
-                var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
+        IDiscordPermissionSet? defaultMemberPermissions = null;
+        var memberPermissionsAttribute =
+            commandNode.FindCustomAttributeOnLocalTree<DiscordDefaultMemberPermissionsAttribute>();
 
-                if (defaultMemberPermissionsAttribute is not null)
-                {
-                    defaultMemberPermissions = new DiscordPermissionSet
-                    (
-                        defaultMemberPermissionsAttribute.Permissions.ToArray()
-                    );
-                }
-
-                var directMessagePermissionAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
-
-                if (directMessagePermissionAttributes.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        "In a set of groups with the same name, only one may be marked with a default " +
-                        $"DM permissions attribute, but {directMessagePermissionAttributes.Length} were found.",
-                        node
-                    );
-                }
-
-                var directMessagePermissionAttribute = directMessagePermissionAttributes.SingleOrDefault();
-
-                if (directMessagePermissionAttribute is not null)
-                {
-                    directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
-                }
-
-                var isNsfwAttributes = groupNode.GroupTypes.Select
-                (
-                    t => t.GetCustomAttribute<DiscordNsfwAttribute>()
-                )
-                .Where(attribute => attribute is not null)
-                .ToArray();
-
-                if (isNsfwAttributes.Length > 1)
-                {
-                    throw new InvalidNodeException
-                    (
-                        $"In a set of groups with the same name, only one may be marked with a NSFW attribute, but "
-                        + $"{isNsfwAttributes.Length} were found.",
-                        node
-                    );
-                }
-
-                var nsfwAttribute = isNsfwAttributes.SingleOrDefault();
-
-                if (nsfwAttribute is not null)
-                {
-                    isNsfw = nsfwAttribute.IsNsfw;
-                }
-
-                break;
-            }
-            case CommandNode commandNode:
-            {
-                commandType = commandNode.GetCommandType();
-
-                // Top-level command outside of a group
-                var memberPermissionsAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
-
-                if (memberPermissionsAttribute is not null)
-                {
-                    defaultMemberPermissions = new DiscordPermissionSet
-                    (
-                        memberPermissionsAttribute.Permissions.ToArray()
-                    );
-                }
-
-                var directMessagePermissionAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
-
-                if (directMessagePermissionAttribute is not null)
-                {
-                    directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
-                }
-
-                var nsfwAttribute =
-                    commandNode.GroupType.GetCustomAttribute<DiscordNsfwAttribute>() ??
-                    commandNode.CommandMethod.GetCustomAttribute<DiscordNsfwAttribute>();
-
-                if (nsfwAttribute is not null)
-                {
-                    isNsfw = nsfwAttribute.IsNsfw;
-                }
-
-                break;
-            }
+        if (memberPermissionsAttribute is not null)
+        {
+            defaultMemberPermissions = new DiscordPermissionSet
+            (
+                memberPermissionsAttribute.Permissions.ToArray()
+            );
         }
 
-        return new(commandType, directMessagePermission, defaultMemberPermissions, isNsfw);
+        var directMessagePermission = default(Optional<bool>);
+        var directMessagePermissionAttribute =
+            commandNode.FindCustomAttributeOnLocalTree<DiscordDefaultDMPermissionAttribute>();
+
+        if (directMessagePermissionAttribute is not null)
+        {
+            directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+        }
+
+        var isNsfw = default(Optional<bool>);
+        var nsfwAttribute = commandNode.FindCustomAttributeOnLocalTree<DiscordNsfwAttribute>();
+
+        if (nsfwAttribute is not null)
+        {
+            isNsfw = nsfwAttribute.IsNsfw;
+        }
+
+        var allowedContextTypes = default(Optional<IReadOnlyList<InteractionContextType>>);
+        var contextsAttribute = commandNode.FindCustomAttributeOnLocalTree<AllowedContextsAttribute>();
+
+        if (contextsAttribute is not null)
+        {
+            allowedContextTypes = contextsAttribute.Contexts.AsOptional();
+        }
+
+        var allowedIntegrationTypes = default(Optional<IReadOnlyList<ApplicationIntegrationType>>);
+        var integrationAttribute = commandNode.FindCustomAttributeOnLocalTree<DiscordInstallContextAttribute>();
+
+        if (integrationAttribute is not null)
+        {
+            allowedIntegrationTypes = integrationAttribute.InstallTypes.AsOptional();
+        }
+
+        return new
+        (
+            commandType,
+            directMessagePermission,
+            defaultMemberPermissions,
+            isNsfw,
+            allowedIntegrationTypes,
+            allowedContextTypes
+        );
+    }
+
+    private static TopLevelMetadata GetGroupNodeMetadata(IChildNode node, GroupNode groupNode)
+    {
+        var memberPermissionAttributes = groupNode.GroupTypes.Select
+            (
+                t => t.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>()
+            )
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (memberPermissionAttributes.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                "In a set of groups with the same name, only one may be marked with a default " +
+                $"member permissions attribute, but {memberPermissionAttributes.Length} were found.",
+                node
+            );
+        }
+
+        IDiscordPermissionSet? defaultMemberPermissions = null;
+        var defaultMemberPermissionsAttribute = memberPermissionAttributes.SingleOrDefault();
+        if (defaultMemberPermissionsAttribute is not null)
+        {
+            defaultMemberPermissions = new DiscordPermissionSet
+            (
+                defaultMemberPermissionsAttribute.Permissions.ToArray()
+            );
+        }
+
+        var directMessagePermission = default(Optional<bool>);
+        var directMessagePermissionAttributes = groupNode.GroupTypes.Select
+            (
+                t => t.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>()
+            )
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (directMessagePermissionAttributes.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                "In a set of groups with the same name, only one may be marked with a default " +
+                $"DM permissions attribute, but {directMessagePermissionAttributes.Length} were found.",
+                node
+            );
+        }
+
+        var directMessagePermissionAttribute = directMessagePermissionAttributes.SingleOrDefault();
+        if (directMessagePermissionAttribute is not null)
+        {
+            directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
+        }
+
+        var isNsfw = default(Optional<bool>);
+        var isNsfwAttributes = groupNode.GroupTypes.Select
+            (
+                t => t.GetCustomAttribute<DiscordNsfwAttribute>()
+            )
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (isNsfwAttributes.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                $"In a set of groups with the same name, only one may be marked with a NSFW attribute, but "
+                + $"{isNsfwAttributes.Length} were found.",
+                node
+            );
+        }
+
+        var nsfwAttribute = isNsfwAttributes.SingleOrDefault();
+        if (nsfwAttribute is not null)
+        {
+            isNsfw = nsfwAttribute.IsNsfw;
+        }
+
+        var allowedContextTypes = default(Optional<IReadOnlyList<InteractionContextType>>);
+        var contextsAttributes = groupNode.GroupTypes.Select
+        (
+            t => t.GetCustomAttribute<AllowedContextsAttribute>()
+        );
+
+        var contexts = contextsAttributes
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (contexts.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                $"In a set of groups with the same name, only one may be marked with a context attribute, but "
+                + $"{contexts.Length} were found.",
+                node
+            );
+        }
+
+        var context = contexts.SingleOrDefault();
+        if (context is not null)
+        {
+            allowedContextTypes = context.Contexts.AsOptional();
+        }
+
+        var allowedIntegrationTypes = default(Optional<IReadOnlyList<ApplicationIntegrationType>>);
+        var installAttributes = groupNode.GroupTypes.Select
+        (
+            t => t.GetCustomAttribute<DiscordInstallContextAttribute>()
+        );
+
+        var installs = installAttributes
+            .Where(attribute => attribute is not null)
+            .ToArray();
+
+        if (installs.Length > 1)
+        {
+            throw new InvalidNodeException
+            (
+                $"In a set of groups with the same name, only one may be marked with an install attribute, "
+                + $"but {installs.Length} were found.",
+                node
+            );
+        }
+
+        var install = installs.SingleOrDefault();
+        if (install is not null)
+        {
+            allowedIntegrationTypes = install.InstallTypes.AsOptional();
+        }
+
+        return new
+        (
+            default,
+            directMessagePermission,
+            defaultMemberPermissions,
+            isNsfw,
+            allowedIntegrationTypes,
+            allowedContextTypes
+        );
     }
 
     private static IApplicationCommandOption? TranslateCommandNode
@@ -372,11 +455,11 @@ public static class CommandTreeExtensions
         ILocalizationProvider localizationProvider
     )
     {
-        if (treeDepth > MaxTreeDepth)
+        if (treeDepth > _maxTreeDepth)
         {
             throw new UnsupportedFeatureException
             (
-                $"A sub-command or group was nested too deeply (depth {treeDepth}, max {MaxTreeDepth}).",
+                $"A sub-command or group was nested too deeply (depth {treeDepth}, max {_maxTreeDepth}).",
                 node
             );
         }
@@ -468,11 +551,11 @@ public static class CommandTreeExtensions
             return null;
         }
 
-        if (subCommandCount > MaxGroupCommands)
+        if (subCommandCount > _maxGroupCommands)
         {
             throw new UnsupportedFeatureException
             (
-                $"Too many commands under a group ({subCommandCount}, max {MaxGroupCommands}).",
+                $"Too many commands under a group ({subCommandCount}, max {_maxGroupCommands}).",
                 group
             );
         }
@@ -507,7 +590,7 @@ public static class CommandTreeExtensions
 
         if (treeDepth > 1)
         {
-            if (command.CommandMethod.GetCustomAttribute<DiscordDefaultDMPermissionAttribute>() is not null)
+            if (command.Attributes.OfType<DiscordDefaultDMPermissionAttribute>().FirstOrDefault() is not null)
             {
                 throw new InvalidNodeException
                 (
@@ -516,7 +599,7 @@ public static class CommandTreeExtensions
                 );
             }
 
-            if (command.CommandMethod.GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>() is not null)
+            if (command.Attributes.OfType<DiscordDefaultMemberPermissionsAttribute>().FirstOrDefault() is not null)
             {
                 throw new InvalidNodeException
                 (
@@ -525,7 +608,7 @@ public static class CommandTreeExtensions
                 );
             }
 
-            if (command.CommandMethod.GetCustomAttribute<DiscordNsfwAttribute>() is not null)
+            if (command.Attributes.OfType<DiscordNsfwAttribute>().FirstOrDefault() is not null)
             {
                 throw new InvalidNodeException
                 (
@@ -547,9 +630,9 @@ public static class CommandTreeExtensions
                 );
             }
 
-            var parameters = command.CommandMethod.GetParameters();
+            var parameters = command.Shape.Parameters;
             var expectedParameter = commandType.AsParameterName();
-            if (parameters.Length != 1 || parameters[0].Name != expectedParameter)
+            if (parameters.Count != 1 || parameters[0].HintName != expectedParameter)
             {
                 throw new InvalidNodeException
                 (
@@ -622,21 +705,12 @@ public static class CommandTreeExtensions
                         parameter
                     );
                 }
-                case NamedCollectionParameterShape or PositionalCollectionParameterShape:
-                {
-                    throw new UnsupportedParameterFeatureException
-                    (
-                        "Collection parameters are not supported in slash commands.",
-                        command,
-                        parameter
-                    );
-                }
             }
 
             var actualParameterType = parameter.GetActualParameterType();
             var (enableAutocomplete, choices) = GetParameterChoices
             (
-                parameter.Parameter,
+                parameter,
                 actualParameterType,
                 localizationProvider
             );
@@ -649,32 +723,66 @@ public static class CommandTreeExtensions
 
             var (channelTypes, minValue, maxValue, minLength, maxLength) = GetParameterConstraints(command, parameter);
 
-            var parameterOption = new ApplicationCommandOption
-            (
-                parameter.GetDiscordType(),
-                name,
-                parameter.Description,
-                default,
-                !parameter.IsOmissible(),
-                choices,
-                ChannelTypes: channelTypes,
-                EnableAutocomplete: enableAutocomplete,
-                MinValue: minValue,
-                MaxValue: maxValue,
-                NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
-                DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
-                MinLength: minLength,
-                MaxLength: maxLength
-            );
+            if (parameter is not (NamedCollectionParameterShape or PositionalCollectionParameterShape))
+            {
+                var parameterOption = new ApplicationCommandOption
+                (
+                    parameter.GetDiscordType(),
+                    name,
+                    parameter.Description,
+                    default,
+                    !parameter.IsOmissible(),
+                    choices,
+                    ChannelTypes: channelTypes,
+                    EnableAutocomplete: enableAutocomplete,
+                    MinValue: minValue,
+                    MaxValue: maxValue,
+                    NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+                    DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
+                    MinLength: minLength,
+                    MaxLength: maxLength
+                );
 
-            parameterOptions.Add(parameterOption);
+                parameterOptions.Add(parameterOption);
+
+                continue;
+            }
+
+            // Collection parameters
+            var rangeAttribute = parameter.Attributes.OfType<RangeAttribute>().SingleOrDefault();
+            var (minElements, maxElements) = (rangeAttribute?.GetMin() ?? 1, rangeAttribute?.GetMax());
+
+            for (ulong i = 0; i < (maxElements ?? minElements); i++)
+            {
+                var parameterOption = new ApplicationCommandOption
+                (
+                    parameter.GetDiscordType(),
+                    $"{name}__{i + 1}",
+                    parameter.Description,
+                    default,
+                    i < minElements && !parameter.IsOmissible(),
+                    choices,
+                    ChannelTypes: channelTypes,
+                    EnableAutocomplete: enableAutocomplete,
+                    MinValue: minValue,
+                    MaxValue: maxValue,
+                    NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+                    DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default,
+                    MinLength: minLength,
+                    MaxLength: maxLength
+                );
+
+                parameterOptions.Add(parameterOption);
+            }
         }
 
-        if (parameterOptions.Count > MaxCommandParameters)
+        parameterOptions = parameterOptions.OrderByDescending(p => p.IsRequired.OrDefault(true)).ToList();
+
+        if (parameterOptions.Count > _maxCommandParameters)
         {
             throw new UnsupportedFeatureException
             (
-                $"Too many parameters in a command (had {parameterOptions.Count}, max {MaxCommandParameters}).",
+                $"Too many parameters in a command (had {parameterOptions.Count}, max {_maxCommandParameters}).",
                 command
             );
         }
@@ -685,7 +793,7 @@ public static class CommandTreeExtensions
     private static (Optional<bool> EnableAutocomplete, Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices)
     GetParameterChoices
     (
-        ParameterInfo parameter,
+        IParameterShape parameter,
         Type actualParameterType,
         ILocalizationProvider localizationProvider
     )
@@ -696,7 +804,7 @@ public static class CommandTreeExtensions
         if (actualParameterType.IsEnum)
         {
             // Add the choices directly
-            if (Enum.GetValues(actualParameterType).Length <= MaxChoiceValues)
+            if (Enum.GetValues(actualParameterType).Length <= _maxChoiceValues)
             {
                 choices = new(EnumExtensions.GetEnumChoices(actualParameterType, localizationProvider));
             }
@@ -708,7 +816,7 @@ public static class CommandTreeExtensions
         }
         else
         {
-            if (parameter.GetCustomAttribute<AutocompleteAttribute>() is not null)
+            if (parameter.Attributes.OfType<AutocompleteAttribute>().SingleOrDefault() is not null)
             {
                 enableAutocomplete = true;
             }
@@ -724,7 +832,7 @@ public static class CommandTreeExtensions
         ApplicationCommandOptionType parameterType
     )
     {
-        var channelTypesAttribute = parameter.Parameter.GetCustomAttribute<ChannelTypesAttribute>();
+        var channelTypesAttribute = parameter.Attributes.OfType<ChannelTypesAttribute>().SingleOrDefault();
         if (channelTypesAttribute is not null && parameterType is not ApplicationCommandOptionType.Channel)
         {
             throw new InvalidCommandParameterException
@@ -810,7 +918,7 @@ public static class CommandTreeExtensions
                 var type = command.GetCommandType();
                 if (type is ApplicationCommandType.ChatInput)
                 {
-                    if (description.Length <= MaxCommandDescriptionLength)
+                    if (description.Length <= _maxCommandDescriptionLength)
                     {
                         return;
                     }
@@ -818,7 +926,7 @@ public static class CommandTreeExtensions
                     throw new UnsupportedFeatureException
                     (
                         $"A command description was too long (length {description.Length}, "
-                        + $"max {MaxCommandDescriptionLength}).",
+                        + $"max {_maxCommandDescriptionLength}).",
                         node
                     );
                 }
@@ -837,7 +945,7 @@ public static class CommandTreeExtensions
             default:
             {
                 // Assume it uses the default limits
-                if (description.Length <= MaxCommandDescriptionLength)
+                if (description.Length <= _maxCommandDescriptionLength)
                 {
                     return;
                 }
@@ -845,7 +953,7 @@ public static class CommandTreeExtensions
                 throw new UnsupportedFeatureException
                 (
                     $"A group or parameter description was too long (length {description.Length}, "
-                    + $"max {MaxCommandDescriptionLength}).",
+                    + $"max {_maxCommandDescriptionLength}).",
                     node
                 );
             }
@@ -947,8 +1055,8 @@ public static class CommandTreeExtensions
         ApplicationCommandOptionType discordType
     )
     {
-        var minValue = parameter.Parameter.GetCustomAttribute<MinValueAttribute>();
-        var maxValue = parameter.Parameter.GetCustomAttribute<MaxValueAttribute>();
+        var minValue = parameter.Attributes.OfType<MinValueAttribute>().SingleOrDefault();
+        var maxValue = parameter.Attributes.OfType<MaxValueAttribute>().SingleOrDefault();
 
         if (discordType is not (Number or Integer) && (minValue is not null || maxValue is not null))
         {
@@ -980,8 +1088,8 @@ public static class CommandTreeExtensions
         ApplicationCommandOptionType discordType
     )
     {
-        var minLength = parameter.Parameter.GetCustomAttribute<MinLengthAttribute>();
-        var maxLength = parameter.Parameter.GetCustomAttribute<MaxLengthAttribute>();
+        var minLength = parameter.Attributes.OfType<MinLengthAttribute>().SingleOrDefault();
+        var maxLength = parameter.Attributes.OfType<MaxLengthAttribute>().SingleOrDefault();
 
         var isNonStringWithLengthConstraint = discordType is not ApplicationCommandOptionType.String
                                               && (minLength is not null || maxLength is not null);
@@ -1043,11 +1151,15 @@ public static class CommandTreeExtensions
     /// <param name="DirectMessagePermission">The DM permission requested for the node.</param>
     /// <param name="DefaultMemberPermission">The default member permission requested for the node.</param>
     /// <param name="IsNsfw">The age restriction requested for the node.</param>
+    /// <param name="AllowedIntegrationTypes">The integration types allowed for the node.</param>
+    /// <param name="AllowedContextTypes">The context types allowed for the node.</param>
     private sealed record TopLevelMetadata
     (
         Optional<ApplicationCommandType> CommandType,
         Optional<bool> DirectMessagePermission,
         IDiscordPermissionSet? DefaultMemberPermission,
-        Optional<bool> IsNsfw
+        Optional<bool> IsNsfw,
+        Optional<IReadOnlyList<ApplicationIntegrationType>> AllowedIntegrationTypes,
+        Optional<IReadOnlyList<InteractionContextType>> AllowedContextTypes
     );
 }

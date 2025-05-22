@@ -7,6 +7,12 @@ env:
   GITHUB_FEED: https://nuget.pkg.github.com/Remora
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+permissions:
+  pull-requests: write
+  contents: write
+  packages: write
+  security-events: write
+
 on:
   push:
     branches: [ main ]
@@ -18,47 +24,70 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-    - uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: |
-          6.0.x
-          7.0.x
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
-    - name: Build
-      run: |
-        dotnet restore
-        dotnet build -c Release --no-restore
+      - name: Build
+        run: |
+          dotnet restore
+          dotnet build -c Release --no-restore
 
-    - name: Test
-      run: dotnet test -c Release --no-restore --no-build --verbosity minimal
+      - name: Test
+        run: dotnet test -c Release --no-restore --no-build --verbosity minimal --collect:"XPlat Code Coverage" --results-directory ./coverage
 
-    - name: Package
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
+      - name: Inspect
+        uses: JetBrains/ReSharper-InspectCode@v0.8
+        with:
+          tool-version: 2024.3.0
+          solution: Remora.Discord.sln
+          build: false
+          no-build: true
 
-    - uses: actions/upload-artifact@v3
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      with:
-        name: nupkg
-        path: nuget/*
+      - name: Coverage
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage/**/coverage.cobertura.xml
+          badge: true
+          format: markdown
+          indicators: true
+          output: both
+          thresholds: '60 80'
 
-    - name: Build Docs
-      if: github.event_name == 'push'
-      run: |
-        dotnet tool restore
-        cd ./docfx
-        sed -i -E "s/%APP_VERSION%/${GITHUB_REF_NAME}/" docfx_project/docfx.json
-        dotnet docfx docfx_project/docfx.json
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'pull_request'
+        with:
+          name: coverage
+          path: code-coverage-results.md
 
-    - uses: actions/upload-artifact@v3
-      if: github.event_name == 'push'
-      with:
-        name: docfx-site
-        path: docfx/docfx_project/_site/
+      - name: Package
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: dotnet pack -c Release --no-restore --no-build --version-suffix "github$GITHUB_RUN_ID"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nupkg
+          path: nuget/*
+
+      - name: Build Docs
+        if: github.event_name == 'push'
+        run: |
+          dotnet tool restore
+          cd ./docfx
+          sed -i -E "s/%APP_VERSION%/${GITHUB_REF_NAME}/" docfx_project/docfx.json
+          dotnet docfx docfx_project/docfx.json
+
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push'
+        with:
+          name: docfx-site
+          path: docfx/docfx_project/_site/
 
   publish_docs:
     name: Publish Documentation
@@ -71,12 +100,12 @@ jobs:
 
     steps:
       - name: Checkout triggering branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: base
 
       - name: Checkout gh-pages
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: site
@@ -85,7 +114,7 @@ jobs:
         run: bash base/docfx/scripts/prepare.sh
 
       - name: Download documentation artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docfx-site
           path: site/${{ github.ref_name }}
@@ -107,15 +136,17 @@ jobs:
 
     steps:
       - name: Download package artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: nupkg
           path: nuget
 
       # To ensure that the current version being pushed does not get pruned we prune first.
       - name: Prune packages older than 4 versions (new version is the 5th)
-        uses: smartsquaregmbh/delete-old-packages@v0.6.0
+        uses: smartsquaregmbh/delete-old-packages@v0.8.1
         with:
+          organization: Remora
+          type: nuget
           keep: 4
           names: |
             Remora.Discord

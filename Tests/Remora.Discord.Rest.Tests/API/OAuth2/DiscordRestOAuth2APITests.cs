@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -64,7 +65,7 @@ public class DiscordRestOAuth2APITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/applications/@me")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
+                    .Respond<IApplication>()
             );
 
             var result = await api.GetCurrentBotApplicationInformationAsync();
@@ -98,7 +99,7 @@ public class DiscordRestOAuth2APITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/@me")
                     .WithNoContent()
-                    .Respond("Authorization/json", SampleRepository.Samples[typeof(IAuthorizationInformation)])
+                    .Respond("Authorization/json", SampleRepository.Get<IAuthorizationInformation>())
             );
 
             var result = await api.GetCurrentAuthorizationInformationAsync();

@@ -28,6 +28,8 @@ using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Objects.Soundboard;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.API.Gateway.Bidirectional;
@@ -36,6 +38,8 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
+using Remora.Discord.API.Objects.Soundboard;
+using Remora.Discord.API.Rest;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
 using Remora.Rest.Extensions;
@@ -112,7 +116,11 @@ public static class ServiceCollectionExtensions
                         .AddTeamObjectConverters()
                         .AddStageInstanceObjectConverters()
                         .AddStickerObjectConverters()
-                        .AddApplicationRoleConnectionObjectConverters();
+                        .AddApplicationRoleConnectionObjectConverters()
+                        .AddMonetizationConverters()
+                        .AddPollObjectConverters()
+                        .AddSoundboardObjectConverters()
+                        .AddWebhookEventObjectConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
                     options.AddConverter<PropertyErrorDetailsConverter>();
@@ -156,6 +164,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IRequestGuildMembers, RequestGuildMembers>()
             .WithPropertyName(r => r.UserIDs, "user_ids");
+
+        options.AddDataObjectConverter<IRequestSoundboardSounds, RequestSoundboardSounds>()
+            .WithPropertyName(r => r.GuildIDs, "guild_ids");
 
         options.AddDataObjectConverter<IResume, Resume>()
             .WithPropertyName(r => r.SequenceNumber, "seq");
@@ -414,6 +425,40 @@ public static class ServiceCollectionExtensions
         // Application commands
         options.AddDataObjectConverter<IApplicationCommandPermissionsUpdate, ApplicationCommandPermissionsUpdate>();
 
+        // Monetization
+        options.AddDataObjectConverter<IEntitlementCreate, EntitlementCreate>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        options.AddDataObjectConverter<IEntitlementUpdate, EntitlementUpdate>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        options.AddDataObjectConverter<IEntitlementDelete, EntitlementDelete>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        // Polls
+        options.AddDataObjectConverter<IMessagePollVoteAdd, MessagePollVoteAdd>();
+        options.AddDataObjectConverter<IMessagePollVoteRemove, MessagePollVoteRemove>();
+
+        // Soundboards
+        options.AddDataObjectConverter<IGuildSoundboardSoundCreate, GuildSoundboardSoundCreate>()
+            .WithPropertyName(e => e.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundUpdate, GuildSoundboardSoundUpdate>()
+            .WithPropertyName(e => e.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundDelete, GuildSoundboardSoundDelete>();
+
+        options.AddDataObjectConverter<IGuildSoundboardSoundsUpdate, GuildSoundboardSoundsUpdate>();
+
+        options.AddDataObjectConverter<ISoundboardSounds, SoundboardSounds>()
+            .WithPropertyName(s => s.Sounds, "soundboard_sounds");
+
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -474,6 +519,7 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IActivity, Activity>()
             .WithPropertyConverter(a => a.CreatedAt, new UnixMillisecondsDateTimeOffsetConverter());
+
         options.AddDataObjectConverter<IActivityAssets, ActivityAssets>();
         options.AddDataObjectConverter<IActivityButton, ActivityButton>();
         options.AddDataObjectConverter<IActivityEmoji, ActivityEmoji>();
@@ -569,6 +615,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IPartialForumTag, PartialForumTag>()
             .WithPropertyName(t => t.IsModerated, "moderated");
+
+        // REST-related types not strictly defined by Discord
+        options.AddDataObjectConverter<IChannelPositionModification, ChannelPositionModification>();
 
         return options;
     }
@@ -682,6 +731,14 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(o => o.ChannelIDs, "channel_ids")
             .WithPropertyName(o => o.RoleIDs, "role_ids");
 
+        options.AddDataObjectConverter<IBulkBanResponse, BulkBanResponse>();
+
+        options.AddDataObjectConverter<IIncidentsData, IncidentsData>()
+            .WithPropertyName(i => i.DMsDisabledUntil, "dms_disabled_until")
+            .WithPropertyConverter(i => i.DMsDisabledUntil, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyName(i => i.DMSpamDetectedAt, "dm_spam_detected_at")
+            .WithPropertyConverter(i => i.DMSpamDetectedAt, new ISO8601DateTimeOffsetConverter());
+
         return options;
     }
 
@@ -750,6 +807,9 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IInvite, Invite>();
         options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
+        options.AddDataObjectConverter<IInviteWithMetadata, InviteWithMetadata>()
+            .WithPropertyName(i => i.IsTemporary, "temporary")
+            .WithPropertyConverter(i => i.MaxAge, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         return options;
     }
@@ -802,6 +862,8 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
         options.AddDataObjectConverter<IMessageReference, MessageReference>();
+        options.AddDataObjectConverter<IMessageSnapshot, MessageSnapshot>();
+        options.AddDataObjectConverter<IMessageCall, MessageCall>();
 
         return options;
     }
@@ -869,7 +931,12 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddReactionObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IReaction, Reaction>()
-            .WithPropertyName(r => r.HasCurrentUserReacted, "me");
+            .WithPropertyName(r => r.HasCurrentUserReacted, "me")
+            .WithPropertyName(r => r.HasCurrentUserBurstReacted, "me_burst")
+            .WithPropertyName(r => r.BurstColours, "burst_colors")
+            .WithPropertyConverter(r => r.BurstColours, new HexCodeColourConverter());
+
+        options.AddDataObjectConverter<IReactionCountDetails, ReactionCountDetails>();
 
         return options;
     }
@@ -969,6 +1036,7 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IRestError, RestError>()
             .WithPropertyName(e => e.IsGlobal, "global");
+
         options.AddDataObjectConverter<IErrorDetails, ErrorDetails>();
 
         return options;
@@ -1013,7 +1081,12 @@ public static class ServiceCollectionExtensions
             >()
             .WithPropertyName(o => o.IsFocused, "focused");
 
-        options.AddDataObjectConverter<IInteraction, Interaction>();
+        options.AddDataObjectConverter<IInteraction, Interaction>()
+               .WithPropertyConverter
+               (
+                   i => i.AuthorizingIntegrationOwners,
+                   new EnumIntKeyDictionaryConverterFactory()
+               );
         options.AddDataObjectConverter
             <
                 IInteractionMessageCallbackData,
@@ -1026,15 +1099,18 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>()
-            .WithPropertyName(d => d.IsNsfw, "nsfw");
+               .WithPropertyName(d => d.IsNsfw, "nsfw");
+
         options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
             .WithPropertyName(o => o.IsDefault, "default")
             .WithPropertyName(o => o.IsRequired, "required")
             .WithPropertyName(o => o.EnableAutocomplete, "autocomplete");
+
         options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
         options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
+
         options.AddDataObjectConverter<IBulkApplicationCommandData, BulkApplicationCommandData>()
-            .WithPropertyName(d => d.IsNsfw, "nsfw");
+               .WithPropertyName(d => d.IsNsfw, "nsfw");
 
         options.AddDataObjectConverter
             <
@@ -1078,6 +1154,7 @@ public static class ServiceCollectionExtensions
             IPartialGuildApplicationCommandPermissions,
             PartialGuildApplicationCommandPermissions
         >();
+
         options.AddDataObjectConverter<IApplicationCommandPermissions, ApplicationCommandPermissions>()
             .WithPropertyName(p => p.HasPermission, "permission");
 
@@ -1086,12 +1163,14 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>()
             .IncludeWhenSerializing(c => c.Type);
+
         options.AddDataObjectConverter<IPartialActionRowComponent, PartialActionRowComponent>()
             .IncludeWhenSerializing(c => c.Type);
 
         options.AddDataObjectConverter<IButtonComponent, ButtonComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialButtonComponent, PartialButtonComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
@@ -1099,30 +1178,39 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IStringSelectComponent, StringSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IUserSelectComponent, UserSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IRoleSelectComponent, RoleSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IMentionableSelectComponent, MentionableSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IChannelSelectComponent, ChannelSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialStringSelectComponent, PartialStringSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialUserSelectComponent, PartialUserSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialRoleSelectComponent, PartialRoleSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialMentionableSelectComponent, PartialMentionableSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
         options.AddDataObjectConverter<IPartialChannelSelectComponent, PartialChannelSelectComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
@@ -1130,14 +1218,97 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<ITextInputComponent, TextInputComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(i => i.IsRequired, "required");
+
         options.AddDataObjectConverter<IPartialTextInputComponent, PartialTextInputComponent>()
             .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(i => i.IsRequired, "required");
 
         options.AddDataObjectConverter<ISelectOption, SelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
+
         options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
+
+        options.AddDataObjectConverter<IPartialUnfurledMediaItem, PartialUnfurledMediaItem>()
+               .ExcludeWhenSerializing(o => o.ProxyUrl)
+               .ExcludeWhenSerializing(o => o.Width)
+               .ExcludeWhenSerializing(o => o.Height)
+               .ExcludeWhenSerializing(o => o.ContentType);
+
+        options.AddDataObjectConverter<IPartialContainerComponent, PartialContainerComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .WithPropertyName(o => o.AccentColour, "accent_color");
+
+        options.AddDataObjectConverter<IPartialFileComponent, FileComponent>()
+               .IncludeWhenSerializing(c => c.Type).WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IPartialMediaGalleryComponent, PartialMediaGalleryComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IPartialMediaGalleryItem, PartialMediaGalleryItem>()
+            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IPartialSectionComponent, PartialSectionComponent>()
+               .IncludeWhenSerializing(o => o.Type);
+
+        options.AddDataObjectConverter<IPartialTextDisplayComponent, PartialTextDisplayComponent>()
+               .IncludeWhenSerializing(o => o.Type);
+
+        options.AddDataObjectConverter<IPartialThumbnailComponent, PartialThumbnailComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<ISelectDefaultValue, SelectDefaultValue>();
+
+        options.AddConverter<MessageInteractionMetadataConverter>();
+
+        options.AddDataObjectConverter<IApplicationCommandInteractionMetadata, ApplicationCommandInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IMessageComponentInteractionMetadata, MessageComponentInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IModalSubmitInteractionMetadata, ModalSubmitInteractionMetadata>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyConverter(m => m.AuthorizingIntegrationOwners, new EnumIntKeyDictionaryConverterFactory());
+
+        options.AddDataObjectConverter<IUnfurledMediaItem, UnfurledMediaItem>()
+               .ExcludeWhenSerializing(o => o.ProxyUrl)
+               .ExcludeWhenSerializing(o => o.Width)
+               .ExcludeWhenSerializing(o => o.Height)
+               .ExcludeWhenSerializing(o => o.ContentType);
+
+        options.AddDataObjectConverter<IThumbnailComponent, ThumbnailComponent>()
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IMediaGalleryItem, MediaGalleryItem>()
+               .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<ITextDisplayComponent, TextDisplayComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<IMediaGalleryComponent, MediaGalleryComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<ISectionComponent, SectionComponent>()
+               .IncludeWhenSerializing(c => c.Type);
+
+        options.AddDataObjectConverter<ISeparatorComponent, SeparatorComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsDivider, "divider");
+
+        options.AddDataObjectConverter<IFileComponent, FileComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+                .WithPropertyName(o => o.IsSpoiler, "spoiler");
+
+        options.AddDataObjectConverter<IContainerComponent, ContainerComponent>()
+               .IncludeWhenSerializing(c => c.Type)
+               .WithPropertyName(o => o.IsSpoiler, "spoiler")
+               .WithPropertyName(o => o.AccentColour, "accent_color");
 
         return options;
     }
@@ -1150,9 +1321,10 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddOAuth2ObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IApplication, Application>()
-            .WithPropertyName(a => a.IsBotPublic, "bot_public")
-            .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
-            .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+               .WithPropertyName(a => a.IsBotPublic, "bot_public")
+               .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
+               .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id")
+               .WithPropertyConverter(a => a.IntegrationTypesConfig, new EnumIntKeyDictionaryConverterFactory());
 
         options.AddDataObjectConverter<IPartialApplication, PartialApplication>()
             .WithPropertyName(a => a.IsBotPublic, "bot_public")
@@ -1162,6 +1334,13 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IApplicationInstallParameters, ApplicationInstallParameters>();
 
         options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>();
+
+        options.AddDataObjectConverter<IApplicationIntegrationTypeConfig, ApplicationIntegrationTypeConfig>()
+               .WithPropertyName(a => a.OAuth2InstallParams, "oauth2_install_params");
+
+        options.AddDataObjectConverter<IApplicationOAuth2InstallParams, ApplicationOAuth2InstallParams>();
+
+        options.Converters.Insert(0, new EnumIntKeyDictionaryConverterFactory.EnumKeyDictionaryConverterInner<ApplicationIntegrationType, IApplicationIntegrationTypeConfig>(options));
 
         return options;
     }
@@ -1174,7 +1353,38 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddTeamObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<ITeam, Team>();
-        options.AddDataObjectConverter<ITeamMember, TeamMember>();
+        options.AddDataObjectConverter<ITeamMember, TeamMember>()
+            .WithPropertyConverter(m => m.Role, new StringEnumConverter<TeamMemberRole>(new SnakeCaseNamingPolicy()));
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle monetization objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddMonetizationConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IEntitlement, Entitlement>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        options.AddDataObjectConverter<IPartialEntitlement, PartialEntitlement>()
+            .WithPropertyName(e => e.SKUID, "sku_id")
+            .WithPropertyName(e => e.IsDeleted, "deleted")
+            .WithPropertyName(e => e.IsConsumed, "consumed");
+
+        options.AddDataObjectConverter<ISKU, SKU>();
+
+        options.AddDataObjectConverter<ISubscription, Subscription>()
+            .WithPropertyName(s => s.SKUIDs, "sku_ids")
+            .WithPropertyName(s => s.RenewalSKUIDs, "renewal_sku_ids")
+            .WithPropertyName(s => s.EntitlementIDs, "entitlement_ids")
+            .WithPropertyConverter(s => s.CurrentPeriodStart, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyConverter(s => s.CurrentPeriodEnd, new ISO8601DateTimeOffsetConverter())
+            .WithPropertyConverter(s => s.CanceledAt, new ISO8601DateTimeOffsetConverter());
 
         return options;
     }
@@ -1224,6 +1434,64 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IApplicationRoleConnectionMetadata, ApplicationRoleConnectionMetadata>();
         options.AddDataObjectConverter<IApplicationRoleConnection, ApplicationRoleConnection>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle poll objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddPollObjectConverters
+    (
+        this JsonSerializerOptions options
+    )
+    {
+        options.AddDataObjectConverter<IPoll, Poll>()
+            .WithPropertyName(p => p.IsMultiselectAllowed, "allow_multiselect");
+
+        options.AddDataObjectConverter<IPollAnswer, PollAnswer>();
+
+        options.AddDataObjectConverter<IPollAnswerCount, PollAnswerCount>()
+            .WithPropertyName(p => p.HasCurrentUserVoted, "me_voted");
+
+        options.AddDataObjectConverter<IPollAnswerVoters, PollAnswerVoters>();
+
+        options.AddDataObjectConverter<IPollCreateRequest, PollCreateRequest>()
+            .WithPropertyName(p => p.IsMultiselectAllowed, "allow_multiselect");
+
+        options.AddDataObjectConverter<IPollMedia, PollMedia>();
+        options.AddDataObjectConverter<IPollResults, PollResults>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle soundboard objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddSoundboardObjectConverters
+    (
+        this JsonSerializerOptions options
+    )
+    {
+        options.AddDataObjectConverter<ISoundboardSound, SoundboardSound>()
+            .WithPropertyName(s => s.IsAvailable, "available");
+
+        options.AddDataObjectConverter<IListGuildSoundboardSoundsResponse, ListGuildSoundboardSoundsResponse>();
+
+        return options;
+    }
+
+    private static JsonSerializerOptions AddWebhookEventObjectConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IWebhookEvent, WebhookEvent>()
+               .WithPropertyConverter(we => we.Type, new StringEnumConverter<WebhookEventType>(new SnakeCaseNamingPolicy()));
+
+        options.AddDataObjectConverter<IApplicationAuthorizedWebhookEvent, ApplicationAuthorizedWebhookEvent>();
+        options.AddDataObjectConverter<IWebhookEventPayload, WebhookEventPayload>();
 
         return options;
     }

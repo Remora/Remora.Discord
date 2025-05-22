@@ -29,6 +29,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Core;
@@ -70,7 +71,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules")
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<IAutoModerationRule>>()
             );
 
             var result = await api.ListAutoModerationRulesAsync(guildID);
@@ -106,7 +107,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
+                    .Respond<IAutoModerationRule>()
             );
 
             var result = await api.GetAutoModerationRuleAsync(guildID, ruleID);
@@ -162,19 +163,23 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("event_type", p => p.Is((int)eventType))
                                 .WithProperty("trigger_type", p => p.Is((int)triggerType))
-                                .WithProperty("trigger_metadata", p => p.IsObject
+                                .WithProperty
                                 (
-                                    oo => oo
-                                        .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
-                                        .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
-                                ))
+                                    "trigger_metadata",
+                                    p => p.IsObject
+                                    (
+                                        oo => oo
+                                            .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
+                                            .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
+                                    )
+                                )
                                 .WithProperty("actions", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("enabled", p => p.Is(enabled))
                                 .WithProperty("exempt_roles", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("exempt_channels", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
+                    .Respond<IAutoModerationRule>()
             );
 
             var result = await api.CreateAutoModerationRuleAsync
@@ -242,19 +247,23 @@ public class DiscordRestAutoModerationAPITests
                                 .WithProperty("name", p => p.Is(name))
                                 .WithProperty("event_type", p => p.Is((int)eventType))
                                 .WithProperty("trigger_type", p => p.Is((int)triggerType))
-                                .WithProperty("trigger_metadata", p => p.IsObject
+                                .WithProperty
                                 (
-                                    oo => oo
-                                        .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
-                                        .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
-                                ))
+                                    "trigger_metadata",
+                                    p => p.IsObject
+                                    (
+                                        oo => oo
+                                            .WithProperty("keyword_filter", pp => pp.IsArray(a => a.WithCount(0)))
+                                            .WithProperty("presets", pp => pp.IsArray(a => a.WithCount(0)))
+                                    )
+                                )
                                 .WithProperty("actions", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("enabled", p => p.Is(enabled))
                                 .WithProperty("exempt_roles", p => p.IsArray(a => a.WithCount(0)))
                                 .WithProperty("exempt_channels", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
+                    .Respond<IAutoModerationRule>()
             );
 
             var result = await api.ModifyAutoModerationRuleAsync
@@ -303,7 +312,7 @@ public class DiscordRestAutoModerationAPITests
             (
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IAutoModerationRule)])
+                    .Respond<IAutoModerationRule>()
             );
 
             var result = await api.DeleteAutoModerationRuleAsync

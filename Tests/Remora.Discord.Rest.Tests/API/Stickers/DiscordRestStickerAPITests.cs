@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -28,6 +29,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -69,7 +71,7 @@ public class DiscordRestStickerAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}stickers/{stickerId}")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(ISticker)])
+                    .Respond<ISticker>()
             );
 
             var result = await api.GetStickerAsync(stickerId);
@@ -103,7 +105,7 @@ public class DiscordRestStickerAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}sticker-packs")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(INitroStickerPacks)])
+                    .Respond<INitroStickerPacks>()
             );
 
             var result = await api.ListNitroStickerPacksAsync();
@@ -139,7 +141,7 @@ public class DiscordRestStickerAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/stickers")
                     .WithNoContent()
-                    .Respond("application/json", "[ ]")
+                    .Respond<IReadOnlyList<ISticker>>()
             );
 
             var result = await api.ListGuildStickersAsync(guildId);
@@ -176,7 +178,7 @@ public class DiscordRestStickerAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/stickers/{stickerId}")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(ISticker)])
+                    .Respond<ISticker>()
             );
 
             var result = await api.GetGuildStickerAsync(guildId, stickerId);
@@ -223,7 +225,7 @@ public class DiscordRestStickerAPITests
                     .WithMultipartFormData("description", description)
                     .WithMultipartFormData("tags", tags)
                     .WithMultipartFormData("file", file.Name, fileStream)
-                    .Respond("application/json", SampleRepository.Samples[typeof(ISticker)])
+                    .Respond<ISticker>()
             );
 
             var result = await api.CreateGuildStickerAsync(guildId, name, description, tags, file, reason);
@@ -274,7 +276,7 @@ public class DiscordRestStickerAPITests
                                 .WithProperty("tags", p => p.Is(tags))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(ISticker)])
+                    .Respond<ISticker>()
             );
 
             var result = await api.ModifyGuildStickerAsync(guildId, stickerId, name, description, tags, reason);

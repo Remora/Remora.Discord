@@ -120,6 +120,8 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
         Optional<MessageFlags> flags = default,
         Optional<string> threadName = default,
+        Optional<IReadOnlyList<Snowflake>> appliedTags = default,
+        Optional<IPollCreateRequest> poll = default,
         CancellationToken ct = default
     )
     {
@@ -139,6 +141,8 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
             attachments,
             flags,
             threadName,
+            appliedTags,
+            poll,
             ct
         );
 
@@ -247,7 +251,8 @@ public partial class CachingDiscordRestWebhookAPI : IDiscordRestWebhookAPI, IRes
     /// <inheritdoc />
     public async Task<Result<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
     (
-        Snowflake guildID, CancellationToken ct = default
+        Snowflake guildID,
+        CancellationToken ct = default
     )
     {
         var key = new KeyHelpers.GuildWebhooksCacheKey(guildID);

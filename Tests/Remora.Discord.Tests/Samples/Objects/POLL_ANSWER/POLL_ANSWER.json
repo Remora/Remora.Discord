@@ -1,0 +1,9 @@
+{
+  "answer_id": 1,
+  "poll_media": {
+    "text": "abcdef",
+    "emoji": {
+      "name": "xyz"
+    }
+  }
+}

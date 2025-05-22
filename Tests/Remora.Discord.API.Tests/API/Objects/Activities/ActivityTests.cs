@@ -46,7 +46,7 @@ public class ActivityTests : ObjectTestBase<IActivity>
     {
         AllowMissing = new[]
         {
-            "id",        // undocumented field
+            "id", // undocumented field
             "session_id" // undocumented field
         }
     };

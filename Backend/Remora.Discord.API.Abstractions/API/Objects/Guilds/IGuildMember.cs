@@ -49,6 +49,11 @@ public interface IGuildMember : IPartialGuildMember
     new Optional<IImageHash?> Avatar { get; }
 
     /// <summary>
+    /// Gets the member's guild banner hash.
+    /// </summary>
+    new Optional<IImageHash?> Banner { get; }
+
+    /// <summary>
     /// Gets the roles the user has.
     /// </summary>
     new IReadOnlyList<Snowflake> Roles { get; }
@@ -101,6 +106,9 @@ public interface IGuildMember : IPartialGuildMember
 
     /// <inheritdoc />
     Optional<IImageHash?> IPartialGuildMember.Avatar => this.Avatar;
+
+    /// <inheritdoc />
+    Optional<IImageHash?> IPartialGuildMember.Banner => this.Banner;
 
     /// <inheritdoc/>
     Optional<IReadOnlyList<Snowflake>> IPartialGuildMember.Roles => new(this.Roles);

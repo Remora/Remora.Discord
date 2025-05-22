@@ -123,6 +123,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
         Optional<Snowflake> before = default,
         Optional<Snowflake> after = default,
         Optional<int> limit = default,
+        Optional<bool> withCounts = default,
         CancellationToken ct = default
     )
     {
@@ -153,6 +154,11 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
                 if (limit.TryGet(out var realLimit))
                 {
                     b.AddQueryParameter("limit", realLimit.ToString());
+                }
+
+                if (withCounts.TryGet(out var realWithCounts))
+                {
+                    b.AddQueryParameter("with_counts", realWithCounts.ToString());
                 }
 
                 b.WithRateLimitContext(this.RateLimitCache);
@@ -224,7 +230,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    public virtual Task<Result<IReadOnlyList<IConnection>>> GetCurrentUserConnectionsAsync
     (
         CancellationToken ct = default
     )
@@ -238,7 +244,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IApplicationRoleConnection>> GetUserApplicationRoleConnectionAsync
+    public virtual Task<Result<IApplicationRoleConnection>> GetCurrentUserApplicationRoleConnectionAsync
     (
         Snowflake applicationID,
         CancellationToken ct = default
@@ -253,7 +259,7 @@ public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     }
 
     /// <inheritdoc />
-    public virtual async Task<Result<IApplicationRoleConnection>> UpdateUserApplicationRoleConnectionAsync
+    public virtual async Task<Result<IApplicationRoleConnection>> UpdateCurrentUserApplicationRoleConnectionAsync
     (
         Snowflake applicationID,
         Optional<string> platformName = default,

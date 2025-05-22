@@ -79,4 +79,7 @@ public interface IPartialUser
 
     /// <inheritdoc cref="IUser.PublicFlags" />
     Optional<UserFlags> PublicFlags { get; }
+
+    /// <inheritdoc cref="IUser.AvatarDecoration" />
+    Optional<IImageHash?> AvatarDecoration { get; }
 }

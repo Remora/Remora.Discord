@@ -8,6 +8,7 @@
   ],
   "bot_public": true,
   "bot_require_code_grant": true,
+  "bot": {},
   "terms_of_service_url": "https://www.example.org",
   "privacy_policy_url": "https://www.example.org",
   "owner": {},
@@ -27,19 +28,30 @@
           "discriminator": "9999",
           "id": "999999999999999999",
           "username": "none"
-        }
+        },
+        "role": "read_only"
       }
     ],
     "name": "none",
     "owner_user_id": "999999999999999999"
   },
   "guild_id": "999999999999999999",
-  "guild": { },
+  "guild": {},
   "primary_sku_id": "999999999999999999",
-  "slug": "test",
+  "slug": "none",
   "cover_image": "68b329da9893e34099c7d8ad5cb9c940",
   "flags": 0,
   "approximate_guild_count": 0,
+  "redirect_uris": [
+    "https://www.example.org"
+  ],
+  "interactions_endpoint_url": "https://www.example.org",
+  "role_connections_verification_url": "https://www.example.org",
+  "event_webhooks_url": "https://www.example.org",
+  "event_webhooks_status": 1,
+  "event_webhooks_types": [
+    "none"
+  ],
   "tags": [
     "none"
   ],
@@ -50,5 +62,8 @@
     "permissions": "0"
   },
   "custom_install_url": "https://www.example.org",
-  "role_connections_verification_url": "https://www.example.org"
+  "integration_types_config": {
+    "0": { "oauth2_install_params": { "scopes": [ "bot", "application.commands" ], "permissions": "0"} },
+    "1": { "oauth2_install_params": { "scopes": [ "application.commands" ], "permissions": "0" } }
+  }
 }

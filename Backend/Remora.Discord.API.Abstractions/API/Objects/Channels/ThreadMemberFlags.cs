@@ -29,6 +29,4 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Enumerates various thread member flags.
 /// </summary>
 [PublicAPI, Flags]
-public enum ThreadMemberFlags
-{
-}
+public enum ThreadMemberFlags;

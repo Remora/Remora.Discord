@@ -271,6 +271,21 @@ public enum AuditLogEvent
     ApplicationCommandPermissionUpdate = 121,
 
     /// <summary>
+    /// A soundboard sound was created.
+    /// </summary>
+    SoundboardSoundCreate = 130,
+
+    /// <summary>
+    /// A soundboard sound was updated.
+    /// </summary>
+    SoundboardSoundUpdate = 131,
+
+    /// <summary>
+    /// A soundboard sound was deleted.
+    /// </summary>
+    SoundboardSoundDelete = 132,
+
+    /// <summary>
     /// An Auto Moderation rule was created.
     /// </summary>
     AutoModerationRuleCreate = 140,

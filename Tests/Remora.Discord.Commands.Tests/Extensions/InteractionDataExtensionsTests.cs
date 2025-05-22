@@ -267,7 +267,7 @@ public class InteractionDataExtensionsTests
             command.UnpackInteraction(out var commandPath, out var parameters);
 
             Assert.Equal(new[] { "user" }, commandPath);
-            Assert.Equal(1, parameters.Count);
+            Assert.Single(parameters);
             Assert.True(parameters.ContainsKey("user"));
             Assert.Equal("1", parameters["user"][0]);
         }
@@ -289,7 +289,7 @@ public class InteractionDataExtensionsTests
             command.UnpackInteraction(out var commandPath, out var parameters);
 
             Assert.Equal(new[] { "message" }, commandPath);
-            Assert.Equal(1, parameters.Count);
+            Assert.Single(parameters);
             Assert.True(parameters.ContainsKey("message"));
             Assert.Equal("1", parameters["message"][0]);
         }

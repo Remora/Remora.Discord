@@ -50,13 +50,17 @@ public static class ServiceCollectionExtensions
         string? optionsName = "Discord"
     )
     {
-        serviceCollection.Configure<JsonSerializerOptions>(optionsName, jsonOptions =>
-        {
-            jsonOptions.AddConverter<UnstableVoicePayloadConverter>();
+        serviceCollection.Configure<JsonSerializerOptions>
+        (
+            optionsName,
+            jsonOptions =>
+            {
+                jsonOptions.AddConverter<UnstableVoicePayloadConverter>();
 
-            jsonOptions.AddDataObjectConverter<IVoiceClientDisconnect, VoiceClientDisconnect>();
-            jsonOptions.AddDataObjectConverter<IVoiceSpeakingEvent, VoiceSpeakingEvent>();
-        });
+                jsonOptions.AddDataObjectConverter<IVoiceClientDisconnect, VoiceClientDisconnect>();
+                jsonOptions.AddDataObjectConverter<IVoiceSpeakingEvent, VoiceSpeakingEvent>();
+            }
+        );
 
         return serviceCollection;
     }

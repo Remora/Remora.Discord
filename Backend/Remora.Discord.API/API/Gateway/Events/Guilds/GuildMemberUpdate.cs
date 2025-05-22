@@ -40,6 +40,7 @@ public record GuildMemberUpdate
     IUser User,
     Optional<string?> Nickname = default,
     Optional<IImageHash?> Avatar = default,
+    Optional<IImageHash?> Banner = default,
     DateTimeOffset? JoinedAt = default,
     Optional<DateTimeOffset?> PremiumSince = default,
     Optional<bool> IsPending = default,

@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.API.Webhooks;
+using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Remora.Rest.Xunit.Extensions;
@@ -82,7 +83,7 @@ public class DiscordRestInteractionAPITests
                             o => o.WithProperty("type", p => p.Is(5))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IInteractionResponse)])
+                    .Respond<IInteractionResponse>()
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -149,7 +150,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -233,7 +234,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -315,7 +316,7 @@ public class DiscordRestInteractionAPITests
                             )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateInteractionResponseAsync
@@ -382,7 +383,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -427,24 +428,28 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -491,35 +496,39 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName1))
-                                                    .WithProperty("description", ep => ep.Is(description1))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName2))
-                                                    .WithProperty("description", ep => ep.Is(description2))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -566,33 +575,37 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditOriginalInteractionResponseAsync
@@ -701,7 +714,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -746,7 +759,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -786,24 +799,28 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -846,35 +863,39 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName1))
-                                                    .WithProperty("description", ep => ep.Is(description1))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName2))
-                                                    .WithProperty("description", ep => ep.Is(description2))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -917,33 +938,37 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.CreateFollowupMessageAsync
@@ -995,7 +1020,7 @@ public class DiscordRestInteractionAPITests
                         $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.GetFollowupMessageAsync
@@ -1058,7 +1083,7 @@ public class DiscordRestInteractionAPITests
                                 .WithProperty("components", p => p.IsArray())
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1105,24 +1130,28 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1171,35 +1200,39 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName1))
-                                                    .WithProperty("description", ep => ep.Is(description1))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(1.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName2))
-                                                    .WithProperty("description", ep => ep.Is(description2))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1248,33 +1281,37 @@ public class DiscordRestInteractionAPITests
                         j => j.IsObject
                         (
                             o => o
-                                .WithProperty("attachments", p => p.IsArray
+                                .WithProperty
                                 (
-                                    a => a
-                                        .WithElement
-                                        (
-                                            0,
-                                            e => e.IsObject
+                                    "attachments",
+                                    p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
-                                                    .WithProperty("filename", ep => ep.Is(fileName))
-                                                    .WithProperty("description", ep => ep.Is(description))
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
                                             )
-                                        )
-                                        .WithElement
-                                        (
-                                            1,
-                                            e => e.IsObject
+                                            .WithElement
                                             (
-                                                eo => eo
-                                                    .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
                                             )
-                                        )
-                                ))
+                                    )
+                                )
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.EditFollowupMessageAsync
@@ -1373,7 +1410,7 @@ public class DiscordRestInteractionAPITests
                         $"{Constants.BaseURL}webhooks/{interactionID}/{token}/messages/@original"
                     )
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                    .Respond<IMessage>()
             );
 
             var result = await api.GetOriginalInteractionResponseAsync

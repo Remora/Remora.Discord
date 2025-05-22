@@ -1,15 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>78.0.0</VersionPrefix>
+        <VersionPrefix>83.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-          Add new error code
-          BREAKING: Implement onboarding
-          BREAKING: Implement support for voice messages.
-          BREAKING: Mark ChannelID as deprecated and replace it with Channel.
-          BREKAING: Implement max stage video users.
-          Add new application flag.
+          BREAKING: Update target frameworks.
+          BREAKING: Update dependencies.
+          BREAKING: Catch-up on all discord features...
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -115,6 +112,24 @@
       </Compile>
       <Compile Update="API\Objects\Messages\IPartialMessage.cs">
         <DependentUpon>IMessage.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Rest\IChannelPositionModification.cs">
+        <DependentUpon>IDiscordRestGuildAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Rest\IBulkBanResponse.cs">
+        <DependentUpon>IDiscordRestGuildAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Rest\IListGuildSoundboardSoundsResponse.cs">
+        <DependentUpon>IDiscordRestSoundboardAPI.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\IMessageComponentInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\IModalSubmitInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\IApplicationCommandInteractionMetadata.cs">
+        <DependentUpon>IMessageInteractionMetadata.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

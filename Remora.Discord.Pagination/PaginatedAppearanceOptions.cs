@@ -37,10 +37,11 @@ public sealed record PaginatedAppearanceOptions
     ButtonComponent Previous,
     ButtonComponent Next,
     ButtonComponent Last,
-    ButtonComponent Close,
-    ButtonComponent Help,
+    ButtonComponent? Close,
+    ButtonComponent? Help,
+    Embed? HelpEmbed,
     string FooterFormat = "Page {0}/{1}",
-    string HelpText = "This is a paginated message. Use the buttons to change page."
+    ButtonComponent[]? CustomButtons = null
 )
 {
     /// <summary>
@@ -83,13 +84,18 @@ public sealed record PaginatedAppearanceOptions
             ButtonComponentStyle.Secondary,
             Emoji: new PartialEmoji(Name: "ℹ"),
             Label: nameof(Help)
+        ),
+        new Embed
+        (
+            Title: "Pagination Help",
+            Description: "Use the buttons below to navigate the pages."
         )
     );
 
     /// <summary>
     /// Gets the appearance options' configured buttons as an array.
     /// </summary>
-    public IReadOnlyList<ButtonComponent> Buttons { get; } = new[]
+    public IReadOnlyList<ButtonComponent?> Buttons { get; } = new[]
     {
         First,
         Previous,

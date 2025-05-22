@@ -101,6 +101,11 @@ public enum GuildFeature
     MemberVerificationGateEnabled,
 
     /// <summary>
+    /// The guild has increased custom soundboard sound slots.
+    /// </summary>
+    MoreSoundboard,
+
+    /// <summary>
     /// The guild has enabled monetization.
     /// </summary>
     MonetizationEnabled,
@@ -144,6 +149,11 @@ public enum GuildFeature
     /// The guild has enabled role subscriptions.
     /// </summary>
     RoleSubscriptionsEnabled,
+
+    /// <summary>
+    /// The guild has created soundboard sounds.
+    /// </summary>
+    Soundboard,
 
     /// <summary>
     /// The guild has enabled ticketed events.

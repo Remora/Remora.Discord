@@ -1,0 +1,29 @@
+{
+  "question": {
+    "text": "abcdef"
+  },
+  "answers": [
+    {
+      "answer_id": 1,
+      "poll_media": {
+        "text": "abcdef",
+        "emoji": {
+          "name": "xyz"
+        }
+      }
+    }
+  ],
+  "expiry": null,
+  "allow_multiselect": false,
+  "layout_type": 1,
+  "results": {
+    "is_finalized": true,
+    "answer_counts": [
+      {
+        "id": 1,
+        "count": 2,
+        "me_voted": false
+      }
+    ]
+  }
+}

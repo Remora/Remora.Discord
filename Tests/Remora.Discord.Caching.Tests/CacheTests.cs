@@ -44,9 +44,7 @@ public class CacheTests
     /// A test fixture for caching.
     /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public class Fixture
-    {
-    }
+    public class Fixture;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CacheTests"/> class.
@@ -147,6 +145,35 @@ public class CacheTests
         ResultAssert.Successful(result);
 
         Assert.Same(dummyMessage, result.Entity);
+    }
+
+    /// <summary>
+    /// Tests whether the caching system makes overwritten values available through <see cref="CacheService.TryGetPreviousValueAsync"/>.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanProduceCachedPreviousValue()
+    {
+        var dummyMessageNew = new Mock<Fixture>().Object;
+        var dummyMessageOld = new Mock<Fixture>().Object;
+
+        var services = CreateServices().CreateScope().ServiceProvider;
+
+        var cache = services.GetRequiredService<CacheService>();
+
+        var key = CacheKey.StringKey("dummy");
+
+        await cache.CacheAsync(key, dummyMessageOld);
+        await cache.CacheAsync(key, dummyMessageNew);
+
+        var resultNew = await cache.TryGetValueAsync<Fixture>(key);
+        ResultAssert.Successful(resultNew);
+
+        var resultOld = await cache.TryGetPreviousValueAsync<Fixture>(key);
+        ResultAssert.Successful(resultOld);
+
+        Assert.Same(dummyMessageNew, resultNew.Entity);
+        Assert.Same(dummyMessageOld, resultOld.Entity);
     }
 
     /// <summary>
