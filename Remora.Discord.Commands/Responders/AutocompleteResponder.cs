@@ -119,10 +119,9 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             return new InvalidOperationError("Autocomplete interaction without focused option received. Desync?");
         }
 
-
         var realParameter = commandNode.Shape.Parameters.First
         (
-            p => p.Parameter.Name is not null && p.Parameter.Name.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
+            p => p.HintName.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
         );
 
         var contextInjector = _services.GetRequiredService<ContextInjectionService>();
@@ -132,7 +131,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
         IAutocompleteProvider? autocompleteProvider;
 
         // First, check if the parameter wants a specific provider
-        var providerAttribute = realParameter.Parameter.GetCustomAttribute<AutocompleteProviderAttribute>();
+        var providerAttribute = realParameter.Attributes.OfType<AutocompleteProviderAttribute>().FirstOrDefault();
         if (providerAttribute is not null)
         {
             // look up the requested provider
@@ -154,7 +153,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
         else
         {
             // see if there's an autocomplete provider registered for the parameter type
-            var parameterType = realParameter.Parameter.ParameterType;
+            var parameterType = realParameter.ParameterType;
             var autocompleteProviderType = typeof(IAutocompleteProvider<>).MakeGenericType(parameterType);
             autocompleteProvider = (IAutocompleteProvider?)_services.GetService(autocompleteProviderType);
 
