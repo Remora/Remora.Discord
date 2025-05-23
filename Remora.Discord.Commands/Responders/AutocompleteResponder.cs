@@ -119,9 +119,9 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             return new InvalidOperationError("Autocomplete interaction without focused option received. Desync?");
         }
 
-        var realParameter = commandNode.Invoke.Method.GetParameters().First
+        var realParameter = commandNode.Shape.Parameters.First
         (
-            p => p.Name is not null && p.Name.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
+            p => p.HintName.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
         );
 
         var contextInjector = _services.GetRequiredService<ContextInjectionService>();
@@ -131,7 +131,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
         IAutocompleteProvider? autocompleteProvider;
 
         // First, check if the parameter wants a specific provider
-        var providerAttribute = realParameter.GetCustomAttribute<AutocompleteProviderAttribute>();
+        var providerAttribute = realParameter.Attributes.OfType<AutocompleteProviderAttribute>().FirstOrDefault();
         if (providerAttribute is not null)
         {
             // look up the requested provider
