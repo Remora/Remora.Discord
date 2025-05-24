@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>6.0.0</VersionPrefix>
+        <VersionPrefix>6.0.1</VersionPrefix>
         <Description>Utilities and components which extend upon Remora.Discord's base resources</Description>
         <PackageReleaseNotes>
-            BREAKING: Update target frameworks.
-            BREAKING: Update dependencies.
-            BREAKING: Catch-up on all discord features...
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

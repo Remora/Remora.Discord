@@ -1,12 +1,15 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2025.1</VersionPrefix>
+        <VersionPrefix>2025.2</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            BREAKING: Update target frameworks.
-            BREAKING: Update dependencies.
-            BREAKING: Catch-up on all discord features...
+            Add custom buttons &amp; ability to remove buttons
+            BREAKING: Components V2 support
+            BREAKING: Replace Fuzzy Matching in EnumAutocompleteProvider to use String.Contains
+            Fix CacheService.TryGetPreviousValueAsync
+            Handle IMessageUpdate in cache service
+            Fix autocomplete
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
