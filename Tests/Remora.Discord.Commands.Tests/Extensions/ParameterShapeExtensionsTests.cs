@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Moq;
 using Remora.Commands.Signatures;
 using Remora.Discord.API.Abstractions.Objects;

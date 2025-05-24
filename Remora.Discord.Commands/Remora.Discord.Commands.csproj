@@ -15,7 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FuzzySharp" />
         <PackageReference Include="Humanizer.Core" />
         <PackageReference Include="NGettext" />
         <PackageReference Include="Remora.Commands" />

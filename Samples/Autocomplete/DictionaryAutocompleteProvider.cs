@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FuzzySharp;
 using Humanizer;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -85,7 +84,7 @@ public class DictionaryAutocompleteProvider : IAutocompleteProvider
         return new ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>>
         (
             _dictionary
-                .OrderByDescending(n => Fuzz.Ratio(userInput, n))
+                .OrderByDescending(n => n.Contains(userInput))
                 .Take(25)
                 .Select(n => new ApplicationCommandOptionChoice(n.Humanize().Transform(To.TitleCase), n))
                 .ToList()
