@@ -32,11 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IButtonComponent : IMessageComponent, IPartialButtonComponent
 {
     /// <summary>
-    /// Gets the type of the component.
-    /// </summary>
-    new ComponentType Type { get; }
-
-    /// <summary>
     /// Gets the button's style.
     /// </summary>
     new ButtonComponentStyle Style { get; }
@@ -67,7 +62,7 @@ public interface IButtonComponent : IMessageComponent, IPartialButtonComponent
     new Optional<bool> IsDisabled { get; }
 
     /// <inheritdoc/>
-    Optional<ComponentType> IPartialButtonComponent.Type => this.Type;
+    Optional<ComponentType> IPartialMessageComponent.Type => this.Type;
 
     /// <inheritdoc/>
     Optional<ButtonComponentStyle> IPartialButtonComponent.Style => this.Style;

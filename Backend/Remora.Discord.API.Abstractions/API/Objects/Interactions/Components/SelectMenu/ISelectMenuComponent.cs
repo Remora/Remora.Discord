@@ -32,11 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface ISelectMenuComponent : IMessageComponent, IPartialSelectMenuComponent
 {
     /// <summary>
-    /// Gets the type of the component.
-    /// </summary>
-    new ComponentType Type { get; }
-
-    /// <summary>
     /// Gets a custom ID for the component, defined by the developer.
     /// </summary>
     new string CustomID { get; }
@@ -62,7 +57,7 @@ public interface ISelectMenuComponent : IMessageComponent, IPartialSelectMenuCom
     new Optional<bool> IsDisabled { get; }
 
     /// <inheritdoc/>
-    Optional<ComponentType> IPartialSelectMenuComponent.Type => this.Type;
+    Optional<ComponentType> IPartialMessageComponent.Type => this.Type;
 
     /// <inheritdoc/>
     Optional<string> IPartialSelectMenuComponent.CustomID => this.CustomID;

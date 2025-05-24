@@ -32,11 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface ITextInputComponent : IMessageComponent, IPartialTextInputComponent
 {
     /// <summary>
-    /// Gets the type of the component.
-    /// </summary>
-    new ComponentType Type { get; }
-
-    /// <summary>
     /// Gets a custom ID for the component, defined by the developer.
     /// </summary>
     new string CustomID { get; }
@@ -85,7 +80,7 @@ public interface ITextInputComponent : IMessageComponent, IPartialTextInputCompo
     new Optional<string> Placeholder { get; }
 
     /// <inheritdoc/>
-    Optional<ComponentType> IPartialTextInputComponent.Type => this.Type;
+    Optional<ComponentType> IPartialMessageComponent.Type => this.Type;
 
     /// <inheritdoc/>
     Optional<string> IPartialTextInputComponent.CustomID => this.CustomID;

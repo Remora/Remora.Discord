@@ -31,9 +31,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 [PublicAPI]
 public interface IPartialButtonComponent : IPartialMessageComponent
 {
-    /// <inheritdoc cref="IButtonComponent.Type" />
-    Optional<ComponentType> Type { get; }
-
     /// <inheritdoc cref="IButtonComponent.Style"/>
     Optional<ButtonComponentStyle> Style { get; }
 

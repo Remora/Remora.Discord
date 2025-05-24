@@ -32,9 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 [PublicAPI]
 public interface IPartialActionRowComponent : IPartialMessageComponent
 {
-    /// <inheritdoc cref="IActionRowComponent.Type" />
-    Optional<ComponentType> Type { get; }
-
     /// <inheritdoc cref="IActionRowComponent.Components"/>
     Optional<IReadOnlyList<IPartialMessageComponent>> Components { get; }
 }

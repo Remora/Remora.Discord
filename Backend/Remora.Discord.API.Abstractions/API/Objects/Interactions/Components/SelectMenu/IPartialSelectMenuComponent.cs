@@ -31,9 +31,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 [PublicAPI]
 public interface IPartialSelectMenuComponent : IPartialMessageComponent
 {
-    /// <inheritdoc cref="ISelectMenuComponent.Type" />
-    Optional<ComponentType> Type { get; }
-
     /// <inheritdoc cref="ISelectMenuComponent.CustomID"/>
     Optional<string> CustomID { get; }
 

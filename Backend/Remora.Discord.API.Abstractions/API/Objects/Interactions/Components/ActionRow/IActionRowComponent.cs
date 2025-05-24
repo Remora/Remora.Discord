@@ -33,17 +33,12 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IActionRowComponent : IMessageComponent, IPartialActionRowComponent
 {
     /// <summary>
-    /// Gets the type of the component.
-    /// </summary>
-    new ComponentType Type { get; }
-
-    /// <summary>
     /// Gets the components nested under this component.
     /// </summary>
     new IReadOnlyList<IMessageComponent> Components { get; }
 
     /// <inheritdoc/>
-    Optional<ComponentType> IPartialActionRowComponent.Type => this.Type;
+    Optional<ComponentType> IPartialMessageComponent.Type => this.Type;
 
     /// <inheritdoc/>
     Optional<IReadOnlyList<IPartialMessageComponent>> IPartialActionRowComponent.Components => new(this.Components);
