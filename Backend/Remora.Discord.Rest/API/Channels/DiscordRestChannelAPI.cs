@@ -81,6 +81,28 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
+    public virtual Task<Result> SetVoiceChannelStatusAsync
+    (
+        Snowflake channelID,
+        Optional<string> status,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (status is { HasValue: true, Value: { Length: > 500 } })
+        {
+            return Task.FromResult<Result>(new ArgumentOutOfRangeError(nameof(status), "The status must between 0 and 500 characters."));
+        }
+
+        return this.RestHttpClient.PatchAsync
+        (
+            $"channels/{channelID}/voice-status",
+            b => b.WithJson(b => b.Write("status", status, this.JsonOptions)).WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
     public virtual async Task<Result<IChannel>> ModifyChannelAsync
     (
         Snowflake channelID,

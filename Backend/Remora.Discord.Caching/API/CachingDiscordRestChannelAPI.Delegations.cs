@@ -36,6 +36,18 @@ namespace Remora.Discord.Caching.API;
 public partial class CachingDiscordRestChannelAPI
 {
     /// <inheritdoc />
+    public Task<Result> SetVoiceChannelStatusAsync
+    (
+        Snowflake channelID,
+        Optional<string> status,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return _actual.SetVoiceChannelStatusAsync(channelID, status, reason, ct);
+    }
+
+    /// <inheritdoc />
     public Task<Result<IChannel>> ModifyGroupDMChannelAsync
     (
         Snowflake channelID,
