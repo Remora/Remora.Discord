@@ -148,7 +148,7 @@ public class CacheTests
     }
 
     /// <summary>
-    /// Tests whether the caching system makes overwritten values available through <see cref="CacheService.TryGetPreviousValueAsync"/>.
+    /// Tests whether the caching system makes overwritten values available through <see cref="CacheService.TryGetPreviousValueAsync{T}"/>.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
