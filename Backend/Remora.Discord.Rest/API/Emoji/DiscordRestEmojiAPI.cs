@@ -59,6 +59,115 @@ public class DiscordRestEmojiAPI : AbstractDiscordRestAPI, IDiscordRestEmojiAPI
     }
 
     /// <inheritdoc />
+    public Task<Result<IReadOnlyList<IEmoji>>> ListApplicationEmojisAync
+    (
+        Snowflake applicationID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IEmoji>>
+        (
+            $"applications/{applicationID}/emojis",
+            "items",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IEmoji>> GetApplicationEmojiAsync
+    (
+        Snowflake applicationID,
+        Snowflake emojiID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IEmoji>
+        (
+            $"applications/{applicationID}/emojis/{emojiID}",
+            b => b.WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+    
+    /// <inheritdoc />
+    public virtual async Task<Result<IEmoji>> CreateApplicationEmojiAsync
+    (
+        Snowflake applicationID,
+        string name,
+        Stream image,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (image.Length > 256000)
+        {
+            return new NotSupportedError("Image too large (max 256k).");
+        }
+
+        var packImage = await ImagePacker.PackImageAsync(image, ct);
+        if (!packImage.IsSuccess)
+        {
+            return Result<IEmoji>.FromError(packImage);
+        }
+
+        var emojiData = packImage.Entity;
+
+        return await this.RestHttpClient.PostAsync<IEmoji>
+        (
+            $"applications/{applicationID}/emojis",
+            b => b
+                .AddAuditLogReason(reason)
+                .WithJson
+                (
+                    json =>
+                    {
+                        json.WriteString("name", name);
+                        json.WriteString("image", emojiData);
+                    }
+                )
+                .WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IEmoji>> ModifyApplicationEmojiAsync
+    (
+        Snowflake applicationID,
+        Snowflake emojiID,
+        Optional<string> name = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IEmoji>
+        (
+            $"applications/{applicationID}/emojis/{emojiID}",
+            b => b
+                .AddAuditLogReason(reason)
+                .WithJson(
+                    json =>
+                    {
+                        json.Write("name", name, this.JsonOptions);
+                    }
+                ).WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteApplicationEmojiAsync(Snowflake applicationID, Snowflake emojiID, Optional<string> reason = default, CancellationToken ct = default)
+    {
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"applications/{applicationID}/emojis/{emojiID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
     public virtual Task<Result<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
     (
         Snowflake guildID,
