@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -38,9 +39,26 @@ namespace Remora.Discord.Commands.Parsers;
 [PublicAPI]
 public class SnowflakeParser : AbstractTypeParser<Snowflake>
 {
+    private static readonly Regex _channelLinkRegex = new
+    (
+        @"^https://(canary\.|ptb\.)?discord\.com/channels/(?<guild_id>@me|[0-9]*)/(?<channel_id>[0-9]*)(/(?<message_id>[0-9]*))?/?$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant
+    );
+
     /// <inheritdoc />
     public override ValueTask<Result<Snowflake>> TryParseAsync(string value, CancellationToken ct = default)
     {
+        var channelLinkMatch = _channelLinkRegex.Match(value);
+        if (channelLinkMatch.Success)
+        {
+            value = channelLinkMatch.Groups["message_id"].Value;
+
+            if (string.IsNullOrEmpty(value))
+            {
+                value = channelLinkMatch.Groups["channel_id"].Value;
+            }
+        }
+
         return new
         (
             !DiscordSnowflake.TryParse(value.Unmention(), out var snowflake)

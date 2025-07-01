@@ -67,6 +67,24 @@ public class SnowflakeParserTests
     }
 
     /// <summary>
+    /// Tests whether the parser can parse snowflake value given by url.
+    /// </summary>
+    /// <param name="value">Mention that should be parsed correctly.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [InlineData("https://discord.com/channels/690919691404967977/765178263517397033")]
+    [InlineData("https://discord.com/channels/690919691404967977/1389600463250260019/765178263517397033")]
+    [InlineData("https://canary.discord.com/channels/690919691404967977/1389600463250260019/765178263517397033")]
+    [InlineData("https://ptb.discord.com/channels/690919691404967977/1389600463250260019/765178263517397033")]
+    [Theory]
+    public async Task CanParseSnowflakeByUrl(string value)
+    {
+        ulong snowflakeValue = 765178263517397033;
+        var tryParse = await _parser.TryParseAsync(value);
+        ResultAssert.Successful(tryParse);
+        Assert.Equal(snowflakeValue, tryParse.Entity.Value);
+    }
+
+    /// <summary>
     /// Tests whether the parser can parse snowflake value given by mentions.
     /// </summary>
     /// <param name="value">Mention that should be parsed correctly.</param>
