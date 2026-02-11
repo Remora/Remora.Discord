@@ -60,19 +60,23 @@ public static class ServiceCollectionExtensions
     /// <param name="tokenFactory">
     /// A function that creates or retrieves the authorization token and its token type.
     /// </param>
+    /// /// <param name="apiBasePath">The base API endpoint.</param>
+    /// <param name="cdnBasePath">The base path to the CDN.</param>
     /// <param name="buildClient">Extra client building operations.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordRest
     (
         this IServiceCollection serviceCollection,
         Func<IServiceProvider, (string Token, DiscordTokenType TokenType)> tokenFactory,
+        Uri apiBasePath,
+        Uri cdnBasePath,
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
         serviceCollection.AddSingleton<IAsyncTokenStore>(ctx =>
         {
             var (token, type) = tokenFactory(ctx);
-            return new StaticTokenStore(token, type);
+            return new StaticTokenStore(token, type, apiBasePath, cdnBasePath);
         });
 
         return serviceCollection.AddDiscordRest(buildClient);
@@ -243,13 +247,14 @@ public static class ServiceCollectionExtensions
         var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
         var clientBuilder = serviceCollection
             .AddRestHttpClient<RestError>("Discord")
-            .ConfigureHttpClient((_, client) =>
+            .ConfigureHttpClient((services, client) =>
             {
+                IAsyncTokenStore tokenStore = services.GetRequiredService<IAsyncTokenStore>();
                 var assemblyName = Assembly.GetExecutingAssembly().GetName();
                 var name = assemblyName.Name ?? "Remora.Discord";
                 var version = assemblyName.Version ?? new Version(1, 0, 0);
 
-                client.BaseAddress = Constants.BaseURL;
+                client.BaseAddress = tokenStore.BaseApiUri;
                 client.DefaultRequestHeaders.UserAgent.Add
                 (
                     new ProductInfoHeaderValue(name, version.ToString())

@@ -69,7 +69,7 @@ public class DiscordRestPollsAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelID}/polls/{messageID}/answers/{answerID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelID}/polls/{messageID}/answers/{answerID}")
                     .WithNoContent()
                     .Respond<IPollAnswerVoters>()
             );
@@ -93,7 +93,7 @@ public class DiscordRestPollsAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelID}/polls/{messageID}/answers/{answerID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelID}/polls/{messageID}/answers/{answerID}")
                     .WithExactQueryString
                     (
                         new[]
@@ -123,7 +123,7 @@ public class DiscordRestPollsAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelID}/polls/{messageID}/answers/{answerID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelID}/polls/{messageID}/answers/{answerID}")
                     .WithExactQueryString
                     (
                         new[]
@@ -188,7 +188,7 @@ public class DiscordRestPollsAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelID}/polls/{messageID}/expire")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelID}/polls/{messageID}/expire")
                     .WithNoContent()
                     .Respond("Authorization/json", SampleRepository.Get<IMessage>())
             );

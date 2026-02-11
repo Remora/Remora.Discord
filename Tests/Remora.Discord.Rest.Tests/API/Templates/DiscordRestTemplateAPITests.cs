@@ -67,7 +67,7 @@ public class DiscordRestTemplateAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/templates/{templateCode}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/templates/{templateCode}")
                     .Respond<ITemplate>()
             );
 
@@ -109,7 +109,7 @@ public class DiscordRestTemplateAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/templates/{templateCode}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/templates/{templateCode}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -152,7 +152,7 @@ public class DiscordRestTemplateAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/templates")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/templates")
                     .Respond<IReadOnlyList<ITemplate>>()
             );
 
@@ -189,7 +189,7 @@ public class DiscordRestTemplateAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/templates")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/templates")
                     .WithJson
                     (
                         j => j.IsObject
@@ -233,7 +233,7 @@ public class DiscordRestTemplateAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/templates/{templateCode}")
+                    .Expect(HttpMethod.Put, $"{Constants.DiscordBaseURL}guilds/{guildId}/templates/{templateCode}")
                     .Respond<ITemplate>()
             );
 
@@ -271,7 +271,7 @@ public class DiscordRestTemplateAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/templates/{templateCode}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/templates/{templateCode}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -315,7 +315,7 @@ public class DiscordRestTemplateAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/templates/{templateCode}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildId}/templates/{templateCode}")
                     .Respond<ITemplate>()
             );
 

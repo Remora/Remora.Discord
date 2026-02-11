@@ -69,7 +69,7 @@ public class DiscordRestInviteAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}invites/{inviteCode}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}invites/{inviteCode}")
                     .WithExactQueryString
                     (
                         new[]
@@ -114,7 +114,7 @@ public class DiscordRestInviteAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}invites/{inviteCode}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}invites/{inviteCode}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond<IInvite>()
             );
