@@ -35,142 +35,185 @@ public enum GatewayIntents
 {
     /// <summary>
     /// Subscribes to the following events:
-    ///     - GUILD_CREATE
-    ///     - GUILD_UPDATE
-    ///     - GUILD_DELETE
-    ///     - GUILD_ROLE_CREATE
-    ///     - GUILD_ROLE_UPDATE
-    ///     - GUILD_ROLE_DELETE
-    ///     - CHANNEL_CREATE
-    ///     - CHANNEL_UPDATE
-    ///     - CHANNEL_DELETE
-    ///     - CHANNEL_PINS_UPDATE
-    ///     - THREAD_CREATE
-    ///     - THREAD_UPDATE
-    ///     - THREAD_DELETE
-    ///     - THREAD_LIST_SYNC
-    ///     - THREAD_MEMBER_UPDATE
-    ///     - THREAD_MEMBERS_UPDATE
-    ///     - STAGE_INSTANCE_UPDATE
-    ///     - STAGE_INSTANCE_DELETE
+    /// <list type="bullet">
+    /// <item>GUILD_CREATE</item>
+    /// <item>GUILD_UPDATE</item>
+    /// <item>GUILD_DELETE</item>
+    /// <item>GUILD_ROLE_CREATE</item>
+    /// <item>GUILD_ROLE_UPDATE</item>
+    /// <item>GUILD_ROLE_DELETE</item>
+    /// <item>CHANNEL_CREATE</item>
+    /// <item>CHANNEL_UPDATE</item>
+    /// <item>CHANNEL_DELETE</item>
+    /// <item>CHANNEL_PINS_UPDATE</item>
+    /// <item>THREAD_CREATE</item>
+    /// <item>THREAD_UPDATE</item>
+    /// <item>THREAD_DELETE</item>
+    /// <item>THREAD_LIST_SYNC</item>
+    /// <item>THREAD_MEMBER_UPDATE</item>
+    /// <item>THREAD_MEMBERS_UPDATE</item>
+    /// <item>STAGE_INSTANCE_CREATE</item>
+    /// <item>STAGE_INSTANCE_UPDATE</item>
+    /// <item>STAGE_INSTANCE_DELETE</item>
+    /// <item>VOICE_CHANNEL_STATUS_UPDATE</item>
+    /// <item>VOICE_CHANNEL_START_TIME_UPDATE</item>
+    /// </list>
     /// </summary>
+    /// <remarks>
+    /// THREAD_MEMBERS_UPDATE contains different data depending on which intents are used.
+    /// </remarks>
     Guilds = 1 << 0,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - GUILD_MEMBER_ADD
-    ///     - GUILD_MEMBER_UPDATE
-    ///     - GUILD_MEMBER_REMOVE
-    ///     - THREAD_MEMBERS_UPDATE
+    /// <list type="bullet">
+    /// <item>GUILD_MEMBER_ADD</item>
+    /// <item>GUILD_MEMBER_UPDATE</item>
+    /// <item>GUILD_MEMBER_REMOVE</item>
+    /// <item>THREAD_MEMBERS_UPDATE</item>
+    /// </list>
     /// </summary>
+    /// <remarks>
+    /// THREAD_MEMBERS_UPDATE contains different data depending on which intents are used.
+    /// </remarks>
     GuildMembers = 1 << 1,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - GUILD_BAN_ADD
-    ///     - GUILD_BAN_REMOVE
+    /// <list type="bullet">
+    /// <item>GUILD_AUDIT_LOG_ENTRY_CREATE</item>
+    /// <item>GUILD_BAN_ADD</item>
+    /// <item>GUILD_BAN_REMOVE</item>
+    /// </list>
     /// </summary>
     GuildModeration = 1 << 2,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - GUILD_EMOJIS_UPDATE
-    ///     - GUILD_STICKERS_UPDATE
-    ///     - GUILD_SOUNDBOARD_SOUND_CREATE
-    ///     - GUILD_SOUNDBOARD_SOUND_UPDATE
-    ///     - GUILD_SOUNDBOARD_SOUND_DELETE
-    ///     - GUILD_SOUNDBOARD_SOUNDS_UPDATE
+    /// <list type="bullet">
+    /// <item>GUILD_EMOJIS_UPDATE</item>
+    /// <item>GUILD_STICKERS_UPDATE</item>
+    /// <item>GUILD_SOUNDBOARD_SOUND_CREATE</item>
+    /// <item>GUILD_SOUNDBOARD_SOUND_UPDATE</item>
+    /// <item>GUILD_SOUNDBOARD_SOUND_DELETE</item>
+    /// <item>GUILD_SOUNDBOARD_SOUNDS_UPDATE</item>
+    /// </list>
     /// </summary>
     GuildExpressions = 1 << 3,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - GUILD_INTEGRATIONS_UPDATE
-    ///     - INTEGRATION_CREATE
-    ///     - INTEGRATION_UPDATE
-    ///     - INTEGRATION_DELETE
+    /// <list type="bullet">
+    /// <item>GUILD_INTEGRATIONS_UPDATE</item>
+    /// <item>INTEGRATION_CREATE</item>
+    /// <item>INTEGRATION_UPDATE</item>
+    /// <item>INTEGRATION_DELETE</item>
+    /// </list>
     /// </summary>
     GuildIntegrations = 1 << 4,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - WEBHOOKS_UPDATE
+    /// <list type="bullet">
+    /// <item>WEBHOOKS_UPDATE</item>
+    /// </list>
     /// </summary>
     GuildWebhooks = 1 << 5,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - INVITE_CREATE
-    ///     - INVITE_DELETE
+    /// <list type="bullet">
+    /// <item>INVITE_CREATE</item>
+    /// <item>INVITE_DELETE</item>
+    /// </list>
     /// </summary>
     GuildInvites = 1 << 6,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - VOICE_STATE_UPDATE
+    /// <list type="bullet">
+    /// <item>VOICE_CHANNEL_EFFECT_SEND</item>
+    /// <item>VOICE_STATE_UPDATE</item>
+    /// </list>
     /// </summary>
     GuildVoiceStates = 1 << 7,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - PRESENCE_UPDATE
+    /// <list type="bullet">
+    /// <item>PRESENCE_UPDATE</item>
+    /// </list>
     /// </summary>
     GuildPresences = 1 << 8,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - MESSAGE_CREATE
-    ///     - MESSAGE_UPDATE
-    ///     - MESSAGE_DELETE
-    ///     - MESSAGE_DELETE_BULK
+    /// <list type="bullet">
+    /// <item>MESSAGE_CREATE</item>
+    /// <item>MESSAGE_UPDATE</item>
+    /// <item>MESSAGE_DELETE</item>
+    /// <item>MESSAGE_DELETE_BULK</item>
+    /// </list>
     /// </summary>
     GuildMessages = 1 << 9,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - MESSAGE_REACTION_ADD
-    ///     - MESSAGE_REACTION_REMOVE
-    ///     - MESSAGE_REACTION_REMOVE_ALL
-    ///     - MESSAGE_REACTION_REMOVE_EMOJI
+    /// <list type="bullet">
+    /// <item>MESSAGE_REACTION_ADD</item>
+    /// <item>MESSAGE_REACTION_REMOVE</item>
+    /// <item>MESSAGE_REACTION_REMOVE_ALL</item>
+    /// <item>MESSAGE_REACTION_REMOVE_EMOJI</item>
+    /// </list>
     /// </summary>
     GuildMessageReactions = 1 << 10,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - TYPING_START
+    /// <list type="bullet">
+    /// <item>TYPING_START</item>
+    /// </list>
     /// </summary>
     GuildMessageTyping = 1 << 11,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - MESSAGE_CREATE
-    ///     - MESSAGE_UPDATE
-    ///     - MESSAGE_DELETE
-    ///     - CHANNEL_PINS_UPDATE
+    /// <list type="bullet">
+    /// <item>MESSAGE_CREATE</item>
+    /// <item>MESSAGE_UPDATE</item>
+    /// <item>MESSAGE_DELETE</item>
+    /// <item>CHANNEL_PINS_UPDATE</item>
+    /// </list>
     /// </summary>
     DirectMessages = 1 << 12,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - MESSAGE_REACTION_ADD
-    ///     - MESSAGE_REACTION_REMOVE
-    ///     - MESSAGE_REACTION_REMOVE_ALL
-    ///     - MESSAGE_REACTION_REMOVE_EMOJI
+    /// <list type="bullet">
+    /// <item>MESSAGE_REACTION_ADD</item>
+    /// <item>MESSAGE_REACTION_REMOVE</item>
+    /// <item>MESSAGE_REACTION_REMOVE_ALL</item>
+    /// <item>MESSAGE_REACTION_REMOVE_EMOJI</item>
+    /// </list>
     /// </summary>
     DirectMessageReactions = 1 << 13,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - TYPING_START
+    /// <list type="bullet">
+    /// <item>TYPING_START</item>
+    /// </list>
     /// </summary>
     DirectMessageTyping = 1 << 14,
 
     /// <summary>
     /// Does not subscribe to any particular events, but requests that message contents be sent along with the following
     /// events:
-    ///     - MESSAGE_CREATE
-    ///     - MESSAGE_UPDATE
-    ///     - MESSAGE_DELETE
+    /// <list type="bullet">
+    /// <item>MESSAGE_CREATE</item>
+    /// <item>MESSAGE_UPDATE</item>
+    /// <item>MESSAGE_DELETE</item>
+    /// </list>
     ///
     /// If this intent is not specified, all raw message content strings will be empty. You may still receive user input
     /// using interactions, such as slash commands or modals.
@@ -179,43 +222,49 @@ public enum GatewayIntents
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - GUILD_SCHEDULED_EVENT_CREATE
-    ///     - GUILD_SCHEDULED_EVENT_UPDATE
-    ///     - GUILD_SCHEDULED_EVENT_DELETE
-    ///     - GUILD_SCHEDULED_EVENT_USER_ADD **
-    ///     - GUILD_SCHEDULED_EVENT_USER_REMOVE **
+    /// <list type="bullet">
+    /// <item>GUILD_SCHEDULED_EVENT_CREATE</item>
+    /// <item>GUILD_SCHEDULED_EVENT_UPDATE</item>
+    /// <item>GUILD_SCHEDULED_EVENT_DELETE</item>
+    /// <item>GUILD_SCHEDULED_EVENT_USER_ADD</item>
+    /// <item>GUILD_SCHEDULED_EVENT_USER_REMOVE</item>
+    /// </list>
     /// </summary>
-    /// <remarks>
-    /// GUILD_SCHEDULED_EVENT_USER_ADD and GUILD_SCHEDULED_EVENT_USER_REMOVE are currently experimental and not
-    /// officially supported.
-    /// </remarks>
     GuildScheduledEvents = 1 << 16,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - AUTO_MODERATION_RULE_CREATE
-    ///     - AUTO_MODERATION_RULE_UPDATE
-    ///     - AUTO_MODERATION_RULE_DELETE
+    /// <list type="bullet">
+    /// <item>AUTO_MODERATION_RULE_CREATE</item>
+    /// <item>AUTO_MODERATION_RULE_UPDATE</item>
+    /// <item>AUTO_MODERATION_RULE_DELETE</item>
+    /// </list>
     /// </summary>
     AutoModerationConfiguration = 1 << 20,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - AUTO_MODERATION_ACTION_EXECUTION
+    /// <list type="bullet">
+    /// <item>AUTO_MODERATION_ACTION_EXECUTION</item>
+    /// </list>
     /// </summary>
     AutoModerationExecution = 1 << 21,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - MESSAGE_POLL_VOTE_ADD
-    ///     - MESSAGE_POLL_VOTE_REMOVE
+    /// <list type="bullet">
+    /// <item>MESSAGE_POLL_VOTE_ADD</item>
+    /// <item>MESSAGE_POLL_VOTE_REMOVE</item>
+    /// </list>
     /// </summary>
     GuildMessagePolls = 1 << 24,
 
     /// <summary>
     /// Subscribes to the following events:
-    ///     - MESSAGE_POLL_VOTE_ADD
-    ///     - MESSAGE_POLL_VOTE_REMOVE
+    /// <list type="bullet">
+    /// <item>MESSAGE_POLL_VOTE_ADD</item>
+    /// <item>MESSAGE_POLL_VOTE_REMOVE</item>
+    /// </list>
     /// </summary>
     DirectMessagePolls = 1 << 25,
 }
