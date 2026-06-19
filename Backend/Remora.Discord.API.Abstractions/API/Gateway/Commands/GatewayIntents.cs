@@ -70,7 +70,7 @@ public enum GatewayIntents
     ///     - GUILD_BAN_ADD
     ///     - GUILD_BAN_REMOVE
     /// </summary>
-    GuildBans = 1 << 2,
+    GuildModeration = 1 << 2,
 
     /// <summary>
     /// Subscribes to the following events:
