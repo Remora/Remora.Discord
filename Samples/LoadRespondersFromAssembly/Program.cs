@@ -56,7 +56,7 @@ public class Program
                 services.AddRespondersFromAssembly(typeof(Program).Assembly);
                 services.Configure<DiscordGatewayClientOptions>
                 (
-                    g => g.Intents |= GatewayIntents.MessageContents
+                    g => g.Intents |= GatewayIntents.MessageContent
                                       | GatewayIntents.GuildMembers
                                       | GatewayIntents.GuildVoiceStates
                                       | GatewayIntents.GuildMessageReactions

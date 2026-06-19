@@ -175,7 +175,7 @@ public enum GatewayIntents
     /// If this intent is not specified, all raw message content strings will be empty. You may still receive user input
     /// using interactions, such as slash commands or modals.
     /// </summary>
-    MessageContents = 1 << 15,
+    MessageContent = 1 << 15,
 
     /// <summary>
     /// Subscribes to the following events:

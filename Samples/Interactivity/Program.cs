@@ -92,7 +92,7 @@ public class Program
         (
             (_, services) =>
             {
-                services.Configure<DiscordGatewayClientOptions>(g => g.Intents |= GatewayIntents.MessageContents);
+                services.Configure<DiscordGatewayClientOptions>(g => g.Intents |= GatewayIntents.MessageContent);
 
                 services
                     .AddDiscordCommands(true)
