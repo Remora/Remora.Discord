@@ -105,7 +105,7 @@ public class EmbedBuilder : BuilderBase<Embed>
         {
             var titleLength = this.Title?.Length ?? 0;
             var descriptionLength = this.Description?.Length ?? 0;
-            var fieldSum = _fields.Sum(field => field.Name.Length + field.Value.Length);
+            var fieldSum = _fields.Sum(x => x.Name.Length + x.Value.Length);
             var footerLength = this.Footer?.Text.Length ?? 0;
             var authorLength = this.Author?.Name.Length ?? 0;
 
