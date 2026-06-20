@@ -1,10 +1,10 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>5.1.0</VersionPrefix>
+        <VersionPrefix>5.1.1</VersionPrefix>
         <Description>Button-based pagination of messages for Remora.Discord</Description>
         <PackageReleaseNotes>
-            Add custom buttons &amp; ability to remove buttons
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <VersionPrefix>7.0.1</VersionPrefix>
+        <VersionPrefix>7.0.2</VersionPrefix>
         <Description>Unstable or experimental features of Remora.Discord.</Description>
         <PackageReleaseNotes>
             Update dependencies.
