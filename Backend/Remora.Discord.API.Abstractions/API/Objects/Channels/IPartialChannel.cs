@@ -137,4 +137,7 @@ public interface IPartialChannel
 
     /// <inheritdoc cref="IChannel.DefaultForumLayout" />
     Optional<ForumLayout> DefaultForumLayout { get; }
+
+    /// <inheritdoc cref="IChannel.Status"/>
+    Optional<string?> Status { get; }
 }

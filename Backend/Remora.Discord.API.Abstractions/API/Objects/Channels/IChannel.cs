@@ -212,6 +212,11 @@ public interface IChannel : IPartialChannel
     /// </summary>
     new Optional<ForumLayout> DefaultForumLayout { get; }
 
+    /// <summary>
+    /// Gets the status of the channel.
+    /// </summary>
+    new Optional<string?> Status { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialChannel.ID => this.ID;
 
@@ -316,4 +321,7 @@ public interface IChannel : IPartialChannel
 
     /// <inheritdoc/>
     Optional<ForumLayout> IPartialChannel.DefaultForumLayout => this.DefaultForumLayout;
+
+    /// <inheritdoc/>
+    Optional<string?> IPartialChannel.Status => this.Status;
 }
