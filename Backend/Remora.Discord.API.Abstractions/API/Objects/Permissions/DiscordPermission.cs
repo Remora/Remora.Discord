@@ -275,6 +275,16 @@ public enum DiscordPermission
     SendVoiceMessages = 46,
 
     /// <summary>
+    /// Allows for interaction with Clyde (AI).
+    /// </summary>
+    UseClydeAi = 47,
+
+    /// <summary>
+    /// Allows for setting the status of a voice channel.
+    /// </summary>
+    SetVoiceChannelStatus = 48,
+
+    /// <summary>
     /// Allows for sending polls.
     /// </summary>
     SendPolls = 49,
