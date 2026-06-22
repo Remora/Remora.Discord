@@ -77,7 +77,7 @@ public class DiscordRestMonetizationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/entitlements")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}applications/{applicationID}/entitlements")
                     .WithExactQueryString
                     (
                         [
@@ -138,7 +138,7 @@ public class DiscordRestMonetizationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}applications/{applicationID}/entitlements/{entitlementID}")
                     .Respond<IEntitlement>()
             );
 
@@ -179,7 +179,7 @@ public class DiscordRestMonetizationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}/consume")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/entitlements/{entitlementID}/consume")
                     .Respond(HttpStatusCode.NoContent)
             );
 
@@ -222,7 +222,7 @@ public class DiscordRestMonetizationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/entitlements")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/entitlements")
                     .WithJson
                     (
                         j => j.IsObject
@@ -268,7 +268,7 @@ public class DiscordRestMonetizationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}applications/{applicationID}/entitlements/{entitlementID}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}applications/{applicationID}/entitlements/{entitlementID}")
                     .Respond(HttpStatusCode.NoContent)
             );
 
@@ -303,7 +303,7 @@ public class DiscordRestMonetizationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/skus")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}applications/{applicationID}/skus")
                     .Respond<IReadOnlyList<ISKU>>()
             );
 
@@ -342,7 +342,7 @@ public class DiscordRestMonetizationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}skus/{skuID}/subscriptions")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}skus/{skuID}/subscriptions")
                     .WithExactQueryString
                     (
                         [
@@ -395,7 +395,7 @@ public class DiscordRestMonetizationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}skus/{skuID}/subscriptions/{subscriptionID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}skus/{skuID}/subscriptions/{subscriptionID}")
                     .Respond<ISubscription>()
             );
 

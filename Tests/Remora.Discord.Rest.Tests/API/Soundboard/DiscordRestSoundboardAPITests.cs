@@ -73,7 +73,7 @@ public class DiscordRestSoundboardAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelID}/send-soundboard-sound"
+                        $"{Constants.DiscordBaseURL}channels/{channelID}/send-soundboard-sound"
                     )
                     .WithJson
                     (
@@ -118,7 +118,7 @@ public class DiscordRestSoundboardAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}soundboard-default-sounds"
+                        $"{Constants.DiscordBaseURL}soundboard-default-sounds"
                     )
                     .WithNoContent()
                     .Respond("application/json", "[" + SampleRepository.Get<ISoundboardSound>() + "]")
@@ -157,7 +157,7 @@ public class DiscordRestSoundboardAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}guilds/{guildID}/soundboard-sounds"
+                        $"{Constants.DiscordBaseURL}guilds/{guildID}/soundboard-sounds"
                     )
                     .WithNoContent()
                     .Respond<IListGuildSoundboardSoundsResponse>()
@@ -198,7 +198,7 @@ public class DiscordRestSoundboardAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}guilds/{guildID}/soundboard-sounds/{soundID}"
+                        $"{Constants.DiscordBaseURL}guilds/{guildID}/soundboard-sounds/{soundID}"
                     )
                     .WithNoContent()
                     .Respond<ISoundboardSound>()
@@ -245,7 +245,7 @@ public class DiscordRestSoundboardAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}guilds/{guildID}/soundboard-sounds"
+                        $"{Constants.DiscordBaseURL}guilds/{guildID}/soundboard-sounds"
                     )
                     .WithJson
                     (
@@ -313,7 +313,7 @@ public class DiscordRestSoundboardAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}guilds/{guildID}/soundboard-sounds/{soundID}"
+                        $"{Constants.DiscordBaseURL}guilds/{guildID}/soundboard-sounds/{soundID}"
                     )
                     .WithJson
                     (
@@ -376,7 +376,7 @@ public class DiscordRestSoundboardAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}guilds/{guildID}/soundboard-sounds/{soundID}"
+                        $"{Constants.DiscordBaseURL}guilds/{guildID}/soundboard-sounds/{soundID}"
                     )
                     .WithNoContent()
                     .WithHeaders("X-Audit-Log-Reason", reason)

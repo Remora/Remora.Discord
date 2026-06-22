@@ -74,7 +74,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithExactQueryString("with_localizations", withLocalizations.ToString())
                     .WithHeaders(Constants.LocaleHeaderName, locale)
                     .WithNoContent()
@@ -124,7 +124,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithJson
                     (
                         json => json.IsObject
@@ -172,7 +172,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithJson
                     (
                         json => json.IsObject
@@ -212,7 +212,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithJson
                     (
                         json => json.IsObject
@@ -253,7 +253,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithJson
                     (
                         json => json.IsObject
@@ -295,7 +295,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithJson
                     (
                         json => json.IsObject
@@ -335,7 +335,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithJson
                     (
                         json => json.IsObject
@@ -375,7 +375,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithJson
                     (
                         json => json.IsObject
@@ -451,7 +451,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Put, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .WithJson
                     (
                         json => json.IsArray
@@ -537,7 +537,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .Respond<IApplicationCommand>()
             );
 
@@ -570,7 +570,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .Respond<IApplicationCommand>()
             );
 
@@ -603,7 +603,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .Respond<IApplicationCommand>()
             );
 
@@ -636,7 +636,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Expect(HttpMethod.Put, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands")
                     .Respond<IApplicationCommand>()
             );
 
@@ -677,7 +677,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands/{commandID}")
                     .WithNoContent()
                     .Respond<IApplicationCommand>()
             );
@@ -724,7 +724,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands/{commandID}")
                     .WithJson
                     (
                         json => json.IsObject
@@ -769,7 +769,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands/{commandID}")
                     .WithJson
                     (
                         json => json.IsObject
@@ -812,7 +812,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands/{commandID}")
                     .WithJson
                     (
                         json => json.IsObject
@@ -855,7 +855,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands/{commandID}")
                     .WithJson
                     (
                         json => json.IsObject
@@ -898,7 +898,7 @@ public class DiscordRestApplicationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}applications/{applicationID}/commands/{commandID}")
                     .WithJson
                     (
                         json => json.IsObject
@@ -955,7 +955,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/commands/{commandID}"
                     )
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
@@ -998,7 +998,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithExactQueryString("with_localizations", withLocalizations.ToString())
                     .WithHeaders(Constants.LocaleHeaderName, locale)
@@ -1055,7 +1055,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithJson
                     (
@@ -1108,7 +1108,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithJson
                     (
@@ -1155,7 +1155,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithJson
                     (
@@ -1202,7 +1202,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithJson
                     (
@@ -1249,7 +1249,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithJson
                     (
@@ -1296,7 +1296,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithJson
                     (
@@ -1343,7 +1343,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithJson
                     (
@@ -1425,7 +1425,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .WithJson
                     (
@@ -1517,7 +1517,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .Respond<IApplicationCommand>()
             );
@@ -1556,7 +1556,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .Respond<IApplicationCommand>()
             );
@@ -1595,7 +1595,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .Respond<IApplicationCommand>()
             );
@@ -1634,7 +1634,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands"
                     )
                     .Respond<IApplicationCommand>()
             );
@@ -1681,7 +1681,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
                     .WithNoContent()
                     .Respond<IApplicationCommand>()
@@ -1734,7 +1734,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
                     .WithJson
                     (
@@ -1785,7 +1785,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
                     .WithJson
                     (
@@ -1834,7 +1834,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
                     .WithJson
                     (
@@ -1883,7 +1883,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
                     .WithJson
                     (
@@ -1932,7 +1932,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
                     .WithJson
                     (
@@ -1992,7 +1992,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
@@ -2033,7 +2033,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
                     )
                     .WithNoContent()
                     .Respond<IReadOnlyList<IGuildApplicationCommandPermissions>>()
@@ -2075,7 +2075,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
                     )
                     .WithNoContent()
                     .Respond
@@ -2123,7 +2123,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
                     )
                     .WithJson
                     (
@@ -2175,7 +2175,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/role-connections/metadata"
                     )
                     .WithNoContent()
                     .Respond<IReadOnlyList<IApplicationRoleConnectionMetadata>>()
@@ -2236,7 +2236,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/role-connections/metadata"
                     )
                     .WithJson
                     (
@@ -2306,7 +2306,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/role-connections/metadata"
                     )
                     .Respond
                     (
@@ -2349,7 +2349,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/role-connections/metadata"
                     )
                     .Respond
                     (
@@ -2392,7 +2392,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}applications/{applicationID}/role-connections/metadata"
+                        $"{Constants.DiscordBaseURL}applications/{applicationID}/role-connections/metadata"
                     )
                     .Respond
                     (
@@ -2438,7 +2438,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}applications/@me"
+                        $"{Constants.DiscordBaseURL}applications/@me"
                     )
                     .WithNoContent()
                     .Respond<IApplication>()
@@ -2512,7 +2512,7 @@ public class DiscordRestApplicationAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}applications/@me"
+                        $"{Constants.DiscordBaseURL}applications/@me"
                     )
                     .WithJson
                     (

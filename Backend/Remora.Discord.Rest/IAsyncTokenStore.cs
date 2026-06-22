@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -43,4 +44,14 @@ public interface IAsyncTokenStore
     /// Gets the type of the token.
     /// </summary>
     DiscordTokenType TokenType { get; }
+
+    /// <summary>
+    /// Gets the base uri to the Discord API.
+    /// </summary>
+    Uri BaseApiUri { get; }
+
+    /// <summary>
+    /// Gets the base uri to the Discord CDN.
+    /// </summary>
+    Uri BaseCDNUri { get; }
 }

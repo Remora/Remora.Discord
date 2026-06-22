@@ -70,7 +70,7 @@ public class DiscordRestAutoModerationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildID}/auto-moderation/rules")
                     .Respond<IReadOnlyList<IAutoModerationRule>>()
             );
 
@@ -106,7 +106,7 @@ public class DiscordRestAutoModerationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
                     .Respond<IAutoModerationRule>()
             );
 
@@ -154,7 +154,7 @@ public class DiscordRestAutoModerationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildID}/auto-moderation/rules")
                     .WithJson
                     (
                         j => j.IsObject
@@ -238,7 +238,7 @@ public class DiscordRestAutoModerationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -311,7 +311,7 @@ public class DiscordRestAutoModerationAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildID}/auto-moderation/rules/{ruleID}")
                     .Respond<IAutoModerationRule>()
             );
 

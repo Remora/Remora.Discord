@@ -75,7 +75,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}interactions/{interactionID}/{token}/callback")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}interactions/{interactionID}/{token}/callback")
                     .WithJson
                     (
                         j => j.IsObject
@@ -119,7 +119,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}interactions/{interactionID}/{token}/callback")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}interactions/{interactionID}/{token}/callback")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -191,7 +191,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}interactions/{interactionID}/{token}/callback")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}interactions/{interactionID}/{token}/callback")
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
@@ -276,7 +276,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}interactions/{interactionID}/{token}/callback")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}interactions/{interactionID}/{token}/callback")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -370,7 +370,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/@original"
                     )
                     .WithJson
                     (
@@ -420,7 +420,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/@original"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
@@ -487,7 +487,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/@original"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
@@ -567,7 +567,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/@original"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
@@ -653,7 +653,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/@original"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -701,7 +701,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -748,7 +748,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -792,7 +792,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -855,7 +855,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}")
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
@@ -931,7 +931,7 @@ public class DiscordRestInteractionAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -1017,7 +1017,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .WithNoContent()
                     .Respond<IMessage>()
@@ -1070,7 +1070,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .WithJson
                     (
@@ -1122,7 +1122,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
@@ -1191,7 +1191,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
@@ -1273,7 +1273,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
@@ -1361,7 +1361,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1407,7 +1407,7 @@ public class DiscordRestInteractionAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}webhooks/{interactionID}/{token}/messages/@original"
+                        $"{Constants.DiscordBaseURL}webhooks/{interactionID}/{token}/messages/@original"
                     )
                     .WithNoContent()
                     .Respond<IMessage>()

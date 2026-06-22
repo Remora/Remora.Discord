@@ -63,7 +63,7 @@ public class DiscordRestVoiceAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}voice/regions")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}voice/regions")
                     .Respond<IReadOnlyList<IVoiceRegion>>()
             );
 

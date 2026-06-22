@@ -28,6 +28,7 @@ using Microsoft.Extensions.Hosting;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Hosting.Options;
 using Remora.Discord.Hosting.Services;
+using Remora.Discord.Rest;
 using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Hosting.Extensions;
@@ -52,11 +53,25 @@ public static class HostBuilderExtensions
         Func<IServiceProvider, string> tokenFactory,
         Action<IHttpClientBuilder>? buildClient = null
     )
-    {
-        hostBuilder.ConfigureServices((_, serviceCollection) =>
-            serviceCollection.AddDiscordService(tokenFactory, buildClient));
+        => AddDiscordService(hostBuilder, tokenFactory, DiscordServiceOptions.Discord, buildClient);
 
-        return hostBuilder;
+    /// <inheritdoc cref="AddDiscordService(IHostBuilder, Func{IServiceProvider, string}, Action{IHttpClientBuilder}?)"/>
+    /// <param name="hostbuilder"/>
+    /// <param name="tokenFactory"/>
+    /// <param name="discordServiceOptions">The <paramref name="discordServiceOptions"/> used to configure this service.</param>
+    /// <param name="buildClient"/>
+    public static IHostBuilder AddDiscordService
+    (
+        this IHostBuilder hostbuilder,
+        Func<IServiceProvider, string> tokenFactory,
+        DiscordServiceOptions discordServiceOptions,
+        Action<IHttpClientBuilder>? buildClient = null
+    )
+    {
+        hostbuilder.ConfigureServices((_, serviceCollection) =>
+            serviceCollection.AddDiscordService(tokenFactory, discordServiceOptions, buildClient));
+
+        return hostbuilder;
     }
 
     /// <summary>
@@ -65,19 +80,23 @@ public static class HostBuilderExtensions
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
+    /// <param name="discordServiceOptions">The <see cref="DiscordServiceOptions"/> used to configure this service.</param>
     /// <param name="buildClient">Extra options to configure the rest client.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordService
     (
         this IServiceCollection serviceCollection,
         Func<IServiceProvider, string> tokenFactory,
+        DiscordServiceOptions discordServiceOptions,
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
-        serviceCollection.Configure(() => new DiscordServiceOptions());
+        discordServiceOptions.Verify();
+
+        serviceCollection.Configure(() => discordServiceOptions);
 
         serviceCollection
-            .AddDiscordGateway(tokenFactory, buildClient);
+            .AddDiscordGateway(tokenFactory, discordServiceOptions.APIBasePath, discordServiceOptions.CDNBasePath, discordServiceOptions.TokenType, buildClient);
 
         serviceCollection
             .TryAddSingleton<DiscordService>();

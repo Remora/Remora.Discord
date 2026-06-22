@@ -67,7 +67,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}users/@me")
                     .Respond<IUser>()
             );
 
@@ -102,7 +102,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/{userId}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}users/{userId}")
                     .Respond<IUser>()
             );
 
@@ -143,7 +143,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}users/@me")
                     .WithJson
                     (
                         j => j.IsObject
@@ -172,7 +172,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}users/@me")
                     .WithJson
                     (
                         j => j.IsObject
@@ -207,7 +207,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}users/@me")
                     .Respond<IUser>()
             );
 
@@ -245,7 +245,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}users/@me/guilds")
                     .WithExactQueryString
                     (
                         new[]
@@ -275,7 +275,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}users/@me/guilds")
                     .Respond<IReadOnlyList<IGuild>>()
             );
 
@@ -295,7 +295,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}users/@me/guilds")
                     .Respond<IReadOnlyList<IGuild>>()
             );
 
@@ -330,7 +330,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds/{guildId}/member")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}users/@me/guilds/{guildId}/member")
                     .Respond<IGuildMember>()
             );
 
@@ -365,7 +365,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}users/@me/guilds/{guildId}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}users/@me/guilds/{guildId}")
                     .Respond(HttpStatusCode.NoContent)
             );
 
@@ -398,7 +398,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/channels")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}users/@me/channels")
                     .Respond<IReadOnlyList<IChannel>>()
             );
 
@@ -433,7 +433,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}users/@me/channels")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}users/@me/channels")
                     .WithJson
                     (
                         j => j.IsObject
@@ -474,7 +474,7 @@ public class DiscordRestUserAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/connections")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}users/@me/connections")
                     .Respond<IReadOnlyList<IConnection>>()
             );
 
@@ -512,7 +512,7 @@ public class DiscordRestUserAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                        $"{Constants.DiscordBaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
                     .Respond<IApplicationRoleConnection>()
             );
@@ -558,7 +558,7 @@ public class DiscordRestUserAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                        $"{Constants.DiscordBaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
                     .WithJson
                     (
@@ -617,7 +617,7 @@ public class DiscordRestUserAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                        $"{Constants.DiscordBaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
                     .Respond<IApplicationRoleConnection>()
             );
@@ -653,7 +653,7 @@ public class DiscordRestUserAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                        $"{Constants.DiscordBaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
                     .Respond<IApplicationRoleConnection>()
             );
@@ -689,7 +689,7 @@ public class DiscordRestUserAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}users/@me/applications/{applicationID}/role-connection"
+                        $"{Constants.DiscordBaseURL}users/@me/applications/{applicationID}/role-connection"
                     )
                     .Respond<IApplicationRoleConnection>()
             );
