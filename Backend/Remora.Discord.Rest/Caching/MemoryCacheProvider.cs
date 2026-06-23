@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -37,14 +39,33 @@ namespace Remora.Discord.Rest.Caching;
 public class MemoryCacheProvider : ICacheProvider
 {
     private readonly IMemoryCache _memoryCache;
+    private readonly string? _tokenHash;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MemoryCacheProvider"/> class.
     /// </summary>
     /// <param name="memoryCache">The memory cache.</param>
-    public MemoryCacheProvider(IMemoryCache memoryCache)
+    /// <param name="tokenStore">The token store, if one is available.</param>
+    public MemoryCacheProvider(IMemoryCache memoryCache, ITokenStore? tokenStore = null)
     {
         _memoryCache = memoryCache;
+
+        if (tokenStore is null)
+        {
+            _tokenHash = null;
+            return;
+        }
+
+        using var hasher = SHA256.Create();
+        var hashBuilder = new StringBuilder(64);
+        var hash = hasher.ComputeHash(Encoding.UTF8.GetBytes(tokenStore.Token));
+
+        foreach (var value in hash)
+        {
+            hashBuilder.Append(value.ToString("x2"));
+        }
+
+        _tokenHash = hashBuilder.ToString();
     }
 
     /// <inheritdoc cref="ICacheProvider.CacheAsync{TInstance}" />
@@ -57,7 +78,7 @@ public class MemoryCacheProvider : ICacheProvider
     )
         where TInstance : class
     {
-        _memoryCache.Set(key, instance, options);
+        _memoryCache.Set(CreateTokenScopedKey(key), instance, options);
 
         return default;
     }
@@ -66,7 +87,7 @@ public class MemoryCacheProvider : ICacheProvider
     public ValueTask<Result<TInstance>> RetrieveAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class
     {
-        if (_memoryCache.TryGetValue<TInstance>(key, out var instance))
+        if (_memoryCache.TryGetValue<TInstance>(CreateTokenScopedKey(key), out var instance))
         {
             return new(instance);
         }
@@ -77,12 +98,12 @@ public class MemoryCacheProvider : ICacheProvider
     /// <inheritdoc cref="ICacheProvider.EvictAsync" />
     public ValueTask<Result> EvictAsync(CacheKey key, CancellationToken ct = default)
     {
-        if (!_memoryCache.TryGetValue(key, out _))
+        if (!_memoryCache.TryGetValue(CreateTokenScopedKey(key), out _))
         {
             return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
         }
 
-        _memoryCache.Remove(key);
+        _memoryCache.Remove(CreateTokenScopedKey(key));
         return new(Result.FromSuccess());
     }
 
@@ -90,12 +111,19 @@ public class MemoryCacheProvider : ICacheProvider
     public ValueTask<Result<TInstance>> EvictAsync<TInstance>(CacheKey key, CancellationToken ct = default)
         where TInstance : class
     {
-        if (!_memoryCache.TryGetValue(key, out TInstance? existingValue))
+        if (!_memoryCache.TryGetValue(CreateTokenScopedKey(key), out TInstance? existingValue))
         {
             return new(new NotFoundError($"The key \"{key}\" did not contain a value in cache."));
         }
 
-        _memoryCache.Remove(key);
+        _memoryCache.Remove(CreateTokenScopedKey(key));
         return new(existingValue);
     }
+
+    /// <summary>
+    /// Creates a cache key scoped to a specific token.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <returns>The scoped key.</returns>
+    private object CreateTokenScopedKey(CacheKey key) => (_tokenHash, key);
 }

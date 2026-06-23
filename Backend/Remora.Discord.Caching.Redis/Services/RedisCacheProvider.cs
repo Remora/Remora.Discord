@@ -21,6 +21,8 @@
 //
 
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +31,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using Remora.Discord.Caching.Abstractions;
 using Remora.Discord.Caching.Abstractions.Services;
+using Remora.Discord.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.Redis.Services;
@@ -41,16 +44,40 @@ public class RedisCacheProvider : ICacheProvider
 {
     private readonly IDistributedCache _cache;
     private readonly JsonSerializerOptions _jsonOptions;
+    private readonly string? _tokenHash;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RedisCacheProvider"/> class.
     /// </summary>
     /// <param name="cache">The redis cache.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public RedisCacheProvider(IDistributedCache cache, IOptionsMonitor<JsonSerializerOptions> jsonOptions)
+    /// <param name="tokenStore">The token store, if one is available.</param>
+    public RedisCacheProvider
+    (
+        IDistributedCache cache,
+        IOptionsMonitor<JsonSerializerOptions> jsonOptions,
+        ITokenStore? tokenStore = null
+    )
     {
         _cache = cache;
         _jsonOptions = jsonOptions.Get("Discord");
+
+        if (tokenStore is null)
+        {
+            _tokenHash = null;
+            return;
+        }
+
+        using var hasher = SHA256.Create();
+        var hashBuilder = new StringBuilder(64);
+        var hash = hasher.ComputeHash(Encoding.UTF8.GetBytes(tokenStore.Token));
+
+        foreach (var value in hash)
+        {
+            hashBuilder.Append(value.ToString("x2"));
+        }
+
+        _tokenHash = hashBuilder.ToString();
     }
 
     /// <inheritdoc cref="ICacheProvider.CacheAsync{TInstance}"/>
@@ -77,7 +104,7 @@ public class RedisCacheProvider : ICacheProvider
 
         var serialized = JsonSerializer.SerializeToUtf8Bytes(instance, _jsonOptions);
 
-        await _cache.SetAsync(key.ToCanonicalString(), serialized, options, ct);
+        await _cache.SetAsync(CreateTokenScopedKey(key), serialized, options, ct);
     }
 
     /// <inheritdoc cref="ICacheProvider.RetrieveAsync{TInstance}"/>
@@ -95,7 +122,7 @@ public class RedisCacheProvider : ICacheProvider
     )
         where TInstance : class
     {
-        var keyString = key.ToCanonicalString();
+        var keyString = CreateTokenScopedKey(key);
 
         var value = await _cache.GetAsync(keyString, ct);
 
@@ -114,7 +141,7 @@ public class RedisCacheProvider : ICacheProvider
     /// <inheritdoc cref="ICacheProvider.EvictAsync" />
     public async ValueTask<Result> EvictAsync(CacheKey key, CancellationToken ct = default)
     {
-        var keyString = key.ToCanonicalString();
+        var keyString = CreateTokenScopedKey(key);
 
         var existingValue = await _cache.GetAsync(keyString, ct);
 
@@ -143,7 +170,7 @@ public class RedisCacheProvider : ICacheProvider
     )
         where TInstance : class
     {
-        var keyString = key.ToCanonicalString();
+        var keyString = CreateTokenScopedKey(key);
 
         var existingValue = await _cache.GetAsync(keyString, ct);
 
@@ -158,4 +185,13 @@ public class RedisCacheProvider : ICacheProvider
 
         return deserialized;
     }
+
+    /// <summary>
+    /// Creates a cache key scoped to a specific token.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <returns>The scoped key.</returns>
+    private string CreateTokenScopedKey(CacheKey key) => _tokenHash is not null
+        ? $"{_tokenHash}:{key.ToCanonicalString()}"
+        : key.ToCanonicalString();
 }
