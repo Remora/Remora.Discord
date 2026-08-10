@@ -50,6 +50,7 @@ public class EarlyCacheResponder :
     IResponder<IGuildMemberUpdate>,
     IResponder<IGuildRoleCreate>,
     IResponder<IGuildRoleUpdate>,
+    IResponder<IInviteCreate>,
     IResponder<IMessageCreate>,
     IResponder<IMessageUpdate>,
     IResponder<IMessageReactionAdd>,
@@ -246,6 +247,15 @@ public class EarlyCacheResponder :
         await _cacheService.CacheAsync(key, gatewayEvent.Role, ct);
 
         return await UpdateRolesList(gatewayEvent.GuildID, gatewayEvent.Role, ct);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result> RespondAsync(IInviteCreate gatewayEvent, CancellationToken ct = default)
+    {
+        var key = new KeyHelpers.InviteCacheKey(gatewayEvent.Code);
+        await _cacheService.CacheAsync(key, gatewayEvent, ct);
+
+        return Result.FromSuccess();
     }
 
     /// <inheritdoc/>
