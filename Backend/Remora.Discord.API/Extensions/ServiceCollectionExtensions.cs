@@ -365,7 +365,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IMessageDeleteBulk, MessageDeleteBulk>()
             .WithPropertyName(d => d.IDs, "ids");
 
-        options.AddDataObjectConverter<IMessageReactionAdd, MessageReactionAdd>();
+        options.AddDataObjectConverter<IMessageReactionAdd, MessageReactionAdd>()
+            .WithPropertyName(r => r.BurstColours, "burst_colors")
+            .WithPropertyConverter(r => r.BurstColours, new HexCodeColourConverter());
         options.AddDataObjectConverter<IMessageReactionRemove, MessageReactionRemove>();
         options.AddDataObjectConverter<IMessageReactionRemoveAll, MessageReactionRemoveAll>();
         options.AddDataObjectConverter<IMessageReactionRemoveEmoji, MessageReactionRemoveEmoji>();

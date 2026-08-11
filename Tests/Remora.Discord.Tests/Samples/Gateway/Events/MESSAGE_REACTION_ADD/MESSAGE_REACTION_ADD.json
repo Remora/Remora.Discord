@@ -17,6 +17,11 @@
       "flags": 1
     },
     "emoji": { },
-    "message_author_id": "999999999999999999"
+    "message_author_id": "999999999999999999",
+    "burst": true,
+    "burst_colors": [
+      "#ffffff"
+    ],
+    "type": 1
   }
 }

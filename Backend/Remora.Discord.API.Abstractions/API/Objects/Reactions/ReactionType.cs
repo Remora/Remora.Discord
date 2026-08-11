@@ -1,5 +1,5 @@
 //
-//  MessageReactionRemove.cs
+//  ReactionType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,23 +21,22 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Gateway.Events;
-
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove" />
+/// <summary>
+/// Enumerates the possible types of reactions.
+/// </summary>
 [PublicAPI]
-public record MessageReactionRemove
-(
-    Snowflake UserID,
-    Snowflake ChannelID,
-    Snowflake MessageID,
-    Optional<Snowflake> GuildID,
-    IPartialEmoji Emoji,
-    bool Burst,
-    ReactionType Type
-) : IMessageReactionRemove;
+public enum ReactionType
+{
+    /// <summary>
+    /// A regular reaction.
+    /// </summary>
+    Normal = 0,
+
+    /// <summary>
+    /// A super-reaction.
+    /// </summary>
+    Burst = 1
+}
