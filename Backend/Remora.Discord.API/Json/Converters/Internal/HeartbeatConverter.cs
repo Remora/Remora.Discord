@@ -32,6 +32,9 @@ namespace Remora.Discord.API.Json;
 internal class HeartbeatConverter : JsonConverter<IHeartbeat?>
 {
     /// <inheritdoc />
+    public override bool HandleNull => true;
+
+    /// <inheritdoc />
     public override IHeartbeat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         return reader.TokenType switch
