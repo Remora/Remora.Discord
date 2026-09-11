@@ -53,6 +53,9 @@ public class EarlyCacheResponder :
     IResponder<IMessageCreate>,
     IResponder<IMessageUpdate>,
     IResponder<IMessageReactionAdd>,
+    IResponder<IMessageReactionRemove>,
+    IResponder<IMessageReactionRemoveAll>,
+    IResponder<IMessageReactionRemoveEmoji>,
     IResponder<IUserUpdate>,
     IResponder<IInteractionCreate>
 {
@@ -269,6 +272,9 @@ public class EarlyCacheResponder :
     /// <inheritdoc/>
     public async Task<Result> RespondAsync(IMessageReactionAdd gatewayEvent, CancellationToken ct = default)
     {
+        var key = new KeyHelpers.MessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.MessageID);
+        await _cacheService.EvictAsync<IMessage>(key, ct);
+
         if (!gatewayEvent.GuildID.TryGet(out var guildID))
         {
             return Result.FromSuccess();
@@ -284,10 +290,34 @@ public class EarlyCacheResponder :
             return Result.FromSuccess();
         }
 
-        var key = new KeyHelpers.GuildMemberKey(guildID, user.ID);
-        await _cacheService.CacheAsync(key, member, ct);
+        var memberKey = new KeyHelpers.GuildMemberKey(guildID, user.ID);
+        await _cacheService.CacheAsync(memberKey, member, ct);
 
         return Result.FromSuccess();
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result> RespondAsync(IMessageReactionRemove gatewayEvent, CancellationToken ct = default)
+    {
+        var key = new KeyHelpers.MessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.MessageID);
+        await _cacheService.EvictAsync<IMessage>(key, ct);
+        return Result.Success;
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result> RespondAsync(IMessageReactionRemoveAll gatewayEvent, CancellationToken ct = default)
+    {
+        var key = new KeyHelpers.MessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.MessageID);
+        await _cacheService.EvictAsync<IMessage>(key, ct);
+        return Result.Success;
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result> RespondAsync(IMessageReactionRemoveEmoji gatewayEvent, CancellationToken ct = default)
+    {
+        var key = new KeyHelpers.MessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.MessageID);
+        await _cacheService.EvictAsync<IMessage>(key, ct);
+        return Result.Success;
     }
 
     /// <inheritdoc/>
