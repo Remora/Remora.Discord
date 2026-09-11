@@ -104,10 +104,11 @@ public class CacheService
     /// Attempts to retrieve the previous value of the given key from the eviction cache.
     /// </summary>
     /// <param name="key">The cache key.</param>
+    /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The instance type.</typeparam>
     /// <returns>A <see cref="Result"/> that may or not have succeeded.</returns>
-    public ValueTask<Result<TInstance>> TryGetPreviousValueAsync<TInstance>(CacheKey key)
-        where TInstance : class => _cacheProvider.RetrieveAsync<TInstance>(new KeyHelpers.EvictionCacheKey(key));
+    public ValueTask<Result<TInstance>> TryGetPreviousValueAsync<TInstance>(CacheKey key, CancellationToken ct = default)
+        where TInstance : class => _cacheProvider.RetrieveAsync<TInstance>(new KeyHelpers.EvictionCacheKey(key), ct);
 
     /// <summary>
     /// Evicts the instance with the given key from the cache.
