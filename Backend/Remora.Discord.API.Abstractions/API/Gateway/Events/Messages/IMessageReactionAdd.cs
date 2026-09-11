@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
@@ -66,4 +68,19 @@ public interface IMessageReactionAdd : IGatewayEvent
     /// Gets the ID of the user who authored the message.
     /// </summary>
     Optional<Snowflake> MessageAuthorID { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this is a super-reaction.
+    /// </summary>
+    bool Burst { get; }
+
+    /// <summary>
+    /// Gets the colors used for super-reaction animation.
+    /// </summary>
+    Optional<IReadOnlyList<Color>> BurstColours { get; }
+
+    /// <summary>
+    /// Gets the type of reaction.
+    /// </summary>
+    ReactionType Type { get; }
 }

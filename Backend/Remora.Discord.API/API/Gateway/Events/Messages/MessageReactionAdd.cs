@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -39,5 +41,8 @@ public record MessageReactionAdd
     Optional<Snowflake> GuildID,
     Optional<IGuildMember> Member,
     IPartialEmoji Emoji,
-    Optional<Snowflake> MessageAuthorID
+    Optional<Snowflake> MessageAuthorID,
+    bool Burst,
+    Optional<IReadOnlyList<Color>> BurstColours,
+    ReactionType Type
 ) : IMessageReactionAdd;

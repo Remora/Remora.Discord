@@ -56,4 +56,14 @@ public interface IMessageReactionRemove : IGatewayEvent
     /// Gets the emoji.
     /// </summary>
     IPartialEmoji Emoji { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this is a super-reaction.
+    /// </summary>
+    bool Burst { get; }
+
+    /// <summary>
+    /// Gets the type of reaction.
+    /// </summary>
+    ReactionType Type { get; }
 }
