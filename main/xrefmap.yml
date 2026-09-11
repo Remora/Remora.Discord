@@ -72803,15 +72803,33 @@ references:
   commentId: M:Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd,System.Threading.CancellationToken)
   fullName: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd, System.Threading.CancellationToken)
   nameWithType: EarlyCacheResponder.RespondAsync(IMessageReactionAdd, CancellationToken)
+- uid: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove,System.Threading.CancellationToken)
+  name: RespondAsync(IMessageReactionRemove, CancellationToken)
+  href: api/Remora.Discord.Caching.Responders.EarlyCacheResponder.html#RespondAsync_14
+  commentId: M:Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove,System.Threading.CancellationToken)
+  fullName: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove, System.Threading.CancellationToken)
+  nameWithType: EarlyCacheResponder.RespondAsync(IMessageReactionRemove, CancellationToken)
+- uid: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveAll,System.Threading.CancellationToken)
+  name: RespondAsync(IMessageReactionRemoveAll, CancellationToken)
+  href: api/Remora.Discord.Caching.Responders.EarlyCacheResponder.html#RespondAsync_15
+  commentId: M:Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveAll,System.Threading.CancellationToken)
+  fullName: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveAll, System.Threading.CancellationToken)
+  nameWithType: EarlyCacheResponder.RespondAsync(IMessageReactionRemoveAll, CancellationToken)
+- uid: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveEmoji,System.Threading.CancellationToken)
+  name: RespondAsync(IMessageReactionRemoveEmoji, CancellationToken)
+  href: api/Remora.Discord.Caching.Responders.EarlyCacheResponder.html#RespondAsync_16
+  commentId: M:Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveEmoji,System.Threading.CancellationToken)
+  fullName: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveEmoji, System.Threading.CancellationToken)
+  nameWithType: EarlyCacheResponder.RespondAsync(IMessageReactionRemoveEmoji, CancellationToken)
 - uid: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate,System.Threading.CancellationToken)
   name: RespondAsync(IMessageUpdate, CancellationToken)
-  href: api/Remora.Discord.Caching.Responders.EarlyCacheResponder.html#RespondAsync_14
+  href: api/Remora.Discord.Caching.Responders.EarlyCacheResponder.html#RespondAsync_17
   commentId: M:Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate,System.Threading.CancellationToken)
   fullName: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IMessageUpdate, System.Threading.CancellationToken)
   nameWithType: EarlyCacheResponder.RespondAsync(IMessageUpdate, CancellationToken)
 - uid: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate,System.Threading.CancellationToken)
   name: RespondAsync(IUserUpdate, CancellationToken)
-  href: api/Remora.Discord.Caching.Responders.EarlyCacheResponder.html#RespondAsync_15
+  href: api/Remora.Discord.Caching.Responders.EarlyCacheResponder.html#RespondAsync_18
   commentId: M:Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate,System.Threading.CancellationToken)
   fullName: Remora.Discord.Caching.Responders.EarlyCacheResponder.RespondAsync(Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate, System.Threading.CancellationToken)
   nameWithType: EarlyCacheResponder.RespondAsync(IUserUpdate, CancellationToken)
