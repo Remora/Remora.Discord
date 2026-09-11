@@ -119,11 +119,11 @@ public class CacheSettings
     /// <summary>
     /// Sets the default absolute expiration value for types when they have been evicted from the primary cache.
     /// </summary>
-    /// <param name="defaultAbsoluteExpiration">The default value.</param>
+    /// <param name="defaultEvictionAbsoluteExpiration">The default value.</param>
     /// <returns>The settings.</returns>
-    public CacheSettings SetDefaultEvictionAbsoluteExpiration(TimeSpan? defaultAbsoluteExpiration)
+    public CacheSettings SetDefaultEvictionAbsoluteExpiration(TimeSpan? defaultEvictionAbsoluteExpiration)
     {
-        this.DefaultAbsoluteExpiration = defaultAbsoluteExpiration;
+        this.DefaultEvictionAbsoluteExpiration = defaultEvictionAbsoluteExpiration;
 
         return this;
     }
@@ -131,11 +131,11 @@ public class CacheSettings
     /// <summary>
     /// Sets the default sliding expiration value for types when they have been evicted from the primary cache.
     /// </summary>
-    /// <param name="defaultSlidingExpiration">The default value.</param>
+    /// <param name="defaultEvictionSlidingExpiration">The default value.</param>
     /// <returns>The settings.</returns>
-    public CacheSettings SetDefaultEvictionSlidingExpiration(TimeSpan? defaultSlidingExpiration)
+    public CacheSettings SetDefaultEvictionSlidingExpiration(TimeSpan? defaultEvictionSlidingExpiration)
     {
-        this.DefaultSlidingExpiration = defaultSlidingExpiration;
+        this.DefaultEvictionSlidingExpiration = defaultEvictionSlidingExpiration;
 
         return this;
     }
