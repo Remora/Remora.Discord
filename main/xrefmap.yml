@@ -72824,15 +72824,15 @@ references:
   isSpec: "True"
   fullName: Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync
   nameWithType: CacheService.TryGetPreviousValueAsync
-- uid: Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync``1(Remora.Discord.Caching.Abstractions.CacheKey)
-  name: TryGetPreviousValueAsync<TInstance>(CacheKey)
+- uid: Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync``1(Remora.Discord.Caching.Abstractions.CacheKey,System.Threading.CancellationToken)
+  name: TryGetPreviousValueAsync<TInstance>(CacheKey, CancellationToken)
   href: api/Remora.Discord.Caching.Services.CacheService.html#TryGetPreviousValueAsync__1_1
-  commentId: M:Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync``1(Remora.Discord.Caching.Abstractions.CacheKey)
-  name.vb: TryGetPreviousValueAsync(Of TInstance)(CacheKey)
-  fullName: Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync<TInstance>(Remora.Discord.Caching.Abstractions.CacheKey)
-  fullName.vb: Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync(Of TInstance)(Remora.Discord.Caching.Abstractions.CacheKey)
-  nameWithType: CacheService.TryGetPreviousValueAsync<TInstance>(CacheKey)
-  nameWithType.vb: CacheService.TryGetPreviousValueAsync(Of TInstance)(CacheKey)
+  commentId: M:Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync``1(Remora.Discord.Caching.Abstractions.CacheKey,System.Threading.CancellationToken)
+  name.vb: TryGetPreviousValueAsync(Of TInstance)(CacheKey, CancellationToken)
+  fullName: Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync<TInstance>(Remora.Discord.Caching.Abstractions.CacheKey, System.Threading.CancellationToken)
+  fullName.vb: Remora.Discord.Caching.Services.CacheService.TryGetPreviousValueAsync(Of TInstance)(Remora.Discord.Caching.Abstractions.CacheKey, System.Threading.CancellationToken)
+  nameWithType: CacheService.TryGetPreviousValueAsync<TInstance>(CacheKey, CancellationToken)
+  nameWithType.vb: CacheService.TryGetPreviousValueAsync(Of TInstance)(CacheKey, CancellationToken)
 - uid: Remora.Discord.Caching.Services.CacheService.TryGetValueAsync*
   name: TryGetValueAsync
   href: api/Remora.Discord.Caching.Services.CacheService.html#TryGetValueAsync_
