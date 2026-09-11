@@ -81,7 +81,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/webhooks")
                     .WithJson
                     (
                         j => j.IsObject
@@ -119,7 +119,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/webhooks")
                     .Respond<IWebhook>()
             );
 
@@ -146,7 +146,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/webhooks")
                     .Respond<IWebhook>()
             );
 
@@ -173,7 +173,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/webhooks")
                     .Respond<IWebhook>()
             );
 
@@ -206,7 +206,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/webhooks")
                     .Respond<IWebhook>()
             );
 
@@ -246,7 +246,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelId}/webhooks")
                     .Respond<IReadOnlyList<IWebhook>>()
             );
 
@@ -284,7 +284,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/webhooks")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/webhooks")
                     .Respond<IReadOnlyList<IWebhook>>()
             );
 
@@ -322,7 +322,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}webhooks/{webhookID}")
                     .Respond<IWebhook>()
             );
 
@@ -362,7 +362,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}")
                     .With(m => m.Headers.Authorization == null)
                     .Respond<IWebhook>()
             );
@@ -413,7 +413,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}webhooks/{webhookId}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -452,7 +452,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}webhooks/{webhookId}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -491,7 +491,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}webhooks/{webhookId}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -548,7 +548,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .With(m => m.Headers.Authorization == null)
                     .Respond<IWebhook>()
@@ -579,7 +579,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -620,7 +620,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .Respond<IWebhook>()
             );
 
@@ -662,7 +662,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}webhooks/{webhookID}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -705,7 +705,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .With(m => m.Headers.Authorization == null)
                     .Respond(HttpStatusCode.NoContent)
@@ -759,7 +759,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
@@ -820,7 +820,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithExactQueryString(new Dictionary<string, string>
                     {
                         { "wait", shouldWait.ToString() },
@@ -884,7 +884,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
@@ -942,7 +942,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithExactQueryString("wait", shouldWait.ToString())
                     .WithJson
                     (
@@ -992,7 +992,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -1055,7 +1055,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
@@ -1131,7 +1131,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -1209,7 +1209,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1244,7 +1244,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}webhooks/{webhookId}/{token}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1303,7 +1303,7 @@ public class DiscordRestWebhookAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
                     .WithJson
                     (
@@ -1353,7 +1353,7 @@ public class DiscordRestWebhookAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
                     .WithJson
                     (
@@ -1401,7 +1401,7 @@ public class DiscordRestWebhookAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
@@ -1470,7 +1470,7 @@ public class DiscordRestWebhookAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
@@ -1552,7 +1552,7 @@ public class DiscordRestWebhookAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
@@ -1638,7 +1638,7 @@ public class DiscordRestWebhookAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
                     .WithExactQueryString("thread_id", threadID.ToString())
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1687,7 +1687,7 @@ public class DiscordRestWebhookAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        $"{Constants.DiscordBaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                     )
                     .WithNoContent()
                     .WithExactQueryString("thread_id", threadID.ToString())

@@ -91,7 +91,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds")
                     .WithJson
                     (
                         j => j.IsObject
@@ -147,7 +147,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds")
                     .Respond<IGuild>()
             );
 
@@ -171,7 +171,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds")
                     .Respond<IGuild>()
             );
 
@@ -201,7 +201,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds")
                     .Respond<IGuild>()
             );
 
@@ -242,7 +242,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}")
                     .WithExactQueryString("with_counts", withCounts.ToString())
                     .Respond<IGuild>()
             );
@@ -279,7 +279,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/preview")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/preview")
                     .Respond<IGuildPreview>()
             );
 
@@ -355,7 +355,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -433,7 +433,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -479,7 +479,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}")
                     .Respond<IGuild>()
             );
 
@@ -511,7 +511,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}")
                     .Respond<IGuild>()
             );
 
@@ -543,7 +543,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}")
                     .Respond<IGuild>()
             );
 
@@ -584,7 +584,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildId}")
                     .Respond(HttpStatusCode.NoContent)
             );
 
@@ -620,7 +620,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .Respond<IReadOnlyList<IChannel>>()
             );
 
@@ -667,7 +667,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -733,7 +733,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -802,7 +802,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -879,7 +879,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -951,7 +951,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -1017,7 +1017,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -1072,7 +1072,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1157,7 +1157,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithJson
                     (
                         j => j.IsArray
@@ -1241,7 +1241,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithJson
                     (
                         j => j.IsArray
@@ -1325,7 +1325,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/channels")
                     .WithJson
                     (
                         j => j.IsArray
@@ -1418,7 +1418,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/members/{userId}")
                     .Respond<IGuildMember>()
             );
 
@@ -1456,7 +1456,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/members")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/members")
                     .WithExactQueryString
                     (
                         new[]
@@ -1502,7 +1502,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/members/search")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/members/search")
                     .WithExactQueryString
                     (
                         new[]
@@ -1552,7 +1552,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}")
+                    .Expect(HttpMethod.Put, $"{Constants.DiscordBaseURL}guilds/{guildId}/members/{userId}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1601,7 +1601,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}")
+                    .Expect(HttpMethod.Put, $"{Constants.DiscordBaseURL}guilds/{guildId}/members/{userId}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1669,7 +1669,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/members/{userId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -1734,7 +1734,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/members/@me")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/members/@me")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -1787,7 +1787,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}/roles/{roleId}")
+                    .Expect(HttpMethod.Put, $"{Constants.DiscordBaseURL}guilds/{guildId}/members/{userId}/roles/{roleId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1836,7 +1836,7 @@ public class DiscordRestGuildAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}guilds/{guildId}/members/{userId}/roles/{roleId}"
+                        $"{Constants.DiscordBaseURL}guilds/{guildId}/members/{userId}/roles/{roleId}"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
@@ -1882,7 +1882,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildId}/members/{userId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1927,7 +1927,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/bans")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/bans")
                     .WithExactQueryString
                     (
                         new[]
@@ -1979,7 +1979,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/bans/{userId}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/bans/{userId}")
                     .Respond<IBan>()
             );
 
@@ -2022,7 +2022,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/bans/{userId}")
+                    .Expect(HttpMethod.Put, $"{Constants.DiscordBaseURL}guilds/{guildId}/bans/{userId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -2075,7 +2075,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/bans/{userId}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildId}/bans/{userId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -2120,7 +2120,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/bulk-ban")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/bulk-ban")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -2172,7 +2172,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/roles")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/roles")
                     .Respond("application/json", "[ ]")
             );
 
@@ -2226,7 +2226,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/roles")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/roles")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -2296,7 +2296,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/roles")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/roles")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -2402,7 +2402,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/roles/{roleId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/roles/{roleId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -2466,7 +2466,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/mfa")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/mfa")
                     .WithJson
                     (
                         j => j.IsObject
@@ -2516,7 +2516,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/roles/{roleId}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildId}/roles/{roleId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -2565,7 +2565,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/prune")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/prune")
                     .WithExactQueryString
                     (
                         new[]
@@ -2618,7 +2618,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/prune")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/prune")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -2672,7 +2672,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/regions")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/regions")
                     .Respond("application/json", "[ ]")
             );
 
@@ -2711,7 +2711,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/invites")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/invites")
                     .Respond("application/json", "[ ]")
             );
 
@@ -2750,7 +2750,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/integrations")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/integrations")
                     .Respond("application/json", "[ ]")
             );
 
@@ -2789,7 +2789,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/widget")
                     .Respond<IGuildWidgetSettings>()
             );
 
@@ -2831,7 +2831,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/widget")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/widget")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -2883,7 +2883,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget.json")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/widget.json")
                     .WithNoContent()
                     .Respond<IGuildWidget>()
             );
@@ -2923,7 +2923,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/vanity-url")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/vanity-url")
                     .Respond<IInvite>()
             );
 
@@ -2963,7 +2963,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget.png")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/widget.png")
                     .WithExactQueryString("style", widgetStyle.ToString().ToLowerInvariant())
                     .Respond("image/png", new MemoryStream())
             );
@@ -3004,7 +3004,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/welcome-screen")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/welcome-screen")
                     .Respond<IWelcomeScreen>()
             );
 
@@ -3047,7 +3047,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/welcome-screen")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/welcome-screen")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -3101,7 +3101,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/onboarding")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/onboarding")
                     .Respond<IGuildOnboarding>()
             );
 
@@ -3145,7 +3145,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/onboarding")
+                    .Expect(HttpMethod.Put, $"{Constants.DiscordBaseURL}guilds/{guildId}/onboarding")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -3204,7 +3204,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/voice-states/@me")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/voice-states/@me")
                     .WithJson
                     (
                         j => j.IsObject
@@ -3263,7 +3263,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/voice-states/{userID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/voice-states/{userID}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -3317,7 +3317,7 @@ public class DiscordRestGuildAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}guilds/{guildID}/threads/active"
+                        $"{Constants.DiscordBaseURL}guilds/{guildID}/threads/active"
                     )
                     .WithNoContent()
                     .Respond<IGuildThreadQueryResponse>()
@@ -3356,7 +3356,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildID}/integrations/{integrationID}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildID}/integrations/{integrationID}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -3395,7 +3395,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildID}/incident-actions")
                     .WithJson
                     (
                         j => j.IsObject
@@ -3429,7 +3429,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildID}/incident-actions")
                     .WithJson
                     (
                         j => j.IsObject
@@ -3459,7 +3459,7 @@ public class DiscordRestGuildAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/incident-actions")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildID}/incident-actions")
                     .WithJson
                     (
                         j => j.IsObject

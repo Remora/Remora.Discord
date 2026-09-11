@@ -72,7 +72,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildID}/scheduled-events")
                     .WithExactQueryString("with_user_count", withUserCount.ToString())
                     .Respond<IReadOnlyList<IGuildScheduledEvent>>()
             );
@@ -122,7 +122,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildID}/scheduled-events")
                     .WithJson
                     (
                         j => j.IsObject
@@ -194,7 +194,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildID}/scheduled-events/{eventID}")
                     .WithExactQueryString("with_user_count", withCounts.ToString())
                     .WithNoContent()
                     .Respond<IGuildScheduledEvent>()
@@ -247,7 +247,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildID}/scheduled-events/{eventID}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -321,7 +321,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildID}/scheduled-events/{eventID}")
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -362,7 +362,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}/users")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildID}/scheduled-events/{eventID}/users")
                     .WithExactQueryString
                     (
                         new[]

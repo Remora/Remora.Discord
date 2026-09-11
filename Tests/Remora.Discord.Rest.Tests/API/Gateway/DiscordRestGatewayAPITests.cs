@@ -63,7 +63,7 @@ public class DiscordRestGatewayAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}gateway")
                     .WithNoContent()
                     .Respond<IGatewayEndpoint>()
             );
@@ -97,7 +97,7 @@ public class DiscordRestGatewayAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway/bot")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}gateway/bot")
                     .WithNoContent()
                     .WithAuthentication()
                     .Respond<IGatewayEndpoint>()

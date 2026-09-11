@@ -38,5 +38,14 @@ public enum DiscordTokenType
     /// <summary>
     /// The token gained through OAuth2 API.
     /// </summary>
-    Bearer
+    Bearer,
+
+    /// <summary>
+    /// The token gained by authenticating as a user.
+    /// </summary>
+    /// <remarks>
+    /// This kind of token doesn't actually exist. The type is simply not transmitted in this case.
+    /// This value is provided only for use internal to Remora.Discord.
+    /// </remarks>
+    User
 }

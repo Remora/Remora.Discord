@@ -72,7 +72,7 @@ public class DiscordRestStageInstanceAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}stage-instances")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}stage-instances")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -129,7 +129,7 @@ public class DiscordRestStageInstanceAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}stage-instances/{channelID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}stage-instances/{channelID}")
                     .WithNoContent()
                     .Respond<IStageInstance>()
             );
@@ -168,7 +168,7 @@ public class DiscordRestStageInstanceAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}stage-instances/{channelID}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}stage-instances/{channelID}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -214,7 +214,7 @@ public class DiscordRestStageInstanceAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}stage-instances/{channelID}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}stage-instances/{channelID}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)

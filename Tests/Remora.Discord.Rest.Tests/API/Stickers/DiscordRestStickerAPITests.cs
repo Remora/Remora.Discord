@@ -69,7 +69,7 @@ public class DiscordRestStickerAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}stickers/{stickerId}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}stickers/{stickerId}")
                     .WithNoContent()
                     .Respond<ISticker>()
             );
@@ -103,7 +103,7 @@ public class DiscordRestStickerAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}sticker-packs")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}sticker-packs")
                     .WithNoContent()
                     .Respond<INitroStickerPacks>()
             );
@@ -139,7 +139,7 @@ public class DiscordRestStickerAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/stickers")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/stickers")
                     .WithNoContent()
                     .Respond<IReadOnlyList<ISticker>>()
             );
@@ -176,7 +176,7 @@ public class DiscordRestStickerAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/stickers/{stickerId}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/stickers/{stickerId}")
                     .WithNoContent()
                     .Respond<ISticker>()
             );
@@ -219,7 +219,7 @@ public class DiscordRestStickerAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/stickers")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/stickers")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithMultipartFormData("name", name)
                     .WithMultipartFormData("description", description)
@@ -264,7 +264,7 @@ public class DiscordRestStickerAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/stickers/{stickerId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/stickers/{stickerId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -312,7 +312,7 @@ public class DiscordRestStickerAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/stickers/{stickerId}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildId}/stickers/{stickerId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
