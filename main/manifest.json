@@ -3504,6 +3504,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.ReactionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Remora.Discord.API.Abstractions.Objects.ReactionType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Remora.Discord.API.Abstractions.Objects.RoleFlags.yml",
       "output": {
         ".html": {

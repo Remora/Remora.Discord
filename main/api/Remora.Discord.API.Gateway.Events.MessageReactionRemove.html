@@ -150,19 +150,19 @@ public record MessageReactionRemove : IMessageReactionRemove, IGatewayEvent, IGa
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageReactionRemove__ctor_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Discord_API_Abstractions_Objects_IPartialEmoji_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageReactionRemove.%23ctor(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Discord.API.Abstractions.Objects.IPartialEmoji)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageReactionRemove__ctor_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Snowflake_Remora_Rest_Core_Optional_Remora_Rest_Core_Snowflake__Remora_Discord_API_Abstractions_Objects_IPartialEmoji_System_Boolean_Remora_Discord_API_Abstractions_Objects_ReactionType_.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageReactionRemove.%23ctor(Remora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Snowflake%2CRemora.Rest.Core.Optional%7BRemora.Rest.Core.Snowflake%7D%2CRemora.Discord.API.Abstractions.Objects.IPartialEmoji%2CSystem.Boolean%2CRemora.Discord.API.Abstractions.Objects.ReactionType)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Messages/MessageReactionRemove.cs/#L33">View Source</a>
   </span>
   <a id="Remora_Discord_API_Gateway_Events_MessageReactionRemove" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionRemove.#ctor*"></a>
-  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionRemove.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.IPartialEmoji)">MessageReactionRemove(Snowflake, Snowflake, Snowflake, Optional&lt;Snowflake&gt;, IPartialEmoji)</h4>
+  <h4 id="_ctor_1" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionRemove.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.IPartialEmoji,System.Boolean,Remora.Discord.API.Abstractions.Objects.ReactionType)">MessageReactionRemove(Snowflake, Snowflake, Snowflake, Optional&lt;Snowflake&gt;, IPartialEmoji, bool, ReactionType)</h4>
   <div class="markdown level1 summary"><p>Represents the removal of a reaction from a message.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MessageReactionRemove(Snowflake UserID, Snowflake ChannelID, Snowflake MessageID, Optional&lt;Snowflake&gt; GuildID, IPartialEmoji Emoji)</code></pre>
+    <pre><code class="lang-csharp hljs">public MessageReactionRemove(Snowflake UserID, Snowflake ChannelID, Snowflake MessageID, Optional&lt;Snowflake&gt; GuildID, IPartialEmoji Emoji, bool Burst, ReactionType Type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -199,10 +199,51 @@ public record MessageReactionRemove : IMessageReactionRemove, IGatewayEvent, IGa
         <td><span class="parametername">Emoji</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="parametername">Burst</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.ReactionType.html">ReactionType</a></td>
+        <td><span class="parametername">Type</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
 </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageReactionRemove_Burst.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Messages/MessageReactionRemove.cs/#L41">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Gateway_Events_MessageReactionRemove" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst*"></a>
+  <h4 id="Burst" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst">Burst</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this is a super-reaction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Burst { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageReactionRemove_ChannelID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageReactionRemove.ChannelID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
@@ -323,6 +364,37 @@ public record MessageReactionRemove : IMessageReactionRemove, IGatewayEvent, IGa
     <tbody>
       <tr>
         <td><span class="xref">Snowflake</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Gateway_Events_MessageReactionRemove_Type.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API/API/Gateway/Events/Messages/MessageReactionRemove.cs/#L42">View Source</a>
+  </span>
+  <a id="Remora_Discord_API_Gateway_Events_MessageReactionRemove" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type*"></a>
+  <h4 id="Type" data-uid="Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type">Type</h4>
+  <div class="markdown level1 summary"><p>Gets the type of reaction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ReactionType Type { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Remora.Discord.API.Abstractions.Objects.ReactionType.html">ReactionType</a></td>
         <td></td>
       </tr>
     </tbody>

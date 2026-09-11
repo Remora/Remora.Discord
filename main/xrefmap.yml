@@ -2499,6 +2499,32 @@ references:
   commentId: T:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd
   fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd
   nameWithType: IMessageReactionAdd
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Burst
+  name: Burst
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html#Burst
+  commentId: P:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Burst
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Burst
+  nameWithType: IMessageReactionAdd.Burst
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Burst*
+  name: Burst
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html#Burst_
+  commentId: Overload:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Burst
+  isSpec: "True"
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Burst
+  nameWithType: IMessageReactionAdd.Burst
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.BurstColours
+  name: BurstColours
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html#BurstColours
+  commentId: P:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.BurstColours
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.BurstColours
+  nameWithType: IMessageReactionAdd.BurstColours
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.BurstColours*
+  name: BurstColours
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html#BurstColours_
+  commentId: Overload:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.BurstColours
+  isSpec: "True"
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.BurstColours
+  nameWithType: IMessageReactionAdd.BurstColours
 - uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.ChannelID
   name: ChannelID
   href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html#ChannelID
@@ -2577,6 +2603,19 @@ references:
   isSpec: "True"
   fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.MessageID
   nameWithType: IMessageReactionAdd.MessageID
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Type
+  name: Type
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html#Type
+  commentId: P:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Type
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Type
+  nameWithType: IMessageReactionAdd.Type
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Type*
+  name: Type
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html#Type_
+  commentId: Overload:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Type
+  isSpec: "True"
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.Type
+  nameWithType: IMessageReactionAdd.Type
 - uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.UserID
   name: UserID
   href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd.html#UserID
@@ -2596,6 +2635,19 @@ references:
   commentId: T:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove
   fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove
   nameWithType: IMessageReactionRemove
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Burst
+  name: Burst
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.html#Burst
+  commentId: P:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Burst
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Burst
+  nameWithType: IMessageReactionRemove.Burst
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Burst*
+  name: Burst
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.html#Burst_
+  commentId: Overload:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Burst
+  isSpec: "True"
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Burst
+  nameWithType: IMessageReactionRemove.Burst
 - uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.ChannelID
   name: ChannelID
   href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.html#ChannelID
@@ -2648,6 +2700,19 @@ references:
   isSpec: "True"
   fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.MessageID
   nameWithType: IMessageReactionRemove.MessageID
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Type
+  name: Type
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.html#Type
+  commentId: P:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Type
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Type
+  nameWithType: IMessageReactionRemove.Type
+- uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Type*
+  name: Type
+  href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.html#Type_
+  commentId: Overload:Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Type
+  isSpec: "True"
+  fullName: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.Type
+  nameWithType: IMessageReactionRemove.Type
 - uid: Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.UserID
   name: UserID
   href: api/Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove.html#UserID
@@ -23970,6 +24035,24 @@ references:
   commentId: F:Remora.Discord.API.Abstractions.Objects.PromptType.MultipleChoice
   fullName: Remora.Discord.API.Abstractions.Objects.PromptType.MultipleChoice
   nameWithType: PromptType.MultipleChoice
+- uid: Remora.Discord.API.Abstractions.Objects.ReactionType
+  name: ReactionType
+  href: api/Remora.Discord.API.Abstractions.Objects.ReactionType.html
+  commentId: T:Remora.Discord.API.Abstractions.Objects.ReactionType
+  fullName: Remora.Discord.API.Abstractions.Objects.ReactionType
+  nameWithType: ReactionType
+- uid: Remora.Discord.API.Abstractions.Objects.ReactionType.Burst
+  name: Burst
+  href: api/Remora.Discord.API.Abstractions.Objects.ReactionType.html#Burst
+  commentId: F:Remora.Discord.API.Abstractions.Objects.ReactionType.Burst
+  fullName: Remora.Discord.API.Abstractions.Objects.ReactionType.Burst
+  nameWithType: ReactionType.Burst
+- uid: Remora.Discord.API.Abstractions.Objects.ReactionType.Normal
+  name: Normal
+  href: api/Remora.Discord.API.Abstractions.Objects.ReactionType.html#Normal
+  commentId: F:Remora.Discord.API.Abstractions.Objects.ReactionType.Normal
+  fullName: Remora.Discord.API.Abstractions.Objects.ReactionType.Normal
+  nameWithType: ReactionType.Normal
 - uid: Remora.Discord.API.Abstractions.Objects.RoleFlags
   name: RoleFlags
   href: api/Remora.Discord.API.Abstractions.Objects.RoleFlags.html
@@ -41688,15 +41771,15 @@ references:
   commentId: T:Remora.Discord.API.Gateway.Events.MessageReactionAdd
   fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd
   nameWithType: MessageReactionAdd
-- uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember},Remora.Discord.API.Abstractions.Objects.IPartialEmoji,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake})
-  name: MessageReactionAdd(Snowflake, Snowflake, Snowflake, Optional<Snowflake>, Optional<IGuildMember>, IPartialEmoji, Optional<Snowflake>)
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember},Remora.Discord.API.Abstractions.Objects.IPartialEmoji,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},System.Boolean,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.Drawing.Color}},Remora.Discord.API.Abstractions.Objects.ReactionType)
+  name: MessageReactionAdd(Snowflake, Snowflake, Snowflake, Optional<Snowflake>, Optional<IGuildMember>, IPartialEmoji, Optional<Snowflake>, bool, Optional<IReadOnlyList<Color>>, ReactionType)
   href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#_ctor_1
-  commentId: M:Remora.Discord.API.Gateway.Events.MessageReactionAdd.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember},Remora.Discord.API.Abstractions.Objects.IPartialEmoji,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake})
-  name.vb: New(Snowflake, Snowflake, Snowflake, Optional(Of Snowflake), Optional(Of IGuildMember), IPartialEmoji, Optional(Of Snowflake))
-  fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.MessageReactionAdd(Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Optional<Remora.Rest.Core.Snowflake>, Remora.Rest.Core.Optional<Remora.Discord.API.Abstractions.Objects.IGuildMember>, Remora.Discord.API.Abstractions.Objects.IPartialEmoji, Remora.Rest.Core.Optional<Remora.Rest.Core.Snowflake>)
-  fullName.vb: Remora.Discord.API.Gateway.Events.MessageReactionAdd.New(Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Optional(Of Remora.Rest.Core.Snowflake), Remora.Rest.Core.Optional(Of Remora.Discord.API.Abstractions.Objects.IGuildMember), Remora.Discord.API.Abstractions.Objects.IPartialEmoji, Remora.Rest.Core.Optional(Of Remora.Rest.Core.Snowflake))
-  nameWithType: MessageReactionAdd.MessageReactionAdd(Snowflake, Snowflake, Snowflake, Optional<Snowflake>, Optional<IGuildMember>, IPartialEmoji, Optional<Snowflake>)
-  nameWithType.vb: MessageReactionAdd.New(Snowflake, Snowflake, Snowflake, Optional(Of Snowflake), Optional(Of IGuildMember), IPartialEmoji, Optional(Of Snowflake))
+  commentId: M:Remora.Discord.API.Gateway.Events.MessageReactionAdd.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Rest.Core.Optional{Remora.Discord.API.Abstractions.Objects.IGuildMember},Remora.Discord.API.Abstractions.Objects.IPartialEmoji,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},System.Boolean,Remora.Rest.Core.Optional{System.Collections.Generic.IReadOnlyList{System.Drawing.Color}},Remora.Discord.API.Abstractions.Objects.ReactionType)
+  name.vb: New(Snowflake, Snowflake, Snowflake, Optional(Of Snowflake), Optional(Of IGuildMember), IPartialEmoji, Optional(Of Snowflake), Boolean, Optional(Of IReadOnlyList(Of Color)), ReactionType)
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.MessageReactionAdd(Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Optional<Remora.Rest.Core.Snowflake>, Remora.Rest.Core.Optional<Remora.Discord.API.Abstractions.Objects.IGuildMember>, Remora.Discord.API.Abstractions.Objects.IPartialEmoji, Remora.Rest.Core.Optional<Remora.Rest.Core.Snowflake>, bool, Remora.Rest.Core.Optional<System.Collections.Generic.IReadOnlyList<System.Drawing.Color>>, Remora.Discord.API.Abstractions.Objects.ReactionType)
+  fullName.vb: Remora.Discord.API.Gateway.Events.MessageReactionAdd.New(Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Optional(Of Remora.Rest.Core.Snowflake), Remora.Rest.Core.Optional(Of Remora.Discord.API.Abstractions.Objects.IGuildMember), Remora.Discord.API.Abstractions.Objects.IPartialEmoji, Remora.Rest.Core.Optional(Of Remora.Rest.Core.Snowflake), Boolean, Remora.Rest.Core.Optional(Of System.Collections.Generic.IReadOnlyList(Of System.Drawing.Color)), Remora.Discord.API.Abstractions.Objects.ReactionType)
+  nameWithType: MessageReactionAdd.MessageReactionAdd(Snowflake, Snowflake, Snowflake, Optional<Snowflake>, Optional<IGuildMember>, IPartialEmoji, Optional<Snowflake>, bool, Optional<IReadOnlyList<Color>>, ReactionType)
+  nameWithType.vb: MessageReactionAdd.New(Snowflake, Snowflake, Snowflake, Optional(Of Snowflake), Optional(Of IGuildMember), IPartialEmoji, Optional(Of Snowflake), Boolean, Optional(Of IReadOnlyList(Of Color)), ReactionType)
 - uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.#ctor*
   name: MessageReactionAdd
   href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#_ctor_
@@ -41707,6 +41790,32 @@ references:
   fullName.vb: Remora.Discord.API.Gateway.Events.MessageReactionAdd.New
   nameWithType: MessageReactionAdd.MessageReactionAdd
   nameWithType.vb: MessageReactionAdd.New
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.Burst
+  name: Burst
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#Burst
+  commentId: P:Remora.Discord.API.Gateway.Events.MessageReactionAdd.Burst
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.Burst
+  nameWithType: MessageReactionAdd.Burst
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.Burst*
+  name: Burst
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#Burst_
+  commentId: Overload:Remora.Discord.API.Gateway.Events.MessageReactionAdd.Burst
+  isSpec: "True"
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.Burst
+  nameWithType: MessageReactionAdd.Burst
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.BurstColours
+  name: BurstColours
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#BurstColours
+  commentId: P:Remora.Discord.API.Gateway.Events.MessageReactionAdd.BurstColours
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.BurstColours
+  nameWithType: MessageReactionAdd.BurstColours
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.BurstColours*
+  name: BurstColours
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#BurstColours_
+  commentId: Overload:Remora.Discord.API.Gateway.Events.MessageReactionAdd.BurstColours
+  isSpec: "True"
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.BurstColours
+  nameWithType: MessageReactionAdd.BurstColours
 - uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.ChannelID
   name: ChannelID
   href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#ChannelID
@@ -41785,6 +41894,19 @@ references:
   isSpec: "True"
   fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.MessageID
   nameWithType: MessageReactionAdd.MessageID
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.Type
+  name: Type
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#Type
+  commentId: P:Remora.Discord.API.Gateway.Events.MessageReactionAdd.Type
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.Type
+  nameWithType: MessageReactionAdd.Type
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.Type*
+  name: Type
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#Type_
+  commentId: Overload:Remora.Discord.API.Gateway.Events.MessageReactionAdd.Type
+  isSpec: "True"
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionAdd.Type
+  nameWithType: MessageReactionAdd.Type
 - uid: Remora.Discord.API.Gateway.Events.MessageReactionAdd.UserID
   name: UserID
   href: api/Remora.Discord.API.Gateway.Events.MessageReactionAdd.html#UserID
@@ -41804,15 +41926,15 @@ references:
   commentId: T:Remora.Discord.API.Gateway.Events.MessageReactionRemove
   fullName: Remora.Discord.API.Gateway.Events.MessageReactionRemove
   nameWithType: MessageReactionRemove
-- uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.IPartialEmoji)
-  name: MessageReactionRemove(Snowflake, Snowflake, Snowflake, Optional<Snowflake>, IPartialEmoji)
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.IPartialEmoji,System.Boolean,Remora.Discord.API.Abstractions.Objects.ReactionType)
+  name: MessageReactionRemove(Snowflake, Snowflake, Snowflake, Optional<Snowflake>, IPartialEmoji, bool, ReactionType)
   href: api/Remora.Discord.API.Gateway.Events.MessageReactionRemove.html#_ctor_1
-  commentId: M:Remora.Discord.API.Gateway.Events.MessageReactionRemove.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.IPartialEmoji)
-  name.vb: New(Snowflake, Snowflake, Snowflake, Optional(Of Snowflake), IPartialEmoji)
-  fullName: Remora.Discord.API.Gateway.Events.MessageReactionRemove.MessageReactionRemove(Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Optional<Remora.Rest.Core.Snowflake>, Remora.Discord.API.Abstractions.Objects.IPartialEmoji)
-  fullName.vb: Remora.Discord.API.Gateway.Events.MessageReactionRemove.New(Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Optional(Of Remora.Rest.Core.Snowflake), Remora.Discord.API.Abstractions.Objects.IPartialEmoji)
-  nameWithType: MessageReactionRemove.MessageReactionRemove(Snowflake, Snowflake, Snowflake, Optional<Snowflake>, IPartialEmoji)
-  nameWithType.vb: MessageReactionRemove.New(Snowflake, Snowflake, Snowflake, Optional(Of Snowflake), IPartialEmoji)
+  commentId: M:Remora.Discord.API.Gateway.Events.MessageReactionRemove.#ctor(Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Snowflake,Remora.Rest.Core.Optional{Remora.Rest.Core.Snowflake},Remora.Discord.API.Abstractions.Objects.IPartialEmoji,System.Boolean,Remora.Discord.API.Abstractions.Objects.ReactionType)
+  name.vb: New(Snowflake, Snowflake, Snowflake, Optional(Of Snowflake), IPartialEmoji, Boolean, ReactionType)
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionRemove.MessageReactionRemove(Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Optional<Remora.Rest.Core.Snowflake>, Remora.Discord.API.Abstractions.Objects.IPartialEmoji, bool, Remora.Discord.API.Abstractions.Objects.ReactionType)
+  fullName.vb: Remora.Discord.API.Gateway.Events.MessageReactionRemove.New(Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Snowflake, Remora.Rest.Core.Optional(Of Remora.Rest.Core.Snowflake), Remora.Discord.API.Abstractions.Objects.IPartialEmoji, Boolean, Remora.Discord.API.Abstractions.Objects.ReactionType)
+  nameWithType: MessageReactionRemove.MessageReactionRemove(Snowflake, Snowflake, Snowflake, Optional<Snowflake>, IPartialEmoji, bool, ReactionType)
+  nameWithType.vb: MessageReactionRemove.New(Snowflake, Snowflake, Snowflake, Optional(Of Snowflake), IPartialEmoji, Boolean, ReactionType)
 - uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.#ctor*
   name: MessageReactionRemove
   href: api/Remora.Discord.API.Gateway.Events.MessageReactionRemove.html#_ctor_
@@ -41823,6 +41945,19 @@ references:
   fullName.vb: Remora.Discord.API.Gateway.Events.MessageReactionRemove.New
   nameWithType: MessageReactionRemove.MessageReactionRemove
   nameWithType.vb: MessageReactionRemove.New
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst
+  name: Burst
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionRemove.html#Burst
+  commentId: P:Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst
+  nameWithType: MessageReactionRemove.Burst
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst*
+  name: Burst
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionRemove.html#Burst_
+  commentId: Overload:Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst
+  isSpec: "True"
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionRemove.Burst
+  nameWithType: MessageReactionRemove.Burst
 - uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.ChannelID
   name: ChannelID
   href: api/Remora.Discord.API.Gateway.Events.MessageReactionRemove.html#ChannelID
@@ -41875,6 +42010,19 @@ references:
   isSpec: "True"
   fullName: Remora.Discord.API.Gateway.Events.MessageReactionRemove.MessageID
   nameWithType: MessageReactionRemove.MessageID
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type
+  name: Type
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionRemove.html#Type
+  commentId: P:Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type
+  nameWithType: MessageReactionRemove.Type
+- uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type*
+  name: Type
+  href: api/Remora.Discord.API.Gateway.Events.MessageReactionRemove.html#Type_
+  commentId: Overload:Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type
+  isSpec: "True"
+  fullName: Remora.Discord.API.Gateway.Events.MessageReactionRemove.Type
+  nameWithType: MessageReactionRemove.Type
 - uid: Remora.Discord.API.Gateway.Events.MessageReactionRemove.UserID
   name: UserID
   href: api/Remora.Discord.API.Gateway.Events.MessageReactionRemove.html#UserID
