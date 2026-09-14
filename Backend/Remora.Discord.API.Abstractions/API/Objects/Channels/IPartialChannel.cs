@@ -79,7 +79,7 @@ public interface IPartialChannel
     Optional<Snowflake> OwnerID { get; }
 
     /// <inheritdoc cref="IChannel.ApplicationID" />
-    Optional<Snowflake> ApplicationID { get; }
+    Optional<Snowflake?> ApplicationID { get; }
 
     /// <inheritdoc cref="IChannel.IsManaged" />
     Optional<bool> IsManaged { get; }

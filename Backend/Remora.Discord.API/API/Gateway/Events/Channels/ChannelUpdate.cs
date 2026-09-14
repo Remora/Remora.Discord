@@ -48,7 +48,7 @@ public record ChannelUpdate
     Optional<IReadOnlyList<IUser>> Recipients = default,
     Optional<IImageHash?> Icon = default,
     Optional<Snowflake> OwnerID = default,
-    Optional<Snowflake> ApplicationID = default,
+    Optional<Snowflake?> ApplicationID = default,
     Optional<bool> IsManaged = default,
     Optional<Snowflake?> ParentID = default,
     Optional<DateTimeOffset?> LastPinTimestamp = default,

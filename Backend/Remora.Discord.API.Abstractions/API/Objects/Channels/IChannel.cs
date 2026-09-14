@@ -111,9 +111,10 @@ public interface IChannel : IPartialChannel
     new Optional<Snowflake> OwnerID { get; }
 
     /// <summary>
-    /// Gets the application ID of the group DM creator, if it is bot-created.
+    /// Gets the application ID associated with the channel. For group DMs, this is the application that created the
+    /// group.
     /// </summary>
-    new Optional<Snowflake> ApplicationID { get; }
+    new Optional<Snowflake?> ApplicationID { get; }
 
     /// <summary>
     /// Gets a value indicating whether the group DM is managed by an application.
@@ -258,7 +259,7 @@ public interface IChannel : IPartialChannel
     Optional<Snowflake> IPartialChannel.OwnerID => this.OwnerID;
 
     /// <inheritdoc/>
-    Optional<Snowflake> IPartialChannel.ApplicationID => this.ApplicationID;
+    Optional<Snowflake?> IPartialChannel.ApplicationID => this.ApplicationID;
 
     /// <inheritdoc/>
     Optional<bool> IPartialChannel.IsManaged => this.IsManaged;
