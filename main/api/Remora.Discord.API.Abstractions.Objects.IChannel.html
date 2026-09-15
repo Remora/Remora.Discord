@@ -117,16 +117,17 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_ApplicationID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.ApplicationID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L116">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L117">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.ApplicationID*"></a>
   <h4 id="ApplicationID" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.ApplicationID">ApplicationID</h4>
-  <div class="markdown level1 summary"><p>Gets the application ID of the group DM creator, if it is bot-created.</p>
+  <div class="markdown level1 summary"><p>Gets the application ID associated with the channel. For group DMs, this is the application that created the
+group.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Optional&lt;Snowflake&gt; ApplicationID { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">Optional&lt;Snowflake?&gt; ApplicationID { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -138,7 +139,7 @@ public interface IChannel : IPartialChannel</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Optional</span>&lt;<span class="xref">Snowflake</span>&gt;</td>
+        <td><span class="xref">Optional</span>&lt;<span class="xref">Snowflake</span>?&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -148,7 +149,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_AppliedTags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.AppliedTags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L193">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L194">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.AppliedTags*"></a>
   <h4 id="AppliedTags" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.AppliedTags">AppliedTags</h4>
@@ -179,7 +180,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_AvailableTags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.AvailableTags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L188">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L189">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.AvailableTags*"></a>
   <h4 id="AvailableTags" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.AvailableTags">AvailableTags</h4>
@@ -241,7 +242,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_DefaultAutoArchiveDuration.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.DefaultAutoArchiveDuration%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L166">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L167">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultAutoArchiveDuration*"></a>
   <h4 id="DefaultAutoArchiveDuration" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultAutoArchiveDuration">DefaultAutoArchiveDuration</h4>
@@ -272,7 +273,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_DefaultForumLayout.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.DefaultForumLayout%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L213">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L214">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultForumLayout*"></a>
   <h4 id="DefaultForumLayout" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultForumLayout">DefaultForumLayout</h4>
@@ -303,7 +304,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_DefaultReactionEmoji.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.DefaultReactionEmoji%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L198">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L199">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultReactionEmoji*"></a>
   <h4 id="DefaultReactionEmoji" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultReactionEmoji">DefaultReactionEmoji</h4>
@@ -334,7 +335,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_DefaultSortOrder.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.DefaultSortOrder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L208">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L209">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultSortOrder*"></a>
   <h4 id="DefaultSortOrder" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultSortOrder">DefaultSortOrder</h4>
@@ -365,7 +366,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_DefaultThreadRateLimitPerUser.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.DefaultThreadRateLimitPerUser%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L203">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L204">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultThreadRateLimitPerUser*"></a>
   <h4 id="DefaultThreadRateLimitPerUser" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.DefaultThreadRateLimitPerUser">DefaultThreadRateLimitPerUser</h4>
@@ -396,7 +397,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_Flags.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.Flags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L177">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L178">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.Flags*"></a>
   <h4 id="Flags" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.Flags">Flags</h4>
@@ -520,7 +521,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_IsManaged.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.IsManaged%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L121">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L122">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.IsManaged*"></a>
   <h4 id="IsManaged" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.IsManaged">IsManaged</h4>
@@ -613,7 +614,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_LastPinTimestamp.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.LastPinTimestamp%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L131">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L132">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.LastPinTimestamp*"></a>
   <h4 id="LastPinTimestamp" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.LastPinTimestamp">LastPinTimestamp</h4>
@@ -644,7 +645,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_Member.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.Member%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L161">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L162">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.Member*"></a>
   <h4 id="Member" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.Member">Member</h4>
@@ -675,7 +676,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_MemberCount.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.MemberCount%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L151">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L152">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.MemberCount*"></a>
   <h4 id="MemberCount" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.MemberCount">MemberCount</h4>
@@ -706,7 +707,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_MessageCount.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.MessageCount%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L146">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L147">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.MessageCount*"></a>
   <h4 id="MessageCount" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.MessageCount">MessageCount</h4>
@@ -799,7 +800,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_ParentID.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.ParentID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L126">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L127">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.ParentID*"></a>
   <h4 id="ParentID" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.ParentID">ParentID</h4>
@@ -861,7 +862,7 @@ public interface IChannel : IPartialChannel</code></pre>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_Permissions.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.Permissions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L172">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L173">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.Permissions*"></a>
   <h4 id="Permissions" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.Permissions">Permissions</h4>
@@ -924,7 +925,7 @@ resolved via a slash command interaction.</p>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_RTCRegion.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.RTCRegion%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L136">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L137">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.RTCRegion*"></a>
   <h4 id="RTCRegion" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.RTCRegion">RTCRegion</h4>
@@ -1019,7 +1020,7 @@ users with the permission <a class="xref" href="Remora.Discord.API.Abstractions.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_ThreadMetadata.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.ThreadMetadata%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L156">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L157">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.ThreadMetadata*"></a>
   <h4 id="ThreadMetadata" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.ThreadMetadata">ThreadMetadata</h4>
@@ -1081,7 +1082,7 @@ users with the permission <a class="xref" href="Remora.Discord.API.Abstractions.
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_TotalMessageSent.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.TotalMessageSent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L183">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L184">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.TotalMessageSent*"></a>
   <h4 id="TotalMessageSent" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.TotalMessageSent">TotalMessageSent</h4>
@@ -1175,7 +1176,7 @@ decrement when messages are deleted.</p>
     <a href="https://github.com/Remora/Remora.Discord/new/main/apiSpec/new?filename=Remora_Discord_API_Abstractions_Objects_IChannel_VideoQualityMode.md&amp;value=---%0Auid%3A%20Remora.Discord.API.Abstractions.Objects.IChannel.VideoQualityMode%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L141">View Source</a>
+    <a href="https://github.com/Remora/Remora.Discord/blob/main/Backend/Remora.Discord.API.Abstractions/API/Objects/Channels/IChannel.cs/#L142">View Source</a>
   </span>
   <a id="Remora_Discord_API_Abstractions_Objects_IChannel" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.VideoQualityMode*"></a>
   <h4 id="VideoQualityMode" data-uid="Remora.Discord.API.Abstractions.Objects.IChannel.VideoQualityMode">VideoQualityMode</h4>
