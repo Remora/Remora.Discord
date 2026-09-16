@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -29,25 +30,24 @@ namespace Remora.Discord.Rest;
 /// <summary>
 /// Represents a storage class for a static token.
 /// </summary>
+/// <param name="token">The token to store.</param>
+/// <param name="tokenType">The type of token to store.</param>
+/// <param name="baseAPIUri">The base uri for the Discord API.</param>
+/// <param name="baseCDNUri">The base uri for the Discord CDN.</param>
 [PublicAPI]
-public class StaticTokenStore : IAsyncTokenStore
+public class StaticTokenStore(string token, DiscordTokenType tokenType, Uri baseAPIUri, Uri baseCDNUri) : IAsyncTokenStore
 {
-    private readonly string _token;
+    private readonly string _token = token;
 
     /// <inheritdoc />
     public ValueTask<string> GetTokenAsync(CancellationToken cancellationToken) => new(_token);
 
     /// <inheritdoc />
-    public DiscordTokenType TokenType { get; }
+    public DiscordTokenType TokenType { get; } = tokenType;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="StaticTokenStore"/> class.
-    /// </summary>
-    /// <param name="token">The token to store.</param>
-    /// <param name="tokenType">The type of token to store.</param>
-    public StaticTokenStore(string token, DiscordTokenType tokenType)
-    {
-        _token = token;
-        this.TokenType = tokenType;
-    }
+    /// <inheritdoc/>
+    public Uri BaseApiUri { get; } = baseAPIUri;
+
+    /// <inheritdoc/>
+    public Uri BaseCDNUri { get; } = baseCDNUri;
 }

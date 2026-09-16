@@ -71,7 +71,7 @@ public class DiscordRestEmojiAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/emojis")
                     .WithNoContent()
                     .Respond<IReadOnlyList<IEmoji>>()
             );
@@ -108,7 +108,7 @@ public class DiscordRestEmojiAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}guilds/{guildId}/emojis/{emojiId}")
                     .WithNoContent()
                     .Respond<IEmoji>()
             );
@@ -154,7 +154,7 @@ public class DiscordRestEmojiAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/emojis")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -194,7 +194,7 @@ public class DiscordRestEmojiAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/emojis")
                     .WithJson
                     (
                         j => j.IsObject
@@ -233,7 +233,7 @@ public class DiscordRestEmojiAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}guilds/{guildId}/emojis")
                     .WithJson
                     (
                         j => j.IsObject
@@ -282,7 +282,7 @@ public class DiscordRestEmojiAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/emojis/{emojiId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -314,7 +314,7 @@ public class DiscordRestEmojiAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}guilds/{guildId}/emojis/{emojiId}")
                     .WithJson
                     (
                         j => j.IsObject
@@ -360,7 +360,7 @@ public class DiscordRestEmojiAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}guilds/{guildId}/emojis/{emojiId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );

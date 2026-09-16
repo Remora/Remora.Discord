@@ -77,7 +77,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelID}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelID}")
                     .Respond<IChannel>()
             );
 
@@ -117,7 +117,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId.ToString()}")
                     .WithJson
                     (
                         j => j
@@ -163,7 +163,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId.ToString()}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -228,7 +228,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId.ToString()}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -293,7 +293,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -358,7 +358,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -421,7 +421,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId.ToString()}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -490,7 +490,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId.ToString()}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -574,7 +574,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId.ToString()}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
@@ -641,7 +641,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId.ToString()}")
                     .WithJson
                     (
                         j => j
@@ -816,7 +816,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                    .Expect(HttpMethod.Delete, $"{Constants.DiscordBaseURL}channels/{channelId.ToString()}")
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond<IChannel>()
             );
@@ -854,7 +854,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithExactQueryString
                     (
                         new[]
@@ -884,7 +884,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithExactQueryString
                     (
                         new[]
@@ -914,7 +914,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithExactQueryString
                     (
                         new[]
@@ -1014,7 +1014,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithExactQueryString(expectedQueryStringParameters)
                     .Respond<IReadOnlyList<IMessage>>()
             );
@@ -1071,7 +1071,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}")
                     .Respond<IMessage>()
             );
 
@@ -1112,7 +1112,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1161,7 +1161,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1209,7 +1209,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1261,7 +1261,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -1332,7 +1332,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
@@ -1416,7 +1416,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -1502,7 +1502,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/messages")
                     .WithJson
                     (
                         j => j.IsObject
@@ -1562,7 +1562,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/crosspost"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/crosspost"
                     )
                     .Respond<IMessage>()
             );
@@ -1603,7 +1603,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1644,7 +1644,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1687,7 +1687,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/{userId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/{userId}"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1730,7 +1730,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
                     )
                     .WithExactQueryString
                     (
@@ -1765,7 +1765,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
                     )
                     .Respond<IReadOnlyList<IUser>>()
             );
@@ -1792,7 +1792,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
                     )
                     .Respond<IReadOnlyList<IUser>>()
             );
@@ -1832,7 +1832,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/reactions"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1874,7 +1874,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -1920,7 +1920,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}"
                     )
                     .WithJson
                     (
@@ -1967,7 +1967,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}"
                     )
                     .WithJson
                     (
@@ -2005,7 +2005,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Patch,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}"
                     )
                     .WithJson
                     (
@@ -2056,7 +2056,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -2119,7 +2119,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}")
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
@@ -2195,7 +2195,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
+                    .Expect(HttpMethod.Patch, $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -2280,7 +2280,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -2321,7 +2321,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/bulk-delete"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/bulk-delete"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
@@ -2363,7 +2363,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/bulk-delete"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/bulk-delete"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -2388,7 +2388,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/bulk-delete"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/bulk-delete"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -2433,7 +2433,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/permissions/{overwriteId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/permissions/{overwriteId}"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
@@ -2469,7 +2469,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/permissions/{overwriteId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/permissions/{overwriteId}"
                     )
                     .WithJson
                     (
@@ -2517,7 +2517,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelId}/invites"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/invites"
                     )
                     .Respond("application/json", "[]")
             );
@@ -2564,7 +2564,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelId}/invites"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/invites"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
@@ -2632,7 +2632,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/permissions/{overwriteId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/permissions/{overwriteId}"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
@@ -2673,7 +2673,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelId}/followers"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/followers"
                     )
                     .WithJson
                     (
@@ -2719,7 +2719,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelId}/typing"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/typing"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -2758,7 +2758,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelId}/pins"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/pins"
                     )
                     .Respond("application/json", "[]")
             );
@@ -2799,7 +2799,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/pins/{messageId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/pins/{messageId}"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
@@ -2841,7 +2841,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/pins/{messageId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/pins/{messageId}"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
@@ -2884,7 +2884,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/recipients/{userId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/recipients/{userId}"
                     )
                     .WithJson
                     (
@@ -2933,7 +2933,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/recipients/{userId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/recipients/{userId}"
                     )
                     .Respond(HttpStatusCode.NoContent)
             );
@@ -2977,7 +2977,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/threads"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/messages/{messageId}/threads"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
@@ -3033,7 +3033,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelId}/threads"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/threads"
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
@@ -3096,7 +3096,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/threads")
                     .WithJson
                     (
                         j => j.IsObject
@@ -3145,7 +3145,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/threads")
                     .WithJson
                     (
                         j => j.IsObject
@@ -3191,7 +3191,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/threads")
                     .WithJson
                     (
                         j => j.IsObject
@@ -3241,7 +3241,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/threads")
                     .WithMultipartFormData("\"files[0]\"", fileName, file)
                     .WithMultipartJsonPayload
                     (
@@ -3313,7 +3313,7 @@ public class DiscordRestChannelAPITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/threads")
+                    .Expect(HttpMethod.Post, $"{Constants.DiscordBaseURL}channels/{channelId}/threads")
                     .WithMultipartFormData("\"files[0]\"", fileName1, file1)
                     .WithMultipartFormData("\"files[1]\"", fileName2, file2)
                     .WithMultipartJsonPayload
@@ -3409,7 +3409,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/thread-members/@me"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/thread-members/@me"
                     )
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
@@ -3450,7 +3450,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/thread-members/{userId}"
                     )
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
@@ -3490,7 +3490,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/thread-members/@me"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/thread-members/@me"
                     )
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
@@ -3531,7 +3531,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/thread-members/{userId}"
                     )
                     .WithNoContent()
                     .Respond(HttpStatusCode.NoContent)
@@ -3573,7 +3573,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/thread-members/{userId}"
                     )
                     .WithNoContent()
                     .WithExactQueryString("with_member", withMember.ToString())
@@ -3617,7 +3617,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelId}/thread-members"
+                        $"{Constants.DiscordBaseURL}channels/{channelId}/thread-members"
                     )
                     .WithNoContent()
                     .WithExactQueryString(new KeyValuePair<string, string>[]
@@ -3665,7 +3665,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelID}/threads/archived/public"
+                        $"{Constants.DiscordBaseURL}channels/{channelID}/threads/archived/public"
                     )
                     .WithExactQueryString
                     (
@@ -3715,7 +3715,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelID}/threads/archived/private"
+                        $"{Constants.DiscordBaseURL}channels/{channelID}/threads/archived/private"
                     )
                     .WithExactQueryString
                     (
@@ -3765,7 +3765,7 @@ public class DiscordRestChannelAPITests
                     .Expect
                     (
                         HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelID}/users/@me/threads/archived/private"
+                        $"{Constants.DiscordBaseURL}channels/{channelID}/users/@me/threads/archived/private"
                     )
                     .WithExactQueryString
                     (

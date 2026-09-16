@@ -63,7 +63,7 @@ public class DiscordRestOAuth2APITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/applications/@me")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}oauth2/applications/@me")
                     .WithNoContent()
                     .Respond<IApplication>()
             );
@@ -97,7 +97,7 @@ public class DiscordRestOAuth2APITests
             var api = CreateAPI
             (
                 b => b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/@me")
+                    .Expect(HttpMethod.Get, $"{Constants.DiscordBaseURL}oauth2/@me")
                     .WithNoContent()
                     .Respond("Authorization/json", SampleRepository.Get<IAuthorizationInformation>())
             );

@@ -49,18 +49,24 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="tokenFactory">A function that retrieves the bot token.</param>
+    /// <param name="apiBasePath">The base API endpoint.</param>
+    /// <param name="cdnBasePath">The base path to the CDN.</param>
+    /// <param name="tokenType">The type of token to register.</param>
     /// <param name="buildClient">Extra options to configure the rest client.</param>
     /// <returns>The service collection, with the services added.</returns>
     public static IServiceCollection AddDiscordGateway
     (
         this IServiceCollection serviceCollection,
         Func<IServiceProvider, string> tokenFactory,
+        Uri apiBasePath,
+        Uri cdnBasePath,
+        DiscordTokenType tokenType = DiscordTokenType.Bot,
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
         serviceCollection.AddSingleton<IAsyncTokenStore>
         (
-            ctx => new StaticTokenStore(tokenFactory(ctx), DiscordTokenType.Bot)
+            ctx => new StaticTokenStore(tokenFactory(ctx), tokenType, apiBasePath, cdnBasePath)
         );
 
         return serviceCollection.AddDiscordGateway(buildClient);
