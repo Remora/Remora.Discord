@@ -1,16 +1,16 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>2026.1</VersionPrefix>
+        <VersionPrefix>2026.2</VersionPrefix>
         <Description>Metapackage for Remora.Discord's various components</Description>
         <PackageReleaseNotes>
-            Parse channel and message urls with SnowflakeParser
-            fix(EmbedBuilder): escape field keyword
-            Bump Humanizer to 3.x
-            Drop FuzzySharp dependency.
-            Upgrade to Remora.Commands 11.0.3
-            BREAKING: change(GatewayIntents): sync with Discord API docs, make use of proper lists
-            BREAKING: change!(GatewayIntents): MessageContents -> MessageContent
+            Update SDK and dependencies.
+            BREAKING: add cancellation token to CacheService.TryGetPreviousValueAsync
+            update correct property in SetDefaultEvictionExpiration
+            evict message when its reactions are updated
+            BREAKING: Implement new fields on MESSAGE_REACTION_ADD and MESSAGE_REACTION_REMOVE
+            add handle null to HeartbeatConverter
+            BREAKING: make channel application_id nullable
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

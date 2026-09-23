@@ -1,11 +1,12 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>85.0.0</VersionPrefix>
+        <VersionPrefix>86.0.0</VersionPrefix>
         <Description>Interface definitions of Discord's API</Description>
         <PackageReleaseNotes>
-            BREAKING: change(GatewayIntents): sync with Discord API docs, make use of proper lists
-            BREAKING: change!(GatewayIntents): MessageContents -> MessageContent
+            Update SDK and dependencies.
+            BREAKING: Implement new fields on MESSAGE_REACTION_ADD and MESSAGE_REACTION_REMOVE
+            BREAKING: make channel application_id nullable
         </PackageReleaseNotes>
     </PropertyGroup>
 

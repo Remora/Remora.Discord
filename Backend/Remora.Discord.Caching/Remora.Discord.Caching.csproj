@@ -1,10 +1,13 @@
 <Project Sdk="Remora.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>40.0.2</VersionPrefix>
+        <VersionPrefix>41.0.0</VersionPrefix>
         <Description>Caching implementations of Remora.Discord's services</Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Update SDK and dependencies.
+            BREAKING: add cancellation token to CacheService.TryGetPreviousValueAsync
+            update correct property in SetDefaultEvictionExpiration
+            evict message when its reactions are updated
         </PackageReleaseNotes>
     </PropertyGroup>
 
